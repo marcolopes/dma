@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DMA Java Utils
 Bundle-SymbolicName: org.dma.utils
-Bundle-Version: 2.0.1
+Bundle-Version: 2.1.0
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.6.0",
  org.eclipse.ui;bundle-version="3.6.2"
 Bundle-ActivationPolicy: lazy
