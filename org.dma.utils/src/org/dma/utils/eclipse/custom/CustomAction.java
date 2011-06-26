@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse;
+package org.dma.utils.eclipse.custom;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;

@@ -3,10 +3,10 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.jobs;
+package org.dma.utils.eclipse.progress;
 
-import org.dma.utils.eclipse.custom.CustomAction;
+public interface IProgressAction {
 
-public abstract class JobAction extends CustomAction implements IJobAction {
+	public boolean run();
 
 }
