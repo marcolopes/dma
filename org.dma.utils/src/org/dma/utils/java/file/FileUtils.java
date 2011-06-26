@@ -502,16 +502,16 @@ public class FileUtils {
 		final StringBuffer buffer=new StringBuffer();
 
 		try{
-			BufferedReader in = new BufferedReader(
+			BufferedReader br = new BufferedReader(
 					new InputStreamReader(HTTPUtils.getInputStream(fileurl)));
 
 			try{
 				int ch;
-				while ((ch = in.read()) > -1)
+				while ((ch = br.read()) > -1)
 					buffer.append((char)ch);
 
 			}finally{
-				in.close();
+				br.close();
 			}
 
 		} catch (MalformedURLException e) {
