@@ -8,16 +8,16 @@ package org.dma.utils.eclipse.support;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dma.utils.eclipse.custom.DialogHandler;
 import org.dma.utils.java.ArrayUtils;
 import org.dma.utils.java.CollectionUtils;
 
-
-public class ErrorHandler {
+public class ErrorSupport {
 
 	private final List<String> errors=new ArrayList();
 
 
-	public ErrorHandler(){
+	public ErrorSupport(){
 	}
 
 

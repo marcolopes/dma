@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.java;
 
-import org.dma.utils.eclipse.support.ErrorHandler;
+import org.dma.utils.eclipse.support.ErrorSupport;
 
 public class ClassAccess {
 
@@ -13,7 +13,7 @@ public class ClassAccess {
 	public static final String INITIALIZER_ERROR = "INITIALIZER ERROR";
 	public static final String FIELD_NOT_FOUND = "FIELD NOT FOUND";
 
-	private static ErrorHandler error=new ErrorHandler();
+	private static ErrorSupport error=new ErrorSupport();
 
 
 	public static Object getField(Class cl, String field) {
@@ -38,7 +38,7 @@ public class ClassAccess {
 
 
 	//getters
-	public static ErrorHandler getError() {
+	public static ErrorSupport getError() {
 		return error;
 	}
 
