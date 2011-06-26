@@ -3,10 +3,11 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.widgets;
+package org.dma.utils.eclipse.ui;
 
 import java.util.List;
 
+import org.dma.utils.eclipse.custom.CustomList;
 import org.dma.utils.java.ArrayUtils;
 import org.dma.utils.java.CollectionUtils;
 import org.eclipse.swt.SWT;

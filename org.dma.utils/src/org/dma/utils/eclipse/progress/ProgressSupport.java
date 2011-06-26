@@ -3,13 +3,11 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.ui;
+package org.dma.utils.eclipse.progress;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.dma.utils.eclipse.Debug;
@@ -25,36 +23,26 @@ public class ProgressSupport {
 
 	private final String title;
 
-	private final List<Method> methods=new ArrayList();
-	private final Map<Method, String> tasks=new HashMap();
+	private final Map<IProgressAction, String> tasks=new LinkedHashMap();
 	private int work;
-	private int index;
+	private IProgressAction action;
 
 	public ProgressSupport(String title){
 		this.title=title;
 	}
 
 
-	public void add(Class cl, String methodName) {
+	public void add(IProgressAction action) {
 
-		add(cl, methodName, cl.getName());
+		add(action, action.getClass().getName());
 
 	}
 
 
-	public void add(Class cl, String methodName, String taskName) {
+	public void add(IProgressAction action, String taskName) {
 
-		try {
-			Method method=cl.getDeclaredMethod(methodName);
-			this.methods.add(method);
-			this.tasks.put(method, taskName);
-			this.work=100/methods.size();
-
-		} catch (SecurityException e) {
-		} catch (NoSuchMethodException e) {
-			//caso o metodo nao exista, nao sera' adicionado
-			Debug.info("NoSuchMethodException", methodName);
-		}
+		this.tasks.put(action, taskName);
+		this.work=100/tasks.size();
 
 	}
 
@@ -71,32 +59,18 @@ public class ProgressSupport {
 					monitor.beginTask(title, 100);
 
 					// execute the tasks
-					index=0;
-					while(index<methods.size()){
+					Iterator<IProgressAction> iterator=tasks.keySet().iterator();
+					while(iterator.hasNext()){
+
+						action=iterator.next();
 
 						//task name
-						String task=tasks.get(methods.get(index));
-						if (task!=null)
-							monitor.subTask(task);
-						else
-							monitor.subTask("");
+						monitor.subTask(tasks.get(action));
 
-						boolean result=false;
-						try {
-							result=(Boolean)methods.get(index).invoke(new Class[]{});
-							Debug.info("### result ###", result);
-
-						} catch (IllegalArgumentException e) {
-						} catch (IllegalAccessException e) {
-						} catch (InvocationTargetException e) {
-						}
-
-						/*
-						 * Nao inicializar CANCELED directamente com RESULT
-						 * pois interfere com o valor actualizado do monitor
-						 */
-						if (!result)
+						if (!action.run()){
+							Debug.info("### CANCELED ###");
 							monitor.setCanceled(true);
+						}
 
 						/*
 						 * Caso o processo seja cancelado, e' necessario provocar
@@ -107,8 +81,6 @@ public class ProgressSupport {
 							throw new InterruptedException();
 
 						monitor.worked(work);
-
-						index++;
 
 					}
 
@@ -121,8 +93,6 @@ public class ProgressSupport {
 			 * O indice tem de ser actualizado caso termine com sucesso
 			 * uma vez que sai do ciclo com o seu valor incrementado
 			 */
-			index=methods.size()-1;
-
 			return COMPLETED;
 
 		} catch (InterruptedException e) {
@@ -140,13 +110,13 @@ public class ProgressSupport {
 
 
 	public String getLastClass() {
-		return methods.get(index).getDeclaringClass().getCanonicalName();
+		return action.getClass().getCanonicalName();
 	}
 
 
 	public void debug() {
-		for(int i=0; i<methods.size(); i++){
-			Debug.info(methods.get(i));
+		for(int i=0; i<tasks.size(); i++){
+			Debug.info(tasks.get(i));
 		}
 	}
 

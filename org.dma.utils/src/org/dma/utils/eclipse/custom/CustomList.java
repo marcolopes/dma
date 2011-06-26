@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.widgets;
+package org.dma.utils.eclipse.custom;
 
 import java.util.List;
 
