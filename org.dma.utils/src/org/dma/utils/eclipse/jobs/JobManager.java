@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.dma.utils.eclipse.Debug;
+import org.dma.utils.eclipse.jobs.tasks.JobAction;
 import org.eclipse.core.runtime.jobs.Job;
 
 public class JobManager {

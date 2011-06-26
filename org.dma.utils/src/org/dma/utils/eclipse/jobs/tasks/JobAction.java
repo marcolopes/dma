@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.jobs;
+package org.dma.utils.eclipse.jobs.tasks;
 
 import org.dma.utils.eclipse.custom.CustomAction;
 
