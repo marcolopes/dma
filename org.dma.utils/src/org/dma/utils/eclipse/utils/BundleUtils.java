@@ -33,6 +33,9 @@ public class BundleUtils {
 	}
 
 
+	/**
+	 * IMPORTANTE: Testar tanto no IDE como no produto EXPORTADO
+	 */
 	public static File fileResolver(Bundle bundle, String fullPath) {
 
 		try {
@@ -45,6 +48,9 @@ public class BundleUtils {
 	}
 
 
+	/**
+	 * IMPORTANTE: Testar tanto no IDE como no produto EXPORTADO
+	 */
 	public static String pathResolver(Bundle bundle, String fullPath) {
 
 		try {
