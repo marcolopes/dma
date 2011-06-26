@@ -15,6 +15,5 @@ public abstract class CustomAction extends Action {
 		setId(ID);
 	}
 
-	public void dispose() {}
 
 }
