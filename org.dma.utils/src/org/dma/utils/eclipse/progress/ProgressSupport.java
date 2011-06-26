@@ -32,9 +32,27 @@ public class ProgressSupport {
 	}
 
 
-	public void add(IProgressAction action) {
+	public void add(Class cl) {
 
-		add(action, action.getClass().getName());
+		try{
+			IProgressAction action=((Class<IProgressAction>)cl).newInstance();
+			add(action, action.getClass().getName());
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+
+
+	public void add(Class cl, String taskName) {
+
+		try{
+			add(((Class<IProgressAction>)cl).newInstance(), taskName);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 

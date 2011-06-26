@@ -6,9 +6,8 @@
 package org.dma.utils.eclipse.custom;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
 
-public abstract class CustomAction extends Action implements IAction {
+public abstract class CustomAction extends Action {
 
 	public final String ID = getClass().getName();
 
