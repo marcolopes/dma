@@ -6,7 +6,6 @@
 package org.dma.utils.eclipse.jobs;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.dma.utils.eclipse.Debug;
@@ -89,10 +88,9 @@ public class CustomJob extends Job {
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
 
-			Iterator<JobTask> iterator=tasks.iterator();
-			while(iterator.hasNext()) {
+			for(int i=0; i<tasks.size(); i++){
 
-				final JobTask jtask=iterator.next();
+				final JobTask jtask=tasks.get(i);
 				monitor.setTaskName(jtask.getDescription());
 
 				//task normal
