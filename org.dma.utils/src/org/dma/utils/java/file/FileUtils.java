@@ -99,6 +99,42 @@ public class FileUtils {
 	}
 
 
+	public static boolean downloadFile(String fileurl, File dst) {
+
+		try{
+			final BufferedInputStream bis =
+				new BufferedInputStream(
+					HTTPUtils.getInputStream(fileurl));
+
+			final OutputStream bos =
+					new BufferedOutputStream(
+							new FileOutputStream(dst));
+
+			try{
+				// Transfer bytes from input to output
+				byte[] buf = new byte[1024];
+				int len;
+				while((len = bis.read(buf)) > 0)
+					bos.write(buf, 0, len);
+
+			}finally{
+				close(bos);
+				close(bis);
+			}
+
+			return true;
+
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+		}
+
+		return false;
+
+	}
+
+
+
 	/*
 	 * Class FileReader
 	 *
@@ -147,7 +183,7 @@ public class FileUtils {
 	}
 
 
-	public static String readTextFileLines(File file) {
+	public static String readTextFileLines(File file, int count) {
 
 		String text = "";
 
@@ -158,8 +194,9 @@ public class FileUtils {
 
 			try{
 				String line;
-				while((line = br.readLine()) != null)
+				while((line = br.readLine()) != null && count--!=0){
 					text += line + "\n";
+				}
 
 			}finally{
 				close(br);
@@ -175,45 +212,11 @@ public class FileUtils {
 	}
 
 
-	public static String readTextFileLines(String filename) {
+	public static String readTextFileLines(String filename, int count) {
 
-		return readTextFileLines(new File(filename));
-
-	}
-
-
-	public static String readTextFileFirstLine(File file) {
-
-		String line="";
-
-		try {
-			final BufferedReader br =
-				new BufferedReader(
-						new FileReader(file));
-
-			try{
-				line=br.readLine();
-
-			}finally{
-				close(br);
-			}
-
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
-		}
-
-		return line;
+		return readTextFileLines(new File(filename), count);
 
 	}
-
-
-	public static String readTextFileFirstLine(String filename) {
-
-		return readTextFileFirstLine(new File(filename));
-
-	}
-
 
 
 	/*
@@ -333,71 +336,6 @@ public class FileUtils {
 	}
 
 
-	public static String readTextStreamLines(File file, String charset) {
-
-		String text="";
-
-		try {
-			final BufferedReader br =
-				new BufferedReader(
-						new InputStreamReader(
-								new FileInputStream(file), charset));
-
-			try{
-				String line;
-				while((line = br.readLine()) != null)
-					text += line + "\n";
-
-			}finally{
-				close(br);
-			}
-
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
-		}
-
-		return text;
-
-	}
-
-
-	public static String readTextStreamLines(String filename, String charset) {
-
-		return readTextStreamLines(new File(filename), charset);
-
-	}
-
-
-	public static String readTextStreamFirstLine(File file, String charset) {
-
-		String line="";
-
-		try {
-			final BufferedReader br =
-				new BufferedReader(
-						new InputStreamReader(
-								new FileInputStream(file), charset));
-
-			try{
-				line=br.readLine();
-
-			}finally{
-				close(br);
-			}
-
-			return line;
-
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
-		}
-
-		return line;
-
-	}
-
-
 
 	/*
 	 * Class FileOutputStream
@@ -497,12 +435,32 @@ public class FileUtils {
 	}
 
 
+	public static String readTextStream(String filename, String charset) {
+
+		return readTextStream(new File(filename), charset);
+
+	}
+
+
+	public static String readTextStreamUTF8(File file) {
+
+		return readTextStream(file, CHARSET_UTF8);
+	}
+
+
+	public static String readTextStreamUTF8(String filename) {
+
+		return readTextStreamUTF8(new File(filename));
+
+	}
+
+
 	public static String readURLTextStream(String fileurl) {
 
 		final StringBuffer buffer=new StringBuffer();
 
 		try{
-			BufferedReader br = new BufferedReader(
+			final BufferedReader br = new BufferedReader(
 					new InputStreamReader(HTTPUtils.getInputStream(fileurl)));
 
 			try{
@@ -525,24 +483,41 @@ public class FileUtils {
 	}
 
 
-	public static String readTextStream(String filename, String charset) {
+	public static String readTextStreamLines(File file, int count, String charset) {
 
-		return readTextStream(new File(filename), charset);
+		String text="";
+
+		try {
+			final BufferedReader br =
+				new BufferedReader(
+						new InputStreamReader(
+								new FileInputStream(file), charset));
+
+			try{
+				String line;
+				while((line = br.readLine()) != null && count--!=0)
+					text += line + "\n";
+
+			}finally{
+				close(br);
+			}
+
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+		}
+
+		return text;
 
 	}
 
 
-	public static String readTextStreamUTF8(File file) {
+	public static String readTextStreamLines(String filename, int count, String charset) {
 
-		return readTextStream(file, CHARSET_UTF8);
-	}
-
-
-	public static String readTextStreamUTF8(String filename) {
-
-		return readTextStreamUTF8(new File(filename));
+		return readTextStreamLines(new File(filename), count, charset);
 
 	}
+
 
 
 
