@@ -76,9 +76,10 @@ public class JobManager {
 		for(int i=0; i<jobs.size(); i++){
 
 			CustomJob job=jobs.get(i);
-			if (!job.isWorking()){
-
-				job.setWorking(true);
+			/*
+			 * Evita chamadas sucessivas
+			 */
+			if (!job.isExecuting()){
 
 				//e' o primeiro JOB?
 				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0)

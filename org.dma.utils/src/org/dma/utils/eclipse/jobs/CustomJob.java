@@ -39,7 +39,7 @@ public class CustomJob extends Job {
 
 	private final List<JobTask> tasks=new ArrayList();
 	private JobAction exitAction;
-	private boolean working=false;
+	private boolean executing=false;
 
 
 	public CustomJob(String description, int priority) {
@@ -57,6 +57,8 @@ public class CustomJob extends Job {
 	public void execute() {
 
 		Debug.info();
+
+		executing=true;
 
 		//executa accao de saida, mesmo que tenha CANCELADO
 		addJobChangeListener(new JobChangeAdapter() {
@@ -76,6 +78,10 @@ public class CustomJob extends Job {
 	}
 
 
+	public void stop() {
+		this.executing=false;
+	}
+
 
 
 	//main method
@@ -88,7 +94,7 @@ public class CustomJob extends Job {
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
 
-			for(int i=0; i<tasks.size(); i++){
+			for(int i=0; i<tasks.size() && executing; i++){
 
 				final JobTask jtask=tasks.get(i);
 				monitor.setTaskName(jtask.getDescription());
@@ -119,7 +125,6 @@ public class CustomJob extends Job {
 
 
 
-
 	//add and remove tasks
 	public void addTask(JobTask action) {
 		this.tasks.add(action);
@@ -136,12 +141,8 @@ public class CustomJob extends Job {
 		this.exitAction = exitAction;
 	}
 
-	public boolean isWorking() {
-		return working;
-	}
-
-	public void setWorking(boolean working) {
-		this.working = working;
+	public boolean isExecuting() {
+		return executing;
 	}
 
 

@@ -99,12 +99,12 @@ public class FileUtils {
 	}
 
 
-	public static boolean downloadFile(String fileurl, File dst) {
+	public static boolean downloadFile(String src, File dst) {
 
 		try{
 			final BufferedInputStream bis =
 				new BufferedInputStream(
-					HTTPUtils.getInputStream(fileurl));
+					HTTPUtils.getInputStream(src));
 
 			final OutputStream bos =
 					new BufferedOutputStream(
@@ -113,8 +113,7 @@ public class FileUtils {
 			try{
 				// Transfer bytes from input to output
 				byte[] buf = new byte[1024];
-				int len;
-				while((len = bis.read(buf)) > 0)
+				int len = bis.read(buf);
 					bos.write(buf, 0, len);
 
 			}finally{
@@ -130,6 +129,13 @@ public class FileUtils {
 		}
 
 		return false;
+
+	}
+
+
+	public static boolean downloadFile(String src, String dst) {
+
+		return downloadFile(src, new File(dst));
 
 	}
 
