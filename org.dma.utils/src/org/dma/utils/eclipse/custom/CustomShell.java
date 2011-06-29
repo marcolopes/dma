@@ -6,6 +6,7 @@
 package org.dma.utils.eclipse.custom;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -28,6 +29,23 @@ public class CustomShell extends Shell {
 
 	public CustomShell(Shell parent, int style) {
 		super(parent, style);
+	}
+
+
+	public void open(){
+		try {
+			Rectangle parentBounds = getBounds();
+			Rectangle childBounds = getBounds();
+			int x = parentBounds.x + (parentBounds.width - childBounds.width) / 2;
+			int y = parentBounds.y + (parentBounds.height - childBounds.height) / 2;
+			setLocation (x, y);
+
+			super.open();
+			setFocus();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
