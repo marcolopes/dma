@@ -5,13 +5,11 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.custom;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 
-public class OpenShell extends Action implements IWorkbenchAction {
+public class OpenShell {
 
 	private final Shell shell;
 
@@ -35,9 +33,6 @@ public class OpenShell extends Action implements IWorkbenchAction {
 			e.printStackTrace();
 		}
 	}
-
-
-	public void dispose(){}
 
 
 }
