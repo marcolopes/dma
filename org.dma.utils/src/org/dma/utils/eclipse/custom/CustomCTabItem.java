@@ -6,18 +6,14 @@
 package org.dma.utils.eclipse.custom;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 
-public class CustomTabItem extends TabItem {
+public class CustomCTabItem extends CTabItem {
 
 
-	public CustomTabItem(TabFolder parent) {
+	public CustomCTabItem(CTabFolder parent) {
 		super(parent, SWT.NONE);
-	}
-
-	public CustomTabItem(TabFolder parent, int style) {
-		super(parent, style);
 	}
 
 
