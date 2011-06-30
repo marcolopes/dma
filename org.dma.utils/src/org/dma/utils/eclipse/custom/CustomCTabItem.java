@@ -11,14 +11,12 @@ import org.eclipse.swt.custom.CTabItem;
 
 public class CustomCTabItem extends CTabItem {
 
+	//subclassing
+	protected void checkSubclass() {}
 
 	public CustomCTabItem(CTabFolder parent) {
 		super(parent, SWT.NONE);
 	}
-
-
-	//metodos protegidos
-	protected void checkSubclass() {}
 
 
 }
