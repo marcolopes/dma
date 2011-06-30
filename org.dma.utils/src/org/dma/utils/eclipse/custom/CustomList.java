@@ -13,6 +13,10 @@ import org.eclipse.swt.widgets.Composite;
 
 public class CustomList extends org.eclipse.swt.widgets.List {
 
+	//subclassing
+	protected void checkSubclass() {}
+
+
 	public CustomList(Composite parent, int style){
 		super(parent, style);
 	}
@@ -52,11 +56,6 @@ public class CustomList extends org.eclipse.swt.widgets.List {
 		setItems(CollectionUtils.toArray(list));
 
 	}
-
-
-
-	//metodos protegidos
-	protected void checkSubclass() {}
 
 
 }

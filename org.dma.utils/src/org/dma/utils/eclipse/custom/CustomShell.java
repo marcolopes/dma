@@ -19,9 +19,9 @@ public class CustomShell extends Shell {
 	public static final int STYLE_RESIZABLE = SWT.TITLE | SWT.PRIMARY_MODAL | SWT.CLOSE | SWT.RESIZE | SWT.MAX | SWT.MIN;
 	public static final int STYLE_MESSAGE = SWT.PRIMARY_MODAL| SWT.TITLE;
 
-	public CustomShell(Display display) {
-		super(display);
-	}
+	//subclassing
+	protected void checkSubclass() {}
+
 
 	public CustomShell(Display display, int style) {
 		super(display, style);
@@ -34,7 +34,7 @@ public class CustomShell extends Shell {
 
 	public void open(){
 		try {
-			Rectangle parentBounds = getBounds();
+			Rectangle parentBounds = getParent().getBounds();
 			Rectangle childBounds = getBounds();
 			int x = parentBounds.x + (parentBounds.width - childBounds.width) / 2;
 			int y = parentBounds.y + (parentBounds.height - childBounds.height) / 2;
@@ -47,10 +47,6 @@ public class CustomShell extends Shell {
 			e.printStackTrace();
 		}
 	}
-
-
-	//metodos protegidos
-	protected void checkSubclass() {}
 
 
 }

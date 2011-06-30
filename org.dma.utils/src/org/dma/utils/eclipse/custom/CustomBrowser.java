@@ -11,6 +11,9 @@ import org.eclipse.swt.widgets.Composite;
 
 public class CustomBrowser extends Browser {
 
+	//subclassing
+	protected void checkSubclass() {}
+
 	public CustomBrowser(Composite parent){
 		super(parent, SWT.NONE);
 	}
@@ -29,11 +32,6 @@ public class CustomBrowser extends Browser {
 			e.printStackTrace();
 		}
 	}
-
-
-
-	//metodos protegidos
-	protected void checkSubclass() {}
 
 
 }
