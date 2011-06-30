@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.custom;
 
+import org.dma.utils.java.numeric.IntegerUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
@@ -17,9 +18,7 @@ public class CustomShell extends Shell {
 	 */
 	public static final int STYLE_FIXED = SWT.TITLE | SWT.PRIMARY_MODAL | SWT.CLOSE;
 	public static final int STYLE_RESIZABLE = SWT.TITLE | SWT.PRIMARY_MODAL | SWT.CLOSE | SWT.RESIZE | SWT.MAX | SWT.MIN;
-	public static final int STYLE_MESSAGE = SWT.PRIMARY_MODAL| SWT.TITLE;
-
-	private final int style;
+	public static final int STYLE_MESSAGE = SWT.TITLE | SWT.PRIMARY_MODAL;
 
 	//subclassing
 	protected void checkSubclass() {}
@@ -27,8 +26,6 @@ public class CustomShell extends Shell {
 
 	public CustomShell(Shell parent, int style) {
 		super(parent, style);
-
-		this.style=style;
 	}
 
 
@@ -43,9 +40,7 @@ public class CustomShell extends Shell {
 
 	public void pack(){
 		super.pack();
-		if (style==STYLE_RESIZABLE){
-			setMinimumSize(getSize().x, getSize().y);
-		}
+		setMinimumSize();
 	}
 
 
@@ -63,6 +58,13 @@ public class CustomShell extends Shell {
 
 	public void setParentBounds(){
 		setBounds(getParent().getBounds());
+	}
+
+
+	public void setMinimumSize(){
+		if (IntegerUtils.bit(getStyle(), SWT.RESIZE)){
+			setMinimumSize(getSize().x, getSize().y);
+		}
 	}
 
 
