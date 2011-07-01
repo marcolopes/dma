@@ -9,7 +9,7 @@ import org.eclipse.jface.action.Action;
 
 public abstract class CustomAction extends Action {
 
-	public final String ID = getClass().getName();
+	public final String ID=getClass().getName();
 
 	public CustomAction() {
 		setId(ID);
