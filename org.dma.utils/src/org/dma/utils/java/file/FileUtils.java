@@ -156,12 +156,12 @@ public class FileUtils {
 	 */
 	public static String readTextFile(File file) {
 
-		final StringBuffer buffer=new StringBuffer();
-
 		try {
 			final BufferedReader br =
 				new BufferedReader(
 						new FileReader(file));
+
+			final StringBuffer buffer=new StringBuffer();
 
 			try{
 				int ch;
@@ -172,12 +172,14 @@ public class FileUtils {
 				close(br);
 			}
 
+			return buffer.toString();
+
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 		}
 
-		return buffer.toString();
+		return null;
 
 	}
 
@@ -191,12 +193,12 @@ public class FileUtils {
 
 	public static String readTextFileLines(File file, int count) {
 
-		String text = "";
-
 		try {
 			final BufferedReader br =
 				new BufferedReader(
 						new FileReader(file));
+
+			String text = "";
 
 			try{
 				String line;
@@ -208,12 +210,14 @@ public class FileUtils {
 				close(br);
 			}
 
+			return text;
+
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 		}
 
-		return text;
+		return null;
 
 	}
 
@@ -414,13 +418,13 @@ public class FileUtils {
 	 */
 	public static String readTextStream(File file, String charset) {
 
-		StringBuffer buffer=new StringBuffer();
-
 		try {
 			final BufferedReader br =
 				new BufferedReader(
 						new InputStreamReader(
 								new FileInputStream(file), charset));
+
+			StringBuffer buffer=new StringBuffer();
 
 			try{
 				int ch;
@@ -431,12 +435,14 @@ public class FileUtils {
 				close(br);
 			}
 
+			return buffer.toString();
+
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 		}
 
-		return buffer.toString();
+		return null;
 
 	}
 
@@ -463,11 +469,11 @@ public class FileUtils {
 
 	public static String readURLTextStream(String fileurl) {
 
-		final StringBuffer buffer=new StringBuffer();
-
 		try{
 			final BufferedReader br = new BufferedReader(
 					new InputStreamReader(HTTPUtils.getInputStream(fileurl)));
+
+			final StringBuffer buffer=new StringBuffer();
 
 			try{
 				int ch;
@@ -478,26 +484,28 @@ public class FileUtils {
 				br.close();
 			}
 
+			return buffer.toString();
+
 		} catch (MalformedURLException e) {
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 		}
 
-		return buffer.toString();
+		return null;
 
 	}
 
 
 	public static String readTextStreamLines(File file, int count, String charset) {
 
-		String text="";
-
 		try {
 			final BufferedReader br =
 				new BufferedReader(
 						new InputStreamReader(
 								new FileInputStream(file), charset));
+
+			String text="";
 
 			try{
 				String line;
@@ -508,12 +516,14 @@ public class FileUtils {
 				close(br);
 			}
 
+			return text;
+
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 		}
 
-		return text;
+		return null;
 
 	}
 
