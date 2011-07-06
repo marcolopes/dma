@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2010 Public Domain
+ * 2008-2011 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -26,8 +26,6 @@ public class TraverseSupport {
 		public void keyTraversed(TraverseEvent e){
 
 			try {
-				e.doit = true;
-
 				if (e.detail == SWT.TRAVERSE_RETURN) {
 
 					Debug.info("### TRAVERSE_RETURN ###");
