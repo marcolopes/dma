@@ -113,7 +113,8 @@ public class FileUtils {
 			try{
 				// Transfer bytes from input to output
 				byte[] buf = new byte[1024];
-				int len = bis.read(buf);
+				int len;
+				while((len = bis.read(buf)) > 0)
 					bos.write(buf, 0, len);
 
 			}finally{
