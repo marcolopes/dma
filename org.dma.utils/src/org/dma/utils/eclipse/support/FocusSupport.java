@@ -23,8 +23,8 @@ public class FocusSupport {
 		}
 
 		public void focusLost(FocusEvent e) {
-
 		}
+
 	};
 
 
