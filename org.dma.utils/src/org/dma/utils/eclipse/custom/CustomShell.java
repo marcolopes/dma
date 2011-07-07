@@ -48,7 +48,8 @@ public class CustomShell extends Shell {
 	 * Added
 	 */
 	public void setCenteredLocation(){
-		Rectangle parentBounds = getParent().getBounds();
+		Rectangle parentBounds = getParent()==null ?
+				getDisplay().getBounds() : getParent().getBounds();
 		Rectangle childBounds = getBounds();
 		int x = parentBounds.x + (parentBounds.width - childBounds.width) / 2;
 		int y = parentBounds.y + (parentBounds.height - childBounds.height) / 2;

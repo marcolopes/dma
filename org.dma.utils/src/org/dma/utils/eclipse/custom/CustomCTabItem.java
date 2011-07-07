@@ -8,6 +8,8 @@ package org.dma.utils.eclipse.custom;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 
 public class CustomCTabItem extends CTabItem {
 
@@ -18,5 +20,15 @@ public class CustomCTabItem extends CTabItem {
 		super(parent, SWT.NONE);
 	}
 
+
+	public void setStyle(int style) {
+
+		FontData[] fd = getFont().getFontData();
+		for(int i=0; i<fd.length; i++)
+			fd[i].setStyle(style);
+
+		setFont(new Font(getDisplay(), fd));
+
+	}
 
 }
