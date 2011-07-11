@@ -6,7 +6,7 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.copypaste;
 
-import org.dma.utils.eclipse.Debug;
+import org.dma.utils.java.Debug;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;

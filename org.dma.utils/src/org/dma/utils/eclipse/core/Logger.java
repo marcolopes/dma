@@ -3,12 +3,13 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse;
+package org.dma.utils.eclipse.core;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.statushandlers.StatusManager;

@@ -6,7 +6,7 @@
 package org.dma.utils.apache.mail;
 
 import org.apache.commons.mail.MultiPartEmail;
-import org.dma.utils.eclipse.Debug;
+import org.dma.utils.java.Debug;
 
 public class SendMail {
 
