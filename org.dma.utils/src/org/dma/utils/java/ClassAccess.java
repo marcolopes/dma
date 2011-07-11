@@ -5,7 +5,8 @@
  *******************************************************************************/
 package org.dma.utils.java;
 
-import org.dma.utils.eclipse.support.ErrorSupport;
+import org.dma.utils.eclipse.swt.ErrorSupport;
+
 
 public class ClassAccess {
 
