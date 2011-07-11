@@ -8,9 +8,9 @@ package org.dma.utils.eclipse.jobs;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dma.utils.eclipse.Debug;
 import org.dma.utils.eclipse.jobs.tasks.JobAction;
 import org.dma.utils.eclipse.jobs.tasks.JobTask;
+import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

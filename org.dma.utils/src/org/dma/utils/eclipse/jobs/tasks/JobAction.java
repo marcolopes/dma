@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.jobs.tasks;
 
-import org.dma.utils.eclipse.custom.CustomAction;
+import org.dma.utils.eclipse.swt.custom.CustomAction;
 
 public abstract class JobAction extends CustomAction implements IJobAction {
 
