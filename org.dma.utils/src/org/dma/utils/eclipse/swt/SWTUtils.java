@@ -13,9 +13,9 @@ import org.eclipse.swt.widgets.Display;
 public class SWTUtils {
 
 
-	public static Image createImage(byte[] array){
+	public static Image createImage(byte[] buf){
 
-		return new Image(Display.getDefault(), new ByteArrayInputStream(array));
+		return new Image(Display.getDefault(), new ByteArrayInputStream(buf));
 
 	}
 
