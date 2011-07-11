@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.apache.mail;
 
-import org.dma.utils.eclipse.Debug;
+import org.dma.utils.java.Debug;
 
 public class EmailAttachment extends org.apache.commons.mail.EmailAttachment {
 
