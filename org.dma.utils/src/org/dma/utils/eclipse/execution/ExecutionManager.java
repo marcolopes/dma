@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.dma.utils.eclipse.Debug;
+import org.dma.utils.java.Debug;
 import org.dma.utils.java.ObjectUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
