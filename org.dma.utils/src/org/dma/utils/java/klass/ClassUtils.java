@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.java;
+package org.dma.utils.java.klass;
 
 public final class ClassUtils {
 

@@ -17,9 +17,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 
@@ -52,86 +50,6 @@ public class FileUtils {
 		return new File(filename).delete();
 
 	}
-
-
-	/*
-	 * Copy
-	 */
-	public static boolean copyFile(File src, File dst) {
-
-		try {
-			final InputStream bis =
-				new BufferedInputStream(
-						new FileInputStream(src));
-
-			final OutputStream bos =
-				new BufferedOutputStream(
-						new FileOutputStream(dst));
-
-			try{
-				// Transfer bytes from input to output
-				byte[] buf = new byte[1024];
-				int len;
-				while((len = bis.read(buf)) > 0)
-					bos.write(buf, 0, len);
-
-			}finally{
-				close(bos);
-				close(bis);
-			}
-
-			return true;
-
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
-		}
-
-		return false;
-	}
-
-
-	public static boolean copyFile(String src, String dst) {
-
-		return copyFile(new File(src), new File(dst));
-
-	}
-
-
-	public static boolean downloadFile(String src, String dst) {
-
-		try{
-			final BufferedInputStream bis =
-				new BufferedInputStream(
-					HTTPUtils.getInputStream(src));
-
-			final OutputStream bos =
-					new BufferedOutputStream(
-							new FileOutputStream(dst));
-
-			try{
-				// Transfer bytes from input to output
-				byte[] buf = new byte[1024];
-				int len;
-				while((len = bis.read(buf)) > 0)
-					bos.write(buf, 0, len);
-
-			}finally{
-				close(bos);
-				close(bis);
-			}
-
-			return true;
-
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
-		}
-
-		return false;
-
-	}
-
 
 
 	/*

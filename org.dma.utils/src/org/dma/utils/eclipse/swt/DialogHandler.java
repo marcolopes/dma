@@ -42,7 +42,7 @@ public class DialogHandler {
 	}
 
 	public static boolean information(String operation, String message) {
-		return open(operation+": "+message, TYPE.INFORMATION);
+		return open(operation +"\n"+ message, TYPE.INFORMATION);
 	}
 
 

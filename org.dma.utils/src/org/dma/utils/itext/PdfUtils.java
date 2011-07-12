@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.dma.utils.java.file.FileParameters;
 import org.dma.utils.java.file.FileUtils;
+import org.dma.utils.java.file.copy.FileCopy;
 
 import com.itextpdf.text.pdf.PdfCopyFields;
 import com.itextpdf.text.pdf.PdfReader;
@@ -54,7 +55,11 @@ public class PdfUtils {
 			pdfStamper.addJavaScript(script);
 			pdfStamper.close();
 
-			FileUtils.copyFile(outfile,filename);
+			new FileCopy() {
+				public boolean cancel() {
+					return false;
+				}
+			}.copyFile(outfile,filename);
 			FileUtils.deleteFile(outfile);
 
 			return true;
