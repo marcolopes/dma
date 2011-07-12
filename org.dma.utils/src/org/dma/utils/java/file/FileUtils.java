@@ -39,8 +39,7 @@ public class FileUtils {
 			try{
 				resource.close();
 
-			}catch(IOException e){
-			}
+			}catch(IOException e){}
 		}
 	}
 
@@ -475,7 +474,7 @@ public class FileUtils {
 					buffer.append((char)ch);
 
 			}finally{
-				br.close();
+				close(br);
 			}
 
 			return buffer.toString();
