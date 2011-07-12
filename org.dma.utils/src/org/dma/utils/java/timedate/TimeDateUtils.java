@@ -100,8 +100,7 @@ public final class TimeDateUtils {
 		try {
 			return new SimpleDateFormat(getDateFormat(format)).format(date);
 
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 
 		return null;
 	}
@@ -111,8 +110,7 @@ public final class TimeDateUtils {
 		try {
 			return new SimpleDateFormat(getTimeFormat(format)).format(time);
 
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 
 		return null;
 	}
@@ -122,8 +120,7 @@ public final class TimeDateUtils {
 		try {
 			return new SimpleDateFormat(getDateFormat(format)).format(timestamp);
 
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 
 		return null;
 	}
@@ -139,8 +136,7 @@ public final class TimeDateUtils {
 		try {
 			return new SimpleDateFormat(getDateFormat(format)).parse(date);
 
-		} catch (ParseException e) {
-		}
+		} catch (ParseException e) {}
 
 		return getCurrentDate();
 	}
@@ -150,8 +146,7 @@ public final class TimeDateUtils {
 		try {
 			return new Time(new SimpleDateFormat(getTimeFormat(format)).parse(time).getTime());
 
-		} catch (ParseException e) {
-		}
+		} catch (ParseException e) {}
 
 		return getCurrentTime();
 	}
