@@ -3,10 +3,9 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.java;
+package org.dma.utils.java.klass;
 
 import org.dma.utils.eclipse.swt.ErrorSupport;
-
 
 public class ClassAccess {
 
