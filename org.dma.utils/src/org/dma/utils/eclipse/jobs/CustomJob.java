@@ -43,13 +43,17 @@ public class CustomJob extends Job {
 
 
 	public CustomJob(String description, int priority) {
+		this(description,priority,MUTEX_RULE);
+	}
+
+
+	public CustomJob(String description, int priority, ISchedulingRule rule) {
 		super(description);
 		setPriority(priority);
-
 		/*
 		 * Comentar a regra para testar operacoes simultaneas
 		 */
-		setRule(MUTEX_RULE);
+		setRule(rule);
 	}
 
 
@@ -75,6 +79,11 @@ public class CustomJob extends Job {
 		});
 
 		schedule();
+	}
+
+
+	public void canceling(){
+		stop();
 	}
 
 
