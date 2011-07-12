@@ -99,7 +99,7 @@ public class FileUtils {
 	}
 
 
-	public static boolean downloadFile(String src, File dst) {
+	public static boolean downloadFile(String src, String dst) {
 
 		try{
 			final BufferedInputStream bis =
@@ -130,13 +130,6 @@ public class FileUtils {
 		}
 
 		return false;
-
-	}
-
-
-	public static boolean downloadFile(String src, String dst) {
-
-		return downloadFile(src, new File(dst));
 
 	}
 
