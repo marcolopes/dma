@@ -42,18 +42,13 @@ public class CustomJob extends Job {
 	private boolean executing=false;
 
 
-	public CustomJob(String description, int priority) {
-		this(description,priority,MUTEX_RULE);
-	}
-
-
-	public CustomJob(String description, int priority, ISchedulingRule rule) {
+	public CustomJob(String description) {
 		super(description);
-		setPriority(priority);
+		setPriority(Job.LONG);
 		/*
 		 * Comentar a regra para testar operacoes simultaneas
 		 */
-		setRule(rule);
+		setRule(MUTEX_RULE);
 	}
 
 
