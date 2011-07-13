@@ -35,8 +35,6 @@ public class CustomJob extends Job {
 	 *
 	 */
 
-	private ILock lock;
-
 	private final List<JobTask> tasks=new ArrayList();
 	private JobAction exitAction;
 	private boolean executing=false;
@@ -45,10 +43,8 @@ public class CustomJob extends Job {
 	public CustomJob(String description) {
 		super(description);
 		setPriority(Job.LONG);
-		/*
-		 * Comentar a regra para testar operacoes simultaneas
-		 */
-		setRule(MUTEX_RULE);
+		//setUser(true); // Apresenta dialogo de progresso
+		setRule(MUTEX_RULE); // Evita operacoes simultaneas
 	}
 
 
@@ -91,10 +87,11 @@ public class CustomJob extends Job {
 	//main method
 	protected IStatus run(IProgressMonitor monitor) {
 
+		ILock lock = getJobManager().newLock();
+
 		try {
 			Debug.info("### JOB STARTED ###", getName());
 
-			lock = getJobManager().newLock();
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
 
