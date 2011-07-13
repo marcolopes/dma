@@ -83,7 +83,7 @@ public class DialogHandler {
 				}
 			}
 
-			Shell shell=Display.getCurrent().getActiveShell();
+			Shell shell=Display.getDefault().getActiveShell();
 			switch(type) {
 				case ERROR: MessageDialog.openError(shell, title, message); break;
 				case INFORMATION: MessageDialog.openInformation(shell, title, message); break;
