@@ -19,37 +19,45 @@ public class StatusbarSupport {
 
 	private final StatusLineContributionItem item;
 	private final Locale locale;
-	private final String format;
 
-	private final Timer timer;
 	private String timedate;
+	private Timer timer;
 
-	public StatusbarSupport(StatusLineContributionItem item, Locale locale, String format, int seconds) {
+	public StatusbarSupport(StatusLineContributionItem item, Locale locale) {
 		this.item=item;
 		this.locale=locale;
-		this.format=format;
-		this.timer=new Timer();
-		this.timer.schedule(new DateTimeTask(), 0, seconds*1000);
+	}
+
+
+	public void startTimer(String format, int seconds) {
+		Timer timer=new Timer();
+		timer.schedule(new CustomTimer(), 0, seconds*1000);
+
+		Format formatter=new SimpleDateFormat(format,this.locale);
+		timedate=formatter.format(new Date());
+	}
+
+
+	public void stopTimer() {
+		timer.cancel();
 	}
 
 
 	private void updateStatusBar() {
 		try {
-			Format formatter=new SimpleDateFormat(format,this.locale);
-			timedate=formatter.format(new Date());
-
 			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
 					item.setText(timedate);
 				}
 			});
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 
-	class DateTimeTask extends TimerTask {
+	class CustomTimer extends TimerTask {
 
 		public void run() {
 			updateStatusBar();
