@@ -41,8 +41,12 @@ public class CustomJob extends Job {
 
 
 	public CustomJob(String description) {
+		this(description,Job.LONG);
+	}
+
+	public CustomJob(String description, int priority) {
 		super(description);
-		setPriority(Job.LONG);
+		setPriority(priority);
 		//setUser(true); // Apresenta dialogo de progresso
 		setRule(MUTEX_RULE); // Evita operacoes simultaneas
 	}
