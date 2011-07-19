@@ -276,7 +276,7 @@ public class ArrayUtils {
 			if(array[i].trim().length()>0)
 				list.add(array[i]);
 
-		return CollectionUtils.toArray(list);
+		return CollectionUtils.toStringArray(list);
 
 	}
 
@@ -378,7 +378,7 @@ public class ArrayUtils {
 		List<String> list = ArrayUtils.toList(array);
 		CollectionUtils.removeContaining(list, searchFor);
 
-		return CollectionUtils.toArray(list);
+		return CollectionUtils.toStringArray(list);
 
 	}
 
@@ -388,7 +388,7 @@ public class ArrayUtils {
 		List<String> list=toList(array);
 		list.add(position, element);
 
-		return CollectionUtils.toArray(list);
+		return CollectionUtils.toStringArray(list);
 	}
 
 
@@ -462,7 +462,7 @@ public class ArrayUtils {
 			if (!list.contains(array2[i]))
 				list.add(array2[i]);
 
-		return CollectionUtils.toArray(list);
+		return CollectionUtils.toStringArray(list);
 
 	}
 

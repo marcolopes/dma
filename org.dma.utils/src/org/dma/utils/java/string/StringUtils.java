@@ -157,7 +157,7 @@ public class StringUtils {
 			index+=searchFor.length()-1;
 		}
 
-		return CollectionUtils.toArray2(result);
+		return CollectionUtils.toIntegerArray(result);
 	}
 
 

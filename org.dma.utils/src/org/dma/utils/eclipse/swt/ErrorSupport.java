@@ -42,7 +42,7 @@ public class ErrorSupport {
 
 
 	public String[] getMessageArray(){
-		return CollectionUtils.toArray(errors);
+		return CollectionUtils.toStringArray(errors);
 	}
 
 
