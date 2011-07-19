@@ -17,23 +17,16 @@ public class ImageUtils {
 	/*
 	 * AWT BufferedImage
 	 */
-	public static BufferedImage getBufferedImage(byte[] bytes) throws Exception {
+	public static BufferedImage createBufferedImage(byte[] bytes) throws Exception {
 
 		return ImageIO.read(new ByteArrayInputStream(bytes));
 
 	}
 
 
-	public static BufferedImage resizeBufferedImage(BufferedImage image, int pixels) {
-
-		return Scalr.resize(image, pixels);
-
-	}
-
-
 	public static BufferedImage resizeBufferedImage(byte[] bytes, int pixels) throws Exception {
 
-		return resizeBufferedImage(getBufferedImage(bytes), pixels);
+		return Scalr.resize(createBufferedImage(bytes), pixels);
 
 	}
 
@@ -41,14 +34,14 @@ public class ImageUtils {
 	/*
 	 * SWT Image
 	 */
-	public static Image getImage(byte[] bytes) throws Exception {
+	public static Image createImage(byte[] bytes){
 
-		return new Image(Display.getCurrent(), Snippet156.convertToSWT(getBufferedImage(bytes)));
+		return new Image(Display.getDefault(), new ByteArrayInputStream(bytes));
 
 	}
 
 
-	public static Image getImage(BufferedImage bufferedImage) throws Exception {
+	public static Image createImage(BufferedImage bufferedImage) throws Exception {
 
 		return new Image(Display.getCurrent(), Snippet156.convertToSWT(bufferedImage));
 
@@ -57,7 +50,7 @@ public class ImageUtils {
 
 	public static Image resizeImage(byte[] bytes, int pixels) throws Exception {
 
-		return getImage(resizeBufferedImage(bytes, pixels));
+		return createImage(resizeBufferedImage(bytes, pixels));
 
 	}
 
