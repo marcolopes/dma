@@ -16,7 +16,7 @@ public class CollectionUtils {
 	/*
 	 * Conversion
 	 */
-	public static String[] toArray(Collection<String> collection) {
+	public static String[] toStringArray(Collection<String> collection) {
 
 		/*
 		String[] array = new String[collection.size()];
@@ -28,7 +28,7 @@ public class CollectionUtils {
 	}
 
 
-	public static Integer[] toArray2(Collection<Integer> collection) {
+	public static Integer[] toIntegerArray(Collection<Integer> collection) {
 
 		/*
 		Integer[] array = new Integer[collection.size()];
@@ -36,6 +36,13 @@ public class CollectionUtils {
 		return array;
 		 */
 		return collection.toArray(new Integer[collection.size()]);
+
+	}
+
+
+	public static Object[] toObjectArray(Collection<Object> collection) {
+
+		return collection.toArray(new Object[collection.size()]);
 
 	}
 

@@ -26,7 +26,7 @@ public class CustomList extends org.eclipse.swt.widgets.List {
 
 		List<String> list=ArrayUtils.toList(getItems());
 		list.addAll(index, ArrayUtils.toList(array));
-		setItems(CollectionUtils.toArray(list));
+		setItems(CollectionUtils.toStringArray(list));
 
 	}
 
@@ -35,7 +35,7 @@ public class CustomList extends org.eclipse.swt.widgets.List {
 
 		List<String> list=ArrayUtils.toList(getItems());
 		CollectionUtils.remove(list, indexes);
-		setItems(CollectionUtils.toArray(list));
+		setItems(CollectionUtils.toStringArray(list));
 
 	}
 
@@ -44,7 +44,7 @@ public class CustomList extends org.eclipse.swt.widgets.List {
 
 		List<String> list=ArrayUtils.toList(getItems());
 		CollectionUtils.moveDown(list, indexes, position);
-		setItems(CollectionUtils.toArray(list));
+		setItems(CollectionUtils.toStringArray(list));
 
 	}
 
@@ -53,7 +53,7 @@ public class CustomList extends org.eclipse.swt.widgets.List {
 
 		List<String> list=ArrayUtils.toList(getItems());
 		CollectionUtils.moveUp(list, indexes, position);
-		setItems(CollectionUtils.toArray(list));
+		setItems(CollectionUtils.toStringArray(list));
 
 	}
 
