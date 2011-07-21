@@ -78,11 +78,6 @@ public class CustomJob extends Job {
 
 
 	public void canceling(){
-		stop();
-	}
-
-
-	public void stop() {
 		this.executing=false;
 	}
 
