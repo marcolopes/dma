@@ -71,12 +71,12 @@ public class DragNDropManager {
 
 
 				public void dragFinished(DragSourceEvent event) {
-
 					Debug.info();
-
 				}
 			};
+
 			source.addDragListener(dsl);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
