@@ -19,7 +19,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 
-public class DragNDropManager{
+public class DragNDropManager {
 
 	private static DropTargetListener dtl;
 

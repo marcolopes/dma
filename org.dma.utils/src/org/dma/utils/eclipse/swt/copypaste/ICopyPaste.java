@@ -1,13 +1,16 @@
 /*******************************************************************************
- * 2008-2010 Public Domain
+ * 2008-2011 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
- * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.copypaste;
 
 public interface ICopyPaste {
 
-	public ICopyPasteSupport getCopyPasteSupport() ;
+	public void executeCopy();
+
+	public void executePaste();
 
 }
+
+
