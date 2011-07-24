@@ -1,66 +1,25 @@
 /*******************************************************************************
- * 2008-2010 Public Domain
+ * 2008-2011 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
- * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.copypaste;
 
-import org.dma.utils.java.Debug;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CopyPasteManager {
 
-	private final ICopyPasteSupport header;
-	private final TabFolder tabFolder;
-	private int currentTabIndex=-1;
+	private final List<ICopyPaste> collection=new ArrayList();
 
-	Listener tabfolderListener=new Listener() {
-
-		public void handleEvent(Event event) {
-			try {
-				if(tabFolder!=null)
-					currentTabIndex=tabFolder.getSelectionIndex();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
-	};
-
-
-	public CopyPasteManager(ICopyPasteSupport header, TabFolder tabFolder) {
-		this.header=header;
-		this.tabFolder=tabFolder;
-		this.tabFolder.addListener(SWT.Selection, tabfolderListener);
-		this.currentTabIndex=this.tabFolder.getSelectionIndex();
+	public CopyPasteManager(ICopyPaste header) {
+		add(header);
 	}
 
 
-	public CopyPasteManager(TabFolder tabfolder) {
-		this.header=null;
-		this.tabFolder=tabfolder;
-		this.tabFolder.addListener(SWT.Selection, tabfolderListener);
+	public void add(ICopyPaste element) {
+		collection.add(element);
 	}
-
-
-	public CopyPasteManager(ICopyPasteSupport header) {
-		this.header=header;
-		this.tabFolder=null;
-	}
-
-
-	public void removeTabCopyPasteSupport() {
-		this.tabFolder.removeListener(SWT.Selection, tabfolderListener);
-	}
-
-
-
 
 
 
@@ -69,38 +28,19 @@ public class CopyPasteManager {
 	//executions
 	public void executeCopy() {
 
-		Debug.info("currentTabIndex", currentTabIndex);
+		for(int i=0; i<collection.size(); i++){
 
-		if(currentTabIndex!=-1) {
-
-			TabItem currentTabItem=tabFolder.getItem(currentTabIndex);
-
-			if(currentTabItem instanceof ICopyPaste)
-				((ICopyPaste) currentTabItem).getCopyPasteSupport().executeCopy();
+			collection.get(i).executeCopy();
 		}
-
-		if(header!=null)
-			header.executeCopy();
-
 	}
 
 
 	public void executePaste() {
 
-		Debug.info("currentTabIndex", currentTabIndex);
+		for(int i=0; i<collection.size(); i++){
 
-		if(currentTabIndex!=-1) {
-
-			TabItem currentTabItem=tabFolder.getItem(currentTabIndex);
-
-			if(currentTabItem instanceof ICopyPaste)
-				((ICopyPaste) currentTabItem).getCopyPasteSupport().executePaste();
-
+			collection.get(i).executePaste();
 		}
-
-		if(header!=null)
-			header.executePaste();
-
 	}
 
 
