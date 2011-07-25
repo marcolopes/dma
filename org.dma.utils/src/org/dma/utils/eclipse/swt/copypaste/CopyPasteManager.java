@@ -5,20 +5,24 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.copypaste;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.eclipse.swt.widgets.TabItem;
 
 public class CopyPasteManager {
 
-	private final List<ICopyPaste> collection=new ArrayList();
+	private final ICopyPaste header;
+	private final Map<ICopyPaste, TabItem> itemMap=new LinkedHashMap();
 
 	public CopyPasteManager(ICopyPaste header) {
-		add(header);
+		this.header=header;
 	}
 
 
-	public void add(ICopyPaste element) {
-		collection.add(element);
+	public void add(ICopyPaste element, TabItem item) {
+		itemMap.put(element, item);
 	}
 
 
@@ -28,19 +32,31 @@ public class CopyPasteManager {
 	//executions
 	public void executeCopy() {
 
-		for(int i=0; i<collection.size(); i++){
+		header.executeCopy();
 
-			collection.get(i).executeCopy();
+		Iterator<ICopyPaste> iterator=itemMap.keySet().iterator();
+		while(iterator.hasNext()){
+
+			ICopyPaste element=iterator.next();
+			if (itemMap.get(element).getControl().isVisible())
+				element.executeCopy();
 		}
+
 	}
 
 
 	public void executePaste() {
 
-		for(int i=0; i<collection.size(); i++){
+		header.executePaste();
 
-			collection.get(i).executePaste();
+		Iterator<ICopyPaste> iterator=itemMap.keySet().iterator();
+		while(iterator.hasNext()){
+
+			ICopyPaste element=iterator.next();
+			if (itemMap.get(element).getControl().isVisible())
+				element.executePaste();
 		}
+
 	}
 
 

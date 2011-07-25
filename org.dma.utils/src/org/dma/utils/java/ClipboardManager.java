@@ -18,16 +18,12 @@ public class ClipboardManager {
 
 		if(objectArray!=null && objectArray.length>0) {
 
-			Debug.info("--- TO CLIPBOARD ---");
-			Debug.info("objectArray", objectArray.length);
-			Debug.info("clipboard", clipboard.size());
-			Debug.info("objectClass", objectClass);
-
 			clearClipboard();
 			clipboard=ArrayUtils.toList(objectArray);
 			objectClass=clipboard.get(0).getClass();
 
-			Debug.info("--- TRANSFERED ---");
+			Debug.info("--- TO CLIPBOARD ---");
+			Debug.info("objectArray", objectArray.length);
 			Debug.info("clipboard", clipboard.size());
 			Debug.info("objectClass", objectClass);
 
