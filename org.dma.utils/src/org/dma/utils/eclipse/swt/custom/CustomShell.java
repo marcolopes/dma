@@ -45,7 +45,7 @@ public class CustomShell extends Shell {
 
 
 	/*
-	 * Added
+	 * Contributed
 	 */
 	public void setCenteredLocation(){
 		Rectangle parentBounds = getParent()==null ?
