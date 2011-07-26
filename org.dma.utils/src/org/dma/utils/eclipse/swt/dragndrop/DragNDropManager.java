@@ -119,15 +119,8 @@ public class DragNDropManager {
 			}
 
 			public void dropAccept(DropTargetEvent event) {
-				try {
-
-					Debug.info("event.data", event.data);
-
-					//processDroppedObject(((DropTarget)event.getSource()).getControl());
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				Debug.info("event.data", event.data);
+				//processDroppedObject(((DropTarget)event.getSource()).getControl());
 			}
 
 			public void drop(DropTargetEvent event) {

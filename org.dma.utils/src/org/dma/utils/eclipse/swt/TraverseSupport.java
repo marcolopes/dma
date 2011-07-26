@@ -103,13 +103,13 @@ public class TraverseSupport {
 	}
 
 
-	public void addTraverseSupport(Control control) {
+	public void addTraverseListener(Control control) {
 		control.addTraverseListener(traverseListener);
 		components.add(control);
 	}
 
 
-	public void removeTraverseSupport(Control control) {
+	public void removeTraverseListener(Control control) {
 		control.removeTraverseListener(traverseListener);
 		components.remove(control);
 	}

@@ -12,13 +12,13 @@ import org.eclipse.swt.widgets.Control;
 
 public class FocusSupport {
 
-	private Control lastfocuscontrol;
+	private Control lastFocusControl;
 
 	private final FocusListener focusListener = new FocusListener() {
 
 		public void focusGained(FocusEvent e) {
 			if(e.widget instanceof Control) {
-				lastfocuscontrol=(Control)e.widget;
+				lastFocusControl=(Control)e.widget;
 			}
 		}
 
@@ -28,16 +28,16 @@ public class FocusSupport {
 	};
 
 
-	public void addRetainFocusListener(Control control) {
+	public void addFocusListener(Control control) {
 		control.addFocusListener(focusListener);
 	}
 
-	public void removeRetainFocusListener(Control control) {
+	public void removeFocusListener(Control control) {
 		control.removeFocusListener(focusListener);
 	}
 
 	public void reset() {
-		lastfocuscontrol = null;
+		lastFocusControl=null;
 	}
 
 
@@ -45,12 +45,12 @@ public class FocusSupport {
 
 
 	//getters and setters
-	public Control getLastfocuscontrol() {
-		return lastfocuscontrol;
+	public Control getLastFocusControl() {
+		return lastFocusControl;
 	}
 
-	public void setLastfocuscontrol(Control lastfocuscontrol) {
-		this.lastfocuscontrol = lastfocuscontrol;
+	public void setLastFocusControl(Control lastFocusControl) {
+		this.lastFocusControl=lastFocusControl;
 	}
 
 
