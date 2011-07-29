@@ -123,7 +123,6 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 	//table
 	public int computeSize(){
-
 		Rectangle rect = getTable().getClientArea();
 		int itemHeight = getTable().getItemHeight();
 		int headerHeight = getTable().getHeaderHeight();
@@ -154,7 +153,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 	//collection
-	public Collection getObjectCollection() {
+	public Collection getCollection() {
 		return this.objectCollection;
 	}
 
