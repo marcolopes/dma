@@ -60,7 +60,6 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 		Debug.info();
 
-		viewer.cancelEditing();
 		removeTableDoubleClickListener();
 		removeTableEnterKeyListener();
 		clearTable();
