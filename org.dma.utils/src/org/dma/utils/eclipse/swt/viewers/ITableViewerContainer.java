@@ -2,7 +2,7 @@
  * 2008-2011 Projecto Colibri
  * Marco Lopes (marcolopes@projectocolibri.com)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt.container;
+package org.dma.utils.eclipse.swt.viewers;
 
 import java.util.Collection;
 
