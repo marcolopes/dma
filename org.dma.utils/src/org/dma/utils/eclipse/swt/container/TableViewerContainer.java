@@ -22,12 +22,14 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Table;
 
 public abstract class TableViewerContainer implements ITableViewerContainer {
 
-	protected final TableViewer viewer;
-	protected final ITableLabelProvider labelProvider;
 	protected final List<Object> objectCollection=new ArrayList();
+
+	private final TableViewer viewer;
+	private final ITableLabelProvider labelProvider;
 
 	private MouseAdapter tableDoubleClickListener;
 	private KeyListener tableEnterKeyListener;
@@ -61,7 +63,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		viewer.cancelEditing();
 		removeTableDoubleClickListener();
 		removeTableEnterKeyListener();
-		clearObjectCollection();
+		clearTable();
 
 	}
 
@@ -80,14 +82,14 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 			}
 		};
 
-		viewer.getTable().addMouseListener(tableDoubleClickListener);
+		getTable().addMouseListener(tableDoubleClickListener);
 
 	}
 
 
 	private void removeTableDoubleClickListener() {
 
-		viewer.getTable().removeMouseListener(tableDoubleClickListener);
+		getTable().removeMouseListener(tableDoubleClickListener);
 
 	}
 
@@ -104,13 +106,13 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 			}
 		};
 
-		viewer.getTable().addKeyListener(tableEnterKeyListener);
+		getTable().addKeyListener(tableEnterKeyListener);
 
 	}
 
 	private void removeTableEnterKeyListener() {
 
-		viewer.getTable().removeKeyListener(tableEnterKeyListener);
+		getTable().removeKeyListener(tableEnterKeyListener);
 
 	}
 
@@ -120,38 +122,30 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 	//table
-	public void updateTable() {
-
-		objectCollection.clear();
-		objectCollection.addAll(retrieveObjects());
-		viewer.refresh();
-
-	}
-
 	public int computeSize(){
 
-		Rectangle rect = viewer.getTable().getClientArea();
-		int itemHeight = viewer.getTable().getItemHeight();
-		int headerHeight = viewer.getTable().getHeaderHeight();
+		Rectangle rect = getTable().getClientArea();
+		int itemHeight = getTable().getItemHeight();
+		int headerHeight = getTable().getHeaderHeight();
 		int visibleCount = (rect.height-headerHeight+itemHeight-1) / itemHeight;
 		return visibleCount;
 	}
 
 	public void forceTableFocus() {
 		if(viewer!=null)
-			viewer.getTable().forceFocus();
+			getTable().forceFocus();
 	}
 
 	public String[] getColumnText() {
-		String[] names=new String[viewer.getTable().getColumns().length];
-		for(int i=0; i<viewer.getTable().getColumns().length; i++)
-			names[i]=viewer.getTable().getColumns()[i].getText();
+		String[] names=new String[getTable().getColumns().length];
+		for(int i=0; i<getTable().getColumns().length; i++)
+			names[i]=getTable().getColumns()[i].getText();
 		return names;
 	}
 
 	public String getSortColumnText() {
-		return viewer.getTable().getSortColumn()==null ?
-			"" : viewer.getTable().getSortColumn().getText();
+		return getTable().getSortColumn()==null ?
+			"" : getTable().getSortColumn().getText();
 	}
 
 
@@ -160,15 +154,21 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 	//collection
-	public int getSize() {
-		return this.objectCollection.size();
-	}
-
 	public Collection getObjectCollection() {
 		return this.objectCollection;
 	}
 
-	public void clearObjectCollection(){
+	public int getSize() {
+		return this.objectCollection.size();
+	}
+
+	public void updateTable() {
+		objectCollection.clear();
+		objectCollection.addAll(retrieveObjects());
+		viewer.refresh();
+	}
+
+	public void clearTable(){
 		objectCollection.clear();
 		viewer.refresh();
 	}
@@ -184,12 +184,8 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		viewer.getControl().setEnabled(enabled);
 	}
 
-	public TableViewer getViewer() {
-		return viewer;
-	}
-
 	public int[] getSelectionIndices() {
-		return viewer.getTable().getSelectionIndices();
+		return getTable().getSelectionIndices();
 	}
 
 	public Object getSelectedObject() {
@@ -206,6 +202,18 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		Debug.info("objectsArray", ArrayUtils.toList(objectsArray));
 		ClipboardManager.transferToClipboard(objectsArray);
 
+	}
+
+
+
+
+	//getters and setters
+	public TableViewer getViewer() {
+		return viewer;
+	}
+
+	public Table getTable() {
+		return viewer.getTable();
 	}
 
 
