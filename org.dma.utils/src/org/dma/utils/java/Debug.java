@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.java;
 
+import java.awt.Toolkit;
 import java.util.Date;
 
 import org.dma.utils.java.numeric.IntegerUtils;
@@ -108,6 +109,7 @@ public class Debug {
 		if (IntegerUtils.bit(TYPE, TYPE_WARNING)){
 			String logMessage=getMessage("###WARNING### "+message,obj);
 			System.out.println(logMessage);
+			Toolkit.getDefaultToolkit().beep();
 		}
 	}
 
