@@ -34,7 +34,7 @@ public class ImageUtils {
 	/*
 	 * SWT Image
 	 */
-	public static Image createImage(byte[] bytes){
+	public static Image createImage(byte[] bytes) throws Exception {
 
 		return new Image(Display.getDefault(), new ByteArrayInputStream(bytes));
 
