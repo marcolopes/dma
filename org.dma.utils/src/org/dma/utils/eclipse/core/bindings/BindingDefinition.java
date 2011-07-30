@@ -5,7 +5,6 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.core.bindings;
 
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 
@@ -46,13 +45,6 @@ public class BindingDefinition {
 
 		targetObservableValue.dispose();
 		modelObservableValue.dispose();
-
-	}
-
-
-	public void createBinding(DataBindingContext bindingContext) {
-
-		bindingContext.bindValue(targetObservableValue, modelObservableValue, targetToModel, modelToTarget);
 
 	}
 

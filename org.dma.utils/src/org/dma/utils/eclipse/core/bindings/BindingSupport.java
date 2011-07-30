@@ -13,9 +13,9 @@ import org.eclipse.core.databinding.DataBindingContext;
 
 public class BindingSupport {
 
-	private final DataBindingContext bindingContext=new DataBindingContext();
-
 	private final Map<String, BindingDefinition> bindingMap=new HashMap();
+
+	private final DataBindingContext bindingContext=new DataBindingContext();
 
 	public BindingSupport() {
 	}
@@ -23,11 +23,19 @@ public class BindingSupport {
 
 	public void register(String property, BindingDefinition definition) {
 
-		bindingMap.put(property, definition);
+		if (!bindingMap.containsKey(property)){
 
-		definition.createBinding(bindingContext);
+			bindingMap.put(property, definition);
 
-		Debug.info(property, bindingMap.keySet());
+			bindingContext.bindValue(
+				definition.getTargetObservableValue(), definition.getModelObservableValue(),
+				definition.getTargetToModel(), definition.getModelToTarget());
+
+			Debug.info(property, bindingMap.keySet());
+
+		}else{
+			Debug.warning("BINDING ALREADY REGISTERED", property);
+		}
 
 	}
 
