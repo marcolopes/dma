@@ -1,75 +1,79 @@
 /*******************************************************************************
- * 2008-2011 Projecto Colibri
- * Marco Lopes (marcolopes@projectocolibri.com)
+ * 2008-2011 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.utils.eclipse.core.bindings;
 
-import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 
 public class BindingDefinition {
 
-	private IObservableValue observeObject;
-	private IViewerObservableValue observeWidget;
+	private final IObservableValue targetObservableValue;
+	private final IObservableValue modelObservableValue;
 
-	private UpdateValueStrategy objectToWidget;
-	private UpdateValueStrategy widgetToObject;
+	private final UpdateValueStrategy targetToModel;
+	private final UpdateValueStrategy modelToTarget;
 
-	private Binding bind;
+	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue,
+			UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
 
+		this.targetObservableValue=targetObservableValue;
+		this.modelObservableValue=modelObservableValue;
 
-	public IObservableValue getObserveObject() {
-		return observeObject;
+		this.targetToModel=targetToModel;
+		this.modelToTarget=modelToTarget;
+
+	}
+
+	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue,
+			UpdateValueStrategy modelToTarget) {
+
+		this(targetObservableValue, modelObservableValue, null, modelToTarget);
+
+	}
+
+	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue) {
+
+		this(targetObservableValue, modelObservableValue, null);
+
 	}
 
 
 	public void dispose() {
 
-		observeObject.dispose();
-		observeWidget.dispose();
-
-		bind.dispose();
+		targetObservableValue.dispose();
+		modelObservableValue.dispose();
 
 	}
+
+
+	public void createBinding(DataBindingContext bindingContext) {
+
+		bindingContext.bindValue(targetObservableValue, modelObservableValue, targetToModel, modelToTarget);
+
+	}
+
+
 
 
 	//getters and setters
-	public void setObserveObject(IObservableValue observeObject) {
-		this.observeObject=observeObject;
+	public IObservableValue getTargetObservableValue() {
+		return targetObservableValue;
 	}
 
-	public IViewerObservableValue getObserveWidget() {
-		return observeWidget;
+	public IObservableValue getModelObservableValue() {
+		return modelObservableValue;
 	}
 
-	public void setObserveWidget(IViewerObservableValue observeWidget) {
-		this.observeWidget=observeWidget;
+	public UpdateValueStrategy getTargetToModel() {
+		return targetToModel;
 	}
 
-	public UpdateValueStrategy getObjectToWidget() {
-		return objectToWidget;
-	}
-
-	public void setObjectToWidget(UpdateValueStrategy objectToWidget) {
-		this.objectToWidget=objectToWidget;
-	}
-
-	public UpdateValueStrategy getWidgetToObject() {
-		return widgetToObject;
-	}
-
-	public void setWidgetToObject(UpdateValueStrategy widgetToObject) {
-		this.widgetToObject=widgetToObject;
-	}
-
-	public Binding getBind() {
-		return bind;
-	}
-
-	public void setBind(Binding bind) {
-		this.bind=bind;
+	public UpdateValueStrategy getModelToTarget() {
+		return modelToTarget;
 	}
 
 
