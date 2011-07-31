@@ -5,7 +5,6 @@
 package org.dma.utils.eclipse.swt.viewers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.dma.utils.java.ArrayUtils;
@@ -129,11 +128,6 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		return visibleCount;
 	}
 
-	public void forceTableFocus() {
-		if(viewer!=null)
-			getTable().forceFocus();
-	}
-
 	public String[] getColumnText() {
 		String[] names=new String[getTable().getColumns().length];
 		for(int i=0; i<getTable().getColumns().length; i++)
@@ -146,13 +140,16 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 			"" : getTable().getSortColumn().getText();
 	}
 
+	public void forceTableFocus() {
+		getTable().forceFocus();
+	}
 
 
 
 
 
 	//collection
-	public Collection getCollection() {
+	public List getCollection() {
 		return this.objectCollection;
 	}
 
