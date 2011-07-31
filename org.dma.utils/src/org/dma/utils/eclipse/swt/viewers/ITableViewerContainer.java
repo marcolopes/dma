@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public interface ITableViewerContainer {
 
-	public Collection<Object> retrieveObjects();
+	public Collection retrieveObjects();
 
 	public void editObject();
 
