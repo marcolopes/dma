@@ -8,7 +8,7 @@
  * Supports any unit and any decimal precision
  *
  * Portuguese Gramar Rules:
- * i) A conjuncao conjunction_and e' sempre intercalada entre as centenas, as dezenas e as unidades:
+ * i) A conjuncao "e" e' sempre intercalada entre as centenas, as dezenas e as unidades:
  * a) novecentos e noventa e nove Euros.
  *
  * ii) Nao se emprega a conjuncao entre os milhares e as centenas, salvo quando o numero
@@ -16,7 +16,7 @@
  * a) mil duzentos e trinta euros;
  * b) mil e duzentos.
  *
- * iii) Em numeros muito grandes (acima do milhao?), a conjuncao conjunction_and emprega-se entre os membros
+ * iii) Em numeros muito grandes (acima do milhao?), a conjuncao "e" emprega-se entre os membros
  * da mesma ordem de unidades, e omite-se quando se passa de uma ordem a outra:
  * a) duzentos e noventa e tres mil quinhentos e setenta e dois;
  * b) trezentos e trinta e dois bilioes, quatrocentos e quinze milhões, setecentos e quarenta e um mil duzentos e onze.
