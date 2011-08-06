@@ -54,7 +54,6 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	}
 
 
-	//dispose
 	public void dispose() {
 
 		getTable().removeMouseListener(tableDoubleClickListener);
