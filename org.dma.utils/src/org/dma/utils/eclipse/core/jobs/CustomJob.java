@@ -25,7 +25,7 @@ public class CustomJob extends Job {
 
 	/*
 	 * MUTEX (mutual exclusion semaphore)
-	 * Regra para evitar execucoes simultaneas
+	 * Regra COMUM para evitar execucoes simultaneas
 	 */
 	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
 
