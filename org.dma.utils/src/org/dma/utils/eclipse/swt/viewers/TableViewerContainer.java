@@ -57,13 +57,12 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	//dispose
 	public void dispose() {
 
-		Debug.info();
-
-		removeTableDoubleClickListener();
-		removeTableEnterKeyListener();
+		getTable().removeMouseListener(tableDoubleClickListener);
+		getTable().removeKeyListener(tableEnterKeyListener);
 		clearTable();
 
 	}
+
 
 
 
@@ -85,13 +84,6 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	}
 
 
-	private void removeTableDoubleClickListener() {
-
-		getTable().removeMouseListener(tableDoubleClickListener);
-
-	}
-
-
 	private void addTableEnterKeyListener() {
 
 		tableEnterKeyListener=new KeyAdapter() {
@@ -105,12 +97,6 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		};
 
 		getTable().addKeyListener(tableEnterKeyListener);
-
-	}
-
-	private void removeTableEnterKeyListener() {
-
-		getTable().removeKeyListener(tableEnterKeyListener);
 
 	}
 
@@ -128,6 +114,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		return visibleCount;
 	}
 
+
 	public String[] getColumnText() {
 		String[] names=new String[getTable().getColumns().length];
 		for(int i=0; i<getTable().getColumns().length; i++)
@@ -135,14 +122,17 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		return names;
 	}
 
+
 	public String getSortColumnText() {
 		return getTable().getSortColumn()==null ?
 			"" : getTable().getSortColumn().getText();
 	}
 
+
 	public void forceTableFocus() {
 		getTable().forceFocus();
 	}
+
 
 
 
@@ -153,9 +143,11 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		return this.objectCollection;
 	}
 
+
 	public int getSize() {
 		return this.objectCollection.size();
 	}
+
 
 	public void updateTable() {
 		objectCollection.clear();
@@ -163,11 +155,11 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		viewer.refresh();
 	}
 
+
 	public void clearTable(){
 		objectCollection.clear();
 		viewer.refresh();
 	}
-
 
 
 
@@ -198,6 +190,8 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		ClipboardManager.transferToClipboard(objectsArray);
 
 	}
+
+
 
 
 
