@@ -8,8 +8,24 @@ import java.util.Collection;
 
 public interface ITableViewerContainer {
 
-	public Collection retrieveObjects();
+	public Object getNewObject() throws Exception;
+
+	public void createObject() throws Exception;
+
+	public void insertObject() throws Exception;
+
+	public void postInsertObject() throws Exception;
+
+	public void removeObject();
+
+	public void copyObject();
 
 	public void editObject();
+
+	public int getNumberOfObjects();
+
+	public Collection retrieveObjects();
+
+	public void updateTable();
 
 }
