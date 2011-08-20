@@ -35,6 +35,37 @@ public class JobManager {
 	}
 
 
+	/*
+	 * Exit task class
+	 */
+	public static class ExitTask extends JobAction {
+
+		private final CustomJob job;
+
+		public ExitTask(CustomJob job) {
+			this.job=job;
+		}
+
+		public void task() {
+			try {
+				IJobSupport ijob=findJobView(job);
+
+				remove(job);
+
+				if (getQueuedJobs(ijob)==0)
+					ijob.setJobRunning(false);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		public void UItask() {
+		}
+
+	}
+
+
 
 	//remove
 	public static void remove(CustomJob job) {
@@ -146,33 +177,6 @@ public class JobManager {
 
 
 
-	public static void debug() {
-
-		Debug.info("QUEUED", getQueuedJobs());
-		Debug.info("PENDING", getPendingJobs());
-		Debug.info("RUNNING", getRunningJobs());
-
-		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext()) {
-
-			IJobSupport ijob=iterator.next();
-			Debug.info("ijob",ijob);
-
-			List<CustomJob> jobList=jobMap.get(ijob);
-			for(int i=0; i<jobList.size(); i++){
-				CustomJob job=jobList.get(i);
-				Debug.info(job.getName()+": "+getStateName(job));
-			}
-
-		}
-
-	}
-
-
-
-
-
-	//getters and setters
 	public static String getStateName(CustomJob job) {
 
 		String state="NONE";
@@ -259,32 +263,25 @@ public class JobManager {
 	}
 
 
-	/*
-	 * Exit task class
-	 */
-	public static class ExitTask extends JobAction {
+	//debug
+	public static void debug() {
 
-		private final CustomJob job;
+		Debug.info("QUEUED", getQueuedJobs());
+		Debug.info("PENDING", getPendingJobs());
+		Debug.info("RUNNING", getRunningJobs());
 
-		public ExitTask(CustomJob job) {
-			this.job=job;
-		}
+		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+		while(iterator.hasNext()) {
 
-		public void task() {
-			try {
-				IJobSupport ijob=findJobView(job);
+			IJobSupport ijob=iterator.next();
+			Debug.info("ijob",ijob);
 
-				remove(job);
-
-				if (getQueuedJobs(ijob)==0)
-					ijob.setJobRunning(false);
-
-			} catch (Exception e) {
-				e.printStackTrace();
+			List<CustomJob> jobList=jobMap.get(ijob);
+			for(int i=0; i<jobList.size(); i++){
+				CustomJob job=jobList.get(i);
+				Debug.info(job.getName()+": "+getStateName(job));
 			}
-		}
 
-		public void UItask() {
 		}
 
 	}
