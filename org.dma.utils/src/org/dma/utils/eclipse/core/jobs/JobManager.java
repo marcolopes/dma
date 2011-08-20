@@ -30,8 +30,6 @@ public class JobManager {
 
 		jobMap.get(ijob).add(job);
 
-		debug();
-
 	}
 
 
@@ -154,8 +152,6 @@ public class JobManager {
 			if (!cancelJobs(ijob))
 				result=false;
 		}
-
-		debug();
 
 		return result;
 
