@@ -107,7 +107,7 @@ public class Debug {
 	 */
 	private static void warning2(String message, Object obj) {
 		if (IntegerUtils.bit(TYPE, TYPE_WARNING)){
-			String logMessage=getMessage("###WARNING### "+message,obj);
+			String logMessage=getMessage("### WARNING ### "+message,obj);
 			System.out.println(logMessage);
 			Toolkit.getDefaultToolkit().beep();
 		}
