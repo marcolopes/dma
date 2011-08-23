@@ -57,7 +57,7 @@ public class Logger {
 		Status status=new Status(severity, pluginId, message, e);
 		StatusManager.getManager().handle(status, style);
 
-		if (severity!=SEVERITY_OK){
+		if (severity!=SEVERITY_OK) {
 			Integer n=exceptions.get(severity);
 			exceptions.put(severity, n==null ? 1 : n+1);
 		}
@@ -65,7 +65,7 @@ public class Logger {
 
 
 	public void report() {
-		if (hasExceptions()){
+		if (hasExceptions()) {
 			System.out.println(exceptions.size()+" Exception(s)");
 			debug();
 		}
@@ -80,11 +80,11 @@ public class Logger {
 	private void debug() {
 		System.out.println("### DEBUG BY SEVERITY ###");
 		Iterator<Integer> iterator=exceptions.keySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 
 			int key=iterator.next();
 			System.out.print("Type "+key+" (");
-			switch(key){
+			switch(key) {
 			case SEVERITY_OK: System.out.print("OK"); break;
 			case SEVERITY_INFO: System.out.print("INFO"); break;
 			case SEVERITY_WARNING: System.out.print("WARNING"); break;

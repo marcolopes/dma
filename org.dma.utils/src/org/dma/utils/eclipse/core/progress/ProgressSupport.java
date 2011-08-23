@@ -27,18 +27,18 @@ public class ProgressSupport {
 	private int work;
 	private IProgressAction action;
 
-	public ProgressSupport(String title){
+	public ProgressSupport(String title) {
 		this.title=title;
 	}
 
 
 	public void add(Class cl) {
 
-		try{
+		try {
 			IProgressAction action=((Class<IProgressAction>)cl).newInstance();
 			add(action, action.getClass().getName());
 
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -47,10 +47,10 @@ public class ProgressSupport {
 
 	public void add(Class cl, String taskName) {
 
-		try{
+		try {
 			add(((Class<IProgressAction>)cl).newInstance(), taskName);
 
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -78,14 +78,14 @@ public class ProgressSupport {
 
 					// execute the tasks
 					Iterator<IProgressAction> iterator=tasks.keySet().iterator();
-					while(iterator.hasNext()){
+					while (iterator.hasNext()) {
 
 						action=iterator.next();
 
 						//task name
 						monitor.subTask(tasks.get(action));
 
-						if (!action.run()){
+						if (!action.run()) {
 							Debug.info("### CANCELED ###");
 							monitor.setCanceled(true);
 						}
@@ -133,7 +133,7 @@ public class ProgressSupport {
 
 
 	public void debug() {
-		for(int i=0; i<tasks.size(); i++){
+		for (int i=0; i<tasks.size(); i++) {
 			Debug.info(tasks.get(i));
 		}
 	}

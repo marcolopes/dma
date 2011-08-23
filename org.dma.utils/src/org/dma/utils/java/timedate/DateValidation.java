@@ -11,13 +11,13 @@ import java.util.regex.Pattern;
 
 public final class DateValidation {
 
-	private static final String REGEX_YEAR="([0-9]|"+TimeDateUtils.CHAR_YEAR+"){"+TimeDateUtils.DATE_YEAR.length()+"}";
-	private static final String REGEX_MONTH="([0-9]|"+TimeDateUtils.CHAR_MONTH+"){"+TimeDateUtils.DATE_MONTH.length()+"}";
-	private static final String REGEX_DAY="([0-9]|"+TimeDateUtils.CHAR_DAY+"){"+TimeDateUtils.DATE_DAY.length()+"}";
+	private static final String REGEX_YEAR="([0-9]|"+TimeDateUtils.CHAR_YEAR+") {"+TimeDateUtils.DATE_YEAR.length()+"}";
+	private static final String REGEX_MONTH="([0-9]|"+TimeDateUtils.CHAR_MONTH+") {"+TimeDateUtils.DATE_MONTH.length()+"}";
+	private static final String REGEX_DAY="([0-9]|"+TimeDateUtils.CHAR_DAY+") {"+TimeDateUtils.DATE_DAY.length()+"}";
 
 	public static boolean isDateValid(String date, String format) {
 
-		if(date.matches(format))
+		if (date.matches(format))
 			return false;
 
 		/*
@@ -28,7 +28,7 @@ public final class DateValidation {
 		 */
 
 		//contem algum caractere de formatacao?
-		if((date.indexOf(TimeDateUtils.CHAR_YEAR)!=-1) ||
+		if ((date.indexOf(TimeDateUtils.CHAR_YEAR)!=-1) ||
 				(date.indexOf(TimeDateUtils.CHAR_MONTH)!=-1) ||
 				(date.indexOf(TimeDateUtils.CHAR_DAY)!=-1))
 			return false;
@@ -73,9 +73,9 @@ public final class DateValidation {
 
 	public static char getSeparator(String format) {
 
-		for(int i=0; i<format.length(); i++) {
+		for (int i=0; i<format.length(); i++) {
 			char chr=format.charAt(i);
-			if(chr!=TimeDateUtils.CHAR_DAY && chr!=TimeDateUtils.CHAR_MONTH && chr!=TimeDateUtils.CHAR_YEAR)
+			if (chr!=TimeDateUtils.CHAR_DAY && chr!=TimeDateUtils.CHAR_MONTH && chr!=TimeDateUtils.CHAR_YEAR)
 				return chr;
 		}
 		return TimeDateUtils.DATE_SEPARATOR[0];

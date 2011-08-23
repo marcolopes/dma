@@ -25,7 +25,7 @@ public class JobManager {
 
 		job.setExitAction(new ExitTask(job));
 
-		if(!jobMap.containsKey(ijob))
+		if (!jobMap.containsKey(ijob))
 			jobMap.put(ijob, new ArrayList());
 
 		jobMap.get(ijob).add(job);
@@ -80,8 +80,8 @@ public class JobManager {
 	public static void clean() {
 
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext()){
-			if(jobMap.get(iterator.next()).size()==0)
+		while (iterator.hasNext()) {
+			if (jobMap.get(iterator.next()).size()==0)
 				iterator.remove();
 		}
 
@@ -102,13 +102,13 @@ public class JobManager {
 
 		List<CustomJob> jobs=jobMap.get(ijob);
 
-		for(int i=0; i<jobs.size(); i++){
+		for (int i=0; i<jobs.size(); i++) {
 
 			CustomJob job=jobs.get(i);
 			/*
 			 * Evita chamadas sucessivas
 			 */
-			if (!job.isExecuting()){
+			if (!job.isExecuting()) {
 
 				//e' o primeiro JOB?
 				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0)
@@ -132,7 +132,7 @@ public class JobManager {
 		 * Deve comecar pelo ultimo elemento para prevenir a remocao
 		 * automatica de JOBS da lista efectuada pelo metodo de SAIDA
 		 */
-		for(int i=jobs.size()-1; i>=0; i--){
+		for (int i=jobs.size()-1; i>=0; i--) {
 			CustomJob job=jobs.get(i);
 			if (!job.cancel())
 				result=false;
@@ -147,7 +147,7 @@ public class JobManager {
 
 		boolean result=true;
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			IJobSupport ijob=iterator.next();
 			if (!cancelJobs(ijob))
 				result=false;
@@ -162,9 +162,9 @@ public class JobManager {
 	public static IJobSupport findJobView(CustomJob job) {
 
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			IJobSupport ijob=iterator.next();
-			if(jobMap.get(ijob).contains(job))
+			if (jobMap.get(ijob).contains(job))
 				return ijob;
 		}
 
@@ -176,7 +176,7 @@ public class JobManager {
 	public static String getStateName(CustomJob job) {
 
 		String state="NONE";
-		switch (job.getState()){
+		switch (job.getState()) {
 			case Job.RUNNING: state="RUNNING"; break;
 			case Job.WAITING: state="WAITING"; break;
 			case Job.SLEEPING: state="SLEEPING"; break;
@@ -199,7 +199,7 @@ public class JobManager {
 
 		int n=0;
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 			n+=getQueuedJobs(iterator.next());
 
 		return n;
@@ -211,7 +211,7 @@ public class JobManager {
 
 		int n=0;
 		List<CustomJob> jobs=jobMap.get(ijob);
-		for(int i=0; i<jobs.size(); i++){
+		for (int i=0; i<jobs.size(); i++) {
 			CustomJob job=jobs.get(i);
 			if (job.getState()==Job.WAITING) ++n;
 		}
@@ -225,7 +225,7 @@ public class JobManager {
 
 		int n=0;
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 			n+=getPendingJobs(iterator.next());
 
 		return n;
@@ -237,7 +237,7 @@ public class JobManager {
 
 		int n=0;
 		List<CustomJob> jobs=jobMap.get(ijob);
-		for(int i=0; i<jobs.size(); i++){
+		for (int i=0; i<jobs.size(); i++) {
 			CustomJob job=jobs.get(i);
 			if (job.getState()==Job.RUNNING) ++n;
 		}
@@ -251,7 +251,7 @@ public class JobManager {
 
 		int n=0;
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 			n+=getRunningJobs(iterator.next());
 
 		return n;
@@ -267,13 +267,13 @@ public class JobManager {
 		Debug.info("RUNNING", getRunningJobs());
 
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 
 			IJobSupport ijob=iterator.next();
 			Debug.info("ijob",ijob);
 
 			List<CustomJob> jobList=jobMap.get(ijob);
-			for(int i=0; i<jobList.size(); i++){
+			for (int i=0; i<jobList.size(); i++) {
 				CustomJob job=jobList.get(i);
 				Debug.info(job.getName()+": "+getStateName(job));
 			}

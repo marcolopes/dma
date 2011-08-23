@@ -34,10 +34,10 @@ public class FileUtils {
 	 */
 	public static void close(Closeable resource) {
 		if (resource!=null) {
-			try{
+			try {
 				resource.close();
 
-			}catch(IOException e){}
+			} catch (IOException e) {}
 		}
 	}
 
@@ -45,7 +45,7 @@ public class FileUtils {
 	/*
 	 * Delete
 	 */
-	public static boolean deleteFile(String filename){
+	public static boolean deleteFile(String filename) {
 
 		return new File(filename).delete();
 
@@ -74,7 +74,7 @@ public class FileUtils {
 
 			final StringBuffer buffer=new StringBuffer();
 
-			try{
+			try {
 				int ch;
 				while ((ch = br.read()) > -1)
 					buffer.append((char)ch);
@@ -111,9 +111,9 @@ public class FileUtils {
 
 			String text = "";
 
-			try{
+			try {
 				String line;
-				while((line = br.readLine()) != null && count--!=0){
+				while ((line = br.readLine()) != null && count--!=0) {
 					text += line + "\n";
 				}
 
@@ -166,7 +166,7 @@ public class FileUtils {
 					new BufferedWriter(
 							new FileWriter(file));
 
-			try{
+			try {
 				bw.write(text);
 
 			}finally{
@@ -203,7 +203,7 @@ public class FileUtils {
 	public static byte[] readBytesStream(File file) {
 
 		try {
-			if(file != null){
+			if (file != null) {
 
 				final BufferedInputStream bis =
 					new BufferedInputStream(
@@ -211,7 +211,7 @@ public class FileUtils {
 
 				// Create the byte array to hold the data
 				byte[] bytes;
-				try{
+				try {
 					// Get the size of the file
 					long length = file.length();
 
@@ -275,13 +275,13 @@ public class FileUtils {
 	public static int writeBytesStream(byte[] bytes, File file) {
 
 		try {
-			if (bytes!=null){
+			if (bytes!=null) {
 
 				final BufferedOutputStream bos =
 					new BufferedOutputStream(
 							new FileOutputStream(file));
 
-				try{
+				try {
 					bos.write(bytes);
 
 				}finally{
@@ -337,7 +337,7 @@ public class FileUtils {
 
 			StringBuffer buffer=new StringBuffer();
 
-			try{
+			try {
 				int ch;
 				while ((ch = br.read()) > -1)
 					buffer.append((char)ch);
@@ -380,13 +380,13 @@ public class FileUtils {
 
 	public static String readURLTextStream(String fileurl) {
 
-		try{
+		try {
 			final BufferedReader br = new BufferedReader(
 					new InputStreamReader(HTTPUtils.getInputStream(fileurl)));
 
 			final StringBuffer buffer=new StringBuffer();
 
-			try{
+			try {
 				int ch;
 				while ((ch = br.read()) > -1)
 					buffer.append((char)ch);
@@ -418,9 +418,9 @@ public class FileUtils {
 
 			String text="";
 
-			try{
+			try {
 				String line;
-				while((line = br.readLine()) != null && count--!=0)
+				while ((line = br.readLine()) != null && count--!=0)
 					text += line + "\n";
 
 			}finally{
@@ -477,7 +477,7 @@ public class FileUtils {
 						new OutputStreamWriter(
 								new FileOutputStream(file), charset));
 
-			try{
+			try {
 				bw.write(text);
 
 			}finally{
@@ -517,11 +517,11 @@ public class FileUtils {
 	}
 
 
-	public static boolean replaceOcurrencesUTF8(String filename, String[][] searchReplace){
+	public static boolean replaceOcurrencesUTF8(String filename, String[][] searchReplace) {
 		try {
 			String text=FileUtils.readTextStreamUTF8(filename);
 
-			for(int i=0; i<searchReplace.length; i++)
+			for (int i=0; i<searchReplace.length; i++)
 				text=text.replaceAll(searchReplace[i][0], searchReplace[i][1]);
 
 			FileUtils.writeTextStreamUTF8(text, filename);
@@ -550,7 +550,7 @@ public class FileUtils {
 	 * 			or null if the default temporary-file directory is to be used
 	 *
 	 */
-	public static String createTempFile(FileParameters parameters){
+	public static String createTempFile(FileParameters parameters) {
 
 		try {
 			File directory=parameters.getFolder()!=null ? new File(parameters.getFolder()): null;
@@ -567,7 +567,7 @@ public class FileUtils {
 	}
 
 
-	public static String createTempFile(byte[] bytes, FileParameters parameters){
+	public static String createTempFile(byte[] bytes, FileParameters parameters) {
 
 		try {
 			String filename=createTempFile(parameters);
@@ -584,7 +584,7 @@ public class FileUtils {
 	}
 
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 
 		String text=readURLTextStream("http://dl.dropbox.com/u/126065/Colibri/versao.txt");
 		System.out.println(text);

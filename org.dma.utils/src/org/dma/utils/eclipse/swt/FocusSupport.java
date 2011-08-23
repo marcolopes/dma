@@ -17,7 +17,7 @@ public class FocusSupport {
 	private final FocusListener focusListener = new FocusListener() {
 
 		public void focusGained(FocusEvent e) {
-			if(e.widget instanceof Control) {
+			if (e.widget instanceof Control) {
 				lastFocusControl=(Control)e.widget;
 			}
 		}

@@ -168,9 +168,9 @@ public final class TimeDateUtils {
 	}
 
 
-	public static Calendar getCalendar(String date, String format){
+	public static Calendar getCalendar(String date, String format) {
 		Calendar calendar=Calendar.getInstance();
-		if(date!=null) calendar.setTime(getDateParsed(date, format));
+		if (date!=null) calendar.setTime(getDateParsed(date, format));
 		return calendar;
 	}
 
@@ -203,12 +203,12 @@ public final class TimeDateUtils {
 	}
 
 
-	public static int getCurrentYear(){
+	public static int getCurrentYear() {
 		return getYear(Calendar.getInstance());
 	}
 
 
-	public static int getCurrentMonth(){
+	public static int getCurrentMonth() {
 		return getMonth(Calendar.getInstance());
 	}
 

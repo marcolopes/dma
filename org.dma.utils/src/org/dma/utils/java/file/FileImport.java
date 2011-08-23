@@ -46,16 +46,16 @@ public class FileImport {
 			Debug.info("defaultPath", defaultPath);
 
 			FileDialog fd = new FileDialog(parent,SWT.OPEN);
-			if(this.defaultPath != null)
+			if (this.defaultPath != null)
 				fd.setFilterPath(defaultPath);
 			fd.setFilterExtensions(extensions);
 
 			String selected = fd.open();
-			if(selected!=null){
+			if (selected!=null) {
 				file = new File(selected);
 			}
 
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -73,7 +73,7 @@ public class FileImport {
 			fd.setFilterExtensions(extensions);
 
 			String filename = fd.open();
-			if(filename!=null) {
+			if (filename!=null) {
 				text=FileUtils.readTextStream(filename,charset);
 			}
 

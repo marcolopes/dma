@@ -23,7 +23,7 @@ public class DragNDropManager {
 
 	private static DropTargetListener dtl;
 
-	public static void createDragObject(Control sourceControl){
+	public static void createDragObject(Control sourceControl) {
 
 		try {
 			int operations = DND.DROP_MOVE | DND.DROP_COPY;
@@ -44,7 +44,7 @@ public class DragNDropManager {
 	}
 
 
-	public static void addSourceListneres(DragSource source){
+	public static void addSourceListneres(DragSource source) {
 
 		try {
 			DragSourceListener dsl = new DragSourceListener() {
@@ -84,7 +84,7 @@ public class DragNDropManager {
 
 
 
-	public static void createDropObject(Control targetControl){
+	public static void createDropObject(Control targetControl) {
 
 		try {
 			int operations = DND.DROP_MOVE | DND.DROP_COPY;
@@ -103,7 +103,7 @@ public class DragNDropManager {
 	}
 
 
-	public static void addTargetListeners(){
+	public static void addTargetListeners() {
 
 		dtl = new DropTargetListener() {
 			public void dragEnter(DropTargetEvent event) {

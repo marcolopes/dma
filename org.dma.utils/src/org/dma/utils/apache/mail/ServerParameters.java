@@ -32,7 +32,7 @@ public class ServerParameters {
 	}
 
 
-	public void debug(){
+	public void debug() {
 
 		Debug.info("hostname", hostname);
 		Debug.info("smtpport", smtpport);

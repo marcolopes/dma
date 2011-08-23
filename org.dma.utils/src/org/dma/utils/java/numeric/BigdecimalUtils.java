@@ -24,7 +24,7 @@ public class BigdecimalUtils {
 	}
 
 
-	public static BigDecimal fromString(String value){
+	public static BigDecimal fromString(String value) {
 
 		return value==null || value.length()==0 ? new BigDecimal(0) : new BigDecimal(value);
 	}
@@ -38,7 +38,7 @@ public class BigdecimalUtils {
 	/*
 	 * Analysis
 	 */
-	public static boolean isBigger(BigDecimal value, BigDecimal compareTo){
+	public static boolean isBigger(BigDecimal value, BigDecimal compareTo) {
 
 		int result = value.compareTo(compareTo);
 
@@ -47,24 +47,24 @@ public class BigdecimalUtils {
 	}
 
 
-	public static BigDecimal getBigger(BigDecimal value, BigDecimal compareTo){
+	public static BigDecimal getBigger(BigDecimal value, BigDecimal compareTo) {
 
 		int result = value.compareTo(compareTo);
 
-		if(result < 0) return compareTo;
-		else if(result > 0)	return value;
+		if (result < 0) return compareTo;
+		else if (result > 0)	return value;
 
 		return null;
 
 	}
 
 
-	public static BigDecimal getSmaller(BigDecimal value, BigDecimal compareTo){
+	public static BigDecimal getSmaller(BigDecimal value, BigDecimal compareTo) {
 
 		int result = value.compareTo(compareTo);
 
-		if(result < 0) return value;
-		else if(result > 0) return compareTo;
+		if (result < 0) return value;
+		else if (result > 0) return compareTo;
 
 		return null;
 

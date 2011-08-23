@@ -34,11 +34,11 @@ public abstract class FileCopy implements IFileCopy {
 				new BufferedOutputStream(
 						new FileOutputStream(dst));
 
-			try{
+			try {
 				// Transfer bytes from input to output
 				byte[] buf = new byte[1024];
 				int len;
-				while((len = bis.read(buf)) > 0 && !cancel())
+				while ((len = bis.read(buf)) > 0 && !cancel())
 					bos.write(buf, 0, len);
 
 			}finally{
@@ -69,7 +69,7 @@ public abstract class FileCopy implements IFileCopy {
 	 */
 	public Boolean downloadFile(String src, String dst) {
 
-		try{
+		try {
 			final BufferedInputStream bis =
 				new BufferedInputStream(
 					HTTPUtils.getInputStream(src));
@@ -78,11 +78,11 @@ public abstract class FileCopy implements IFileCopy {
 					new BufferedOutputStream(
 							new FileOutputStream(dst));
 
-			try{
+			try {
 				// Transfer bytes from input to output
 				byte[] buf = new byte[1024];
 				int len;
-				while((len = bis.read(buf)) > 0 && !cancel())
+				while ((len = bis.read(buf)) > 0 && !cancel())
 					bos.write(buf, 0, len);
 
 			}finally{

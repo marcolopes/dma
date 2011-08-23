@@ -11,13 +11,13 @@ public class FileParameters {
 	private final String suffix;
 	private final String folder;
 
-	public FileParameters(String prefix, String suffix){
+	public FileParameters(String prefix, String suffix) {
 
 		this(prefix,suffix,null);
 
 	}
 
-	public FileParameters(String prefix, String suffix, String folder){
+	public FileParameters(String prefix, String suffix, String folder) {
 
 		this.prefix=prefix;
 		this.suffix=suffix;

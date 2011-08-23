@@ -16,16 +16,16 @@ public class ErrorSupport {
 	private final List<String> errors=new ArrayList();
 
 
-	public ErrorSupport(){
+	public ErrorSupport() {
 	}
 
 
-	public void clearErrors(){
+	public void clearErrors() {
 		errors.clear();
 	}
 
 
-	public boolean showErrors(){
+	public boolean showErrors() {
 		if (hasErrors()) DialogHandler.error(getMessage());
 		return hasErrors();
 	}
@@ -36,34 +36,34 @@ public class ErrorSupport {
 	}
 
 
-	public String getMessage(){
+	public String getMessage() {
 		return ArrayUtils.concat(getMessageArray(),"\n");
 	}
 
 
-	public String[] getMessageArray(){
+	public String[] getMessageArray() {
 		return CollectionUtils.toStringArray(errors);
 	}
 
 
-	public void addError(String[] message){
-		for(int i=0; i<message.length; i++)
+	public void addError(String[] message) {
+		for (int i=0; i<message.length; i++)
 			addError(message[i]);
 	}
 
 
-	public void addError(String operation, String message){
+	public void addError(String operation, String message) {
 		addError(operation+": "+message);
 	}
 
 
-	public void addError(String message){
+	public void addError(String message) {
 		if (!errors.contains(message))
 			errors.add(message);
 	}
 
 
-	public boolean hasErrors(){
+	public boolean hasErrors() {
 		return errors.size()!=0;
 	}
 

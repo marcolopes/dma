@@ -95,7 +95,7 @@ public class Numerals {
 				s+=ordersToString(getOrders(integer_part),unit[0]);
 
 			//converts decimal part
-			if (decimal_part.doubleValue()>0){
+			if (decimal_part.doubleValue()>0) {
 				s+=s.length()>0 ? " "+conjunction_and+" " : "";
 				s+=ordersToString(getOrders(decimal_part),unit[1]);
 			}
@@ -117,7 +117,7 @@ public class Numerals {
 		List<Integer> orders=new ArrayList();
 
 		try {
-			while(value.doubleValue()>=1000) {
+			while (value.doubleValue()>=1000) {
 				orders.add(value.remainder(BigInteger.valueOf(1000)).intValue());
 				value=value.divide(BigInteger.valueOf(1000));
 			}
@@ -148,11 +148,11 @@ public class Numerals {
 			int last=0;
 
 			//processes above 999
-			for (int i=1; i<orders.size(); i++){
+			for (int i=1; i<orders.size(); i++) {
 
 				Integer value=orders.get(i);
 
-				if (value!=0){
+				if (value!=0) {
 
 					//singular and plural
 					String q=qualifiers.length>=i ? qualifiers[i-1][value>1?1:0] : "?";
@@ -219,20 +219,20 @@ public class Numerals {
 
 		try {
 			//processa ate' 19
-			if (value<20){
+			if (value<20) {
 				s+=numerals[0][value]+" ";
 
 			//processa de 20 a 99
-			}else if (value<100){
+			}else if (value<100) {
 				s+=numerals[1][value/10-2]+" ";
 				if (value % 10!=0) s+=conjunction_and+" "+orderToString(value % 10);
 
 			//processa 100
-			}else if (value==100){
+			}else if (value==100) {
 				s+=numerals[2][0]+" ";
 
 			//processa de 101 a 999
-			}else if (value<1000){
+			}else if (value<1000) {
 				s+=numerals[2][value/100]+" ";
 				if (value % 100!=0) s+=conjunction_and+" "+orderToString(value % 100);
 			}
@@ -245,7 +245,7 @@ public class Numerals {
 	}
 
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 
 		Numerals numerals=new Numerals(2);
 
@@ -255,7 +255,7 @@ public class Numerals {
 			new BigDecimal("1230"), new BigDecimal("1200"),
 			new BigDecimal("293572"), new BigDecimal("332415741211")};
 
-		for(int i=0; i<values.length; i++){
+		for (int i=0; i<values.length; i++) {
 			System.out.println(values[i]+": "+ numerals.toString(values[i]));
 		}
 
@@ -269,10 +269,10 @@ public class Numerals {
 			{999999999,1000000001,1}, {1000567099,1000567101,1}, {1000010000,1000010002,1},
 			{1001000000,1001000002,1}, {1010010000,1010010002,1}, {1234567890,1234567891,1}	};
 
-		for(int i=0; i<intervals.length; i++){
+		for (int i=0; i<intervals.length; i++) {
 			System.out.println();
 			System.out.println("===INTERVALO #"+(i+1)+"===");
-			for(BigDecimal j=BigDecimal.valueOf(intervals[i][0]); j.doubleValue()<=intervals[i][1]; j=j.add(BigDecimal.valueOf(intervals[i][2]))){
+			for (BigDecimal j=BigDecimal.valueOf(intervals[i][0]); j.doubleValue()<=intervals[i][1]; j=j.add(BigDecimal.valueOf(intervals[i][2]))) {
 				System.out.println(numerals.toString(j));
 			}
 		}

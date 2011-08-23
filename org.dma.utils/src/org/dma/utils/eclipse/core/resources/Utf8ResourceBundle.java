@@ -1,4 +1,4 @@
-package org.dma.utils.eclipse.core;
+package org.dma.utils.eclipse.core.resources;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;

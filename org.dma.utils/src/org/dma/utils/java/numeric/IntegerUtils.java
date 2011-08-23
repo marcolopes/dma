@@ -11,7 +11,7 @@ public class IntegerUtils {
 	/*
 	 * Conversion
 	 */
-	public static String toString(int value){
+	public static String toString(int value) {
 
 		return Integer.toString(value);
 	}

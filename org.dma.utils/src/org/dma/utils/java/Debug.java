@@ -38,7 +38,7 @@ public class Debug {
 
 	// Info
 	public static void info() {
-		if (isOn()){
+		if (isOn()) {
 			caller = new Throwable().getStackTrace()[1];
 			info2("",null);
 		}
@@ -46,7 +46,7 @@ public class Debug {
 
 
 	public static void info(String message) {
-		if (isOn()){
+		if (isOn()) {
 			caller = new Throwable().getStackTrace()[1];
 			info2(message,null);
 		}
@@ -54,7 +54,7 @@ public class Debug {
 
 
 	public static void info(Object obj) {
-		if (isOn()){
+		if (isOn()) {
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
 			info2("",obj);
@@ -63,7 +63,7 @@ public class Debug {
 
 
 	public static void info(String message, Object obj) {
-		if (isOn()){
+		if (isOn()) {
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
 			info2(message,obj);
@@ -75,7 +75,7 @@ public class Debug {
 
 	// Warning
 	public static void warning(String message) {
-		if (isOn()){
+		if (isOn()) {
 			caller = new Throwable().getStackTrace()[1];
 			warning2(message,null);
 		}
@@ -83,7 +83,7 @@ public class Debug {
 
 
 	public static void warning(Object obj) {
-		if (isOn()){
+		if (isOn()) {
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
 			warning2("",obj);
@@ -92,7 +92,7 @@ public class Debug {
 
 
 	public static void warning(String message, Object obj) {
-		if (isOn()){
+		if (isOn()) {
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
 			warning2(message,obj);
@@ -106,7 +106,7 @@ public class Debug {
 	 * Metodos privados
 	 */
 	private static void warning2(String message, Object obj) {
-		if (IntegerUtils.bit(TYPE, TYPE_WARNING)){
+		if (IntegerUtils.bit(TYPE, TYPE_WARNING)) {
 			String logMessage=getMessage("### WARNING ### "+message,obj);
 			System.out.println(logMessage);
 			Toolkit.getDefaultToolkit().beep();
@@ -115,7 +115,7 @@ public class Debug {
 
 
 	private static void info2(String message, Object obj) {
-		if (IntegerUtils.bit(TYPE, TYPE_INFO)){
+		if (IntegerUtils.bit(TYPE, TYPE_INFO)) {
 			String logMessage=getMessage(message,obj);
 			System.out.println(logMessage);
 		}
@@ -126,7 +126,7 @@ public class Debug {
 
 		String logMessage="";
 		try {
-			switch(LEVEL){
+			switch(LEVEL) {
 
 			case LEVEL_BASIC:
 				logMessage=caller.getFileName()+

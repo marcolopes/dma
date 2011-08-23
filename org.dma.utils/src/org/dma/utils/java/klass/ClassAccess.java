@@ -24,10 +24,10 @@ public class ClassAccess {
 		} catch (NoSuchFieldException e) {
 			error.addError(FIELD_NOT_FOUND+" "+cl.getCanonicalName()+"."+field);
 
-		}catch(IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			error.addError(ILLEGAL_ACCESS+" "+cl.getCanonicalName()+"."+field);
 
-		}catch(ExceptionInInitializerError e) {
+		} catch (ExceptionInInitializerError e) {
 			error.addError(INITIALIZER_ERROR+" "+cl.getCanonicalName()+"."+field);
 		}
 

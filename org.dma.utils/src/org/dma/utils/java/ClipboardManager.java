@@ -16,7 +16,7 @@ public class ClipboardManager {
 
 	public static void transferToClipboard(Object[] objectArray) {
 
-		if(objectArray!=null && objectArray.length>0) {
+		if (objectArray!=null && objectArray.length>0) {
 
 			clearClipboard();
 			clipboard=ArrayUtils.toList(objectArray);
@@ -41,7 +41,7 @@ public class ClipboardManager {
 		Debug.info("clipboard", clipboard.size());
 		Debug.info("objectClass", objectClass);
 
-		if(!cl.equals(objectClass))
+		if (!cl.equals(objectClass))
 			return null;
 
 		return clipboard;
@@ -49,7 +49,7 @@ public class ClipboardManager {
 
 
 	public static Object getObject(Class cl) {
-		if(clipboard.size()==0 || !cl.equals(objectClass))
+		if (clipboard.size()==0 || !cl.equals(objectClass))
 			return null;
 
 		return clipboard.iterator().next();
