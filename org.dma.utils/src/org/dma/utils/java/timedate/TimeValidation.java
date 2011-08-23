@@ -11,12 +11,12 @@ import java.util.regex.Pattern;
 
 public final class TimeValidation {
 
-	private static final String REGEX_HOUR="([0-9]|"+TimeDateUtils.CHAR_HOUR+"){"+TimeDateUtils.TIME_HOUR.length()+"}";
-	private static final String REGEX_MINUTE="([0-9]|"+TimeDateUtils.CHAR_MINUTE+"){"+TimeDateUtils.TIME_MINUTES.length()+"}";
+	private static final String REGEX_HOUR="([0-9]|"+TimeDateUtils.CHAR_HOUR+") {"+TimeDateUtils.TIME_HOUR.length()+"}";
+	private static final String REGEX_MINUTE="([0-9]|"+TimeDateUtils.CHAR_MINUTE+") {"+TimeDateUtils.TIME_MINUTES.length()+"}";
 
 	public static boolean isTimeValid(String time, String format) {
 
-		if(time.matches(format))
+		if (time.matches(format))
 			return false;
 
 		/*
@@ -27,7 +27,7 @@ public final class TimeValidation {
 		 */
 
 		//contem algum caractere de formatacao?
-		if((time.indexOf(TimeDateUtils.CHAR_HOUR)!=-1) ||
+		if ((time.indexOf(TimeDateUtils.CHAR_HOUR)!=-1) ||
 				(time.indexOf(TimeDateUtils.CHAR_MINUTE)!=-1))
 			return false;
 
@@ -39,7 +39,7 @@ public final class TimeValidation {
 
 		//verifica limite das horas
 		int hour = Integer.parseInt(getHour(time, format));
-		if(hour < 0 || hour > 23)
+		if (hour < 0 || hour > 23)
 			return false;
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
 
@@ -66,9 +66,9 @@ public final class TimeValidation {
 
 	public static char getSeparator(String format) {
 
-		for(int i=0; i<format.length(); i++) {
+		for (int i=0; i<format.length(); i++) {
 			char chr=format.charAt(i);
-			if(chr!=TimeDateUtils.CHAR_HOUR && chr!=TimeDateUtils.CHAR_MINUTE)
+			if (chr!=TimeDateUtils.CHAR_HOUR && chr!=TimeDateUtils.CHAR_MINUTE)
 				return chr;
 		}
 		return TimeDateUtils.DEFAULT_TIME_SEPARATOR;

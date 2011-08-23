@@ -14,11 +14,11 @@ public class CustomBrowser extends Browser {
 	//subclassing
 	protected void checkSubclass() {}
 
-	public CustomBrowser(Composite parent){
+	public CustomBrowser(Composite parent) {
 		super(parent, SWT.NONE);
 	}
 
-	public CustomBrowser(Composite parent, int style){
+	public CustomBrowser(Composite parent, int style) {
 		super(parent, style);
 	}
 

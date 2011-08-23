@@ -77,7 +77,7 @@ public class CustomJob extends Job {
 	}
 
 
-	public void canceling(){
+	public void canceling() {
 		this.executing=false;
 	}
 
@@ -94,7 +94,7 @@ public class CustomJob extends Job {
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
 
-			for(int i=0; i<tasks.size() && executing; i++){
+			for (int i=0; i<tasks.size() && executing; i++) {
 
 				final JobTask jtask=tasks.get(i);
 				monitor.setTaskName(jtask.getDescription());

@@ -17,7 +17,7 @@ public abstract class CustomDragNDrop {
 	private DragSource source = null;
 	private DropTarget target = null;
 
-	public CustomDragNDrop(){
+	public CustomDragNDrop() {
 	}
 
 

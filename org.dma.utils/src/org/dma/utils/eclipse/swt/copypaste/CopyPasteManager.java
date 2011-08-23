@@ -35,7 +35,7 @@ public class CopyPasteManager {
 		header.executeCopy();
 
 		Iterator<ICopyPaste> iterator=itemMap.keySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 
 			ICopyPaste element=iterator.next();
 			if (itemMap.get(element).getControl().isVisible())
@@ -50,7 +50,7 @@ public class CopyPasteManager {
 		header.executePaste();
 
 		Iterator<ICopyPaste> iterator=itemMap.keySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 
 			ICopyPaste element=iterator.next();
 			if (itemMap.get(element).getControl().isVisible())

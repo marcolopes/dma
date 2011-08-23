@@ -60,9 +60,9 @@ public class ExecutionManager {
 
 	private static void registerExecution(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
-		if(!executionMap.containsKey(execDefinition)) {
+		if (!executionMap.containsKey(execDefinition)) {
 
-			if(execDefinition.getSrcControl() instanceof Combo) {
+			if (execDefinition.getSrcControl() instanceof Combo) {
 
 				Listener selectionListener=new Listener() {
 
@@ -81,7 +81,7 @@ public class ExecutionManager {
 				KeyListener keyListener=new KeyAdapter()  {
 
 					public void keyPressed(KeyEvent event) {
-						if(event.keyCode==execEvent.getKeycode()) {
+						if (event.keyCode==execEvent.getKeycode()) {
 							execEvent.getExecutionAction().run();
 							execEvent.setActionExecuted(true);
 							event.doit=false;
@@ -114,27 +114,27 @@ public class ExecutionManager {
 
 		//percorre as execucoes
 		Iterator<ExecutionDefinition> iterator=executionMap.keySet().iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
 			//encontra execucoes com o mesmo control
-			if(execDefinition.getSrcControl().equals(srcControl))
+			if (execDefinition.getSrcControl().equals(srcControl))
 				keys.add(execDefinition);
 		}
 
-		for(int i=0; i<keys.size(); i++){
+		for (int i=0; i<keys.size(); i++) {
 
 			ExecutionDefinition execDefinition=keys.get(i);
 			ExecutionEvent execEvent=executionMap.get(execDefinition);
 
-			if(execEvent.getSelectionListener()!=null)
+			if (execEvent.getSelectionListener()!=null)
 				execDefinition.getSrcControl().removeListener(SWT.Selection, execEvent.getSelectionListener());
 
-			if(execEvent.getModifyListener()!=null)
+			if (execEvent.getModifyListener()!=null)
 				execDefinition.getSrcControl().removeListener(SWT.Modify, execEvent.getModifyListener());
 
-			if(execEvent.getKeyListener()!=null)
+			if (execEvent.getKeyListener()!=null)
 				execDefinition.getSrcControl().removeKeyListener(execEvent.getKeyListener());
 
 			executionMap.remove(execDefinition);
@@ -148,20 +148,20 @@ public class ExecutionManager {
 	public static void notifyDependentExecutions(String srcId, String srcSecondaryId) {
 
 		Iterator<ExecutionDefinition> iterator=executionMap.keySet().iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
-			if(ObjectUtils.equals(srcId, execDefinition.getSrcId()) &&
+			if (ObjectUtils.equals(srcId, execDefinition.getSrcId()) &&
 					ObjectUtils.equals(srcSecondaryId, execDefinition.getSrcSecondaryId())) {
 
 				ExecutionEvent execEvent=executionMap.get(execDefinition);
-				if(execEvent.getResponseAction()!=null && execEvent.isActionExecuted()) {
+				if (execEvent.getResponseAction()!=null && execEvent.isActionExecuted()) {
 
 					execEvent.getResponseAction().run();
 					execEvent.setActionExecuted(false);
 
-					if(execEvent.getPostresponseAction()!=null)
+					if (execEvent.getPostresponseAction()!=null)
 						execEvent.getPostresponseAction().run();
 				}
 			}
@@ -172,12 +172,12 @@ public class ExecutionManager {
 	private static boolean hasDependentExecutions(String srcId, String srcSecondaryId) {
 
 		Iterator<ExecutionDefinition> iterator=executionMap.keySet().iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 			ExecutionEvent execEvent=executionMap.get(execDefinition);
 
-			if(execDefinition!=null && execEvent!=null &&
+			if (execDefinition!=null && execEvent!=null &&
 				execEvent.getPostresponseAction()!=null &&
 				ObjectUtils.equals(srcId, execDefinition.getSrcId()) &&
 				ObjectUtils.equals(srcSecondaryId, execDefinition.getSrcSecondaryId()))

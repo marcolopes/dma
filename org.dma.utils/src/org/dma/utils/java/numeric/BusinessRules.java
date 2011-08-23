@@ -17,7 +17,7 @@ public class BusinessRules {
 	 * exemplo: 123.56, 2.50 = 122.50
 	 *
 	 **/
-	public static BigDecimal round(BigDecimal valor, BigDecimal arredondamento){
+	public static BigDecimal round(BigDecimal valor, BigDecimal arredondamento) {
 
 		if (arredondamento.doubleValue()!=0)
 			/*
@@ -44,7 +44,7 @@ public class BusinessRules {
 	 **/
 	public static BigDecimal getPrecoMedioPonderado(BigDecimal existencias, BigDecimal precoActual, BigDecimal entradas, BigDecimal precoEntradas) {
 
-		if (entradas.doubleValue()>0){
+		if (entradas.doubleValue()>0) {
 			BigDecimal dividendo=(existencias.abs().multiply(precoActual)).add(entradas.multiply(precoEntradas));
 			BigDecimal divisor=existencias.abs().add(entradas);
 
@@ -64,7 +64,7 @@ public class BusinessRules {
 	 * exemplo: 50% + 25% = 62,5%
 	 *
 	 **/
-	public static BigDecimal getPercentagemFinal(BigDecimal perc1, BigDecimal perc2){
+	public static BigDecimal getPercentagemFinal(BigDecimal perc1, BigDecimal perc2) {
 
 		return perc1.add((BigDecimal.valueOf(100).subtract(perc1)).
 				multiply(perc2.divide(BigDecimal.valueOf(100))));
@@ -78,9 +78,9 @@ public class BusinessRules {
 	 * formula: ((total - valor) / valor) * 100;
 	 * exemplo: 200, 10 = 1900%
 	 **/
-	public static BigDecimal getPercentagemLucro(BigDecimal total, BigDecimal valor){
+	public static BigDecimal getPercentagemLucro(BigDecimal total, BigDecimal valor) {
 
-		if(valor.doubleValue()!=0)
+		if (valor.doubleValue()!=0)
 			return ((total.subtract(valor)).
 			//PARA EVITAR: Non-terminating decimal expansion; no exact representable decimal result.
 			divide(valor,RoundingMode.HALF_EVEN)).multiply(BigDecimal.valueOf(100));
@@ -97,7 +97,7 @@ public class BusinessRules {
 	 * exemplo: 200, 10 = 5%
 	 *
 	 **/
-	public static BigDecimal getPercentagemValor(BigDecimal total, BigDecimal valor){
+	public static BigDecimal getPercentagemValor(BigDecimal total, BigDecimal valor) {
 
 		if (total.doubleValue()!=0)
 			return (valor.multiply(BigDecimal.valueOf(100))).
@@ -116,7 +116,7 @@ public class BusinessRules {
 	 * exemplo: 200, 10% = 20
 	 *
 	 **/
-	public static BigDecimal getValorPercentagem(BigDecimal valor, BigDecimal perc){
+	public static BigDecimal getValorPercentagem(BigDecimal valor, BigDecimal perc) {
 
 		return valor.multiply(perc.divide(BigDecimal.valueOf(100)));
 
@@ -130,7 +130,7 @@ public class BusinessRules {
 	 * exemplo: 200, 10% = 180
 	 *
 	 **/
-	public static BigDecimal getValorLiquido(BigDecimal valor, BigDecimal perc){
+	public static BigDecimal getValorLiquido(BigDecimal valor, BigDecimal perc) {
 
 		return valor.
 		multiply(BigDecimal.valueOf(1).
@@ -146,7 +146,7 @@ public class BusinessRules {
 	 * exemplo: 130, 30% = 100
 	 *
 	 **/
-	public static BigDecimal getValorDeduzido(BigDecimal valor, BigDecimal perc){
+	public static BigDecimal getValorDeduzido(BigDecimal valor, BigDecimal perc) {
 
 		return valor.
 			divide((perc.divide(BigDecimal.valueOf(100)).
@@ -163,7 +163,7 @@ public class BusinessRules {
 	 * exemplo: 200, 10% = 220
 	 *
 	 **/
-	public static BigDecimal getValorAcrescido(BigDecimal valor, BigDecimal perc){
+	public static BigDecimal getValorAcrescido(BigDecimal valor, BigDecimal perc) {
 
 		return valor.
 		multiply((perc.divide(BigDecimal.valueOf(100))).add(BigDecimal.valueOf(1)));
@@ -178,7 +178,7 @@ public class BusinessRules {
 	 * exemplo: 100, 50, 200 = 25
 	 *
 	 **/
-	public static BigDecimal getValorProporcional(BigDecimal valor, BigDecimal parte, BigDecimal total){
+	public static BigDecimal getValorProporcional(BigDecimal valor, BigDecimal parte, BigDecimal total) {
 
 		if (total.doubleValue()!=0)
 			return (valor.multiply(parte)).

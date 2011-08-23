@@ -13,7 +13,7 @@ public final class MethodUtils {
 	public static Object invoke(String className, String methodName, Object[] args) throws Exception {
 
 		Class[] params=new Class[args.length];
-		for(int i=0; i<args.length; i++)
+		for (int i=0; i<args.length; i++)
 			params[i]=args[i].getClass();
 
 		return invoke(className, methodName, args, params);

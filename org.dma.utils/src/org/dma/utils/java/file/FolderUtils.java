@@ -42,12 +42,12 @@ public class FolderUtils {
 
 	public static boolean createFolder(String folder) {
 
-		try{
+		try {
 			File file=new File(folder);
 
 			return file.exists() ? true : file.mkdir();
 
-		}catch(Exception e){}
+		} catch (Exception e) {}
 
 		return false;
 
@@ -56,13 +56,13 @@ public class FolderUtils {
 
 	public static boolean createFolder(String folder, boolean clean) {
 
-		try{
-			if (createFolder(folder)){
+		try {
+			if (createFolder(folder)) {
 				if (clean) deleteFiles(folder, "*.*");
 				return true;
 			}
 
-		}catch(Exception e){}
+		} catch (Exception e) {}
 
 		return false;
 
@@ -103,7 +103,7 @@ public class FolderUtils {
 		int n=0;
 
 		File[] files = getFiles(new File(folder),wilcards);
-		if (files!=null){
+		if (files!=null) {
 
 			for (File file : files)
 				if (file.delete()) ++n;
@@ -123,7 +123,7 @@ public class FolderUtils {
 
 		try {
 			String[] names=new String[files.length];
-			for(int i=0; i<files.length; i++){
+			for (int i=0; i<files.length; i++) {
 				names[i]=files[i].getName();
 			}
 

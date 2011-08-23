@@ -31,7 +31,7 @@ public class FileExport {
 
 
 
-	public String directoryPicker(Shell parent){
+	public String directoryPicker(Shell parent) {
 
 		DirectoryDialog dd = new DirectoryDialog(parent, SWT.SAVE);
 
@@ -40,7 +40,7 @@ public class FileExport {
 	}
 
 
-	public String filePicker(Shell parent){
+	public String filePicker(Shell parent) {
 
 		FileDialog fd = new FileDialog(parent, SWT.SAVE);
 		fd.setFilterExtensions(extensions);
@@ -50,7 +50,7 @@ public class FileExport {
 	}
 
 
-	public String filePicker(Shell parent, String filename){
+	public String filePicker(Shell parent, String filename) {
 
 		FileDialog fd = new FileDialog(parent, SWT.SAVE);
 		fd.setFilterExtensions(extensions);
@@ -70,13 +70,13 @@ public class FileExport {
 			fd.setFilterExtensions(extensions);
 			fd.setFileName(filename);
 
-			if(fd.open() != null){
+			if (fd.open() != null) {
 
 				FileUtils.writeBytesStream(bytes, fd.getFilterPath()+File.separator+fd.getFileName());
 				return fd.getFilterPath();
 			}
 
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -85,7 +85,7 @@ public class FileExport {
 	}
 
 
-	public void writeText(Shell parent, String text, String filename, String fileext, String charset){
+	public void writeText(Shell parent, String text, String filename, String fileext, String charset) {
 		try {
 			Debug.info("filename",filename);
 			Debug.info("fileext",fileext);
@@ -94,11 +94,11 @@ public class FileExport {
 			fd.setFilterExtensions(extensions);
 			fd.setFileName(filename+"."+fileext);
 
-			if(fd.open() != null){
+			if (fd.open() != null) {
 				FileUtils.writeTextStream(text, fd.getFilterPath()+File.separator+fd.getFileName(),charset);
 			}
 
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

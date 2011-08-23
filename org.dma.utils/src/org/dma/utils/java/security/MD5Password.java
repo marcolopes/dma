@@ -42,7 +42,7 @@ public class MD5Password {
 			"A", "B", "C", "D", "E", "F"};
 
 		String out="";
-		for(int i=0; i<in.length; i++) {
+		for (int i=0; i<in.length; i++) {
 			out += pseudo[0] + pseudo[in[i] & 0x0F];
 		}
 		return out;

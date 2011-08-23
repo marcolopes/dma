@@ -17,7 +17,7 @@ public class CustomList extends org.eclipse.swt.widgets.List {
 	protected void checkSubclass() {}
 
 
-	public CustomList(Composite parent, int style){
+	public CustomList(Composite parent, int style) {
 		super(parent, style);
 	}
 

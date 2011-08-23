@@ -23,7 +23,7 @@ public class ExecutionDefinition {
 
 
 	public boolean equals(ExecutionDefinition exec) {
-		if(ObjectUtils.equals(exec.getSrcId(), this.srcId) &&
+		if (ObjectUtils.equals(exec.getSrcId(), this.srcId) &&
 				ObjectUtils.equals(exec.getSrcSecondaryId(), this.srcSecondaryId) &&
 				ObjectUtils.equals(exec.getSrcControl(), this.srcControl))
 			return true;

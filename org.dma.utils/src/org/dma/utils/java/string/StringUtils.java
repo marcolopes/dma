@@ -25,10 +25,10 @@ public class StringUtils {
 	 */
 	public static int val(String string) {
 
-		try{
+		try {
 			return Integer.parseInt(string);
 
-		}catch(NumberFormatException e){}
+		} catch (NumberFormatException e) {}
 
 		return 0;
 
@@ -63,7 +63,7 @@ public class StringUtils {
 	public static String replicate(String string, int replicas) {
 
 		String result="";
-		for(int i=0; i<replicas; i++)
+		for (int i=0; i<replicas; i++)
 			result+=string;
 
 		return result;
@@ -73,7 +73,7 @@ public class StringUtils {
 	public static String replicate(char character, int replicas) {
 
 		String result="";
-		for(int i=0; i<replicas; i++)
+		for (int i=0; i<replicas; i++)
 			result+=character;
 
 		return result;
@@ -107,39 +107,39 @@ public class StringUtils {
 	}
 
 
-	public static boolean isEmpty(String string){
+	public static boolean isEmpty(String string) {
 
 		return string==null || string.trim().length()==0;
 	}
 
 
-	public static boolean isLogical(String string){
+	public static boolean isLogical(String string) {
 
 		return string.equals("0") || string.equals("1");
 	}
 
 
-	public static boolean isNumeric(String string){
+	public static boolean isNumeric(String string) {
 
 		return NUMERIC_PATTERN.matcher(string).matches();
 	}
 
 
-	public static boolean isDecimal(String string){
+	public static boolean isDecimal(String string) {
 
 		return DECIMAL_PATTERN.matcher(string).matches();
 	}
 
 
-	public static boolean isUppercase(String string){
+	public static boolean isUppercase(String string) {
 
 		return UPPERCASE_PATTERN.matcher(string).matches();
 	}
 
 
-	public static int startsWith(String string, String[] searchFor){
+	public static int startsWith(String string, String[] searchFor) {
 
-		for(int i=0; i<searchFor.length; i++)
+		for (int i=0; i<searchFor.length; i++)
 			if (string.startsWith(searchFor[i]))
 				return i;
 
@@ -147,12 +147,12 @@ public class StringUtils {
 	}
 
 
-	public static Integer[] indexOf(String string, String searchFor){
+	public static Integer[] indexOf(String string, String searchFor) {
 
 		Collection<Integer> result=new ArrayList();
 
 		int index=0;
-		while((index=string.indexOf(searchFor, index))!=-1){
+		while ((index=string.indexOf(searchFor, index))!=-1) {
 			result.add(index);
 			index+=searchFor.length()-1;
 		}
@@ -166,7 +166,7 @@ public class StringUtils {
 		int count=0;
 
 		int index=0;
-		while((index=string.indexOf(searchFor, index))!=-1){
+		while ((index=string.indexOf(searchFor, index))!=-1) {
 			count++;
 			index+=searchFor.length()-1;
 		}
@@ -182,13 +182,13 @@ public class StringUtils {
 	}
 
 
-	public static String[] splitInside(String string, String delimiter){
+	public static String[] splitInside(String string, String delimiter) {
 		try {
 			String[] splited=string.split(delimiter);
 
 			String[] result=new String[splited.length/2];
 			int n=0;
-			for(int i=1; i<splited.length; i=i+2){
+			for (int i=1; i<splited.length; i=i+2) {
 				result[n]=splited[i];
 				n++;
 			}
@@ -202,14 +202,14 @@ public class StringUtils {
 	}
 
 
-	public static String[] splitInside(String string, String delimiter1, String delimiter2){
+	public static String[] splitInside(String string, String delimiter1, String delimiter2) {
 
 		Integer[] indexes1=indexOf(string, delimiter1);
 		Integer[] indexes2=indexOf(string, delimiter2);
 
 		String[] result=new String[indexes1.length];
 
-		for(int i=0; i<indexes1.length; i++)
+		for (int i=0; i<indexes1.length; i++)
 			result[i]=string.substring(indexes1[i]+1, indexes2[i]);
 
 		return result;
@@ -250,49 +250,49 @@ public class StringUtils {
 	}
 
 
-	public static String replaceChars(String string, String searchFor, char replaceWith){
+	public static String replaceChars(String string, String searchFor, char replaceWith) {
 
-		for(int i=0; i<searchFor.length(); i++)
+		for (int i=0; i<searchFor.length(); i++)
 			string=string.replace(searchFor.charAt(i), replaceWith);
 
 		return string;
 	}
 
 
-	public static String remove(String string, String searchFor){
+	public static String remove(String string, String searchFor) {
 
 		return string.replace(searchFor, "");
 	}
 
 
-	public static String remove(String string, char[] searchFor){
+	public static String remove(String string, char[] searchFor) {
 
 		return remove(string, searchFor, "");
 	}
 
 
-	public static String removeChars(String string, String searchFor){
+	public static String removeChars(String string, String searchFor) {
 
-		for(int i=0; i<searchFor.length(); i++)
+		for (int i=0; i<searchFor.length(); i++)
 			string=remove(string, searchFor.substring(i,i+1));
 
 		return string;
 	}
 
 
-	public static String remove(String string, char[] searchFor, String delimiter){
+	public static String remove(String string, char[] searchFor, String delimiter) {
 
-		for(int i=0; i<searchFor.length; i++)
+		for (int i=0; i<searchFor.length; i++)
 			string=remove(string, delimiter+searchFor[i]+delimiter);
 
 		return string;
 	}
 
 
-	public static String removeInside(String string, String delimiter){
+	public static String removeInside(String string, String delimiter) {
 
 		String[] splited=splitInside(string, delimiter);
-		for(int i=0; i<splited.length; i++)
+		for (int i=0; i<splited.length; i++)
 			string=string.replace(delimiter+splited[i]+delimiter, delimiter+delimiter);
 
 		return string;
@@ -311,7 +311,7 @@ public class StringUtils {
 	}
 
 
-	public static String concatChars(String string, int[] indices, String separator){
+	public static String concatChars(String string, int[] indices, String separator) {
 
 		String string2=chars(string, indices);
 		return ArrayUtils.concat(string2.toCharArray(), separator);
@@ -325,12 +325,12 @@ public class StringUtils {
 	}
 
 
-	public static String numbers(String string){
+	public static String numbers(String string) {
 
 		String numbers="";
 
 		char[] chars=string.toCharArray();
-		for(int i=0; i<chars.length; i++){
+		for (int i=0; i<chars.length; i++) {
 			if (chars[i]>='0' && chars[i]<='9')
 				numbers+=string.substring(i, i+1);
 		}
@@ -339,12 +339,12 @@ public class StringUtils {
 	}
 
 
-	public static String letters(String string){
+	public static String letters(String string) {
 
 		String letters="";
 
 		char[] chars = string.toCharArray();
-		for(int i=0; i<chars.length; i++){
+		for (int i=0; i<chars.length; i++) {
 			if ((chars[i]>='A' && chars[i]<='Z') || (chars[i]>='a' && chars[i]<='z'))
 				letters+=string.substring(i, i+1);
 		}
@@ -382,13 +382,13 @@ public class StringUtils {
 	}
 
 
-	public static String indent(String text){
+	public static String indent(String text) {
 
 		int tabSize = 0;
 		String[] lines = text.split("\n");
 		text = "";
 
-		for(int i=0; i<lines.length; i++){
+		for (int i=0; i<lines.length; i++) {
 			if (lines[i].contains("}")) --tabSize;
 			text+=replicate("\t", tabSize) + lines[i] + "\n";
 			if (lines[i].contains("{")) ++tabSize;

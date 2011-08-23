@@ -21,12 +21,12 @@ public class DoubleList {
 	private CustomList rightSWTList;
 	private List<String> rightList;
 
-	public DoubleList(){
+	public DoubleList() {
 	}
 
 
 	public DoubleList(CustomList leftSWTList, List<String> leftList,
-			CustomList rightSWTList, List<String> rightList){
+			CustomList rightSWTList, List<String> rightList) {
 
 		this.leftSWTList=leftSWTList;
 		this.leftList=leftList;

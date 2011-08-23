@@ -32,13 +32,13 @@ public class CustomShell extends Shell {
 	/*
 	 * Overrided
 	 */
-	public void open(){
+	public void open() {
 		super.open();
 		setFocus();
 	}
 
 
-	public void pack(){
+	public void pack() {
 		super.pack();
 		setMinimumSize();
 	}
@@ -47,7 +47,7 @@ public class CustomShell extends Shell {
 	/*
 	 * Contributed
 	 */
-	public void setCenteredLocation(){
+	public void setCenteredLocation() {
 		Rectangle parentBounds = getParent()==null ?
 				getDisplay().getBounds() : getParent().getBounds();
 		Rectangle childBounds = getBounds();
@@ -57,19 +57,19 @@ public class CustomShell extends Shell {
 	}
 
 
-	public void setParentBounds(){
+	public void setParentBounds() {
 		setBounds(getParent().getBounds());
 	}
 
 
-	public void setMinimumSize(){
-		if (IntegerUtils.bit(getStyle(), SWT.RESIZE)){
+	public void setMinimumSize() {
+		if (IntegerUtils.bit(getStyle(), SWT.RESIZE)) {
 			setMinimumSize(getSize().x, getSize().y);
 		}
 	}
 
 
-	public void setGridLayout(){
+	public void setGridLayout() {
 		setLayout(new GridLayout());
 	}
 

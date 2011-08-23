@@ -10,7 +10,7 @@ public class EmailAddress {
 	private String email;
 	private String name;
 
-	public EmailAddress(String email, String name){
+	public EmailAddress(String email, String name) {
 		this.email=email;
 		this.name=name;
 	}

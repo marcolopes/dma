@@ -59,8 +59,8 @@ public class CollectionUtils {
 		int count=0;
 
 		Iterator<String> iterator=collection.iterator();
-		while(iterator.hasNext()) {
-			if(iterator.next().contains(element))
+		while (iterator.hasNext()) {
+			if (iterator.next().contains(element))
 				count++;
 		}
 
@@ -82,7 +82,7 @@ public class CollectionUtils {
 		String string="";
 
 		Iterator<String> iterator=collection.iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 
 			if (string.length()==0)
 				string=iterator.next();
@@ -97,7 +97,7 @@ public class CollectionUtils {
 
 	public static void addDistinct(Collection<String> collection, String element) {
 
-		if(!collection.contains(element))
+		if (!collection.contains(element))
 			collection.add(element);
 
 	}
@@ -106,7 +106,7 @@ public class CollectionUtils {
 	public static void addDistinct(Collection<String> collection, Collection<String> collection2) {
 
 		Iterator<String> iterator=collection2.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 			addDistinct(collection, iterator.next());
 
 	}
@@ -115,21 +115,21 @@ public class CollectionUtils {
 	public static void removeDuplicated(Collection<String> collection, Collection<String> collection2 ) {
 
 		Iterator<String> iterator=collection2.iterator();
-		while(iterator.hasNext())
+		while (iterator.hasNext())
 			collection.remove(iterator.next());
 
 	}
 
 
-	public static void removeContaining(Collection<String> collection, String searchFor){
+	public static void removeContaining(Collection<String> collection, String searchFor) {
 
 		Collection<String> removeList=new ArrayList();
 
 		Iterator<String> iterator=collection.iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 
 			String string2=iterator.next();
-			if(string2.contains(searchFor))
+			if (string2.contains(searchFor))
 				removeList.add(string2);
 		}
 
@@ -138,7 +138,7 @@ public class CollectionUtils {
 	}
 
 
-	public static void removeContaining(Collection<String> collection, String[] searchFor){
+	public static void removeContaining(Collection<String> collection, String[] searchFor) {
 
 		for (int i=0; i<searchFor.length; i++)
 			removeContaining(collection, searchFor[i]);
@@ -161,7 +161,7 @@ public class CollectionUtils {
 		Collection<T> insertList=new ArrayList(indexes.length);
 
 		Arrays.sort(indexes);
-		for(int i=0; i<indexes.length; i++)
+		for (int i=0; i<indexes.length; i++)
 			insertList.add(from.get(indexes[i]));
 
 		into.addAll(position, insertList);
@@ -175,7 +175,7 @@ public class CollectionUtils {
 
 		Collection<T> removeList=new ArrayList(indexes.length);
 
-		for(int i=0; i<indexes.length; i++)
+		for (int i=0; i<indexes.length; i++)
 			removeList.add(list.get(indexes[i]));
 
 		list.removeAll(removeList);
@@ -190,7 +190,7 @@ public class CollectionUtils {
 		Collection<T> insertList=new ArrayList(indexes.length);
 
 		Arrays.sort(indexes);
-		for(int i=0; i<indexes.length; i++)
+		for (int i=0; i<indexes.length; i++)
 			insertList.add(list.get(indexes[i]));
 
 		remove(list, indexes);
@@ -205,7 +205,7 @@ public class CollectionUtils {
 		Collection<T> insertList=new ArrayList(indexes.length);
 
 		Arrays.sort(indexes);
-		for(int i=0; i<indexes.length; i++)
+		for (int i=0; i<indexes.length; i++)
 			insertList.add(list.get(indexes[i]));
 
 		remove(list, indexes);

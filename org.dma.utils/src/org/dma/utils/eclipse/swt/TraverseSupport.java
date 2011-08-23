@@ -23,7 +23,7 @@ public class TraverseSupport {
 	private final TraverseListener traverseListener = new TraverseListener() {
 
 		//TODO INTERFACE: Implementar o controle de teclado para SWT.MULTI
-		public void keyTraversed(TraverseEvent e){
+		public void keyTraversed(TraverseEvent e) {
 
 			try {
 				if (e.detail == SWT.TRAVERSE_RETURN) {
@@ -33,20 +33,20 @@ public class TraverseSupport {
 					//processa control actual
 					Control actualControl=(Control)e.getSource();
 					//e' uma TEXT multi-linha?
-					if(actualControl instanceof Text &&
-							IntegerUtils.bit(((Text) actualControl).getStyle(), SWT.MULTI)){
+					if (actualControl instanceof Text &&
+							IntegerUtils.bit(((Text) actualControl).getStyle(), SWT.MULTI)) {
 
 						Debug.info("### SWT.MULTI ###");
 
 						//foi pressionado ENTER principal?
-						if (e.keyCode==SWT.CR){
+						if (e.keyCode==SWT.CR) {
 							Debug.info("### SWT.CR ###");
 							//NAO insere nova linha
 							e.detail = SWT.TRAVERSE_NONE;
 							//passa de campo
 							e.doit = true;
 						//foi pressionado ENTER do teclado numerico?
-						}else if (e.keyCode==SWT.KEYPAD_CR){
+						}else if (e.keyCode==SWT.KEYPAD_CR) {
 							Debug.info("### SWT.KEYPAD_CR ###");
 							//NAO passa de campo
 							e.doit = false;
@@ -54,7 +54,7 @@ public class TraverseSupport {
 					}
 
 					//processa proximo control
-					if (e.doit){
+					if (e.doit) {
 						Debug.info("### doit ###");
 
 						Control nextControl=getNextControl(e.getSource());
@@ -62,8 +62,8 @@ public class TraverseSupport {
 						nextControl.update();
 
 						//selecciona texto caso nao seja MULTI
-						if(nextControl instanceof Text &&
-								!IntegerUtils.bit(((Text) nextControl).getStyle(), SWT.MULTI)){
+						if (nextControl instanceof Text &&
+								!IntegerUtils.bit(((Text) nextControl).getStyle(), SWT.MULTI)) {
 							((Text) nextControl).selectAll();
 						}
 					}
@@ -78,7 +78,7 @@ public class TraverseSupport {
 	};
 
 
-	private Control getNextControl(Object obj){
+	private Control getNextControl(Object obj) {
 
 		int index=components.indexOf(obj);
 		try {
@@ -87,12 +87,12 @@ public class TraverseSupport {
 			int index2=index;
 			do{
 				index++;
-				if(index==components.size())
+				if (index==components.size())
 					index=0;
 
 				control=components.get(index);
 
-			}while(index!=index2 && !control.isEnabled());
+			}while (index!=index2 && !control.isEnabled());
 
 		} catch (Exception e) {
 			e.printStackTrace();

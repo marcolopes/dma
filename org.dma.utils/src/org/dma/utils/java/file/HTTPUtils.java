@@ -8,9 +8,9 @@ import java.net.URLConnection;
 
 public class HTTPUtils {
 
-	public static InputStream getInputStream(String url){
+	public static InputStream getInputStream(String url) {
 
-		try{
+		try {
 			URLConnection urlConn = new URL(url).openConnection();
 			//input connection
 			urlConn.setDoInput(true);
@@ -27,9 +27,9 @@ public class HTTPUtils {
 	}
 
 
-	public static OutputStream getOutputStream(String url){
+	public static OutputStream getOutputStream(String url) {
 
-		try{
+		try {
 			URLConnection urlConn = new URL(url).openConnection();
 			//output connection
 			urlConn.setDoInput(false);

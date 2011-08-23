@@ -38,7 +38,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		this.viewer=viewer;
 		this.labelProvider=labelProvider;
 
-		try{
+		try {
 			//viewer
 			this.viewer.setLabelProvider(this.labelProvider);
 			this.viewer.setContentProvider(new ArrayContentProvider());
@@ -47,7 +47,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 			addTableDoubleClickListener();
 			addTableEnterKeyListener();
 
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -72,7 +72,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 		tableDoubleClickListener=new MouseAdapter() {
 			public void mouseDoubleClick(MouseEvent e) {
-				if(getSelectedObject()!=null) {
+				if (getSelectedObject()!=null) {
 					editObject();
 				}
 			}
@@ -87,8 +87,8 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 		tableEnterKeyListener=new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if (e.keyCode==SWT.CR || e.keyCode==SWT.KEYPAD_CR){
-					if(getSelectedObject()!=null) {
+				if (e.keyCode==SWT.CR || e.keyCode==SWT.KEYPAD_CR) {
+					if (getSelectedObject()!=null) {
 						editObject();
 					}
 				}
@@ -105,7 +105,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 	//table
-	public int computeSize(){
+	public int computeSize() {
 		Rectangle rect = getTable().getClientArea();
 		int itemHeight = getTable().getItemHeight();
 		int headerHeight = getTable().getHeaderHeight();
@@ -116,7 +116,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 	public String[] getColumnText() {
 		String[] names=new String[getTable().getColumns().length];
-		for(int i=0; i<getTable().getColumns().length; i++)
+		for (int i=0; i<getTable().getColumns().length; i++)
 			names[i]=getTable().getColumns()[i].getText();
 		return names;
 	}
@@ -155,7 +155,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	}
 
 
-	public void clearTable(){
+	public void clearTable() {
 		objectCollection.clear();
 		viewer.refresh();
 	}

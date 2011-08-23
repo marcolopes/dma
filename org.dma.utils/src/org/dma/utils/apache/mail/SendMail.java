@@ -44,7 +44,7 @@ public class SendMail {
 			email.setSubject(subject);
 			email.setMsg(message);
 
-			if (attachment!=null){
+			if (attachment!=null) {
 				attachment.debug();
 				email.attach(attachment);
 			}

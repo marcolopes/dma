@@ -72,8 +72,8 @@ public class DialogHandler {
 
 	public static boolean open(String title, String message, TYPE type) {
 
-		try{
-			if(title==null) {
+		try {
+			if (title==null) {
 
 				switch(type) {
 					case ERROR: title=ERROR_TITLE; break;
@@ -91,7 +91,7 @@ public class DialogHandler {
 				case CONFIRMATION: return MessageDialog.openConfirm(shell, title, message);
 			}
 
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

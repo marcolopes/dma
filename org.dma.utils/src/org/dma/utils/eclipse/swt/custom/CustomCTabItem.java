@@ -24,7 +24,7 @@ public class CustomCTabItem extends CTabItem {
 	public void setStyle(int style) {
 
 		FontData[] fd = getFont().getFontData();
-		for(int i=0; i<fd.length; i++)
+		for (int i=0; i<fd.length; i++)
 			fd[i].setStyle(style);
 
 		setFont(new Font(getDisplay(), fd));

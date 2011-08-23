@@ -20,12 +20,12 @@ import com.itextpdf.text.pdf.PdfStamper;
 
 public class PdfUtils {
 
-	public static boolean merge(List<String> filesList, String filename){
+	public static boolean merge(List<String> filesList, String filename) {
 
 		try {
 			PdfCopyFields PdfFile = new PdfCopyFields(new FileOutputStream(filename));
 
-			for(int i=0; i<filesList.size(); i++){
+			for (int i=0; i<filesList.size(); i++) {
 				PdfReader reader = new PdfReader(filesList.get(i));
 				PdfFile.addDocument(reader);
 			}
@@ -34,7 +34,7 @@ public class PdfUtils {
 
 			return true;
 
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -43,7 +43,7 @@ public class PdfUtils {
 	}
 
 
-	public static boolean addJavaScript(String filename, String script){
+	public static boolean addJavaScript(String filename, String script) {
 
 		try {
 			String outfile=FileUtils.createTempFile(new FileParameters("script", "pdf"));

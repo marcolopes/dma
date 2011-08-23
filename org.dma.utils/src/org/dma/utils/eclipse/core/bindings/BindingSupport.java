@@ -23,7 +23,7 @@ public class BindingSupport {
 
 	public void register(String property, BindingDefinition definition) {
 
-		if (!bindingMap.containsKey(property)){
+		if (!bindingMap.containsKey(property)) {
 
 			bindingMap.put(property, definition);
 
@@ -42,7 +42,7 @@ public class BindingSupport {
 
 	public void unregister(String property) {
 
-		if (bindingMap.containsKey(property)){
+		if (bindingMap.containsKey(property)) {
 
 			Debug.info(property, bindingMap.keySet());
 
@@ -58,7 +58,7 @@ public class BindingSupport {
 
 		Debug.info("UNREGISTERING", bindingMap.size());
 
-		while(bindingMap.size()>0){
+		while (bindingMap.size()>0) {
 			String property=bindingMap.keySet().iterator().next();
 			unregister(property);
 		}

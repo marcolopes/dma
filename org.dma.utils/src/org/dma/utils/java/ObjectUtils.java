@@ -10,12 +10,12 @@ public final class ObjectUtils {
 
 	public static boolean equals(Object a, Object b) {
 
-		if(a==null && b==null) return true;
+		if (a==null && b==null) return true;
 
-		if(a!=null && b!=null && a.getClass()==b.getClass()) {
+		if (a!=null && b!=null && a.getClass()==b.getClass()) {
 
-			if(a instanceof Number) {
-				if(((Number) a).doubleValue()==((Number) b).doubleValue()) return true;
+			if (a instanceof Number) {
+				if (((Number) a).doubleValue()==((Number) b).doubleValue()) return true;
 			}else{
 				return a.equals(b);
 			}
