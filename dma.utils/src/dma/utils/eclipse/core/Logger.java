@@ -93,6 +93,7 @@ public class Logger {
 			case SEVERITY_CANCEL: System.out.print("CANCEL"); break;
 			}
 			System.out.println(") = "+exceptions.get(key));
+			System.out.flush();
 		}
 
 	}
