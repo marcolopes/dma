@@ -28,7 +28,7 @@ public class Manager{
 	}
 
 
-	private PersistenceManagerFactory initPFM(){
+	private PersistenceManagerFactory initPFM() {
 
 		try {
 			Map<String,Object> map = new HashMap();
@@ -62,7 +62,7 @@ public class Manager{
 	}
 
 
-	public void test(){
+	public void test() {
 
 		try{
 			PersistenceManager pm = pmf.getPersistenceManager();
