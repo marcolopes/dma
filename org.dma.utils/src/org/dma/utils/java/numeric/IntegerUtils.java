@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.dma.utils.java.numeric;
 
+import org.dma.utils.java.string.StringUtils;
+
 public class IntegerUtils {
 
 
@@ -20,6 +22,19 @@ public class IntegerUtils {
 	public static char chr(int value) {
 
 		return (char)value;
+
+	}
+
+
+
+
+
+	/*
+	 * Creation
+	 */
+	public static Integer random(int length) {
+
+		return new Integer(StringUtils.random("0123456789", length));
 
 	}
 
