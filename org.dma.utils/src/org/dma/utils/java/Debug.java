@@ -40,7 +40,7 @@ public class Debug {
 	public static void info() {
 		if (isOn()){
 			caller = new Throwable().getStackTrace()[1];
-			info2("",null);
+			info2(null,null);
 		}
 	}
 
@@ -57,7 +57,7 @@ public class Debug {
 		if (isOn()){
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
-			info2("",obj);
+			info2(null,obj);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class Debug {
 		if (isOn()){
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
-			warning2("",obj);
+			warning2(null,obj);
 		}
 	}
 
@@ -130,8 +130,8 @@ public class Debug {
 
 			case LEVEL_BASIC:
 				logMessage=caller.getFileName()+
-				"; "+ caller.getMethodName()+
-				"; "+ message;
+				"; "+ caller.getMethodName();
+				if (message!=null) logMessage+="; "+ message;
 				if (obj!=null) logMessage+=": "+obj.toString();
 				break;
 
@@ -139,8 +139,8 @@ public class Debug {
 				logMessage=new Date()+
 				"; CLASSE: " + caller.getClassName()+
 				"; METODO: " + caller.getMethodName()+
-				"; LINHA: " + caller.getLineNumber()+
-				"; MENSAGEM: " + message;
+				"; LINHA: " + caller.getLineNumber();
+				if (message!=null) logMessage+="; MENSAGEM: " + message;
 				if (obj!=null) logMessage+=", Valor: "+obj.toString();
 				break;
 			}
