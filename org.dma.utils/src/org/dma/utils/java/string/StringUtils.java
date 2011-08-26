@@ -92,6 +92,13 @@ public class StringUtils {
 	}
 
 
+	public static String random(int length) {
+
+		return 	random("abcdefghijklmnopqrstuvwxyz", length);
+
+	}
+
+
 
 
 
