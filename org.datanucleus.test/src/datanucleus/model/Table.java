@@ -15,7 +15,7 @@ limitations under the License.
 package datanucleus.model;
 
 //@PersistenceCapable(table = "ou=People,dc=example,dc=com", schema = "top,person,organizationalPerson,inetOrgPerson")
-public class Users1{
+public class Table{
 
 	//@Persistent(column = "cn", primaryKey = "true")
 	private String fullName;
@@ -26,7 +26,7 @@ public class Users1{
 	//@Persistent(column = "sn")
 	private String lastName;
 
-	public Users1(String fullName, String firstName, String lastName){
+	public Table(String fullName, String firstName, String lastName){
 
 		super();
 		this.fullName = fullName;

@@ -5,7 +5,7 @@
 
 	<package name="datanucleus.model">
 
-		<class name="Users1" detachable="true" identity-type="application">
+		<class name="Table" detachable="true" identity-type="application">
 			<inheritance strategy="new table"/>
 
 			<field name="fullName" primary-key="true" persistence-modifier="persistent" default-fetch-group="true">
