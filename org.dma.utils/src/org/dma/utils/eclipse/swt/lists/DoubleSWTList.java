@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt;
+package org.dma.utils.eclipse.swt.lists;
 
 import org.dma.utils.java.ArrayUtils;
 import org.dma.utils.java.CollectionUtils;

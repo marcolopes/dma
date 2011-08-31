@@ -3,11 +3,10 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt;
+package org.dma.utils.eclipse.swt.lists;
 
 import java.util.List;
 
-import org.dma.utils.eclipse.swt.custom.CustomSWTList;
 
 public class LinkedSWTList {
 

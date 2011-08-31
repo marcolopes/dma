@@ -4,7 +4,7 @@
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt;
+package org.dma.utils.eclipse.swt.support;
 
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
