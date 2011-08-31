@@ -11,13 +11,13 @@ import org.dma.utils.java.ArrayUtils;
 import org.dma.utils.java.CollectionUtils;
 import org.eclipse.swt.widgets.Composite;
 
-public class CustomList extends org.eclipse.swt.widgets.List {
+public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	//subclassing
 	protected void checkSubclass() {}
 
 
-	public CustomList(Composite parent, int style){
+	public CustomSWTList(Composite parent, int style){
 		super(parent, style);
 	}
 
