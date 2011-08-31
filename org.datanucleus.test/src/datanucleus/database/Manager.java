@@ -11,7 +11,7 @@ import javax.jdo.PersistenceManagerFactory;
 
 import org.datanucleus.api.jdo.JDOTransaction;
 
-import datanucleus.model.Users1;
+import datanucleus.model.Table;
 
 public class Manager{
 
@@ -70,7 +70,7 @@ public class Manager{
 			//store
 			JDOTransaction tx=(JDOTransaction)pm.currentTransaction();
 			tx.begin();
-			Users1 user = new Users1( "1", "Projecto", "Colibri" );
+			Table user = new Table( "1", "Projecto", "Colibri" );
 			pm.makePersistent(user);
 			tx.commit();
 
