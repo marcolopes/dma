@@ -3,20 +3,17 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt;
+package org.dma.utils.java;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dma.utils.java.ArrayUtils;
-import org.dma.utils.java.CollectionUtils;
-
-public class ErrorSupport {
+public class ErrorList {
 
 	private final List<String> errors=new ArrayList();
 
 
-	public ErrorSupport(){
+	public ErrorList(){
 	}
 
 
@@ -25,14 +22,9 @@ public class ErrorSupport {
 	}
 
 
-	public boolean showErrors(){
-		if (hasErrors()) DialogHandler.error(getMessage());
-		return hasErrors();
-	}
-
-
 	public void printErrors() {
-		if (hasErrors()) System.out.println(getMessage());
+		if (hasErrors())
+			System.out.println(getMessage());
 	}
 
 

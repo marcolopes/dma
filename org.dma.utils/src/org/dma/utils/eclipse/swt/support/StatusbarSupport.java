@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt;
+package org.dma.utils.eclipse.swt.support;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
