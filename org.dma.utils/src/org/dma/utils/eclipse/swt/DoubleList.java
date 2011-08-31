@@ -5,9 +5,6 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt;
 
-import java.util.List;
-
-import org.dma.utils.eclipse.swt.custom.CustomList;
 import org.dma.utils.java.ArrayUtils;
 import org.dma.utils.java.CollectionUtils;
 import org.eclipse.swt.SWT;
@@ -15,23 +12,16 @@ import org.eclipse.swt.widgets.Event;
 
 public class DoubleList {
 
-	private CustomList leftSWTList;
-	private List<String> leftList;
-
-	private CustomList rightSWTList;
-	private List<String> rightList;
+	private LinkedSWTList leftList;
+	private LinkedSWTList rightList;
 
 	public DoubleList(){
 	}
 
 
-	public DoubleList(CustomList leftSWTList, List<String> leftList,
-			CustomList rightSWTList, List<String> rightList){
+	public DoubleList(LinkedSWTList leftList, LinkedSWTList rightList){
 
-		this.leftSWTList=leftSWTList;
 		this.leftList=leftList;
-
-		this.rightSWTList=rightSWTList;
 		this.rightList=rightList;
 
 	}
@@ -39,67 +29,69 @@ public class DoubleList {
 
 	public void insert() {
 
-		int itemCount = rightSWTList.getItemCount();
-		int[] selectionIndices = leftSWTList.getSelectionIndices();
+		int itemCount = rightList.getSWTList().getItemCount();
+		int[] selectionIndices = leftList.getSWTList().getSelectionIndices();
 
-		leftList.removeAll(CollectionUtils.insert(rightList, leftList, selectionIndices, itemCount));
+		leftList.getList().removeAll(CollectionUtils.insert(rightList.getList(), leftList.getList(), selectionIndices, itemCount));
 		//CollectionUtils.remove(leftList, selectionIndices);
-		rightSWTList.insert(leftSWTList.getSelection(), itemCount);
-		leftSWTList.remove(selectionIndices);
+		rightList.getSWTList().insert(leftList.getSWTList().getSelection(), itemCount);
+		leftList.getSWTList().remove(selectionIndices);
 
-		rightSWTList.select(itemCount, itemCount+rightSWTList.getItemCount()-1);
-		rightSWTList.showSelection();
-		rightSWTList.notifyListeners(SWT.Selection, new Event());
+		rightList.getSWTList().select(itemCount, itemCount+rightList.getSWTList().getItemCount()-1);
+		rightList.getSWTList().showSelection();
+		rightList.getSWTList().notifyListeners(SWT.Selection, new Event());
 
 	}
 
 
 	public void remove() {
 
-		int[] selectionIndices = rightSWTList.getSelectionIndices();
+		int[] selectionIndices = rightList.getSWTList().getSelectionIndices();
 
-		rightList.removeAll(CollectionUtils.insert(leftList, rightList, selectionIndices, 0));
+		rightList.getList().removeAll(CollectionUtils.insert(leftList.getList(), rightList.getList(), selectionIndices, 0));
 		//CollectionUtils.remove(rightList, selectionIndices);
-		leftSWTList.insert(rightSWTList.getSelection(), 0);
-		rightSWTList.remove(selectionIndices);
+		leftList.getSWTList().insert(rightList.getSWTList().getSelection(), 0);
+		rightList.getSWTList().remove(selectionIndices);
 
-		leftSWTList.select(0, selectionIndices.length-1);
-		leftSWTList.showSelection();
-		leftSWTList.notifyListeners(SWT.Selection, new Event());
+		leftList.getSWTList().select(0, selectionIndices.length-1);
+		leftList.getSWTList().showSelection();
+		leftList.getSWTList().notifyListeners(SWT.Selection, new Event());
 
 	}
 
 
 	public void moveUp() {
 
-		int selectionCount = rightSWTList.getSelectionCount();
-		int selectionIndex = ArrayUtils.smaller(rightSWTList.getSelectionIndices());
-		int[] selectionIndices = rightSWTList.getSelectionIndices();
+		int selectionCount = rightList.getSWTList().getSelectionCount();
+		int selectionIndex = ArrayUtils.smaller(rightList.getSWTList().getSelectionIndices());
+		int[] selectionIndices = rightList.getSWTList().getSelectionIndices();
 
-		CollectionUtils.moveUp(rightList, selectionIndices, selectionIndex-1);
-		rightSWTList.moveUp(selectionIndices, selectionIndex-1 );
+		CollectionUtils.moveUp(rightList.getList(), selectionIndices, selectionIndex-1);
+		rightList.getSWTList().moveUp(selectionIndices, selectionIndex-1 );
 
-		rightSWTList.select(selectionIndex-1, selectionIndex+selectionCount-2);
-		rightSWTList.showSelection();
-		rightSWTList.notifyListeners(SWT.Selection, new Event());
+		rightList.getSWTList().select(selectionIndex-1, selectionIndex+selectionCount-2);
+		rightList.getSWTList().showSelection();
+		rightList.getSWTList().notifyListeners(SWT.Selection, new Event());
 
 	}
 
 
 	public void moveDown() {
 
-		int selectionCount = rightSWTList.getSelectionCount();
-		int selectionIndex = ArrayUtils.smaller(rightSWTList.getSelectionIndices());
-		int[] selectionIndices = rightSWTList.getSelectionIndices();
+		int selectionCount = rightList.getSWTList().getSelectionCount();
+		int selectionIndex = ArrayUtils.smaller(rightList.getSWTList().getSelectionIndices());
+		int[] selectionIndices = rightList.getSWTList().getSelectionIndices();
 
-		CollectionUtils.moveDown(rightList, selectionIndices, selectionIndex+1);
-		rightSWTList.moveDown(selectionIndices, selectionIndex+1);
+		CollectionUtils.moveDown(rightList.getList(), selectionIndices, selectionIndex+1);
+		rightList.getSWTList().moveDown(selectionIndices, selectionIndex+1);
 
-		rightSWTList.select(selectionIndex+1, selectionIndex+selectionCount);
-		rightSWTList.showSelection();
-		rightSWTList.notifyListeners(SWT.Selection, new Event());
+		rightList.getSWTList().select(selectionIndex+1, selectionIndex+selectionCount);
+		rightList.getSWTList().showSelection();
+		rightList.getSWTList().notifyListeners(SWT.Selection, new Event());
 
 	}
+
+
 
 
 
@@ -107,31 +99,21 @@ public class DoubleList {
 
 
 	//getters and setters
-	public CustomList getLeftSWTList() {
-		return leftSWTList;
-	}
-
-	public List<String> getLeftList() {
+	public LinkedSWTList getLeftList() {
 		return leftList;
 	}
 
-	public void setLeftList(CustomList leftSWTList, List<String> leftList) {
-		this.leftSWTList=leftSWTList;
-		this.leftList=leftList;
+	public void setLeftList(LinkedSWTList leftList) {
+		this.leftList = leftList;
 	}
 
 
-	public void setRightList(CustomList rightSWTList, List<String> rightList) {
-		this.rightSWTList=rightSWTList;
-		this.rightList=rightList;
-	}
-
-	public CustomList getRightSWTList() {
-		return rightSWTList;
-	}
-
-	public List<String> getRightList() {
+	public LinkedSWTList getRightList() {
 		return rightList;
+	}
+
+	public void setRightList(LinkedSWTList rightList) {
+		this.rightList = rightList;
 	}
 
 
