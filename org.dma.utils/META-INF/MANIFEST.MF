@@ -42,6 +42,6 @@ Bundle-ClassPath: .,
  libraries/bcprov-jdk16-145.jar,
  libraries/commons-codec-1.4.jar,
  libraries/commons-email-1.2.jar,
- libraries/iText-5.0.4.jar,
+ libraries/itextpdf-5.1.2.jar,
  libraries/mail.jar
 Bundle-Vendor: marcolopes@netc.pt
