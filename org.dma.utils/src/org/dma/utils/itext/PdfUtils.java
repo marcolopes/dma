@@ -14,23 +14,23 @@ import org.dma.utils.java.file.FileParameters;
 import org.dma.utils.java.file.FileUtils;
 import org.dma.utils.java.file.copy.FileCopy;
 
-import com.itextpdf.text.pdf.PdfCopyFields;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
+import com.lowagie.text.pdf.PdfCopyFields;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
 
 public class PdfUtils {
 
 	public static boolean merge(List<String> filesList, String filename){
 
 		try{
-			PdfCopyFields PdfFile = new PdfCopyFields(new FileOutputStream(filename));
+			PdfCopyFields pdfFile=new PdfCopyFields(new FileOutputStream(filename));
 
 			for(int i=0; i<filesList.size(); i++){
-				PdfReader reader = new PdfReader(filesList.get(i));
-				PdfFile.addDocument(reader);
+				PdfReader reader=new PdfReader(filesList.get(i));
+				pdfFile.addDocument(reader);
 			}
 
-			PdfFile.close();
+			pdfFile.close();
 
 			return true;
 
