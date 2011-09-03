@@ -3,12 +3,13 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.java.file;
+package org.dma.utils.eclipse.swt.file;
 
 import java.io.File;
 
 import org.dma.utils.java.ArrayUtils;
 import org.dma.utils.java.Debug;
+import org.dma.utils.java.file.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
