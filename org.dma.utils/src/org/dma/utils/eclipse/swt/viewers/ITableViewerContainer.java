@@ -1,6 +1,7 @@
 /*******************************************************************************
- * 2008-2011 Projecto Colibri
- * Marco Lopes (marcolopes@projectocolibri.com)
+ * 2010-2011 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.viewers;
 

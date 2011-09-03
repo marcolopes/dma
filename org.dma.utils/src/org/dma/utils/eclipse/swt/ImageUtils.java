@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * 2011 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopes@netc.pt)
+ *******************************************************************************/
 package org.dma.utils.eclipse.swt;
 
 import java.awt.image.BufferedImage;
