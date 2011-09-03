@@ -1,6 +1,7 @@
 /*******************************************************************************
- * 2008-2011 Projecto Colibri
- * Marco Lopes (marcolopes@projectocolibri.com)
+ * 2011 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.custom;
 
@@ -80,6 +81,8 @@ public abstract class CustomBrowserView extends ViewPart {
 		try{
 			final CTabItem tabItem=new CTabItem(tabFolder,
 					browserMap.size()==0 ? SWT.NONE : SWT.CLOSE);
+			tabItem.setText("Loading...");
+
 			Composite container=new Composite(tabFolder, SWT.NONE);
 			container.setLayout(new FillLayout());
 

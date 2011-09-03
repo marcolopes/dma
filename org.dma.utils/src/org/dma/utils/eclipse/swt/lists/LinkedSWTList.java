@@ -1,12 +1,11 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2010-2011 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.lists;
 
 import java.util.List;
-
 
 public class LinkedSWTList {
 
