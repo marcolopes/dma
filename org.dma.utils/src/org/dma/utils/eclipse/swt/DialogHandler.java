@@ -12,20 +12,12 @@ import org.eclipse.swt.widgets.Shell;
 
 public class DialogHandler {
 
+	public static String ERROR_TITLE = "Error";
+	public static String INFORMATION_TITLE = "Information";
+	public static String QUESTION_TITLE = "Attention";
+	public static String CONFIRMATION_TITLE = "Attention";
+
 	private static enum TYPE {ERROR, INFORMATION, QUESTION, CONFIRMATION}
-
-	private static String ERROR_TITLE = "Error";
-	private static String INFORMATION_TITLE = "Information";
-	private static String QUESTION_TITLE = "Attention";
-	private static String CONFIRMATION_TITLE = "Attention";
-
-	public static void setMessages(String error, String information, String question, String confirmation) {
-		ERROR_TITLE=error;
-		INFORMATION_TITLE=information;
-		QUESTION_TITLE=question;
-		CONFIRMATION_TITLE=confirmation;
-	}
-
 
 	/*
 	 * Error
