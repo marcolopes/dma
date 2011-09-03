@@ -7,6 +7,7 @@ package org.dma.utils.eclipse.swt.custom;
 
 import org.apache.commons.collections15.map.LinkedMap;
 import org.dma.utils.eclipse.core.resources.ResourceManager;
+import org.dma.utils.java.Debug;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -28,7 +29,7 @@ import org.eclipse.ui.part.ViewPart;
 public abstract class CustomBrowserView extends ViewPart {
 
 	private CTabFolder tabFolder;
-	private final LinkedMap<CTabItem, Browser> browserMap=new LinkedMap();
+	private final LinkedMap<Browser, CTabItem> browserMap=new LinkedMap();
 
 	private String url;
 
@@ -61,14 +62,17 @@ public abstract class CustomBrowserView extends ViewPart {
 
 			tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
 				public void close(CTabFolderEvent event) {
+					Debug.info("### CLOSE ###");
 					browserMap.remove(tabFolder.getSelectionIndex());
 				}
 			});
 			tabFolder.addSelectionListener(new SelectionListener(){
 				public void widgetSelected(SelectionEvent e) {
+					Debug.info("### SELECTED ###");
 					getBrowser().setFocus();
 				}
 				public void widgetDefaultSelected(SelectionEvent e) {
+					Debug.info("### DEFAULT SELECTED ###");
 				}
 			});
 
@@ -93,17 +97,19 @@ public abstract class CustomBrowserView extends ViewPart {
 
 			browser.addOpenWindowListener(new OpenWindowListener() {
 				public void open(WindowEvent event) {
+					Debug.info("### OPEN ###");
 					event.browser=createBrowser();
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
 				public void changed(TitleEvent event) {
-					browserMap.get(tabFolder.getSelectionIndex()).setText(getBrowser().getUrl());
+					Debug.info("### CHANGED ###");
+					browserMap.getValue(tabFolder.getSelectionIndex()).setText(getBrowser().getUrl());
+					getBrowser().setFocus();
 				}
 			});
 
-			browser.setFocus();
-			browserMap.put(tabItem, browser);
+			browserMap.put(browser, tabItem);
 
 			return browser;
 
@@ -208,7 +214,7 @@ public abstract class CustomBrowserView extends ViewPart {
 
 	//getters and setters
 	public Browser getBrowser() {
-		return browserMap.getValue(tabFolder.getSelectionIndex());
+		return browserMap.get(tabFolder.getSelectionIndex());
 	}
 
 
