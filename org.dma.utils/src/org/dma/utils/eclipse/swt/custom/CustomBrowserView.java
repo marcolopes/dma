@@ -55,6 +55,10 @@ public abstract class CustomBrowserView extends ViewPart {
 			container.setLayout(new FillLayout());
 
 			tabFolder=new CTabFolder(container, SWT.NONE);
+			tabFolder.pack();
+			//tabFolder.setBorderVisible(true);
+			tabFolder.setSimple(false);
+
 			tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
 				public void close(CTabFolderEvent event) {
 					browserMap.remove(tabFolder.getSelectionIndex());
@@ -82,6 +86,7 @@ public abstract class CustomBrowserView extends ViewPart {
 
 			Composite container=new Composite(tabFolder, SWT.NONE);
 			container.setLayout(new FillLayout());
+			container.setFocus();
 
 			Browser browser=new Browser(tabFolder, SWT.NONE);
 			tabItem.setControl(browser);
@@ -98,7 +103,6 @@ public abstract class CustomBrowserView extends ViewPart {
 				}
 			});
 
-			browser.setFocus();
 			browserMap.put(tabItem, browser);
 
 			return browser;
@@ -116,10 +120,10 @@ public abstract class CustomBrowserView extends ViewPart {
 
 		try{
 			//toolbar
-			IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
+			IToolBarManager toolbarManager=getViewSite().getActionBars().getToolBarManager();
 
 			if (getHomeIcon()!=null){
-				IAction button_home = new CustomAction(){
+				IAction button_home=new CustomAction(){
 					public final void run(){
 						goHome();
 					}
@@ -130,7 +134,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			}
 
 			if (getStopIcon()!=null){
-				IAction button_stop = new CustomAction(){
+				IAction button_stop=new CustomAction(){
 					public final void run(){
 						getBrowser().stop();
 					}
@@ -141,7 +145,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			}
 
 			if (getBackIcon()!=null){
-				IAction button_back = new CustomAction(){
+				IAction button_back=new CustomAction(){
 					public final void run(){
 						getBrowser().back();
 					}
@@ -152,7 +156,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			}
 
 			if (getForwardIcon()!=null){
-				IAction button_forward = new CustomAction(){
+				IAction button_forward=new CustomAction(){
 					public final void run(){
 						getBrowser().forward();
 					}
@@ -183,24 +187,19 @@ public abstract class CustomBrowserView extends ViewPart {
 	}
 
 
-	public void goHome() {
+	public void goHome(String url) {
 		try{
+			this.url=url;
 			getBrowser().setUrl(url);
 
-		}catch(Exception e){
+		} catch (Exception e){
 			e.printStackTrace();
 		}
 	}
 
 
-	public void goHome(String url) {
-		try{
-			this.url=url;
-			goHome();
-
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+	public void goHome() {
+		goHome(url);
 	}
 
 
