@@ -59,7 +59,8 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
 				public void close(CTabFolderEvent event) {
 					Debug.info("### CLOSE ###", getBrowser().getUrl());
-					browserMap.remove(tabFolder.getSelection());
+					browserMap.getValue(tabFolder.getSelectionIndex()).dispose();
+					browserMap.remove(tabFolder.getSelectionIndex());
 				}
 			});
 			tabFolder.addSelectionListener(new SelectionListener(){
@@ -214,7 +215,7 @@ public abstract class CustomBrowserView extends ViewPart {
 
 	//getters and setters
 	public Browser getBrowser() {
-		return browserMap.get(tabFolder.getSelection());
+		return browserMap.getValue(tabFolder.getSelectionIndex());
 	}
 
 
