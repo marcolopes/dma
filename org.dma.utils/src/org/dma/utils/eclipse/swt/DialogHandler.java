@@ -71,7 +71,6 @@ public class DialogHandler {
 
 		try{
 			if(title==null) {
-
 				switch(type) {
 					case ERROR: title=ERROR_TITLE; break;
 					case INFORMATION: title=INFORMATION_TITLE; break;

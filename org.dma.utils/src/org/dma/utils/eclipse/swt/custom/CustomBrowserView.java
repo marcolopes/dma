@@ -88,7 +88,6 @@ public abstract class CustomBrowserView extends ViewPart {
 
 			Browser browser=new Browser(tabFolder, SWT.NONE);
 			tabItem.setControl(browser);
-			browser.setFocus();
 			tabFolder.setSelection(browserMap.size());
 
 			browser.addOpenWindowListener(new OpenWindowListener() {
@@ -104,6 +103,7 @@ public abstract class CustomBrowserView extends ViewPart {
 				}
 			});
 
+			browser.setFocus();
 			browserMap.put(tabItem, browser);
 
 			return browser;
