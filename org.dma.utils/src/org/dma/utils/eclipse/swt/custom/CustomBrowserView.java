@@ -7,7 +7,6 @@ package org.dma.utils.eclipse.swt.custom;
 
 import org.apache.commons.collections15.map.LinkedMap;
 import org.dma.utils.eclipse.core.resources.ResourceManager;
-import org.dma.utils.java.Debug;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -58,14 +57,11 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabFolder=new CTabFolder(container, SWT.NONE);
 			tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
 				public void close(CTabFolderEvent event) {
-					Debug.info("### CLOSE ###", getBrowser().getUrl());
-					browserMap.getValue(tabFolder.getSelectionIndex()).dispose();
 					browserMap.remove(tabFolder.getSelectionIndex());
 				}
 			});
 			tabFolder.addSelectionListener(new SelectionListener(){
 				public void widgetSelected(SelectionEvent e) {
-					Debug.info("### SELECTED ###", getBrowser().getUrl());
 					getBrowser().setFocus();
 				}
 				public void widgetDefaultSelected(SelectionEvent e) {
@@ -94,12 +90,10 @@ public abstract class CustomBrowserView extends ViewPart {
 			browser.addOpenWindowListener(new OpenWindowListener() {
 				public void open(WindowEvent event) {
 					event.browser=createBrowser();
-					Debug.info("### OPEN ###", getBrowser().getUrl());
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
 				public void changed(TitleEvent event) {
-					Debug.info("### BROWSER ###", getBrowser().getUrl());
 					browserMap.get(tabFolder.getSelectionIndex()).setText(getBrowser().getUrl());
 				}
 			});
