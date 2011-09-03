@@ -80,13 +80,12 @@ public abstract class CustomBrowserView extends ViewPart {
 
 	private Browser createBrowser() {
 		try{
-			final CTabItem tabItem=new CTabItem(tabFolder,
-					browserMap.size()==0 ? SWT.NONE : SWT.CLOSE);
+			final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
+			tabItem.setShowClose(browserMap.size()>0);
 			tabItem.setText("Loading...");
 
 			Composite container=new Composite(tabFolder, SWT.NONE);
 			container.setLayout(new FillLayout());
-			container.setFocus();
 
 			Browser browser=new Browser(tabFolder, SWT.NONE);
 			tabItem.setControl(browser);
@@ -103,6 +102,7 @@ public abstract class CustomBrowserView extends ViewPart {
 				}
 			});
 
+			browser.setFocus();
 			browserMap.put(tabItem, browser);
 
 			return browser;
