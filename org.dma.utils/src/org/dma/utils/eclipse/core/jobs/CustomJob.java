@@ -145,6 +145,8 @@ public class CustomJob extends Job {
 			monitor.done();
 			Debug.info("### JOB FINISHED ###", getName());
 		}
+		
+		executing=false;
 
 		return Status.OK_STATUS;
 	}
