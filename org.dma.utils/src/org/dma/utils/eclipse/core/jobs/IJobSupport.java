@@ -7,8 +7,6 @@ package org.dma.utils.eclipse.core.jobs;
 
 public interface IJobSupport {
 
-	public boolean isJobRunning();
-
 	public void setJobRunning(boolean jobRunning);
 
 }
