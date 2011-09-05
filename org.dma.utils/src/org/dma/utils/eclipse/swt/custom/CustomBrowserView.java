@@ -74,8 +74,8 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabFolder.addSelectionListener(new SelectionListener(){
 				public void widgetSelected(SelectionEvent e) {
 					Debug.info("### SELECTED ###");
-					getBrowser().setFocus();
-					updateToolbar();
+					setFocus();
+					updateToolbar(getBrowser()!=null);
 				}
 				public void widgetDefaultSelected(SelectionEvent e) {
 					Debug.info("### DEFAULT SELECTED ###");
@@ -90,14 +90,20 @@ public abstract class CustomBrowserView extends ViewPart {
 
 	private Browser createBrowser() {
 
+		Browser browser=null;
+
+		final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
+		tabItem.setShowClose(browserMap.size()>0);
+		tabItem.setText("Loading...");
+
 		try{
 			//Composite container=new Composite(tabFolder, SWT.NONE);
 			//container.setLayout(new FillLayout());
 
-			int x;
-			if (browserMap.size()>=2) x=1/0;
+			//test browser creation failure
+			if (browserMap.size()>=1) throw new Exception();
 
-			Browser browser=new Browser(tabFolder, SWT.NONE);
+			browser=new Browser(tabFolder, SWT.NONE);
 			//listeners are not created if browser throws exception
 			browser.addOpenWindowListener(new OpenWindowListener() {
 				public void open(WindowEvent event) {
@@ -107,7 +113,7 @@ public abstract class CustomBrowserView extends ViewPart {
 					 * and that is what we are currently avoiding by creating a new one!
 					 */
 					event.browser=createBrowser();
-					updateToolbar();
+					updateToolbar(getBrowser()!=null);
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
@@ -115,29 +121,22 @@ public abstract class CustomBrowserView extends ViewPart {
 					Debug.info("### CHANGED ###");
 					CTabItem tabItem=browserMap.get(tabFolder.getSelectionIndex());
 					tabItem.setText(getBrowser().getUrl());
-					getBrowser().setFocus();
-					updateToolbar();
+					setFocus();
+					updateToolbar(getBrowser()!=null);
 				}
 			});
 
-			final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
-			tabItem.setShowClose(browserMap.size()>0);
-			tabItem.setText("Loading...");
 			tabItem.setControl(browser);
-
-			tabFolder.setSelection(browserMap.size());
-
-			browserMap.put(tabItem, browser);
-
-			return browser;
 
 		}catch(Exception e){
 			e.printStackTrace();
+			tabItem.setText("Browser could not be created!");
 		}
 
-		Debug.info("### BROWSER NOT CREATED ###");
+		tabFolder.setSelection(browserMap.size());
+		browserMap.put(tabItem, browser);
 
-		return null;
+		return browser;
 
 	}
 
@@ -156,7 +155,6 @@ public abstract class CustomBrowserView extends ViewPart {
 				};
 				button_home.setToolTipText("Home");
 				button_home.setImageDescriptor(ResourceManager.getImageDescriptor(getHomeIcon()));
-				button_home.setEnabled(false);
 				toolbarManager.add(button_home);
 			}
 
@@ -168,35 +166,32 @@ public abstract class CustomBrowserView extends ViewPart {
 				};
 				button_stop.setToolTipText("Stop");
 				button_stop.setImageDescriptor(ResourceManager.getImageDescriptor(getStopIcon()));
-				button_stop.setEnabled(false);
 				toolbarManager.add(button_stop);
 			}
 
 			if (getBackIcon()!=null){
 				button_back=new CustomAction(){
 					public final void run(){
-						Debug.info("### BACK ###", getBrowser().isBackEnabled());
 						getBrowser().back();
 					}
 				};
 				button_back.setToolTipText("Back");
 				button_back.setImageDescriptor(ResourceManager.getImageDescriptor(getBackIcon()));
-				button_back.setEnabled(false);
 				toolbarManager.add(button_back);
 			}
 
 			if (getForwardIcon()!=null){
 				button_forward=new CustomAction(){
 					public final void run(){
-						Debug.info("### FORWARD ###", getBrowser().isForwardEnabled());
 						getBrowser().forward();
 					}
 				};
 				button_forward.setToolTipText("Forward");
 				button_forward.setImageDescriptor(ResourceManager.getImageDescriptor(getForwardIcon()));
-				button_forward.setEnabled(false);
 				toolbarManager.add(button_forward);
 			}
+
+			updateToolbar(false);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -204,19 +199,21 @@ public abstract class CustomBrowserView extends ViewPart {
 	}
 
 
-	private void updateToolbar(){
+	private void updateToolbar(boolean enabled){
 
 		try{
-			if (button_home!=null)
-				button_home.setEnabled(true);
+			final IAction[] buttons=new IAction[]{
+				button_home, button_stop, button_back, button_forward};
 
-			if (button_stop!=null)
-				button_stop.setEnabled(true);
+			for(int i=0; i<buttons.length; i++){
+				if (buttons[i]!=null)
+					buttons[i].setEnabled(enabled);
+			}
 
-			if (button_back!=null)
+			if (button_back.isEnabled())
 				button_back.setEnabled(getBrowser().isBackEnabled());
 
-			if (button_forward!=null)
+			if (button_forward.isEnabled())
 				button_forward.setEnabled(getBrowser().isForwardEnabled());
 
 		}catch(Exception e){
@@ -228,6 +225,15 @@ public abstract class CustomBrowserView extends ViewPart {
 
 
 	//browser
+	public void setFocus() {
+		Browser browser=getBrowser();
+		//browser may not exist!
+		if (browser!=null){
+			browser.setFocus();
+		}
+	}
+
+
 	public void setInvisible() {
 		Browser browser=getBrowser();
 		//browser may not exist!
@@ -254,8 +260,7 @@ public abstract class CustomBrowserView extends ViewPart {
 
 
 	public Browser getBrowser() {
-		int index=tabFolder.getSelectionIndex();
-		return index>=0 && index<browserMap.size() ? browserMap.getValue(index) : null;
+		return browserMap.getValue(tabFolder.getSelectionIndex());
 	}
 
 
