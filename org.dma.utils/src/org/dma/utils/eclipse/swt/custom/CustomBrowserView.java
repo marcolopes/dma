@@ -38,6 +38,7 @@ public abstract class CustomBrowserView extends ViewPart {
 	private IAction button_back;
 	private IAction button_forward;
 
+	//button is not created if icon is NULL
 	public abstract String getHomeIcon();
 	public abstract String getStopIcon();
 	public abstract String getBackIcon();
@@ -97,9 +98,6 @@ public abstract class CustomBrowserView extends ViewPart {
 		tabItem.setText("Loading...");
 
 		try{
-			//Composite container=new Composite(tabFolder, SWT.NONE);
-			//container.setLayout(new FillLayout());
-
 			//test browser creation failure
 			//if (browserMap.size()>=0) throw new Exception();
 
@@ -108,10 +106,6 @@ public abstract class CustomBrowserView extends ViewPart {
 			browser.addOpenWindowListener(new OpenWindowListener() {
 				public void open(WindowEvent event) {
 					Debug.info("### OPEN ###");
-					/*
-					 * If the browser cannot be created, an external browser is used
-					 * and that is what we are currently avoiding by creating a new one!
-					 */
 					event.browser=createBrowser();
 					updateToolbar(getBrowser()!=null);
 				}
@@ -129,6 +123,10 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabItem.setControl(browser);
 
 		}catch(Exception e){
+			/*
+			 * If the browser cannot be created, an external browser is used
+			 * but that is what we are currently avoiding by creating a new one :-\
+			 */
 			tabItem.setText("Browser could not be created!");
 		}
 
@@ -225,30 +223,27 @@ public abstract class CustomBrowserView extends ViewPart {
 
 	//browser
 	public void setFocus() {
-		Browser browser=getBrowser();
 		//browser may not exist!
-		if (browser!=null){
-			browser.setFocus();
+		if (getBrowser()!=null){
+			getBrowser().setFocus();
 		}
 	}
 
 
 	public void setInvisible() {
-		Browser browser=getBrowser();
 		//browser may not exist!
-		if (browser!=null){
-			browser.setVisible(false);
-			browser.setBounds(0, 0, 1, 1);
+		if (getBrowser()!=null){
+			getBrowser().setVisible(false);
+			getBrowser().setBounds(0, 0, 1, 1);
 		}
 	}
 
 
 	public void goHome(String homeUrl) {
 		this.homeUrl=homeUrl;
-		Browser browser=getBrowser();
 		//browser may not exist!
-		if (browser!=null){
-			browser.setUrl(homeUrl);
+		if (getBrowser()!=null){
+			getBrowser().setUrl(homeUrl);
 		}
 	}
 
