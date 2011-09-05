@@ -56,6 +56,21 @@ public abstract class CustomBrowserView extends ViewPart {
 	}
 
 
+	public void dispose() {
+		try{
+			for(int i=0; i<tabMap.size(); i++){
+				tabMap.getValue(i).dispose();
+				tabMap.get(i).dispose();
+			}
+			tabFolder.dispose();
+			super.dispose();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+
 	public void createTabFolder(Composite parent) {
 		try{
 			Composite container=new Composite(parent, SWT.NONE);
@@ -69,6 +84,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
 				public void close(CTabFolderEvent event) {
 					Debug.info("### CLOSE ###");
+					tabMap.getValue(tabFolder.getSelectionIndex()).dispose();
 					tabMap.remove(tabFolder.getSelectionIndex());
 				}
 			});
