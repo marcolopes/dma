@@ -28,10 +28,13 @@ import org.eclipse.ui.part.ViewPart;
 
 public abstract class CustomBrowserView extends ViewPart {
 
+	private String url;
+
 	private CTabFolder tabFolder;
 	private final LinkedMap<Browser, CTabItem> browserMap=new LinkedMap();
 
-	private String url;
+	private IAction button_back;
+	private IAction button_forward;
 
 	public abstract String getHomeIcon();
 	public abstract String getStopIcon();
@@ -42,7 +45,7 @@ public abstract class CustomBrowserView extends ViewPart {
 		try{
 			createTabFolder(parent);
 			createToolbarManager();
-			createTabItem();
+			createBrowser();
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -70,6 +73,7 @@ public abstract class CustomBrowserView extends ViewPart {
 				public void widgetSelected(SelectionEvent e) {
 					Debug.info("### SELECTED ###");
 					getBrowser().setFocus();
+					updateToolbar();
 				}
 				public void widgetDefaultSelected(SelectionEvent e) {
 					Debug.info("### DEFAULT SELECTED ###");
@@ -82,33 +86,45 @@ public abstract class CustomBrowserView extends ViewPart {
 	}
 
 
-	private Browser createTabItem() {
-		try{
-			final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
-			tabItem.setShowClose(browserMap.size()>0);
-			tabItem.setText("Loading...");
+	private Browser createBrowser() {
 
+		final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
+		tabItem.setShowClose(browserMap.size()>0);
+		tabItem.setText("Loading...");
+
+		try{
 			//Composite container=new Composite(tabFolder, SWT.NONE);
 			//container.setLayout(new FillLayout());
 
-			Browser browser=createBrowser(tabFolder);
+			int x;
+			if (browserMap.size()>1) x=1/0;
+
+			Browser browser=new Browser(tabFolder, SWT.NONE);
+
+			//listeners are not created if browser throws exception
 			browser.addOpenWindowListener(new OpenWindowListener() {
 				public void open(WindowEvent event) {
 					Debug.info("### OPEN ###");
-					event.browser=createTabItem();
+					/*
+					 * If the browser cannot be created, an external browser is used
+					 * and that is what we are currently avoiding by creating a new one!
+					 */
+					event.browser=createBrowser();
+					updateToolbar();
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
 				public void changed(TitleEvent event) {
 					Debug.info("### CHANGED ###");
-					browserMap.getValue(tabFolder.getSelectionIndex()).setText(getBrowser().getUrl());
+					CTabItem tabItem=browserMap.getValue(tabFolder.getSelectionIndex());
+					tabItem.setText(getBrowser().getUrl());
 					getBrowser().setFocus();
+					updateToolbar();
 				}
 			});
 
 			tabItem.setControl(browser);
 			tabFolder.setSelection(browserMap.size());
-
 			browserMap.put(browser, tabItem);
 
 			return browser;
@@ -116,6 +132,9 @@ public abstract class CustomBrowserView extends ViewPart {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+
+		//tabItem must no be created to avoid tabFolder listeners
+		tabItem.dispose();
 
 		return null;
 
@@ -151,7 +170,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			}
 
 			if (getBackIcon()!=null){
-				IAction button_back=new CustomAction(){
+				button_back=new CustomAction(){
 					public final void run(){
 						Debug.info("### BACK ###", getBrowser().isBackEnabled());
 						getBrowser().back();
@@ -163,7 +182,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			}
 
 			if (getForwardIcon()!=null){
-				IAction button_forward=new CustomAction(){
+				button_forward=new CustomAction(){
 					public final void run(){
 						Debug.info("### FORWARD ###", getBrowser().isForwardEnabled());
 						getBrowser().forward();
@@ -180,43 +199,40 @@ public abstract class CustomBrowserView extends ViewPart {
 	}
 
 
+	private void updateToolbar(){
 
-
-	//browser
-	private Browser createBrowser(Composite parent) {
 		try{
-			Browser browser=new Browser(tabFolder, SWT.NONE);
+			if (button_back!=null)
+				button_back.setEnabled(getBrowser().isBackEnabled());
 
-			return browser;
+			if (button_forward!=null)
+				button_forward.setEnabled(getBrowser().isForwardEnabled());
 
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-
-		return null;
-
 	}
 
 
+
+
+	//browser
 	public void setInvisible() {
-		try{
-			Browser browser=getBrowser();
+		Browser browser=getBrowser();
+		//browser may not exist!
+		if (browser!=null){
 			browser.setVisible(false);
 			browser.setBounds(0, 0, 1, 1);
-
-		} catch (Exception e){
-			e.printStackTrace();
 		}
 	}
 
 
 	public void goHome(String url) {
-		try{
-			this.url=url;
-			getBrowser().setUrl(url);
-
-		} catch (Exception e){
-			e.printStackTrace();
+		this.url=url;
+		Browser browser=getBrowser();
+		//browser may not exist!
+		if (browser!=null){
+			browser.setUrl(url);
 		}
 	}
 
@@ -226,12 +242,9 @@ public abstract class CustomBrowserView extends ViewPart {
 	}
 
 
-
-
-
-	//getters and setters
 	public Browser getBrowser() {
-		return browserMap.get(tabFolder.getSelectionIndex());
+		int index=tabFolder.getSelectionIndex();
+		return index>=0 && index<browserMap.size() ? browserMap.get(index) : null;
 	}
 
 
