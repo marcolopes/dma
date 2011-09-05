@@ -11,7 +11,6 @@ import java.math.RoundingMode;
 public class BusinessRules {
 
 	/**
-	 *
 	 * Devolve o numero mais proximo ao arredondamento;
 	 * Podem ser numeros com ou sem casas decimais;
 	 * exemplo: 123.56, 2.50 = 122.50
@@ -36,7 +35,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve o PRECO de CUSTO MEDIO PONDERADO;
 	 * formula: (existencias * PrecoActual + entradas * precoEntradas) / (existencias + entradas);
 	 * exemplo: 100, 10, 100, 20 = 15
@@ -58,7 +56,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve a PERCENTAGEM FINAL;
 	 * formula: perc1 + (100 - perc1) * (perc2 / 100);
 	 * exemplo: 50% + 25% = 62,5%
@@ -73,7 +70,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve a PERCENTAGEM de lucro;
 	 * formula: ((total - valor) / valor) * 100;
 	 * exemplo: 200, 10 = 1900%
@@ -91,7 +87,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve a PERCENTAGEM do VALOR;
 	 * formula: (valor * 100) / total;
 	 * exemplo: 200, 10 = 5%
@@ -110,7 +105,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve o VALOR da PERCENTAGEM;
 	 * formula: valor * (perc / 100);
 	 * exemplo: 200, 10% = 20
@@ -124,7 +118,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve o VALOR liquido da PERCENTAGEM;
 	 * formula: valor * (1 - (perc / 100);
 	 * exemplo: 200, 10% = 180
@@ -140,7 +133,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve o VALOR deduzido da PERCENTAGEM;
 	 * formula: valor / (perc / 100) + 1;
 	 * exemplo: 130, 30% = 100
@@ -157,7 +149,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve o VALOR acrescido da PERCENTAGEM;
 	 * formula: valor * ((perc / 100) + 1);
 	 * exemplo: 200, 10% = 220
@@ -172,7 +163,6 @@ public class BusinessRules {
 
 
 	/**
-	 *
 	 * Devolve o VALOR PROPORCIONAL;
 	 * formula: (valor * parte) / total;
 	 * exemplo: 100, 50, 200 = 25
