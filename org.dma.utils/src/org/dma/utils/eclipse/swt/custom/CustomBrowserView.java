@@ -31,8 +31,10 @@ public abstract class CustomBrowserView extends ViewPart {
 	private String url;
 
 	private CTabFolder tabFolder;
-	private final LinkedMap<Browser, CTabItem> browserMap=new LinkedMap();
+	private final LinkedMap<CTabItem, Browser> browserMap=new LinkedMap();
 
+	private IAction button_home;
+	private IAction button_stop;
 	private IAction button_back;
 	private IAction button_forward;
 
@@ -88,19 +90,14 @@ public abstract class CustomBrowserView extends ViewPart {
 
 	private Browser createBrowser() {
 
-		final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
-		tabItem.setShowClose(browserMap.size()>0);
-		tabItem.setText("Loading...");
-
 		try{
 			//Composite container=new Composite(tabFolder, SWT.NONE);
 			//container.setLayout(new FillLayout());
 
 			int x;
-			if (browserMap.size()>1) x=1/0;
+			if (browserMap.size()>=2) x=1/0;
 
 			Browser browser=new Browser(tabFolder, SWT.NONE);
-
 			//listeners are not created if browser throws exception
 			browser.addOpenWindowListener(new OpenWindowListener() {
 				public void open(WindowEvent event) {
@@ -116,16 +113,21 @@ public abstract class CustomBrowserView extends ViewPart {
 			browser.addTitleListener(new TitleListener(){
 				public void changed(TitleEvent event) {
 					Debug.info("### CHANGED ###");
-					CTabItem tabItem=browserMap.getValue(tabFolder.getSelectionIndex());
+					CTabItem tabItem=browserMap.get(tabFolder.getSelectionIndex());
 					tabItem.setText(getBrowser().getUrl());
 					getBrowser().setFocus();
 					updateToolbar();
 				}
 			});
 
+			final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
+			tabItem.setShowClose(browserMap.size()>0);
+			tabItem.setText("Loading...");
 			tabItem.setControl(browser);
+
 			tabFolder.setSelection(browserMap.size());
-			browserMap.put(browser, tabItem);
+
+			browserMap.put(tabItem, browser);
 
 			return browser;
 
@@ -133,8 +135,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			e.printStackTrace();
 		}
 
-		//tabItem must no be created to avoid tabFolder listeners
-		tabItem.dispose();
+		Debug.info("### BROWSER NOT CREATED ###");
 
 		return null;
 
@@ -148,24 +149,26 @@ public abstract class CustomBrowserView extends ViewPart {
 			IToolBarManager toolbarManager=getViewSite().getActionBars().getToolBarManager();
 
 			if (getHomeIcon()!=null){
-				IAction button_home=new CustomAction(){
+				button_home=new CustomAction(){
 					public final void run(){
 						goHome();
 					}
 				};
 				button_home.setToolTipText("Home");
 				button_home.setImageDescriptor(ResourceManager.getImageDescriptor(getHomeIcon()));
+				button_home.setEnabled(false);
 				toolbarManager.add(button_home);
 			}
 
 			if (getStopIcon()!=null){
-				IAction button_stop=new CustomAction(){
+				button_stop=new CustomAction(){
 					public final void run(){
 						getBrowser().stop();
 					}
 				};
 				button_stop.setToolTipText("Stop");
 				button_stop.setImageDescriptor(ResourceManager.getImageDescriptor(getStopIcon()));
+				button_stop.setEnabled(false);
 				toolbarManager.add(button_stop);
 			}
 
@@ -178,6 +181,7 @@ public abstract class CustomBrowserView extends ViewPart {
 				};
 				button_back.setToolTipText("Back");
 				button_back.setImageDescriptor(ResourceManager.getImageDescriptor(getBackIcon()));
+				button_back.setEnabled(false);
 				toolbarManager.add(button_back);
 			}
 
@@ -190,6 +194,7 @@ public abstract class CustomBrowserView extends ViewPart {
 				};
 				button_forward.setToolTipText("Forward");
 				button_forward.setImageDescriptor(ResourceManager.getImageDescriptor(getForwardIcon()));
+				button_forward.setEnabled(false);
 				toolbarManager.add(button_forward);
 			}
 
@@ -202,6 +207,12 @@ public abstract class CustomBrowserView extends ViewPart {
 	private void updateToolbar(){
 
 		try{
+			if (button_home!=null)
+				button_home.setEnabled(true);
+
+			if (button_stop!=null)
+				button_stop.setEnabled(true);
+
 			if (button_back!=null)
 				button_back.setEnabled(getBrowser().isBackEnabled());
 
@@ -244,7 +255,7 @@ public abstract class CustomBrowserView extends ViewPart {
 
 	public Browser getBrowser() {
 		int index=tabFolder.getSelectionIndex();
-		return index>=0 && index<browserMap.size() ? browserMap.get(index) : null;
+		return index>=0 && index<browserMap.size() ? browserMap.getValue(index) : null;
 	}
 
 
