@@ -59,7 +59,9 @@ public abstract class CustomBrowserView extends ViewPart {
 	public void dispose() {
 		try{
 			for(int i=0; i<tabMap.size(); i++){
+				//dispose control (Browser)
 				tabMap.getValue(i).dispose();
+				//dispose TabItem
 				tabMap.get(i).dispose();
 			}
 			tabFolder.dispose();
@@ -84,7 +86,9 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
 				public void close(CTabFolderEvent event) {
 					Debug.info("### CLOSE ###");
+					//dispose control (Browser)
 					tabMap.getValue(tabFolder.getSelectionIndex()).dispose();
+					//remove TabItem
 					tabMap.remove(tabFolder.getSelectionIndex());
 				}
 			});
