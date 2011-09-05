@@ -31,7 +31,7 @@ public abstract class CustomBrowserView extends ViewPart {
 	private String homeUrl;
 
 	private CTabFolder tabFolder;
-	private final LinkedMap<CTabItem, Browser> browserMap=new LinkedMap();
+	private final LinkedMap<CTabItem, Browser> tabMap=new LinkedMap();
 
 	private IAction button_home;
 	private IAction button_stop;
@@ -69,7 +69,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
 				public void close(CTabFolderEvent event) {
 					Debug.info("### CLOSE ###");
-					browserMap.remove(tabFolder.getSelectionIndex());
+					tabMap.remove(tabFolder.getSelectionIndex());
 				}
 			});
 			tabFolder.addSelectionListener(new SelectionListener(){
@@ -94,7 +94,7 @@ public abstract class CustomBrowserView extends ViewPart {
 		Browser browser=null;
 
 		final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
-		tabItem.setShowClose(browserMap.size()>0);
+		tabItem.setShowClose(tabMap.size()>0);
 		tabItem.setText("Loading...");
 
 		try{
@@ -113,7 +113,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			browser.addTitleListener(new TitleListener(){
 				public void changed(TitleEvent event) {
 					Debug.info("### CHANGED ###");
-					CTabItem tabItem=browserMap.get(tabFolder.getSelectionIndex());
+					CTabItem tabItem=tabMap.get(tabFolder.getSelectionIndex());
 					tabItem.setText(getBrowser().getUrl());
 					setFocus();
 					updateToolbar(getBrowser()!=null);
@@ -130,8 +130,8 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabItem.setText("Browser could not be created!");
 		}
 
-		tabFolder.setSelection(browserMap.size());
-		browserMap.put(tabItem, browser);
+		tabFolder.setSelection(tabMap.size());
+		tabMap.put(tabItem, browser);
 
 		return browser;
 
@@ -254,7 +254,7 @@ public abstract class CustomBrowserView extends ViewPart {
 
 
 	public Browser getBrowser() {
-		return browserMap.getValue(tabFolder.getSelectionIndex());
+		return tabMap.getValue(tabFolder.getSelectionIndex());
 	}
 
 
