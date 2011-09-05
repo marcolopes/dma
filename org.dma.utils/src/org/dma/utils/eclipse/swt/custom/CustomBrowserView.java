@@ -42,7 +42,7 @@ public abstract class CustomBrowserView extends ViewPart {
 		try{
 			createTabFolder(parent);
 			createToolbarManager();
-			createBrowser();
+			createTabItem();
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -82,23 +82,20 @@ public abstract class CustomBrowserView extends ViewPart {
 	}
 
 
-	private Browser createBrowser() {
+	private Browser createTabItem() {
 		try{
 			final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
 			tabItem.setShowClose(browserMap.size()>0);
 			tabItem.setText("Loading...");
 
-			Composite container=new Composite(tabFolder, SWT.NONE);
-			container.setLayout(new FillLayout());
+			//Composite container=new Composite(tabFolder, SWT.NONE);
+			//container.setLayout(new FillLayout());
 
-			Browser browser=new Browser(tabFolder, SWT.NONE);
-			tabItem.setControl(browser);
-			tabFolder.setSelection(browserMap.size());
-
+			Browser browser=createBrowser(tabFolder);
 			browser.addOpenWindowListener(new OpenWindowListener() {
 				public void open(WindowEvent event) {
 					Debug.info("### OPEN ###");
-					event.browser=createBrowser();
+					event.browser=createTabItem();
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
@@ -108,6 +105,9 @@ public abstract class CustomBrowserView extends ViewPart {
 					getBrowser().setFocus();
 				}
 			});
+
+			tabItem.setControl(browser);
+			tabFolder.setSelection(browserMap.size());
 
 			browserMap.put(browser, tabItem);
 
@@ -153,6 +153,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			if (getBackIcon()!=null){
 				IAction button_back=new CustomAction(){
 					public final void run(){
+						Debug.info("### BACK ###", getBrowser().isBackEnabled());
 						getBrowser().back();
 					}
 				};
@@ -164,6 +165,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			if (getForwardIcon()!=null){
 				IAction button_forward=new CustomAction(){
 					public final void run(){
+						Debug.info("### FORWARD ###", getBrowser().isForwardEnabled());
 						getBrowser().forward();
 					}
 				};
@@ -181,6 +183,21 @@ public abstract class CustomBrowserView extends ViewPart {
 
 
 	//browser
+	private Browser createBrowser(Composite parent) {
+		try{
+			Browser browser=new Browser(tabFolder, SWT.NONE);
+
+			return browser;
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+
 	public void setInvisible() {
 		try{
 			Browser browser=getBrowser();
