@@ -28,7 +28,7 @@ import org.eclipse.ui.part.ViewPart;
 
 public abstract class CustomBrowserView extends ViewPart {
 
-	private String url;
+	private String homeUrl;
 
 	private CTabFolder tabFolder;
 	private final LinkedMap<CTabItem, Browser> browserMap=new LinkedMap();
@@ -101,7 +101,7 @@ public abstract class CustomBrowserView extends ViewPart {
 			//container.setLayout(new FillLayout());
 
 			//test browser creation failure
-			if (browserMap.size()>=1) throw new Exception();
+			//if (browserMap.size()>=0) throw new Exception();
 
 			browser=new Browser(tabFolder, SWT.NONE);
 			//listeners are not created if browser throws exception
@@ -129,7 +129,6 @@ public abstract class CustomBrowserView extends ViewPart {
 			tabItem.setControl(browser);
 
 		}catch(Exception e){
-			e.printStackTrace();
 			tabItem.setText("Browser could not be created!");
 		}
 
@@ -244,18 +243,18 @@ public abstract class CustomBrowserView extends ViewPart {
 	}
 
 
-	public void goHome(String url) {
-		this.url=url;
+	public void goHome(String homeUrl) {
+		this.homeUrl=homeUrl;
 		Browser browser=getBrowser();
 		//browser may not exist!
 		if (browser!=null){
-			browser.setUrl(url);
+			browser.setUrl(homeUrl);
 		}
 	}
 
 
 	public void goHome() {
-		goHome(url);
+		goHome(homeUrl);
 	}
 
 
