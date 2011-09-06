@@ -13,10 +13,14 @@ public final class ObjectUtils {
 		if(a==null && b==null)
 			return true;
 
-		if(a!=null && b!=null)
-			return a.equals(b);
+		if(a==null || b==null)
+			return false;
 
-		return false;
+		//avoids the numeric format notation ZOO
+		if (a instanceof Number && b instanceof Number)
+			return ((Number)a).doubleValue()==((Number)b).doubleValue();
+
+		return a.equals(b);
 
 	}
 
