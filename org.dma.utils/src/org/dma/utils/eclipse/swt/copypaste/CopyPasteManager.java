@@ -27,9 +27,6 @@ public class CopyPasteManager {
 
 
 
-
-
-	//executions
 	public void executeCopy() {
 
 		header.executeCopy();
