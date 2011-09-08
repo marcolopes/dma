@@ -25,10 +25,10 @@ public class TraverseSupport {
 		//TODO INTERFACE: Implementar o controle de teclado para SWT.MULTI
 		public void keyTraversed(TraverseEvent e){
 
+			Debug.info("### detail ###", e.detail);
+
 			try{
 				if (e.detail == SWT.TRAVERSE_RETURN) {
-
-					Debug.info("### TRAVERSE_RETURN ###");
 
 					//processa control actual
 					Control actualControl=(Control)e.getSource();
@@ -51,11 +51,11 @@ public class TraverseSupport {
 							//NAO passa de campo
 							e.doit = false;
 						}
+
 					}
 
 					//processa proximo control
 					if (e.doit){
-						Debug.info("### doit ###");
 
 						Control nextControl=getNextControl(e.getSource());
 						nextControl.setFocus();
@@ -66,6 +66,7 @@ public class TraverseSupport {
 								!IntegerUtils.bit(((Text) nextControl).getStyle(), SWT.MULTI)){
 							((Text) nextControl).selectAll();
 						}
+
 					}
 
 				}
