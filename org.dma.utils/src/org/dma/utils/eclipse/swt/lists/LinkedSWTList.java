@@ -27,7 +27,9 @@ public class LinkedSWTList {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public CustomSWTList getSWTList() {
 		return SWTList;
 	}

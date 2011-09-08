@@ -32,7 +32,9 @@ public class ExecutionEvent {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public Action getExecutionAction() {
 		return executionAction;
 	}

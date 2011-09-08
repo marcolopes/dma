@@ -44,7 +44,9 @@ public class FocusSupport {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public Control getLastFocusControl() {
 		return lastFocusControl;
 	}

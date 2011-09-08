@@ -51,7 +51,9 @@ public class BindingDefinition {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public IObservableValue getTargetObservableValue() {
 		return targetObservableValue;
 	}

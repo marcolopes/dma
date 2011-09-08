@@ -70,7 +70,9 @@ public class BindingSupport {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public DataBindingContext getBindingContext() {
 		return bindingContext;
 	}

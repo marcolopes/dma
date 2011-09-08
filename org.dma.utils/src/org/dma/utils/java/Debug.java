@@ -73,7 +73,9 @@ public class Debug {
 
 
 
-	// Warning
+	/*
+	 * Warning
+	 */
 	public static void warning(String message) {
 		if (isOn()){
 			caller = new Throwable().getStackTrace()[1];
@@ -156,7 +158,10 @@ public class Debug {
 
 
 
-	//getters and setters
+
+	/*
+	 * Getters and setters
+	 */
 	public static boolean isOn() {
 		return LEVEL!=LEVEL_NONE;
 	}

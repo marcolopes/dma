@@ -44,7 +44,9 @@ public class ExecutionDefinition {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public String getSrcId() {
 		return srcId;
 	}

@@ -27,7 +27,9 @@ public class FileParameters {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public String getPrefix() {
 		return prefix;
 	}
