@@ -44,7 +44,9 @@ public class ServerParameters {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public String getHostname() {
 		return hostname;
 	}

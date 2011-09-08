@@ -65,7 +65,9 @@ public class CustomJob extends Job {
 
 
 
-	//add and remove tasks
+	/*
+	 * Tasks
+	 */
 	public void addTask(JobTask action) {
 		this.tasks.add(action);
 	}
@@ -77,7 +79,9 @@ public class CustomJob extends Job {
 
 
 
-	//execute job
+	/*
+	 * Job
+	 */
 	public void execute() {
 
 		Debug.info();
@@ -105,7 +109,6 @@ public class CustomJob extends Job {
 	public void canceling(){
 		this.executing=false;
 	}
-
 
 
 
@@ -145,7 +148,7 @@ public class CustomJob extends Job {
 			monitor.done();
 			Debug.info("### JOB FINISHED ###", getName());
 		}
-		
+
 		executing=false;
 
 		return Status.OK_STATUS;
@@ -155,7 +158,9 @@ public class CustomJob extends Job {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public void setExitAction(JobAction exitAction) {
 		this.exitAction = exitAction;
 	}

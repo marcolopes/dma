@@ -95,10 +95,9 @@ public class DoubleSWTList {
 
 
 
-
-
-
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public LinkedSWTList getLeftList() {
 		return leftList;
 	}

@@ -68,7 +68,9 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 
-	//listeners
+	/*
+	 * Listeners
+	 */
 	private void addTableDoubleClickListener() {
 
 		tableDoubleClickListener=new MouseAdapter() {
@@ -105,7 +107,9 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 
-	//table
+	/*
+	 * Table
+	 */
 	public int computeSize(){
 		Rectangle rect = getTable().getClientArea();
 		int itemHeight = getTable().getItemHeight();
@@ -138,7 +142,9 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 
-	//collection
+	/*
+	 * Collection
+	 */
 	public List getCollection() {
 		return this.objectCollection;
 	}
@@ -166,7 +172,9 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 
-	//viewer
+	/*
+	 * Viewer
+	 */
 	public void setEnabled(boolean enabled) {
 		viewer.getControl().setEnabled(enabled);
 	}
@@ -196,7 +204,9 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public TableViewer getViewer() {
 		return viewer;
 	}

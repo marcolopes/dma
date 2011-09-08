@@ -69,8 +69,9 @@ public class ClipboardManager {
 
 
 
-
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public static List<Object> getClipboard() {
 		return clipboard;
 	}

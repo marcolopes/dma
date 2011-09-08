@@ -17,7 +17,9 @@ public class EmailAddress {
 
 
 
-	//getters and setters
+	/*
+	 * Getters and setters
+	 */
 	public String getEmail() {
 		return email;
 	}
