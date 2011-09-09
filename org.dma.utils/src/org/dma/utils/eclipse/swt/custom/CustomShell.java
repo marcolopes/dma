@@ -10,6 +10,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 public class CustomShell extends Shell {
 
@@ -24,9 +25,14 @@ public class CustomShell extends Shell {
 	protected void checkSubclass() {}
 
 
+	public CustomShell(int style) {
+		super(PlatformUI.getWorkbench().getDisplay().getActiveShell(), style);
+	}
+
 	public CustomShell(Shell parent, int style) {
 		super(parent, style);
 	}
+
 
 
 	/*
