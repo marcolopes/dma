@@ -272,18 +272,15 @@ public class StringUtils {
 	}
 
 
-	public static String remove(String string, char[] searchFor){
+	public static String remove(String string, char searchFor){
 
-		return remove(string, searchFor, "");
+		return remove(string, ""+searchFor);
 	}
 
 
-	public static String removeChars(String string, String searchFor){
+	public static String remove(String string, char[] searchFor){
 
-		for(int i=0; i<searchFor.length(); i++)
-			string=remove(string, searchFor.substring(i,i+1));
-
-		return string;
+		return remove(string, searchFor, "");
 	}
 
 
@@ -291,6 +288,15 @@ public class StringUtils {
 
 		for(int i=0; i<searchFor.length; i++)
 			string=remove(string, delimiter+searchFor[i]+delimiter);
+
+		return string;
+	}
+
+
+	public static String removeChars(String string, String searchFor){
+
+		for(int i=0; i<searchFor.length(); i++)
+			string=remove(string, searchFor.substring(i,i+1));
 
 		return string;
 	}
