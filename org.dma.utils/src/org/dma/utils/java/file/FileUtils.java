@@ -86,7 +86,7 @@ public class FileUtils {
 			return buffer.toString();
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
@@ -124,7 +124,7 @@ public class FileUtils {
 			return text;
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
@@ -241,7 +241,7 @@ public class FileUtils {
 			}
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
@@ -292,7 +292,7 @@ public class FileUtils {
 			}
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
@@ -349,7 +349,7 @@ public class FileUtils {
 			return buffer.toString();
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
@@ -399,7 +399,7 @@ public class FileUtils {
 
 		} catch (MalformedURLException e){
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
@@ -430,7 +430,7 @@ public class FileUtils {
 			return text;
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
@@ -487,7 +487,7 @@ public class FileUtils {
 			return true;
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 

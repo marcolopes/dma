@@ -20,6 +20,7 @@ public class HTTPUtils {
 			return urlConn.getInputStream();
 
 		} catch (IOException e){
+			System.out.println(e);
 		}
 
 		return null;
@@ -39,6 +40,7 @@ public class HTTPUtils {
 			return urlConn.getOutputStream();
 
 		} catch (IOException e){
+			System.out.println(e);
 		}
 
 		return null;

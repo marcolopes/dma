@@ -49,7 +49,7 @@ public abstract class FileCopy implements IFileCopy {
 			return cancel()? null : true;
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
@@ -93,7 +93,7 @@ public abstract class FileCopy implements IFileCopy {
 			return cancel()? null : true;
 
 		} catch (FileNotFoundException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		} catch (IOException e){
 		}
 
