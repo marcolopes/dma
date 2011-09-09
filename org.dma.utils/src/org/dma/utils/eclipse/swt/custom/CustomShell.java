@@ -26,7 +26,7 @@ public class CustomShell extends Shell {
 
 
 	public CustomShell(int style) {
-		super(PlatformUI.getWorkbench().getDisplay().getActiveShell(), style);
+		super(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), style);
 	}
 
 	public CustomShell(Shell parent, int style) {
