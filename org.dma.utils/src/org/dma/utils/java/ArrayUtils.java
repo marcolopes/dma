@@ -172,50 +172,6 @@ public class ArrayUtils {
 	}
 
 
-	public static int indexOf(String[] array, String element) {
-
-		for(int i=0; i<array.length; i++)
-			if(array[i].equals(element))
-				return i;
-
-		return -1;
-
-	}
-
-
-	public static int indexOrFirst(String[] array, String element) {
-
-		int index=indexOf(array, element);
-
-		return index==-1 ? 0 : index;
-
-	}
-
-
-	public static int contains(String[] array, String element) {
-
-		if(element!=null && element.length()>0)
-			for(int i=0; i<array.length; i++)
-				if(array[i].equals(element))
-					return i;
-
-		return -1;
-
-	}
-
-
-	public static int contains(Integer[] array, Integer element) {
-
-		if(element!=null)
-			for(int i=0; i<array.length; i++)
-				if(array[i].equals(element))
-					return i;
-
-		return -1;
-
-	}
-
-
 	public static int startsWith(String[] array, String element) {
 
 		if(element!=null && element.length()>0)
@@ -488,6 +444,37 @@ public class ArrayUtils {
 		return array2;
 
 	}
+
+
+
+
+
+
+
+
+
+	/*
+	 * Generics
+	 */
+	public static <T> int indexOf(T[] array, T element) {
+
+		for(int i=0; i<array.length; i++)
+			if(array[i].equals(element))
+				return i;
+
+		return -1;
+
+	}
+
+
+	public static <T> int indexOrFirst(T[] array, T element) {
+
+		int index=indexOf(array, element);
+
+		return index==-1 ? 0 : index;
+
+	}
+
 
 
 }
