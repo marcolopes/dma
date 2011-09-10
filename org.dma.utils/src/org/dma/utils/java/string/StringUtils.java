@@ -209,7 +209,7 @@ public class StringUtils {
 	}
 
 
-	public static String[] _splitInside(String string, String delimiter1, String delimiter2){
+	public static String[] splitInside(String string, String delimiter1, String delimiter2){
 
 		Integer[] indexes1=indexOf(string, delimiter1);
 		Integer[] indexes2=indexOf(string, delimiter2);
@@ -381,19 +381,6 @@ public class StringUtils {
 
 	}
 
-	public static String normalize(String string) {
-
-		final char[] ILLEGAL_CHARACTERS =
-			{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'};
-		//normaliza (separa letras e acentos)
-		return remove(Normalizer.normalize(string, Normalizer.Form.NFD).
-				//remove acentos
-				replaceAll("\\p{InCombiningDiacriticalMarks}+", ""),
-				//remove caracteres ilegais
-				ILLEGAL_CHARACTERS);
-
-	}
-
 
 	public static String indent(String text){
 
@@ -409,5 +396,20 @@ public class StringUtils {
 
 		return text;
 	}
+
+
+	public static String normalize(String string) {
+
+		final char[] ILLEGAL_CHARACTERS =
+			{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'};
+		//normaliza (separa letras e acentos)
+		return remove(Normalizer.normalize(string, Normalizer.Form.NFD).
+				//remove acentos
+				replaceAll("\\p{InCombiningDiacriticalMarks}+", ""),
+				//remove caracteres ilegais
+				ILLEGAL_CHARACTERS);
+
+	}
+
 
 }
