@@ -19,6 +19,16 @@ public class ArrayUtils {
 	/*
 	 * Conversion
 	 */
+	public static int[] toIntegerArray(String[] array) {
+
+		int[] array2=new int[array.length];
+		for(int i=0; i<array.length; i++)
+			array2[i]=StringUtils.val(array[i]);
+
+		return array2;
+
+	}
+
 	public static Set<String> toSet(String[] array) {
 
 		//return new HashSet(Arrays.asList(array));
@@ -232,26 +242,78 @@ public class ArrayUtils {
 	}
 
 
-	public static String[] capitalize(String[] array) {
+	public static String[] tailArray(String[] array) {
 
-		String[] array2=new String[array.length];
+		String[] array2=new String[array.length-1];
 
-		for(int i=0; i<array.length; i++)
-			array2[i]=StringUtils.capitalize(array[i]);
+		for(int i=1; i<array.length; i++)
+			array2[i-1]=array[i];
 
 		return array2;
 
 	}
 
 
-	public static String[] uncapitalize(String[] array) {
+	public static String tailArray(String[] array, String separator) {
+
+		String string=array[1];
+
+		for(int i=2; i<array.length; i++)
+			string=string+separator+array[i];
+
+		return string;
+
+	}
+
+
+	public static String[] headArray(String[] array) {
+
+		String[] array2=new String[array.length-1];
+
+		for(int i=0; i<array.length-1; i++)
+			array2[i]=array[i];
+
+		return array2;
+
+	}
+
+
+	public static String headArray(String[] array, String separator) {
+
+		String string=array[0];
+
+		for(int i=1; i<array.length-1; i++)
+			string=string+separator+array[i];
+
+		return string;
+
+	}
+
+
+	public static String[] subArray(String[][] array, int index) {
 
 		String[] array2=new String[array.length];
 
 		for(int i=0; i<array.length; i++)
-			array2[i]=StringUtils.uncapitalize(array[i]);
+			array2[i]=array[i][index];
 
 		return array2;
+
+	}
+
+
+	public static String[] merge(String[] array, String[] array2) {
+
+		if(array==null || array.length==0) return array2;
+		if(array2==null || array2.length==0) return array;
+
+		List<String> list=toList(array);
+
+		for(int i=0; i<array2.length; i++)
+			if (!list.contains(array2[i]))
+				list.add(array2[i]);
+
+		return CollectionUtils.toStringArray(list);
 
 	}
 
@@ -392,77 +454,38 @@ public class ArrayUtils {
 	}
 
 
-	public static String[] tailArray(String[] array) {
-
-		String[] array2=new String[array.length-1];
-
-		for(int i=1; i<array.length; i++)
-			array2[i-1]=array[i];
-
-		return array2;
-
-	}
-
-	public static String tailArray(String[] array, String separator) {
-
-		String string=array[1];
-
-		for(int i=2; i<array.length; i++)
-			string=string+separator+array[i];
-
-		return string;
-
-	}
-
-
-	public static String[] headArray(String[] array) {
-
-		String[] array2=new String[array.length-1];
-
-		for(int i=0; i<array.length-1; i++)
-			array2[i]=array[i];
-
-		return array2;
-
-	}
-
-
-	public static String headArray(String[] array, String separator) {
-
-		String string=array[0];
-
-		for(int i=1; i<array.length-1; i++)
-			string=string+separator+array[i];
-
-		return string;
-
-	}
-
-
-	public static String[] subArray(String[][] array, int index) {
+	public static String[] numbers(String[] array) {
 
 		String[] array2=new String[array.length];
 
 		for(int i=0; i<array.length; i++)
-			array2[i]=array[i][index];
+			array2[i]=StringUtils.numbers(array[i]);
 
 		return array2;
 
 	}
 
 
-	public static String[] merge(String[] array, String[] array2) {
+	public static String[] capitalize(String[] array) {
 
-		if(array==null || array.length==0) return array2;
-		if(array2==null || array2.length==0) return array;
+		String[] array2=new String[array.length];
 
-		List<String> list=toList(array);
+		for(int i=0; i<array.length; i++)
+			array2[i]=StringUtils.capitalize(array[i]);
 
-		for(int i=0; i<array2.length; i++)
-			if (!list.contains(array2[i]))
-				list.add(array2[i]);
+		return array2;
 
-		return CollectionUtils.toStringArray(list);
+	}
+
+
+	public static String[] uncapitalize(String[] array) {
+
+		String[] array2=new String[array.length];
+
+		for(int i=0; i<array.length; i++)
+			array2[i]=StringUtils.uncapitalize(array[i]);
+
+		return array2;
 
 	}
 

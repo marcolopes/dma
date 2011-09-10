@@ -161,7 +161,7 @@ public class StringUtils {
 		int index=0;
 		while((index=string.indexOf(searchFor, index))!=-1){
 			result.add(index);
-			index+=searchFor.length()-1;
+			index+=searchFor.length();
 		}
 
 		return CollectionUtils.toIntegerArray(result);
@@ -175,7 +175,7 @@ public class StringUtils {
 		int index=0;
 		while((index=string.indexOf(searchFor, index))!=-1){
 			count++;
-			index+=searchFor.length()-1;
+			index+=searchFor.length();
 		}
 
 		return count;
@@ -209,7 +209,7 @@ public class StringUtils {
 	}
 
 
-	public static String[] splitInside(String string, String delimiter1, String delimiter2){
+	public static String[] _splitInside(String string, String delimiter1, String delimiter2){
 
 		Integer[] indexes1=indexOf(string, delimiter1);
 		Integer[] indexes2=indexOf(string, delimiter2);
