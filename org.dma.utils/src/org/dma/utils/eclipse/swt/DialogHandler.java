@@ -30,6 +30,10 @@ public class DialogHandler {
 		return open(message, TYPE.ERROR);
 	}
 
+	public static boolean error(String operation, String message) {
+		return error(operation +"\n"+ message);
+	}
+
 
 	/*
 	 * Information
@@ -39,7 +43,7 @@ public class DialogHandler {
 	}
 
 	public static boolean information(String operation, String message) {
-		return open(operation +"\n"+ message, TYPE.INFORMATION);
+		return information(operation +"\n"+ message);
 	}
 
 
@@ -48,6 +52,10 @@ public class DialogHandler {
 	 */
 	public static boolean question(String message) {
 		return open(message, TYPE.QUESTION);
+	}
+
+	public static boolean question(String operation, String message) {
+		return information(operation +"\n"+ message);
 	}
 
 
