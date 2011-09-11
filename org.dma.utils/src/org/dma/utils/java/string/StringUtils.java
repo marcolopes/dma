@@ -182,47 +182,6 @@ public class StringUtils {
 	}
 
 
-	public static String left(String string, int lenght) {
-
-		return string.length()<=lenght ? string : string.substring(0,lenght);
-
-	}
-
-
-	public static String[] splitInside(String string, String delimiter){
-		try{
-			String[] splited=string.split(delimiter);
-
-			String[] result=new String[splited.length/2];
-			int n=0;
-			for(int i=1; i<splited.length; i=i+2){
-				result[n]=splited[i];
-				n++;
-			}
-
-			return result;
-
-		} catch (Exception e){
-			e.printStackTrace();
-			return new String[]{};
-		}
-	}
-
-
-	public static String[] splitInside(String string, String delimiter1, String delimiter2){
-
-		Integer[] indexes1=indexOf(string, delimiter1);
-		Integer[] indexes2=indexOf(string, delimiter2);
-
-		String[] result=new String[indexes1.length];
-
-		for(int i=0; i<indexes1.length; i++)
-			result[i]=string.substring(indexes1[i]+1, indexes2[i]);
-
-		return result;
-	}
-
-
 
 
 
@@ -238,6 +197,34 @@ public class StringUtils {
 	}
 
 
+	public static String left(String string, int lenght) {
+
+		return string.length()<=lenght ? string : string.substring(0,lenght);
+
+	}
+
+
+	public static String right(String string, int lenght) {
+
+		return string.length()<lenght ? string : string.substring(string.length()-lenght);
+
+	}
+
+
+	public static String padLeft(String string, int lenght, String character) {
+
+		return string.length()>=lenght ? string :
+			replicate(character, lenght-string.length())+string;
+	}
+
+
+	public static String padRight(String string, int lenght, String character) {
+
+		return string.length()>=lenght ? string :
+			string+replicate(character, lenght-string.length());
+	}
+
+
 	public static String addIfEmpy(String string, String toAdd) {
 
 		return string.length()==0 ? toAdd : string;
@@ -250,10 +237,28 @@ public class StringUtils {
 	}
 
 
-	public static String pad(String string, int lenght, String character) {
+	public static String chars(String string, int[] indices) {
 
-		return string.length()>=lenght ? string :
-			replicate(character, lenght-string.length())+string;
+		String string2="";
+
+		for (int i=0; i<indices.length; i++)
+			if (indices[i]<string.length())
+				string2+=string.charAt(indices[i]);
+
+		return string2;
+	}
+
+
+	public static String concatChars(String string, String separator) {
+
+		return ArrayUtils.concat(string.toCharArray(), separator);
+	}
+
+
+	public static String concatChars(String string, int[] indices, String separator){
+
+		return concatChars(chars(string, indices), separator);
+
 	}
 
 
@@ -272,24 +277,24 @@ public class StringUtils {
 	}
 
 
-	public static String remove(String string, char searchFor){
+	public static String remove(String string, Character searchFor){
 
-		return remove(string, ""+searchFor);
+		return remove(string, searchFor.toString());
 	}
 
 
-	public static String remove(String string, char[] searchFor){
-
-		return remove(string, searchFor, "");
-	}
-
-
-	public static String remove(String string, char[] searchFor, String delimiter){
+	public static <T> String remove(String string, T[] searchFor, String delimiter){
 
 		for(int i=0; i<searchFor.length; i++)
 			string=remove(string, delimiter+searchFor[i]+delimiter);
 
 		return string;
+	}
+
+
+	public static <T> String remove(String string, T[] searchFor){
+
+		return remove(string, searchFor, "");
 	}
 
 
@@ -302,39 +307,19 @@ public class StringUtils {
 	}
 
 
-	public static String removeInside(String string, String delimiter){
+	public static String[] splitInside(String string, String delimiter){
 
-		String[] splited=splitInside(string, delimiter);
-		for(int i=0; i<splited.length; i++)
-			string=string.replace(delimiter+splited[i]+delimiter, delimiter+delimiter);
+		String[] splited=string.split(delimiter);
 
-		return string;
-	}
+		String[] result=new String[splited.length/2];
+		int n=0;
+		for(int i=1; i<splited.length; i=i+2){
+			result[n]=splited[i];
+			n++;
+		}
 
+		return result;
 
-	public static String chars(String string, int[] indices) {
-
-		String string2="";
-
-		for (int i=0; i<indices.length; i++)
-			if (indices[i]<string.length())
-				string2+=string.charAt(indices[i]);
-
-		return string2;
-	}
-
-
-	public static String concatChars(String string, int[] indices, String separator){
-
-		String string2=chars(string, indices);
-		return ArrayUtils.concat(string2.toCharArray(), separator);
-
-	}
-
-
-	public static String concatChars(String string, String separator) {
-
-		return ArrayUtils.concat(string.toCharArray(), separator);
 	}
 
 
@@ -400,7 +385,7 @@ public class StringUtils {
 
 	public static String normalize(String string) {
 
-		final char[] ILLEGAL_CHARACTERS =
+		final Character[] ILLEGAL_CHARACTERS =
 			{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'};
 		//normaliza (separa letras e acentos)
 		return remove(Normalizer.normalize(string, Normalizer.Form.NFD).
@@ -409,6 +394,10 @@ public class StringUtils {
 				//remove caracteres ilegais
 				ILLEGAL_CHARACTERS);
 
+	}
+
+
+	public static void main(String[] argvs){
 	}
 
 
