@@ -30,11 +30,6 @@ public class CollectionUtils {
 
 	public static Integer[] toIntegerArray(Collection<Integer> collection) {
 
-		/*
-		Integer[] array = new Integer[collection.size()];
-		System.arraycopy(collection.toArray(), 0, array, 0, collection.size());
-		return array;
-		 */
 		return collection.toArray(new Integer[collection.size()]);
 
 	}
@@ -145,16 +140,20 @@ public class CollectionUtils {
 	}
 
 
+	public static <T> Collection<T> remove(List<T> list, int[] indexes) {
+
+		Collection<T> removeList=new ArrayList(indexes.length);
+
+		for(int i=0; i<indexes.length; i++)
+			removeList.add(list.get(indexes[i]));
+
+		list.removeAll(removeList);
+
+		return removeList;
+
+	}
 
 
-
-
-
-
-
-	/*
-	 * Generics
-	 */
 	public static <T> Collection<T> insert(List<T> into, List<T> from, int[] indexes, int position) {
 
 		Collection<T> insertList=new ArrayList(indexes.length);
@@ -166,20 +165,6 @@ public class CollectionUtils {
 		into.addAll(position, insertList);
 
 		return insertList;
-
-	}
-
-
-	public static <T> Collection<T> remove(List<T> list, int[] indexes) {
-
-		Collection<T> removeList=new ArrayList(indexes.length);
-
-		for(int i=0; i<indexes.length; i++)
-			removeList.add(list.get(indexes[i]));
-
-		list.removeAll(removeList);
-
-		return removeList;
 
 	}
 
@@ -198,7 +183,6 @@ public class CollectionUtils {
 	}
 
 
-
 	public static <T> void moveUp(List<T> list, int[] indexes, int position) {
 
 		Collection<T> insertList=new ArrayList(indexes.length);
@@ -210,6 +194,10 @@ public class CollectionUtils {
 		remove(list, indexes);
 		list.addAll(position, insertList);
 
+	}
+
+
+	public static void main(String[] argvs){
 	}
 
 

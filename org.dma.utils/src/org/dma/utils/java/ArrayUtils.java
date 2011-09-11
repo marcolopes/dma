@@ -13,27 +13,16 @@ import java.util.Set;
 
 import org.dma.utils.java.string.StringUtils;
 
-
 public class ArrayUtils {
 
 	/*
 	 * Conversion
 	 */
-	public static int[] toIntegerArray(String[] array) {
-
-		int[] array2=new int[array.length];
-		for(int i=0; i<array.length; i++)
-			array2[i]=StringUtils.val(array[i]);
-
-		return array2;
-
-	}
-
-	public static Set<String> toSet(String[] array) {
+	public static <T> Set<T> toSet(T[] array) {
 
 		//return new HashSet(Arrays.asList(array));
 
-		Set<String> set=new HashSet(array.length);
+		Set<T> set=new HashSet(array.length);
 
 		for(int i=0; i<array.length; i++)
 			set.add(array[i]);
@@ -43,11 +32,11 @@ public class ArrayUtils {
 	}
 
 
-	public static List<String> toList(String[] array) {
+	public static <T> List<T> toList(T[] array) {
 
 		//return new ArrayList(Arrays.asList(array));
 
-		List<String> list=new ArrayList(array.length);
+		List<T> list=new ArrayList(array.length);
 
 		for(int i=0; i<array.length; i++)
 			list.add(array[i]);
@@ -57,14 +46,13 @@ public class ArrayUtils {
 	}
 
 
-	public static List<Object> toList(Object[] array) {
+	public static int[] toIntegerArray(String[] array) {
 
-		List<Object> list=new ArrayList(array.length);
+		int[] array2=new int[array.length];
+		for(int i=0; i<array.length; i++)
+			array2[i]=StringUtils.val(array[i]);
 
-		for(int i=0;i<array.length;i++)
-			list.add(array[i]);
-
-		return list;
+		return array2;
 
 	}
 
@@ -99,7 +87,7 @@ public class ArrayUtils {
 
 		for (byte b: array) {
 			String hexString = Integer.toHexString(0x00FF & b);
-			string += hexString.length() == 1 ? "0" + hexString : hexString;
+			string += hexString.length()==1 ? "0" + hexString : hexString;
 		}
 
 		return string;
@@ -126,7 +114,7 @@ public class ArrayUtils {
 		String bigger="";
 
 		for (int i=0; i<array.length; i++)
-			if(array[i].length() > bigger.length())
+			if(array[i].length()>bigger.length())
 				bigger=array[i];
 
 		return bigger;
@@ -166,9 +154,29 @@ public class ArrayUtils {
 	}
 
 
-	public static String last(String[] array) {
+	public static <T> T last(T[] array) {
 
 		return array[array.length-1];
+	}
+
+
+	public static <T> int indexOf(T[] array, T element) {
+
+		for(int i=0; i<array.length; i++)
+			if(array[i].equals(element))
+				return i;
+
+		return -1;
+
+	}
+
+
+	public static <T> int indexOrFirst(T[] array, T element) {
+
+		int index=indexOf(array, element);
+
+		return index==-1 ? 0 : index;
+
 	}
 
 
@@ -184,6 +192,15 @@ public class ArrayUtils {
 	}
 
 
+	public static int startsWithOrFirst(String[] array, String element) {
+
+		int index=startsWith(array, element);
+
+		return index==-1 ? 0 : index;
+
+	}
+
+
 
 
 
@@ -191,13 +208,6 @@ public class ArrayUtils {
 	/*
 	 * Transformation
 	 */
-	public static String toString(String[] label) {
-
-		return label==null ? "" : concat(label, " ");
-
-	}
-
-
 	public static String[] tailArray(String[] array) {
 
 		String[] array2=new String[array.length-1];
@@ -446,35 +456,8 @@ public class ArrayUtils {
 	}
 
 
-
-
-
-
-
-
-
-	/*
-	 * Generics
-	 */
-	public static <T> int indexOf(T[] array, T element) {
-
-		for(int i=0; i<array.length; i++)
-			if(array[i].equals(element))
-				return i;
-
-		return -1;
-
+	public static void main(String[] argvs){
 	}
-
-
-	public static <T> int indexOrFirst(T[] array, T element) {
-
-		int index=indexOf(array, element);
-
-		return index==-1 ? 0 : index;
-
-	}
-
 
 
 }
