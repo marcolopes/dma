@@ -26,7 +26,7 @@ public class StringUtils {
 	public static int val(String string) {
 
 		try{
-			return Integer.parseInt(string);
+			return Integer.valueOf(string);
 
 		} catch (NumberFormatException e){}
 

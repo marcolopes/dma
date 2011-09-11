@@ -49,8 +49,21 @@ public class ArrayUtils {
 	public static int[] toIntegerArray(String[] array) {
 
 		int[] array2=new int[array.length];
+
 		for(int i=0; i<array.length; i++)
 			array2[i]=StringUtils.val(array[i]);
+
+		return array2;
+
+	}
+
+
+	public static String[] toStringArray(int[] array) {
+
+		String[] array2=new String[array.length];
+
+		for(int i=0; i<array.length; i++)
+			array2[i]=String.valueOf(array[i]);
 
 		return array2;
 
@@ -74,7 +87,7 @@ public class ArrayUtils {
 		String string="";
 
 		for (byte b: array)
-			string += StringUtils.toHex(b);
+			string+=StringUtils.toHex(b);
 
 		return string;
 
@@ -87,7 +100,7 @@ public class ArrayUtils {
 
 		for (byte b: array) {
 			String hexString = Integer.toHexString(0x00FF & b);
-			string += hexString.length()==1 ? "0" + hexString : hexString;
+			string+=hexString.length()==1 ? "0"+hexString : hexString;
 		}
 
 		return string;
@@ -270,8 +283,10 @@ public class ArrayUtils {
 
 	public static String[] merge(String[] array, String[] array2) {
 
-		if(array==null || array.length==0) return array2;
-		if(array2==null || array2.length==0) return array;
+		if(array==null || array.length==0)
+			return array2;
+		if(array2==null || array2.length==0)
+			return array;
 
 		List<String> list=toList(array);
 
@@ -311,7 +326,8 @@ public class ArrayUtils {
 
 	public static String concat(String[] array, String separator) {
 
-		if (array.length==0) return "";
+		if (array.length==0)
+			return "";
 
 		String string=array[0];
 
@@ -325,7 +341,8 @@ public class ArrayUtils {
 
 	public static String concat(char[] array, String separator) {
 
-		if (array.length==0) return "";
+		if (array.length==0)
+			return "";
 
 		String string=Character.toString(array[0]);
 
@@ -339,7 +356,8 @@ public class ArrayUtils {
 
 	public static String concatUpto(String[] array, int lastindex, String separator) {
 
-		if(lastindex>array.length) return "";
+		if(lastindex>array.length)
+			return "";
 
 		String string=array[0];
 
@@ -353,7 +371,8 @@ public class ArrayUtils {
 
 	public static String concatFrom(String[] array, int index, String separator) {
 
-		if(index>array.length-1) return "";
+		if(index>array.length-1)
+			return "";
 
 		String string=array[index];
 
