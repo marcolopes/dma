@@ -8,6 +8,7 @@ package org.dma.utils.eclipse.swt.custom;
 import org.apache.commons.collections15.map.LinkedMap;
 import org.dma.utils.eclipse.core.resources.ResourceManager;
 import org.dma.utils.java.Debug;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -33,10 +34,10 @@ public abstract class CustomBrowserView extends ViewPart {
 	private CTabFolder tabFolder;
 	private final LinkedMap<CTabItem, Browser> tabMap=new LinkedMap();
 
-	private IAction button_home;
-	private IAction button_stop;
-	private IAction button_back;
-	private IAction button_forward;
+	private Action button_home;
+	private Action button_stop;
+	private Action button_back;
+	private Action button_forward;
 
 	//button is not created if icon is NULL
 	public abstract String getHomeIcon();
