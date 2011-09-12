@@ -25,8 +25,6 @@ public class TraverseSupport {
 		//TODO INTERFACE: Implementar o controle de teclado para SWT.MULTI
 		public void keyTraversed(TraverseEvent e){
 
-			Debug.info("### detail ###", e.detail);
-
 			try{
 				if (e.detail == SWT.TRAVERSE_RETURN) {
 
