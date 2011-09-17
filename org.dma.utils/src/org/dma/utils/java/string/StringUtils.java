@@ -109,7 +109,7 @@ public class StringUtils {
 	 */
 	public static int hashCode(String string) {
 
-		return string==null? 0 : string.hashCode();
+		return string==null ? 0 : string.hashCode();
 
 	}
 
