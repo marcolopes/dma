@@ -15,7 +15,7 @@ public class BusinessRules {
 	 * Podem ser numeros com ou sem casas decimais;
 	 * Exemplo: 123.56, 2.50 = 122.50
 	 *
-	 **/
+	 */
 	public static BigDecimal round(BigDecimal valor, BigDecimal arredondamento){
 
 		if (arredondamento.doubleValue()!=0)
@@ -39,7 +39,7 @@ public class BusinessRules {
 	 * Formula: (existencias * PrecoActual + entradas * precoEntradas) / (existencias + entradas);
 	 * Exemplo: 100, 10, 100, 20 = 15
 	 *
-	 **/
+	 */
 	public static BigDecimal getPrecoMedioPonderado(BigDecimal existencias, BigDecimal precoActual, BigDecimal entradas, BigDecimal precoEntradas) {
 
 		if (entradas.doubleValue()>0){
@@ -60,7 +60,7 @@ public class BusinessRules {
 	 * Formula: perc1 + (100 - perc1) * (perc2 / 100);
 	 * Exemplo: 50% + 25% = 62,5%
 	 *
-	 **/
+	 */
 	public static BigDecimal getPercentagemFinal(BigDecimal perc1, BigDecimal perc2){
 
 		return perc1.add((BigDecimal.valueOf(100).subtract(perc1)).
@@ -73,7 +73,7 @@ public class BusinessRules {
 	 * Devolve a PERCENTAGEM de lucro;
 	 * Formula: ((total - valor) / valor) * 100;
 	 * Exemplo: 200, 10 = 1900%
-	 **/
+	 */
 	public static BigDecimal getPercentagemLucro(BigDecimal total, BigDecimal valor){
 
 		if(valor.doubleValue()!=0)
@@ -91,7 +91,7 @@ public class BusinessRules {
 	 * Formula: (valor * 100) / total;
 	 * Exemplo: 200, 10 = 5%
 	 *
-	 **/
+	 */
 	public static BigDecimal getPercentagemValor(BigDecimal total, BigDecimal valor){
 
 		if (total.doubleValue()!=0)
@@ -109,7 +109,7 @@ public class BusinessRules {
 	 * Formula: valor * (perc / 100);
 	 * Exemplo: 200, 10% = 20
 	 *
-	 **/
+	 */
 	public static BigDecimal getValorPercentagem(BigDecimal valor, BigDecimal perc){
 
 		return valor.multiply(perc.divide(BigDecimal.valueOf(100)));
@@ -122,7 +122,7 @@ public class BusinessRules {
 	 * Formula: valor * (1 - (perc / 100);
 	 * Exemplo: 200, 10% = 180
 	 *
-	 **/
+	 */
 	public static BigDecimal getValorLiquido(BigDecimal valor, BigDecimal perc){
 
 		return valor.
@@ -137,7 +137,7 @@ public class BusinessRules {
 	 * Formula: valor / (perc / 100) + 1;
 	 * Exemplo: 130, 30% = 100
 	 *
-	 **/
+	 */
 	public static BigDecimal getValorDeduzido(BigDecimal valor, BigDecimal perc){
 
 		return valor.
@@ -153,7 +153,7 @@ public class BusinessRules {
 	 * Formula: valor * ((perc / 100) + 1);
 	 * Exemplo: 200, 10% = 220
 	 *
-	 **/
+	 */
 	public static BigDecimal getValorAcrescido(BigDecimal valor, BigDecimal perc){
 
 		return valor.
@@ -167,7 +167,7 @@ public class BusinessRules {
 	 * Formula: (valor * parte) / total;
 	 * Exemplo: 100, 50, 200 = 25
 	 *
-	 **/
+	 */
 	public static BigDecimal getValorProporcional(BigDecimal valor, BigDecimal parte, BigDecimal total){
 
 		if (total.doubleValue()!=0)
