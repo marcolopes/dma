@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 public class BusinessRules {
 
 	/**
-	 * Devolve o numero mais proximo ao arredondamento;
+	 * Devolve o numero mais proximo ao arredondamento.
 	 * Podem ser numeros com ou sem casas decimais;
 	 * Exemplo: 123.56, 2.50 = 122.50
 	 *
@@ -35,7 +35,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve o PRECO de CUSTO MEDIO PONDERADO;
+	 * Devolve o PRECO de CUSTO MEDIO PONDERADO.
 	 * Formula: (existencias * PrecoActual + entradas * precoEntradas) / (existencias + entradas);
 	 * Exemplo: 100, 10, 100, 20 = 15
 	 *
@@ -56,7 +56,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve a PERCENTAGEM FINAL;
+	 * Devolve a PERCENTAGEM FINAL.
 	 * Formula: perc1 + (100 - perc1) * (perc2 / 100);
 	 * Exemplo: 50% + 25% = 62,5%
 	 *
@@ -70,7 +70,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve a PERCENTAGEM de lucro;
+	 * Devolve a PERCENTAGEM de lucro.
 	 * Formula: ((total - valor) / valor) * 100;
 	 * Exemplo: 200, 10 = 1900%
 	 */
@@ -87,7 +87,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve a PERCENTAGEM do VALOR;
+	 * Devolve a PERCENTAGEM do VALOR.
 	 * Formula: (valor * 100) / total;
 	 * Exemplo: 200, 10 = 5%
 	 *
@@ -105,7 +105,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve o VALOR da PERCENTAGEM;
+	 * Devolve o VALOR da PERCENTAGEM.
 	 * Formula: valor * (perc / 100);
 	 * Exemplo: 200, 10% = 20
 	 *
@@ -118,7 +118,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve o VALOR liquido da PERCENTAGEM;
+	 * Devolve o VALOR liquido da PERCENTAGEM.
 	 * Formula: valor * (1 - (perc / 100);
 	 * Exemplo: 200, 10% = 180
 	 *
@@ -133,7 +133,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve o VALOR deduzido da PERCENTAGEM;
+	 * Devolve o VALOR deduzido da PERCENTAGEM.
 	 * Formula: valor / (perc / 100) + 1;
 	 * Exemplo: 130, 30% = 100
 	 *
@@ -149,7 +149,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve o VALOR acrescido da PERCENTAGEM;
+	 * Devolve o VALOR acrescido da PERCENTAGEM.
 	 * Formula: valor * ((perc / 100) + 1);
 	 * Exemplo: 200, 10% = 220
 	 *
@@ -163,7 +163,7 @@ public class BusinessRules {
 
 
 	/**
-	 * Devolve o VALOR PROPORCIONAL;
+	 * Devolve o VALOR PROPORCIONAL.
 	 * Formula: (valor * parte) / total;
 	 * Exemplo: 100, 50, 200 = 25
 	 *
