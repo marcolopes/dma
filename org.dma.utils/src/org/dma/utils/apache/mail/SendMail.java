@@ -10,69 +10,65 @@ import org.dma.utils.java.Debug;
 
 public class SendMail {
 
-	public static boolean send(ServerParameters server, EmailAddress from, EmailAddress to, String subject, String message) {
+	public static void send(ServerParameters server, EmailAddress from, EmailAddress to, String subject, String message) throws Exception {
 
-		return send(server, from, to, subject, message, null);
+		send(server, from, to, subject, message, null);
 
 	}
 
 
-	public static boolean send(ServerParameters server, EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) {
+	public static void send(ServerParameters server, EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) throws Exception {
 
-		try{
-			server.debug();
-			Debug.info("from", from.getName()+": "+from.getEmail());
-			Debug.info("to", to.getName()+": "+to.getEmail());
-			Debug.info("subject", subject);
-			Debug.info("message", message);
+		server.debug();
+		Debug.info("from", from.getName()+": "+from.getEmail());
+		Debug.info("to", to.getName()+": "+to.getEmail());
+		Debug.info("subject", subject);
+		Debug.info("message", message);
 
-			MultiPartEmail email = new MultiPartEmail();
-			email.setDebug(true);
+		MultiPartEmail email = new MultiPartEmail();
+		email.setDebug(true);
 
-			email.setHostName(server.getHostname());
-			email.setSmtpPort(server.getSmtpport());
+		email.setHostName(server.getHostname());
+		email.setSmtpPort(server.getSmtpport());
 
-			//Authentication
-			if (server.isAuth()) email.setAuthentication(server.getUsername(), server.getPassword());
+		//Authentication
+		if (server.isAuth()) email.setAuthentication(server.getUsername(), server.getPassword());
 
-			//Security
-			email.setTLS(server.getSecurity()==ServerParameters.SECURITY_SSLTLS || server.getSecurity()==ServerParameters.SECURITY_SSLTLS);
-			email.setSSL(server.getSecurity()==ServerParameters.SECURITY_SSLTLS);
+		//Security
+		email.setTLS(server.getSecurity()==ServerParameters.SECURITY_SSLTLS || server.getSecurity()==ServerParameters.SECURITY_SSLTLS);
+		email.setSSL(server.getSecurity()==ServerParameters.SECURITY_SSLTLS);
 
-			email.setFrom(from.getEmail(), from.getName());
-			email.addTo(to.getEmail(), to.getName());
-			email.setSubject(subject);
-			email.setMsg(message);
+		email.setFrom(from.getEmail(), from.getName());
+		email.addTo(to.getEmail(), to.getName());
+		email.setSubject(subject);
+		email.setMsg(message);
 
-			if (attachment!=null){
-				attachment.debug();
-				email.attach(attachment);
-			}
-
-			email.send();
-
-			return true;
-
-		} catch (Exception e){
-			e.printStackTrace();
+		if (attachment!=null){
+			attachment.debug();
+			email.attach(attachment);
 		}
 
-		return false;
+		email.send();
 
 	}
 
 
 	public static void main(String arg[]) {
 
-		ServerParameters server=new ServerParameters("mail.projectocolibri.com", 25,
-				true, "marcolopes@projectocolibri.com", "***", ServerParameters.SECURITY_NONE);
-		EmailAddress from=new EmailAddress("suporte@projectocolibri.com", "FROM: Projecto Colibri");
-		EmailAddress to=new EmailAddress("marcolopes@projectocolibri.com", "TO: Marco Lopes");
+		try{
+			ServerParameters server=new ServerParameters("mail.projectocolibri.com", 25,
+					true, "marcolopes@projectocolibri.com", "***", ServerParameters.SECURITY_NONE);
+			EmailAddress from=new EmailAddress("suporte@projectocolibri.com", "FROM: Projecto Colibri");
+			EmailAddress to=new EmailAddress("marcolopes@projectocolibri.com", "TO: Marco Lopes");
 
-		send(server, from, to, "SUBJECT: Teste Email Simples", "MESSAGE: Teste Email Simples");
+			send(server, from, to, "SUBJECT: Teste Email Simples", "MESSAGE: Teste Email Simples");
 
-		send(server,from, to, "SUBJECT: Teste Email Simples", "MESSAGE: Teste Email com Attachment",
-			new EmailAttachment("/colibri/email.txt", "EMAIL", "TEXT: Texto do Attachment"));
+			send(server,from, to, "SUBJECT: Teste Email Simples", "MESSAGE: Teste Email com Attachment",
+				new EmailAttachment("/colibri/email.txt", "EMAIL", "TEXT: Texto do Attachment"));
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
