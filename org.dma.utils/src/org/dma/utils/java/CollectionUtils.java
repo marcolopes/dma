@@ -89,42 +89,15 @@ public class CollectionUtils {
 	}
 
 
-	public static void addDistinct(Collection<String> collection, String element) {
-
-		if(!collection.contains(element))
-			collection.add(element);
-
-	}
-
-
-	public static void addDistinct(Collection<String> collection, Collection<String> collection2) {
-
-		Iterator<String> iterator=collection2.iterator();
-		while(iterator.hasNext())
-			addDistinct(collection, iterator.next());
-
-	}
-
-
-	public static void removeDuplicated(Collection<String> collection, Collection<String> collection2 ) {
-
-		Iterator<String> iterator=collection2.iterator();
-		while(iterator.hasNext())
-			collection.remove(iterator.next());
-
-	}
-
-
 	public static void removeContaining(Collection<String> collection, String searchFor){
 
 		Collection<String> removeList=new ArrayList();
 
 		Iterator<String> iterator=collection.iterator();
 		while(iterator.hasNext()) {
-
-			String string2=iterator.next();
-			if(string2.contains(searchFor))
-				removeList.add(string2);
+			String element=iterator.next();
+			if(element.contains(searchFor))
+				removeList.add(element);
 		}
 
 		collection.removeAll(removeList);
@@ -136,6 +109,24 @@ public class CollectionUtils {
 
 		for (int i=0; i<searchFor.length; i++)
 			removeContaining(collection, searchFor[i]);
+
+	}
+
+
+	public static <T> void addDistinct(Collection<T> collection, Collection<T> collection2) {
+
+		Iterator<T> iterator=collection2.iterator();
+		while(iterator.hasNext())
+			collection.add(iterator.next());
+
+	}
+
+
+	public static <T> void removeDuplicated(Collection<T> collection, Collection<T> collection2 ) {
+
+		Iterator<T> iterator=collection2.iterator();
+		while(iterator.hasNext())
+			collection.remove(iterator.next());
 
 	}
 
