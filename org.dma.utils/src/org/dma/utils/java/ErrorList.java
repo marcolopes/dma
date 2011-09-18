@@ -22,9 +22,18 @@ public class ErrorList {
 	}
 
 
-	public void printErrors() {
-		if (hasErrors())
-			System.out.println(getMessage());
+	public void addError(String message){
+		if (!errors.contains(message))
+			errors.add(message);
+	}
+
+	public void addError(String[] message){
+		for(int i=0; i<message.length; i++)
+			addError(message[i]);
+	}
+
+	public void addError(String operation, String message){
+		addError(operation+": "+message);
 	}
 
 
@@ -38,25 +47,22 @@ public class ErrorList {
 	}
 
 
-	public void addError(String[] message){
-		for(int i=0; i<message.length; i++)
-			addError(message[i]);
-	}
-
-
-	public void addError(String operation, String message){
-		addError(operation+": "+message);
-	}
-
-
-	public void addError(String message){
-		if (!errors.contains(message))
-			errors.add(message);
-	}
-
-
 	public boolean hasErrors(){
 		return errors.size()!=0;
+	}
+
+	public void printErrors() {
+		if (hasErrors())
+			System.out.println(getMessage());
+	}
+
+
+
+	/*
+	 * Getters and setters
+	 */
+	public List<String> getErrors() {
+		return errors;
 	}
 
 
