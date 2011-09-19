@@ -26,7 +26,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.dma.utils.java.ArrayUtils;
+import org.dma.utils.java.array.ArrayUtils;
 
 /*
  * RSA is an asymmetric encryption algorithm developed in 1977 that use a pair of private key and public key.

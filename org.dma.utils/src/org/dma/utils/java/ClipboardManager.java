@@ -9,6 +9,8 @@ package org.dma.utils.java;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dma.utils.java.array.ArrayUtils;
+
 public class ClipboardManager {
 
 	private static List<Object> clipboard=new ArrayList();

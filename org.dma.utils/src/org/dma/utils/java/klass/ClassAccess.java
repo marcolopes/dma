@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.java.klass;
 
-import org.dma.utils.java.ErrorList;
+import org.dma.utils.java.array.ErrorList;
 
 public class ClassAccess {
 

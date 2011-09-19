@@ -7,8 +7,8 @@ package org.dma.utils.eclipse.swt.lists;
 
 import java.util.List;
 
-import org.dma.utils.java.ArrayUtils;
-import org.dma.utils.java.CollectionUtils;
+import org.dma.utils.java.array.ArrayUtils;
+import org.dma.utils.java.array.CollectionUtils;
 import org.eclipse.swt.widgets.Composite;
 
 public class CustomSWTList extends org.eclipse.swt.widgets.List {
