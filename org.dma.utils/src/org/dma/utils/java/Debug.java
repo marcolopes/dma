@@ -45,14 +45,6 @@ public class Debug {
 	}
 
 
-	public static void info(String message) {
-		if (isOn()){
-			caller = new Throwable().getStackTrace()[1];
-			info2(message,null);
-		}
-	}
-
-
 	public static void info(Object obj) {
 		if (isOn()){
 			caller = new Throwable().getStackTrace()[1];
@@ -62,11 +54,11 @@ public class Debug {
 	}
 
 
-	public static void info(String message, Object obj) {
+	public static void info(Object obj1, Object obj2) {
 		if (isOn()){
 			caller = new Throwable().getStackTrace()[1];
-			if (obj==null) obj="<NULL>";
-			info2(message,obj);
+			if (obj1==null) obj1="<NULL>";
+			info2(obj1.toString(),obj2);
 		}
 	}
 

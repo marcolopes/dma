@@ -1,43 +1,52 @@
 /*******************************************************************************
- * 2008-2010 Public Domain
+ * 2008-2011 Public Domain
  * Contributors
- * Paulo Silva (wickay@hotmail.com)
  * Marco Lopes (marcolopes@netc.pt)
+ * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.execution;
 
-import org.dma.utils.java.ObjectUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Listener;
 
 public class ExecutionDefinition {
 
-	private final String srcId;
-	private final String srcSecondaryId;
-	private final Control srcControl;
+	private final String id;
+	private final String secondaryId;
+	private final Control control;
 
-	public ExecutionDefinition(String srcId, String srcSecondaryId, Control srcControl) {
-		this.srcId=srcId;
-		this.srcSecondaryId=srcSecondaryId;
-		this.srcControl=srcControl;
+	private Listener selectionListener;
+	private KeyListener keyListener;
+
+	public ExecutionDefinition(String id, String secondaryId, Control control) {
+		this.id=id;
+		this.secondaryId=secondaryId;
+		this.control=control;
 	}
 
 
-	public boolean equals(ExecutionDefinition exec) {
-		if(ObjectUtils.equals(exec.getSrcId(), this.srcId) &&
-				ObjectUtils.equals(exec.getSrcSecondaryId(), this.srcSecondaryId) &&
-				ObjectUtils.equals(exec.getSrcControl(), this.srcControl))
-			return true;
 
-		return false;
+	/*
+	 * Listeners
+	 */
+	public void addSelectionListener(Listener selectionListener) {
+		this.selectionListener = selectionListener;
+		control.addListener(SWT.Selection, selectionListener);
 	}
 
+	public void addKeyListener(KeyListener keyListener) {
+		this.keyListener = keyListener;
+		control.addKeyListener(keyListener);
+	}
 
-	public String toString() {
-		String toString=
-			"srcId: "+this.srcId + "; "+
-			"srcSecondaryId: "+this.srcSecondaryId + "; "+
-			"srcControl: "+srcControl.hashCode();
-		return toString;
+	public void removeListeners() {
+		if(selectionListener!=null)
+			control.removeListener(SWT.Selection, selectionListener);
+
+		if(keyListener!=null)
+			control.removeKeyListener(keyListener);
 	}
 
 
@@ -47,18 +56,17 @@ public class ExecutionDefinition {
 	/*
 	 * Getters and setters
 	 */
-	public String getSrcId() {
-		return srcId;
+	public String getId() {
+		return id;
 	}
 
-	public String getSrcSecondaryId() {
-		return srcSecondaryId;
+	public String getSecondaryId() {
+		return secondaryId;
 	}
 
-	public Control getSrcControl() {
-		return srcControl;
+	public Control getControl() {
+		return control;
 	}
-
 
 
 }

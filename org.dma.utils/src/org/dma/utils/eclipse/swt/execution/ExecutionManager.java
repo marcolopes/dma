@@ -1,21 +1,18 @@
 /*******************************************************************************
- * 2008-2010 Public Domain
+ * 2008-2011 Public Domain
  * Contributors
- * Paulo Silva (wickay@hotmail.com)
  * Marco Lopes (marcolopes@netc.pt)
+ * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.execution;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.dma.utils.java.Debug;
 import org.dma.utils.java.ObjectUtils;
 import org.eclipse.jface.action.Action;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -29,43 +26,44 @@ public class ExecutionManager {
 	private static final Map<ExecutionDefinition, ExecutionEvent> executionMap=new HashMap();
 
 
-	//register
-	public static void registerExecution(Control srcControl, int keycode, String srcId, String srcSecondaryId, Action action, Action responseAction, Action postresponseAction) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(srcId,srcSecondaryId,srcControl);
+	/*
+	 * Register
+	 */
+	public static void register(Control control, int keycode, String id, String secondaryId, Action action, Action responseAction, Action postresponseAction) {
+		ExecutionDefinition execDefinition=new ExecutionDefinition(id,secondaryId,control);
 		ExecutionEvent execEvent=new ExecutionEvent(action,responseAction,postresponseAction,keycode);
-		registerExecution(execDefinition, execEvent);
+		register(execDefinition, execEvent);
 	}
 
 
-	public static void registerExecution(Control srcControl, int keycode, String srcId, Action action, Action responseAction, Action postresponseAction) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(srcId,null,srcControl);
+	public static void register(Control control, int keycode, String id, Action action, Action responseAction, Action postresponseAction) {
+		ExecutionDefinition execDefinition=new ExecutionDefinition(id,null,control);
 		ExecutionEvent execEvent=new ExecutionEvent(action,responseAction,postresponseAction,keycode);
-		registerExecution(execDefinition, execEvent);
+		register(execDefinition, execEvent);
 	}
 
 
-	public static void registerExecution(Control srcControl, int keycode, Action action) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(null,null,srcControl);
+	public static void register(Control control, int keycode, Action action) {
+		ExecutionDefinition execDefinition=new ExecutionDefinition(null,null,control);
 		ExecutionEvent execEvent=new ExecutionEvent(action,null,null,keycode);
-		registerExecution(execDefinition, execEvent);
+		register(execDefinition, execEvent);
 	}
 
 
-	public static void registerExecution(Control srcControl, Action action) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(null,null,srcControl);
+	public static void register(Control control, Action action) {
+		ExecutionDefinition execDefinition=new ExecutionDefinition(null,null,control);
 		ExecutionEvent execEvent=new ExecutionEvent(action,null,null,-1);
-		registerExecution(execDefinition, execEvent);
+		register(execDefinition, execEvent);
 	}
 
 
-	private static void registerExecution(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
+	private static void register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
 		if(!executionMap.containsKey(execDefinition)) {
 
-			if(execDefinition.getSrcControl() instanceof Combo) {
+			if(execDefinition.getControl() instanceof Combo) {
 
 				Listener selectionListener=new Listener() {
-
 					public void handleEvent(Event event) {
 						Debug.info("### EXECUTION ###");
 						execEvent.getExecutionAction().run();
@@ -73,13 +71,11 @@ public class ExecutionManager {
 					}
 				};
 
-				execDefinition.getSrcControl().addListener(SWT.Selection,selectionListener);
-				execEvent.setSelectionListener(selectionListener);
+				execDefinition.addSelectionListener(selectionListener);
 
 			}else{
 
 				KeyListener keyListener=new KeyAdapter()  {
-
 					public void keyPressed(KeyEvent event) {
 						if(event.keyCode==execEvent.getKeycode()) {
 							execEvent.getExecutionAction().run();
@@ -89,16 +85,15 @@ public class ExecutionManager {
 					}
 				};
 
-				execDefinition.getSrcControl().addKeyListener(keyListener);
-				execEvent.setKeyListener(keyListener);
+				execDefinition.addKeyListener(keyListener);
 			}
 
 			executionMap.put(execDefinition, execEvent);
 
-			debug(execEvent);
+			Debug.info(execEvent.getExecutionAction().getId(), executionMap.size());
 
 		}else
-			Debug.warning("EXECUTION ALREADY REGISTERED", execDefinition.getSrcId());
+			Debug.warning("EXECUTION ALREADY REGISTERED", execDefinition.getId());
 
 	}
 
@@ -106,54 +101,46 @@ public class ExecutionManager {
 
 
 
+	/*
+	 * Unregister
+	 */
+	public static void unregister(Control control) {
 
-	//unregister
-	public static void unregisterExecution(Control srcControl) {
-
-		List<ExecutionDefinition> keys=new ArrayList();
-
-		//percorre as execucoes
 		Iterator<ExecutionDefinition> iterator=executionMap.keySet().iterator();
 		while(iterator.hasNext()) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
-			//encontra execucoes com o mesmo control
-			if(execDefinition.getSrcControl().equals(srcControl))
-				keys.add(execDefinition);
-		}
+			if(execDefinition.getControl().equals(control)){
 
-		for(int i=0; i<keys.size(); i++){
+				ExecutionEvent execEvent=executionMap.get(execDefinition);
 
-			ExecutionDefinition execDefinition=keys.get(i);
-			ExecutionEvent execEvent=executionMap.get(execDefinition);
+				execDefinition.removeListeners();
+				iterator.remove();
 
-			if(execEvent.getSelectionListener()!=null)
-				execDefinition.getSrcControl().removeListener(SWT.Selection, execEvent.getSelectionListener());
+				Debug.info(execEvent.getExecutionAction().getId(), executionMap.size());
+			}
 
-			if(execEvent.getModifyListener()!=null)
-				execDefinition.getSrcControl().removeListener(SWT.Modify, execEvent.getModifyListener());
-
-			if(execEvent.getKeyListener()!=null)
-				execDefinition.getSrcControl().removeKeyListener(execEvent.getKeyListener());
-
-			executionMap.remove(execDefinition);
-
-			debug(execEvent);
 		}
 
 	}
 
 
-	public static void notifyDependentExecutions(String srcId, String srcSecondaryId) {
+
+
+
+	/*
+	 * Executions
+	 */
+	public static void notifyDependentExecutions(String id, String secondaryId) {
 
 		Iterator<ExecutionDefinition> iterator=executionMap.keySet().iterator();
 		while(iterator.hasNext()) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
-			if(ObjectUtils.equals(srcId, execDefinition.getSrcId()) &&
-					ObjectUtils.equals(srcSecondaryId, execDefinition.getSrcSecondaryId())) {
+			if(ObjectUtils.equals(id, execDefinition.getId()) &&
+					ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
 
 				ExecutionEvent execEvent=executionMap.get(execDefinition);
 				if(execEvent.getResponseAction()!=null && execEvent.isActionExecuted()) {
@@ -169,7 +156,7 @@ public class ExecutionManager {
 	}
 
 
-	private static boolean hasDependentExecutions(String srcId, String srcSecondaryId) {
+	private static boolean hasDependentExecutions(String id, String secondaryId) {
 
 		Iterator<ExecutionDefinition> iterator=executionMap.keySet().iterator();
 		while(iterator.hasNext()) {
@@ -179,22 +166,12 @@ public class ExecutionManager {
 
 			if(execDefinition!=null && execEvent!=null &&
 				execEvent.getPostresponseAction()!=null &&
-				ObjectUtils.equals(srcId, execDefinition.getSrcId()) &&
-				ObjectUtils.equals(srcSecondaryId, execDefinition.getSrcSecondaryId()))
-
+				ObjectUtils.equals(id, execDefinition.getId()) &&
+				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId()))
 				return true;
 		}
 
 		return false;
-	}
-
-
-
-	private static void debug(final ExecutionEvent execEvent) {
-
-		Debug.info(execEvent.getExecutionAction()+"/"+
-				execEvent.getKeycode()+": "+executionMap.size());
-
 	}
 
 

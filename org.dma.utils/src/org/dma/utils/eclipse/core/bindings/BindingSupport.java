@@ -56,8 +56,6 @@ public class BindingSupport {
 
 	public void unregisterAll() {
 
-		Debug.info("UNREGISTERING", bindingMap.size());
-
 		while(bindingMap.size()>0){
 			String property=bindingMap.keySet().iterator().next();
 			unregister(property);
