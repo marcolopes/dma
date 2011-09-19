@@ -8,7 +8,7 @@ package org.dma.utils.java.array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ErrorList {
+public class ErrorList extends MessageList {
 
 	private final List<String> errors=new ArrayList();
 

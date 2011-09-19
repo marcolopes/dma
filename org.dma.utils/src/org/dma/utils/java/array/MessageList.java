@@ -28,27 +28,27 @@ public class MessageList {
 
 
 
-	public void add(String message){
+	public void addMessage(String message){
 		if (!messages.contains(message))
 			messages.add(message);
 	}
 
 	public void add(String operation, String message){
-		add(operation+": "+message);
+		addMessage(operation+": "+message);
 	}
 
-	public void addArray(String[] message){
+	public void addMessageArray(String[] message){
 		for(int i=0; i<message.length; i++)
-			add(message[i]);
+			addMessage(message[i]);
 	}
 
 
 
-	public String toString(){
-		return ArrayUtils.concat(toArray(),"\n");
+	public String toMessageString(){
+		return ArrayUtils.concat(toMessageArray(),"\n");
 	}
 
-	public String[] toArray(){
+	public String[] toMessageArray(){
 		return CollectionUtils.toStringArray(messages);
 	}
 
