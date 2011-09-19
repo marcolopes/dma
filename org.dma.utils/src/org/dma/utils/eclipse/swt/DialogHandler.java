@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt;
 
-import org.dma.utils.java.ErrorList;
+import org.dma.utils.java.array.ErrorList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -23,7 +23,7 @@ public class DialogHandler {
 	 * Error
 	 */
 	public static boolean error(ErrorList error){
-		return error.hasErrors() ? error(error.getMessage()) : false;
+		return error.hasErrors() ? error(error.getErrorMessage()) : false;
 	}
 
 	public static boolean error(String message) {

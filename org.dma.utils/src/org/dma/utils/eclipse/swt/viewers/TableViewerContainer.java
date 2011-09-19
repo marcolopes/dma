@@ -8,9 +8,9 @@ package org.dma.utils.eclipse.swt.viewers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dma.utils.java.ArrayUtils;
 import org.dma.utils.java.ClipboardManager;
 import org.dma.utils.java.Debug;
+import org.dma.utils.java.array.ArrayUtils;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;

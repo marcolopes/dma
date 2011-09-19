@@ -5,8 +5,8 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.lists;
 
-import org.dma.utils.java.ArrayUtils;
-import org.dma.utils.java.CollectionUtils;
+import org.dma.utils.java.array.ArrayUtils;
+import org.dma.utils.java.array.CollectionUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 

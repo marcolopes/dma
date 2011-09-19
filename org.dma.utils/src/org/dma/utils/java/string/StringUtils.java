@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import org.dma.utils.java.ArrayUtils;
-import org.dma.utils.java.CollectionUtils;
+import org.dma.utils.java.array.ArrayUtils;
+import org.dma.utils.java.array.CollectionUtils;
 
 public class StringUtils {
 
