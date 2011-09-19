@@ -22,13 +22,13 @@ public class ClassAccess {
 			return cl.getField(field).get(cl);
 
 		} catch (NoSuchFieldException e){
-			error.addError(FIELD_NOT_FOUND+" "+cl.getCanonicalName()+"."+field);
+			error.getErrors().add(FIELD_NOT_FOUND+" "+cl.getCanonicalName()+"."+field);
 
 		} catch (IllegalAccessException e){
-			error.addError(ILLEGAL_ACCESS+" "+cl.getCanonicalName()+"."+field);
+			error.getErrors().add(ILLEGAL_ACCESS+" "+cl.getCanonicalName()+"."+field);
 
 		} catch (ExceptionInInitializerError e) {
-			error.addError(INITIALIZER_ERROR+" "+cl.getCanonicalName()+"."+field);
+			error.getErrors().add(INITIALIZER_ERROR+" "+cl.getCanonicalName()+"."+field);
 		}
 
 		return null;

@@ -23,7 +23,7 @@ public class DialogHandler {
 	 * Error
 	 */
 	public static boolean error(ErrorList error){
-		return error.hasErrors() ? error(error.getErrorMessage()) : false;
+		return error.hasErrors() ? error(error.getErrors().toString()) : false;
 	}
 
 	public static boolean error(String message) {

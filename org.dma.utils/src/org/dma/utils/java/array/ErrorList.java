@@ -5,65 +5,45 @@
  *******************************************************************************/
 package org.dma.utils.java.array;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ErrorList {
 
-public class ErrorList extends MessageList {
-
-	private final List<String> errors=new ArrayList();
-
+	private final MessageList errors=new MessageList();
+	private final MessageList warnings=new MessageList();
 
 	public ErrorList(){
 	}
 
 
-	public void clearErrors(){
+	public void clear(){
 		errors.clear();
+		warnings.clear();
 	}
 
-	public void printErrors() {
-		if (hasErrors())
-			System.out.println(getErrorMessage());
-	}
-
-
-
-	public void addError(String message){
-		if (!errors.contains(message))
-			errors.add(message);
-	}
-
-	public void addError(String operation, String message){
-		addError(operation+": "+message);
-	}
-
-	public void addErrorArray(String[] message){
-		for(int i=0; i<message.length; i++)
-			addError(message[i]);
-	}
-
-
-
-	public String getErrorMessage(){
-		return ArrayUtils.concat(getErrorArray(),"\n");
-	}
-
-	public String[] getErrorArray(){
-		return CollectionUtils.toStringArray(errors);
+	public void print() {
+		errors.print();
+		warnings.print();
 	}
 
 
 
 
 	/*
-	 * Getters and setters
+	 * Getters and Setters
 	 */
 	public boolean hasErrors(){
-		return errors.size()!=0;
+		return errors.hasMessages();
 	}
 
-	public List<String> getErrors() {
+	public boolean hasWarnings(){
+		return warnings.hasMessages();
+	}
+
+	public MessageList getErrors() {
 		return errors;
+	}
+
+	public MessageList getWarnings() {
+		return warnings;
 	}
 
 
