@@ -34,12 +34,12 @@ public class ErrorList {
 		return errors.hasMessages();
 	}
 
-	public boolean hasWarnings(){
-		return warnings.hasMessages();
-	}
-
 	public MessageList getErrors() {
 		return errors;
+	}
+
+	public boolean hasWarnings(){
+		return warnings.hasMessages();
 	}
 
 	public MessageList getWarnings() {
