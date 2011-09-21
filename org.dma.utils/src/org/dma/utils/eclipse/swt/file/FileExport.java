@@ -8,6 +8,7 @@ package org.dma.utils.eclipse.swt.file;
 import java.io.File;
 
 import org.dma.utils.java.Debug;
+import org.dma.utils.java.array.ArrayUtils;
 import org.dma.utils.java.file.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -18,16 +19,16 @@ public class FileExport {
 
 	private final String[] extensions;
 
-	public FileExport() {
-		this.extensions = new String[]{""};
+	public FileExport(String[] extensions) {
+		this.extensions = extensions;
 	}
 
 	public FileExport(String extensions) {
-		this.extensions = new String[]{extensions};
+		this(new String[]{extensions});
 	}
 
-	public FileExport(String[] extensions) {
-		this.extensions = extensions;
+	public FileExport() {
+		this("");
 	}
 
 
@@ -35,65 +36,41 @@ public class FileExport {
 	public String directoryPicker(Shell parent){
 
 		DirectoryDialog dd = new DirectoryDialog(parent, SWT.SAVE);
-
 		return dd.open();
 
 	}
 
 
-	public String filePicker(Shell parent){
+	public File filePicker(Shell parent, String filename){
 
-		FileDialog fd = new FileDialog(parent, SWT.SAVE);
-		fd.setFilterExtensions(extensions);
-
-		return fd.open();
-
-	}
-
-
-	public String filePicker(Shell parent, String filename){
-
-		FileDialog fd = new FileDialog(parent, SWT.SAVE);
-		fd.setFilterExtensions(extensions);
-		fd.setFileName(filename);
-
-		return fd.open();
-
-	}
-
-
-	public String saveFile(Shell parent, byte[] bytes, String filename) {
+		Debug.info("extensions", ArrayUtils.toList(extensions));
 
 		try{
-			Debug.info("filename",filename);
-
 			FileDialog fd = new FileDialog(parent,SWT.SAVE);
 			fd.setFilterExtensions(extensions);
 			fd.setFileName(filename);
 
-			if(fd.open() != null){
+			return new File(fd.open());
 
-				FileUtils.writeBytesStream(bytes, fd.getFilterPath()+File.separator+fd.getFileName());
-				return fd.getFilterPath();
-			}
-
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		}catch(Exception e){}
 
 		return null;
 
 	}
 
 
-	public void writeText(Shell parent, String text, String filename, String fileext, String charset){
-		try{
-			Debug.info("filename",filename);
-			Debug.info("fileext",fileext);
+	public File filePicker(Shell parent){
 
+		return filePicker(parent, null);
+
+	}
+
+
+	public void writeText(Shell parent, String text, String filename, String charset){
+		try{
 			FileDialog fd = new FileDialog(parent,SWT.SAVE);
 			fd.setFilterExtensions(extensions);
-			fd.setFileName(filename+"."+fileext);
+			fd.setFileName(filename);
 
 			if(fd.open() != null){
 				FileUtils.writeTextStream(text, fd.getFilterPath()+File.separator+fd.getFileName(),charset);

@@ -19,48 +19,36 @@ public class FileImport {
 	private final String[] extensions;
 	private final String defaultPath;
 
-
-	public FileImport(String extensions) {
-		this.extensions = new String[]{extensions};
-		this.defaultPath = null;
-	}
-
-
-	public FileImport(String extensions, String defaultPath) {
-		this.extensions = new String[]{extensions};
-		this.defaultPath = defaultPath;
-	}
-
-
 	public FileImport(String[] extensions, String defaultPath) {
 		this.extensions = extensions;
 		this.defaultPath = defaultPath;
 	}
 
+	public FileImport(String extensions, String defaultPath) {
+		this(new String[]{extensions}, defaultPath);
+	}
 
-	public File openFile(Shell parent) {
+	public FileImport(String extensions) {
+		this(extensions, null);
+	}
 
-		File file=null;
+
+	public File filePicker(Shell parent) {
+
+		Debug.info("extensions", ArrayUtils.toList(extensions));
+		Debug.info("defaultPath", defaultPath);
 
 		try{
-			Debug.info("extensions", ArrayUtils.toList(extensions));
-			Debug.info("defaultPath", defaultPath);
-
 			FileDialog fd = new FileDialog(parent,SWT.OPEN);
-			if(this.defaultPath != null)
+			if(defaultPath!=null)
 				fd.setFilterPath(defaultPath);
 			fd.setFilterExtensions(extensions);
 
-			String selected = fd.open();
-			if(selected!=null){
-				file = new File(selected);
-			}
+			return new File(fd.open());
 
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		}catch(Exception e){}
 
-		return file;
+		return null;
 
 	}
 

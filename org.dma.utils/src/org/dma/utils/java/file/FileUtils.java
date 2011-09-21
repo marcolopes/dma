@@ -18,6 +18,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 
@@ -69,8 +71,8 @@ public class FileUtils {
 
 		try{
 			final BufferedReader br =
-				new BufferedReader(
-						new FileReader(file));
+					new BufferedReader(
+							new FileReader(file));
 
 			final StringBuffer buffer=new StringBuffer();
 
@@ -106,8 +108,8 @@ public class FileUtils {
 
 		try{
 			final BufferedReader br =
-				new BufferedReader(
-						new FileReader(file));
+					new BufferedReader(
+							new FileReader(file));
 
 			String text = "";
 
@@ -203,42 +205,38 @@ public class FileUtils {
 	public static byte[] readBytesStream(File file) {
 
 		try{
-			if(file != null){
-
-				final BufferedInputStream bis =
+			final BufferedInputStream bis =
 					new BufferedInputStream(
 							new FileInputStream(file));
 
-				// Create the byte array to hold the data
-				byte[] bytes;
-				try{
-					// Get the size of the file
-					long length = file.length();
+			// Create the byte array to hold the data
+			byte[] bytes;
+			try{
+				// Get the size of the file
+				long length = file.length();
 
-					// File is too large
-					if (length > Integer.MAX_VALUE)
-						throw new IOException("File is too large: "+file.getName());
+				// File is too large
+				if (length > Integer.MAX_VALUE)
+					throw new IOException("File is too large: "+file.getName());
 
-					bytes=new byte[(int)length];
+				bytes=new byte[(int)length];
 
-					// Read in the bytes
-					int offset = 0;
-					int numRead = 0;
-					while (offset < bytes.length && (numRead=bis.read(bytes, offset, bytes.length-offset)) >= 0)
-						offset += numRead;
+				// Read in the bytes
+				int offset = 0;
+				int numRead = 0;
+				while (offset < bytes.length && (numRead=bis.read(bytes, offset, bytes.length-offset)) >= 0)
+					offset += numRead;
 
-					// Ensure all the bytes have been read in
-					if (offset < bytes.length)
-						throw new IOException("Could not completely read file: "+file.getName());
+				// Ensure all the bytes have been read in
+				if (offset < bytes.length)
+					throw new IOException("Could not completely read file: "+file.getName());
 
-				}finally{
-					// Close the input stream
-					close(bis);
-				}
-
-				return bytes;
-
+			}finally{
+				// Close the input stream
+				close(bis);
 			}
+
+			return bytes;
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
@@ -253,6 +251,41 @@ public class FileUtils {
 	public static byte[] readBytesStream(String filename) {
 
 		return readBytesStream(new File(filename));
+
+	}
+
+
+	public static Object readObjectStream(File file) {
+
+		try{
+			final ObjectInputStream ois =
+					new ObjectInputStream(
+							new FileInputStream(file));
+
+			Object obj;
+			try{
+				obj=ois.readObject();
+
+			}finally{
+				close(ois);
+			}
+
+			return obj;
+
+		} catch (FileNotFoundException e){
+			System.out.println(e);
+		} catch(ClassNotFoundException e){
+		} catch (IOException e){
+		}
+
+		return null;
+
+	}
+
+
+	public static Object readObjectStream(String filename) {
+
+		return readObjectStream(new File(filename));
 
 	}
 
@@ -275,21 +308,18 @@ public class FileUtils {
 	public static int writeBytesStream(byte[] bytes, File file) {
 
 		try{
-			if (bytes!=null){
-
-				final BufferedOutputStream bos =
+			final BufferedOutputStream bos =
 					new BufferedOutputStream(
 							new FileOutputStream(file));
 
-				try{
-					bos.write(bytes);
+			try{
+				bos.write(bytes);
 
-				}finally{
-					close(bos);
-				}
-
-				return bytes.length;
+			}finally{
+				close(bos);
 			}
+
+			return bytes.length;
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
@@ -304,6 +334,39 @@ public class FileUtils {
 	public static int writeBytesStream(byte[] bytes, String filename) {
 
 		return writeBytesStream(bytes, new File(filename));
+
+	}
+
+
+	public static boolean writeObjectStream(Object obj, File file) {
+
+		try{
+			final ObjectOutputStream oos =
+					new ObjectOutputStream(
+							new FileOutputStream(file));
+
+			try{
+				oos.writeObject(obj);
+
+			}finally{
+				close(oos);
+			}
+
+			return true;
+
+		} catch (FileNotFoundException e){
+			System.out.println(e);
+		} catch (IOException e){
+		}
+
+		return false;
+
+	}
+
+
+	public static boolean writeObjectStream(Object obj, String filename) {
+
+		return writeObjectStream(obj, new File(filename));
 
 	}
 
