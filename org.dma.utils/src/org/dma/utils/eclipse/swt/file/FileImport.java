@@ -44,7 +44,12 @@ public class FileImport {
 				fd.setFilterPath(defaultPath);
 			fd.setFilterExtensions(extensions);
 
-			return new File(fd.open());
+			File file=new File(fd.open());
+			/*
+			 * The name could be entered manually in the dialog
+			 * so we must check if the file really exists
+			 */
+			return file.exists() ? file : null;
 
 		}catch(Exception e){}
 
