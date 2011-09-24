@@ -38,10 +38,12 @@ public class JobManager {
 	public static void remove(CustomJob job) {
 
 		IJobSupport ijob=findJobView(job);
-		if (ijob!=null)
+		if (ijob!=null){
 			jobMap.get(ijob).remove(job);
-		else
+		}else{
 			Debug.warning("JOB NOT FOUND", job.getName());
+			debug();
+		}
 
 	}
 
@@ -140,20 +142,6 @@ public class JobManager {
 		return null;
 	}
 
-
-
-	public static String getStateName(CustomJob job) {
-
-		String state="NONE";
-		switch (job.getState()){
-			case Job.RUNNING: state="RUNNING"; break;
-			case Job.WAITING: state="WAITING"; break;
-			case Job.SLEEPING: state="SLEEPING"; break;
-		}
-
-		return state;
-
-	}
 
 
 	public static int getQueuedJobs(IJobSupport ijob) {
@@ -262,20 +250,24 @@ public class JobManager {
 	//debug
 	public static void debug() {
 
-		Debug.info("QUEUED", getQueuedJobs());
-		Debug.info("PENDING", getPendingJobs());
-		Debug.info("RUNNING", getRunningJobs());
+		if (!Debug.isOn())
+			return;
+
+		System.out.println("QUEUED: " + getQueuedJobs());
+		System.out.println("PENDING: " + getPendingJobs());
+		System.out.println("RUNNING: " + getRunningJobs());
 
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext()) {
 
 			IJobSupport ijob=iterator.next();
-			Debug.info("ijob",ijob);
+			System.out.println("ijob: " + ijob);
 
 			List<CustomJob> jobList=jobMap.get(ijob);
 			for(int i=0; i<jobList.size(); i++){
 				CustomJob job=jobList.get(i);
-				Debug.info(job.getName()+": "+getStateName(job));
+				System.out.println("Job: " + job.getName()+
+					"("+job.getTasks().size() + "/" + job.getStateName()+")");
 			}
 
 		}

@@ -63,6 +63,20 @@ public class CustomJob extends Job {
 	}
 
 
+	public String getStateName() {
+
+		String state="NONE";
+		switch (getState()){
+			case Job.RUNNING: state="RUNNING"; break;
+			case Job.WAITING: state="WAITING"; break;
+			case Job.SLEEPING: state="SLEEPING"; break;
+		}
+
+		return state;
+
+	}
+
+
 
 
 	/*
@@ -83,8 +97,6 @@ public class CustomJob extends Job {
 	 * Job
 	 */
 	public void execute() {
-
-		Debug.info();
 
 		executing=true;
 
@@ -157,12 +169,15 @@ public class CustomJob extends Job {
 
 
 
-
 	/*
 	 * Getters and setters
 	 */
 	public void setExitAction(JobAction exitAction) {
 		this.exitAction = exitAction;
+	}
+
+	public List<JobTask> getTasks() {
+		return tasks;
 	}
 
 	public boolean isExecuting() {
