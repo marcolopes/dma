@@ -16,6 +16,9 @@ public class BindingDefinition {
 	private final UpdateValueStrategy targetToModel;
 	private final UpdateValueStrategy modelToTarget;
 
+	/**
+	 * Bidirectional convertion TARGET <-> MODEL
+	 */
 	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue,
 			UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
 
@@ -27,6 +30,9 @@ public class BindingDefinition {
 
 	}
 
+	/**
+	 * Unidirectional convertion MODEL -> TARGET
+	 */
 	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue,
 			UpdateValueStrategy modelToTarget) {
 
@@ -34,6 +40,9 @@ public class BindingDefinition {
 
 	}
 
+	/**
+	 * NO convertion
+	 */
 	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue) {
 
 		this(targetObservableValue, modelObservableValue, null);
