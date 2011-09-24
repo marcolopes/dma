@@ -67,7 +67,7 @@ public class FileUtils {
 	 */
 	public static String readTextFile(File file) {
 
-		final StringBuffer buffer=new StringBuffer();
+		char[] buffer=new char[0];
 
 		try{
 			final BufferedReader br =
@@ -75,9 +75,11 @@ public class FileUtils {
 							new FileReader(file));
 
 			try{
-				int ch;
-				while ((ch = br.read()) > -1)
-					buffer.append((char)ch);
+				buffer=new AbstractTextReader(){
+					public int read(char[] b, int off, int len) throws IOException {
+						return br.read(b, off, len);
+					}
+				}.readText(file);
 
 			}finally{
 				close(br);
@@ -206,25 +208,11 @@ public class FileUtils {
 							new FileInputStream(file));
 
 			try{
-				// Get the size of the file
-				long length = file.length();
-
-				// File is too large
-				if (length > Integer.MAX_VALUE)
-					throw new IOException("File is too large: "+file.getName());
-
-				// Create the buffer to hold the data
-				buffer=new byte[(int)length];
-
-				// Read in the bytes
-				int offset = 0;
-				int numRead = 0;
-				while (offset < buffer.length && (numRead=bis.read(buffer, offset, buffer.length-offset)) >= 0)
-					offset += numRead;
-
-				// Ensure all the bytes have been read in
-				if (offset < buffer.length)
-					throw new IOException("Could not completely read file: "+file.getName());
+				buffer=new AbstractByteReader(){
+					public int read(byte[] b, int off, int len) throws IOException {
+						return bis.read(b, off, len);
+					}
+				}.readBytes(file);
 
 			}finally{
 				// Close the input stream
@@ -352,7 +340,7 @@ public class FileUtils {
 	 */
 	public static String readTextStream(File file, String charset) {
 
-		char[] buffer=null;
+		char[] buffer=new char[0];
 
 		try{
 			final BufferedReader br =
@@ -361,25 +349,11 @@ public class FileUtils {
 									new FileInputStream(file), charset));
 
 			try{
-				// Get the size of the file
-				long length = file.length();
-
-				// File is too large
-				if (length > Integer.MAX_VALUE)
-					throw new IOException("File is too large: "+file.getName());
-
-				// Create the buffer to hold the data
-				buffer=new char[(int)length];
-
-				// Read in the bytes
-				int offset = 0;
-				int numRead = 0;
-				while (offset < buffer.length && (numRead=br.read(buffer, offset, buffer.length-offset)) >= 0)
-					offset += numRead;
-
-				// Ensure all the bytes have been read in
-				if (offset < buffer.length)
-					throw new IOException("Could not completely read file: "+file.getName());
+				buffer=new AbstractTextReader(){
+					public int read(char[] b, int off, int len) throws IOException {
+						return br.read(b, off, len);
+					}
+				}.readText(file);
 
 			}finally{
 				// Close the input stream

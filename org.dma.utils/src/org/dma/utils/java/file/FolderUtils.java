@@ -19,7 +19,7 @@ public class FolderUtils {
 		try{
 			final Pattern pattern=Pattern.compile(wilcards.replace("*", ".*").replace("?", "."));
 
-			FileFilter fileFilter = new FileFilter() {
+			FileFilter fileFilter=new FileFilter() {
 				public boolean accept(File file) {
 					return file.isDirectory() && pattern.matcher(file.getName()).find();
 				}
@@ -58,7 +58,9 @@ public class FolderUtils {
 
 		try{
 			if (createFolder(folder)){
-				if (clean) deleteFiles(folder, "*.*");
+				if (clean)
+					deleteFiles(folder, "*.*");
+
 				return true;
 			}
 
