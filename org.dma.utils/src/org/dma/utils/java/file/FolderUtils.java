@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class FolderUtils {
 
+
 	/*
 	 * Folders
 	 */
@@ -57,18 +58,17 @@ public class FolderUtils {
 	public static boolean createFolder(String folder, boolean clean) {
 
 		try{
-			if (createFolder(folder)){
-				if (clean)
-					deleteFiles(folder, "*.*");
+			if (createFolder(folder) && clean)
+				deleteFiles(folder, "*.*");
 
-				return true;
-			}
+			return true;
 
 		} catch (Exception e){}
 
 		return false;
 
 	}
+
 
 
 	/*
