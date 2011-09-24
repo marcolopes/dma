@@ -268,8 +268,7 @@ public class JobManager {
 			List<CustomJob> jobList=jobMap.get(ijob);
 			for(int i=0; i<jobList.size(); i++){
 				CustomJob job=jobList.get(i);
-				System.out.print("Job: " + job);
-				System.out.println("(" + i +"/" + job.getTasks().size()+" )");
+				System.out.print("Job #"+i+": " + job);
 			}
 
 		}
