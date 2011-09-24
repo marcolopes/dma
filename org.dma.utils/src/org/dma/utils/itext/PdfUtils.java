@@ -10,9 +10,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
 
+import org.dma.utils.java.file.FileCopy;
 import org.dma.utils.java.file.FileParameters;
 import org.dma.utils.java.file.FileUtils;
-import org.dma.utils.java.file.copy.FileCopy;
 
 import com.lowagie.text.pdf.PdfCopyFields;
 import com.lowagie.text.pdf.PdfReader;
