@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.dma.utils.eclipse.core.jobs.tasks.JobAction;
 import org.dma.utils.java.Debug;
+import org.dma.utils.java.string.StringUtils;
 import org.eclipse.core.runtime.jobs.Job;
 
 public class JobManager {
@@ -253,6 +254,7 @@ public class JobManager {
 		if (!Debug.isOn())
 			return;
 
+		System.out.println(StringUtils.replicate('-', 50));
 		System.out.println("QUEUED: " + getQueuedJobs());
 		System.out.println("PENDING: " + getPendingJobs());
 		System.out.println("RUNNING: " + getRunningJobs());
@@ -261,16 +263,17 @@ public class JobManager {
 		while(iterator.hasNext()) {
 
 			IJobSupport ijob=iterator.next();
-			System.out.println("ijob: " + ijob);
+			System.out.println("IJob: " + ijob +"/"+ jobMap.size());
 
 			List<CustomJob> jobList=jobMap.get(ijob);
 			for(int i=0; i<jobList.size(); i++){
 				CustomJob job=jobList.get(i);
-				System.out.println("Job: " + job.getName()+
-					"("+job.getTasks().size() + "/" + job.getStateName()+")");
+				System.out.print("Job: " + job);
+				System.out.println("(" + i +"/" + job.getTasks().size()+" )");
 			}
 
 		}
+		System.out.println(StringUtils.replicate('-', 50));
 
 	}
 
