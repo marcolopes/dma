@@ -66,10 +66,7 @@ public class FileImport {
 			FileDialog fd = new FileDialog(parent,SWT.OPEN);
 			fd.setFilterExtensions(extensions);
 
-			String filename = fd.open();
-			if(filename!=null) {
-				text=FileUtils.readTextStream(filename,charset);
-			}
+			text=FileUtils.readTextStream(fd.open(),charset);
 
 		} catch (Exception e){}
 
