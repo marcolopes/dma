@@ -198,14 +198,13 @@ public class FileUtils {
 	 */
 	public static byte[] readBytesStream(File file) {
 
-		byte[] bytes=null;
+		byte[] buffer=null;
 
 		try{
 			final BufferedInputStream bis =
 					new BufferedInputStream(
 							new FileInputStream(file));
 
-			// Create the byte array to hold the data
 			try{
 				// Get the size of the file
 				long length = file.length();
@@ -214,16 +213,17 @@ public class FileUtils {
 				if (length > Integer.MAX_VALUE)
 					throw new IOException("File is too large: "+file.getName());
 
-				bytes=new byte[(int)length];
+				// Create the buffer to hold the data
+				buffer=new byte[(int)length];
 
 				// Read in the bytes
 				int offset = 0;
 				int numRead = 0;
-				while (offset < bytes.length && (numRead=bis.read(bytes, offset, bytes.length-offset)) >= 0)
+				while (offset < buffer.length && (numRead=bis.read(buffer, offset, buffer.length-offset)) >= 0)
 					offset += numRead;
 
 				// Ensure all the bytes have been read in
-				if (offset < bytes.length)
+				if (offset < buffer.length)
 					throw new IOException("Could not completely read file: "+file.getName());
 
 			}finally{
@@ -233,10 +233,12 @@ public class FileUtils {
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
+		} catch (IOException e){
+			System.out.println(e);
 		} catch (Exception e){
 		}
 
-		return bytes;
+		return buffer;
 
 	}
 
@@ -350,24 +352,43 @@ public class FileUtils {
 	 */
 	public static String readTextStream(File file, String charset) {
 
-		StringBuffer buffer=new StringBuffer();
+		char[] buffer=null;
 
 		try{
 			final BufferedReader br =
-				new BufferedReader(
-						new InputStreamReader(
-								new FileInputStream(file), charset));
+					new BufferedReader(
+							new InputStreamReader(
+									new FileInputStream(file), charset));
 
 			try{
-				int ch;
-				while ((ch = br.read()) > -1)
-					buffer.append((char)ch);
+				// Get the size of the file
+				long length = file.length();
+
+				// File is too large
+				if (length > Integer.MAX_VALUE)
+					throw new IOException("File is too large: "+file.getName());
+
+				// Create the buffer to hold the data
+				buffer=new char[(int)length];
+
+				// Read in the bytes
+				int offset = 0;
+				int numRead = 0;
+				while (offset < buffer.length && (numRead=br.read(buffer, offset, buffer.length-offset)) >= 0)
+					offset += numRead;
+
+				// Ensure all the bytes have been read in
+				if (offset < buffer.length)
+					throw new IOException("Could not completely read file: "+file.getName());
 
 			}finally{
+				// Close the input stream
 				close(br);
 			}
 
 		} catch (FileNotFoundException e){
+			System.out.println(e);
+		} catch (IOException e){
 			System.out.println(e);
 		} catch (Exception e){
 		}
