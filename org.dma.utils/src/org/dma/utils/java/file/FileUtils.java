@@ -18,10 +18,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
 
 public class FileUtils {
 
@@ -69,12 +67,12 @@ public class FileUtils {
 	 */
 	public static String readTextFile(File file) {
 
+		final StringBuffer buffer=new StringBuffer();
+
 		try{
 			final BufferedReader br =
 					new BufferedReader(
 							new FileReader(file));
-
-			final StringBuffer buffer=new StringBuffer();
 
 			try{
 				int ch;
@@ -85,14 +83,12 @@ public class FileUtils {
 				close(br);
 			}
 
-			return buffer.toString();
-
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
-		return null;
+		return buffer.toString();
 
 	}
 
@@ -106,12 +102,12 @@ public class FileUtils {
 
 	public static String readTextFileLines(File file, int count) {
 
+		String text="";
+
 		try{
 			final BufferedReader br =
 					new BufferedReader(
 							new FileReader(file));
-
-			String text = "";
 
 			try{
 				String line;
@@ -123,14 +119,12 @@ public class FileUtils {
 				close(br);
 			}
 
-			return text;
-
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
-		return null;
+		return text;
 
 	}
 
@@ -177,7 +171,7 @@ public class FileUtils {
 
 			return true;
 
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
 		return false;
@@ -204,13 +198,14 @@ public class FileUtils {
 	 */
 	public static byte[] readBytesStream(File file) {
 
+		byte[] bytes=null;
+
 		try{
 			final BufferedInputStream bis =
 					new BufferedInputStream(
 							new FileInputStream(file));
 
 			// Create the byte array to hold the data
-			byte[] bytes;
 			try{
 				// Get the size of the file
 				long length = file.length();
@@ -236,14 +231,12 @@ public class FileUtils {
 				close(bis);
 			}
 
-			return bytes;
-
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
-		return null;
+		return bytes;
 
 	}
 
@@ -251,41 +244,6 @@ public class FileUtils {
 	public static byte[] readBytesStream(String filename) {
 
 		return readBytesStream(new File(filename));
-
-	}
-
-
-	public static Object readObjectStream(File file) {
-
-		try{
-			final ObjectInputStream ois =
-					new ObjectInputStream(
-							new FileInputStream(file));
-
-			Object obj;
-			try{
-				obj=ois.readObject();
-
-			}finally{
-				close(ois);
-			}
-
-			return obj;
-
-		} catch (FileNotFoundException e){
-			System.out.println(e);
-		} catch(ClassNotFoundException e){
-		} catch (IOException e){
-		}
-
-		return null;
-
-	}
-
-
-	public static Object readObjectStream(String filename) {
-
-		return readObjectStream(new File(filename));
 
 	}
 
@@ -323,7 +281,7 @@ public class FileUtils {
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
 		return 0;
@@ -356,7 +314,7 @@ public class FileUtils {
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
 		return false;
@@ -392,13 +350,13 @@ public class FileUtils {
 	 */
 	public static String readTextStream(File file, String charset) {
 
+		StringBuffer buffer=new StringBuffer();
+
 		try{
 			final BufferedReader br =
 				new BufferedReader(
 						new InputStreamReader(
 								new FileInputStream(file), charset));
-
-			StringBuffer buffer=new StringBuffer();
 
 			try{
 				int ch;
@@ -409,14 +367,12 @@ public class FileUtils {
 				close(br);
 			}
 
-			return buffer.toString();
-
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
-		return null;
+		return buffer.toString();
 
 	}
 
@@ -443,11 +399,13 @@ public class FileUtils {
 
 	public static String readURLTextStream(String fileurl) {
 
-		try{
-			final BufferedReader br = new BufferedReader(
-					new InputStreamReader(HTTPUtils.getInputStream(fileurl)));
+		final StringBuffer buffer=new StringBuffer();
 
-			final StringBuffer buffer=new StringBuffer();
+		try{
+			final BufferedReader br =
+					new BufferedReader(
+							new InputStreamReader(
+									HTTPUtils.getInputStream(fileurl)));
 
 			try{
 				int ch;
@@ -458,28 +416,25 @@ public class FileUtils {
 				close(br);
 			}
 
-			return buffer.toString();
-
-		} catch (MalformedURLException e){
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
-		return null;
+		return buffer.toString();
 
 	}
 
 
 	public static String readTextStreamLines(File file, int count, String charset) {
 
+		String text="";
+
 		try{
 			final BufferedReader br =
 				new BufferedReader(
 						new InputStreamReader(
 								new FileInputStream(file), charset));
-
-			String text="";
 
 			try{
 				String line;
@@ -490,14 +445,12 @@ public class FileUtils {
 				close(br);
 			}
 
-			return text;
-
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
-		return null;
+		return text;
 
 	}
 
@@ -551,7 +504,7 @@ public class FileUtils {
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
 		return false;
@@ -592,7 +545,7 @@ public class FileUtils {
 			return true;
 
 		} catch (Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return false;
@@ -622,7 +575,7 @@ public class FileUtils {
 
 			return file.getAbsolutePath();
 
-		} catch (IOException e){
+		} catch (Exception e){
 		}
 
 		return null;
@@ -632,17 +585,10 @@ public class FileUtils {
 
 	public static String createTempFile(byte[] bytes, FileParameters parameters){
 
-		try{
-			String filename=createTempFile(parameters);
-			writeBytesStream(bytes, filename);
+		String filename=createTempFile(parameters);
+		writeBytesStream(bytes, filename);
 
-			return filename;
-
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-
-		return null;
+		return filename;
 
 	}
 
