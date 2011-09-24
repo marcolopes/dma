@@ -67,30 +67,30 @@ public class FileUtils {
 	 */
 	public static String readTextFile(File file) {
 
-		char[] buffer=new char[0];
-
 		try{
 			final BufferedReader br =
 					new BufferedReader(
 							new FileReader(file));
 
+			final StringBuffer buffer=new StringBuffer();
+
 			try{
-				buffer=new AbstractTextReader(){
-					public int read(char[] b, int off, int len) throws IOException {
-						return br.read(b, off, len);
-					}
-				}.readText(file);
+				int ch;
+				while ((ch = br.read()) > -1)
+					buffer.append((char)ch);
 
 			}finally{
 				close(br);
 			}
 
+			return buffer.toString();
+
 		} catch (FileNotFoundException e){
 			System.out.println(e);
-		} catch (Exception e){
+		} catch (IOException e){
 		}
 
-		return buffer.toString();
+		return null;
 
 	}
 
@@ -340,29 +340,25 @@ public class FileUtils {
 	 */
 	public static String readTextStream(File file, String charset) {
 
-		char[] buffer=new char[0];
+		StringBuffer buffer=new StringBuffer();
 
 		try{
 			final BufferedReader br =
-					new BufferedReader(
-							new InputStreamReader(
-									new FileInputStream(file), charset));
+				new BufferedReader(
+						new InputStreamReader(
+								new FileInputStream(file), charset));
+
 
 			try{
-				buffer=new AbstractTextReader(){
-					public int read(char[] b, int off, int len) throws IOException {
-						return br.read(b, off, len);
-					}
-				}.readText(file);
+				int ch;
+				while ((ch = br.read()) > -1)
+					buffer.append((char)ch);
 
 			}finally{
-				// Close the input stream
 				close(br);
 			}
 
 		} catch (FileNotFoundException e){
-			System.out.println(e);
-		} catch (IOException e){
 			System.out.println(e);
 		} catch (Exception e){
 		}
@@ -590,7 +586,7 @@ public class FileUtils {
 
 	public static void main(String[] argvs){
 
-		String text=readURLTextStream("http://dl.dropbox.com/u/126065/Colibri/versao.txt");
+		String text=readURLTextStream("http://dl.dropbox.com/u/126065/Colibri/readme.txt");
 		System.out.println(text);
 
 	}
