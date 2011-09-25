@@ -14,11 +14,9 @@ import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ILock;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.swt.widgets.Display;
 /**
  * On the Job: The Eclipse Jobs API
@@ -78,7 +76,6 @@ public class CustomJob extends Job {
 
 
 
-
 	/*
 	 * Tasks
 	 */
@@ -92,7 +89,6 @@ public class CustomJob extends Job {
 
 
 
-
 	/*
 	 * Job
 	 */
@@ -101,6 +97,7 @@ public class CustomJob extends Job {
 		executing=true;
 
 		//executa accao de saida, mesmo que tenha CANCELADO
+		/*
 		addJobChangeListener(new JobChangeAdapter() {
 
 			public void done(IJobChangeEvent event) {
@@ -116,6 +113,7 @@ public class CustomJob extends Job {
 				Debug.info("JOB FINISHED", this);
 			}
 		});
+		*/
 
 		schedule();
 	}
@@ -128,7 +126,10 @@ public class CustomJob extends Job {
 
 
 
-	//main method
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
+	 */
 	protected IStatus run(IProgressMonitor monitor) {
 
 		ILock lock = getJobManager().newLock();
@@ -164,6 +165,16 @@ public class CustomJob extends Job {
 			monitor.done();
 		}
 
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				if (exitAction!=null){
+					exitAction.task();
+					Debug.info("EXIT ACTION", exitAction);
+				}
+			}
+		});
+
+		executing=false;
 		Debug.info("RUN FINISHED", this);
 
 		return Status.OK_STATUS;

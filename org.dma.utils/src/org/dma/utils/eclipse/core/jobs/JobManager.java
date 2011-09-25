@@ -38,6 +38,8 @@ public class JobManager {
 				if (remove(job) && getQueuedJobs(ijob)==0)
 					ijob.setJobRunning(false);
 
+				debug();
+
 			} catch (Exception e){
 				e.printStackTrace();
 			}
@@ -82,7 +84,6 @@ public class JobManager {
 		}
 
 		Debug.warning("JOB NOT FOUND", job);
-		debug();
 		return false;
 
 	}
