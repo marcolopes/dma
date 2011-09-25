@@ -26,8 +26,8 @@ import org.eclipse.swt.widgets.Display;
 public class CustomJob extends Job {
 
 	/**
-	 * MUTEX (mutual exclusion semaphore).
-	 * Global rule to avoid simultaneous executions
+	 * MUTEX: MUTual EXclusion semaphore.
+	 * Global rule to avoid simultaneous executions.
 	 */
 	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
 
@@ -57,7 +57,6 @@ public class CustomJob extends Job {
 		super(description);
 		setPriority(priority);
 		//setUser(true); // Apresenta dialogo de progresso
-		setRule(MUTEX_RULE); // Evita operacoes simultaneas
 	}
 
 
@@ -90,13 +89,14 @@ public class CustomJob extends Job {
 
 
 	/*
-	 * Job
+	 * Execution
 	 */
-	public void execute() {
+	public void execute(ISchedulingRule rule) {
+
+		setRule(rule);
 
 		executing=true;
 
-		//executa accao de saida, mesmo que tenha CANCELADO
 		/*
 		addJobChangeListener(new JobChangeAdapter() {
 
@@ -116,6 +116,12 @@ public class CustomJob extends Job {
 		*/
 
 		schedule();
+	}
+
+
+	public void execute() {
+
+		execute(MUTEX_RULE); // default rule
 	}
 
 
@@ -165,6 +171,7 @@ public class CustomJob extends Job {
 			monitor.done();
 		}
 
+		//exit action
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				if (exitAction!=null){

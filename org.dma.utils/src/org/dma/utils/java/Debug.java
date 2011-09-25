@@ -36,23 +36,26 @@ public class Debug {
 	//stack trace
 	private static StackTraceElement caller;
 
+	private static final int HEADER_LENGHT = 100;
+
 	/*
 	 * Helpers
 	 */
 	public static void header(String message) {
 
-		int HEADER_LENGHT = 100;
+		message="[ "+message+" ]";
+		int replicas=message.length()>HEADER_LENGHT ? 0 : (HEADER_LENGHT-message.length())/2;
+		System.out.println(
+			StringUtils.replicate('=',replicas)+
+			message+
+			StringUtils.replicate('=',replicas));
 
-		if (message==null || message.isEmpty()){
-			System.out.println(StringUtils.replicate('-',HEADER_LENGHT));
-		}else{
-			message="[ "+message+" ]";
-			int replicas=message.length()>HEADER_LENGHT ? 0 : (HEADER_LENGHT-message.length())/2;
-			System.out.println(
-				StringUtils.replicate('=',replicas)+
-				message+
-				StringUtils.replicate('=',replicas));
-		}
+	}
+
+
+	public static void footer() {
+
+		System.out.println(StringUtils.replicate('-',HEADER_LENGHT));
 
 	}
 
