@@ -289,7 +289,7 @@ public class JobManager {
 			}
 
 		}
-		Debug.header(null);
+		Debug.footer();
 
 	}
 
