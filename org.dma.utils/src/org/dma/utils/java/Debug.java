@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.util.Date;
 
 import org.dma.utils.java.numeric.IntegerUtils;
+import org.dma.utils.java.string.StringUtils;
 
 public class Debug {
 
@@ -35,8 +36,31 @@ public class Debug {
 	//stack trace
 	private static StackTraceElement caller;
 
+	/*
+	 * Helpers
+	 */
+	public static void header(String message) {
 
-	// Info
+		int HEADER_LENGHT = 50;
+
+		if (message==null || message.isEmpty()){
+			System.out.println(StringUtils.replicate('-',HEADER_LENGHT));
+		}else{
+			message="[ "+message+" ]";
+			int replicas=message.length()>HEADER_LENGHT ? 0 : (HEADER_LENGHT-message.length())/2;
+			System.out.println(
+				StringUtils.replicate('-',replicas)+
+				message+
+				StringUtils.replicate('-',replicas));
+		}
+
+	}
+
+
+
+	/*
+	 * Info
+	 */
 	public static void info() {
 		if (isOn()){
 			caller = new Throwable().getStackTrace()[1];
@@ -97,7 +121,7 @@ public class Debug {
 
 
 	/*
-	 * Metodos privados
+	 * Privados
 	 */
 	private static void warning2(String message, Object obj) {
 		if (IntegerUtils.bit(TYPE, TYPE_WARNING)){
