@@ -104,13 +104,16 @@ public class CustomJob extends Job {
 		addJobChangeListener(new JobChangeAdapter() {
 
 			public void done(IJobChangeEvent event) {
-				Debug.info("EXIT ACTION", this);
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
-						if (exitAction!=null)
+						if (exitAction!=null){
 							exitAction.task();
+							Debug.info("EXIT ACTION", exitAction);
+						}
 					}
 				});
+				executing=false;
+				Debug.info("JOB FINISHED", this);
 			}
 		});
 
@@ -130,7 +133,7 @@ public class CustomJob extends Job {
 		ILock lock = getJobManager().newLock();
 
 		try{
-			Debug.info("JOB STARTED", this);
+			Debug.info("RUN STARTED", this);
 
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
@@ -158,10 +161,9 @@ public class CustomJob extends Job {
 
 			lock.release();
 			monitor.done();
-			Debug.info("JOB FINISHED", this);
 		}
 
-		executing=false;
+		Debug.info("RUN FINISHED", this);
 
 		return Status.OK_STATUS;
 	}

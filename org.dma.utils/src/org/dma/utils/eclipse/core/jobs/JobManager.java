@@ -19,6 +19,35 @@ public class JobManager {
 
 	private static final Map<IJobSupport, List<CustomJob>> jobMap=new HashMap();
 
+	/*
+	 * Exit task class
+	 */
+	public static class ExitTask extends JobAction {
+
+		private final CustomJob job;
+
+		public ExitTask(CustomJob job) {
+			this.job=job;
+		}
+
+		public void task() {
+			try{
+				Debug.info("EXIT TASK", job);
+				IJobSupport ijob=findJobView(job);
+
+				if (remove(job) && getQueuedJobs(ijob)==0)
+					ijob.setJobRunning(false);
+
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		public void UItask() {
+		}
+
+	}
+
 
 	//add
 	public static void register(IJobSupport ijob, CustomJob job) {
@@ -221,35 +250,6 @@ public class JobManager {
 
 	}
 
-
-	/*
-	 * Exit task class
-	 */
-	public static class ExitTask extends JobAction {
-
-		private final CustomJob job;
-
-		public ExitTask(CustomJob job) {
-			this.job=job;
-		}
-
-		public void task() {
-			try{
-				Debug.info("EXIT TASK", job);
-				IJobSupport ijob=findJobView(job);
-
-				if (remove(job) && getQueuedJobs(ijob)==0)
-					ijob.setJobRunning(false);
-
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-		}
-
-		public void UItask() {
-		}
-
-	}
 
 
 	//debug
