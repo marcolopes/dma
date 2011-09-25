@@ -41,7 +41,7 @@ public class Debug {
 	 */
 	public static void header(String message) {
 
-		int HEADER_LENGHT = 50;
+		int HEADER_LENGHT = 100;
 
 		if (message==null || message.isEmpty()){
 			System.out.println(StringUtils.replicate('-',HEADER_LENGHT));
@@ -49,9 +49,9 @@ public class Debug {
 			message="[ "+message+" ]";
 			int replicas=message.length()>HEADER_LENGHT ? 0 : (HEADER_LENGHT-message.length())/2;
 			System.out.println(
-				StringUtils.replicate('-',replicas)+
+				StringUtils.replicate('=',replicas)+
 				message+
-				StringUtils.replicate('-',replicas));
+				StringUtils.replicate('=',replicas));
 		}
 
 	}

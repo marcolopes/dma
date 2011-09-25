@@ -182,6 +182,15 @@ public class StringUtils {
 	}
 
 
+	public static boolean isQuoted(String string, Character quote) {
+
+		return string.length()>=2 &&
+			string.startsWith(quote.toString()) && string.endsWith(quote.toString());
+
+	}
+
+
+
 
 
 
@@ -190,9 +199,30 @@ public class StringUtils {
 	/*
 	 * Transformation
 	 */
+	public static String quote(String string, Character quote) {
+
+		return quote + string.replace("\"","\\\"") + quote;
+
+	}
+
+
 	public static String quote(String string) {
 
-		return "\"" + string.replace("\"","\\\"") + "\"";
+		return quote(string, '\"');
+
+	}
+
+
+	public static String unquote(String string, Character quote) {
+
+		return !isQuoted(string, quote) ? string : string.substring(1, string.length()-1);
+
+	}
+
+
+	public static String unquote(String string) {
+
+		return unquote(string, '\"');
 
 	}
 
@@ -307,22 +337,6 @@ public class StringUtils {
 	}
 
 
-	public static String[] splitInside(String string, String delimiter){
-
-		String[] splited=string.split(delimiter);
-
-		String[] result=new String[splited.length/2];
-		int n=0;
-		for(int i=1; i<splited.length; i=i+2){
-			result[n]=splited[i];
-			n++;
-		}
-
-		return result;
-
-	}
-
-
 	public static String numbers(String string){
 
 		String numbers="";
@@ -393,6 +407,22 @@ public class StringUtils {
 				replaceAll("\\p{InCombiningDiacriticalMarks}+", ""),
 				//remove caracteres ilegais
 				ILLEGAL_CHARACTERS);
+
+	}
+
+
+	public static String[] splitInside(String string, String delimiter){
+
+		String[] splited=string.split(delimiter);
+
+		String[] result=new String[splited.length/2];
+		int n=0;
+		for(int i=1; i<splited.length; i=i+2){
+			result[n]=splited[i];
+			n++;
+		}
+
+		return result;
 
 	}
 
