@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="libraries/imgscalr-lib-3.1.jar" sourcepath="libraries/sources/imgscalr-lib-3.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/bcprov-jdk16-145.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/commons-codec-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-codec-1.4.jar" sourcepath="libraries/commons-codec-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons-email-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/collections-generic-4.01.jar" sourcepath="libraries/sources/collections-generic-4.01-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/itext-2.1.7.jar" sourcepath="libraries/sources/itext-2.1.7-sources.jar"/>
