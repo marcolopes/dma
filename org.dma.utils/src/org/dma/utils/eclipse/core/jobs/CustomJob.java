@@ -121,11 +121,10 @@ public class CustomJob extends Job {
 	}
 
 
-	/*
 	public void canceling(){
-		this.executing=false;
+		Debug.info("### CANCELING ###", this);
+		//this.executing=false;
 	}
-	*/
 
 
 
