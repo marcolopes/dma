@@ -65,7 +65,7 @@ public class ExecutionManager {
 
 				Listener selectionListener=new Listener() {
 					public void handleEvent(Event event) {
-						Debug.info("### EXECUTION ###");
+						Debug.info("EXECUTION");
 						execEvent.getExecutionAction().run();
 						execEvent.setActionExecuted(true);
 					}

@@ -86,7 +86,7 @@ public abstract class CustomBrowserView extends ViewPart {
 
 			tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
 				public void close(CTabFolderEvent event) {
-					Debug.info("### CLOSE ###");
+					Debug.info("CLOSE");
 					//dispose control (Browser)
 					tabMap.getValue(tabFolder.getSelectionIndex()).dispose();
 					//remove TabItem
@@ -95,12 +95,12 @@ public abstract class CustomBrowserView extends ViewPart {
 			});
 			tabFolder.addSelectionListener(new SelectionListener(){
 				public void widgetSelected(SelectionEvent e) {
-					Debug.info("### SELECTED ###");
+					Debug.info("SELECTED");
 					setFocus();
 					updateToolbar(getBrowser()!=null);
 				}
 				public void widgetDefaultSelected(SelectionEvent e) {
-					Debug.info("### DEFAULT SELECTED ###");
+					Debug.info("DEFAULT SELECTED");
 				}
 			});
 
@@ -126,14 +126,14 @@ public abstract class CustomBrowserView extends ViewPart {
 			//listeners are not created if browser throws exception
 			browser.addOpenWindowListener(new OpenWindowListener() {
 				public void open(WindowEvent event) {
-					Debug.info("### OPEN ###");
+					Debug.info("OPEN");
 					event.browser=createBrowser();
 					updateToolbar(getBrowser()!=null);
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
 				public void changed(TitleEvent event) {
-					Debug.info("### CHANGED ###");
+					Debug.info("CHANGED");
 					CTabItem tabItem=tabMap.get(tabFolder.getSelectionIndex());
 					tabItem.setText(getBrowser().getUrl());
 					setFocus();

@@ -86,7 +86,7 @@ public class ProgressSupport {
 						monitor.subTask(tasks.get(action));
 
 						if (!action.run()){
-							Debug.info("### CANCELED ###");
+							Debug.info("CANCELED");
 							monitor.setCanceled(true);
 						}
 
@@ -114,12 +114,12 @@ public class ProgressSupport {
 			return COMPLETED;
 
 		} catch (InterruptedException e){
-			Debug.info("### InterruptedException ###");
+			Debug.info("InterruptedException");
 			return CANCELED;
 		} catch (InvocationTargetException e){
-			Debug.info("### InvocationTargetException ###");
+			Debug.info("InvocationTargetException");
 		} catch (Exception e){
-			Debug.info("### Exception ###");
+			Debug.info("Exception");
 		}
 
 		return EXCEPTION;
