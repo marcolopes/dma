@@ -99,18 +99,8 @@ public class CustomJob extends Job {
 
 		/*
 		addJobChangeListener(new JobChangeAdapter() {
-
 			public void done(IJobChangeEvent event) {
-				Display.getDefault().syncExec(new Runnable() {
-					public void run() {
-						if (exitAction!=null){
-							exitAction.task();
-							Debug.info("EXIT ACTION", exitAction);
-						}
-					}
-				});
-				executing=false;
-				Debug.info("JOB FINISHED", this);
+				Debug.info("JOB DONE", this);
 			}
 		});
 		*/
