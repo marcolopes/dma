@@ -29,22 +29,28 @@ public class JobManager {
 		if(!jobMap.containsKey(ijob))
 			jobMap.put(ijob, new ArrayList());
 
-		jobMap.get(ijob).add(job);
+		if (jobMap.get(ijob).contains(job))
+			Debug.warning("JOB ALREADY REGISTERD", job);
+		else
+			jobMap.get(ijob).add(job);
 
 	}
 
 
 
 	//remove
-	public static void remove(CustomJob job) {
+	public static boolean remove(CustomJob job) {
 
 		IJobSupport ijob=findJobView(job);
 		if (ijob!=null){
 			jobMap.get(ijob).remove(job);
-		}else{
-			Debug.warning("JOB NOT FOUND", job.getName());
-			debug();
+			Debug.info("### JOB REMOVED ###", job);
+			return true;
 		}
+
+		Debug.warning("JOB NOT FOUND", job);
+		debug();
+		return false;
 
 	}
 
@@ -230,11 +236,10 @@ public class JobManager {
 
 		public void task() {
 			try{
+				Debug.info("### EXIT TASK ###", job);
 				IJobSupport ijob=findJobView(job);
 
-				remove(job);
-
-				if (getQueuedJobs(ijob)==0)
+				if (remove(job) && getQueuedJobs(ijob)==0)
 					ijob.setJobRunning(false);
 
 			} catch (Exception e){
@@ -268,11 +273,11 @@ public class JobManager {
 			List<CustomJob> jobList=jobMap.get(ijob);
 			for(int i=0; i<jobList.size(); i++){
 				CustomJob job=jobList.get(i);
-				System.out.print("Job #"+i+": " + job);
+				System.out.println("Job #"+i+": " + job);
 			}
 
 		}
-		System.out.println(StringUtils.replicate('-', 50));
+		System.out.println(StringUtils.replicate('=', 50));
 
 	}
 
