@@ -280,7 +280,7 @@ public class JobManager {
 		while(iterator.hasNext()) {
 
 			IJobSupport ijob=iterator.next();
-			System.out.println("IJob: " + ijob +"/"+ jobMap.size());
+			System.out.println("IJob: " + ijob +"/"+ jobMap.get(ijob).size());
 
 			List<CustomJob> jobList=jobMap.get(ijob);
 			for(int i=0; i<jobList.size(); i++){
