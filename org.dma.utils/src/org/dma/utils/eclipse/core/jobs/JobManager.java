@@ -49,7 +49,10 @@ public class JobManager {
 	}
 
 
-	//add
+
+	/*
+	 * Register
+	 */
 	public static void register(IJobSupport ijob, CustomJob job) {
 
 		job.setExitAction(new ExitTask(job));
@@ -66,7 +69,9 @@ public class JobManager {
 
 
 
-	//remove
+	/*
+	 * Remove
+	 */
 	public static boolean remove(CustomJob job) {
 
 		IJobSupport ijob=findJobView(job);
@@ -95,7 +100,9 @@ public class JobManager {
 
 
 
-	//execute
+	/*
+	 * Execute
+	 */
 	public static void execute(CustomJob job) {
 
 		IJobSupport ijob=findJobView(job);
@@ -129,7 +136,9 @@ public class JobManager {
 
 
 
-	//cancel
+	/*
+	 * Cancel
+	 */
 	public static boolean cancelJobs(IJobSupport ijob) {
 
 		boolean result=true;
@@ -165,6 +174,9 @@ public class JobManager {
 
 
 
+	/*
+	 * Helper
+	 */
 	public static IJobSupport findJobView(CustomJob job) {
 
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
