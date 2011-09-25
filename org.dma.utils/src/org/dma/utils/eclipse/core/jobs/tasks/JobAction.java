@@ -7,6 +7,11 @@ package org.dma.utils.eclipse.core.jobs.tasks;
 
 import org.dma.utils.eclipse.swt.custom.CustomAction;
 
-public abstract class JobAction extends CustomAction implements IJobAction {
+public abstract class JobAction extends CustomAction {
+
+	public abstract void task();
+
+	public abstract void UItask();
+
 
 }
