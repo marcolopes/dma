@@ -116,7 +116,7 @@ public class CustomJob extends Job {
 
 
 	public void canceling(){
-		Debug.info("### CANCELING ###", this);
+		Debug.info("CANCELING", this);
 		//this.executing=false;
 	}
 
