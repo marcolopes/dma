@@ -14,9 +14,11 @@ import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ILock;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.swt.widgets.Display;
 /**
  * On the Job: The Eclipse Jobs API
@@ -93,24 +95,29 @@ public class CustomJob extends Job {
 	 */
 	public void execute(ISchedulingRule rule) {
 
-		setRule(rule);
-
-		executing=true;
-
-		/*
 		addJobChangeListener(new JobChangeAdapter() {
 			public void done(IJobChangeEvent event) {
-				Debug.info("JOB DONE", this);
+				Debug.info("JOB DONE", event.getJob());
+				//exit action
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						if (executing && exitAction!=null){
+							exitAction.task();
+							Debug.info("EXIT ACTION", exitAction);
+						}
+					}
+				});
+				executing=false;
 			}
 		});
-		*/
 
+		setRule(rule);
+		executing=true;
 		schedule();
 	}
 
 
 	public void execute() {
-
 		execute(MUTEX_RULE); // default rule
 	}
 
@@ -156,22 +163,10 @@ public class CustomJob extends Job {
 			e.printStackTrace();
 		}
 		finally{
-
 			lock.release();
 			monitor.done();
 		}
 
-		//exit action
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				if (exitAction!=null){
-					exitAction.task();
-					Debug.info("EXIT ACTION", exitAction);
-				}
-			}
-		});
-
-		executing=false;
 		Debug.info("RUN FINISHED", this);
 
 		return Status.OK_STATUS;
