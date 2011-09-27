@@ -138,34 +138,22 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	}
 
 
-
-
+	public void clearTable(){
+		objectCollection.clear();
+		viewer.refresh();
+	}
 
 
 	/*
-	 * Collection
+	 * (non-Javadoc)
+	 * @see org.dma.utils.eclipse.swt.viewers.ITableViewerContainer#updateTable()
 	 */
-	public List getCollection() {
-		return this.objectCollection;
-	}
-
-
-	public int getSize() {
-		return this.objectCollection.size();
-	}
-
-
 	public void updateTable() {
 		objectCollection.clear();
 		objectCollection.addAll(retrieveObjects());
 		viewer.refresh();
 	}
 
-
-	public void clearTable(){
-		objectCollection.clear();
-		viewer.refresh();
-	}
 
 
 
@@ -207,6 +195,14 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	/*
 	 * Getters and setters
 	 */
+	public int getSize() {
+		return this.objectCollection.size();
+	}
+
+	public List getCollection() {
+		return this.objectCollection;
+	}
+
 	public TableViewer getViewer() {
 		return viewer;
 	}
