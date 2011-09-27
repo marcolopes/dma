@@ -36,6 +36,7 @@ public class CustomJob extends Job {
 	private final List<JobTask> tasks=new ArrayList();
 	private JobAction exitAction;
 	private boolean executing=false;
+	private boolean canceling=false;
 
 
 	/**
@@ -106,7 +107,7 @@ public class CustomJob extends Job {
 				//exit action
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
-						if (executing && exitAction!=null){
+						if (exitAction!=null){
 							exitAction.task();
 							Debug.info("EXIT ACTION", exitAction);
 						}
@@ -129,7 +130,7 @@ public class CustomJob extends Job {
 
 	public void canceling(){
 		Debug.info("CANCELING", this);
-		//this.executing=false;
+		this.canceling=true;
 	}
 
 
@@ -148,7 +149,7 @@ public class CustomJob extends Job {
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
 
-			for(int i=0; i<tasks.size() && executing; i++){
+			for(int i=0; i<tasks.size() && !canceling; i++){
 
 				final JobTask jtask=tasks.get(i);
 				monitor.setTaskName(jtask.getDescription());
