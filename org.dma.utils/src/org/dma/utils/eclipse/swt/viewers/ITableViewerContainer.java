@@ -15,8 +15,6 @@ public interface ITableViewerContainer {
 
 	public void insertObject() throws Exception;
 
-	public void postInsertObject() throws Exception;
-
 	public void removeObject();
 
 	public void copyObject();
