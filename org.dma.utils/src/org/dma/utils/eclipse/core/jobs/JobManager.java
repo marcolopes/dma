@@ -265,7 +265,9 @@ public class JobManager {
 
 
 
-	//debug
+	/*
+	 * Debug
+	 */
 	public static void debug() {
 
 		if (!Debug.isOn())
