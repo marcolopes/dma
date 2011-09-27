@@ -52,14 +52,18 @@ public class CustomJob extends Job {
 	 * can be executed immediately
 	 *
 	 */
-	public CustomJob(String description) {
-		this(description,Job.LONG);
-	}
-
-	public CustomJob(String description, int priority) {
-		super(description);
+	public CustomJob(String name, int priority) {
+		super(name);
 		setPriority(priority);
 		//setUser(true); // Apresenta dialogo de progresso
+	}
+
+	public CustomJob(String name) {
+		this(name,Job.LONG);
+	}
+
+	public CustomJob() {
+		this("");
 	}
 
 
