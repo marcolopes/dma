@@ -111,7 +111,9 @@ public class JobManager {
 
 	}
 
-
+	/**
+	 * Execute all jobs with default Mutex Rule
+	 */
 	public static void execute(IJobSupport ijob) {
 
 		List<CustomJob> jobs=jobMap.get(ijob);
