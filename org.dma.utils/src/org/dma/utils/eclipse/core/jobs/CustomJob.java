@@ -96,6 +96,11 @@ public class CustomJob extends Job {
 	public void execute(ISchedulingRule rule) {
 
 		addJobChangeListener(new JobChangeAdapter() {
+			/*
+			 * The only way to be sure that a CANCELED job
+			 * has finished is by overriding the done method
+			 */
+			@Override
 			public void done(IJobChangeEvent event) {
 				Debug.info("JOB DONE", event.getJob());
 				//exit action
