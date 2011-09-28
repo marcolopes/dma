@@ -98,7 +98,7 @@ public class CustomJob extends Job {
 	/*
 	 * Execution
 	 */
-	public void execute(ISchedulingRule rule) {
+	public void execute() {
 
 		addJobChangeListener(new JobChangeAdapter() {
 			/*
@@ -121,14 +121,14 @@ public class CustomJob extends Job {
 			}
 		});
 
-		setRule(rule);
 		executing=true;
 		schedule();
 	}
 
 
-	public void execute() {
-		execute(MUTEX_RULE); // default rule
+	public void execute(ISchedulingRule rule) {
+		setRule(rule);
+		execute();
 	}
 
 
