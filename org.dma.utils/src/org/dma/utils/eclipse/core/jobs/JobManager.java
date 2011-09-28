@@ -33,7 +33,7 @@ public class JobManager {
 		public void task() {
 			try{
 				Debug.info("EXIT TASK", job);
-				IJobSupport ijob=findJobView(job);
+				IJobSupport ijob=findJobSupport(job);
 
 				if (remove(job) && getQueuedJobs(ijob)==0)
 					ijob.setJobRunning(false);
@@ -76,7 +76,7 @@ public class JobManager {
 	 */
 	public static boolean remove(CustomJob job) {
 
-		IJobSupport ijob=findJobView(job);
+		IJobSupport ijob=findJobSupport(job);
 		if (ijob!=null){
 			jobMap.get(ijob).remove(job);
 			Debug.info("JOB REMOVED", job);
@@ -106,7 +106,7 @@ public class JobManager {
 	 */
 	public static void execute(CustomJob job) {
 
-		IJobSupport ijob=findJobView(job);
+		IJobSupport ijob=findJobSupport(job);
 		execute(ijob);
 
 	}
@@ -122,15 +122,16 @@ public class JobManager {
 
 			CustomJob job=jobs.get(i);
 			/*
-			 * Evita chamadas sucessivas
+			 * Avoids successive calls
 			 */
 			if (!job.isExecuting()){
 
-				//e' o primeiro JOB?
-				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0)
+				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0) //last job?
 					ijob.setJobRunning(true);
-
-				job.execute();
+				/*
+				 * Overrides job rule
+				 */
+				job.execute(CustomJob.MUTEX_RULE); // queue
 			}
 
 		}
@@ -147,8 +148,8 @@ public class JobManager {
 		boolean result=true;
 		List<CustomJob> jobs=jobMap.get(ijob);
 		/*
-		 * Deve comecar pelo ultimo elemento para prevenir a remocao
-		 * automatica de JOBS da lista efectuada pelo metodo de SAIDA
+		 * Starts with last element to avoid iteration problems
+		 * caused by the removal executed by the ExitTask
 		 */
 		for(int i=jobs.size()-1; i>=0; i--){
 			CustomJob job=jobs.get(i);
@@ -180,7 +181,7 @@ public class JobManager {
 	/*
 	 * Helper
 	 */
-	public static IJobSupport findJobView(CustomJob job) {
+	public static IJobSupport findJobSupport(CustomJob job) {
 
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext()) {
