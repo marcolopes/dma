@@ -55,7 +55,8 @@ public class CustomJob extends Job {
 	public CustomJob(String name, int priority) {
 		super(name);
 		setPriority(priority);
-		//setUser(true); // Apresenta dialogo de progresso
+		//setUser(true); // shows progress dialogue
+		setRule(MUTEX_RULE);
 	}
 
 	public CustomJob(String name) {
