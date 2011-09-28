@@ -149,7 +149,7 @@ public class JobManager {
 		List<CustomJob> jobs=jobMap.get(ijob);
 		/*
 		 * Starts with last element to avoid iteration problems
-		 * caused by the removal executed by the ExitTask
+		 * caused by JOB removal executed by the ExitTask
 		 */
 		for(int i=jobs.size()-1; i>=0; i--){
 			CustomJob job=jobs.get(i);
