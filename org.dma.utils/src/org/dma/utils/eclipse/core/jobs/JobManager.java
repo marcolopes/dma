@@ -11,58 +11,42 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.dma.utils.eclipse.swt.custom.CustomAction;
 import org.dma.utils.java.Debug;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
 	private static final Map<IJobSupport, List<CustomJob>> jobMap=new HashMap();
 
 	/*
-	 * Exit Action class
-	 */
-	public static class ExitAction extends CustomAction {
-
-		private final CustomJob job;
-
-		public ExitAction(CustomJob job) {
-			this.job=job;
-		}
-
-		public void run() {
-			try{
-				Debug.info("EXIT ACTION", job);
-				IJobSupport ijob=findJobSupport(job);
-
-				if (remove(job) && getQueuedJobs(ijob)==0)
-					ijob.jobDone();
-
-				debug();
-
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-
-
-	/*
 	 * Register
 	 */
 	public static void register(IJobSupport ijob, CustomJob job) {
-
-		job.setExitAction(new ExitAction(job));
 
 		if(!jobMap.containsKey(ijob))
 			jobMap.put(ijob, new ArrayList());
 
 		if (jobMap.get(ijob).contains(job))
 			Debug.warning("JOB ALREADY REGISTERD", job);
-		else
+		else{
+			/*
+			 * The only way to be sure that a CANCELED job
+			 * has finished is by overriding the done method
+			 */
+			job.addJobChangeListener(new JobChangeAdapter() {
+				@Override
+				public void done(final IJobChangeEvent event) {
+					final CustomJob job=(CustomJob)event.getJob();
+					Debug.info("JOB DONE", job);
+					exit(job);
+				}
+			});
+
 			jobMap.get(ijob).add(job);
+		}
 
 	}
 
@@ -175,7 +159,33 @@ public class JobManager {
 
 
 	/*
-	 * Helper
+	 * Exit
+	 */
+	public static void exit(CustomJob job) {
+		try{
+			Debug.info("EXIT", job);
+			final IJobSupport ijob=findJobSupport(job);
+
+			if (remove(job) && getQueuedJobs(ijob)==0){
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						ijob.jobDone();
+					}
+				});
+			}
+
+			debug();
+
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+	/*
+	 * Helpers
 	 */
 	public static IJobSupport findJobSupport(CustomJob job) {
 
