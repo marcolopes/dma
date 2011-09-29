@@ -15,6 +15,7 @@ import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
@@ -166,13 +167,11 @@ public class JobManager {
 			final IJobSupport ijob=findJobSupport(job);
 
 			if (remove(job) && getQueuedJobs(ijob)==0){
-				/*
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						ijob.jobDone();
 					}
 				});
-				*/
 			}
 
 			debug();
