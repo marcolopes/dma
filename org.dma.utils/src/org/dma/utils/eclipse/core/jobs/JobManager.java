@@ -36,7 +36,7 @@ public class JobManager {
 				IJobSupport ijob=findJobSupport(job);
 
 				if (remove(job) && getQueuedJobs(ijob)==0)
-					ijob.jobStopping();
+					ijob.jobDone();
 
 				debug();
 

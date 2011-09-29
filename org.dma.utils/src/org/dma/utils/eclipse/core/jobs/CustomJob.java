@@ -56,6 +56,26 @@ public class CustomJob extends Job {
 		setPriority(priority);
 		//setUser(true); // shows progress dialogue
 		setRule(MUTEX_RULE);
+		/*
+		 * The only way to be sure that a CANCELED job
+		 * has finished is by overriding the done method
+		 */
+		addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(IJobChangeEvent event) {
+				Debug.info("JOB DONE", event.getJob());
+				//exit action
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						if (exitAction!=null){
+							exitAction.run();
+							Debug.info("EXIT ACTION", exitAction);
+						}
+					}
+				});
+				running=false;
+			}
+		});
 	}
 
 	public CustomJob(String name) {
@@ -64,20 +84,6 @@ public class CustomJob extends Job {
 
 	public CustomJob() {
 		this("");
-	}
-
-
-	public String getStateName() {
-
-		String state="NONE";
-		switch (getState()){
-			case Job.RUNNING: state="RUNNING"; break;
-			case Job.WAITING: state="WAITING"; break;
-			case Job.SLEEPING: state="SLEEPING"; break;
-		}
-
-		return state;
-
 	}
 
 
@@ -99,28 +105,6 @@ public class CustomJob extends Job {
 	 * Execution
 	 */
 	public void execute() {
-
-		addJobChangeListener(new JobChangeAdapter() {
-			/*
-			 * The only way to be sure that a CANCELED job
-			 * has finished is by overriding the done method
-			 */
-			@Override
-			public void done(IJobChangeEvent event) {
-				Debug.info("JOB DONE", event.getJob());
-				//exit action
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						if (exitAction!=null){
-							exitAction.run();
-							Debug.info("EXIT ACTION", exitAction);
-						}
-					}
-				});
-				running=false;
-			}
-		});
-
 		running=true;
 		schedule();
 	}
@@ -182,6 +166,19 @@ public class CustomJob extends Job {
 		return Status.OK_STATUS;
 	}
 
+
+	public String getStateName() {
+
+		String state="NONE";
+		switch (getState()){
+			case Job.RUNNING: state="RUNNING"; break;
+			case Job.WAITING: state="WAITING"; break;
+			case Job.SLEEPING: state="SLEEPING"; break;
+		}
+
+		return state;
+
+	}
 
 
 
