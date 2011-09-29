@@ -13,12 +13,9 @@ import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ILock;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Display;
 /**
  * On the Job: The Eclipse Jobs API
@@ -34,8 +31,6 @@ public class CustomJob extends Job {
 	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
 
 	private final List<JobTask> tasks=new ArrayList();
-	private Action exitAction;
-	private boolean running=false;
 	private boolean canceled=false;
 
 	/**
@@ -56,26 +51,6 @@ public class CustomJob extends Job {
 		setPriority(priority);
 		//setUser(true); // shows progress dialogue
 		setRule(MUTEX_RULE);
-		/*
-		 * The only way to be sure that a CANCELED job
-		 * has finished is by overriding the done method
-		 */
-		addJobChangeListener(new JobChangeAdapter() {
-			@Override
-			public void done(IJobChangeEvent event) {
-				Debug.info("JOB DONE", event.getJob());
-				//exit action
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						if (exitAction!=null){
-							exitAction.run();
-							Debug.info("EXIT ACTION", exitAction);
-						}
-					}
-				});
-				running=false;
-			}
-		});
 	}
 
 	public CustomJob(String name) {
@@ -105,7 +80,6 @@ public class CustomJob extends Job {
 	 * Execution
 	 */
 	public void execute() {
-		running=true;
 		schedule();
 	}
 
@@ -113,12 +87,14 @@ public class CustomJob extends Job {
 	public void execute(ISchedulingRule rule) {
 		setRule(rule);
 		execute();
+		Debug.info("### STATE ###", getStateName());
 	}
 
 
 	public void canceling(){
 		Debug.info("CANCELING", this);
 		this.canceled=true;
+		Debug.info("### STATE ###", getStateName());
 	}
 
 
@@ -133,6 +109,7 @@ public class CustomJob extends Job {
 
 		try{
 			Debug.info("RUN STARTED", this);
+			Debug.info("### STATE ###", getStateName());
 
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
@@ -162,6 +139,7 @@ public class CustomJob extends Job {
 		}
 
 		Debug.info("RUN FINISHED", this);
+		Debug.info("### STATE ###", getStateName());
 
 		return Status.OK_STATUS;
 	}
@@ -185,16 +163,13 @@ public class CustomJob extends Job {
 	/*
 	 * Getters and setters
 	 */
-	public void setExitAction(Action exitAction) {
-		this.exitAction = exitAction;
-	}
-
 	public List<JobTask> getTasks() {
 		return tasks;
 	}
 
 	public boolean isRunning() {
-		return running;
+		Debug.info("### STATE ###", getStateName());
+		return getState()==Job.RUNNING;
 	}
 
 	public boolean isCanceled() {
