@@ -8,7 +8,6 @@ package org.dma.utils.eclipse.core.jobs;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dma.utils.eclipse.core.jobs.tasks.JobAction;
 import org.dma.utils.eclipse.core.jobs.tasks.JobTask;
 import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -19,6 +18,7 @@ import org.eclipse.core.runtime.jobs.ILock;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Display;
 /**
  * On the Job: The Eclipse Jobs API
@@ -34,10 +34,9 @@ public class CustomJob extends Job {
 	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
 
 	private final List<JobTask> tasks=new ArrayList();
-	private JobAction exitAction;
-	private boolean executing=false;
-	private boolean canceling=false;
-
+	private Action exitAction;
+	private boolean running=false;
+	private boolean canceled=false;
 
 	/**
 	 * Creates a new job
@@ -110,19 +109,19 @@ public class CustomJob extends Job {
 			public void done(IJobChangeEvent event) {
 				Debug.info("JOB DONE", event.getJob());
 				//exit action
-				Display.getDefault().syncExec(new Runnable() {
+				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						if (exitAction!=null){
-							exitAction.task();
+							exitAction.run();
 							Debug.info("EXIT ACTION", exitAction);
 						}
 					}
 				});
-				executing=false;
+				running=false;
 			}
 		});
 
-		executing=true;
+		running=true;
 		schedule();
 	}
 
@@ -135,7 +134,7 @@ public class CustomJob extends Job {
 
 	public void canceling(){
 		Debug.info("CANCELING", this);
-		this.canceling=true;
+		this.canceled=true;
 	}
 
 
@@ -154,15 +153,15 @@ public class CustomJob extends Job {
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
 
-			for(int i=0; i<tasks.size() && !canceling; i++){
+			for(int i=0; i<tasks.size() && !canceled; i++){
 
 				final JobTask jtask=tasks.get(i);
 				monitor.setTaskName(jtask.getDescription());
 
-				//task normal
+				//normal task
 				jtask.getAction().task();
 
-				//task grafica
+				//UI task
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
 						jtask.getAction().UItask();
@@ -189,7 +188,7 @@ public class CustomJob extends Job {
 	/*
 	 * Getters and setters
 	 */
-	public void setExitAction(JobAction exitAction) {
+	public void setExitAction(Action exitAction) {
 		this.exitAction = exitAction;
 	}
 
@@ -197,9 +196,12 @@ public class CustomJob extends Job {
 		return tasks;
 	}
 
-	public boolean isExecuting() {
-		return executing;
+	public boolean isRunning() {
+		return running;
 	}
 
+	public boolean isCanceled() {
+		return canceled;
+	}
 
 }
