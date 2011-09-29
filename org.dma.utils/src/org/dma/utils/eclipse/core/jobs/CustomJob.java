@@ -169,7 +169,8 @@ public class CustomJob extends Job {
 
 	public boolean isRunning() {
 		Debug.info("### STATE ###", getStateName());
-		return getState()==Job.RUNNING;
+		int state=getState();
+		return state==Job.RUNNING || state==Job.WAITING || state==Job.SLEEPING;
 	}
 
 	public boolean isCanceled() {
