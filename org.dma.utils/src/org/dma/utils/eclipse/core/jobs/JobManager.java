@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.dma.utils.eclipse.core.jobs.tasks.JobAction;
+import org.dma.utils.eclipse.swt.custom.CustomAction;
 import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.jobs.Job;
 
@@ -20,32 +20,29 @@ public class JobManager {
 	private static final Map<IJobSupport, List<CustomJob>> jobMap=new HashMap();
 
 	/*
-	 * Exit task class
+	 * Exit Action class
 	 */
-	public static class ExitTask extends JobAction {
+	public static class ExitAction extends CustomAction {
 
 		private final CustomJob job;
 
-		public ExitTask(CustomJob job) {
+		public ExitAction(CustomJob job) {
 			this.job=job;
 		}
 
-		public void task() {
+		public void run() {
 			try{
-				Debug.info("EXIT TASK", job);
+				Debug.info("EXIT ACTION", job);
 				IJobSupport ijob=findJobSupport(job);
 
 				if (remove(job) && getQueuedJobs(ijob)==0)
-					ijob.setJobRunning(false);
+					ijob.jobDone();
 
 				debug();
 
 			} catch (Exception e){
 				e.printStackTrace();
 			}
-		}
-
-		public void UItask() {
 		}
 
 	}
@@ -57,7 +54,7 @@ public class JobManager {
 	 */
 	public static void register(IJobSupport ijob, CustomJob job) {
 
-		job.setExitAction(new ExitTask(job));
+		job.setExitAction(new ExitAction(job));
 
 		if(!jobMap.containsKey(ijob))
 			jobMap.put(ijob, new ArrayList());
@@ -124,10 +121,12 @@ public class JobManager {
 			/*
 			 * Avoids successive calls
 			 */
-			if (!job.isExecuting()){
-
-				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0) //last job?
-					ijob.setJobRunning(true);
+			if (!job.isRunning()){
+				/*
+				 * Is this the first job?
+				 */
+				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0)
+					ijob.jobBusy();
 				/*
 				 * Overrides job rule
 				 */

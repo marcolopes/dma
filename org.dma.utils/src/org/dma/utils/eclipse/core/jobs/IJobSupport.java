@@ -7,6 +7,14 @@ package org.dma.utils.eclipse.core.jobs;
 
 public interface IJobSupport {
 
-	public void setJobRunning(boolean jobRunning);
+	/**
+	 * Executed when first job starts running
+	 */
+	public void jobBusy();
+
+	/**
+	 * Executed when last job is done
+	 */
+	public void jobDone();
 
 }
