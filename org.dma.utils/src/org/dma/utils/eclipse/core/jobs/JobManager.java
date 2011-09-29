@@ -36,7 +36,7 @@ public class JobManager {
 				IJobSupport ijob=findJobSupport(job);
 
 				if (remove(job) && getQueuedJobs(ijob)==0)
-					ijob.jobDone();
+					ijob.jobStopping();
 
 				debug();
 
@@ -118,18 +118,15 @@ public class JobManager {
 		for(int i=0; i<jobs.size(); i++){
 
 			CustomJob job=jobs.get(i);
-			/*
-			 * Avoids successive calls
-			 */
+
+			// Avoids successive calls
 			if (!job.isRunning()){
-				/*
-				 * Is this the first job?
-				 */
+
+				// Is this the first job?
 				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0)
-					ijob.jobBusy();
-				/*
-				 * Overrides job rule
-				 */
+					ijob.jobStarting();
+
+				// Overrides job rule
 				job.execute(CustomJob.MUTEX_RULE); // queue
 			}
 

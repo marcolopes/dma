@@ -10,11 +10,11 @@ public interface IJobSupport {
 	/**
 	 * Executed when first job starts running
 	 */
-	public void jobBusy();
+	public void jobStarting();
 
 	/**
 	 * Executed when last job is done
 	 */
-	public void jobDone();
+	public void jobStopping();
 
 }
