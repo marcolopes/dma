@@ -8,13 +8,13 @@ package org.dma.utils.eclipse.core.jobs;
 public interface IJobSupport {
 
 	/**
-	 * Executed when first job starts running
+	 * Executed when first job is about to start
 	 */
 	public void jobStarting();
 
 	/**
 	 * Executed when last job is done
 	 */
-	public void jobStopping();
+	public void jobDone();
 
 }
