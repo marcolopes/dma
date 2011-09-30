@@ -6,8 +6,8 @@
 package org.dma.utils.eclipse.core.jobs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
-	private static final Map<IJobSupport, List<CustomJob>> jobMap=new HashMap();
+	private static final Map<IJobSupport, List<CustomJob>> jobMap=new LinkedHashMap();
 
 	/*
 	 * Register
