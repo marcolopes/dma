@@ -120,16 +120,6 @@ public class JobManager {
 
 
 
-	/*
-	 * Execute
-	 */
-	public static void execute(CustomJob job) {
-
-		IJobSupport ijob=findJobSupport(job);
-		execute(ijob);
-
-	}
-
 	/**
 	 * Execute all jobs with default Mutex Rule
 	 */
@@ -153,6 +143,13 @@ public class JobManager {
 			}
 
 		}
+
+	}
+
+	public static void execute(CustomJob job) {
+
+		IJobSupport ijob=findJobSupport(job);
+		execute(ijob);
 
 	}
 
