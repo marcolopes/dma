@@ -104,7 +104,7 @@ public class JobManager {
 			CustomJob job=jobs.get(i);
 
 			// Avoids successive calls
-			if (!job.isRunning()){
+			if (!job.isBusy()){
 
 				// Is this the first job?
 				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0)
