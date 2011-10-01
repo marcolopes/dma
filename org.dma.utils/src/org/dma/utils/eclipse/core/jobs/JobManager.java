@@ -83,6 +83,44 @@ public class JobManager {
 
 
 	/*
+	 * Cancel
+	 */
+	public static boolean cancelJobs(IJobSupport ijob) {
+
+		boolean result=true;
+		List<CustomJob> jobs=jobMap.get(ijob);
+		/*
+		 * Starts with last element to avoid iteration problems
+		 * caused by JOB removal executed by the exit method
+		 */
+		for(int i=jobs.size()-1; i>=0; i--){
+			CustomJob job=jobs.get(i);
+			if (!job.cancel())
+				result=false;
+		}
+
+		return result;
+
+	}
+
+
+	public static boolean cancelJobs() {
+
+		boolean result=true;
+		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+		while(iterator.hasNext()) {
+			IJobSupport ijob=iterator.next();
+			if (!cancelJobs(ijob))
+				result=false;
+		}
+
+		return result;
+
+	}
+
+
+
+	/*
 	 * Execute
 	 */
 	public static void execute(CustomJob job) {
@@ -115,44 +153,6 @@ public class JobManager {
 			}
 
 		}
-
-	}
-
-
-
-	/*
-	 * Cancel
-	 */
-	public static boolean cancelJobs(IJobSupport ijob) {
-
-		boolean result=true;
-		List<CustomJob> jobs=jobMap.get(ijob);
-		/*
-		 * Starts with last element to avoid iteration problems
-		 * caused by JOB removal executed by the ExitTask
-		 */
-		for(int i=jobs.size()-1; i>=0; i--){
-			CustomJob job=jobs.get(i);
-			if (!job.cancel())
-				result=false;
-		}
-
-		return result;
-
-	}
-
-
-	public static boolean cancelJobs() {
-
-		boolean result=true;
-		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
-		while(iterator.hasNext()) {
-			IJobSupport ijob=iterator.next();
-			if (!cancelJobs(ijob))
-				result=false;
-		}
-
-		return result;
 
 	}
 
@@ -211,64 +211,66 @@ public class JobManager {
 
 	public static int getQueuedJobs() {
 
-		int n=0;
+		int count=0;
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext())
-			n+=getQueuedJobs(iterator.next());
+			count+=getQueuedJobs(iterator.next());
 
-		return n;
+		return count;
 
 	}
 
 
 	public static int getPendingJobs(IJobSupport ijob) {
 
-		int n=0;
+		int count=0;
 		List<CustomJob> jobs=jobMap.get(ijob);
 		for(int i=0; i<jobs.size(); i++){
 			CustomJob job=jobs.get(i);
-			if (job.getState()==Job.WAITING) ++n;
+			if (job.getState()==Job.WAITING)
+				count++;
 		}
 
-		return n;
+		return count;
 
 	}
 
 
 	public static int getPendingJobs() {
 
-		int n=0;
+		int count=0;
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext())
-			n+=getPendingJobs(iterator.next());
+			count+=getPendingJobs(iterator.next());
 
-		return n;
+		return count;
 
 	}
 
 
 	public static int getRunningJobs(IJobSupport ijob) {
 
-		int n=0;
+		int count=0;
 		List<CustomJob> jobs=jobMap.get(ijob);
 		for(int i=0; i<jobs.size(); i++){
 			CustomJob job=jobs.get(i);
-			if (job.getState()==Job.RUNNING) ++n;
+			if (job.getState()==Job.RUNNING)
+				count++;
 		}
 
-		return n;
+		return count;
 
 	}
 
 
 	public static int getRunningJobs() {
 
-		int n=0;
+		int count=0;
 		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext())
-			n+=getRunningJobs(iterator.next());
+			count+=getRunningJobs(iterator.next());
 
-		return n;
+		return count;
 
 	}
 
