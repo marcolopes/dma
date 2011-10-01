@@ -9,21 +9,21 @@ import org.eclipse.jface.action.Action;
 
 public class JobTask {
 
-	private final String description;
+	private final String name;
 	private final Action action;
 
 	public JobTask(Action action) {
 		this.action = action;
-		this.description = "";
+		this.name = "";
 	}
 
 	public JobTask(String description, Action action) {
 		this.action = action;
-		this.description = description;
+		this.name = description;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
 
 	public Action getAction() {
