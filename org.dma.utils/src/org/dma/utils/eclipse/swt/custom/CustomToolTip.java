@@ -21,7 +21,7 @@ public class CustomToolTip extends ToolTip {
 
 		this.parent=parent;
 		setText(text);
-		setAutoHide(true);
+		setAutoHide(false);
 	}
 
 
