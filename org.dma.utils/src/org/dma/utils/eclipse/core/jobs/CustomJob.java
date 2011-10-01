@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dma.utils.eclipse.core.jobs.tasks.JobTask;
+import org.dma.utils.eclipse.core.jobs.tasks.JobUITask;
 import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -119,15 +120,19 @@ public class CustomJob extends Job {
 				final JobTask jtask=tasks.get(i);
 				monitor.setTaskName(jtask.getDescription());
 
-				//normal task
-				jtask.getAction().task();
-
 				//UI task
-				Display.getDefault().syncExec(new Runnable() {
-					public void run() {
-						jtask.getAction().UItask();
-					}
-				});
+				if (jtask instanceof JobUITask){
+					Display.getDefault().syncExec(new Runnable() {
+						public void run() {
+							((JobUITask)jtask).getAction().run();
+						}
+					});
+				}
+				//normal task
+				else{
+					jtask.getAction().run();
+				}
+
 			}
 
 		} catch (Exception e){
@@ -163,10 +168,6 @@ public class CustomJob extends Job {
 	/*
 	 * Getters and setters
 	 */
-	public List<JobTask> getTasks() {
-		return tasks;
-	}
-
 	public boolean isRunning() {
 		Debug.info("### STATE ###", getStateName());
 		int state=getState();

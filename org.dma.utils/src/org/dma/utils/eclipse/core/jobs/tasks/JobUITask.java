@@ -5,13 +5,17 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.core.jobs.tasks;
 
-import org.dma.utils.eclipse.swt.custom.CustomAction;
+import org.eclipse.jface.action.Action;
 
-public abstract class JobAction extends CustomAction {
+public class JobUITask extends JobTask {
 
-	public abstract void task();
+	public JobUITask(Action action) {
+		super(action);
+	}
 
-	public abstract void UItask();
-
+	public JobUITask(String description, Action action) {
+		super(description, action);
+	}
 
 }
+
