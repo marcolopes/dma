@@ -5,17 +5,19 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.core.jobs.tasks;
 
+import org.eclipse.jface.action.Action;
+
 public class JobTask {
 
 	private final String description;
-	private final JobAction action;
+	private final Action action;
 
-	public JobTask(JobAction action) {
+	public JobTask(Action action) {
 		this.action = action;
 		this.description = "";
 	}
 
-	public JobTask(String description, JobAction action) {
+	public JobTask(String description, Action action) {
 		this.action = action;
 		this.description = description;
 	}
@@ -24,7 +26,7 @@ public class JobTask {
 		return description;
 	}
 
-	public JobAction getAction() {
+	public Action getAction() {
 		return action;
 	}
 

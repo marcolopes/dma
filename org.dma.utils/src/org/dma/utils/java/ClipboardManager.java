@@ -16,7 +16,7 @@ public class ClipboardManager {
 	private static List<Object> clipboard=new ArrayList();
 	private static Class objectClass;
 
-	public static void transferToClipboard(Object[] objectArray) {
+	public static void copyToClipboard(Object[] objectArray) {
 
 		if(objectArray!=null && objectArray.length>0) {
 

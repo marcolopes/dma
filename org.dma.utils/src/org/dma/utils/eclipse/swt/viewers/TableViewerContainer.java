@@ -179,11 +179,11 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		return ((StructuredSelection)viewer.getSelection()).toArray();
 	}
 
-	public void transferSelectionToClipboard() {
+	public void copySelectionToClipboard() {
 
 		Object[] objectsArray=getSelectedObjectsArray();
 		Debug.info("objectsArray", ArrayUtils.toList(objectsArray));
-		ClipboardManager.transferToClipboard(objectsArray);
+		ClipboardManager.copyToClipboard(objectsArray);
 
 	}
 
