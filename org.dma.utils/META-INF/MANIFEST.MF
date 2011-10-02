@@ -3,15 +3,14 @@ Bundle-ManifestVersion: 2
 Bundle-Name: DMA Utils
 Bundle-SymbolicName: org.dma.utils;singleton:=true
 Bundle-Version: 2.6.0
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
- org.eclipse.ui;bundle-version="3.7.0",
+Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
+ org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.core.databinding;bundle-version="1.4.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.dma.utils.apache.codec,
  org.dma.utils.apache.mail,
  org.dma.utils.bouncycastle,
- org.dma.utils.eclipse.core,
  org.dma.utils.eclipse.core.bindings,
  org.dma.utils.eclipse.core.jobs,
  org.dma.utils.eclipse.core.jobs.tasks,
@@ -27,6 +26,7 @@ Export-Package: org.dma.utils.apache.codec,
  org.dma.utils.eclipse.swt.snippets,
  org.dma.utils.eclipse.swt.support,
  org.dma.utils.eclipse.swt.viewers,
+ org.dma.utils.eclipse.ui,
  org.dma.utils.itext,
  org.dma.utils.java,
  org.dma.utils.java.array,

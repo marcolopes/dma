@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * 2008-2011 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopes@netc.pt)
+ *******************************************************************************/
 package org.dma.utils.eclipse.swt;
 
 import org.eclipse.jface.viewers.ComboViewer;
@@ -13,6 +18,7 @@ public class SWTUtils {
 		}
 
 		return 0;
+
 	}
 
 
@@ -24,11 +30,11 @@ public class SWTUtils {
 		}
 
 		return 0;
+
 	}
 
 
 	public static String getComboString(CCombo ccombo){
-
 		return ccombo.getItemCount()==0 ? "" : ccombo.getItem(getComboIndex(ccombo));
 	}
 
