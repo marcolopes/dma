@@ -6,7 +6,7 @@
 package org.dma.utils.eclipse.swt.custom;
 
 import org.apache.commons.collections15.map.LinkedMap;
-import org.dma.utils.eclipse.core.resources.ResourceManager;
+import org.dma.utils.eclipse.swt.image.ImageUtils;
 import org.dma.utils.java.Debug;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -172,7 +172,7 @@ public abstract class CustomBrowserView extends ViewPart {
 					}
 				};
 				button_home.setToolTipText("Home");
-				button_home.setImageDescriptor(ResourceManager.getImageDescriptor(getHomeIcon()));
+				button_home.setImageDescriptor(ImageUtils.getImageDescriptor(getHomeIcon()));
 				toolbarManager.add(button_home);
 			}
 
@@ -183,7 +183,7 @@ public abstract class CustomBrowserView extends ViewPart {
 					}
 				};
 				button_stop.setToolTipText("Stop");
-				button_stop.setImageDescriptor(ResourceManager.getImageDescriptor(getStopIcon()));
+				button_stop.setImageDescriptor(ImageUtils.getImageDescriptor(getStopIcon()));
 				toolbarManager.add(button_stop);
 			}
 
@@ -194,7 +194,7 @@ public abstract class CustomBrowserView extends ViewPart {
 					}
 				};
 				button_back.setToolTipText("Back");
-				button_back.setImageDescriptor(ResourceManager.getImageDescriptor(getBackIcon()));
+				button_back.setImageDescriptor(ImageUtils.getImageDescriptor(getBackIcon()));
 				toolbarManager.add(button_back);
 			}
 
@@ -205,7 +205,7 @@ public abstract class CustomBrowserView extends ViewPart {
 					}
 				};
 				button_forward.setToolTipText("Forward");
-				button_forward.setImageDescriptor(ResourceManager.getImageDescriptor(getForwardIcon()));
+				button_forward.setImageDescriptor(ImageUtils.getImageDescriptor(getForwardIcon()));
 				toolbarManager.add(button_forward);
 			}
 
