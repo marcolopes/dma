@@ -18,38 +18,24 @@ public class ImageManager {
 
 	private static final int MISSING_IMAGE_SIZE = 16;
 
-	private static Map<String, Image> imageMap = new LinkedHashMap();
+	private static Map<String, Image> cacheMap = new LinkedHashMap();
 
 
+	/**
+	 * Returns the cached resized image or a new one if it does not exist;
+	 * Cache Map key based on byte-array hash + pixels hash
+	 */
 	public static Image resizeImage(byte[] bytes, int pixels) {
 		String key=String.valueOf(Arrays.hashCode(bytes))+":"+String.valueOf(pixels);
 		Debug.info("### KEY ###", key);
-		Image image = imageMap.get(key);
+		Image image = cacheMap.get(key);
 		if (image == null) {
 			try{
 				image = ImageUtils.createImage(bytes,pixels);
 			} catch (Exception e){
 				image = ImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
-			imageMap.put(key, image);
-			debug();
-		}
-
-		return image;
-	}
-
-
-	public static Image getImage(byte[] bytes) {
-		String key=String.valueOf(Arrays.hashCode(bytes));
-		Debug.info("### KEY ###", key);
-		Image image = imageMap.get(key);
-		if (image == null) {
-			try{
-				image = ImageUtils.createImage(bytes);
-			} catch (Exception e){
-				image = ImageUtils.createImage(MISSING_IMAGE_SIZE);
-			}
-			imageMap.put(key, image);
+			cacheMap.put(key, image);
 			debug();
 		}
 
@@ -58,14 +44,33 @@ public class ImageManager {
 
 
 	/**
-	 * Returns an {@link Image} stored in the file at the specified path.
-	 *
-	 * @param path
-	 *            the path to the image file
-	 * @return the {@link Image} stored in the file at the specified path
+	 * Returns the cached image or a new one if it does not exist;
+	 * Cache Map key based on byte-array hash
+	 */
+	public static Image getImage(byte[] bytes) {
+		String key=String.valueOf(Arrays.hashCode(bytes));
+		Debug.info("### KEY ###", key);
+		Image image = cacheMap.get(key);
+		if (image == null) {
+			try{
+				image = ImageUtils.createImage(bytes);
+			} catch (Exception e){
+				image = ImageUtils.createImage(MISSING_IMAGE_SIZE);
+			}
+			cacheMap.put(key, image);
+			debug();
+		}
+
+		return image;
+	}
+
+
+	/**
+	 * Returns the cached image or a new one if it does not exist;
+	 * Cache Map key based on path string
 	 */
 	public static Image getImage(String path) {
-		Image image = imageMap.get(path);
+		Image image = cacheMap.get(path);
 		Debug.info("### KEY ###", path);
 		if (image == null) {
 			try{
@@ -73,7 +78,7 @@ public class ImageManager {
 			} catch (Exception e){
 				image = ImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
-			imageMap.put(path, image);
+			cacheMap.put(path, image);
 			debug();
 		}
 
@@ -82,16 +87,16 @@ public class ImageManager {
 
 
 	/**
-	 * Dispose all of the cached {@link Image}
+	 * Dispose all of the cached images
 	 */
 	public static void disposeImages() {
 		debug();
 		// dispose created images
-		Iterator<Image> iterator=imageMap.values().iterator();
+		Iterator<Image> iterator=cacheMap.values().iterator();
 		while(iterator.hasNext()){
 			iterator.next().dispose();
 		}
-		imageMap.clear();
+		cacheMap.clear();
 	}
 
 
@@ -100,8 +105,8 @@ public class ImageManager {
 			return;
 
 		Debug.header("IMAGES");
-		System.out.println("size: " + imageMap.size());
-		Iterator<String> iterator=imageMap.keySet().iterator();
+		System.out.println("size: " + cacheMap.size());
+		Iterator<String> iterator=cacheMap.keySet().iterator();
 		while(iterator.hasNext()){
 			String key=iterator.next();
 			System.out.println("key: " + key);
