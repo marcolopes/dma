@@ -9,7 +9,6 @@ import java.awt.Toolkit;
 import java.util.Date;
 
 import org.dma.utils.java.numeric.IntegerUtils;
-import org.dma.utils.java.string.StringUtils;
 
 public class Debug {
 
@@ -17,15 +16,16 @@ public class Debug {
 	 * Tipos (podem ser misturados)
 	 */
 	public static final int TYPE_NONE = 0;
-	public static final int TYPE_WARNING = 1;
-	public static final int TYPE_INFO = 2;
+	public static final int TYPE_DEBUG = 1;
+	public static final int TYPE_WARNING = 2;
+	public static final int TYPE_INFO = 4;
+	public static final int TYPE_ALL = TYPE_DEBUG + TYPE_WARNING + TYPE_INFO;
 
 	/*
 	 * Level
 	 */
-	public static final int LEVEL_NONE = 0;
-	public static final int LEVEL_BASIC = 1;
-	public static final int LEVEL_COMPLETE = 2;
+	public static final int LEVEL_BASIC = 0;
+	public static final int LEVEL_COMPLETE = 1;
 
 	/*
 	 * Configuracao
@@ -33,30 +33,18 @@ public class Debug {
 	public static int TYPE = TYPE_WARNING + TYPE_INFO;
 	public static int LEVEL = LEVEL_BASIC;
 
-	//stack trace
-	private static StackTraceElement caller;
-
-	private static final int HEADER_LENGHT = 100;
+	private static StackTraceElement caller; //stack trace
 
 	/*
-	 * Helpers
+	 * Debug
 	 */
-	public static void header(String message) {
-
-		message="[ "+message+" ]";
-		int replicas=message.length()>HEADER_LENGHT ? 0 : (HEADER_LENGHT-message.length())/2;
-		System.out.println(
-			StringUtils.replicate('=',replicas)+
-			message+
-			StringUtils.replicate('=',replicas));
-
+	public static void debug(String message) {
+		System.out.println("### "+message+" ###");
 	}
 
 
-	public static void footer() {
-
-		System.out.println(StringUtils.replicate('-',HEADER_LENGHT));
-
+	public static boolean isType(int type) {
+		return IntegerUtils.bit(TYPE, type);
 	}
 
 
@@ -65,7 +53,7 @@ public class Debug {
 	 * Info
 	 */
 	public static void info() {
-		if (isOn()){
+		if (TYPE!=TYPE_NONE){
 			caller = new Throwable().getStackTrace()[1];
 			info2(null,null);
 		}
@@ -73,7 +61,7 @@ public class Debug {
 
 
 	public static void info(Object obj) {
-		if (isOn()){
+		if (TYPE!=TYPE_NONE){
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
 			info2(null,obj);
@@ -82,7 +70,7 @@ public class Debug {
 
 
 	public static void info(Object obj1, Object obj2) {
-		if (isOn()){
+		if (TYPE!=TYPE_NONE){
 			caller = new Throwable().getStackTrace()[1];
 			if (obj1==null) obj1="<NULL>";
 			info2(obj1.toString(),obj2);
@@ -96,7 +84,7 @@ public class Debug {
 	 * Warning
 	 */
 	public static void warning(String message) {
-		if (isOn()){
+		if (TYPE!=TYPE_NONE){
 			caller = new Throwable().getStackTrace()[1];
 			warning2(message,null);
 		}
@@ -104,7 +92,7 @@ public class Debug {
 
 
 	public static void warning(Object obj) {
-		if (isOn()){
+		if (TYPE!=TYPE_NONE){
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
 			warning2(null,obj);
@@ -113,7 +101,7 @@ public class Debug {
 
 
 	public static void warning(String message, Object obj) {
-		if (isOn()){
+		if (TYPE!=TYPE_NONE){
 			caller = new Throwable().getStackTrace()[1];
 			if (obj==null) obj="<NULL>";
 			warning2(message,obj);
@@ -172,17 +160,6 @@ public class Debug {
 
 		return logMessage;
 
-	}
-
-
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public static boolean isOn() {
-		return LEVEL!=LEVEL_NONE;
 	}
 
 

@@ -16,9 +16,9 @@ import org.eclipse.swt.graphics.Image;
 
 public class ImageManager {
 
-	private static final int MISSING_IMAGE_SIZE = 16;
+	private static final int MISSING_IMAGE_SIZE=16;
 
-	private static Map<String, Image> cacheMap = new LinkedHashMap();
+	private static Map<String, Image> cacheMap=new LinkedHashMap();
 
 
 	/**
@@ -27,12 +27,12 @@ public class ImageManager {
 	 */
 	public static Image resizeImage(byte[] bytes, int pixels) {
 		String key=String.valueOf(Arrays.hashCode(bytes))+":"+String.valueOf(pixels);
-		Image image = cacheMap.get(key);
+		Image image=cacheMap.get(key);
 		if (image == null) {
 			try{
-				image = ImageUtils.createImage(bytes,pixels);
+				image=ImageUtils.createImage(bytes,pixels);
 			} catch (Exception e){
-				image = ImageUtils.createImage(MISSING_IMAGE_SIZE);
+				image=ImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
 			cacheMap.put(key, image);
 			debug();
@@ -48,12 +48,12 @@ public class ImageManager {
 	 */
 	public static Image getImage(byte[] bytes) {
 		String key=String.valueOf(Arrays.hashCode(bytes));
-		Image image = cacheMap.get(key);
+		Image image=cacheMap.get(key);
 		if (image == null) {
 			try{
-				image = ImageUtils.createImage(bytes);
+				image=ImageUtils.createImage(bytes);
 			} catch (Exception e){
-				image = ImageUtils.createImage(MISSING_IMAGE_SIZE);
+				image=ImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
 			cacheMap.put(key, image);
 			debug();
@@ -68,12 +68,12 @@ public class ImageManager {
 	 * Cache Map key based on path string
 	 */
 	public static Image getImage(String path) {
-		Image image = cacheMap.get(path);
+		Image image=cacheMap.get(path);
 		if (image == null) {
 			try{
-				image = ImageUtils.createImage(new FileInputStream(path));
+				image=ImageUtils.createImage(new FileInputStream(path));
 			} catch (Exception e){
-				image = ImageUtils.createImage(MISSING_IMAGE_SIZE);
+				image=ImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
 			cacheMap.put(path, image);
 			debug();
@@ -98,17 +98,16 @@ public class ImageManager {
 
 
 	public static void debug() {
-		if (!Debug.isOn())
+		if (!Debug.isType(Debug.TYPE_DEBUG))
 			return;
 
-		Debug.header("IMAGES");
+		Debug.debug("IMAGES");
 		System.out.println("size: " + cacheMap.size());
 		Iterator<String> iterator=cacheMap.keySet().iterator();
 		while(iterator.hasNext()){
 			String key=iterator.next();
 			System.out.println("key: " + key);
 		}
-		Debug.footer();
 	}
 
 
