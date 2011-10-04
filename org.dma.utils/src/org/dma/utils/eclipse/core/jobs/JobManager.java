@@ -278,10 +278,10 @@ public class JobManager {
 	 */
 	public static void debug() {
 
-		if (!Debug.isOn())
+		if (!Debug.isType(Debug.TYPE_DEBUG))
 			return;
 
-		Debug.header("JOB MANAGER");
+		Debug.debug("JOB MANAGER");
 		System.out.println("QUEUED: " + getQueuedJobs());
 		System.out.println("PENDING: " + getPendingJobs());
 		System.out.println("RUNNING: " + getRunningJobs());
@@ -299,7 +299,6 @@ public class JobManager {
 			}
 
 		}
-		Debug.footer();
 
 	}
 
