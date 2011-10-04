@@ -27,7 +27,6 @@ public class ImageManager {
 	 */
 	public static Image resizeImage(byte[] bytes, int pixels) {
 		String key=String.valueOf(Arrays.hashCode(bytes))+":"+String.valueOf(pixels);
-		Debug.info("### KEY ###", key);
 		Image image = cacheMap.get(key);
 		if (image == null) {
 			try{
@@ -49,7 +48,6 @@ public class ImageManager {
 	 */
 	public static Image getImage(byte[] bytes) {
 		String key=String.valueOf(Arrays.hashCode(bytes));
-		Debug.info("### KEY ###", key);
 		Image image = cacheMap.get(key);
 		if (image == null) {
 			try{
@@ -71,7 +69,6 @@ public class ImageManager {
 	 */
 	public static Image getImage(String path) {
 		Image image = cacheMap.get(path);
-		Debug.info("### KEY ###", path);
 		if (image == null) {
 			try{
 				image = ImageUtils.createImage(new FileInputStream(path));
