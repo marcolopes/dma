@@ -19,8 +19,12 @@ public abstract class FileCopy {
 
 	public abstract boolean cancel();
 
-	/*
-	 * Copy
+	/**
+	 * Copies a file from SOURCE to DESTINATION
+	 * @return
+	 * true - if copy was completed<br>
+	 * false - if copy was canceled<br>
+	 * NULL - if there was an error
 	 */
 	public Boolean copyFile(File src, File dst) {
 
@@ -45,14 +49,14 @@ public abstract class FileCopy {
 				FileUtils.close(bis);
 			}
 
-			return cancel()? null : true;
+			return cancel() ? false : true;
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
 		} catch (IOException e){
 		}
 
-		return false;
+		return null;
 	}
 
 
@@ -63,8 +67,12 @@ public abstract class FileCopy {
 	}
 
 
-	/*
-	 * Download
+	/**
+	 * Downloads a file from SOURCE to DESTINATION
+	 * @return
+	 * true - if download was completed<br>
+	 * false - if download was canceled<br>
+	 * NULL - if there was an error
 	 */
 	public Boolean downloadFile(String src, String dst) {
 
@@ -89,14 +97,14 @@ public abstract class FileCopy {
 				FileUtils.close(bis);
 			}
 
-			return cancel() ? null : true;
+			return cancel() ? false : true;
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
 		} catch (IOException e){
 		}
 
-		return false;
+		return null;
 
 	}
 
