@@ -89,7 +89,7 @@ public abstract class FileCopy {
 				FileUtils.close(bis);
 			}
 
-			return cancel()? null : true;
+			return cancel() ? null : true;
 
 		} catch (FileNotFoundException e){
 			System.out.println(e);
