@@ -16,10 +16,9 @@ public class Debug {
 	 * Tipos (podem ser misturados)
 	 */
 	public static final int TYPE_NONE = 0;
-	public static final int TYPE_DEBUG = 1;
-	public static final int TYPE_WARNING = 2;
-	public static final int TYPE_INFO = 4;
-	public static final int TYPE_ALL = TYPE_DEBUG + TYPE_WARNING + TYPE_INFO;
+	public static final int TYPE_WARNING = 1;
+	public static final int TYPE_INFO = 2;
+	public static final int TYPE_ALL = TYPE_WARNING + TYPE_INFO;
 
 	/*
 	 * Level
@@ -40,11 +39,6 @@ public class Debug {
 	 */
 	public static void debug(String message) {
 		System.out.println("### "+message+" ###");
-	}
-
-
-	public static boolean isType(int type) {
-		return IntegerUtils.bit(TYPE, type);
 	}
 
 

@@ -278,9 +278,6 @@ public class JobManager {
 	 */
 	public static void debug() {
 
-		if (!Debug.isType(Debug.TYPE_DEBUG))
-			return;
-
 		Debug.debug("JOB MANAGER");
 		System.out.println("QUEUED: " + getQueuedJobs());
 		System.out.println("PENDING: " + getPendingJobs());
