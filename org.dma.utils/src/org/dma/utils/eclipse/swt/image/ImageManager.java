@@ -35,7 +35,6 @@ public class ImageManager {
 				image=ImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
 			cacheMap.put(key, image);
-			debug();
 		}
 
 		return image;
@@ -56,7 +55,6 @@ public class ImageManager {
 				image=ImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
 			cacheMap.put(key, image);
-			debug();
 		}
 
 		return image;
@@ -76,7 +74,6 @@ public class ImageManager {
 				image=ImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
 			cacheMap.put(path, image);
-			debug();
 		}
 
 		return image;
@@ -97,9 +94,10 @@ public class ImageManager {
 	}
 
 
+	/*
+	 * Debug
+	 */
 	public static void debug() {
-		if (!Debug.isType(Debug.TYPE_DEBUG))
-			return;
 
 		Debug.debug("IMAGES");
 		System.out.println("size: " + cacheMap.size());
