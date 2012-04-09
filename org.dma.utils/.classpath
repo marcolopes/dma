@@ -12,6 +12,6 @@
 	<classpathentry exported="true" kind="lib" path="libraries/pdfbox-1.6.0.jar" sourcepath="libraries/sources/pdfbox-1.6.0-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/fontbox-1.6.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/itext-2.1.7.jar" sourcepath="libraries/sources/itext-2.1.7-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/mail.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/mail-1.4.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
