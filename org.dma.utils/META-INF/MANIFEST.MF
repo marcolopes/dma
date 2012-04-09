@@ -47,5 +47,5 @@ Bundle-ClassPath: .,
  libraries/pdfbox-1.6.0.jar,
  libraries/fontbox-1.6.0.jar,
  libraries/itext-2.1.7.jar,
- libraries/mail.jar
+ libraries/mail-1.4.3.jar
 Bundle-Vendor: marcolopes@netc.pt
