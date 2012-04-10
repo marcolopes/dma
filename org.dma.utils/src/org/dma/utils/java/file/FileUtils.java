@@ -21,7 +21,6 @@ import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
 public class FileUtils {
 
@@ -32,7 +31,7 @@ public class FileUtils {
 	public static final String UTF8_BOM = "\ufeff";
 
 	public static final String CHARSET_ISO = "ISO-8859-1";
-	public static final String CHARSET_UTF8 = "UTF8";
+	public static final String CHARSET_UTF8 = "UTF-8";
 
 
 	/*
@@ -600,15 +599,6 @@ public class FileUtils {
 		writeBytesStream(bytes, filename);
 
 		return filename;
-
-	}
-
-
-	public static void main(String[] argvs){
-
-		System.out.println("DEFAULT CHARSET: "+Charset.defaultCharset().name());
-		String text=readURLTextStreamUTF8("http://www.deltafil.com/download/updates.txt");
-		System.out.println(text);
 
 	}
 
