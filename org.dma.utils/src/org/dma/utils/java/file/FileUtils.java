@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2012 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -20,10 +20,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 public class FileUtils {
 
-	public static final String UTF8_SIGNATURE = "\ufeff";
+	/**
+	 * Unicode Byte Order Mark<br>
+	 * http://unicode.org/faq/utf_bom.html
+	 */
+	public static final String UTF8_BOM = "\ufeff";
 
 	public static final String CHARSET_ISO = "ISO-8859-1";
 	public static final String CHARSET_UTF8 = "UTF8";
@@ -358,6 +364,8 @@ public class FileUtils {
 				close(br);
 			}
 
+		} catch (UnsupportedEncodingException e){
+			System.out.println(e);
 		} catch (FileNotFoundException e){
 			System.out.println(e);
 		} catch (Exception e){
@@ -388,7 +396,7 @@ public class FileUtils {
 	}
 
 
-	public static String readURLTextStream(String fileurl) {
+	public static String readURLTextStream(String fileurl, String charset) {
 
 		final StringBuffer buffer=new StringBuffer();
 
@@ -396,7 +404,7 @@ public class FileUtils {
 			final BufferedReader br =
 					new BufferedReader(
 							new InputStreamReader(
-									HTTPUtils.getInputStream(fileurl)));
+									HTTPUtils.getInputStream(fileurl), charset));
 
 			try{
 				int ch;
@@ -407,6 +415,8 @@ public class FileUtils {
 				close(br);
 			}
 
+		} catch (UnsupportedEncodingException e){
+			System.out.println(e);
 		} catch (FileNotFoundException e){
 			System.out.println(e);
 		} catch (Exception e){
@@ -414,6 +424,12 @@ public class FileUtils {
 
 		return buffer.toString();
 
+	}
+
+
+	public static String readURLTextStreamUTF8(String fileurl) {
+
+		return readURLTextStream(fileurl, CHARSET_UTF8);
 	}
 
 
@@ -436,6 +452,8 @@ public class FileUtils {
 				close(br);
 			}
 
+		} catch (UnsupportedEncodingException e){
+			System.out.println(e);
 		} catch (FileNotFoundException e){
 			System.out.println(e);
 		} catch (Exception e){
@@ -493,6 +511,8 @@ public class FileUtils {
 
 			return true;
 
+		} catch (UnsupportedEncodingException e){
+			System.out.println(e);
 		} catch (FileNotFoundException e){
 			System.out.println(e);
 		} catch (Exception e){
@@ -586,7 +606,8 @@ public class FileUtils {
 
 	public static void main(String[] argvs){
 
-		String text=readURLTextStream("http://dl.dropbox.com/u/126065/Colibri/readme.txt");
+		System.out.println("DEFAULT CHARSET: "+Charset.defaultCharset().name());
+		String text=readURLTextStreamUTF8("http://www.deltafil.com/download/updates.txt");
 		System.out.println(text);
 
 	}
