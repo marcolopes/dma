@@ -353,7 +353,6 @@ public class FileUtils {
 						new InputStreamReader(
 								new FileInputStream(file), charset));
 
-
 			try{
 				int ch;
 				while ((ch = br.read()) > -1)
