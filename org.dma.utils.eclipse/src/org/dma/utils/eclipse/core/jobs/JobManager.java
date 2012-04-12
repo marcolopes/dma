@@ -29,9 +29,7 @@ public class JobManager {
 		if(!jobMap.containsKey(ijob))
 			jobMap.put(ijob, new ArrayList());
 
-		if (jobMap.get(ijob).contains(job))
-			Debug.warning("JOB ALREADY REGISTERD", job);
-		else{
+		if (!jobMap.get(ijob).contains(job)){
 			/*
 			 * The only way to be sure that a CANCELED job
 			 * has finished is by overriding the done method
@@ -46,6 +44,9 @@ public class JobManager {
 			});
 
 			jobMap.get(ijob).add(job);
+
+		}else{
+			Debug.warning("JOB ALREADY REGISTERD", job);
 		}
 
 	}
