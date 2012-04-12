@@ -182,7 +182,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	public void copySelectionToClipboard() {
 
 		Object[] objectsArray=getSelectedObjectsArray();
-		Debug.info("objectsArray", ArrayUtils.toList(objectsArray));
+		Debug.out("objectsArray", ArrayUtils.toList(objectsArray));
 		ClipboardManager.copyToClipboard(objectsArray);
 
 	}

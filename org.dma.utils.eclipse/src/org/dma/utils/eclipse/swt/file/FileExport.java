@@ -43,7 +43,7 @@ public class FileExport {
 
 	public File filePicker(Shell parent, String filename){
 
-		Debug.info("extensions", ArrayUtils.toList(extensions));
+		Debug.out("extensions", ArrayUtils.toList(extensions));
 
 		try{
 			FileDialog fd = new FileDialog(parent,SWT.SAVE);

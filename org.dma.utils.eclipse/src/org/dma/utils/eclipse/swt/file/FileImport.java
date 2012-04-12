@@ -35,8 +35,8 @@ public class FileImport {
 
 	public File filePicker(Shell parent) {
 
-		Debug.info("extensions", ArrayUtils.toList(extensions));
-		Debug.info("defaultPath", defaultPath);
+		Debug.out("extensions", ArrayUtils.toList(extensions));
+		Debug.out("defaultPath", defaultPath);
 
 		try{
 			FileDialog fd = new FileDialog(parent,SWT.OPEN);

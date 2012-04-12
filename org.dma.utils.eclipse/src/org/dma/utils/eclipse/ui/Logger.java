@@ -33,7 +33,7 @@ public class Logger {
 	private final Map<Integer, Integer> exceptions=new HashMap();
 
 	public Logger(String pluginId) {
-		Debug.info();
+		Debug.out();
 		this.pluginId=pluginId;
 	}
 

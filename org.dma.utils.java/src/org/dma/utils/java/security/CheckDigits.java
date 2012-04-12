@@ -20,7 +20,7 @@ public final class CheckDigits {
 	 */
 	public static boolean checkNIF(String nif) {
 
-		Debug.info("nif",nif);
+		Debug.out("nif",nif);
 
 		//Check if is numeric and if has 9 numbers
 		if (StringUtils.isNumeric(nif) && nif.length()==9) {

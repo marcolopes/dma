@@ -26,27 +26,32 @@ public class JobManager {
 	 */
 	public static void register(IJobSupport ijob, CustomJob job) {
 
-		if(!jobMap.containsKey(ijob))
-			jobMap.put(ijob, new ArrayList());
+		try{
+			if(!jobMap.containsKey(ijob))
+				jobMap.put(ijob, new ArrayList());
 
-		if (!jobMap.get(ijob).contains(job)){
-			/*
-			 * The only way to be sure that a CANCELED job
-			 * has finished is by overriding the done method
-			 */
-			job.addJobChangeListener(new JobChangeAdapter() {
-				@Override
-				public void done(final IJobChangeEvent event) {
-					final CustomJob job=(CustomJob)event.getJob();
-					Debug.info("JOB DONE", job);
-					exit(job);
-				}
-			});
+			if (!jobMap.get(ijob).contains(job)){
+				/*
+				 * The only way to be sure that a CANCELED job
+				 * has finished is by overriding the done method
+				 */
+				job.addJobChangeListener(new JobChangeAdapter() {
+					@Override
+					public void done(final IJobChangeEvent event) {
+						final CustomJob job=(CustomJob)event.getJob();
+						Debug.out("JOB DONE", job);
+						exit(job);
+					}
+				});
 
-			jobMap.get(ijob).add(job);
+				jobMap.get(ijob).add(job);
 
-		}else{
-			Debug.warning("JOB ALREADY REGISTERD", job);
+			}else{
+				throw new Exception("JOB ALREADY REGISTERD: "+job);
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 	}
@@ -59,11 +64,17 @@ public class JobManager {
 	public static boolean remove(CustomJob job) {
 
 		IJobSupport ijob=findJobSupport(job);
-		if (ijob!=null){
-			jobMap.get(ijob).remove(job);
-			Debug.info("JOB REMOVED", job);
-		}else{
-			Debug.warning("JOB NOT FOUND", job);
+
+		try{
+			if (ijob!=null){
+				jobMap.get(ijob).remove(job);
+				Debug.out("JOB REMOVED", job);
+			}else{
+				throw new Exception("JOB NOT FOUND: "+job);
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 		return ijob!=null;
@@ -161,7 +172,7 @@ public class JobManager {
 	 */
 	public static void exit(CustomJob job) {
 		try{
-			Debug.info("EXIT", job);
+			Debug.out("EXIT", job);
 			final IJobSupport ijob=findJobSupport(job);
 
 			if (remove(job) && getQueuedJobs(ijob)==0){
@@ -279,7 +290,7 @@ public class JobManager {
 	 */
 	public static void debug() {
 
-		Debug.debug("JOB MANAGER");
+		Debug.out("JOB MANAGER");
 		System.out.println("QUEUED: " + getQueuedJobs());
 		System.out.println("PENDING: " + getPendingJobs());
 		System.out.println("RUNNING: " + getRunningJobs());

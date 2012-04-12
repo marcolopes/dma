@@ -33,18 +33,18 @@ public class TraverseSupport {
 					if(actualControl instanceof Text &&
 							IntegerUtils.bit(((Text) actualControl).getStyle(), SWT.MULTI)){
 
-						Debug.info("SWT.MULTI");
+						Debug.out("SWT.MULTI");
 
 						//foi pressionado ENTER principal?
 						if (e.keyCode==SWT.CR){
-							Debug.info("SWT.CR");
+							Debug.out("SWT.CR");
 							//NAO insere nova linha
 							e.detail = SWT.TRAVERSE_NONE;
 							//passa de campo
 							e.doit = true;
 						//foi pressionado ENTER do teclado numerico?
 						}else if (e.keyCode==SWT.KEYPAD_CR){
-							Debug.info("SWT.KEYPAD_CR");
+							Debug.out("SWT.KEYPAD_CR");
 							//NAO passa de campo
 							e.doit = false;
 						}

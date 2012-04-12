@@ -27,9 +27,9 @@ public class ClipboardManager {
 			clearClipboard();
 			clipboard=ArrayUtils.toList(objectArray);
 
-			Debug.info("CLIPBOARD", clipboard.size());
-			Debug.info("OBJECTS", objectArray.length);
-			Debug.info("CLASS", getObjectClass());
+			Debug.out("CLIPBOARD", clipboard.size());
+			Debug.out("OBJECTS", objectArray.length);
+			Debug.out("CLASS", getObjectClass());
 
 		}
 

@@ -5,125 +5,49 @@
  *******************************************************************************/
 package org.dma.utils.java;
 
-import java.awt.Toolkit;
 import java.util.Date;
-
-import org.dma.utils.java.numeric.IntegerUtils;
 
 public class Debug {
 
-	/*
-	 * Tipos (podem ser misturados)
-	 */
-	public static final int TYPE_NONE = 0;
-	public static final int TYPE_WARNING = 1;
-	public static final int TYPE_INFO = 2;
-	public static final int TYPE_ALL = TYPE_WARNING + TYPE_INFO;
+	public static boolean STATUS = true;
 
-	/*
-	 * Level
-	 */
 	public static final int LEVEL_BASIC = 0;
 	public static final int LEVEL_COMPLETE = 1;
-
-	/*
-	 * Configuracao
-	 */
-	public static int TYPE = TYPE_WARNING + TYPE_INFO;
 	public static int LEVEL = LEVEL_BASIC;
 
-	private static StackTraceElement caller; //stack trace
-
-	/*
-	 * Debug
-	 */
-	public static void debug(String message) {
-		System.out.println("### "+message+" ###");
+	public static void out() {
+		if (STATUS){
+			StackTraceElement caller = new Throwable().getStackTrace()[1];
+			log(null, null, caller);
+		}
 	}
 
+	public static void out(String message) {
+		if (STATUS){
+			StackTraceElement caller = new Throwable().getStackTrace()[1];
+			log(message, null, caller);
+		}
+	}
 
+	public static void out(Object obj) {
+		if (STATUS){
+			StackTraceElement caller = new Throwable().getStackTrace()[1];
+			log(null, obj==null?"<NULL>":obj, caller);
+		}
+	}
 
-	/*
-	 * Info
-	 */
-	public static void info() {
-		if (TYPE!=TYPE_NONE){
-			caller = new Throwable().getStackTrace()[1];
-			info2(null,null);
+	public static void out(String message, Object obj) {
+		if (STATUS){
+			StackTraceElement caller = new Throwable().getStackTrace()[1];
+			log(message, obj==null?"<NULL>":obj, caller);
 		}
 	}
 
 
-	public static void info(Object obj) {
-		if (TYPE!=TYPE_NONE){
-			caller = new Throwable().getStackTrace()[1];
-			info2(null,obj==null?"<NULL>":obj);
-		}
-	}
-
-
-	public static void info(String message, Object obj) {
-		if (TYPE!=TYPE_NONE){
-			caller = new Throwable().getStackTrace()[1];
-			info2(message,obj==null?"<NULL>":obj);
-		}
-	}
-
-
-
-
-	/*
-	 * Warning
-	 */
-	public static void warning(String message) {
-		if (TYPE!=TYPE_NONE){
-			caller = new Throwable().getStackTrace()[1];
-			warning2(message,null);
-		}
-	}
-
-
-	public static void warning(Object obj) {
-		if (TYPE!=TYPE_NONE){
-			caller = new Throwable().getStackTrace()[1];
-			warning2(null,obj==null?"<NULL>":obj);
-		}
-	}
-
-
-	public static void warning(String message, Object obj) {
-		if (TYPE!=TYPE_NONE){
-			caller = new Throwable().getStackTrace()[1];
-			warning2(message,obj==null?"<NULL>":obj);
-		}
-	}
-
-
-
-
-	/*
-	 * Privados
-	 */
-	private static void warning2(String message, Object obj) {
-		if (IntegerUtils.bit(TYPE, TYPE_WARNING)){
-			String logMessage=getMessage("### WARNING ### "+message,obj);
-			System.out.println(logMessage);
-			Toolkit.getDefaultToolkit().beep();
-		}
-	}
-
-
-	private static void info2(String message, Object obj) {
-		if (IntegerUtils.bit(TYPE, TYPE_INFO)){
-			String logMessage=getMessage(message,obj);
-			System.out.println(logMessage);
-		}
-	}
-
-
-	private static String getMessage(String message, Object obj) {
+	private static void log(String message, Object obj, StackTraceElement caller) {
 
 		String logMessage="";
+
 		try{
 			switch(LEVEL){
 
@@ -136,9 +60,9 @@ public class Debug {
 
 			case LEVEL_COMPLETE:
 				logMessage=new Date()+
-				"; CLASSE: " + caller.getClassName()+
-				"; METODO: " + caller.getMethodName()+
-				"; LINHA: " + caller.getLineNumber();
+				"; CLASS: " + caller.getClassName()+
+				"; METHOD: " + caller.getMethodName()+
+				"; LINE: " + caller.getLineNumber();
 				if (message!=null) logMessage+="; MENSAGEM: " + message;
 				if (obj!=null) logMessage+=", Valor: "+obj.toString();
 				break;
@@ -148,7 +72,7 @@ public class Debug {
 			e.printStackTrace();
 		}
 
-		return logMessage;
+		System.out.println(logMessage);
 
 	}
 
