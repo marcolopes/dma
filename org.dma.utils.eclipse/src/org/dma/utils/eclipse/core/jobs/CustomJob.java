@@ -122,16 +122,15 @@ public class CustomJob extends Job {
 				monitor.setTaskName(jtask.getName());
 				Debug.info("JOB TASK", jtask.getName());
 
-				//UI task
 				if (jtask instanceof JobUITask){
+					//UI task
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
 							((JobUITask)jtask).getAction().run();
 						}
 					});
-				}
-				//normal task
-				else{
+				}else{
+					//normal task
 					jtask.getAction().run();
 				}
 
