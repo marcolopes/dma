@@ -97,7 +97,7 @@ public class WorkbenchHelper {
 				Listener[] listeners = toolBar.getListeners(SWT.MenuDetect);
 				if (listeners != null){
 					for (Listener listener : listeners){
-						Debug.info("REMOVING", listener.toString());
+						Debug.out("REMOVING", listener.toString());
 						toolBar.removeListener(SWT.MenuDetect, listener);
 					}
 				}
@@ -119,7 +119,7 @@ public class WorkbenchHelper {
 			for(int i=0; i<perspectivesConfig.length; i++){
 				String id=perspectivesConfig[i].getAttribute("id");
 				if (!id.equals(perspectiveId)){
-					Debug.info("ADDING", id);
+					Debug.out("ADDING", id);
 					layout.addPerspectiveShortcut(id);
 				}
 			}

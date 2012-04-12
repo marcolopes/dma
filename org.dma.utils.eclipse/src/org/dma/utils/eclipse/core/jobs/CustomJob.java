@@ -88,14 +88,14 @@ public class CustomJob extends Job {
 	public void execute(ISchedulingRule rule) {
 		setRule(rule);
 		execute();
-		Debug.info("JOB STATE", getStateName());
+		Debug.out("JOB STATE", getStateName());
 	}
 
 
 	public void canceling(){
-		Debug.info("CANCELING", this);
+		Debug.out("CANCELING", this);
 		this.canceled=true;
-		Debug.info("JOB STATE", getStateName());
+		Debug.out("JOB STATE", getStateName());
 	}
 
 
@@ -109,8 +109,8 @@ public class CustomJob extends Job {
 		ILock lock = getJobManager().newLock();
 
 		try{
-			Debug.info("RUN STARTED", this);
-			Debug.info("JOB STATE", getStateName());
+			Debug.out("RUN STARTED", this);
+			Debug.out("JOB STATE", getStateName());
 
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
@@ -120,7 +120,7 @@ public class CustomJob extends Job {
 				final JobTask jtask=tasks.get(i);
 
 				monitor.setTaskName(jtask.getName());
-				Debug.info("JOB TASK", jtask.getName());
+				Debug.out("JOB TASK", jtask.getName());
 
 				if (jtask instanceof JobUITask){
 					//UI task
@@ -144,8 +144,8 @@ public class CustomJob extends Job {
 			monitor.done();
 		}
 
-		Debug.info("RUN FINISHED", this);
-		Debug.info("JOB STATE", getStateName());
+		Debug.out("RUN FINISHED", this);
+		Debug.out("JOB STATE", getStateName());
 
 		return Status.OK_STATUS;
 	}
@@ -170,7 +170,7 @@ public class CustomJob extends Job {
 	 * Getters and setters
 	 */
 	public boolean isBusy() {
-		Debug.info("JOB STATE", getStateName());
+		Debug.out("JOB STATE", getStateName());
 		int state=getState();
 		return state==Job.RUNNING || state==Job.WAITING || state==Job.SLEEPING;
 	}

@@ -23,18 +23,23 @@ public class BindingSupport {
 
 	public void register(String property, BindingDefinition definition) {
 
-		if (!bindingMap.containsKey(property)){
+		try{
+			if (!bindingMap.containsKey(property)){
 
-			bindingMap.put(property, definition);
+				bindingMap.put(property, definition);
 
-			bindingContext.bindValue(
-				definition.getTargetObservableValue(), definition.getModelObservableValue(),
-				definition.getTargetToModel(), definition.getModelToTarget());
+				bindingContext.bindValue(
+					definition.getTargetObservableValue(), definition.getModelObservableValue(),
+					definition.getTargetToModel(), definition.getModelToTarget());
 
-			Debug.info(property, bindingMap.keySet());
+				Debug.out(property, bindingMap.keySet());
 
-		}else{
-			Debug.warning("BINDING ALREADY REGISTERED", property);
+			}else{
+				throw new Exception("BINDING ALREADY REGISTERED: "+property);
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 	}
@@ -44,7 +49,7 @@ public class BindingSupport {
 
 		BindingDefinition binding=bindingMap.remove(property);
 		if (binding!=null){
-			Debug.info(property, bindingMap.keySet());
+			Debug.out(property, bindingMap.keySet());
 			binding.dispose();
 		}
 

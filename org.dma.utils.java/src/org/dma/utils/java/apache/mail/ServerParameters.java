@@ -34,11 +34,11 @@ public class ServerParameters {
 
 	public void debug(){
 
-		Debug.info("hostname", hostname);
-		Debug.info("smtpport", smtpport);
-		Debug.info("username", username);
-		Debug.info("password", password);
-		Debug.info("security", security);
+		Debug.out("hostname", hostname);
+		Debug.out("smtpport", smtpport);
+		Debug.out("username", username);
+		Debug.out("password", password);
+		Debug.out("security", security);
 
 	}
 

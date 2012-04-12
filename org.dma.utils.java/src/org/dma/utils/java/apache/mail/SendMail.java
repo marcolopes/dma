@@ -20,10 +20,10 @@ public class SendMail {
 	public static void send(ServerParameters server, EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) throws Exception {
 
 		server.debug();
-		Debug.info("from", from.getName()+": "+from.getEmail());
-		Debug.info("to", to.getName()+": "+to.getEmail());
-		Debug.info("subject", subject);
-		Debug.info("message", message);
+		Debug.out("from", from.getName()+": "+from.getEmail());
+		Debug.out("to", to.getName()+": "+to.getEmail());
+		Debug.out("subject", subject);
+		Debug.out("message", message);
 
 		MultiPartEmail email = new MultiPartEmail();
 		email.setDebug(true);

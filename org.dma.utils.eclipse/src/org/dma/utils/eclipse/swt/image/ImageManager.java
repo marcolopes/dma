@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.dma.utils.java.Debug;
 import org.eclipse.swt.graphics.Image;
 
 public class ImageManager {
@@ -99,8 +98,7 @@ public class ImageManager {
 	 */
 	public static void debug() {
 
-		Debug.debug("IMAGES");
-		System.out.println("size: " + cacheMap.size());
+		System.out.println("IMAGE CACHE: " + cacheMap.size());
 		Iterator<String> iterator=cacheMap.keySet().iterator();
 		while(iterator.hasNext()){
 			String key=iterator.next();

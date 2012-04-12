@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2012 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -59,41 +59,47 @@ public class ExecutionManager {
 
 	private static void register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
-		if(!executionMap.containsKey(execDefinition)) {
+		try{
+			if(!executionMap.containsKey(execDefinition)) {
 
-			if(execDefinition.getControl() instanceof Combo) {
+				if(execDefinition.getControl() instanceof Combo) {
 
-				Listener selectionListener=new Listener() {
-					public void handleEvent(Event event) {
-						Debug.info("EXECUTION");
-						execEvent.getExecutionAction().run();
-						execEvent.setActionExecuted(true);
-					}
-				};
-
-				execDefinition.addSelectionListener(selectionListener);
-
-			}else{
-
-				KeyListener keyListener=new KeyAdapter()  {
-					public void keyPressed(KeyEvent event) {
-						if(event.keyCode==execEvent.getKeycode()) {
+					Listener selectionListener=new Listener() {
+						public void handleEvent(Event event) {
+							Debug.out("EXECUTION");
 							execEvent.getExecutionAction().run();
 							execEvent.setActionExecuted(true);
-							event.doit=false;
 						}
-					}
-				};
+					};
 
-				execDefinition.addKeyListener(keyListener);
+					execDefinition.addSelectionListener(selectionListener);
+
+				}else{
+
+					KeyListener keyListener=new KeyAdapter()  {
+						public void keyPressed(KeyEvent event) {
+							if(event.keyCode==execEvent.getKeycode()) {
+								execEvent.getExecutionAction().run();
+								execEvent.setActionExecuted(true);
+								event.doit=false;
+							}
+						}
+					};
+
+					execDefinition.addKeyListener(keyListener);
+				}
+
+				executionMap.put(execDefinition, execEvent);
+
+				Debug.out(execEvent.getExecutionAction().getId(), executionMap.size());
+
+			}else{
+				throw new Exception("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
 			}
 
-			executionMap.put(execDefinition, execEvent);
-
-			Debug.info(execEvent.getExecutionAction().getId(), executionMap.size());
-
-		}else
-			Debug.warning("EXECUTION ALREADY REGISTERED", execDefinition.getId());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
@@ -118,7 +124,7 @@ public class ExecutionManager {
 				execDefinition.removeListeners();
 				iterator.remove();
 
-				Debug.info(execEvent.getExecutionAction().getId(), executionMap.size());
+				Debug.out(execEvent.getExecutionAction().getId(), executionMap.size());
 			}
 
 		}

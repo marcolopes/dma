@@ -57,23 +57,23 @@ public class DragNDropManager {
 		DragSourceListener dsl = new DragSourceListener() {
 
 			public void dragStart(DragSourceEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 				DragSource source=(DragSource)event.getSource();
-				Debug.info("source", source);
+				Debug.out("source", source);
 				if (source.getData() instanceof Table){
 					Table table=(Table)source.getData();
-					Debug.info("table selection", table.getSelection()[0].getText());
+					Debug.out("table selection", table.getSelection()[0].getText());
 				}
 				event.doit = true;
 			}
 
 			public void dragSetData(DragSourceEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 				event.data = ((DragSource)event.getSource()).getControl();
 			}
 
 			public void dragFinished(DragSourceEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 			}
 		};
 
@@ -86,27 +86,27 @@ public class DragNDropManager {
 
 		DropTargetListener dtl = new DropTargetListener() {
 			public void dragEnter(DropTargetEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 			}
 
 			public void dragOver(DropTargetEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 			}
 
 			public void dragOperationChanged(DropTargetEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 			}
 
 			public void dragLeave(DropTargetEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 			}
 
 			public void dropAccept(DropTargetEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 			}
 
 			public void drop(DropTargetEvent event) {
-				Debug.info("event.data", event.data);
+				Debug.out("event.data", event.data);
 			}
 		};
 
