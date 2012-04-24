@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2010 Public Domain
+ * 2008-2012 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -16,6 +16,7 @@ public class IntegerUtils {
 	public static String toString(int value){
 
 		return Integer.toString(value);
+
 	}
 
 
@@ -24,6 +25,7 @@ public class IntegerUtils {
 		return (char)value;
 
 	}
+
 
 
 
