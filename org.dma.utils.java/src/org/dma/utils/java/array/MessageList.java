@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2012 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -37,13 +37,13 @@ public class MessageList {
 		add(operation+": "+message);
 	}
 
-	public void addArray(String[] message){
+	public void add(String[] message){
 		for(int i=0; i<message.length; i++)
 			add(message[i]);
 	}
 
 	public void add(MessageList list){
-		addArray(list.toArray());
+		add(list.toArray());
 	}
 
 
