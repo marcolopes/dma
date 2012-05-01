@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2012 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *
@@ -65,15 +65,18 @@ public class Numerals {
 	//number of decimals
 	private final int decimals;
 	//unit label
-	private String[][] unit=UNIT_EURO;
+	private final String[][] unit;
 
 	public Numerals(int decimals, String[][] unit) {
-		this(decimals);
+		this.decimals=decimals;
 		this.unit=unit;
 	}
 
+	/**
+	 * EURO by default
+	 */
 	public Numerals(int decimals) {
-		this.decimals=decimals;
+		this(decimals,UNIT_EURO);
 	}
 
 
