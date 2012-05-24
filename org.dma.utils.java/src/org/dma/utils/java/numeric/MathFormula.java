@@ -1,0 +1,81 @@
+/*******************************************************************************
+ * 2008-2012 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopes@netc.pt)
+ *******************************************************************************/
+package org.dma.utils.java.numeric;
+
+import java.math.BigDecimal;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+import org.dma.utils.java.Debug;
+
+public final class MathFormula {
+
+	private final String formula;
+	private final boolean lowercase;
+
+	public MathFormula(String formula, boolean lowercase){
+		this.formula=lowercase ? formula.toLowerCase() : formula;
+		this.lowercase=lowercase;
+	}
+
+
+	public BigDecimal eval(FormulaSymbol...symbols) {
+
+		BigDecimal result=null;
+
+		try{
+			Debug.out("formula",formula);
+
+			String enumeration=formula;
+			for (int i=0; i<symbols.length; i++){
+
+				if (symbols[i]!=null && !symbols[i].isEmpty()){
+					Debug.out("symbol #"+i,symbols[i]);
+					String name=lowercase ? symbols[i].name.toLowerCase() : symbols[i].name;
+
+					enumeration=enumeration.replace(name, String.valueOf(symbols[i].value));
+					Debug.out("enumeration #"+i,enumeration);
+				}
+
+			}
+
+			Debug.out("formula",formula);
+
+			if (!enumeration.equals(formula)){
+				Debug.out("enumeration",enumeration);
+			    ScriptEngine interpreter=new ScriptEngineManager().getEngineByName("JavaScript");
+
+				Object value=interpreter.eval("result="+enumeration);
+				Debug.out("value",interpreter.get("result"));
+
+				result=BigDecimal.valueOf((Double)value);
+				Debug.out("result",result);
+			}
+
+		}catch(ScriptException e){
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return result;
+
+	}
+
+
+	public boolean isValid(String...vars) {
+
+		FormulaSymbol[] symbols=new FormulaSymbol[vars.length];
+		for (int i=0; i<vars.length; i++)
+			symbols[i]=new FormulaSymbol(vars[i], BigDecimal.valueOf(i+1));
+
+		return eval(symbols)!=null;
+
+	}
+
+
+}
