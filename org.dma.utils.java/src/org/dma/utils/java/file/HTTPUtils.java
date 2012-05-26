@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * 2008-2011 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopes@netc.pt)
+ *******************************************************************************/
 package org.dma.utils.java.file;
 
 import java.io.IOException;

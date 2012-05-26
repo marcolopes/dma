@@ -9,7 +9,6 @@ import org.dma.utils.java.string.StringUtils;
 
 public class IntegerUtils {
 
-
 	/*
 	 * Conversion
 	 */
