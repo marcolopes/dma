@@ -11,22 +11,17 @@ import java.math.RoundingMode;
 public class BusinessRules {
 
 	/**
-	 * Rounds the number to the nearest<br>
-	 * Numbers can be with or without decimals<br>
-	 * Example: 123.56, 2.50 = 122.50
+	 * Weighted Average Price<br>
+	 * Formula: (stock * price1 + entries * price2) / (stock + entries)<br>
+	 * Example: 100, 10, 100, 20 = 15
 	 *
 	 */
-	public static BigDecimal round(BigDecimal value, BigDecimal rounding){
-		/*
-		 * HALF_UP
-		 * Rounding mode to round towards "nearest neighbor" unless both neighbors are equidistant,
-		 * in which case round up.
-		 * Behaves as for RoundingMode.UP if the discarded fraction is >= 0.5;
-		 * otherwise, behaves as for RoundingMode.DOWN.
-		 * Note that this is the rounding mode commonly taught at school.
-		 */
-		return rounding.doubleValue()==0 ? value :
-			(value.divide(rounding,0,RoundingMode.HALF_UP)).multiply(rounding);
+	public static BigDecimal getWeightedAveragePrice(BigDecimal stock, BigDecimal price1, BigDecimal entries, BigDecimal price2) {
+
+		return entries.doubleValue()<=0 ? price1 :
+			(stock.abs().multiply(price1).add(entries.multiply(price2))).
+				//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
+				divide(stock.abs().add(entries),RoundingMode.HALF_EVEN);
 
 	}
 
@@ -44,22 +39,6 @@ public class BusinessRules {
 			b.multiply(c).
 			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 			divide(a,RoundingMode.HALF_EVEN);
-
-	}
-
-
-	/**
-	 * Weighted Average Price<br>
-	 * Formula: (stock * price1 + entries * price2) / (stock + entries)<br>
-	 * Example: 100, 10, 100, 20 = 15
-	 *
-	 */
-	public static BigDecimal getWeightedAveragePrice(BigDecimal stock, BigDecimal price1, BigDecimal entries, BigDecimal price2) {
-
-		return entries.doubleValue()<=0 ? price1 :
-			(stock.abs().multiply(price1).add(entries.multiply(price2))).
-				//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
-				divide(stock.abs().add(entries),RoundingMode.HALF_EVEN);
 
 	}
 
@@ -111,29 +90,42 @@ public class BusinessRules {
 
 	/**
 	 * Percentage Value<br>
-	 * Formula: value * perc / 100<br>
+	 * Formula: total * perc / 100<br>
 	 * Example: 200, 10% = 20
 	 *
 	 */
-	public static BigDecimal getPercentageValue(BigDecimal value, BigDecimal perc){
+	public static BigDecimal getPercentageValue(BigDecimal total, BigDecimal perc){
 
-		return value.multiply(perc).divide(BigDecimal.valueOf(100));
+		return total.multiply(perc).divide(BigDecimal.valueOf(100));
 
 	}
 
 
 	/**
-	 * Value reduced of the included percentage<br>
+	 * Value without included percentage<br>
 	 * Formula: value / ( perc / 100 + 1)<br>
 	 * Example: 220, 10% = 200
 	 *
 	 */
-	public static BigDecimal getReducedValue(BigDecimal value, BigDecimal perc){
+	public static BigDecimal getValueExcluded(BigDecimal value, BigDecimal perc){
 
 		return value.
 			divide(perc.divide(BigDecimal.valueOf(100)).add(BigDecimal.valueOf(1)),
 				//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 				RoundingMode.HALF_EVEN);
+
+	}
+
+
+	/**
+	 * Value added by the percentage<br>
+	 * Formula: value + (value * perc / 100)<br>
+	 * Example: 200, 10% = 220
+	 *
+	 */
+	public static BigDecimal getValueAdded(BigDecimal value, BigDecimal perc){
+
+		return value.add(getPercentageValue(value, perc));
 
 	}
 
@@ -152,42 +144,50 @@ public class BusinessRules {
 
 
 	/**
-	 * Value added by the percentage<br>
-	 * Formula: value + (value * perc / 100)<br>
-	 * Example: 200, 10% = 220
+	 * Rounds the number to the nearest<br>
+	 * Numbers can be with or without decimals<br>
+	 * Example: 123.56, 2.50 = 122.50
 	 *
 	 */
-	public static BigDecimal getValueAdded(BigDecimal value, BigDecimal perc){
-
-		return value.add(getPercentageValue(value, perc));
+	public static BigDecimal round(BigDecimal value, BigDecimal rounding){
+		/*
+		 * HALF_UP
+		 * Rounding mode to round towards "nearest neighbor" unless both neighbors are equidistant,
+		 * in which case round up.
+		 * Behaves as for RoundingMode.UP if the discarded fraction is >= 0.5;
+		 * otherwise, behaves as for RoundingMode.DOWN.
+		 * Note that this is the rounding mode commonly taught at school.
+		 */
+		return rounding.doubleValue()==0 ? value :
+			(value.divide(rounding,0,RoundingMode.HALF_UP)).multiply(rounding);
 
 	}
 
 
 	public static void main(String[] argvs){
 
-		System.out.println("round (122.5): "+round(new BigDecimal(123.56), new BigDecimal(2.50)));
-		System.out.println("Proportional Value (50): "+getProportionalValue(new BigDecimal(100), new BigDecimal(25), new BigDecimal(200)));
 		System.out.println("Weighted Average Price (15): "+getWeightedAveragePrice(new BigDecimal(100), new BigDecimal(10), new BigDecimal(100), new BigDecimal(20)));
+		System.out.println("Proportional Value (50): "+getProportionalValue(new BigDecimal(100), new BigDecimal(25), new BigDecimal(200)));
 		System.out.println("Final Percentage (62.5%): "+getFinalPercentage(new BigDecimal(50), new BigDecimal(25)));
 		System.out.println("Profit Percentage (1900%): "+getProfitPercentage(new BigDecimal(200), new BigDecimal(10)));
 		System.out.println("Value Percentage (5%): "+getValuePercentage(new BigDecimal(200), new BigDecimal(10)));
 		System.out.println("Percentage Value (20): "+getPercentageValue(new BigDecimal(200), new BigDecimal(10)));
-		System.out.println("Reduced Value (200): "+getReducedValue(new BigDecimal(220), new BigDecimal(10)));
-		System.out.println("Net Value (180): "+getNetValue(new BigDecimal(200), new BigDecimal(10)));
+		System.out.println("Value Excluded (200): "+getValueExcluded(new BigDecimal(220), new BigDecimal(10)));
 		System.out.println("Value Added (220): "+getValueAdded(new BigDecimal(200), new BigDecimal(10)));
+		System.out.println("Net Value (180): "+getNetValue(new BigDecimal(200), new BigDecimal(10)));
+		System.out.println("round (122.5): "+round(new BigDecimal(123.56), new BigDecimal(2.50)));
 
 		//DIVISION by ZERO test
-		round(new BigDecimal(0), new BigDecimal(0));
-		getProportionalValue(new BigDecimal(0), new BigDecimal(0), new BigDecimal(0));
 		getWeightedAveragePrice(new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0));
+		getProportionalValue(new BigDecimal(0), new BigDecimal(0), new BigDecimal(0));
 		getFinalPercentage(new BigDecimal(0), new BigDecimal(0));
 		getProfitPercentage(new BigDecimal(0), new BigDecimal(0));
 		getValuePercentage(new BigDecimal(0), new BigDecimal(0));
 		getPercentageValue(new BigDecimal(0), new BigDecimal(0));
-		getReducedValue(new BigDecimal(0), new BigDecimal(0));
-		getNetValue(new BigDecimal(0), new BigDecimal(0));
+		getValueExcluded(new BigDecimal(0), new BigDecimal(0));
 		getValueAdded(new BigDecimal(0), new BigDecimal(0));
+		getNetValue(new BigDecimal(0), new BigDecimal(0));
+		round(new BigDecimal(0), new BigDecimal(0));
 
 	}
 
