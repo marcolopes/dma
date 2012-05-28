@@ -38,10 +38,25 @@ public class ClipboardManager {
 
 
 	/*
-	 * Helpers
+	 * Getters and setters
 	 */
+	public static List<Object> getClipboard() {
+		return clipboard;
+	}
+
+
 	public static Class getObjectClass() {
 		return clipboard.get(0).getClass();
+	}
+
+
+	public static boolean isEmpty() {
+		return clipboard.size()==0;
+	}
+
+
+	public static boolean hasObject(Class cl) {
+		return !isEmpty() && cl.equals(getObjectClass());
 	}
 
 
@@ -52,26 +67,6 @@ public class ClipboardManager {
 
 	public static <T> List<T> getCollection(Class cl) {
 		return !hasObject(cl) ? null : (List<T>)clipboard;
-	}
-
-
-	public static boolean hasObject(Class cl) {
-		return !isEmpty() && cl.equals(getObjectClass());
-	}
-
-
-	public static boolean isEmpty() {
-		return clipboard.size()==0;
-	}
-
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public static List<Object> getClipboard() {
-		return clipboard;
 	}
 
 
