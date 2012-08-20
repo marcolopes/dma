@@ -1,4 +1,4 @@
-package datanucleus.database;
+package datanucleus;
 
 import java.sql.DriverManager;
 import java.util.Enumeration;
@@ -6,29 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.jdo.JDOHelper;
-import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 
-import org.datanucleus.api.jdo.JDOTransaction;
+public class Datanucleus {
 
-import datanucleus.model.Table;
-
-public class Manager{
-
-	public String DRIVER_NAME = "org.h2.Driver";
-	public String DATABASE_NAME = "/colibri/dn3";
+	public static final String DRIVER_NAME = "org.h2.Driver";
+	public static final String DATABASE_NAME = "/colibri/dn3";
 
 	private static final String BUNDLE_NAME = "org.datanucleus.api.jdo";
 	private static final String PMF_CLASS_NAME = "org.datanucleus.api.jdo.JDOPersistenceManagerFactory";
 
-	private final PersistenceManagerFactory pmf;
-
-	public Manager(){
-		this.pmf=initPFM();
-	}
-
-
-	private PersistenceManagerFactory initPFM() {
+	private static PersistenceManagerFactory initPFM() {
 
 		try {
 			Map<String,Object> map = new HashMap();
@@ -62,23 +50,11 @@ public class Manager{
 	}
 
 
-	public void test() {
+	public static void main(String[] argvs){
 
-		try{
-			PersistenceManager pm = pmf.getPersistenceManager();
-
-			//store
-			JDOTransaction tx=(JDOTransaction)pm.currentTransaction();
-			tx.begin();
-			Table user = new Table( "1", "Projecto", "Colibri" );
-			pm.makePersistent(user);
-			tx.commit();
-
-			System.out.println("Commit!");
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		PersistenceManagerFactory pmf=initPFM();
+		TableManager manager=new TableManager(pmf);
+		manager.store();
 
 	}
 
