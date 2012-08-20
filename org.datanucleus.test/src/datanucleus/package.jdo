@@ -3,9 +3,9 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdo http://java.sun.com/xml/ns/jdo/jdo_2_2.xsd">
 
-	<package name="datanucleus.model">
+	<package name="datanucleus">
 
-		<class name="Table" detachable="true" identity-type="application">
+		<class name="TableModel" detachable="true" identity-type="application">
 			<inheritance strategy="new table"/>
 
 			<field name="fullName" primary-key="true" persistence-modifier="persistent" default-fetch-group="true">

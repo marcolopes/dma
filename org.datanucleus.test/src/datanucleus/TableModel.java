@@ -12,10 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  **********************************************************************/
-package datanucleus.model;
+package datanucleus;
 
 //@PersistenceCapable(table = "ou=People,dc=example,dc=com", schema = "top,person,organizationalPerson,inetOrgPerson")
-public class Table{
+public class TableModel{
 
 	//@Persistent(column = "cn", primaryKey = "true")
 	private String fullName;
@@ -26,7 +26,7 @@ public class Table{
 	//@Persistent(column = "sn")
 	private String lastName;
 
-	public Table(String fullName, String firstName, String lastName){
+	public TableModel(String fullName, String firstName, String lastName){
 
 		super();
 		this.fullName = fullName;
@@ -39,7 +39,6 @@ public class Table{
 		return fullName;
 	}
 
-
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
@@ -48,7 +47,6 @@ public class Table{
 	public String getFirstName() {
 		return firstName;
 	}
-
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -59,7 +57,6 @@ public class Table{
 		return lastName;
 	}
 
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -69,5 +66,6 @@ public class Table{
 	public String toString() {
 		return " firstName=" + firstName + ", fullName=" + fullName + ", lastName=" + lastName ;
 	}
+
 
 }
