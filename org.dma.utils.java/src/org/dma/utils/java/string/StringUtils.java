@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.java.string;
 
+import java.text.DecimalFormatSymbols;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +16,23 @@ import org.dma.utils.java.array.ArrayUtils;
 import org.dma.utils.java.array.CollectionUtils;
 
 public class StringUtils {
+
+	/**
+	 * <b>Symbols</b><br>
+	 * Digit (#)<br>
+	 * ZeroDigit (0)<br>
+	 * DecimalSeparator (.)<br>
+	 * GroupingSeparator (,)<br>
+	 * MinusSign (-)<br>
+	 */
+	public static final DecimalFormatSymbols DF_SYMBOLS=new DecimalFormatSymbols();
+	static{
+		DF_SYMBOLS.setDigit('#');
+		DF_SYMBOLS.setZeroDigit('0');
+		DF_SYMBOLS.setDecimalSeparator('.');
+		DF_SYMBOLS.setGroupingSeparator(',');
+		DF_SYMBOLS.setMinusSign('-');
+	}
 
 	public static final Pattern NUMERIC_PATTERN=Pattern.compile("^[0-9]+$");
 	public static final Pattern DECIMAL_PATTERN=Pattern.compile("^[0-9[.]]+$");
@@ -437,6 +455,43 @@ public class StringUtils {
 		}
 
 		return result;
+
+	}
+
+
+	/**
+	 * <b>These symbols must be defined</b><br>
+	 * Digit, ZeroDigit, DecimalSeparator, GroupingSeparator, MinusSign<br>
+	 * <br>
+	 * <b>Examples</b><br>
+	 * SIZE 9,0: -###,###,##0<br>
+	 * SIZE 9,3: -###,##0.000<br>
+	 * SIZE 4,3: -#,##0.000
+	 */
+	public static String buildPattern(DecimalFormatSymbols dfs, int size, int decimals, boolean negative) {
+
+		String pattern="";
+
+		// #,###,##
+		for(int i=size; i>1; i--){
+			pattern+=dfs.getDigit();
+			if (i%3==1) pattern+=dfs.getGroupingSeparator();
+		}
+
+		// #,###,##0
+		pattern+=dfs.getZeroDigit();
+
+		// #,###,##0.000
+		if(decimals>0)
+			pattern+=dfs.getDecimalSeparator()+StringUtils.replicate("0", decimals);
+
+		// -#,###,##0.000
+		if(negative)
+			pattern=dfs.getMinusSign()+pattern;
+
+		//Debug.out("("+size+","+decimals+") ["+pattern+"]");
+
+		return pattern;
 
 	}
 
