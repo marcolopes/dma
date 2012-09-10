@@ -81,7 +81,7 @@ public class PrinterUtils {
 	/**
 	 * Prints a PDF using apache pdfbox
 	 */
-	public static void printPdf(PrinterJob job, String filename, boolean silent) throws Exception {
+	public static void printPdf(String filename, PrinterJob job, boolean silent) throws Exception {
 
 		job.setJobName(filename);
 
@@ -117,8 +117,7 @@ public class PrinterUtils {
 	public static void printData(byte[] data, PrintService ps) throws Exception {
 
 		DocPrintJob job=ps.createPrintJob();
-		DocFlavor flavor=DocFlavor.BYTE_ARRAY.AUTOSENSE;
-		Doc doc=new SimpleDoc(data, flavor, null);
+		Doc doc=new SimpleDoc(data, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
 		job.print(doc, null);
 
 	}
