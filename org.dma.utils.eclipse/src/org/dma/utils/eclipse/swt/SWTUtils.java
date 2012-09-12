@@ -5,8 +5,14 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt;
 
+import org.dma.utils.eclipse.UIHelper;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.widgets.Control;
 
 public class SWTUtils {
 
@@ -32,5 +38,25 @@ public class SWTUtils {
 		return ccombo.getItemCount()==0 ? "" : ccombo.getItem(getComboIndex(ccombo));
 	}
 
+
+	public static Font createFont(Control control, int height){
+
+		FontData[] fontData = control.getFont().getFontData();
+
+		for(int i = 0; i<fontData.length; ++i)
+		    fontData[i].setHeight(height);
+
+		final Font font=new Font(UIHelper.getDisplay(), fontData);
+
+		// Since you created the font, you must dispose it
+		control.addDisposeListener(new DisposeListener() {
+		    public void widgetDisposed(DisposeEvent e) {
+		        font.dispose();
+		    }
+		});
+
+		return font;
+
+	}
 
 }
