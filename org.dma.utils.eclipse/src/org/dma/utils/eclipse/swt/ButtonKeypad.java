@@ -28,11 +28,11 @@ public abstract class ButtonKeypad extends CustomShell {
 		"7", "8", "9",
 		"4", "5", "6",
 		"1", "2", "3",
-		".", "0", RETURN };
+		"0", ".", RETURN };
 
+	private Font font;
 	private Text text;
 	private String value = "0";
-	private final int decimals = -1;
 
 	private final int pixels;
 
@@ -81,7 +81,7 @@ public abstract class ButtonKeypad extends CustomShell {
 			text.setEditable(false);
 			text.setText(value);
 
-			final Font font = SWTUtils.createFont(text, 18);
+			font = SWTUtils.createFont(text, 18);
 			text.setFont(font);
 
 		}catch(Exception e){
@@ -102,6 +102,7 @@ public abstract class ButtonKeypad extends CustomShell {
 			for(int i=0; i<keys.length; i++){
 				Button button=new Button(composite, SWT.PUSH | SWT.WRAP);
 				button.setLayoutData(new GridData(pixels,pixels));
+				button.setFont(font);
 				button.setText(keys[i]);
 				button.setData(keys[i]);
 
