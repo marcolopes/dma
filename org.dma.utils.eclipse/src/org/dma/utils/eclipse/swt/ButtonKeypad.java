@@ -37,7 +37,7 @@ public abstract class ButtonKeypad extends CustomShell {
 	private final int pixels;
 
 	public ButtonKeypad(Shell parent, int pixels){
-		super(parent, SWT.PRIMARY_MODAL);
+		super(parent, SWT.PRIMARY_MODAL | SWT.CLOSE);
 
 		this.pixels=pixels;
 
@@ -51,7 +51,7 @@ public abstract class ButtonKeypad extends CustomShell {
 	}
 
 	public ButtonKeypad(Shell parent){
-		this(parent, 100);
+		this(parent, parent.getDisplay().getClientArea().height / 10);
 	}
 
 
@@ -81,7 +81,7 @@ public abstract class ButtonKeypad extends CustomShell {
 			text.setEditable(false);
 			text.setText(value);
 
-			font = SWTUtils.createFont(text, 18);
+			font = SWTUtils.createFont(text, 20);
 			text.setFont(font);
 
 		}catch(Exception e){
@@ -100,7 +100,7 @@ public abstract class ButtonKeypad extends CustomShell {
 			composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 			for(int i=0; i<keys.length; i++){
-				Button button=new Button(composite, SWT.PUSH | SWT.WRAP);
+				Button button=new Button(composite, SWT.PUSH);
 				button.setLayoutData(new GridData(pixels,pixels));
 				button.setFont(font);
 				button.setText(keys[i]);
