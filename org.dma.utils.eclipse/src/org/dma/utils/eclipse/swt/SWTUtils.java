@@ -43,7 +43,7 @@ public class SWTUtils {
 
 		FontData[] fontData = control.getFont().getFontData();
 
-		for(int i = 0; i<fontData.length; ++i)
+		for(int i=0; i<fontData.length; ++i)
 		    fontData[i].setHeight(height);
 
 		final Font font=new Font(UIHelper.getDisplay(), fontData);
