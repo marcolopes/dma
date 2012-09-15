@@ -1,11 +1,12 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2012 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.utils.eclipse.swt;
 
 import org.dma.utils.eclipse.ui.UIHelper;
+import org.dma.utils.java.Debug;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.DisposeEvent;
@@ -39,6 +40,11 @@ public class SWTUtils {
 	}
 
 
+	/**
+	 * Creates a new font with the specified height.
+	 * The font is automatically disposed when
+	 * the associated control is disposed
+	 */
 	public static Font createFont(Control control, int height){
 
 		FontData[] fontData = control.getFont().getFontData();
@@ -52,6 +58,7 @@ public class SWTUtils {
 		control.addDisposeListener(new DisposeListener() {
 		    public void widgetDisposed(DisposeEvent e) {
 		        font.dispose();
+		        Debug.out("DISPOSED",e);
 		    }
 		});
 
