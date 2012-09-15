@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt.dialogs;
+package org.dma.utils.eclipse.swt.dialogs.message;
 
 import org.dma.utils.java.array.MessageList;
 
