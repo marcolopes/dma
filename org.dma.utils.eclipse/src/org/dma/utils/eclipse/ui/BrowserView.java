@@ -3,9 +3,11 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt.custom;
+package org.dma.utils.eclipse.ui;
 
 import org.apache.commons.collections15.map.LinkedMap;
+import org.dma.utils.eclipse.swt.custom.CustomAction;
+import org.dma.utils.eclipse.swt.custom.CustomBrowser;
 import org.dma.utils.eclipse.swt.image.SWTImageUtils;
 import org.dma.utils.java.Debug;
 import org.eclipse.jface.action.Action;
@@ -26,7 +28,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
-public abstract class CustomBrowserView extends ViewPart {
+public abstract class BrowserView extends ViewPart {
 
 	private String homeUrl;
 
