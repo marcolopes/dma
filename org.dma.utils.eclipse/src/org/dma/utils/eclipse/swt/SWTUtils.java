@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt;
 
-import org.dma.utils.eclipse.UIHelper;
+import org.dma.utils.eclipse.ui.UIHelper;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.DisposeEvent;

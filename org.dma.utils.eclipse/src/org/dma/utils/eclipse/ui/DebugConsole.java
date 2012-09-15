@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.core.debug;
+package org.dma.utils.eclipse.ui;
 
 import java.io.PrintStream;
 

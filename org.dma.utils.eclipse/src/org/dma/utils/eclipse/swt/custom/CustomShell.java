@@ -9,8 +9,8 @@ import org.dma.utils.java.numeric.IntegerUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 public class CustomShell extends Shell {
 
@@ -26,7 +26,7 @@ public class CustomShell extends Shell {
 
 
 	public CustomShell(int style) {
-		super(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), style);
+		super(Display.getDefault().getActiveShell(), style);
 	}
 
 	public CustomShell(Shell parent, int style) {

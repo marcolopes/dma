@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse;
+package org.dma.utils.eclipse.ui;
 
 import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IConfigurationElement;
