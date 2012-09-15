@@ -3,15 +3,14 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.eclipse.swt;
+package org.dma.utils.eclipse.swt.dialogs;
 
+import org.dma.utils.eclipse.swt.SWTUtils;
 import org.dma.utils.eclipse.swt.custom.CustomShell;
 import org.dma.utils.eclipse.swt.image.SWTImageUtils;
-import org.dma.utils.java.Debug;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -30,20 +29,18 @@ public abstract class ButtonKeypad extends CustomShell {
 		"1", "2", "3",
 		"0", ".", RETURN };
 
-	private Font font;
 	private Text text;
 	private String value = "0";
 
 	private final int pixels;
 
 	public ButtonKeypad(int pixels){
-		super(Display.getCurrent().getActiveShell(), SWT.PRIMARY_MODAL | SWT.CLOSE);
+		super(Display.getCurrent().getActiveShell(), SWT.PRIMARY_MODAL);
 
 		this.pixels=pixels;
 
 		createCompositeValue();
 		createCompositeButtons();
-		initializeData();
 
 		setGridLayout();
 		pack();
@@ -52,14 +49,6 @@ public abstract class ButtonKeypad extends CustomShell {
 
 	public ButtonKeypad(){
 		this(Display.getCurrent().getClientArea().height / 10);
-	}
-
-
-	/*
-	 * Inicializacoes
-	 */
-	public void initializeData() {
-		Debug.out();
 	}
 
 
@@ -80,9 +69,7 @@ public abstract class ButtonKeypad extends CustomShell {
 			text.setForeground(SWTImageUtils.getColor(SWT.COLOR_RED));
 			text.setEditable(false);
 			text.setText(value);
-
-			font = SWTUtils.createFont(text, 20);
-			text.setFont(font);
+			text.setFont(SWTUtils.createFont(text, 20));
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -102,7 +89,7 @@ public abstract class ButtonKeypad extends CustomShell {
 			for(int i=0; i<keys.length; i++){
 				Button button=new Button(composite, SWT.PUSH);
 				button.setLayoutData(new GridData(pixels,pixels));
-				button.setFont(font);
+				button.setFont(SWTUtils.createFont(button, 20));
 				button.setText(keys[i]);
 				button.setData(keys[i]);
 
