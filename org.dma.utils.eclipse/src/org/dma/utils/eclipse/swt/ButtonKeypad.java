@@ -16,7 +16,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class ButtonKeypad extends CustomShell {
@@ -36,8 +36,8 @@ public abstract class ButtonKeypad extends CustomShell {
 
 	private final int pixels;
 
-	public ButtonKeypad(Shell parent, int pixels){
-		super(parent, SWT.PRIMARY_MODAL | SWT.CLOSE);
+	public ButtonKeypad(int pixels){
+		super(Display.getCurrent().getActiveShell(), SWT.PRIMARY_MODAL | SWT.CLOSE);
 
 		this.pixels=pixels;
 
@@ -50,8 +50,8 @@ public abstract class ButtonKeypad extends CustomShell {
 		setCenteredLocation();
 	}
 
-	public ButtonKeypad(Shell parent){
-		this(parent, parent.getDisplay().getClientArea().height / 10);
+	public ButtonKeypad(){
+		this(Display.getCurrent().getClientArea().height / 10);
 	}
 
 
