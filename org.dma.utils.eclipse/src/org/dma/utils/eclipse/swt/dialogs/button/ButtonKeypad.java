@@ -34,7 +34,7 @@ public abstract class ButtonKeypad extends CustomShell {
 	private final int pixels;
 
 	public ButtonKeypad(int pixels){
-		super(Display.getCurrent().getActiveShell(), SWT.PRIMARY_MODAL);
+		super(Display.getCurrent().getActiveShell(), SWT.SHEET);
 
 		this.pixels=pixels;
 
