@@ -68,11 +68,11 @@ public class CustomJob extends Job {
 	 * Tasks
 	 */
 	public void addTask(JobTask action) {
-		this.tasks.add(action);
+		tasks.add(action);
 	}
 
 	public void removeTask(JobTask action) {
-		this.tasks.remove(action);
+		tasks.remove(action);
 	}
 
 
@@ -94,7 +94,7 @@ public class CustomJob extends Job {
 
 	public void canceling(){
 		Debug.out("CANCELING", this);
-		this.canceled=true;
+		canceled=true;
 		Debug.out("JOB STATE", getStateName());
 	}
 

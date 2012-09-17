@@ -17,15 +17,15 @@ public class InformationDialog extends CustomDialog {
 	}
 
 	public static boolean open(String operation, MessageList list) {
-		return open(operation, list.toString(), TYPE.CONFIRMATION);
+		return open(operation, list.toString(), TYPE.INFORMATION);
 	}
 
 	public static boolean open(String message) {
-		return open(null, message, TYPE.CONFIRMATION);
+		return open(null, message, TYPE.INFORMATION);
 	}
 
 	public static boolean open(MessageList list){
-		return open(null, list.toString(), TYPE.CONFIRMATION);
+		return open(null, list.toString(), TYPE.INFORMATION);
 	}
 
 
