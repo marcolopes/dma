@@ -1,16 +1,16 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2012 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.utils.eclipse.core.jobs;
 
-public interface IJobSupport {
+public interface IJobGroup {
 
 	/**
 	 * Executed when first job is about to start
 	 */
-	public void jobStarting();
+	public void jobStart();
 
 	/**
 	 * Executed when last job is done

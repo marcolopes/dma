@@ -19,18 +19,18 @@ import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
-	private static final Map<IJobSupport, List<CustomJob>> jobMap=new LinkedHashMap();
+	private static final Map<IJobGroup, List<CustomJob>> jobMap=new LinkedHashMap();
 
 	/*
 	 * Register
 	 */
-	public static void register(IJobSupport ijob, CustomJob job) {
+	public static void register(CustomJob job, IJobGroup group) {
 
 		try{
-			if(!jobMap.containsKey(ijob))
-				jobMap.put(ijob, new ArrayList());
+			if(!jobMap.containsKey(group))
+				jobMap.put(group, new ArrayList());
 
-			if (!jobMap.get(ijob).contains(job)){
+			if (!jobMap.get(group).contains(job)){
 				/*
 				 * The only way to be sure that a CANCELED job
 				 * has finished is by overriding the done method
@@ -38,13 +38,28 @@ public class JobManager {
 				job.addJobChangeListener(new JobChangeAdapter() {
 					@Override
 					public void done(final IJobChangeEvent event) {
-						final CustomJob job=(CustomJob)event.getJob();
-						Debug.out("JOB DONE", job);
-						exit(job);
+						try{
+							final CustomJob job=(CustomJob)event.getJob();
+							Debug.out("JOB DONE", job);
+
+							final IJobGroup group=findJobGroup(job);
+							if (remove(job) && getQueuedJobs(group)==0){
+								Display.getDefault().asyncExec(new Runnable() {
+									public void run() {
+										group.jobDone();
+									}
+								});
+							}
+
+							debug();
+
+						} catch (Exception e){
+							e.printStackTrace();
+						}
 					}
 				});
 
-				jobMap.get(ijob).add(job);
+				jobMap.get(group).add(job);
 
 			}else{
 				throw new Exception("JOB ALREADY REGISTERD: "+job);
@@ -63,11 +78,11 @@ public class JobManager {
 	 */
 	public static boolean remove(CustomJob job) {
 
-		IJobSupport ijob=findJobSupport(job);
+		IJobGroup group=findJobGroup(job);
 
 		try{
-			if (ijob!=null){
-				jobMap.get(ijob).remove(job);
+			if (group!=null){
+				jobMap.get(group).remove(job);
 				Debug.out("JOB REMOVED", job);
 			}else{
 				throw new Exception("JOB NOT FOUND: "+job);
@@ -77,14 +92,14 @@ public class JobManager {
 			e.printStackTrace();
 		}
 
-		return ijob!=null;
+		return group!=null;
 
 	}
 
 
 	public static void clean() {
 
-		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+		Iterator<IJobGroup> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext()){
 			if(jobMap.get(iterator.next()).size()==0)
 				iterator.remove();
@@ -97,14 +112,15 @@ public class JobManager {
 	/*
 	 * Cancel
 	 */
-	public static boolean cancelJobs(IJobSupport ijob) {
+	public static boolean cancelJobs(IJobGroup group) {
 
 		boolean result=true;
-		List<CustomJob> jobs=jobMap.get(ijob);
+
 		/*
 		 * Starts with last element to avoid iteration problems
 		 * caused by JOB removal executed by the exit method
 		 */
+		List<CustomJob> jobs=jobMap.get(group);
 		for(int i=jobs.size()-1; i>=0; i--){
 			CustomJob job=jobs.get(i);
 			if (!job.cancel())
@@ -119,10 +135,11 @@ public class JobManager {
 	public static boolean cancelJobs() {
 
 		boolean result=true;
-		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+
+		Iterator<IJobGroup> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext()) {
-			IJobSupport ijob=iterator.next();
-			if (!cancelJobs(ijob))
+			IJobGroup group=iterator.next();
+			if (!cancelJobs(group))
 				result=false;
 		}
 
@@ -135,9 +152,9 @@ public class JobManager {
 	/**
 	 * Execute all jobs with default Mutex Rule
 	 */
-	public static void execute(IJobSupport ijob) {
+	public static void execute(IJobGroup group) {
 
-		List<CustomJob> jobs=jobMap.get(ijob);
+		List<CustomJob> jobs=jobMap.get(group);
 
 		for(int i=0; i<jobs.size(); i++){
 
@@ -147,8 +164,8 @@ public class JobManager {
 			if (!job.isBusy()){
 
 				// Is this the first job?
-				if (getPendingJobs(ijob)==0 && getRunningJobs(ijob)==0)
-					ijob.jobStarting();
+				if (getPendingJobs(group)==0 && getRunningJobs(group)==0)
+					group.jobStart();
 
 				// Overrides job rule
 				job.execute(CustomJob.MUTEX_RULE); // queue
@@ -160,34 +177,9 @@ public class JobManager {
 
 	public static void execute(CustomJob job) {
 
-		IJobSupport ijob=findJobSupport(job);
-		execute(ijob);
+		IJobGroup group=findJobGroup(job);
+		execute(group);
 
-	}
-
-
-
-	/*
-	 * Exit
-	 */
-	public static void exit(CustomJob job) {
-		try{
-			Debug.out("EXIT", job);
-			final IJobSupport ijob=findJobSupport(job);
-
-			if (remove(job) && getQueuedJobs(ijob)==0){
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						ijob.jobDone();
-					}
-				});
-			}
-
-			debug();
-
-		} catch (Exception e){
-			e.printStackTrace();
-		}
 	}
 
 
@@ -196,13 +188,13 @@ public class JobManager {
 	/*
 	 * Helpers
 	 */
-	public static IJobSupport findJobSupport(CustomJob job) {
+	public static IJobGroup findJobGroup(CustomJob job) {
 
-		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+		Iterator<IJobGroup> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext()) {
-			IJobSupport ijob=iterator.next();
-			if(jobMap.get(ijob).contains(job))
-				return ijob;
+			IJobGroup group=iterator.next();
+			if(jobMap.get(group).contains(job))
+				return group;
 		}
 
 		return null;
@@ -210,9 +202,9 @@ public class JobManager {
 
 
 
-	public static int getQueuedJobs(IJobSupport ijob) {
+	public static int getQueuedJobs(IJobGroup group) {
 
-		List<CustomJob> jobs=jobMap.get(ijob);
+		List<CustomJob> jobs=jobMap.get(group);
 		return jobs==null ? 0 : jobs.size();
 
 	}
@@ -221,7 +213,8 @@ public class JobManager {
 	public static int getQueuedJobs() {
 
 		int count=0;
-		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+
+		Iterator<IJobGroup> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext())
 			count+=getQueuedJobs(iterator.next());
 
@@ -230,10 +223,11 @@ public class JobManager {
 	}
 
 
-	public static int getPendingJobs(IJobSupport ijob) {
+	public static int getPendingJobs(IJobGroup group) {
 
 		int count=0;
-		List<CustomJob> jobs=jobMap.get(ijob);
+
+		List<CustomJob> jobs=jobMap.get(group);
 		for(int i=0; i<jobs.size(); i++){
 			CustomJob job=jobs.get(i);
 			if (job.getState()==Job.WAITING)
@@ -248,7 +242,8 @@ public class JobManager {
 	public static int getPendingJobs() {
 
 		int count=0;
-		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+
+		Iterator<IJobGroup> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext())
 			count+=getPendingJobs(iterator.next());
 
@@ -257,10 +252,11 @@ public class JobManager {
 	}
 
 
-	public static int getRunningJobs(IJobSupport ijob) {
+	public static int getRunningJobs(IJobGroup group) {
 
 		int count=0;
-		List<CustomJob> jobs=jobMap.get(ijob);
+
+		List<CustomJob> jobs=jobMap.get(group);
 		for(int i=0; i<jobs.size(); i++){
 			CustomJob job=jobs.get(i);
 			if (job.getState()==Job.RUNNING)
@@ -275,7 +271,8 @@ public class JobManager {
 	public static int getRunningJobs() {
 
 		int count=0;
-		Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+
+		Iterator<IJobGroup> iterator=jobMap.keySet().iterator();
 		while(iterator.hasNext())
 			count+=getRunningJobs(iterator.next());
 
@@ -297,13 +294,13 @@ public class JobManager {
 			System.out.println("PENDING: " + getPendingJobs());
 			System.out.println("RUNNING: " + getRunningJobs());
 
-			Iterator<IJobSupport> iterator=jobMap.keySet().iterator();
+			Iterator<IJobGroup> iterator=jobMap.keySet().iterator();
 			while(iterator.hasNext()) {
 
-				IJobSupport ijob=iterator.next();
-				System.out.println("IJob: " + ijob +"/"+ jobMap.get(ijob).size());
+				IJobGroup group=iterator.next();
+				System.out.println("Group: " + group +"/"+ jobMap.get(group).size());
 
-				List<CustomJob> jobList=jobMap.get(ijob);
+				List<CustomJob> jobList=jobMap.get(group);
 				for(int i=0; i<jobList.size(); i++){
 					CustomJob job=jobList.get(i);
 					System.out.println("Job #"+i+": " + job);
