@@ -115,7 +115,6 @@ public class JobManager {
 	public static boolean cancelJobs(IJobGroup group) {
 
 		boolean result=true;
-
 		/*
 		 * Starts with last element to avoid iteration problems
 		 * caused by JOB removal executed by the exit method
@@ -169,6 +168,7 @@ public class JobManager {
 
 				// Overrides job rule
 				job.execute(CustomJob.MUTEX_RULE); // queue
+
 			}
 
 		}
