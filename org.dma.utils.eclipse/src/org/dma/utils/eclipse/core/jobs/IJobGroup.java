@@ -8,13 +8,13 @@ package org.dma.utils.eclipse.core.jobs;
 public interface IJobGroup {
 
 	/**
-	 * Executed when first job is about to start
+	 * Executed before first job is started
 	 */
-	public void jobStart();
+	public void jobGroupStart();
 
 	/**
 	 * Executed when last job is done
 	 */
-	public void jobDone();
+	public void jobGroupDone();
 
 }

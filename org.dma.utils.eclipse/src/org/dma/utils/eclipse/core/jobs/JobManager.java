@@ -46,7 +46,7 @@ public class JobManager {
 							if (remove(job) && getQueuedJobs(group)==0){
 								Display.getDefault().asyncExec(new Runnable() {
 									public void run() {
-										group.jobDone();
+										group.jobGroupDone();
 									}
 								});
 							}
@@ -165,7 +165,7 @@ public class JobManager {
 
 				// Is this the first job?
 				if (getPendingJobs(group)==0 && getRunningJobs(group)==0)
-					group.jobStart();
+					group.jobGroupStart();
 
 				// Overrides job rule
 				job.execute(CustomJob.MUTEX_RULE); // queue
