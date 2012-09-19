@@ -7,6 +7,7 @@ package org.dma.utils.eclipse.swt.dialogs.button;
 
 import org.dma.utils.eclipse.swt.SWTUtils;
 import org.dma.utils.eclipse.swt.custom.CustomShell;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -19,8 +20,8 @@ import org.eclipse.swt.widgets.Text;
 
 public abstract class ButtonDialog extends CustomShell {
 
-	private final static String OK = "OK";
-	private final static String CANCEL = "X";
+	private final static String OK = IDialogConstants.OK_LABEL;
+	private final static String CANCEL = IDialogConstants.CANCEL_LABEL;
 	private final static String[] keys = new String[]{OK,CANCEL};
 
 	private Text text;
