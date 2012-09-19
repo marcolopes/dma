@@ -97,7 +97,7 @@ public abstract class ButtonKeypad extends CustomShell {
 						done(getValue());
 					}else{
 						if (value.equals("0")){
-							value=c;
+							value=c.equals(".") ? "0." : c;
 						}else if (!c.equals(".") || !value.contains(".")){
 							value+=c;
 						}
