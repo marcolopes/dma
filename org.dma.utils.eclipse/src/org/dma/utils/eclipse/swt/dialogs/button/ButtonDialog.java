@@ -30,7 +30,7 @@ public abstract class ButtonDialog extends CustomShell {
 	public abstract void done(boolean ok);
 
 	public ButtonDialog(int pixels){
-		super(Display.getCurrent().getActiveShell(), SWT.SHEET);
+		super(Display.getCurrent().getActiveShell(), STYLE_SHEET);
 
 		this.pixels=pixels;
 
