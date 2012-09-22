@@ -5,7 +5,14 @@
  *******************************************************************************/
 package org.dma.utils.java.apache.codec;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
@@ -27,28 +34,33 @@ public class CryptoCipher {
 			cipher.init(Cipher.ENCRYPT_MODE, secretkey);
 			decipher.init(Cipher.DECRYPT_MODE, secretkey);
 
-		} catch (Exception e){
+		}catch(NoSuchAlgorithmException e){
+		}catch(NoSuchPaddingException e){
+		}catch(InvalidKeyException e){
 			e.printStackTrace();
 		}
 	}
 
 
 	/**
-	 * Encrypts a UTF8 text into a BASE64 text
-	 * using the initialized ALGORITHM
+	 * Encrypts using the initialized ALGORITHM
+	 * <p>
+	 * <b>Buffer is processed as follows:</b><br>
+	 * - encrypted<br>
+	 * - encoded to BASE64<br>
+	 *
+	 * @param buffer
 	 */
-	public String encrypt(String text) {
+	public String encrypt(byte[] buffer) {
 		try{
-			// Convert UTF8 String to Bytes
-			byte[] bytes = text.getBytes("UTF8");
-
 			// Encrypt Bytes
-			byte[] encrypted = cipher.doFinal(bytes);
+			byte[] encrypted = cipher.doFinal(buffer);
 
 			// Enconde Bytes to Base64 String
 			return new Base64().encodeToString(encrypted);
 
-		} catch (Exception e){
+		}catch(IllegalBlockSizeException e){
+		}catch(BadPaddingException e){
 			e.printStackTrace();
 		}
 		return null;
@@ -56,13 +68,19 @@ public class CryptoCipher {
 
 
 	/**
-	 * Decrypts BASE64 text into a UTF8 text
-	 * using the initialized ALGORITHM
+	 * Decrypts using the initialized ALGORITHM
+	 * <p>
+	 * <b>Buffer is processed as follows:</b><br>
+	 * - decoded from BASE64<br>
+	 * - decrypted<br>
+	 * - converted to UTF8 String
+	 *
+	 * @param buffer - must be in BASE64
 	 */
-	public String decrypt(String text) {
+	public String decrypt(byte[] buffer) {
 		try{
 			// Decode Base64 String to Bytes
-			byte[] bytes = new Base64().decode(text);
+			byte[] bytes = new Base64().decode(buffer);
 
 			// Decrypt Bytes
 			byte[] decrypted = decipher.doFinal(bytes);
@@ -70,7 +88,9 @@ public class CryptoCipher {
 			// Convert Bytes to UTF8 String
 			return new String(decrypted, "UTF8");
 
-		} catch (Exception e){
+		}catch(IllegalBlockSizeException e){
+		}catch(BadPaddingException e){
+		}catch(UnsupportedEncodingException e){
 			e.printStackTrace();
 		}
 		return null;
