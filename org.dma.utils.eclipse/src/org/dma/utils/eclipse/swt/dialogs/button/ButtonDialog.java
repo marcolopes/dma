@@ -27,7 +27,8 @@ public abstract class ButtonDialog extends CustomShell {
 	private Text text;
 	private final int pixels;
 
-	public abstract void done(boolean ok);
+	public abstract void cancel();
+	public abstract void ok();
 
 	public ButtonDialog(int pixels){
 		super(Display.getCurrent().getActiveShell(), STYLE_SHEET);
@@ -69,7 +70,10 @@ public abstract class ButtonDialog extends CustomShell {
 				public void widgetSelected(SelectionEvent e) {
 					String c=(String)e.widget.getData();
 					close();
-					done(c.equals(OK));
+					if (c.equals(OK))
+						ok();
+					else
+						cancel();
 				}
 			});
 		}
