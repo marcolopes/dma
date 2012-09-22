@@ -18,8 +18,9 @@ public class CustomShell extends Shell {
 	 * Styles
 	 */
 	public static final int STYLE_FIXED = SWT.TITLE | SWT.PRIMARY_MODAL | SWT.CLOSE;
-	public static final int STYLE_RESIZABLE = SWT.TITLE | SWT.PRIMARY_MODAL | SWT.CLOSE | SWT.RESIZE | SWT.MAX | SWT.MIN;
+	public static final int STYLE_RESIZABLE = SWT.TITLE | SWT.PRIMARY_MODAL | SWT.CLOSE | SWT.RESIZE | SWT.MAX;
 	public static final int STYLE_MESSAGE = SWT.TITLE | SWT.PRIMARY_MODAL;
+	public static final int STYLE_SHEET = SWT.SHEET;
 
 	//subclassing
 	protected void checkSubclass() {}
