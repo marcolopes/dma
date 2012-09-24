@@ -21,12 +21,13 @@ public abstract class ButtonMenu extends CustomShell {
 
 	private Text text;
 
-	private final String[] labels;
+	private final int labels;
 	private final int height;
 
-	public abstract void done(String label);
+	public abstract void done(int index);
+	public abstract String label(int index);
 
-	public ButtonMenu(String[] labels, int height){
+	public ButtonMenu(int labels, int height){
 		super(Display.getCurrent().getActiveShell(), STYLE_SHEET);
 
 		this.labels=labels;
@@ -39,7 +40,7 @@ public abstract class ButtonMenu extends CustomShell {
 		setCenteredLocation();
 	}
 
-	public ButtonMenu(String[] labels){
+	public ButtonMenu(int labels){
 		this(labels, Display.getCurrent().getClientArea().height / 10);
 	}
 
@@ -56,18 +57,18 @@ public abstract class ButtonMenu extends CustomShell {
 		composite.setLayout(gridLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
-		for(int i=0; i<labels.length; i++){
+		for(int i=0; i<labels; i++){
 			Button button=new Button(composite, SWT.PUSH);
 			button.setLayoutData(new GridData(height*4,height));
 			button.setFont(SWTUtils.createFont(button, 15));
-			button.setText(labels[i]);
-			button.setData(labels[i]);
+			button.setText(label(i));
+			button.setData(i);
 
 			button.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					String label=(String)e.widget.getData();
+					int index=(Integer)e.widget.getData();
 					close();
-					done(label);
+					done(index);
 				}
 			});
 		}
