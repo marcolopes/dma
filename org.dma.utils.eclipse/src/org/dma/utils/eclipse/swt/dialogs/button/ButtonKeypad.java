@@ -20,10 +20,9 @@ import org.eclipse.swt.widgets.Text;
 
 public abstract class ButtonKeypad extends CustomShell {
 
-	public abstract void done(Double value);
-
 	private final static String RETURN = "OK";
-	private final static String[] keys = new String[]{
+
+	private final static String[] KEYS = new String[]{
 		"7", "8", "9",
 		"4", "5", "6",
 		"1", "2", "3",
@@ -31,12 +30,14 @@ public abstract class ButtonKeypad extends CustomShell {
 
 	private Text text;
 	private String value = "0";
-	private final int pixels;
+	private final int height;
 
-	public ButtonKeypad(int pixels){
+	public abstract void done(String result);
+
+	public ButtonKeypad(int height){
 		super(Display.getCurrent().getActiveShell(), STYLE_SHEET);
 
-		this.pixels=pixels;
+		this.height=height;
 
 		createCompositeValue();
 		createCompositeButtons();
@@ -82,19 +83,19 @@ public abstract class ButtonKeypad extends CustomShell {
 		composite.setLayout(gridLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
-		for(int i=0; i<keys.length; i++){
+		for(int i=0; i<KEYS.length; i++){
 			Button button=new Button(composite, SWT.PUSH);
-			button.setLayoutData(new GridData(pixels,pixels));
+			button.setLayoutData(new GridData(height,height));
 			button.setFont(SWTUtils.createFont(button, 20));
-			button.setText(keys[i]);
-			button.setData(keys[i]);
+			button.setText(KEYS[i]);
+			button.setData(KEYS[i]);
 
 			button.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					String c=(String)e.widget.getData();
 					if (c.equals(RETURN)){
 						close();
-						done(getValue());
+						done(value);
 					}else{
 						if (value.equals("0")){
 							value=c.equals(".") ? "0." : c;
@@ -107,15 +108,6 @@ public abstract class ButtonKeypad extends CustomShell {
 			});
 		}
 
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public Double getValue() {
-		return Double.valueOf(value);
 	}
 
 
