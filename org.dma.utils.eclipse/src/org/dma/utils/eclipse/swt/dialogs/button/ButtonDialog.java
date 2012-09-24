@@ -22,18 +22,19 @@ public abstract class ButtonDialog extends CustomShell {
 
 	private final static String OK = IDialogConstants.OK_LABEL;
 	private final static String CANCEL = IDialogConstants.CANCEL_LABEL;
-	private final static String[] keys = new String[]{OK,CANCEL};
+
+	private final static String[] KEYS = new String[]{OK,CANCEL};
 
 	private Text text;
-	private final int pixels;
+	private final int height;
 
 	public abstract void cancel();
 	public abstract void ok();
 
-	public ButtonDialog(int pixels){
+	public ButtonDialog(int height){
 		super(Display.getCurrent().getActiveShell(), STYLE_SHEET);
 
-		this.pixels=pixels;
+		this.height=height;
 
 		createComposite();
 
@@ -59,12 +60,12 @@ public abstract class ButtonDialog extends CustomShell {
 		composite.setLayout(gridLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
-		for(int i=0; i<keys.length; i++){
+		for(int i=0; i<KEYS.length; i++){
 			Button button=new Button(composite, SWT.PUSH);
-			button.setLayoutData(new GridData(pixels*2,pixels));
+			button.setLayoutData(new GridData(height*2,height));
 			button.setFont(SWTUtils.createFont(button, 20));
-			button.setText(keys[i]);
-			button.setData(keys[i]);
+			button.setText(KEYS[i]);
+			button.setData(KEYS[i]);
 
 			button.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
