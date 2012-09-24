@@ -22,7 +22,7 @@ public abstract class ButtonKeypad extends CustomShell {
 
 	private final static String RETURN = "OK";
 
-	private final static String[] KEYS = new String[]{
+	private final static String[] LABELS = new String[]{
 		"7", "8", "9",
 		"4", "5", "6",
 		"1", "2", "3",
@@ -83,24 +83,24 @@ public abstract class ButtonKeypad extends CustomShell {
 		composite.setLayout(gridLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
-		for(int i=0; i<KEYS.length; i++){
+		for(int i=0; i<LABELS.length; i++){
 			Button button=new Button(composite, SWT.PUSH);
 			button.setLayoutData(new GridData(height,height));
 			button.setFont(SWTUtils.createFont(button, 20));
-			button.setText(KEYS[i]);
-			button.setData(KEYS[i]);
+			button.setText(LABELS[i]);
+			button.setData(LABELS[i]);
 
 			button.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					String c=(String)e.widget.getData();
-					if (c.equals(RETURN)){
+					String label=(String)e.widget.getData();
+					if (label.equals(RETURN)){
 						close();
 						done(value);
 					}else{
 						if (value.equals("0")){
-							value=c.equals(".") ? "0." : c;
-						}else if (!c.equals(".") || !value.contains(".")){
-							value+=c;
+							value=label.equals(".") ? "0." : label;
+						}else if (!label.equals(".") || !value.contains(".")){
+							value+=label;
 						}
 						text.setText(value);
 					}
