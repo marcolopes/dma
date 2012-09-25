@@ -415,10 +415,10 @@ public class StringUtils {
 
 	public static String indent(String text){
 
-		int tabSize=0;
 		String[] lines=text.split("\n");
 		text="";
 
+		int tabSize=0;
 		for(int i=0; i<lines.length; i++){
 			if (lines[i].contains("}")) --tabSize;
 			text+=replicate("\t", tabSize) + lines[i] + "\n";
@@ -472,23 +472,19 @@ public class StringUtils {
 
 		String pattern="";
 
-		// #,###,##
+		//#,###,##
 		for(int i=size; i>1; i--){
 			pattern+=dfs.getDigit();
 			if (i%3==1) pattern+=dfs.getGroupingSeparator();
 		}
-
-		// #,###,##0
+		//#,###,##0
 		pattern+=dfs.getZeroDigit();
-
-		// #,###,##0.000
+		//#,###,##0.000
 		if(decimals>0)
 			pattern+=dfs.getDecimalSeparator()+StringUtils.replicate("0", decimals);
-
-		// -#,###,##0.000
+		//-#,###,##0.000
 		if(negative)
 			pattern=dfs.getMinusSign()+pattern;
-
 		//Debug.out("("+size+","+decimals+") ["+pattern+"]");
 
 		return pattern;
