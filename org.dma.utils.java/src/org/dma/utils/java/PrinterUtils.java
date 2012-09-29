@@ -19,17 +19,17 @@ import javax.print.SimpleDoc;
 public class PrinterUtils {
 
 
-	public static PrintService getDefaultPrintService() {
-
-		return PrintServiceLookup.lookupDefaultPrintService();
-
-	}
-
-
 	public static String getDefaultPrintServiceName() {
 
 		PrintService ps=getDefaultPrintService();
 		return ps==null ? "" : ps.getName();
+
+	}
+
+
+	public static PrintService getDefaultPrintService() {
+
+		return PrintServiceLookup.lookupDefaultPrintService();
 
 	}
 
@@ -83,6 +83,16 @@ public class PrinterUtils {
 		DocPrintJob job=ps.createPrintJob();
 		Doc doc=new SimpleDoc(data, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
 		job.print(doc, null);
+
+	}
+
+
+	/**
+	 * Prints a BYTE ARRAY using java print
+	 */
+	public static void printData(byte[] data, String printerName) throws PrintException {
+
+		printData(data, getPrintService(printerName));
 
 	}
 
