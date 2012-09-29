@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DMA Utils Java
 Bundle-SymbolicName: org.dma.utils.java;singleton:=true
-Bundle-Version: 3.1.1
+Bundle-Version: 3.2.1
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.apache.commons.codec,
@@ -57,6 +57,7 @@ Export-Package: org.apache.commons.codec,
  org.apache.commons.logging.impl,
  org.apache.commons.mail,
  org.dma.utils.java,
+ org.dma.utils.java.apache,
  org.dma.utils.java.apache.codec,
  org.dma.utils.java.apache.mail,
  org.dma.utils.java.array,
