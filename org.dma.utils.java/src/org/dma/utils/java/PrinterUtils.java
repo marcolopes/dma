@@ -76,7 +76,7 @@ public class PrinterUtils {
 
 
 	/**
-	 * Prints a BYTE ARRAY using java print
+	 * Prints RAW DATA using java print
 	 */
 	public static void printData(byte[] data, PrintService ps) throws PrintException {
 
@@ -88,7 +88,7 @@ public class PrinterUtils {
 
 
 	/**
-	 * Prints a BYTE ARRAY using java print
+	 * Prints RAW DATA using java print
 	 */
 	public static void printData(byte[] data, String printerName) throws PrintException {
 
@@ -98,7 +98,7 @@ public class PrinterUtils {
 
 
 	/**
-	 * Prints a BYTE ARRAY using java print
+	 * Prints RAW DATA using java print
 	 * Assumes the DEFAULT print service.
 	 */
 	public static void printData(byte[] data) throws PrintException {
