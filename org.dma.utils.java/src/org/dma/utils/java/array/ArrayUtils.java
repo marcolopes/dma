@@ -158,7 +158,7 @@ public class ArrayUtils {
 
 	public static String[] createEmpty() {
 
-		return new String[] {""};
+		return new String[]{""};
 
 	}
 

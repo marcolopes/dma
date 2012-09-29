@@ -5,10 +5,8 @@
  *******************************************************************************/
 package org.dma.utils.java;
 
-import java.awt.print.PrinterAbortException;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.io.IOException;
 
 import javax.print.Doc;
 import javax.print.DocFlavor;
@@ -16,8 +14,6 @@ import javax.print.DocPrintJob;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class PrinterUtils {
 
@@ -74,39 +70,6 @@ public class PrinterUtils {
 	public static PrinterJob createPrinterJob(String printerName) throws Exception {
 
 		return createPrinterJob(getPrintService(printerName));
-
-	}
-
-
-	/**
-	 * Prints a PDF using apache pdfbox
-	 */
-	public static void printPdf(String filename, PrinterJob job, boolean silent) throws Exception {
-
-		job.setJobName(filename);
-
-		PDDocument doc;
-		try{
-			doc=PDDocument.load(filename);
-
-		}catch(IOException e){
-			throw new Exception("Error reading file "+filename);
-		}
-
-		try{
-			if (silent)
-				doc.silentPrint(job);
-			else
-				doc.print(job);
-
-		}catch(PrinterAbortException e){ //avoid abort exception
-		}catch(PrinterException e){
-			throw new Exception("Error while printing");
-		}finally{
-			try{
-				doc.close();
-			}catch (IOException e){}
-		}
 
 	}
 
