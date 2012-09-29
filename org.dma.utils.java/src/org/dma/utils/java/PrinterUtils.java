@@ -11,6 +11,7 @@ import java.awt.print.PrinterJob;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
+import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
@@ -77,7 +78,7 @@ public class PrinterUtils {
 	/**
 	 * Prints a BYTE ARRAY using java print
 	 */
-	public static void printData(byte[] data, PrintService ps) throws Exception {
+	public static void printData(byte[] data, PrintService ps) throws PrintException {
 
 		DocPrintJob job=ps.createPrintJob();
 		Doc doc=new SimpleDoc(data, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
@@ -90,7 +91,7 @@ public class PrinterUtils {
 	 * Prints a BYTE ARRAY using java print
 	 * Assumes the DEFAULT print service.
 	 */
-	public static void printData(byte[] data) throws Exception {
+	public static void printData(byte[] data) throws PrintException {
 
 		printData(data, getDefaultPrintService());
 
