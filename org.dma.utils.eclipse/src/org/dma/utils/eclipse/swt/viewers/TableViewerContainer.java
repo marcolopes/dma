@@ -21,7 +21,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Table;
 
 public abstract class TableViewerContainer implements ITableViewerContainer {
@@ -29,7 +28,6 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	protected final List<Object> objectCollection=new ArrayList();
 
 	private final TableViewer viewer;
-	private final ITableLabelProvider labelProvider;
 
 	private MouseAdapter tableDoubleClickListener;
 	private KeyListener tableEnterKeyListener;
@@ -37,13 +35,12 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	public TableViewerContainer(TableViewer viewer, ITableLabelProvider labelProvider) {
 
 		this.viewer=viewer;
-		this.labelProvider=labelProvider;
 
 		try{
 			//viewer
-			this.viewer.setLabelProvider(this.labelProvider);
-			this.viewer.setContentProvider(new ArrayContentProvider());
-			this.viewer.setInput(this.objectCollection);
+			this.viewer.setLabelProvider(labelProvider);
+			this.viewer.setContentProvider(ArrayContentProvider.getInstance());
+			this.viewer.setInput(objectCollection);
 
 			addTableDoubleClickListener();
 			addTableEnterKeyListener();
@@ -111,10 +108,9 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	 * Table
 	 */
 	public int computeSize(){
-		Rectangle rect = getTable().getClientArea();
-		int itemHeight = getTable().getItemHeight();
-		int headerHeight = getTable().getHeaderHeight();
-		int visibleCount = (rect.height-headerHeight+itemHeight-1) / itemHeight;
+		int visibleCount = (getTable().getClientArea().height-
+				getTable().getHeaderHeight()+getTable().getItemHeight()-1) /
+				getTable().getItemHeight();
 		return visibleCount;
 	}
 
