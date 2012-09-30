@@ -10,7 +10,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -52,16 +51,12 @@ public class UIHelper extends UIHacker {
 	/*
 	 * IWorkbench
 	 */
-	public static IWorkbench getWorkbench() {
-		return PlatformUI.getWorkbench();
-	}
-
 	public static Display getDisplay() {
-		return getWorkbench().getDisplay();
+		return PlatformUI.getWorkbench().getDisplay();
 	}
 
 	public static IWorkbenchHelpSystem getHelpSystem() {
-		return getWorkbench().getHelpSystem();
+		return PlatformUI.getWorkbench().getHelpSystem();
 	}
 
 
@@ -69,7 +64,7 @@ public class UIHelper extends UIHacker {
 	 * IWorkbenchWindow
 	 */
 	public static IWorkbenchWindow getWorkbenchWindow() {
-		return getWorkbench().getActiveWorkbenchWindow();
+		return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 	}
 
 	public static IWorkbenchPage getActivePage() {
