@@ -5,7 +5,11 @@
  *******************************************************************************/
 package org.dma.utils.java;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Date;
+import java.util.Map;
 
 public class Debug {
 
@@ -14,6 +18,22 @@ public class Debug {
 	public static final int LEVEL_BASIC = 0;
 	public static final int LEVEL_COMPLETE = 1;
 	public static int LEVEL = LEVEL_BASIC;
+
+	public static void size(Map map) {
+		StackTraceElement caller = new Throwable().getStackTrace()[1];
+		System.out.println(caller.getClassName());
+		try{
+			System.out.println("Index Size: " + map.size());
+			ByteArrayOutputStream baos=new ByteArrayOutputStream();
+			ObjectOutputStream oos=new ObjectOutputStream(baos);
+			oos.writeObject(map);
+			oos.close();
+			System.out.println("Memory Size: " + baos.size());
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
 
 	public static void out() {
 		if (STATUS){
