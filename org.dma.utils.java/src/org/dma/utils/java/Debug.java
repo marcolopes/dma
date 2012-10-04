@@ -28,7 +28,7 @@ public class Debug {
 			ObjectOutputStream oos=new ObjectOutputStream(baos);
 			oos.writeObject(map);
 			oos.close();
-			System.out.println("Memory Size: " + baos.size());
+			System.out.println("Data Size: " + baos.size());
 		}catch(IOException e){
 			e.printStackTrace();
 		}
