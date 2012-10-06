@@ -20,8 +20,6 @@ public class Debug {
 	public static int LEVEL = LEVEL_BASIC;
 
 	public static void size(Map map) {
-		StackTraceElement caller = new Throwable().getStackTrace()[1];
-		System.out.println(caller.getClassName());
 		try{
 			System.out.println("Index Size: " + map.size());
 			ByteArrayOutputStream baos=new ByteArrayOutputStream();
