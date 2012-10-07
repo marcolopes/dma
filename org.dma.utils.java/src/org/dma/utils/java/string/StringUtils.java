@@ -418,11 +418,11 @@ public class StringUtils {
 		String[] lines=text.split("\n");
 		text="";
 
-		int tabSize=0;
+		int tabCount=0;
 		for(int i=0; i<lines.length; i++){
-			if (lines[i].contains("}")) --tabSize;
-			text+=replicate("\t", tabSize) + lines[i] + "\n";
-			if (lines[i].contains("{")) ++tabSize;
+			if (lines[i].contains("}")) tabCount--;
+			text+=replicate("\t", tabCount) + lines[i] + "\n";
+			if (lines[i].contains("{")) tabCount++;
 		}
 
 		return text;
