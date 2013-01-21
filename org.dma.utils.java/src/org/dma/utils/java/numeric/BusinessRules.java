@@ -185,17 +185,47 @@ public class BusinessRules {
 	 * Example: 123.56, 2.50 = 122.50
 	 *
 	 */
-	public static BigDecimal round(BigDecimal value, BigDecimal rounding){
-		/*
-		 * HALF_UP
-		 * Rounding mode to round towards "nearest neighbor" unless both neighbors
-		 * are equidistant, in which case round up.
-		 * Behaves as for RoundingMode.UP if the discarded fraction is >= 0.5;
-		 * otherwise, behaves as for RoundingMode.DOWN.
-		 * Note that this is the rounding mode commonly taught at school.
-		 */
+	public static BigDecimal round(BigDecimal value, BigDecimal rounding, RoundingMode roundingMode){
+
 		return rounding.doubleValue()==0 ? value :
-			(value.divide(rounding,0,RoundingMode.HALF_UP)).multiply(rounding);
+			(value.divide(rounding,0,roundingMode)).multiply(rounding);
+
+	}
+
+
+	/**
+	 * Rounds the number to the nearest<br>
+	 * Numbers can be with or without decimals<br>
+	 * Example: 1.005, 0.01 = 1.05
+	 *<p>
+	 * HALF_UP<br>
+	 * Rounding mode to round towards "nearest neighbor" unless
+	 * both neighbors are equidistant, in which case round up.
+	 * Behaves as for RoundingMode.UP if the discarded fraction is >= 0.5;
+	 * otherwise, behaves as for RoundingMode.DOWN.
+	 * Note that this is the rounding mode commonly taught at school.
+	 */
+	public static BigDecimal roundUp(BigDecimal value, BigDecimal rounding){
+
+		return round(value,rounding,RoundingMode.HALF_UP);
+
+	}
+
+
+	/**
+	 * Rounds the number to the nearest<br>
+	 * Numbers can be with or without decimals<br>
+	 * Example: 1.005, 0.01 = 1.04
+	 *<p>
+	 * HALF_DOWN<br>
+	 * Rounding mode to round towards "nearest neighbor" unless
+	 * both neighbors are equidistant, in which case round down.
+	 * Behaves as for RoundingMode.UP if the discarded fraction is > 0.5;
+	 * otherwise, behaves as for RoundingMode.DOWN.
+	 */
+	public static BigDecimal roundDown(BigDecimal value, BigDecimal rounding){
+
+		return round(value,rounding,RoundingMode.HALF_DOWN);
 
 	}
 
@@ -213,7 +243,8 @@ public class BusinessRules {
 		System.out.println("Value Excluded (200): "+getValueExcluded(new BigDecimal(240), new BigDecimal(20)));
 		System.out.println("Value Added (240): "+getValueAdded(new BigDecimal(200), new BigDecimal(20)));
 		System.out.println("Net Value (160): "+getNetValue(new BigDecimal(200), new BigDecimal(20)));
-		System.out.println("round (122.5): "+round(new BigDecimal(123.56), new BigDecimal(2.50)));
+		System.out.println("round Up (1.01): "+roundUp(new BigDecimal(1.005), new BigDecimal(0.01)));
+		System.out.println("round Down (1.00): "+roundDown(new BigDecimal(1.005), new BigDecimal(0.01)));
 
 		//DIVISION by ZERO test
 		getProportionalValue(new BigDecimal(0), new BigDecimal(0), new BigDecimal(0));
@@ -227,7 +258,8 @@ public class BusinessRules {
 		getValueExcluded(new BigDecimal(0), new BigDecimal(0));
 		getValueAdded(new BigDecimal(0), new BigDecimal(0));
 		getNetValue(new BigDecimal(0), new BigDecimal(0));
-		round(new BigDecimal(0), new BigDecimal(0));
+		roundUp(new BigDecimal(0), new BigDecimal(0));
+		roundDown(new BigDecimal(0), new BigDecimal(0));
 
 	}
 
