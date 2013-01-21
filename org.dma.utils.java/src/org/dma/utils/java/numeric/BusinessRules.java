@@ -188,8 +188,8 @@ public class BusinessRules {
 	public static BigDecimal round(BigDecimal value, BigDecimal rounding){
 		/*
 		 * HALF_UP
-		 * Rounding mode to round towards "nearest neighbor" unless both neighbors are equidistant,
-		 * in which case round up.
+		 * Rounding mode to round towards "nearest neighbor" unless both neighbors
+		 * are equidistant, in which case round up.
 		 * Behaves as for RoundingMode.UP if the discarded fraction is >= 0.5;
 		 * otherwise, behaves as for RoundingMode.DOWN.
 		 * Note that this is the rounding mode commonly taught at school.
