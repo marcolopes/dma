@@ -17,7 +17,6 @@ public class BusinessRules {
 	 * Rule of three: a -> b; c -> x<br>
 	 * Formula: b * c / a<br>
 	 * Example: 100 -> 25, 200 -> x = 50
-	 *
 	 */
 	public static BigDecimal getProportionalValue(BigDecimal a, BigDecimal b, BigDecimal c){
 
@@ -33,7 +32,6 @@ public class BusinessRules {
 	 * Average price (weighted)<br>
 	 * Formula: (stock * price1 + entries * price2) / (stock + entries)<br>
 	 * Example: 100, 10, 100, 20 = 15
-	 *
 	 */
 	public static BigDecimal getAveragePrice(BigDecimal stock, BigDecimal price1, BigDecimal entries, BigDecimal price2) {
 
@@ -78,7 +76,6 @@ public class BusinessRules {
 	 * Added percentages<br>
 	 * Formula: perc1 + (100 - perc1) * (perc2 / 100)<br>
 	 * Example: 60% + 50% = 80%
-	 *
 	 */
 	public static BigDecimal getAddedPercentages(BigDecimal perc1, BigDecimal perc2){
 
@@ -92,7 +89,6 @@ public class BusinessRules {
 	 * Added percentages<br>
 	 * Formula: <br>
 	 * Example: 60% + 50% + 40% = 88%
-	 *
 	 */
 	public static BigDecimal getAddedPercentages(BigDecimal...perc){
 
@@ -113,7 +109,6 @@ public class BusinessRules {
 	 * Value percentage<br>
 	 * Formula: value * 100 / total<br>
 	 * Example: 200, 20 = 10%
-	 *
 	 */
 	public static BigDecimal getValuePercentage(BigDecimal total, BigDecimal value){
 
@@ -129,7 +124,6 @@ public class BusinessRules {
 	 * Percentage value<br>
 	 * Formula: total * perc / 100<br>
 	 * Example: 200, 20% = 40
-	 *
 	 */
 	public static BigDecimal getPercentageValue(BigDecimal total, BigDecimal perc){
 
@@ -142,7 +136,6 @@ public class BusinessRules {
 	 * Value without included percentage<br>
 	 * Formula: value / (1 + (perc / 100))<br>
 	 * Example: 240, 20% = 200
-	 *
 	 */
 	public static BigDecimal getValueExcluded(BigDecimal value, BigDecimal perc){
 
@@ -157,7 +150,6 @@ public class BusinessRules {
 	 * Value added by the percentage<br>
 	 * Formula: value + (value * perc / 100)<br>
 	 * Example: 200, 20% = 240
-	 *
 	 */
 	public static BigDecimal getValueAdded(BigDecimal value, BigDecimal perc){
 
@@ -170,7 +162,6 @@ public class BusinessRules {
 	 * Value reduced by the percentage<br>
 	 * Formula: value - (value * perc / 100)<br>
 	 * Example: 200, 20% = 160
-	 *
 	 */
 	public static BigDecimal getNetValue(BigDecimal value, BigDecimal perc){
 
@@ -182,7 +173,6 @@ public class BusinessRules {
 	/**
 	 * Rounds the number to the nearest<br>
 	 * Numbers can be with or without decimals<br>
-	 *
 	 */
 	public static BigDecimal round(BigDecimal value, BigDecimal rounding, RoundingMode roundingMode){
 
@@ -231,19 +221,19 @@ public class BusinessRules {
 
 	public static void main(String[] argvs){
 
-		System.out.println("Proportional Value (50): "+getProportionalValue(new BigDecimal(100), new BigDecimal(25), new BigDecimal(200)));
-		System.out.println("Average Price (15): "+getAveragePrice(new BigDecimal(100), new BigDecimal(10), new BigDecimal(100), new BigDecimal(20)));
-		System.out.println("Sale Price (250): "+getSalePrice(new BigDecimal(200), new BigDecimal(20)));
-		System.out.println("Markup Percentage (900%): "+getMarkupPercentage(new BigDecimal(200), new BigDecimal(20)));
-		System.out.println("Added Percentages (80%): "+getAddedPercentages(new BigDecimal(60), new BigDecimal(50)));
-		System.out.println("Added Percentages (88%): "+getAddedPercentages(new BigDecimal(60), new BigDecimal(50), new BigDecimal(40)));
-		System.out.println("Value Percentage (10%): "+getValuePercentage(new BigDecimal(200), new BigDecimal(20)));
-		System.out.println("Percentage Value (40): "+getPercentageValue(new BigDecimal(200), new BigDecimal(20)));
-		System.out.println("Value Excluded (200): "+getValueExcluded(new BigDecimal(240), new BigDecimal(20)));
-		System.out.println("Value Added (240): "+getValueAdded(new BigDecimal(200), new BigDecimal(20)));
-		System.out.println("Net Value (160): "+getNetValue(new BigDecimal(200), new BigDecimal(20)));
-		System.out.println("round Up (10): "+roundUp(new BigDecimal(5.0), new BigDecimal(10.0)));
-		System.out.println("round Down (0): "+roundDown(new BigDecimal(5.0), new BigDecimal(10.0)));
+		System.out.println("Proportional Value (50): "+getProportionalValue(new BigDecimal("100"), new BigDecimal("25"), new BigDecimal("200")));
+		System.out.println("Average Price (15): "+getAveragePrice(new BigDecimal("100"), new BigDecimal("10"), new BigDecimal("100"), new BigDecimal("20")));
+		System.out.println("Sale Price (250): "+getSalePrice(new BigDecimal("200"), new BigDecimal("20")));
+		System.out.println("Markup Percentage (900%): "+getMarkupPercentage(new BigDecimal("200"), new BigDecimal("20")));
+		System.out.println("Added Percentages (80%): "+getAddedPercentages(new BigDecimal("60"), new BigDecimal("50")));
+		System.out.println("Added Percentages (88%): "+getAddedPercentages(new BigDecimal("60"), new BigDecimal(50), new BigDecimal("40")));
+		System.out.println("Value Percentage (10%): "+getValuePercentage(new BigDecimal("200"), new BigDecimal("20")));
+		System.out.println("Percentage Value (40): "+getPercentageValue(new BigDecimal("200"), new BigDecimal("20")));
+		System.out.println("Value Excluded (200): "+getValueExcluded(new BigDecimal("240"), new BigDecimal("20")));
+		System.out.println("Value Added (240): "+getValueAdded(new BigDecimal("200"), new BigDecimal("20")));
+		System.out.println("Net Value (160): "+getNetValue(new BigDecimal("200"), new BigDecimal("20")));
+		System.out.println("round Up (10): "+roundUp(new BigDecimal("5.0"), new BigDecimal("10.0")));
+		System.out.println("round Down (0): "+roundDown(new BigDecimal("5.0"), new BigDecimal("10.0")));
 
 		//DIVISION by ZERO test
 		getProportionalValue(new BigDecimal(0), new BigDecimal(0), new BigDecimal(0));
@@ -259,6 +249,18 @@ public class BusinessRules {
 		getNetValue(new BigDecimal(0), new BigDecimal(0));
 		roundUp(new BigDecimal(0), new BigDecimal(0));
 		roundDown(new BigDecimal(0), new BigDecimal(0));
+
+		System.out.println(new BigDecimal(1.005));
+		System.out.println(new BigDecimal(0.01));
+		System.out.println(new BigDecimal("1.005"));
+		System.out.println(new BigDecimal("0.01"));
+
+		BigDecimal value=new BigDecimal("1.005");
+		BigDecimal rounding=new BigDecimal("0.01");
+		System.out.println(value.divide(rounding,0,RoundingMode.HALF_UP).multiply(rounding));
+		System.out.println(value.divide(rounding,0,RoundingMode.HALF_DOWN).multiply(rounding));
+		System.out.println(new BigDecimal("1.005").setScale(2, RoundingMode.HALF_UP));
+		System.out.println(new BigDecimal("1.005").setScale(2, RoundingMode.HALF_DOWN));
 
 	}
 
