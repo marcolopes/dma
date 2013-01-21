@@ -182,7 +182,6 @@ public class BusinessRules {
 	/**
 	 * Rounds the number to the nearest<br>
 	 * Numbers can be with or without decimals<br>
-	 * Example: 123.56, 2.50 = 122.50
 	 *
 	 */
 	public static BigDecimal round(BigDecimal value, BigDecimal rounding, RoundingMode roundingMode){
@@ -196,7 +195,7 @@ public class BusinessRules {
 	/**
 	 * Rounds the number to the nearest<br>
 	 * Numbers can be with or without decimals<br>
-	 * Example: 1.005, 0.01 = 1.05
+	 * Example: 5, 10 = 10
 	 *<p>
 	 * HALF_UP<br>
 	 * Rounding mode to round towards "nearest neighbor" unless
@@ -215,7 +214,7 @@ public class BusinessRules {
 	/**
 	 * Rounds the number to the nearest<br>
 	 * Numbers can be with or without decimals<br>
-	 * Example: 1.005, 0.01 = 1.04
+	 * Example: 5, 10 = 0
 	 *<p>
 	 * HALF_DOWN<br>
 	 * Rounding mode to round towards "nearest neighbor" unless
@@ -243,8 +242,8 @@ public class BusinessRules {
 		System.out.println("Value Excluded (200): "+getValueExcluded(new BigDecimal(240), new BigDecimal(20)));
 		System.out.println("Value Added (240): "+getValueAdded(new BigDecimal(200), new BigDecimal(20)));
 		System.out.println("Net Value (160): "+getNetValue(new BigDecimal(200), new BigDecimal(20)));
-		System.out.println("round Up (1.01): "+roundUp(new BigDecimal(1.005), new BigDecimal(0.01)));
-		System.out.println("round Down (1.00): "+roundDown(new BigDecimal(1.005), new BigDecimal(0.01)));
+		System.out.println("round Up (10): "+roundUp(new BigDecimal(5.0), new BigDecimal(10.0)));
+		System.out.println("round Down (0): "+roundDown(new BigDecimal(5.0), new BigDecimal(10.0)));
 
 		//DIVISION by ZERO test
 		getProportionalValue(new BigDecimal(0), new BigDecimal(0), new BigDecimal(0));
