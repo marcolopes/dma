@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.dma.utils.java.Debug;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -33,7 +32,7 @@ public class DebugLogger {
 	private final Map<Integer, Integer> exceptions=new HashMap();
 
 	public DebugLogger(String pluginId) {
-		Debug.out();
+		System.out.println("LOGGER: "+pluginId);
 		this.pluginId=pluginId;
 	}
 
