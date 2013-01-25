@@ -211,6 +211,27 @@ public class ArrayUtils {
 	}
 
 
+	public static int startsWith(String[] array, String element) {
+
+		if(element!=null && element.length()>0)
+			for(int i=0; i<array.length; i++)
+				if(array[i].startsWith(element))
+					return i;
+
+		return -1;
+
+	}
+
+
+	public static int startsWithOrFirst(String[] array, String element) {
+
+		int index=startsWith(array, element);
+
+		return index==-1 ? 0 : index;
+
+	}
+
+
 	public static <T> T last(T[] array) {
 
 		return array[array.length-1];
@@ -238,23 +259,9 @@ public class ArrayUtils {
 	}
 
 
-	public static int startsWith(String[] array, String element) {
+	public static <T> boolean contains(T[] array, T element) {
 
-		if(element!=null && element.length()>0)
-			for(int i=0; i<array.length; i++)
-				if(array[i].startsWith(element))
-					return i;
-
-		return -1;
-
-	}
-
-
-	public static int startsWithOrFirst(String[] array, String element) {
-
-		int index=startsWith(array, element);
-
-		return index==-1 ? 0 : index;
+		return indexOf(array, element)!=-1;
 
 	}
 
