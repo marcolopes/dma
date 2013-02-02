@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -21,11 +21,18 @@ public class CustomDialog {
 		QUESTION ("Attention"),
 		CONFIRMATION ("Attention");
 
-		public String title;
+		private String title;
 
 		TYPE(String title) {
 			this.title=title;
 	    }
+
+		public static void setTitle(String error, String information, String question, String confirmation){
+			ERROR.title=error;
+			INFORMATION.title=information;
+			QUESTION.title=question;
+			CONFIRMATION.title=confirmation;
+		}
 
 	}
 
