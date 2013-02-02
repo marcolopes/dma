@@ -87,7 +87,7 @@ public class CryptoCipher {
 	public String encrypt(String message, int lineLength) {
 		try{
 			// Convert String to UTF8 Array
-			byte[] messageBytes=message.getBytes("UTF8");
+			byte[] messageBytes = message.getBytes("UTF8");
 			// Encrypt Bytes
 			byte[] encrypted = cipher.doFinal(messageBytes);
 			// Enconde Bytes to Base64 String
