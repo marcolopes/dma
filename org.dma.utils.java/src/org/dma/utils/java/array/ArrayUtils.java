@@ -114,15 +114,15 @@ public class ArrayUtils {
 	}
 
 
-	public static String[] toStringArray(Enum[] values) {
+	public static String[] toStringArray(Enum[] array) {
 
-		String[] array=new String[values.length];
+		String[] array2=new String[array.length];
 
-		for(Enum e:values){
-			array[e.ordinal()]=e.name();
+		for(Enum e:array){
+			array2[e.ordinal()]=e.name();
 		}
 
-		return array;
+		return array2;
 
 	}
 
