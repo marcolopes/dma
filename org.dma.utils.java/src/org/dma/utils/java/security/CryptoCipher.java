@@ -24,6 +24,10 @@ public class CryptoCipher {
 
 	private Key key;
 
+	public CryptoCipher(Key key) {
+		this(key, key.getAlgorithm());
+	}
+
 	public CryptoCipher(Key key, String transformation) {
 		try{
 			this.key = key;
@@ -38,10 +42,6 @@ public class CryptoCipher {
 		}catch(InvalidKeyException e){
 			e.printStackTrace();
 		}
-	}
-
-	public CryptoCipher(Key key) {
-		this(key, key.getAlgorithm());
 	}
 
 
