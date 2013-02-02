@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -24,6 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.commons.codec.binary.Base64;
 import org.dma.utils.java.string.StringUtils;
 
 public class FileUtils {
@@ -36,6 +37,8 @@ public class FileUtils {
 	public static final String UTF8_CHARSET = "UTF-8";
 
 	public static final String ISO_CHARSET = "ISO-8859-1";
+
+	public static final int BASE64_LINE_LENGTH = 64;
 
 	/*
 	 * Conversion
@@ -57,6 +60,47 @@ public class FileUtils {
 	public static String normalize(String filename){
 
 		return StringUtils.normalize(filename).replace(" - ","-").replace(" ","_");
+
+	}
+
+
+	/**
+	 * Encodes a file into BASE64
+	 * @param filename - the file whose contents will be encoded
+	 * @param lineLength - Each line of encoded data will be at most
+	 * of the given length (rounded down to nearest multiple of 4).
+	 * If lineLength <= 0, then the output will not be divided into lines.
+	 */
+	public static String encodeToBase64(String filename, int lineLength) {
+
+		final String pad="-----";
+
+		try{
+			File file=new File(filename);
+			byte[] key=FileUtils.readBytesStream(file);
+
+			String encoded=new Base64(lineLength).encodeToString(key);
+
+			return pad+"BEGIN "+file.getName().toUpperCase()+" BASE64"+pad+"\n"+
+				encoded+ pad+"END "+file.getName().toUpperCase()+" BASE64"+pad;
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+
+
+	/**
+	 * Encodes a file into BASE64 with a line length of 64
+	 * @param filename - the file whose contents will be encoded
+	 */
+	public static String encodeToBase64(String filename) {
+
+		return encodeToBase64(filename, BASE64_LINE_LENGTH);
 
 	}
 
