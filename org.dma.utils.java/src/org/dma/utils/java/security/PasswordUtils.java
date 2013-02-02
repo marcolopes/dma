@@ -7,9 +7,6 @@ package org.dma.utils.java.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-
-import org.dma.utils.java.string.StringUtils;
 
 public final class PasswordUtils {
 
@@ -65,25 +62,6 @@ public final class PasswordUtils {
 			out += pseudo[0] + pseudo[in[i] & 0x0F];
 		}
 		return out;
-	}
-
-
-	/**
-	 * @return
-	 * A date-based password composed with 4 digits<br>
-	 * Format: MMDD<br>
-	 * MM=Current MONTH<br>
-	 * DD=Current DAY
-	 *
-	 */
-	public static String backdoorPassword() {
-
-		Calendar calendar=Calendar.getInstance();
-		String month=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.MONTH)+1),2,"0");
-		String day=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)),2,"0");
-
-		return month+day;
-
 	}
 
 
