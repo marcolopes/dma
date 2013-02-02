@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DMA Utils Java
 Bundle-SymbolicName: org.dma.utils.java;singleton:=true
-Bundle-Version: 3.4.1
+Bundle-Version: 3.5.0
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: com.thebuzzmedia.imgscalr,
