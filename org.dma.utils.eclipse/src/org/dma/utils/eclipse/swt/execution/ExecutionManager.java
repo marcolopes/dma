@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.dma.utils.java.Debug;
-import org.dma.utils.java.ObjectUtils;
+import org.dma.utils.java.object.ObjectUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
