@@ -13,8 +13,8 @@ public abstract class CustomAction extends Action {
 
 	public final String ID=getClass().getName();
 
-	public CustomAction() {
-		setId(ID);
+	public CustomAction(String toolTip, String imagePath){
+		this(toolTip, SWTImageUtils.getImageDescriptor(imagePath));
 	}
 
 	public CustomAction(String toolTip, ImageDescriptor image){
@@ -23,8 +23,8 @@ public abstract class CustomAction extends Action {
 		setImageDescriptor(image);
 	}
 
-	public CustomAction(String toolTip, String imagePath){
-		this(toolTip, SWTImageUtils.getImageDescriptor(imagePath));
+	public CustomAction() {
+		setId(ID);
 	}
 
 
