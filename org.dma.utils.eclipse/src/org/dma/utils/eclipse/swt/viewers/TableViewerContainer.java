@@ -136,7 +136,7 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 
 
 	public int getOrderingIndex() {
-		return ArrayUtils.indexOf(getTable().getColumns(), getTable().getSortColumn());
+		return ArrayUtils.indexOrFirst(getTable().getColumns(), getTable().getSortColumn());
 	}
 
 
