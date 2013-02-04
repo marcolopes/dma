@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2012 Public Domain
+ * 2010-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -20,7 +20,10 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 public abstract class TableViewerContainer implements ITableViewerContainer {
 
@@ -91,6 +94,32 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	}
 
 
+	public void addSortColumnSupport(int direction) {
+
+		getTable().setSortColumn(getTable().getColumn(0));
+		getTable().setSortDirection(direction);
+
+		for(int i=0; i<getTable().getColumnCount(); i++){
+
+			getTable().getColumn(i).addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent event) {
+					TableColumn column=(TableColumn)event.widget;
+					//avoids if unselected
+					if(getTable().getSortColumn().getText().equals(column.getText())){
+						//inverts sort direction
+						getTable().setSortDirection(getTable().getSortDirection()==SWT.UP ?
+							SWT.DOWN : SWT.UP);
+					}
+					getTable().setSortColumn(column);
+					updateTable();
+				}
+			});
+
+		}
+
+	}
+
+
 
 
 
@@ -106,17 +135,8 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 	}
 
 
-	public String[] getColumnText() {
-		String[] names=new String[getTable().getColumns().length];
-		for(int i=0; i<getTable().getColumns().length; i++)
-			names[i]=getTable().getColumns()[i].getText();
-		return names;
-	}
-
-
-	public String getSortColumnText() {
-		return getTable().getSortColumn()==null ?
-			"" : getTable().getSortColumn().getText();
+	public int getOrderingIndex() {
+		return ArrayUtils.indexOf(getTable().getColumns(), getTable().getSortColumn());
 	}
 
 
@@ -130,28 +150,6 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		viewer.refresh();
 	}
 
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.dma.utils.eclipse.swt.viewers.ITableViewerContainer#updateTable()
-	 */
-	public void updateTable() {
-		objectCollection.clear();
-		objectCollection.addAll(retrieveObjects());
-		viewer.refresh();
-	}
-
-	public void moveSelectionUp(boolean wrap) {
-		int index=getTable().getSelectionIndex();
-		getTable().select(index<=0 && wrap ? getTable().getItemCount()-1 : index-1);
-		getTable().showSelection();
-	}
-
-	public void moveSelectionDown(boolean wrap) {
-		int index=getTable().getSelectionIndex();
-		getTable().select(index==getTable().getItemCount()-1 && wrap ? 0 : index+1);
-		getTable().showSelection();
-	}
 
 
 
@@ -180,6 +178,33 @@ public abstract class TableViewerContainer implements ITableViewerContainer {
 		Object[] objectsArray=getSelectedObjectsArray();
 		Debug.out("objectsArray", ArrayUtils.toList(objectsArray));
 		ClipboardManager.copyToClipboard(objectsArray);
+	}
+
+
+
+
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.dma.utils.eclipse.swt.viewers.ITableViewerContainer#updateTable()
+	 */
+	public void updateTable() {
+		objectCollection.clear();
+		objectCollection.addAll(retrieveObjects());
+		viewer.refresh();
+	}
+
+	public void moveSelectionUp(boolean wrap) {
+		int index=getTable().getSelectionIndex();
+		getTable().select(index<=0 && wrap ? getTable().getItemCount()-1 : index-1);
+		getTable().showSelection();
+	}
+
+	public void moveSelectionDown(boolean wrap) {
+		int index=getTable().getSelectionIndex();
+		getTable().select(index==getTable().getItemCount()-1 && wrap ? 0 : index+1);
+		getTable().showSelection();
 	}
 
 
