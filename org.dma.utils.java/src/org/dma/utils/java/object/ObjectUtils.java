@@ -1,13 +1,13 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.utils.java;
+package org.dma.utils.java.object;
 
 public final class ObjectUtils {
 
-	public static boolean equals(Object a, Object b) {
+	public static <T> boolean equals(T a, T b) {
 
 		if(a==null && b==null)
 			return true;
