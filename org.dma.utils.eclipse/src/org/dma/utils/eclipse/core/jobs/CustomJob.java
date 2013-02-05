@@ -125,7 +125,7 @@ public class CustomJob extends Job {
 					//UI task
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							((JobUITask)jtask).getAction().run();
+							jtask.getAction().run();
 						}
 					});
 				}else{
