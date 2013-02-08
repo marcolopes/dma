@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
 
-import org.dma.utils.java.file.FileCopy;
+import org.dma.utils.java.file.AbstractFileCopy;
 import org.dma.utils.java.file.FileParameters;
 import org.dma.utils.java.file.FileUtils;
 
@@ -55,7 +55,7 @@ public class PdfUtils {
 			pdfStamper.addJavaScript(script);
 			pdfStamper.close();
 
-			new FileCopy() {
+			new AbstractFileCopy() {
 				public boolean cancel() {
 					return false;
 				}
