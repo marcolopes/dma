@@ -40,6 +40,17 @@ public class FileUtils {
 
 	public static final int BASE64_LINE_LENGTH = 64;
 
+	/**
+	 * Generic File Copy<br>
+	 * Does not cancel the operation
+	 */
+	public static final AbstractFileCopy FILECOPY = new AbstractFileCopy(){
+		public boolean cancel() {
+			return false;
+		}
+	};
+
+
 	/*
 	 * Conversion
 	 */
@@ -59,7 +70,8 @@ public class FileUtils {
 	 */
 	public static String normalize(String filename){
 
-		return StringUtils.normalize(filename).replace(" - ","-").replace(" ","_");
+		return StringUtils.normalize(filename).
+				replace("- ","-").replace(" -","-").replace(" ","_");
 
 	}
 
