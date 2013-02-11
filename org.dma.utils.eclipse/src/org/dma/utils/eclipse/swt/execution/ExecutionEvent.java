@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -13,11 +13,11 @@ public class ExecutionEvent {
 	private final Action executionAction;
 	private final Action responseAction;
 	private final Action postresponseAction;
-	private final int keycode;
+	private final int[] keycode;
 
 	private boolean actionExecuted=false;
 
-	public ExecutionEvent(Action executionAction, Action responseAction, Action postresponseAction, int keycode) {
+	public ExecutionEvent(Action executionAction, Action responseAction, Action postresponseAction, int[] keycode) {
 		this.executionAction=executionAction;
 		this.responseAction=responseAction;
 		this.postresponseAction=postresponseAction;
@@ -41,7 +41,7 @@ public class ExecutionEvent {
 		return postresponseAction;
 	}
 
-	public int getKeycode() {
+	public int[] getKeycode() {
 		return keycode;
 	}
 
