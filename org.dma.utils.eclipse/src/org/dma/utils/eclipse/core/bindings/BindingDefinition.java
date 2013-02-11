@@ -21,19 +21,11 @@ public class BindingDefinition {
 	private final UpdateValueStrategy modelToTarget;
 
 	/**
-	 * Bidirectional convertion TARGET <-> MODEL
+	 * NO convertion
 	 */
-	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue,
-			IConverter targetToModelConverter, IConverter modelToTargetConverter) {
+	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue) {
 
-		this.targetObservableValue=targetObservableValue;
-		this.modelObservableValue=modelObservableValue;
-
-		this.targetToModelConverter=targetToModelConverter;
-		this.modelToTargetConverter=modelToTargetConverter;
-
-		this.targetToModel=new UpdateValueStrategy().setConverter(targetToModelConverter);
-		this.modelToTarget=new UpdateValueStrategy().setConverter(modelToTargetConverter);
+		this(targetObservableValue, modelObservableValue, null);
 
 	}
 
@@ -48,11 +40,19 @@ public class BindingDefinition {
 	}
 
 	/**
-	 * NO convertion
+	 * Bidirectional convertion TARGET <-> MODEL
 	 */
-	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue) {
+	public BindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue,
+			IConverter targetToModelConverter, IConverter modelToTargetConverter) {
 
-		this(targetObservableValue, modelObservableValue, null);
+		this.targetObservableValue=targetObservableValue;
+		this.modelObservableValue=modelObservableValue;
+
+		this.targetToModelConverter=targetToModelConverter;
+		this.modelToTargetConverter=modelToTargetConverter;
+
+		this.targetToModel=new UpdateValueStrategy().setConverter(targetToModelConverter);
+		this.modelToTarget=new UpdateValueStrategy().setConverter(modelToTargetConverter);
 
 	}
 

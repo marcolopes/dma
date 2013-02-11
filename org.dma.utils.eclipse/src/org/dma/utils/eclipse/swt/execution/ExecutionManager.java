@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -15,7 +15,6 @@ import org.dma.utils.java.object.ObjectUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -25,34 +24,37 @@ public class ExecutionManager {
 
 	private static final Map<ExecutionDefinition, ExecutionEvent> executionMap=new HashMap();
 
-
 	/*
 	 * Register
 	 */
-	public static void register(Control control, int keycode, String id, String secondaryId, Action action, Action responseAction, Action postresponseAction) {
+	public static void register(Control control, Action action) {
+		register(control, new int[]{-1}, action);
+	}
+
+
+	public static void register(Control control, int keycode[], Action action) {
+		register(control, keycode, null, action);
+	}
+
+
+	public static void register(Control control, int keycode[], String id, Action action) {
+		register(control, keycode, id, null, action);
+	}
+
+
+	public static void register(Control control, int keycode[], String id, String secondaryId, Action action) {
+		register(control, keycode, id, secondaryId, action, null, null);
+	}
+
+
+	public static void register(Control control, int keycode[], String id, Action action, Action responseAction, Action postresponseAction) {
+		register(control, keycode, id, null, action, responseAction, postresponseAction);
+	}
+
+
+	public static void register(Control control, int keycode[], String id, String secondaryId, Action action, Action responseAction, Action postresponseAction) {
 		ExecutionDefinition execDefinition=new ExecutionDefinition(id,secondaryId,control);
 		ExecutionEvent execEvent=new ExecutionEvent(action,responseAction,postresponseAction,keycode);
-		register(execDefinition, execEvent);
-	}
-
-
-	public static void register(Control control, int keycode, String id, Action action, Action responseAction, Action postresponseAction) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(id,null,control);
-		ExecutionEvent execEvent=new ExecutionEvent(action,responseAction,postresponseAction,keycode);
-		register(execDefinition, execEvent);
-	}
-
-
-	public static void register(Control control, int keycode, Action action) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(null,null,control);
-		ExecutionEvent execEvent=new ExecutionEvent(action,null,null,keycode);
-		register(execDefinition, execEvent);
-	}
-
-
-	public static void register(Control control, Action action) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(null,null,control);
-		ExecutionEvent execEvent=new ExecutionEvent(action,null,null,-1);
 		register(execDefinition, execEvent);
 	}
 
@@ -64,29 +66,29 @@ public class ExecutionManager {
 
 				if(execDefinition.getControl() instanceof Combo) {
 
-					Listener selectionListener=new Listener() {
+					execDefinition.addSelectionListener(new Listener() {
 						public void handleEvent(Event event) {
 							Debug.out("EXECUTION");
 							execEvent.getExecutionAction().run();
 							execEvent.setActionExecuted(true);
 						}
-					};
-
-					execDefinition.addSelectionListener(selectionListener);
+					});
 
 				}else{
 
-					KeyListener keyListener=new KeyAdapter()  {
+					execDefinition.addKeyListener(new KeyAdapter() {
 						public void keyPressed(KeyEvent event) {
-							if(event.keyCode==execEvent.getKeycode()) {
-								execEvent.getExecutionAction().run();
-								execEvent.setActionExecuted(true);
-								event.doit=false;
+							for(int i=0; i<execEvent.getKeycode().length; i++){
+								if(event.keyCode==execEvent.getKeycode()[i]) {
+									execEvent.getExecutionAction().run();
+									execEvent.setActionExecuted(true);
+									event.doit=false;
+								}
+
 							}
 						}
-					};
+					});
 
-					execDefinition.addKeyListener(keyListener);
 				}
 
 				executionMap.put(execDefinition, execEvent);
