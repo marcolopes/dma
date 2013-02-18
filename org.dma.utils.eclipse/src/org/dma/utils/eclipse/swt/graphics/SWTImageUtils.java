@@ -72,6 +72,8 @@ public class SWTImageUtils {
 	/**
 	 * Returns an {@link Image}
 	 * encoded by the specified resource at the specified location.
+	 * <p>
+	 * Resource is loaded with {@link ClassLoader#getResourceAsStream(String)}.
 	 */
 	public static Image createImage(Class location, String resource) {
 		try{
@@ -102,6 +104,7 @@ public class SWTImageUtils {
 	/**
 	 * Returns an {@link Image}
 	 * encoded by the specified {@link BufferedImage}.
+	 * <p>
 	 * The AWT BufferedImage is converted to an SWT ImageData.
 	 */
 	public static Image createImage(BufferedImage bufferedImage) {
@@ -155,6 +158,7 @@ public class SWTImageUtils {
 	/**
 	 * Returns an {@link Image}
 	 * stored by the specified {@link BufferedImage}.
+	 * <p>
 	 * The AWT BufferedImage is converted to an SWT ImageData.
 	 */
 	public static ImageDescriptor getImageDescriptor(BufferedImage bufferedImage) {
@@ -168,6 +172,7 @@ public class SWTImageUtils {
 
 	/**
 	 * snippet 156: convert between SWT Image and AWT BufferedImage.
+	 * <p>
 	 * For a list of all SWT example snippets see
 	 * http://www.eclipse.org/swt/snippets/
 	 */
@@ -218,6 +223,7 @@ public class SWTImageUtils {
 
 	/**
 	 * snippet 156: convert between SWT Image and AWT BufferedImage.
+	 * <p>
 	 * For a list of all SWT example snippets see
 	 * http://www.eclipse.org/swt/snippets/
 	 */
