@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -61,6 +61,13 @@ public class BundleUtils {
 	public static String jarPathResolver(String bundleName, String fullPath) {
 
 		return jarPathResolver(Platform.getBundle(bundleName), fullPath);
+
+	}
+
+
+	public static String jarPathResolver(Class cl, String fullPath) {
+
+		return jarPathResolver(FrameworkUtil.getBundle(cl), fullPath);
 
 	}
 
