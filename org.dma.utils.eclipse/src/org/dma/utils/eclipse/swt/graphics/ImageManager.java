@@ -6,7 +6,6 @@
 package org.dma.utils.eclipse.swt.graphics;
 
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,26 +19,6 @@ public class ImageManager {
 	private static final int MISSING_IMAGE_SIZE = 16;
 
 	private static Map<String, Image> cacheMap=new HashMap();
-
-	/**
-	 * Returns the cached image or a new one if it does not exist;
-	 * Cache Map key based on image hash
-	 */
-	public static Image getImage(BufferedImage bufferedImage) {
-		String key=String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(bufferedImage)));
-		Image image=cacheMap.get(key);
-		if (image == null) {
-			try{
-				image=SWTImageUtils.createImage(bufferedImage);
-			} catch (Exception e){
-				image=SWTImageUtils.createImage(MISSING_IMAGE_SIZE);
-			}
-			cacheMap.put(key, image);
-		}
-
-		return image;
-	}
-
 
 	/**
 	 * Returns the cached image or a new one if it does not exist;
@@ -69,11 +48,31 @@ public class ImageManager {
 		Image image=cacheMap.get(path);
 		if (image == null) {
 			try{
-				image=SWTImageUtils.createImage(new FileInputStream(path));
+				image=SWTImageUtils.createImage(path);
 			} catch (Exception e){
 				image=SWTImageUtils.createImage(MISSING_IMAGE_SIZE);
 			}
 			cacheMap.put(path, image);
+		}
+
+		return image;
+	}
+
+
+	/**
+	 * Returns the cached image or a new one if it does not exist;
+	 * Cache Map key based on image hash
+	 */
+	public static Image getImage(BufferedImage bufferedImage) {
+		String key=String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(bufferedImage)));
+		Image image=cacheMap.get(key);
+		if (image == null) {
+			try{
+				image=SWTImageUtils.createImage(bufferedImage);
+			} catch (Exception e){
+				image=SWTImageUtils.createImage(MISSING_IMAGE_SIZE);
+			}
+			cacheMap.put(key, image);
 		}
 
 		return image;
