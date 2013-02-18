@@ -6,7 +6,6 @@
 package org.dma.utils.eclipse.ui;
 
 import org.apache.commons.collections15.map.LinkedMap;
-import org.dma.utils.eclipse.core.BundleUtils;
 import org.dma.utils.eclipse.swt.custom.CustomAction;
 import org.dma.utils.eclipse.swt.custom.CustomBrowser;
 import org.dma.utils.eclipse.swt.graphics.SWTImageUtils;
@@ -30,11 +29,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 public class BrowserView extends ViewPart {
-
-	public static final String HOME_ICON = BundleUtils.pathResolver(BrowserView.class, "icons/browser_home.png");
-	public static final String STOP_ICON = BundleUtils.pathResolver(BrowserView.class, "icons/browser_stop.png");
-	public static final String BACK_ICON = BundleUtils.pathResolver(BrowserView.class, "icons/browser_back.png");
-	public static final String FORWARD_ICON = BundleUtils.pathResolver(BrowserView.class, "icons/browser_forward.png");
 
 	private String homeUrl;
 	private CTabFolder tabFolder;
@@ -165,7 +159,8 @@ public class BrowserView extends ViewPart {
 				}
 			};
 			button_home.setToolTipText("Home");
-			button_home.setImageDescriptor(SWTImageUtils.getImageDescriptor(HOME_ICON));
+			button_home.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+					BrowserView.class, "icons/browser_home.png"));
 			toolbarManager.add(button_home);
 
 			button_stop=new CustomAction(){
@@ -174,7 +169,8 @@ public class BrowserView extends ViewPart {
 				}
 			};
 			button_stop.setToolTipText("Stop");
-			button_stop.setImageDescriptor(SWTImageUtils.getImageDescriptor(STOP_ICON));
+			button_stop.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+					BrowserView.class, "icons/browser_stop.png"));
 			toolbarManager.add(button_stop);
 
 			button_back=new CustomAction(){
@@ -183,7 +179,8 @@ public class BrowserView extends ViewPart {
 				}
 			};
 			button_back.setToolTipText("Back");
-			button_back.setImageDescriptor(SWTImageUtils.getImageDescriptor(BACK_ICON));
+			button_back.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+					BrowserView.class, "icons/browser_back.png"));
 			toolbarManager.add(button_back);
 
 			button_forward=new CustomAction(){
@@ -192,7 +189,8 @@ public class BrowserView extends ViewPart {
 				}
 			};
 			button_forward.setToolTipText("Forward");
-			button_forward.setImageDescriptor(SWTImageUtils.getImageDescriptor(FORWARD_ICON));
+			button_forward.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+					BrowserView.class, "icons/browser_forward.png"));
 			toolbarManager.add(button_forward);
 
 		}catch(Exception e){

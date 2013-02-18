@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Henry Proudhon and Contributors (henry.proudhon AT insa-lyon.fr)
@@ -14,10 +14,9 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -31,51 +30,56 @@ import org.eclipse.swt.widgets.Display;
 public class SWTImageUtils {
 
 	/**
-	 * Creates an SWT image using the current display
-	 */
-	public static Image createImage(BufferedImage bufferedImage) throws Exception {
-		return new Image(Display.getCurrent(), toSWTImage(bufferedImage));
-	}
-
-
-	/**
-	 * Creates an SWT image using the current display
-	 */
-	public static Image createImage(byte[] bytes) throws Exception {
-		return new Image(Display.getCurrent(), new ByteArrayInputStream(bytes));
-	}
-
-
-	/**
-	 * @return {@link Image} that can be used as placeholder for missing image.
+	 * Returns an {@link Image}
+	 * that can be used as placeholder for missing image.
 	 */
 	public static Image createImage(int size) {
 		Image image = new Image(Display.getCurrent(), size, size);
-		//
 		GC gc = new GC(image);
 		gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
 		gc.fillRectangle(0, 0, size, size);
 		gc.dispose();
-		//
 		return image;
 	}
 
 
 	/**
-	 * Returns an {@link Image} encoded by the specified {@link InputStream}.
-	 *
-	 * @param stream
-	 *            the {@link InputStream} encoding the image data
-	 * @return the {@link Image} encoded by the specified input stream
+	 * Returns an {@link Image}
+	 * encoded by the specified buffer.
+	 */
+	public static Image createImage(byte[] bytes) {
+		try{
+			return createImage(new ByteArrayInputStream(bytes));
+		}catch(Exception e){
+			return null;
+		}
+	}
+
+
+	/**
+	 * Returns an {@link Image}
+	 * encoded by the specified resource at the specified location.
+	 */
+	public static Image createImage(Class location, String resource) {
+		try{
+			return createImage(location.getClassLoader().getResourceAsStream(resource));
+		}catch(Exception e){
+			return null;
+		}
+	}
+
+
+	/**
+	 * Returns an {@link Image}
+	 * encoded by the specified {@link InputStream}.
 	 */
 	public static Image createImage(InputStream stream) throws IOException {
 		try{
 			Display display = Display.getCurrent();
 			ImageData data = new ImageData(stream);
-			if (data.transparentPixel > 0) {
-				return new Image(display, data, data.getTransparencyMask());
-			}
-			return new Image(display, data);
+			return data.transparentPixel > 0 ?
+				new Image(display, data, data.getTransparencyMask()) :
+				new Image(display, data);
 		} finally {
 			stream.close();
 		}
@@ -83,26 +87,62 @@ public class SWTImageUtils {
 
 
 	/**
-	 * Returns an {@link ImageDescriptor} stored in the file at the specified path.
-	 *
-	 * @param path
-	 *            the path to the image file.
-	 * @return the {@link ImageDescriptor} stored in the file at the specified path.
+	 * Returns an {@link Image}
+	 * encoded by the specified {@link BufferedImage}.
+	 * The AWT BufferedImage is converted to an SWT ImageData.
 	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
+	public static Image createImage(BufferedImage bufferedImage) {
 		try{
-			return ImageDescriptor.createFromURL(new File(path).toURI().toURL());
-		} catch (MalformedURLException e){
+			return new Image(Display.getCurrent(), toSWTImage(bufferedImage));
+		}catch(Exception e){
 			return null;
 		}
 	}
 
 
 	/**
-	 * snippet 156: convert between SWT Image and AWT BufferedImage
+	 * Returns an {@link ImageDescriptor}
+	 * stored in the resource at the specified location.
+	 */
+	public static ImageDescriptor getImageDescriptor(Class location, String resource) {
+		try{
+			return getImageDescriptor(location.getClassLoader().getResourceAsStream(resource));
+		}catch(Exception e){
+			return null;
+		}
+	}
+
+
+	/**
+	 * Returns an {@link ImageDescriptor}
+	 * stored in the file at the specified path.
+	 */
+	public static ImageDescriptor getImageDescriptor(String filename) {
+		try{
+			return getImageDescriptor(new FileInputStream(filename));
+		}catch(Exception e){
+			return null;
+		}
+	}
+
+
+	/**
+	 * Returns an {@link ImageDescriptor}
+	 * encoded by the specified {@link InputStream}.
+	 */
+	public static ImageDescriptor getImageDescriptor(InputStream stream) throws IOException {
+		try{
+			return ImageDescriptor.createFromImageData(new ImageData(stream));
+		} finally {
+			stream.close();
+		}
+	}
+
+
+	/**
+	 * snippet 156: convert between SWT Image and AWT BufferedImage.
 	 * For a list of all SWT example snippets see
 	 * http://www.eclipse.org/swt/snippets/
-	 * 2012 - edited to remove compiler warnings - marcolopes@netc.pt
 	 */
 	public static BufferedImage toAWTImage(ImageData data) {
 		BufferedImage bufferedImage = null;
@@ -150,10 +190,9 @@ public class SWTImageUtils {
 
 
 	/**
-	 * snippet 156: convert between SWT Image and AWT BufferedImage
+	 * snippet 156: convert between SWT Image and AWT BufferedImage.
 	 * For a list of all SWT example snippets see
 	 * http://www.eclipse.org/swt/snippets/
-	 * 2012 - edited to remove compiler warnings - marcolopes@netc.pt
 	 */
 	public static ImageData toSWTImage(BufferedImage bufferedImage) {
 		ImageData data = null;
