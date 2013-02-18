@@ -2,8 +2,6 @@
  * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
- * Henry Proudhon and Contributors (henry.proudhon AT insa-lyon.fr)
- * Object Refinery Limited and Contributors.
  * IBM Corporation and others
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.graphics;
