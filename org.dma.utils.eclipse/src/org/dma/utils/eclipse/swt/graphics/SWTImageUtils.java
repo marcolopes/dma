@@ -58,6 +58,19 @@ public class SWTImageUtils {
 
 	/**
 	 * Returns an {@link Image}
+	 * encoded by the specified file at the specified path.
+	 */
+	public static Image createImage(String path) {
+		try{
+			return createImage(new FileInputStream(path));
+		}catch(Exception e){
+			return null;
+		}
+	}
+
+
+	/**
+	 * Returns an {@link Image}
 	 * encoded by the specified resource at the specified location.
 	 */
 	public static Image createImage(Class location, String resource) {
@@ -102,7 +115,20 @@ public class SWTImageUtils {
 
 	/**
 	 * Returns an {@link ImageDescriptor}
-	 * stored in the resource at the specified location.
+	 * stored by the the file at the specified path.
+	 */
+	public static ImageDescriptor getImageDescriptor(String path) {
+		try{
+			return getImageDescriptor(new FileInputStream(path));
+		}catch(Exception e){
+			return null;
+		}
+	}
+
+
+	/**
+	 * Returns an {@link ImageDescriptor}
+	 * stored by the resource at the specified location.
 	 */
 	public static ImageDescriptor getImageDescriptor(Class location, String resource) {
 		try{
@@ -114,27 +140,28 @@ public class SWTImageUtils {
 
 
 	/**
-	 * Returns an {@link ImageDescriptor}
-	 * stored in the file at the specified path.
-	 */
-	public static ImageDescriptor getImageDescriptor(String filename) {
-		try{
-			return getImageDescriptor(new FileInputStream(filename));
-		}catch(Exception e){
-			return null;
-		}
-	}
-
-
-	/**
-	 * Returns an {@link ImageDescriptor}
-	 * encoded by the specified {@link InputStream}.
+	 * Creates and returns a new image descriptor {@link ImageDescriptor}
+	 * stored by the specified {@link InputStream}.
 	 */
 	public static ImageDescriptor getImageDescriptor(InputStream stream) throws IOException {
 		try{
 			return ImageDescriptor.createFromImageData(new ImageData(stream));
 		} finally {
 			stream.close();
+		}
+	}
+
+
+	/**
+	 * Returns an {@link Image}
+	 * stored by the specified {@link BufferedImage}.
+	 * The AWT BufferedImage is converted to an SWT ImageData.
+	 */
+	public static ImageDescriptor getImageDescriptor(BufferedImage bufferedImage) {
+		try{
+			return ImageDescriptor.createFromImageData(toSWTImage(bufferedImage));
+		}catch(Exception e){
+			return null;
 		}
 	}
 
