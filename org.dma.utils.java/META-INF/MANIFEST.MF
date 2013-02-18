@@ -1,10 +1,26 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
-Bundle-Name: DMA Utils Java
 Bundle-SymbolicName: org.dma.utils.java;singleton:=true
 Bundle-Version: 3.5.0
+Bundle-Name: DMA Utils Java
+Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ libraries/collections-generic-4.01.jar,
+ libraries/commons-collections-3.2.1.jar,
+ libraries/commons-configuration-1.6.jar,
+ libraries/commons-logging-1.1.1.jar,
+ libraries/commons-codec-1.4.jar,
+ libraries/commons-email-1.2.jar,
+ libraries/commons-lang-2.6.jar,
+ libraries/pdfbox-1.6.0.jar,
+ libraries/fontbox-1.6.0.jar,
+ libraries/itext-2.1.7.jar,
+ libraries/mail-1.4.3.jar,
+ libraries/bcprov-jdk16-145.jar,
+ libraries/imgscalr-lib-3.1.jar
 Export-Package: com.thebuzzmedia.imgscalr,
  org.apache.commons.codec,
  org.apache.commons.codec.binary,
@@ -70,18 +86,3 @@ Export-Package: com.thebuzzmedia.imgscalr,
  org.dma.utils.java.security,
  org.dma.utils.java.string,
  org.dma.utils.java.timedate
-Bundle-ClassPath: .,
- libraries/collections-generic-4.01.jar,
- libraries/commons-collections-3.2.1.jar,
- libraries/commons-configuration-1.6.jar,
- libraries/commons-logging-1.1.1.jar,
- libraries/commons-codec-1.4.jar,
- libraries/commons-email-1.2.jar,
- libraries/commons-lang-2.6.jar,
- libraries/pdfbox-1.6.0.jar,
- libraries/fontbox-1.6.0.jar,
- libraries/itext-2.1.7.jar,
- libraries/mail-1.4.3.jar,
- libraries/bcprov-jdk16-145.jar,
- libraries/imgscalr-lib-3.1.jar
-Bundle-Vendor: marcolopes@netc.pt
