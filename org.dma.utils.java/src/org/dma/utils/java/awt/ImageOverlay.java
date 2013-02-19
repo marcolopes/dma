@@ -40,15 +40,15 @@ public class ImageOverlay {
 	private final Graphics2D g2d;
 	private Font font;
 
+	public ImageOverlay(BufferedImage image) {
+		this(image, null);
+	}
+
 	public ImageOverlay(BufferedImage image, Font font) {
 		this.image=image;
 		this.g2d=image.createGraphics();
 		this.font=font==null ? g2d.getFont() : font;
 		g2d.drawImage(image, 0, 0, null);
-	}
-
-	public ImageOverlay(BufferedImage image) {
-		this(image, null);
 	}
 
 
@@ -84,9 +84,8 @@ public class ImageOverlay {
 	 * @param horizontalAlignment LEFT (default), RIGHT, CENTER
 	 * @param verticalAlignment TOP (default), BOTTOM
 	 * @param style NONE (default), OUTLINE, SHADOW
-	 * @return the processed image
 	 */
-	public BufferedImage writeText(String text, int horizontalAlignment, int verticalAlignment, int style) {
+	public void writeText(String text, int horizontalAlignment, int verticalAlignment, int style) {
 
 		g2d.setFont(font);
 		FontMetrics fm = g2d.getFontMetrics();
@@ -111,8 +110,6 @@ public class ImageOverlay {
 
 		g2d.setColor(textColor);
 		g2d.drawString(text, x, y);
-
-		return image;
 
 	}
 
