@@ -133,6 +133,21 @@ public class BusinessRules {
 
 
 	/**
+	 * Value with included percentage<br>
+	 * Formula: value / (1 + (perc / 100))<br>
+	 * Example: 240, 20% = 200
+	 */
+	public static BigDecimal getValueIncluded(BigDecimal value, BigDecimal perc){
+
+		return perc.doubleValue()==100 ? BigDecimal.valueOf(0) :
+			value.divide(BigDecimal.valueOf(1).subtract(perc.divide(BigDecimal.valueOf(100))),
+			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
+			SCALE,RoundingMode.HALF_EVEN);
+
+	}
+
+
+	/**
 	 * Value without included percentage<br>
 	 * Formula: value / (1 + (perc / 100))<br>
 	 * Example: 240, 20% = 200
@@ -229,6 +244,7 @@ public class BusinessRules {
 		System.out.println("Added Percentages (88%): "+getAddedPercentages(new BigDecimal("60"), new BigDecimal(50), new BigDecimal("40")));
 		System.out.println("Value Percentage (10%): "+getValuePercentage(new BigDecimal("200"), new BigDecimal("20")));
 		System.out.println("Percentage Value (40): "+getPercentageValue(new BigDecimal("200"), new BigDecimal("20")));
+		System.out.println("Value Included (250): "+getValueIncluded(new BigDecimal("200"), new BigDecimal("20")));
 		System.out.println("Value Excluded (200): "+getValueExcluded(new BigDecimal("240"), new BigDecimal("20")));
 		System.out.println("Value Added (240): "+getValueAdded(new BigDecimal("200"), new BigDecimal("20")));
 		System.out.println("Net Value (160): "+getNetValue(new BigDecimal("200"), new BigDecimal("20")));
@@ -244,6 +260,7 @@ public class BusinessRules {
 		getAddedPercentages(new BigDecimal(0));
 		getValuePercentage(new BigDecimal(0), new BigDecimal(0));
 		getPercentageValue(new BigDecimal(0), new BigDecimal(0));
+		getValueIncluded(new BigDecimal(0), new BigDecimal(100));
 		getValueExcluded(new BigDecimal(0), new BigDecimal(0));
 		getValueAdded(new BigDecimal(0), new BigDecimal(0));
 		getNetValue(new BigDecimal(0), new BigDecimal(0));
