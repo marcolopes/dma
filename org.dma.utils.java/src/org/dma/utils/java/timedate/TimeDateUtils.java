@@ -271,6 +271,16 @@ public class TimeDateUtils {
 	}
 
 
+	public static int getDayOfMonthMax(Calendar calendar) {
+		return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+	}
+
+
+	public static int getDayOfMonthMax(int year, int month) {
+		return getDayOfMonthMax(getCalendar(year, month, 1));
+	}
+
+
 	public static int getDaysSinceMonday(Calendar calendar) {
 		int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
 		return dayOfWeek==Calendar.SUNDAY ? Calendar.SATURDAY : dayOfWeek-1;
@@ -302,14 +312,13 @@ public class TimeDateUtils {
 	}
 
 
-	public static int getCurrentMonthMax() {
-		Calendar calendar=Calendar.getInstance();
-		return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+	public static int getCurrentDayOfMonth(){
+		return getDayOfMonth(Calendar.getInstance());
 	}
 
 
-	public static int getCurrentDayOfMonth(){
-		return getDayOfMonth(Calendar.getInstance());
+	public static int getCurrentDayOfMonthMax() {
+		return getDayOfMonthMax(Calendar.getInstance());
 	}
 
 
@@ -416,7 +425,7 @@ public class TimeDateUtils {
 
 
 	public static Date getCurrentYear2() {
-		return getCalendar(getCurrentYear(), 11, getCurrentMonthMax()).getTime();
+		return getCalendar(getCurrentYear(), 11, getCurrentDayOfMonthMax()).getTime();
 	}
 
 
@@ -426,7 +435,7 @@ public class TimeDateUtils {
 
 
 	public static Date getCurrentMonth2() {
-		return getCalendar(getCurrentYear(), getCurrentMonth(), getCurrentMonthMax()).getTime();
+		return getCalendar(getCurrentYear(), getCurrentMonth(), getCurrentDayOfMonthMax()).getTime();
 	}
 
 

@@ -17,7 +17,7 @@ public class PdfboxUtils {
 	/**
 	 * Prints a PDF using apache pdfbox
 	 */
-	public static void printPdf(String filename, PrinterJob job, boolean silent) throws Exception {
+	public static void print(String filename, PrinterJob job, boolean silent) throws Exception {
 
 		job.setJobName(filename);
 
