@@ -42,24 +42,24 @@ public class ArrayUtils {
 	}
 
 
-	public static char[] toCharArray(String[] array) {
+	public static char[] toCharArray(int[] array) {
 
 		char[] array2=new char[array.length];
 
 		for(int i=0; i<array.length; i++)
-			array2[i]=(char)StringUtils.val(array[i]);
+			array2[i]=(char)array[i];
 
 		return array2;
 
 	}
 
 
-	public static byte[] toByteArray(String[] array) {
+	public static byte[] toByteArray(int[] array) {
 
 		byte[] array2=new byte[array.length];
 
 		for(int i=0; i<array.length; i++)
-			array2[i]=(byte)StringUtils.val(array[i]);
+			array2[i]=(byte)array[i];
 
 		return array2;
 
@@ -79,18 +79,6 @@ public class ArrayUtils {
 
 
 	public static String[] toStringArray(char[] array) {
-
-		String[] array2=new String[array.length];
-
-		for(int i=0; i<array.length; i++)
-			array2[i]=String.valueOf(array[i]);
-
-		return array2;
-
-	}
-
-
-	public static String[] toStringArray(byte[] array) {
 
 		String[] array2=new String[array.length];
 
@@ -156,7 +144,7 @@ public class ArrayUtils {
 		String string="";
 
 		for (byte b: array) {
-			String hexString=Integer.toHexString(0x00FF & b);
+			String hexString=Integer.toHexString(0x00ff & b);
 			string+=hexString.length()==1 ? "0"+hexString : hexString;
 		}
 

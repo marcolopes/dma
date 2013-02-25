@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,26 +10,27 @@ import org.dma.utils.java.string.StringUtils;
 public final class CheckDigits {
 
 	/**
-	 * Validates a NIF (Numero de Identificacao Fiscal)
+	 * Validates a NIF (Fiscal Identification Number)
 	 * @param nif - 9 digit number
 	 */
 	public static boolean validateNIF(String nif) {
+
+		//remove spaces
+		nif=StringUtils.trimAll(nif);
 
 		final int max=9;
 
 		//check if is numeric and has 9 numbers
 		if (StringUtils.isNumeric(nif) && nif.length()==max) {
 
-			int checkDigit=0;
-
-			//perform CheckDigit calculations
+			int checkSum=0;
+			//perform calculations
 			for (int i=0; i<max-1; i++){
-				checkDigit+=StringUtils.num(nif.charAt(i)) * (max-i);
+				checkSum+=StringUtils.num(nif.charAt(i)) * (max-i);
 			}
 
-			checkDigit=11-(checkDigit % 11);
-
-			//if checkDigit is higher than ten set it to zero
+			int checkDigit=11-(checkSum % 11);
+			//if checkDigit is higher than TEN set it to zero
 			if (checkDigit>=10)
 				checkDigit=0;
 

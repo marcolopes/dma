@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,6 +7,10 @@ package org.dma.utils.java.print;
 
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import javax.print.Doc;
 import javax.print.DocFlavor;
@@ -75,13 +79,13 @@ public class PrinterUtils {
 
 
 	/**
-	 * Prints RAW DATA using java print
+	 * Prints STREAM DATA using java print
 	 */
-	public static void printData(byte[] data, PrintService ps) throws PrintException {
+	public static void print(InputStream is, PrintService ps) throws PrintException {
 
-		DocPrintJob job=ps.createPrintJob();
-		Doc doc=new SimpleDoc(data, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
-		job.print(doc, null);
+		DocPrintJob job = ps.createPrintJob();
+		Doc document = new SimpleDoc(is, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+		job.print(document, null);
 
 	}
 
@@ -89,9 +93,19 @@ public class PrinterUtils {
 	/**
 	 * Prints RAW DATA using java print
 	 */
-	public static void printData(byte[] data, String printerName) throws PrintException {
+	public static void print(byte[] data, PrintService ps) throws PrintException {
 
-		printData(data, getPrintService(printerName));
+		print(new ByteArrayInputStream(data), ps);
+
+	}
+
+
+	/**
+	 * Prints RAW DATA using java print
+	 */
+	public static void print(byte[] data, String printerName) throws PrintException {
+
+		print(data, getPrintService(printerName));
 
 	}
 
@@ -100,9 +114,39 @@ public class PrinterUtils {
 	 * Prints RAW DATA using java print
 	 * Assumes the DEFAULT print service.
 	 */
-	public static void printData(byte[] data) throws PrintException {
+	public static void print(byte[] data) throws PrintException {
 
-		printData(data, getDefaultPrintService());
+		print(data, getDefaultPrintService());
+
+	}
+
+
+	/**
+	 * Prints FILE DATA using java print
+	 */
+	public static void print(String filename, PrintService ps) throws FileNotFoundException, PrintException {
+
+		print(new FileInputStream(filename), ps);
+
+	}
+
+
+	/**
+	 * Prints FILE DATA using java print
+	 */
+	public static void print(String filename, String printerName) throws FileNotFoundException, PrintException {
+
+		print(filename, getPrintService(printerName));
+
+	}
+
+
+	/**
+	 * Prints FILE DATA using java print
+	 */
+	public static void print(String filename) throws FileNotFoundException, PrintException {
+
+		print(filename, getDefaultPrintService());
 
 	}
 
