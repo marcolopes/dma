@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.dma.ws.vies;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Name: VAT Information Exchange System
+Bundle-Vendor: marcolopes@netc.pt
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Export-Package: eu.europa.ec.taxud.vies,
+ eu.europa.ec.taxud.vies.services.checkvat,
+ eu.europa.ec.taxud.vies.services.checkvat.types
