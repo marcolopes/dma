@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.dma.webservices.at;singleton:=true
+Bundle-Version: 2.0.0
+Bundle-Name: Webservices Autoridade Tributaria
+Bundle-Vendor: marcolopes@netc.pt
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ libraries/streambuffer-0.8.jar,
+ libraries/jaxb-impl-2.1.4.jar,
+ libraries/jaxws-rt-2.1.4.jar,
+ libraries/stax-ex-1.2.jar
+Export-Package: at.ws,
+ at.ws.proxy,
+ pt.gov.portaldasfinancas.servicos.documentosTransporte,
+ pt.gov.portaldasfinancas.servicos.faturas
+
