@@ -1,6 +1,7 @@
 package test;
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 import javax.xml.datatype.DatatypeFactory;
 
@@ -24,7 +25,7 @@ public class FacturaRegister {
 		RegisterInvoiceType registerInvoiceRequest = new RegisterInvoiceType();
 
 		registerInvoiceRequest.setTaxRegistrationNumber(599999993);
-		registerInvoiceRequest.setInvoiceNo("CFA 2013/1");
+		registerInvoiceRequest.setInvoiceNo("CFA 2013/"+new Random().nextInt(999999));
 		registerInvoiceRequest.setInvoiceDate(DatatypeFactory.newInstance().newXMLGregorianCalendar("2012-05-05"));
 		registerInvoiceRequest.setInvoiceType("FT");
 		registerInvoiceRequest.setInvoiceStatus("N");
@@ -60,9 +61,9 @@ public class FacturaRegister {
 				"599999993/0037", "testes1234",
 				//BUG? implementacao AT nao aceita chave de testes
 				new Certificate(CERTIFICATE_TYPE.JKS,
-						"/tmp/saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
+						"saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				new Certificate(CERTIFICATE_TYPE.PKCS12,
-						"/tmp/TestesWebServices.pfx", "TESTEwebservice", null),
+						"TestesWebServices.pfx", "TESTEwebservice", null),
 				A10_ENDPOINTS.TESTES);
 
 			RegisterInvoiceResponseType response=proxy.register(buildRegisterInvoiceRequest());
