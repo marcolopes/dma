@@ -36,13 +36,29 @@ import org.dma.utils.java.string.StringUtils;
 
 public class Numerals {
 
-	public static final String[][] UNIT_EURO = new String[][]{
-		{"Euro","Euros"}, {"Cêntimo","Cêntimos"}};
+	public static class NumeralsUnit {
 
-	public static final String[][] UNIT_METER = new String[][]{
-		{"Metro","Metros"}, {"Centímetro","Centímetros"}};
+		public String[] INTEGER;
+		public String[] DECIMAL;
 
-	public static enum QUALIFIERS {
+		/**
+		 * @param INTEGER singular, plural
+		 * @param DECIMAL singular, plural
+		 */
+		public NumeralsUnit(String[] INTEGER, String[] DECIMAL){
+			this.INTEGER=INTEGER;
+			this.DECIMAL=DECIMAL;
+		}
+
+	}
+
+	public static final NumeralsUnit UNIT_EURO = new NumeralsUnit(
+		new String[]{"Euro","Euros"}, new String[]{"Cêntimo","Cêntimos"});
+
+	public static final NumeralsUnit UNIT_METER = new NumeralsUnit(
+		new String[]{"Metro","Metros"}, new String[]{"Centímetro","Centímetros"});
+
+	private static enum QUALIFIERS {
 
 		SINGULAR (new String[]{
 			"mil", "milhão", "bilião", "trilião", "quatrilião",
@@ -60,7 +76,7 @@ public class Numerals {
 
 	}
 
-	public static enum NUMERALS {
+	private static enum NUMERALS {
 
 		GROUP0_19 (new String[]{"zero",
 			"um", "dois", "três", "quatro", "cinco",
@@ -86,15 +102,25 @@ public class Numerals {
 
 	}
 
-	public static final String CONJUNCTION_AND = "e";
-	public static final String CONJUNCTION_OF = "de";
+	private static enum CONJUNCTION {
+
+		AND ("e"),
+		OF ("de");
+
+		public String name;
+
+		CONJUNCTION(String name){
+			this.name=name;
+		}
+
+	}
 
 	//number of decimals
 	private final int decimals;
 	//unit label
-	private final String[][] unit;
+	private final NumeralsUnit unit;
 
-	public Numerals(int decimals, String[][] unit) {
+	public Numerals(int decimals, NumeralsUnit unit) {
 		this.decimals=decimals;
 		this.unit=unit;
 	}
@@ -122,15 +148,15 @@ public class Numerals {
 
 			//processes ZERO
 			if (value.doubleValue()==0){
-				s+=orderToString(0)+unit[0][1];
+				s+=orderToString(0)+unit.INTEGER[1];
 			}//processes INTEGER
 			else if (INTEGER.doubleValue()>0){
-				s+=ordersToString(getOrders(INTEGER),unit[0]);
+				s+=ordersToString(getOrders(INTEGER),unit.INTEGER);
 			}
 			//processes DECIMAL
 			if (DECIMAL.doubleValue()>0){
-				s+=s.length()>0 ? " "+CONJUNCTION_AND+" " : "";
-				s+=ordersToString(getOrders(DECIMAL),unit[1]);
+				s+=s.length()>0 ? " "+CONJUNCTION.AND.name+" " : "";
+				s+=ordersToString(getOrders(DECIMAL),unit.DECIMAL);
 			}
 
 		} catch (Exception e){
@@ -195,7 +221,7 @@ public class Numerals {
 					 * (MILHOES DE; BILIOES DE; etc)
 					 */
 					if (i>=2 && last==0 && order0==0)
-						q+=" "+CONJUNCTION_OF+" ";
+						q+=" "+CONJUNCTION.OF.name+" ";
 					/*
 					 * ordem anterior = CENTENAS
 					 * existem centenas (EVITA MIL E ?)
@@ -203,7 +229,7 @@ public class Numerals {
 					 * centenas multiplas de 100 (E CEM; E DUZENTOS; etc)
 					 */
 					else if (last==0 && order0>0 &&	(order0<100 || order0%100==0))
-						q+=" "+CONJUNCTION_AND+" ";
+						q+=" "+CONJUNCTION.AND.name+" ";
 					/*
 					 * ordem actual >= MILHOES
 					 * (SEPARA MILHOES, BILIOES, etc)
@@ -257,14 +283,14 @@ public class Numerals {
 			}
 			else if (value<100){
 				s+=NUMERALS.GROUP20_90.names[value/10-2]+" ";
-				s+=value%10!=0 ? CONJUNCTION_AND+" "+orderToString(value%10) : "";
+				s+=value%10!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%10) : "";
 			}
 			else if (value==100){
 				s+=NUMERALS.GROUP100.names[0]+" ";
 			}
 			else if (value<1000){
 				s+=NUMERALS.GROUP101_900.names[value/100-1]+" ";
-				s+=value%100!=0 ? CONJUNCTION_AND+" "+orderToString(value%100) : "";
+				s+=value%100!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%100) : "";
 			}
 
 		} catch (Exception e){
