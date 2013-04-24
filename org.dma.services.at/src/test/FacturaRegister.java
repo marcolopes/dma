@@ -1,7 +1,3 @@
-/*******************************************************************************
- * 2008-2013 Projecto Colibri
- * Marco Lopes (marcolopes@projectocolibri.com)
- *******************************************************************************/
 package test;
 
 import java.math.BigDecimal;
@@ -15,7 +11,12 @@ import at.ws.AutenticationCypherUtil.CERTIFICATE_TYPE;
 import at.ws.AutenticationCypherUtil.Certificate;
 import at.ws.proxy.FaturasProxy;
 import at.ws.proxy.FaturasProxy.A10_ENDPOINTS;
-
+/**
+ * Teste de envio de FACTURAS
+ *
+ * @author marcolopes@netc.pt
+ *
+ */
 public class FacturaRegister {
 
 	public static RegisterInvoiceType buildRegisterInvoiceRequest() throws Exception {
