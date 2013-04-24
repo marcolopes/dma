@@ -56,12 +56,12 @@ public class DocumentosTransporteProxy extends SOAPMessageHandler {
 	 */
 	public StockMovementResponse register(StockMovement request) throws Exception {
 
-		// obtem o wsdl
-		URL wsdlUrl = this.getClass().getClassLoader().getResource("documentosTransporte.wsdl");
-		System.out.println(wsdlUrl);
+		// obtem o wsdl (por defeito e' usado o wsdlLocation definido no servico)
+		URL wsdlLocation = this.getClass().getClassLoader().getResource("documentosTransporte.wsdl");
+		System.out.println(wsdlLocation);
 
 		// cria um novo servico
-		DocumentosTransporte_Service service = new DocumentosTransporte_Service(wsdlUrl);
+		DocumentosTransporte_Service service = new DocumentosTransporte_Service(wsdlLocation);
 		DocumentosTransporte soapService = service.getDocumentosTransporteSOAP();
 
 		// inicializa bindings

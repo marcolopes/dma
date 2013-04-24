@@ -56,12 +56,12 @@ public class FaturasProxy extends SOAPMessageHandler {
 	 */
 	public RegisterInvoiceResponseType register(RegisterInvoiceType request) throws Exception {
 
-		// obtem o wsdl
-		URL wsdlUrl = this.getClass().getClassLoader().getResource("faturas.wsdl");
-		System.out.println(wsdlUrl);
+		// obtem o wsdl (por defeito e' usado o wsdlLocation definido no servico)
+		URL wsdlLocation = this.getClass().getClassLoader().getResource("faturas.wsdl");
+		System.out.println(wsdlLocation);
 
 		// cria um novo servico
-		Faturas_Service service = new Faturas_Service(wsdlUrl);
+		Faturas_Service service = new Faturas_Service(wsdlLocation);
 		Faturas soapService = service.getFaturasSOAP();
 
 		// inicializa bindings
