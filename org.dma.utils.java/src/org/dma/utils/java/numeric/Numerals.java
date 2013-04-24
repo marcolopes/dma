@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2013 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *
@@ -32,35 +32,62 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dma.utils.java.string.StringUtils;
+
 public class Numerals {
 
-	public static final String[][] UNIT_EURO=new String[][]{{"Euro","Euros"},{"Cêntimo","Cêntimos"}};
-	public static final String[][] UNIT_METER=new String[][]{{"Metro","Metros"},{"Centímetro","Centímetros"}};
+	public static final String[][] UNIT_EURO = new String[][]{
+		{"Euro","Euros"}, {"Cêntimo","Cêntimos"}};
 
-	public static final String qualifiers[][] = {
-		{"mil", "mil"}, {"milhão", "milhões"},
-		{"bilião", "biliões"}, {"trilião", "triliões"},
-		{"quatrilião", "quatriliões"}, {"quintilião", "quintiliões"},
-		{"sextilião", "sextiliões"}, {"septilião", "septiliões"},
-		{"octilião", "octiliões"}, {"nonilião", "noniliões"} };
+	public static final String[][] UNIT_METER = new String[][]{
+		{"Metro","Metros"}, {"Centímetro","Centímetros"}};
 
-	public static final String numerals[][] = {
-		//0-19
-		{"zero", "um", "dois", "três", "quatro", "cinco",
-		"seis", "sete", "oito", "nove", "dez",
-		"onze", "doze", "treze", "catorze", "quinze",
-		"dezasseis", "dezassete", "dezoito", "dezanove"},
-		//20-90
-		{"vinte", "trinta", "quarenta", "cinquenta",
-		"sessenta",	"setenta", "oitenta", "noventa"},
-		//100-900
-		{"cem", "cento",
-		"duzentos", "trezentos", "quatrocentos", "quinhentos",
-		"seiscentos", "setecentos", "oitocentos", "novecentos"}
-	};
+	public static enum QUALIFIERS {
 
-	public static final String conjunction_and = "e";
-	public static final String conjunction_of = "de";
+		SINGULAR (new String[]{
+			"mil", "milhão", "bilião", "trilião", "quatrilião",
+			"quintilião", "sextilião", "septilião", "octilião", "nonilião"}),
+
+		PLURAL (new String[]{
+			"mil", "milhões", "biliões", "triliões", "quatriliões",
+			"quintiliões", "sextiliões", "septiliões", "octiliões", "noniliões"});
+
+		public String[] names;
+
+		QUALIFIERS(String[] names){
+			this.names=names;
+		}
+
+	}
+
+	public static enum NUMERALS {
+
+		GROUP0_19 (new String[]{"zero",
+			"um", "dois", "três", "quatro", "cinco",
+			"seis", "sete", "oito", "nove", "dez",
+			"onze", "doze", "treze", "catorze", "quinze",
+			"dezasseis", "dezassete", "dezoito", "dezanove"}),
+
+		GROUP20_90 (new String[]{
+			"vinte", "trinta", "quarenta", "cinquenta",
+			"sessenta",	"setenta", "oitenta", "noventa"}),
+
+		GROUP100 (new String[]{"cem"}),
+
+		GROUP101_900 (new String[]{
+			"cento", "duzentos", "trezentos", "quatrocentos", "quinhentos",
+			"seiscentos", "setecentos", "oitocentos", "novecentos"});
+
+		public String[] names;
+
+		NUMERALS(String[] names){
+			this.names=names;
+		}
+
+	}
+
+	public static final String CONJUNCTION_AND = "e";
+	public static final String CONJUNCTION_OF = "de";
 
 	//number of decimals
 	private final int decimals;
@@ -87,20 +114,23 @@ public class Numerals {
 		try{
 			value=value.abs().setScale(decimals, RoundingMode.HALF_EVEN);
 
-			//retrieves integer and decimal parts
-			BigInteger integer_part=value.abs().toBigInteger();
-			//(value-integer_part)*(10^decimais)
-			BigInteger decimal_part=((value.subtract(new BigDecimal(integer_part))).
+			//retrieves INTEGER and DECIMAL
+			BigInteger INTEGER=value.abs().toBigInteger();
+			//(value-INTEGER)*(10^decimais)
+			BigInteger DECIMAL=((value.subtract(new BigDecimal(INTEGER))).
 					multiply(new BigDecimal(10).pow(decimals))).toBigInteger();
 
-			//converts integer part
-			if (integer_part.doubleValue()>0)
-				s+=ordersToString(getOrders(integer_part),unit[0]);
-
-			//converts decimal part
-			if (decimal_part.doubleValue()>0){
-				s+=s.length()>0 ? " "+conjunction_and+" " : "";
-				s+=ordersToString(getOrders(decimal_part),unit[1]);
+			//processes ZERO
+			if (value.doubleValue()==0){
+				s+=orderToString(0)+unit[0][1];
+			}//processes INTEGER
+			else if (INTEGER.doubleValue()>0){
+				s+=ordersToString(getOrders(INTEGER),unit[0]);
+			}
+			//processes DECIMAL
+			if (DECIMAL.doubleValue()>0){
+				s+=s.length()>0 ? " "+CONJUNCTION_AND+" " : "";
+				s+=ordersToString(getOrders(DECIMAL),unit[1]);
 			}
 
 		} catch (Exception e){
@@ -142,14 +172,12 @@ public class Numerals {
 		String s="";
 
 		try{
-			Integer order0=orders.get(0);
-
-			//processes below 999
-			if (order0>0) s+=orderToString(order0);
-
-			//last processed order
+			//last order index
 			int last=0;
-
+			//first order value
+			Integer order0=orders.get(0);
+			//processes below 999
+			s+=order0>0 ? orderToString(order0) : "";
 			//processes above 999
 			for (int i=1; i<orders.size(); i++){
 
@@ -157,15 +185,17 @@ public class Numerals {
 
 				if (value!=0){
 
-					//singular and plural
-					String q=qualifiers.length>=i ? qualifiers[i-1][value>1?1:0] : "?";
+					String q=value==1 ?
+							QUALIFIERS.SINGULAR.names[i-1] :
+							QUALIFIERS.PLURAL.names[i-1];
 					/*
 					 * ordem actual >= MILHOES
 					 * ordem anterior = CENTENAS
 					 * nao existem centenas
 					 * (MILHOES DE; BILIOES DE; etc)
 					 */
-					if (i>=2 && last==0 && order0==0) q+=" "+conjunction_of+" ";
+					if (i>=2 && last==0 && order0==0)
+						q+=" "+CONJUNCTION_OF+" ";
 					/*
 					 * ordem anterior = CENTENAS
 					 * existem centenas (EVITA MIL E ?)
@@ -173,14 +203,15 @@ public class Numerals {
 					 * centenas multiplas de 100 (E CEM; E DUZENTOS; etc)
 					 */
 					else if (last==0 && order0>0 &&	(order0<100 || order0%100==0))
-						q+=" "+conjunction_and+" ";
+						q+=" "+CONJUNCTION_AND+" ";
 					/*
 					 * ordem actual >= MILHOES
 					 * (SEPARA MILHOES, BILIOES, etc)
 					 */
-					else if (i>=2) q+=", ";
-
-					else q+=" ";
+					else if (i>=2)
+						q+=", ";
+					else
+						q+=" ";
 
 					/*
 					 * ordem actual = MILHARES
@@ -221,23 +252,19 @@ public class Numerals {
 		String s="";
 
 		try{
-			//processa ate' 19
 			if (value<20){
-				s+=numerals[0][value]+" ";
-
-			//processa de 20 a 99
-			}else if (value<100){
-				s+=numerals[1][value/10-2]+" ";
-				if (value % 10!=0) s+=conjunction_and+" "+orderToString(value % 10);
-
-			//processa 100
-			}else if (value==100){
-				s+=numerals[2][0]+" ";
-
-			//processa de 101 a 999
-			}else if (value<1000){
-				s+=numerals[2][value/100]+" ";
-				if (value % 100!=0) s+=conjunction_and+" "+orderToString(value % 100);
+				s+=NUMERALS.GROUP0_19.names[value]+" ";
+			}
+			else if (value<100){
+				s+=NUMERALS.GROUP20_90.names[value/10-2]+" ";
+				s+=value%10!=0 ? CONJUNCTION_AND+" "+orderToString(value%10) : "";
+			}
+			else if (value==100){
+				s+=NUMERALS.GROUP100.names[0]+" ";
+			}
+			else if (value<1000){
+				s+=NUMERALS.GROUP101_900.names[value/100-1]+" ";
+				s+=value%100!=0 ? CONJUNCTION_AND+" "+orderToString(value%100) : "";
 			}
 
 		} catch (Exception e){
@@ -259,7 +286,9 @@ public class Numerals {
 			new BigDecimal("293572"), new BigDecimal("332415741211")};
 
 		for(int i=0; i<values.length; i++){
-			System.out.println(values[i]+": "+ numerals.toString(values[i]));
+			System.out.println(StringUtils.padRight(
+					values[i].toPlainString(), 14, " ")+
+					": "+numerals.toString(values[i]));
 		}
 
 		//teste de intervalos
@@ -275,8 +304,12 @@ public class Numerals {
 		for(int i=0; i<intervals.length; i++){
 			System.out.println();
 			System.out.println("===INTERVALO #"+(i+1)+"===");
-			for(BigDecimal j=BigDecimal.valueOf(intervals[i][0]); j.doubleValue()<=intervals[i][1]; j=j.add(BigDecimal.valueOf(intervals[i][2]))){
-				System.out.println(numerals.toString(j));
+			for(BigDecimal j=BigDecimal.valueOf(intervals[i][0]);
+					j.doubleValue()<=intervals[i][1];
+					j=j.add(BigDecimal.valueOf(intervals[i][2]))){
+				System.out.println(StringUtils.padRight(
+						j.toPlainString(), 14, " ")+
+						": "+numerals.toString(j));
 			}
 		}
 
