@@ -306,33 +306,48 @@ public class Numerals {
 		Numerals numerals=new Numerals(2);
 
 		//teste dos exemplos apresentados em "Nova Gramatica do Portugues Contemporaneo"
-		final BigDecimal[] values={
+		final BigDecimal[] VALUES={
 			new BigDecimal("999"),
-			new BigDecimal("1230"), new BigDecimal("1200"),
-			new BigDecimal("293572"), new BigDecimal("332415741211")};
+			new BigDecimal("1230"),
+			new BigDecimal("1200"),
+			new BigDecimal("293572"),
+			new BigDecimal("332415741211")};
 
-		for(int i=0; i<values.length; i++){
+		for(int i=0; i<VALUES.length; i++){
 			System.out.println(StringUtils.padRight(
-					values[i].toPlainString(), 14, " ")+
-					": "+numerals.toString(values[i]));
+					VALUES[i].toPlainString(), 14, " ")+
+					": "+numerals.toString(VALUES[i]));
 		}
 
 		//teste de intervalos
-		final double[][] intervals=new double[][]{
-			{0.0,0.09,.01}, {0.90,0.99,.01},
-			{1,1.99,.01}, {2,2.99,.1}, {3,200,1},
-			{999,1001,1}, {2000,2001,1}, {1230,1231,1},
-			{9999,10001,1}, {101100,101101,1}, {123450,123451,1},
-			{999999,1000001,1}, {10010099,10010101,1}, {12345670,12345671,1},
-			{999999999,1000000001,1}, {1000567099,1000567101,1}, {1000010000,1000010002,1},
-			{1001000000,1001000002,1}, {1010010000,1010010002,1}, {1234567890,1234567891,1}	};
+		final double[][] INTERVALS=new double[][]{
+			{.0,.09,.01},
+			{.90,.99,.01},
+			{1,1.99,.01},
+			{2,2.99,.1},
+			{3,200,1},
+			{999,1001,1},
+			{2000,2001,1},
+			{1230,1231,1},
+			{9999,10001,1},
+			{101100,101101,1},
+			{123450,123451,1},
+			{999999,1000001,1},
+			{10010099,10010101,1},
+			{12345670,12345671,1},
+			{999999999,1000000001,1},
+			{1000567099,1000567101,1},
+			{1000010000,1000010002,1},
+			{1001000000,1001000002,1},
+			{1010010000,1010010002,1},
+			{1234567890,1234567891,1}};
 
-		for(int i=0; i<intervals.length; i++){
+		for(int i=0; i<INTERVALS.length; i++){
 			System.out.println();
 			System.out.println("===INTERVALO #"+(i+1)+"===");
-			for(BigDecimal j=BigDecimal.valueOf(intervals[i][0]);
-					j.doubleValue()<=intervals[i][1];
-					j=j.add(BigDecimal.valueOf(intervals[i][2]))){
+			for(BigDecimal j=BigDecimal.valueOf(INTERVALS[i][0]);
+					j.doubleValue()<=INTERVALS[i][1];
+					j=j.add(BigDecimal.valueOf(INTERVALS[i][2]))){
 				System.out.println(StringUtils.padRight(
 						j.toPlainString(), 14, " ")+
 						": "+numerals.toString(j));
