@@ -35,7 +35,6 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import org.dma.java.utils.security.Certificate;
 import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
 
 import com.sun.xml.ws.developer.JAXWSProperties;
