@@ -6,7 +6,7 @@ import java.util.List;
 import javax.xml.ws.Binding;
 import javax.xml.ws.handler.Handler;
 
-import org.dma.java.utils.security.Certificate;
+import org.dma.services.at.Certificate;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
