@@ -17,12 +17,12 @@ public class Certificate {
 	public enum CERTIFICATE_TYPE {JKS, PKCS12}
 
 	public KeyStore keyStore; // keyStore cache
-	private X509Certificate X509Cert;
-	private long daysToExpire;
-
 	public final String filename;
 	public final String password;
+
+	private X509Certificate X509Cert;
 	private final String alias;
+	private long daysToExpire;
 
 	/**
 	 * @param type - JKS, PKCS12 (enumerator)
