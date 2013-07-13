@@ -14,6 +14,7 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.AddressStructurePT
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.Line;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.MovementStatus;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.MovementType;
+import pt.gov.portaldasfinancas.servicos.documentosTransporte.ResponseStatus;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovement;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementResponse;
 /**
@@ -85,8 +86,10 @@ public class DocumentoTransporteRegister {
 			StockMovementResponse response=proxy.register(buildRequest());
 
 			System.out.println(response.getATDocCodeID());
-			System.out.println(response.getResponseStatus().get(0).getReturnCode());
-			System.out.println(response.getResponseStatus().get(0).getReturnMessage());
+			for(ResponseStatus status: response.getResponseStatus()){
+				System.out.println(status.getReturnCode());
+				System.out.println(status.getReturnMessage());
+			}
 
 		}catch(Exception e){
 			e.printStackTrace();
