@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: pt.at.factemipf;singleton:=true
+Bundle-Version: 1.0.3.0016
+Bundle-Name: AT Webservice
+Bundle-Vendor: e-fatura@at.gov.pt
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ libraries/jaxws-rt-2.1.4.jar,
+ libraries/jgoodies-forms-1.4.2.jar,
+ libraries/jgoodies-common-1.2.1.jar,
+ libraries/streambuffer-0.8.jar,
+ libraries/stax-ex-1.2.jar,
+ libraries/jaxb-impl-2.1.4.jar
+
