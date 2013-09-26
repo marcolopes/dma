@@ -35,7 +35,7 @@ import pt.at.webservices.core.sgdt.client.StockMovementResponse;
 import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
-public class DocumentoTransporteClientProxy {
+public class DocumentoTransporteWSProxy {
 
 	private static final int DEFAULT_CONNECT_TIMEOUT = 10000;
 	private static final int DEFAULT_REQUEST_TIMEOUT = 10000;
@@ -52,7 +52,7 @@ public class DocumentoTransporteClientProxy {
 	private String keystoreFile;
 	private String keystorePassword;
 
-	public DocumentoTransporteClientProxy(Logger logger, String endpoint, String user, String password, CERTIFICATE ambienteCert,
+	public DocumentoTransporteWSProxy(Logger logger, String endpoint, String user, String password, CERTIFICATE ambienteCert,
 			String keystoreFile, String keystorePassword) {
 		this.logger = logger;
 		this.endpoint = endpoint;
