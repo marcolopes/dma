@@ -13,7 +13,7 @@ import pt.at.webservices.core.SOAPClientMessageHeaderHandler.CERTIFICATE;
 import pt.at.webservices.core.factemipf.client.RegisterInvoiceType;
 import pt.at.webservices.core.factemipf.proxy.FaturasWSProxy;
 import pt.at.webservices.core.sgdt.client.StockMovement;
-import pt.at.webservices.core.sgdt.proxy.DocumentoTransporteClientProxy;
+import pt.at.webservices.core.sgdt.proxy.DocumentoTransporteWSProxy;
 
 public final class ServicesGuiFactory {
 
@@ -139,7 +139,7 @@ public final class ServicesGuiFactory {
 						StockMovement envioDocumentoTransporteRequest = RequestBuilder
 								.buildEnvioDocumentoTransporteRequest(user);
 						// cria um proxy endpoint onde vai invocar o webservice
-						DocumentoTransporteClientProxy documentoTransporteWSProxy = new DocumentoTransporteClientProxy(
+						DocumentoTransporteWSProxy documentoTransporteWSProxy = new DocumentoTransporteWSProxy(
 								logger, endpoint, user, pass, CERTIFICATE.PROD, null, null);
 
 						if (ENVIO_DOCUMENTO_OPERATION.equals(operation)) {
