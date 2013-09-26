@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import pt.at.webservices.factemipf.client.RegisterInvoiceType;
-import pt.at.webservices.factemipf.proxy.FaturasWSProxy;
-import pt.at.webservices.factemipf.proxy.SOAPClientMessageHeaderHandler.CERTIFICATE;
-import pt.at.webservices.sgdt.client.StockMovement;
-import pt.at.webservices.sgdt.proxy.DocumentoTransporteClientProxy;
+import pt.at.webservices.core.SOAPClientMessageHeaderHandler.CERTIFICATE;
+import pt.at.webservices.core.factemipf.client.RegisterInvoiceType;
+import pt.at.webservices.core.factemipf.proxy.FaturasWSProxy;
+import pt.at.webservices.core.sgdt.client.StockMovement;
+import pt.at.webservices.core.sgdt.proxy.DocumentoTransporteClientProxy;
 
 public final class ServicesGuiFactory {
 

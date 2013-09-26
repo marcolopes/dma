@@ -1,20 +1,17 @@
 package pt.at.webservices.gui;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
-import pt.at.webservices.factemipf.client.RegisterInvoiceType;
-import pt.at.webservices.factemipf.client.Tax;
-import pt.at.webservices.sgdt.client.AddressStructurePT;
-import pt.at.webservices.sgdt.client.Line;
-import pt.at.webservices.sgdt.client.MovementStatus;
-import pt.at.webservices.sgdt.client.MovementType;
-import pt.at.webservices.sgdt.client.StockMovement;
+import pt.at.webservices.core.factemipf.client.RegisterInvoiceType;
+import pt.at.webservices.core.factemipf.client.Tax;
+import pt.at.webservices.core.sgdt.client.AddressStructurePT;
+import pt.at.webservices.core.sgdt.client.Line;
+import pt.at.webservices.core.sgdt.client.MovementStatus;
+import pt.at.webservices.core.sgdt.client.MovementType;
+import pt.at.webservices.core.sgdt.client.StockMovement;
 
 /**
  * Cria um request bean para a operação de registo de factura.
@@ -73,17 +70,11 @@ public final class RequestBuilder {
 		request.setCompanyName("Bla");
 		request.setTaxRegistrationNumber(nif);
 		request.setMovementStatus(MovementStatus.N);
-		Calendar movementDate = Calendar.getInstance();
-		request.setMovementDate(convertFromCalendar(movementDate));
+		request.setMovementDate(DatatypeFactory.newInstance().newXMLGregorianCalendar("2012-05-05"));
 		request.setMovementType(MovementType.GR);
 		request.setCustomerTaxID(String.valueOf(nif));
-		Calendar movementStartTime = (Calendar) movementDate.clone();
-		movementStartTime.add(Calendar.MONTH, 1);
-		request.setMovementStartTime(convertFromCalendar(movementStartTime));
-
-		Calendar movementEndTimeCalendar = (Calendar) movementStartTime.clone();
-		movementEndTimeCalendar.add(Calendar.HOUR, 1);
-		request.setMovementEndTime(convertFromCalendar(movementEndTimeCalendar));
+		request.setMovementStartTime(DatatypeFactory.newInstance().newXMLGregorianCalendar("2012-05-05T23:00:00"));
+		request.setMovementEndTime(DatatypeFactory.newInstance().newXMLGregorianCalendar("2012-05-05T23:59:59"));
 		request.setVehicleID("10-10-AA");
 
 		AddressStructurePT companyAddress = new AddressStructurePT();
@@ -124,9 +115,4 @@ public final class RequestBuilder {
 		return request;
 	}
 
-	private static final XMLGregorianCalendar convertFromCalendar(Calendar calendar) throws DatatypeConfigurationException {
-		GregorianCalendar gregCalendar = new GregorianCalendar();
-		gregCalendar.setTimeInMillis(calendar.getTimeInMillis());
-		return DatatypeFactory.newInstance().newXMLGregorianCalendar(gregCalendar);
-	}
 }
