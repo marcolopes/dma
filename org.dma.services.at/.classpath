@@ -4,8 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="libraries/streambuffer-0.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/jaxb-impl-2.1.4.jar" sourcepath="C:/Colibri/workspace/.m2/repository/com/sun/xml/bind/jaxb-impl/2.1.4/jaxb-impl-2.1.4-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/jaxws-rt-2.1.4.jar" sourcepath="C:/Colibri/workspace/.m2/repository/com/sun/xml/ws/jaxws-rt/2.1.4/jaxws-rt-2.1.4-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxb-impl-2.1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxws-rt-2.1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/stax-ex-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
