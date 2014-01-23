@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libraries/collections-generic-4.01.jar" sourcepath="libraries/sources/collections-generic-4.01-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-collections-3.2.1.jar" sourcepath="libraries/sources/commons-collections-3.2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-configuration-1.6.jar" sourcepath="libraries/sources/commons-configuration-1.6-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-logging-1.1.1.jar" sourcepath="libraries/sources/ccommons-logging-1.1.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-codec-1.4.jar" sourcepath="libraries/sources/commons-codec-1.4-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-email-1.2.jar" sourcepath="libraries/sources/commons-email-1.2-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-lang-2.6.jar" sourcepath="libraries/sources/commons-lang-2.6-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-net-3.3.jar" sourcepath="libraries/sources/commons-net-3.3-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/pdfbox-1.6.0.jar" sourcepath="libraries/sources/pdfbox-1.6.0-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/fontbox-1.6.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/itext-2.1.7.jar" sourcepath="libraries/sources/itext-2.1.7-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/mail-1.4.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/bcprov-jdk16-145.jar" sourcepath="C:/Colibri/workspace/.m2/repository/org/bouncycastle/bcprov-jdk16/1.45/bcprov-jdk16-1.45-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/imgscalr-lib-3.1.jar" sourcepath="libraries/sources/imgscalr-lib-3.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/zip4j-1.3.1.jar" sourcepath="libraries/sources/zip4j-1.3.1-sources.zip"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
