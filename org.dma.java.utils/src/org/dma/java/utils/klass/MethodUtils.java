@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,24 +10,24 @@ import java.lang.reflect.Method;
 public final class MethodUtils {
 
 
-	public static Object invoke(String className, String methodName, Object[] args) throws Exception {
+	public static Object invoke(String className, String methodName, Object[] args, Class[] params) throws Exception {
 
-		Class[] params=new Class[args.length];
-		for(int i=0; i<args.length; i++)
-			params[i]=args[i].getClass();
+		Class cl=Class.forName(className);
+		Method method=cl.getDeclaredMethod(methodName, params);
 
-		return invoke(className, methodName, args, params);
+		return method.invoke(cl.newInstance(), args);
 
 	}
 
 
-	public static Object invoke(String className, String methodName, Object[] args, Class[] params) throws Exception {
+	public static Object invoke(String className, String methodName, Object[] args) throws Exception {
 
-		Class cl=Class.forName(className);
-		Method method = cl.getDeclaredMethod(methodName, params);
+		Class[] params=new Class[args.length];
+		for(int i=0; i<args.length; i++){
+			params[i]=args[i].getClass();
+		}
 
-		Object obj=cl.newInstance();
-		return method.invoke(obj, args);
+		return invoke(className, methodName, args, params);
 
 	}
 
