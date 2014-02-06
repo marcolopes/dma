@@ -50,7 +50,7 @@ public class ExecutionEvent {
 	}
 
 	public void setActionExecuted(boolean actionExecuted) {
-		this.actionExecuted = actionExecuted;
+		this.actionExecuted=actionExecuted;
 	}
 
 

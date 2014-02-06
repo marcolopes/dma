@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -8,7 +8,6 @@ package org.dma.eclipse.swt.execution;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.object.ObjectUtils;
@@ -20,9 +19,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-public class ExecutionManager {
+public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEvent> {
 
-	private static final Map<ExecutionDefinition, ExecutionEvent> executionMap=new HashMap();
+	private static final long serialVersionUID = 1L;
+
+	private static final ExecutionManager INSTANCE = new ExecutionManager();
 
 	/*
 	 * Register
@@ -56,7 +57,7 @@ public class ExecutionManager {
 	private static void register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
 		try{
-			if(!executionMap.containsKey(execDefinition)) {
+			if(!INSTANCE.containsKey(execDefinition)) {
 
 				execDefinition.addKeyListener(new KeyAdapter() {
 					public void keyPressed(KeyEvent event) {
@@ -83,9 +84,9 @@ public class ExecutionManager {
 
 				}
 
-				executionMap.put(execDefinition, execEvent);
+				INSTANCE.put(execDefinition, execEvent);
 
-				Debug.out(execEvent.getExecutionAction().getId(), executionMap.size());
+				Debug.out(execEvent.getExecutionAction().getId(), INSTANCE.size());
 
 			}else{
 				throw new Exception("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
@@ -99,25 +100,24 @@ public class ExecutionManager {
 
 
 
-
-
 	/*
 	 * Unregister
 	 */
 	public static void unregister(Control control) {
 
-		for(Iterator<ExecutionDefinition> iterator=executionMap.keySet().iterator(); iterator.hasNext();) {
+		for(Iterator<ExecutionDefinition> iterator=INSTANCE.keySet().iterator(); iterator.hasNext();) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
 			if(execDefinition.getControl().equals(control)){
 
-				ExecutionEvent execEvent=executionMap.get(execDefinition);
+				ExecutionEvent execEvent=INSTANCE.get(execDefinition);
 
 				execDefinition.removeListeners();
 				iterator.remove();
 
-				Debug.out(execEvent.getExecutionAction().getId(), executionMap.size());
+				Debug.out(execEvent.getExecutionAction().getId(), INSTANCE.size());
+
 			}
 
 		}
@@ -126,19 +126,17 @@ public class ExecutionManager {
 
 
 
-
-
 	/*
 	 * Executions
 	 */
 	public static void notifyDependentExecutions(String id, String secondaryId) {
 
-		for(ExecutionDefinition execDefinition: executionMap.keySet()) {
+		for(ExecutionDefinition execDefinition: INSTANCE.keySet()) {
 
 			if(ObjectUtils.equals(id, execDefinition.getId()) &&
 					ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
 
-				ExecutionEvent execEvent=executionMap.get(execDefinition);
+				ExecutionEvent execEvent=INSTANCE.get(execDefinition);
 
 				if(execEvent.getResponseAction()!=null && execEvent.isActionExecuted()) {
 
@@ -160,9 +158,9 @@ public class ExecutionManager {
 
 	private static boolean hasDependentExecutions(String id, String secondaryId) {
 
-		for(ExecutionDefinition execDefinition: executionMap.keySet()) {
+		for(ExecutionDefinition execDefinition: INSTANCE.keySet()) {
 
-			ExecutionEvent execEvent=executionMap.get(execDefinition);
+			ExecutionEvent execEvent=INSTANCE.get(execDefinition);
 
 			if(execDefinition!=null && execEvent!=null &&
 				execEvent.getPostresponseAction()!=null &&
