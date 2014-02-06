@@ -14,17 +14,20 @@ import java.awt.image.BufferedImage;
 public class ImageOverlay {
 
 	public static final int DEFAULT = 0;
+
 	/*
 	 * Horizontal alignement
 	 */
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
 	public static final int CENTER = 2;
+
 	/*
 	 * Vertical alignement
 	 */
 	public static final int TOP = 0;
 	public static final int BOTTOM = 1;
+
 	/*
 	 * Style
 	 */
@@ -81,9 +84,9 @@ public class ImageOverlay {
 
 
 	/**
-	 * @param horizontalAlignment LEFT (default), RIGHT, CENTER
-	 * @param verticalAlignment TOP (default), BOTTOM
-	 * @param style NONE (default), OUTLINE, SHADOW
+	 * @param horizontalAlignment DEFAULT, LEFT, RIGHT, CENTER (default=LEFT)
+	 * @param verticalAlignment DEFAULT, TOP, BOTTOM (default=TOP)
+	 * @param style DEFAULT, NONE, OUTLINE, SHADOW (default=NONE)
 	 */
 	public void writeText(String text, int horizontalAlignment, int verticalAlignment, int style) {
 
@@ -112,7 +115,6 @@ public class ImageOverlay {
 		g2d.drawString(text, x, y);
 
 	}
-
 
 
 
