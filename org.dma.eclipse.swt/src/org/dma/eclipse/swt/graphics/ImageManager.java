@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -8,16 +8,24 @@ package org.dma.eclipse.swt.graphics;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.dma.java.utils.awt.ImageUtils;
 import org.eclipse.swt.graphics.Image;
 
-public class ImageManager {
+public class ImageManager extends HashMap<String, Image> {
 
-	private static final int MISSING_IMAGE_SIZE = 16;
+	private static final long serialVersionUID = 1L;
 
-	private static Map<String, Image> cacheMap=new HashMap();
+	private static final ImageManager INSTANCE = new ImageManager();
+
+	private static Image MISSING_IMAGE;
+
+	private static Image getMissingImage(){
+		if (MISSING_IMAGE==null){
+			MISSING_IMAGE=SWTImageUtils.createImage(16);
+		}
+		return MISSING_IMAGE;
+	}
 
 	/**
 	 * Returns the cached image or a new one if it does not exist;
@@ -25,14 +33,14 @@ public class ImageManager {
 	 */
 	public static Image getImage(byte[] bytes) {
 		String key=String.valueOf(Arrays.hashCode(bytes));
-		Image image=cacheMap.get(key);
+		Image image=INSTANCE.get(key);
 		if (image==null) {
 			try{
 				image=SWTImageUtils.createImage(bytes);
 			} catch (Exception e){
-				image=SWTImageUtils.createImage(MISSING_IMAGE_SIZE);
+				image=getMissingImage();
 			}
-			cacheMap.put(key, image);
+			INSTANCE.put(key, image);
 		}
 
 		return image;
@@ -44,14 +52,14 @@ public class ImageManager {
 	 * Cache Map key based on path string
 	 */
 	public static Image getImage(String path) {
-		Image image=cacheMap.get(path);
+		Image image=INSTANCE.get(path);
 		if (image==null) {
 			try{
 				image=SWTImageUtils.createImage(path);
 			} catch (Exception e){
-				image=SWTImageUtils.createImage(MISSING_IMAGE_SIZE);
+				image=getMissingImage();
 			}
-			cacheMap.put(path, image);
+			INSTANCE.put(path, image);
 		}
 
 		return image;
@@ -64,14 +72,14 @@ public class ImageManager {
 	 */
 	public static Image getImage(BufferedImage bufferedImage) {
 		String key=String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(bufferedImage)));
-		Image image=cacheMap.get(key);
+		Image image=INSTANCE.get(key);
 		if (image==null) {
 			try{
 				image=SWTImageUtils.createImage(bufferedImage);
 			} catch (Exception e){
-				image=SWTImageUtils.createImage(MISSING_IMAGE_SIZE);
+				image=getMissingImage();
 			}
-			cacheMap.put(key, image);
+			INSTANCE.put(key, image);
 		}
 
 		return image;
@@ -84,10 +92,11 @@ public class ImageManager {
 	public static void disposeImages() {
 		debug();
 		// dispose created images
-		for(Image image: cacheMap.values()){
+		for(Image image: INSTANCE.values()){
 			image.dispose();
 		}
-		cacheMap.clear();
+		INSTANCE.clear();
+		MISSING_IMAGE=null;
 	}
 
 
@@ -95,9 +104,8 @@ public class ImageManager {
 	 * Debug
 	 */
 	public static void debug() {
-
-		System.out.println("IMAGE CACHE: " + cacheMap.size());
-		for(String key: cacheMap.keySet()){
+		System.out.println("IMAGE CACHE: " + INSTANCE.size());
+		for(String key: INSTANCE.keySet()){
 			System.out.println("key: " + key);
 		}
 	}

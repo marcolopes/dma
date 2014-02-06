@@ -1,12 +1,11 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.swt.support;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.numeric.NumericUtils;
@@ -16,9 +15,9 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-public class TraverseSupport {
+public class TraverseSupport extends ArrayList<Control> {
 
-	private final List<Control> components = new ArrayList();
+	private static final long serialVersionUID = 1L;
 
 	private final TraverseListener traverseListener = new TraverseListener() {
 
@@ -29,7 +28,7 @@ public class TraverseSupport {
 				Control actualControl=(Control)e.getSource();
 
 				//e' uma TEXT multi-linha?
-				if(actualControl instanceof Text &&
+				if (actualControl instanceof Text &&
 						NumericUtils.bit(((Text)actualControl).getStyle(), SWT.MULTI)){
 
 					Debug.out("SWT.MULTI");
@@ -69,7 +68,7 @@ public class TraverseSupport {
 					nextControl.update();
 
 					//selecciona texto caso nao seja MULTI
-					if(nextControl instanceof Text &&
+					if (nextControl instanceof Text &&
 							!NumericUtils.bit(((Text)nextControl).getStyle(), SWT.MULTI)){
 						((Text)nextControl).selectAll();
 					}
@@ -92,13 +91,13 @@ public class TraverseSupport {
 
 	private Control getNextControl(Object obj) {
 
-		int index=components.indexOf(obj);
+		int index=indexOf(obj);
 		try{
 			Control control;
 			int index2=index;
 			do{
-				index=index+1==components.size() ? 0 : index+1;
-				control=components.get(index);
+				index=index+1==size() ? 0 : index+1;
+				control=get(index);
 
 			}while(index!=index2 && !control.isEnabled());
 
@@ -106,13 +105,14 @@ public class TraverseSupport {
 			e.printStackTrace();
 		}
 
-		return components.get(index);
+		return get(index);
 
 	}
 
-	public void add(Control control) {
+	@Override
+	public boolean add(Control control) {
 		control.addTraverseListener(traverseListener);
-		components.add(control);
+		return super.add(control);
 	}
 
 	public void add(Control...control) {
@@ -121,9 +121,9 @@ public class TraverseSupport {
 		}
 	}
 
-	public void remove(Control control) {
+	public boolean remove(Control control) {
 		control.removeTraverseListener(traverseListener);
-		components.remove(control);
+		return super.remove(control);
 	}
 
 	public void remove(Control...control) {
@@ -133,7 +133,7 @@ public class TraverseSupport {
 	}
 
 	public void removeAll() {
-		for(Control e: components){
+		for(Control e: this){
 			remove(e);
 		}
 
