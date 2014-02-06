@@ -4,9 +4,10 @@
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.utils.array;
+
 import java.util.LinkedHashSet;
 
-public class MessageList extends LinkedHashSet<String>{
+public class MessageList extends LinkedHashSet<String> {
 
 	private static final long serialVersionUID = 1L;
 

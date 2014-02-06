@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -11,12 +11,14 @@ import java.util.Collection;
 
 import org.dma.java.utils.Debug;
 
-public class ClipboardManager {
+public class ClipboardManager<E> extends ArrayList<E> {
 
-	private static Collection<Object> clipboard=new ArrayList();
+	private static final long serialVersionUID = 1L;
+
+	private static ClipboardManager INSTANCE = new ClipboardManager<Object>();
 
 	public static void clearClipboard() {
-		clipboard.clear();
+		INSTANCE.clear();
 	}
 
 
@@ -26,10 +28,10 @@ public class ClipboardManager {
 
 			clearClipboard();
 
-			clipboard.addAll(objectCollection);
+			INSTANCE.addAll(objectCollection);
 
 			Debug.out("COLLECTION", objectCollection.size());
-			Debug.out("CLIPBOARD", clipboard.size());
+			Debug.out("CLIPBOARD", INSTANCE.size());
 			Debug.out("CLASS", getObjectClass());
 
 		}
@@ -41,33 +43,33 @@ public class ClipboardManager {
 	/*
 	 * Getters and setters
 	 */
-	public static boolean isEmpty() {
-		return clipboard.isEmpty();
-	}
-
-
-	public static Collection<Object> getClipboard() {
-		return clipboard;
-	}
-
-
-	public static Class getObjectClass() {
-		return clipboard.iterator().next().getClass();
+	public static boolean hasObject() {
+		return !INSTANCE.isEmpty();
 	}
 
 
 	public static boolean hasObject(Class klass) {
-		return !isEmpty() && klass.equals(getObjectClass());
+		return hasObject() && klass.equals(getObjectClass());
 	}
 
 
 	public static <T> T getObject(Class klass) {
-		return !hasObject(klass) ? null : (T)clipboard.iterator().next();
+		return !hasObject(klass) ? null : (T)INSTANCE.iterator().next();
+	}
+
+
+	public static Class getObjectClass() {
+		return INSTANCE.iterator().next().getClass();
 	}
 
 
 	public static Collection getCollection(Class klass) {
-		return !hasObject(klass) ? null : clipboard;
+		return !hasObject(klass) ? null : INSTANCE;
+	}
+
+
+	public static Collection<Object> getClipboard() {
+		return INSTANCE;
 	}
 
 

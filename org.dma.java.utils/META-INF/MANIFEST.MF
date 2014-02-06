@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: DMA Java Utils
 Bundle-SymbolicName: org.dma.java.utils;singleton:=true
-Bundle-Version: 4.5.0
+Bundle-Version: 4.5.1
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
