@@ -35,10 +35,27 @@ public class SWTImageUtils {
 	public static Image createImage(int size) {
 		Image image = new Image(Display.getCurrent(), size, size);
 		GC gc = new GC(image);
-		gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+		gc.setBackground(Display.getCurrent().getSystemColor(SWT.TRANSPARENT));
 		gc.fillRectangle(0, 0, size, size);
 		gc.dispose();
 		return image;
+	}
+
+
+	/**
+	 * Returns an {@link Image}
+	 * encoded by the specified {@link InputStream}.
+	 */
+	public static Image createImage(InputStream stream) throws IOException {
+		try{
+			Display display = Display.getCurrent();
+			ImageData data = new ImageData(stream);
+			return data.transparentPixel > 0 ?
+				new Image(display, data, data.getTransparencyMask()) :
+				new Image(display, data);
+		} finally {
+			stream.close();
+		}
 	}
 
 
@@ -85,23 +102,6 @@ public class SWTImageUtils {
 
 	/**
 	 * Returns an {@link Image}
-	 * encoded by the specified {@link InputStream}.
-	 */
-	public static Image createImage(InputStream stream) throws IOException {
-		try{
-			Display display = Display.getCurrent();
-			ImageData data = new ImageData(stream);
-			return data.transparentPixel > 0 ?
-				new Image(display, data, data.getTransparencyMask()) :
-				new Image(display, data);
-		} finally {
-			stream.close();
-		}
-	}
-
-
-	/**
-	 * Returns an {@link Image}
 	 * encoded by the specified {@link BufferedImage}.
 	 * <p>
 	 * The AWT BufferedImage is converted to an SWT ImageData.
@@ -111,6 +111,19 @@ public class SWTImageUtils {
 			return new Image(Display.getCurrent(), toSWTImage(bufferedImage));
 		}catch(Exception e){
 			return null;
+		}
+	}
+
+
+	/**
+	 * Creates and returns a new image descriptor {@link ImageDescriptor}
+	 * stored by the specified {@link InputStream}.
+	 */
+	public static ImageDescriptor getImageDescriptor(InputStream stream) throws IOException {
+		try{
+			return ImageDescriptor.createFromImageData(new ImageData(stream));
+		} finally {
+			stream.close();
 		}
 	}
 
@@ -137,19 +150,6 @@ public class SWTImageUtils {
 			return getImageDescriptor(location.getClassLoader().getResourceAsStream(resource));
 		}catch(Exception e){
 			return null;
-		}
-	}
-
-
-	/**
-	 * Creates and returns a new image descriptor {@link ImageDescriptor}
-	 * stored by the specified {@link InputStream}.
-	 */
-	public static ImageDescriptor getImageDescriptor(InputStream stream) throws IOException {
-		try{
-			return ImageDescriptor.createFromImageData(new ImageData(stream));
-		} finally {
-			stream.close();
 		}
 	}
 
