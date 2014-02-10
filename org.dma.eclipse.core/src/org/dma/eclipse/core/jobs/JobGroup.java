@@ -48,8 +48,7 @@ public abstract class JobGroup extends LinkedHashSet<CustomJob> {
 
 	@Override
 	public boolean add(CustomJob e) {
-		return e.hasTasks() ?
-				super.add(e) : false;
+		return e.hasTasks() ? super.add(e) : false;
 	}
 
 
