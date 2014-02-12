@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -202,7 +202,7 @@ public class ArrayUtils {
 	}
 
 
-	public static int lesser(int[] array) {
+	public static int smaller(int[] array) {
 
 		if (array.length==0) return 0;
 
