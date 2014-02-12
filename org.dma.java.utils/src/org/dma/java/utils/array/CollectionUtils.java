@@ -23,13 +23,15 @@ public class CollectionUtils {
 		return c.toArray(a);
 	}
 
-
+	/**
+	 * The collection CAN be empty
+	 */
 	public static <T> T[] toArray(Collection<T> c, Class klass) {
 		return c.toArray((T[])Array.newInstance(klass, c.size()));
 	}
 
 	/**
-	 * The collection MUST NOT be empty!
+	 * The collection CANNOT be empty!
 	 */
 	public static <T> T[] toArray(Collection<T> c) {
 		return toArray(c, c.iterator().next().getClass());
