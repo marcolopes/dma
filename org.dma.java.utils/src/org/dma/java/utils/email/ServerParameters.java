@@ -5,6 +5,9 @@
  *******************************************************************************/
 package org.dma.java.utils.email;
 
+import javax.mail.Authenticator;
+
+import org.apache.commons.mail.DefaultAuthenticator;
 import org.dma.java.utils.Debug;
 
 public class ServerParameters {
@@ -13,22 +16,26 @@ public class ServerParameters {
 
 	private final String hostname;
 	private final int smtpport;
-	private final String smtpuser;
-	private final String password;
-	private final boolean authentication;
 	private final SECURITY security;
+	private final DefaultAuthenticator authenticator;
 
-	public ServerParameters(String hostname, int smtpport, String smtpuser, String password, boolean authentication, SECURITY security) {
+	public ServerParameters(String hostname, int smtpport, SECURITY security, DefaultAuthenticator authenticator) {
 		this.hostname=hostname;
 		this.smtpport=smtpport;
-		this.smtpuser=smtpuser;
-		this.password=password;
 		this.security=security;
-		this.authentication=authentication;
+		this.authenticator=authenticator;
 	}
 
-	public ServerParameters(String hostname, int smtpport, String smtpuser, String password, boolean authentication, int security) {
-		this(hostname, smtpport, smtpuser, password, authentication, SECURITY.values()[security]);
+	public ServerParameters(String hostname, int smtpport, int security, DefaultAuthenticator authenticator) {
+		this(hostname, smtpport, SECURITY.values()[security], authenticator);
+	}
+
+	public ServerParameters(String hostname, int smtpport, SECURITY security) {
+		this(hostname, smtpport, security, null);
+	}
+
+	public ServerParameters(String hostname, int smtpport, int security) {
+		this(hostname, smtpport, security, null);
 	}
 
 
@@ -37,8 +44,6 @@ public class ServerParameters {
 		if (Debug.STATUS){
 			System.out.println("Hostname: "+hostname);
 			System.out.println("SMTP Port:"+smtpport);
-			System.out.println("SMTP User: "+smtpuser);
-			System.out.println("Password: "+password);
 			System.out.println("Security:" +security);
 		}
 
@@ -57,20 +62,12 @@ public class ServerParameters {
 		return smtpport;
 	}
 
-	public String getSmtpuser() {
-		return smtpuser;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public boolean isAuthentication() {
-		return authentication;
-	}
-
 	public SECURITY getSecurity() {
 		return security;
+	}
+
+	public Authenticator getAuthenticator() {
+		return authenticator;
 	}
 
 

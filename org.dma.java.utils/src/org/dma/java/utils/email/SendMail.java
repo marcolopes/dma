@@ -7,6 +7,7 @@ package org.dma.java.utils.email;
 
 import java.io.File;
 
+import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.MultiPartEmail;
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.email.ServerParameters.SECURITY;
@@ -28,8 +29,8 @@ public class SendMail {
 		email.setSmtpPort(server.getSmtpport());
 
 		//Authentication
-		if (server.isAuthentication()){
-			email.setAuthentication(server.getSmtpuser(), server.getPassword());
+		if (server.getAuthenticator()!=null){
+			email.setAuthenticator(server.getAuthenticator());
 		}
 
 		//Security
@@ -59,8 +60,9 @@ public class SendMail {
 	public static void main(String arg[]) {
 
 		try{
-			ServerParameters server=new ServerParameters("mail.projectocolibri.com", 25,
-					"marcolopes@projectocolibri.com", "***", true, SECURITY.STARTTLS);
+			ServerParameters server=new ServerParameters(
+				"mail.projectocolibri.com", 25, SECURITY.STARTTLS,
+				new DefaultAuthenticator("marcolopes@projectocolibri.com", "***"));
 
 			EmailAddress from=new EmailAddress("suporte@projectocolibri.com", "FROM: Projecto Colibri");
 			EmailAddress to=new EmailAddress("marcolopes@projectocolibri.com", "TO: Marco Lopes");
