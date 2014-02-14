@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -22,6 +22,10 @@ public class FileExport {
 		this.parent = parent;
 		this.extensions = extensions;
 		System.out.println("extensions: "+Arrays.toString(extensions));
+	}
+
+	public FileExport(String...extensions) {
+		this(new Shell(), extensions);
 	}
 
 

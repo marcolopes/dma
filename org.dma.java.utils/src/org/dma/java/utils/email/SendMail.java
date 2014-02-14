@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,6 +9,7 @@ import java.io.File;
 
 import org.apache.commons.mail.MultiPartEmail;
 import org.dma.java.utils.Debug;
+import org.dma.java.utils.email.ServerParameters.SECURITY;
 
 public class SendMail {
 
@@ -27,13 +28,13 @@ public class SendMail {
 		email.setSmtpPort(server.getSmtpport());
 
 		//Authentication
-		if (server.isAuth()){
-			email.setAuthentication(server.getUsername(), server.getPassword());
+		if (server.isAuthentication()){
+			email.setAuthentication(server.getSmtpuser(), server.getPassword());
 		}
 
 		//Security
-		email.setStartTLSEnabled(server.getSecurity()==ServerParameters.SECURITY_STARTTLS);
-		email.setSSLOnConnect(server.getSecurity()==ServerParameters.SECURITY_SSLTLS);
+		email.setStartTLSEnabled(server.getSecurity()==SECURITY.STARTTLS);
+		email.setSSLOnConnect(server.getSecurity()==SECURITY.SSLTLS);
 
 		email.setFrom(from.getEmail(), from.getName());
 		email.addTo(to.getEmail(), to.getName());
@@ -59,7 +60,7 @@ public class SendMail {
 
 		try{
 			ServerParameters server=new ServerParameters("mail.projectocolibri.com", 25,
-					true, "marcolopes@projectocolibri.com", "***", ServerParameters.SECURITY_STARTTLS);
+					"marcolopes@projectocolibri.com", "***", true, SECURITY.STARTTLS);
 
 			EmailAddress from=new EmailAddress("suporte@projectocolibri.com", "FROM: Projecto Colibri");
 			EmailAddress to=new EmailAddress("marcolopes@projectocolibri.com", "TO: Marco Lopes");
