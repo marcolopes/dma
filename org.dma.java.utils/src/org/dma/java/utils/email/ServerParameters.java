@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,26 +9,26 @@ import org.dma.java.utils.Debug;
 
 public class ServerParameters {
 
-	public static final int SECURITY_NONE = 0;
-	public static final int SECURITY_STARTTLS = 1;
-	public static final int SECURITY_SSLTLS = 2;
+	public enum SECURITY {NONE, STARTTLS, SSLTLS}
 
-	private String hostname;
-	private int smtpport;
-	private boolean auth;
-	private String username;
-	private String password;
-	private int security;
+	private final String hostname;
+	private final int smtpport;
+	private final String smtpuser;
+	private final String password;
+	private final boolean authentication;
+	private final SECURITY security;
 
-	public ServerParameters(String hostname, int smtpport, boolean auth, String username, String password, int security) {
-
+	public ServerParameters(String hostname, int smtpport, String smtpuser, String password, boolean authentication, SECURITY security) {
 		this.hostname=hostname;
 		this.smtpport=smtpport;
-		this.auth=auth;
-		this.username=username;
+		this.smtpuser=smtpuser;
 		this.password=password;
 		this.security=security;
+		this.authentication=authentication;
+	}
 
+	public ServerParameters(String hostname, int smtpport, String smtpuser, String password, boolean authentication, int security) {
+		this(hostname, smtpport, smtpuser, password, authentication, SECURITY.values()[security]);
 	}
 
 
@@ -37,7 +37,7 @@ public class ServerParameters {
 		if (Debug.STATUS){
 			System.out.println("Hostname: "+hostname);
 			System.out.println("SMTP Port:"+smtpport);
-			System.out.println("Username: "+username);
+			System.out.println("SMTP User: "+smtpuser);
 			System.out.println("Password: "+password);
 			System.out.println("Security:" +security);
 		}
@@ -53,49 +53,24 @@ public class ServerParameters {
 		return hostname;
 	}
 
-	public void setHostname(String hostname) {
-		this.hostname=hostname;
-	}
-
 	public int getSmtpport() {
 		return smtpport;
 	}
 
-	public void setSmtpport(int smtpport) {
-		this.smtpport=smtpport;
-	}
-
-	public boolean isAuth() {
-		return auth;
-	}
-
-	public void setAuth(boolean auth) {
-		this.auth=auth;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username=username;
+	public String getSmtpuser() {
+		return smtpuser;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password=password;
+	public boolean isAuthentication() {
+		return authentication;
 	}
 
-
-	public int getSecurity() {
+	public SECURITY getSecurity() {
 		return security;
-	}
-
-	public void setSecurity(int security) {
-		this.security=security;
 	}
 
 

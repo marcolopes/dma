@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -19,6 +19,10 @@ public class FolderDialog {
 	public FolderDialog(Shell parent, String...extensions) {
 		this.parent = parent;
 		System.out.println("extensions: "+Arrays.toString(extensions));
+	}
+
+	public FolderDialog(String...extensions) {
+		this(new Shell(), extensions);
 	}
 
 
