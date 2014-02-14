@@ -5,29 +5,33 @@
  *******************************************************************************/
 package org.dma.java.utils.email;
 
-import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
 
-import org.apache.commons.mail.DefaultAuthenticator;
 import org.dma.java.utils.Debug;
 
 public class ServerParameters {
 
-	public enum SECURITY {NONE, STARTTLS, SSLTLS}
+	public enum SECURITY {
+		NONE, STARTTLS, SSLTLS;
+		public static SECURITY get(int index){
+			return values()[index];
+		}
+	}
 
 	private final String hostname;
 	private final int smtpport;
 	private final SECURITY security;
-	private final DefaultAuthenticator authenticator;
+	private final PasswordAuthentication authentication;
 
-	public ServerParameters(String hostname, int smtpport, SECURITY security, DefaultAuthenticator authenticator) {
+	public ServerParameters(String hostname, int smtpport, SECURITY security, PasswordAuthentication authentication) {
 		this.hostname=hostname;
 		this.smtpport=smtpport;
 		this.security=security;
-		this.authenticator=authenticator;
+		this.authentication=authentication;
 	}
 
-	public ServerParameters(String hostname, int smtpport, int security, DefaultAuthenticator authenticator) {
-		this(hostname, smtpport, SECURITY.values()[security], authenticator);
+	public ServerParameters(String hostname, int smtpport, int security, PasswordAuthentication authentication) {
+		this(hostname, smtpport, SECURITY.get(security), authentication);
 	}
 
 	public ServerParameters(String hostname, int smtpport, SECURITY security) {
@@ -35,7 +39,7 @@ public class ServerParameters {
 	}
 
 	public ServerParameters(String hostname, int smtpport, int security) {
-		this(hostname, smtpport, security, null);
+		this(hostname, smtpport, SECURITY.get(security), null);
 	}
 
 
@@ -66,9 +70,8 @@ public class ServerParameters {
 		return security;
 	}
 
-	public Authenticator getAuthenticator() {
-		return authenticator;
+	public PasswordAuthentication getAuthentication() {
+		return authentication;
 	}
-
 
 }
