@@ -13,14 +13,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
-public class FileImport {
+public class FileImport extends FileDialog {
 
-	private final Shell parent;
-	private final String[] extensions;
+	//subclassing
+	protected void checkSubclass() {}
 
 	public FileImport(Shell parent, String...extensions) {
-		this.parent = parent;
-		this.extensions = extensions;
+		super(parent, SWT.OPEN);
+		setFilterExtensions(extensions);
 		System.out.println("extensions: "+Arrays.toString(extensions));
 	}
 
@@ -29,18 +29,19 @@ public class FileImport {
 	}
 
 
-	public File filePicker(String defaultPath) {
+	public File filePicker(String defaultPath, String filename) {
 
 		try{
-			FileDialog fd = new FileDialog(parent,SWT.OPEN);
-			fd.setFilterExtensions(extensions);
-			fd.setFilterPath(defaultPath);
+			// FileDialog SWT 3.7 BUG
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
+			// OSX 10.9 workaround
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+			setFilterPath(defaultPath==null ? "." : defaultPath);
+			setFileName(filename);
 
-			File file=new File(fd.open());
-			/*
-			 * The name could be entered manually in the dialog
-			 * so we must check if the file really exists
-			 */
+			File file=new File(open());
+			// The name could be entered manually in the dialog
+			// so we must check if the file really exists
 			return file.exists() ? file : null;
 
 		}catch(Exception e){}
@@ -50,27 +51,27 @@ public class FileImport {
 	}
 
 
+	public File filePicker(String filename){
+		return filePicker(null,filename);
+	}
+
+
 	public File filePicker(){
-
 		return filePicker(null);
-
 	}
 
 
 	public String readText(String charset) {
+		String filename=open();
+		return filename==null ?
+				"" : FileUtils.readTextStream(filename,charset);
+	}
 
-		String text="";
 
-		try{
-			FileDialog fd = new FileDialog(parent,SWT.OPEN);
-			fd.setFilterExtensions(extensions);
-
-			text=FileUtils.readTextStream(fd.open(),charset);
-
-		} catch (Exception e){}
-
-		return text;
-
+	public byte[] readBytes() {
+		String filename=open();
+		return filename==null ?
+				null : FileUtils.readBytesStream(filename);
 	}
 
 

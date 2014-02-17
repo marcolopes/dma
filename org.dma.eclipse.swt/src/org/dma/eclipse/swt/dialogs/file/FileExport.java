@@ -13,14 +13,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
-public class FileExport {
+public class FileExport extends FileDialog {
 
-	private final Shell parent;
-	private final String[] extensions;
+	//subclassing
+	protected void checkSubclass() {}
 
 	public FileExport(Shell parent, String...extensions) {
-		this.parent = parent;
-		this.extensions = extensions;
+		super(parent, SWT.SAVE);
+		setFilterExtensions(extensions);
 		System.out.println("extensions: "+Arrays.toString(extensions));
 	}
 
@@ -29,14 +29,17 @@ public class FileExport {
 	}
 
 
-	public File filePicker(String filename){
+	public File filePicker(String defaultPath, String filename){
 
 		try{
-			FileDialog fd = new FileDialog(parent,SWT.SAVE);
-			fd.setFilterExtensions(extensions);
-			fd.setFileName(filename);
+			// FileDialog SWT 3.7 BUG
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
+			// OSX 10.9 workaround
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+			setFilterPath(defaultPath==null ? "." : defaultPath);
+			setFileName(filename);
 
-			return new File(fd.open());
+			return new File(open());
 
 		}catch(Exception e){}
 
@@ -45,25 +48,21 @@ public class FileExport {
 	}
 
 
-	public File filePicker(){
-
-		return filePicker(null);
-
+	public File filePicker(String filename){
+		return filePicker(null,filename);
 	}
 
 
-	public void writeText(String text, String filename, String charset){
-		try{
-			FileDialog fd = new FileDialog(parent,SWT.SAVE);
-			fd.setFilterExtensions(extensions);
-			fd.setFileName(filename);
+	public File filePicker(){
+		return filePicker(null);
+	}
 
-			if(fd.open() != null){
-				FileUtils.writeTextStream(text, fd.getFilterPath()+File.separator+fd.getFileName(), charset);
-			}
 
-		} catch (Exception e){
-			e.printStackTrace();
+	public void writeText(String text, String defaultFile, String charset){
+		setFileName(defaultFile);
+		if(open()!=null){
+			String filename=getFilterPath()+File.separator+getFileName();
+			FileUtils.writeTextStream(text, filename, charset);
 		}
 	}
 
