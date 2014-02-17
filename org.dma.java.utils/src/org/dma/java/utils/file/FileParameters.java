@@ -12,12 +12,14 @@ public class FileParameters {
 	private final String prefix;
 	private final String suffix;
 	private final File folder;
+	private final String filename;
 
 	public FileParameters(String prefix, String suffix, File folder){
 
 		this.prefix=prefix;
 		this.suffix=suffix;
 		this.folder=folder;
+		this.filename=prefix + (suffix==null ? "" : "."+suffix);
 
 	}
 
@@ -45,8 +47,7 @@ public class FileParameters {
 
 
 	public String toString(){
-		return folder.getAbsolutePath() + File.separator + prefix +
-				(suffix==null ? "" : "."+suffix);
+		return folder.getAbsolutePath() + File.separator + filename;
 	}
 
 
@@ -64,6 +65,10 @@ public class FileParameters {
 
 	public File getFolder() {
 		return folder;
+	}
+
+	public String getFilename(){
+		return filename;
 	}
 
 

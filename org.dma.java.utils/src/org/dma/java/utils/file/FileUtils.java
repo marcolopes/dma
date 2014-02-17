@@ -164,7 +164,7 @@ public class FileUtils {
 	}
 
 
-	public static boolean deleteFile(String filename){
+	public static boolean deleteFile(String filename) {
 
 		return deleteFile(new File(filename));
 
@@ -509,7 +509,7 @@ public class FileUtils {
 				close(br);
 			}
 
-		}catch (UnsupportedEncodingException e){
+		}catch (UnsupportedEncodingException e) {
 			System.out.println(e);
 		}catch (FileNotFoundException e){
 			System.out.println(e);
@@ -603,7 +603,7 @@ public class FileUtils {
 				close(br);
 			}
 
-		}catch (UnsupportedEncodingException e){
+		}catch (UnsupportedEncodingException e) {
 			System.out.println(e);
 		}catch (FileNotFoundException e){
 			System.out.println(e);
@@ -666,7 +666,7 @@ public class FileUtils {
 
 			return true;
 
-		}catch (UnsupportedEncodingException e){
+		}catch (UnsupportedEncodingException e) {
 			System.out.println(e);
 		}catch (FileNotFoundException e){
 			System.out.println(e);
@@ -703,7 +703,7 @@ public class FileUtils {
 	}
 
 
-	public static boolean replaceOcurrencesUTF8(File file, String[][] searchReplace){
+	public static boolean replaceOcurrencesUTF8(File file, String[][] searchReplace) {
 		try{
 			String text=FileUtils.readTextStreamUTF8(file);
 
@@ -755,7 +755,7 @@ public class FileUtils {
 	}
 
 
-	public static File createTempFile(byte[] bytes, FileParameters parameters){
+	public static File createTempFile(byte[] bytes, FileParameters parameters) {
 
 		File file=createTempFile(parameters);
 		writeBytesStream(bytes, file);
