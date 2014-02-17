@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse SWT Utils
 Bundle-SymbolicName: org.dma.eclipse.swt;singleton:=true
-Bundle-Version: 4.2.4
+Bundle-Version: 4.2.5
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

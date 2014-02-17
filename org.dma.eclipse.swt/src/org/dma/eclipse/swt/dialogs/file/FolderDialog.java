@@ -12,12 +12,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
 
-public class FolderDialog {
+public class FolderDialog extends DirectoryDialog {
 
-	private final Shell parent;
+	//subclassing
+	protected void checkSubclass() {}
 
 	public FolderDialog(Shell parent, String...extensions) {
-		this.parent = parent;
+		super(parent, SWT.SAVE);
 		System.out.println("extensions: "+Arrays.toString(extensions));
 	}
 
@@ -26,13 +27,17 @@ public class FolderDialog {
 	}
 
 
-	public File folderPicker(String foldername){
+	public File folderPicker(String defaultPath){
 
 		try{
-			DirectoryDialog dd = new DirectoryDialog(parent,SWT.SAVE);
-			dd.setFilterPath(foldername);
+			// FileDialog SWT 3.7 BUG
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
+			// OSX 10.9 workaround
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+			setFilterPath(defaultPath==null ? "." : defaultPath);
+			setFilterPath(defaultPath);
 
-			return new File(dd.open());
+			return new File(open());
 
 		}catch(Exception e){}
 
@@ -42,9 +47,7 @@ public class FolderDialog {
 
 
 	public File folderPicker(){
-
 		return folderPicker(null);
-
 	}
 
 
