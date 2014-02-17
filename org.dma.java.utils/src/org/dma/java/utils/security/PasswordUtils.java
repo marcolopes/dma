@@ -17,8 +17,7 @@ public class PasswordUtils {
 
 	/**
 	 * @return
-	 * A date-based password composed with 4 digits<br>
-	 * Format: MMDD<br>
+	 * A 4 digit date-based password (MMDD)<br>
 	 * MM=Current MONTH<br>
 	 * DD=Current DAY
 	 */

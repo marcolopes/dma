@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -31,8 +31,8 @@ public final class VersionNumber {
 	/**
 	 * Checks if the current version is smaller than VERSION
 	 * @return
-	 * true - if the current version is SMALLER<br>
-	 * false - if the current version is EQUAL of GREATER<br>
+	 * TRUE if the current version is SMALLER;
+	 * FALSE if the current version is EQUAL of GREATER
 	 */
 	public boolean smallerThan(VersionNumber version) {
 
@@ -68,10 +68,26 @@ public final class VersionNumber {
 	}
 
 
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
 	public String toString(){
 		return String.valueOf(major)+"."+
 			String.valueOf(minor)+"."+
 			String.valueOf(macro);
+	}
+
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return hashCode()==obj.toString().hashCode();
 	}
 
 

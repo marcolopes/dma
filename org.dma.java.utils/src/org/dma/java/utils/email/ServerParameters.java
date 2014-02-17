@@ -11,10 +11,18 @@ import org.dma.java.utils.Debug;
 
 public class ServerParameters {
 
+	public static final int SECURITY_NONE = 0;
+	public static final int SECURITY_STARTTLS = 1;
+	public static final int SECURITY_SSLTLS = 2;
+
 	public enum SECURITY {
 		NONE, STARTTLS, SSLTLS;
-		public static SECURITY get(int index){
-			return values()[index];
+		public static SECURITY get(int security){
+			switch(security){
+			case SECURITY_STARTTLS: return STARTTLS;
+			case SECURITY_SSLTLS: return SSLTLS;
+			default: return NONE;
+			}
 		}
 	}
 

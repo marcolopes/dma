@@ -47,24 +47,6 @@ public class FolderUtils {
 	}
 
 
-	public static boolean createFolder(String foldername, boolean clean) {
-
-		try{
-			if(createFolder(foldername) && clean){
-				deleteFiles(foldername, "*.*");
-			}
-
-			return true;
-
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-
-		return false;
-
-	}
-
-
 	public static File[] listDirectories(File folder, String wildcards) {
 
 		try{
@@ -100,18 +82,22 @@ public class FolderUtils {
 	/*
 	 * Files
 	 */
-	public static int deleteFiles(String foldername, String wildcards) {
+	public static int deleteFiles(File folder, String wildcards) {
 
 		int n=0;
 
-		File folder=new File(foldername);
-		File[] files=listFiles(folder, wildcards);
-		if(files!=null){
-			for(File file: files){
-				if(file.delete()) n++;
+		try{
+			File[] files=listFiles(folder, wildcards);
+			if(files!=null){
+				for(File file: files){
+					if(file.delete()) n++;
+				}
+				System.out.println(n+"/"+files.length+" files deleted in "+
+						folder.getAbsolutePath()+File.separator+wildcards);
 			}
-			System.out.println(n+"/"+files.length+" files deleted in "+
-					folder.getAbsolutePath()+File.separator+wildcards);
+
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 		return n;
@@ -119,9 +105,23 @@ public class FolderUtils {
 	}
 
 
+	public static int deleteFiles(String foldername, String wildcards) {
+
+		return deleteFiles(new File(foldername), wildcards);
+
+	}
+
+
 	public static int deleteFiles(String wildcards){
 
 		return deleteFiles(currentFolder(), wildcards);
+
+	}
+
+
+	public static int deleteAllFiles(String foldername) {
+
+		return deleteFiles(foldername, "*.*");
 
 	}
 

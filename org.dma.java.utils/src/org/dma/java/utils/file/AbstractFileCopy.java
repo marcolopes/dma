@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -24,11 +24,10 @@ public abstract class AbstractFileCopy {
 	/**
 	 * Copies a file from SOURCE to DESTINATION
 	 * @return
-	 * true - if copy was completed<br>
-	 * false - if copy was canceled<br>
-	 * null - if there was an error
+	 * TRUE if copy was completed;
+	 * FALSE if canceled or error
 	 */
-	public Boolean copyFile(File src, File dst) {
+	public boolean copyFile(File src, File dst) {
 
 		try{
 			final InputStream bis =
@@ -62,7 +61,7 @@ public abstract class AbstractFileCopy {
 			e.printStackTrace();
 		}
 
-		return null;
+		return false;
 
 	}
 
@@ -77,11 +76,10 @@ public abstract class AbstractFileCopy {
 	/**
 	 * Downloads a file from SOURCE to DESTINATION
 	 * @return
-	 * true - if download was completed<br>
-	 * false - if download was canceled<br>
-	 * null - if there was an error
+	 * TRUE if download was completed;
+	 * FALSE if canceled or error
 	 */
-	public Boolean downloadFile(String src, String dst) {
+	public boolean downloadFile(String src, String dst) {
 
 		try{
 			final BufferedInputStream bis =
@@ -115,7 +113,7 @@ public abstract class AbstractFileCopy {
 			e.printStackTrace();
 		}
 
-		return null;
+		return false;
 
 	}
 
