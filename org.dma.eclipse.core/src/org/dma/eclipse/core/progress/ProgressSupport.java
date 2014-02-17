@@ -1,11 +1,10 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.core.progress;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import org.dma.java.utils.Debug;
@@ -18,12 +17,20 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 	private static final long serialVersionUID = 1L;
 
+	private Class actionClass;
 	private final String title;
-	private IProgressAction action;
 	private int work;
 
 	public ProgressSupport(String title){
 		this.title=title;
+	}
+
+
+	public void add(IProgressAction action, String taskName) {
+
+		put(action, taskName);
+		work=100/size();
+
 	}
 
 
@@ -42,42 +49,31 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 	}
 
 
-	public void add(Class klass, String taskName) {
+	public boolean run(boolean silent) throws Exception {
 
-		try{
-			add(((Class<IProgressAction>)klass).newInstance(), taskName);
+		if (silent){
 
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+			for(IProgressAction action: keySet()){
+				//task name
+				String taskName=get(action);
+				Debug.out("TASK", taskName);
+				action.run();
+			}
 
-	}
+		}else try{
 
+			ProgressMonitorDialog dialog=new ProgressMonitorDialog(null);
 
-	public void add(IProgressAction action, String taskName) {
-
-		put(action, taskName);
-		work=100/size();
-
-	}
-
-
-	public boolean run() throws Exception {
-
-		final Error error=new Error();
-
-		try{
-			new ProgressMonitorDialog(null).run(true, true, new IRunnableWithProgress() {
+			dialog.run(true, true, new IRunnableWithProgress() {
 
 				public void run(IProgressMonitor monitor) throws InterruptedException {
 
 					monitor.beginTask(title, 100);
 
 					// execute the tasks
-					for(Iterator<IProgressAction> iterator=keySet().iterator();
-						iterator.hasNext() && error.getCause()==null;){
+					for(IProgressAction action: keySet()){
 
-						action=iterator.next();
+						actionClass=action.getClass();
 
 						//task name
 						String taskName=get(action);
@@ -101,18 +97,18 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 				}
 			});
 
-			return error.getCause()==null;
-
 		}catch (InterruptedException e){
 			Debug.out("InterruptedException");
 			return false;
 		}
 
+		return true;
+
 	}
 
 
 	public String getActionClass() {
-		return action.getClass().getCanonicalName();
+		return actionClass.getCanonicalName();
 	}
 
 
