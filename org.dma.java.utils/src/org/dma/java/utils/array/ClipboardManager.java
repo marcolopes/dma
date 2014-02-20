@@ -11,11 +11,11 @@ import java.util.Collection;
 
 import org.dma.java.utils.Debug;
 
-public class ClipboardManager<E> extends ArrayList<E> {
+public class ClipboardManager extends ArrayList<Object> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static ClipboardManager INSTANCE = new ClipboardManager<Object>();
+	private static ClipboardManager INSTANCE = new ClipboardManager();
 
 	public static void clearClipboard() {
 		INSTANCE.clear();
@@ -48,6 +48,11 @@ public class ClipboardManager<E> extends ArrayList<E> {
 	}
 
 
+	public static Class getObjectClass() {
+		return INSTANCE.iterator().next().getClass();
+	}
+
+
 	public static boolean hasObject(Class klass) {
 		return hasObject() && klass.equals(getObjectClass());
 	}
@@ -58,17 +63,12 @@ public class ClipboardManager<E> extends ArrayList<E> {
 	}
 
 
-	public static Class getObjectClass() {
-		return INSTANCE.iterator().next().getClass();
-	}
-
-
 	public static Collection getCollection(Class klass) {
 		return !hasObject(klass) ? null : INSTANCE;
 	}
 
 
-	public static Collection<Object> getClipboard() {
+	public static Collection getClipboard() {
 		return INSTANCE;
 	}
 
