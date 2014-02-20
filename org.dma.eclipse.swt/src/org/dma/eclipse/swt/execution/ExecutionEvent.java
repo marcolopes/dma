@@ -1,23 +1,23 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.execution;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 
 public class ExecutionEvent {
 
-	private final Action executionAction;
-	private final Action responseAction;
-	private final Action postresponseAction;
+	private final IAction executionAction;
+	private final IAction responseAction;
+	private final IAction postresponseAction;
 	private final int[] keycode;
 
 	private boolean actionExecuted=false;
 
-	public ExecutionEvent(Action executionAction, Action responseAction, Action postresponseAction, int[] keycode) {
+	public ExecutionEvent(IAction executionAction, IAction responseAction, IAction postresponseAction, int[] keycode) {
 		this.executionAction=executionAction;
 		this.responseAction=responseAction;
 		this.postresponseAction=postresponseAction;
@@ -29,15 +29,15 @@ public class ExecutionEvent {
 	/*
 	 * Getters and setters
 	 */
-	public Action getExecutionAction() {
+	public IAction getExecutionAction() {
 		return executionAction;
 	}
 
-	public Action getResponseAction() {
+	public IAction getResponseAction() {
 		return responseAction;
 	}
 
-	public Action getPostresponseAction() {
+	public IAction getPostresponseAction() {
 		return postresponseAction;
 	}
 

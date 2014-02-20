@@ -6,6 +6,7 @@
 package org.dma.eclipse.swt.custom;
 
 import org.dma.eclipse.swt.graphics.SWTImageUtils;
+import org.dma.java.utils.Debug;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 
@@ -24,6 +25,7 @@ public abstract class CustomAction extends Action {
 	}
 
 	public CustomAction() {
+		Debug.out("ID", ID);
 		setId(ID);
 	}
 

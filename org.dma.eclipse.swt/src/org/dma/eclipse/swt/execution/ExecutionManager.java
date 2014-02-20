@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.object.ObjectUtils;
-import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Combo;
@@ -28,27 +28,27 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 	/*
 	 * Register
 	 */
-	public static void register(Control control, Action action) {
+	public static void register(Control control, IAction action) {
 		register(control, new int[]{-1}, action);
 	}
 
-	public static void register(Control control, int keycode[], Action action) {
+	public static void register(Control control, int keycode[], IAction action) {
 		register(control, keycode, null, action);
 	}
 
-	public static void register(Control control, int keycode[], String id, Action action) {
+	public static void register(Control control, int keycode[], String id, IAction action) {
 		register(control, keycode, id, null, action);
 	}
 
-	public static void register(Control control, int keycode[], String id, String secondaryId, Action action) {
+	public static void register(Control control, int keycode[], String id, String secondaryId, IAction action) {
 		register(control, keycode, id, secondaryId, action, null, null);
 	}
 
-	public static void register(Control control, int keycode[], String id, Action action, Action responseAction, Action postresponseAction) {
+	public static void register(Control control, int keycode[], String id, IAction action, IAction responseAction, IAction postresponseAction) {
 		register(control, keycode, id, null, action, responseAction, postresponseAction);
 	}
 
-	public static void register(Control control, int keycode[], String id, String secondaryId, Action action, Action responseAction, Action postresponseAction) {
+	public static void register(Control control, int keycode[], String id, String secondaryId, IAction action, IAction responseAction, IAction postresponseAction) {
 		ExecutionDefinition execDefinition=new ExecutionDefinition(id,secondaryId,control);
 		ExecutionEvent execEvent=new ExecutionEvent(action,responseAction,postresponseAction,keycode);
 		register(execDefinition, execEvent);
