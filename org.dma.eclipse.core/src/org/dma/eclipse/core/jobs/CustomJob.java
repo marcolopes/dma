@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Display;
 /**
  * On the Job: The Eclipse Jobs API
  * http://www.eclipse.org/articles/Article-Concurrency/jobs-api.html
- *
  */
 public class CustomJob extends Job {
 
@@ -42,7 +41,7 @@ public class CustomJob extends Job {
 	 * two or more jobs with the same rule from executing at the same time
 	 * <p>
 	 * <b>setRule(new MutexRule());</b> can be used to create a new rule for a new
-	 * group of jobs that need to be mutal exclusive.
+	 * batch of jobs that need to be mutal exclusive.
 	 * <p>
 	 * <b>setRule(null);</b> can be used to indicate that the job has no rule and
 	 * can be executed immediately
@@ -51,7 +50,7 @@ public class CustomJob extends Job {
 	public CustomJob(String name, int priority) {
 		super(name);
 		setPriority(priority);
-		//setUser(true); // shows progress dialogue
+		setUser(false); // avoid progress dialogue
 		setRule(MUTEX_RULE);
 	}
 
@@ -99,6 +98,17 @@ public class CustomJob extends Job {
 	public void canceling(){
 		Debug.out("JOB", this);
 		canceled=true;
+	}
+
+
+	public boolean isBusy() {
+		Debug.out("JOB STATE", getStateName());
+		int state=getState();
+		return state==Job.RUNNING || state==Job.WAITING || state==Job.SLEEPING;
+	}
+
+	public boolean isCanceled() {
+		return canceled;
 	}
 
 
@@ -161,21 +171,6 @@ public class CustomJob extends Job {
 			default: return "NONE";
 		}
 
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public boolean isBusy() {
-		Debug.out("JOB STATE", getStateName());
-		int state=getState();
-		return state==Job.RUNNING || state==Job.WAITING || state==Job.SLEEPING;
-	}
-
-	public boolean isCanceled() {
-		return canceled;
 	}
 
 

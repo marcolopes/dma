@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -18,9 +18,9 @@ import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
-	private static final Set<JobGroup> jobSet=new HashSet();
+	private static final Set<JobBatch> jobSet=new HashSet();
 
-	private static void schedule(CustomJob job, ISchedulingRule rule) {
+	protected static void schedule(CustomJob job, ISchedulingRule rule) {
 
 		//allow reuse
 		job.reset();
@@ -34,16 +34,16 @@ public class JobManager {
 
 					final CustomJob job=(CustomJob)event.getJob();
 					Debug.out("STARTED", job);
-					//find group
-					final JobGroup group=findJobGroup(job);
-					Debug.out("GROUP", group);
-					//Is this the first job?
-					//if (group.getPendingJobs()==0 && group.getRunningJobs()==1)
-					if (!group.running){
-						group.running=true;
+					//find batch
+					final JobBatch batch=findJobBatch(job);
+					Debug.out("BATCH", batch);
+					//first job?
+					//if (batch.getPendingJobs()==0 && batch.getRunningJobs()==1)
+					if (!batch.running){
+						batch.running=true;
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
-								group.jobGroupStart();
+								batch.start();
 							}
 						});
 					}
@@ -63,18 +63,18 @@ public class JobManager {
 					Debug.out("DONE", job);
 					//remove listener
 					job.removeJobChangeListener(this);
-					//find group
-					final JobGroup group=findJobGroup(job);
-					Debug.out("GROUP", group);
-					if (remove(job) && group.getQueuedJobs()==0){
+					//find batch
+					final JobBatch batch=findJobBatch(job);
+					Debug.out("BATCH", batch);
+					if (remove(job) && batch.getQueuedJobs()==0){
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
-								group.jobGroupDone();
+								batch.done();
 							}
 						});
-						group.running=false;
-						//remove group
-						jobSet.remove(group);
+						batch.running=false;
+						//remove batch
+						jobSet.remove(batch);
 					}
 
 					debug();
@@ -90,31 +90,18 @@ public class JobManager {
 	}
 
 
-	/**
-	 * Execute jobs with rule
-	 */
-	public static void schedule(JobGroup group, ISchedulingRule rule) {
+	protected static void schedule(JobBatch batch, ISchedulingRule rule) {
 
-		jobSet.add(group);
+		jobSet.add(batch);
 		Debug.out("SET", jobSet);
 
-		for(CustomJob job: group){
-			// Avoids successive calls
+		for(CustomJob job: batch){
+			//avoid successive calls
 			if (!job.isBusy()){
 				schedule(job,rule);
 			}
 
 		}
-
-	}
-
-
-	/**
-	 * Execute jobs with default Mutex Rule
-	 */
-	public static void schedule(JobGroup group) {
-
-		schedule(group, CustomJob.MUTEX_RULE);
 
 	}
 
@@ -125,19 +112,19 @@ public class JobManager {
 	 */
 	public static boolean remove(CustomJob job) {
 
-		JobGroup group=findJobGroup(job);
+		JobBatch batch=findJobBatch(job);
 
-		return group.remove(job);
+		return batch.remove(job);
 
 	}
 
 
 	public static void clean() {
 
-		List<JobGroup> list=new ArrayList(jobSet);
-		for(JobGroup group: list){
-			if(group.isEmpty()){
-				jobSet.remove(group);
+		List<JobBatch> list=new ArrayList(jobSet);
+		for(JobBatch batch: list){
+			if(batch.isEmpty()){
+				jobSet.remove(batch);
 			}
 		}
 
@@ -152,8 +139,8 @@ public class JobManager {
 
 		boolean result=true;
 
-		for(JobGroup group: jobSet) {
-			if (!group.cancelJobs()){
+		for(JobBatch batch: jobSet) {
+			if (!batch.cancelJobs()){
 				result=false;
 			}
 		}
@@ -168,13 +155,14 @@ public class JobManager {
 	/*
 	 * Query
 	 */
-	public static JobGroup findJobGroup(CustomJob job) {
+	public static JobBatch findJobBatch(CustomJob job) {
 
-		for(JobGroup group: jobSet) {
-			if(group.contains(job)) return group;
+		for(JobBatch batch: jobSet) {
+			if(batch.contains(job)) return batch;
 		}
 
 		return null;
+
 	}
 
 
@@ -182,8 +170,8 @@ public class JobManager {
 
 		int count=0;
 
-		for(JobGroup group: jobSet) {
-			count+=group.getQueuedJobs();
+		for(JobBatch batch: jobSet) {
+			count+=batch.getQueuedJobs();
 		}
 
 		return count;
@@ -195,8 +183,8 @@ public class JobManager {
 
 		int count=0;
 
-		for(JobGroup group: jobSet) {
-			count+=group.getPendingJobs();
+		for(JobBatch batch: jobSet) {
+			count+=batch.getPendingJobs();
 		}
 
 		return count;
@@ -208,8 +196,8 @@ public class JobManager {
 
 		int count=0;
 
-		for(JobGroup group: jobSet) {
-			count+=group.getRunningJobs();
+		for(JobBatch batch: jobSet) {
+			count+=batch.getRunningJobs();
 		}
 
 		return count;
@@ -229,8 +217,8 @@ public class JobManager {
 			System.out.println("QUEUED: " + getQueuedJobs());
 			System.out.println("PENDING: " + getPendingJobs());
 			System.out.println("RUNNING: " + getRunningJobs());
-			for(JobGroup group: jobSet) {
-				group.debug();
+			for(JobBatch batch: jobSet) {
+				batch.debug();
 			}
 		}
 
