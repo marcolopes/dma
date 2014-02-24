@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -11,44 +11,50 @@ import java.util.List;
 
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.numeric.NumericUtils;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 
-public abstract class JobGroup extends LinkedHashSet<CustomJob> {
+public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * MUTEX: MUTual EXclusion semaphore.
+	 * Global rule to avoid simultaneous executions.
+	 */
+	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
+
+	/**
 	 * Executed before first job is started
 	 */
-	public abstract void jobGroupStart();
+	public abstract void start();
 
 	/**
 	 * Executed when last job is done
 	 */
-	public abstract void jobGroupDone();
-
-	private final int radomHash=NumericUtils.random();
+	public abstract void done();
 
 	protected boolean running=false;
 
+	private final int radomHash=NumericUtils.random();
+
+	/**
+	 * Execute jobs with rule
+	 */
+	public void schedule(ISchedulingRule rule) {
+		JobManager.schedule(this, rule);
+	}
+
+	/**
+	 * Execute jobs with default Mutex Rule
+	 */
+	public void schedule() {
+		schedule(MUTEX_RULE);
+	}
+
+
 	public boolean isRunning() {
 		return running;
-	}
-
-
-	@Override
-	public int hashCode() {
-		return radomHash;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return hashCode()==obj.hashCode();
-	}
-
-	@Override
-	public boolean add(CustomJob e) {
-		return e.hasTasks() ? super.add(e) : false;
 	}
 
 
@@ -103,7 +109,7 @@ public abstract class JobGroup extends LinkedHashSet<CustomJob> {
 	public void debug() {
 
 		if (Debug.STATUS){
-			System.out.println("GROUP: " + this);
+			System.out.println("BATCH: " + this);
 			int i=0;
 			for(CustomJob job: this){
 				System.out.println("JOB #"+i+": " + job.getStateName());
@@ -112,6 +118,26 @@ public abstract class JobGroup extends LinkedHashSet<CustomJob> {
 
 		}
 
+	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.util.HashSet#add(java.lang.Object)
+	 */
+	@Override
+	public boolean add(CustomJob e) {
+		return e.hasTasks() ? super.add(e) : false;
+	}
+
+	@Override
+	public int hashCode() {
+		return radomHash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return hashCode()==obj.hashCode();
 	}
 
 
