@@ -20,7 +20,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal proportionalValue(BigDecimal a, BigDecimal b, BigDecimal c){
 
-		return a.signum()==0 ? BigDecimal.valueOf(0) :
+		return a.signum()==0 ? BigDecimal.ZERO :
 			b.multiply(c).
 			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 			divide(a,SCALE,RoundingMode.HALF_EVEN);
@@ -64,7 +64,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal markupPercentage(BigDecimal price, BigDecimal cost){
 
-		return cost.signum()==0 ? BigDecimal.valueOf(0) :
+		return cost.signum()==0 ? BigDecimal.ZERO :
 			(price.subtract(cost)).
 			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 			divide(cost,SCALE,RoundingMode.HALF_EVEN).multiply(BigDecimal.valueOf(100));
@@ -92,7 +92,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal addedPercentages(BigDecimal...perc){
 
-		BigDecimal result=BigDecimal.valueOf(0);
+		BigDecimal result=BigDecimal.ZERO;
 		BigDecimal total=BigDecimal.valueOf(100);
 
 		for(int i=0; i<perc.length; i++){
@@ -112,7 +112,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal valuePercentage(BigDecimal total, BigDecimal value){
 
-		return total.signum()==0 ? BigDecimal.valueOf(0) :
+		return total.signum()==0 ? BigDecimal.ZERO :
 			value.multiply(BigDecimal.valueOf(100)).
 			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 			divide(total,SCALE,RoundingMode.HALF_EVEN);
@@ -139,7 +139,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal valueIncluded(BigDecimal value, BigDecimal perc){
 
-		return perc.compareTo(BigDecimal.valueOf(100))==0 ? BigDecimal.valueOf(0) :
+		return perc.compareTo(BigDecimal.valueOf(100))==0 ? BigDecimal.ZERO :
 			value.divide(BigDecimal.valueOf(1).subtract(perc.divide(BigDecimal.valueOf(100))),
 			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 			SCALE,RoundingMode.HALF_EVEN);

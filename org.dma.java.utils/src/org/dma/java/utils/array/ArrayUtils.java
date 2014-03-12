@@ -31,6 +31,13 @@ public class ArrayUtils {
 	}
 
 
+	public static <T> Set<String> toStringSet(T[] array) {
+
+		return toSet(toStringArray(array));
+
+	}
+
+
 	public static <T> List<T> toList(T[] array) {
 
 		List<T> list=new ArrayList(array.length);
@@ -40,6 +47,13 @@ public class ArrayUtils {
 		}
 
 		return list;
+
+	}
+
+
+	public static <T> List<String> toStringList(T[] array) {
+
+		return toList(toStringArray(array));
 
 	}
 

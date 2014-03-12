@@ -10,24 +10,24 @@ import java.lang.reflect.Method;
 public final class MethodUtils {
 
 
-	public static Object invoke(String className, String methodName, Object[] args, Class[] params) throws Exception {
+	public static Object invoke(String className, String methodName, Class[] parameterTypes, Object...args) throws Exception {
 
-		Class cl=Class.forName(className);
-		Method method=cl.getDeclaredMethod(methodName, params);
+		Class klass=Class.forName(className);
+		Method method=klass.getDeclaredMethod(methodName, parameterTypes);
 
-		return method.invoke(cl.newInstance(), args);
+		return method.invoke(klass, args);
 
 	}
 
 
-	public static Object invoke(String className, String methodName, Object[] args) throws Exception {
+	public static Object invoke(String className, String methodName, Object...args) throws Exception {
 
-		Class[] params=new Class[args.length];
+		Class[] parameterTypes=new Class[args.length];
 		for(int i=0; i<args.length; i++){
-			params[i]=args[i].getClass();
+			parameterTypes[i]=args[i].getClass();
 		}
 
-		return invoke(className, methodName, args, params);
+		return invoke(className, methodName, parameterTypes, args);
 
 	}
 
@@ -35,7 +35,7 @@ public final class MethodUtils {
 	public static void main(String[] args) throws Exception {
 
 		System.out.println(
-			invoke("java.lang.String", "concat", new Object[]{"concat"}) );
+			invoke("java.lang.Integer", "valueOf", "10"));
 
 	}
 

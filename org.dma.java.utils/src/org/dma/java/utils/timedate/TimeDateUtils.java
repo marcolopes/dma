@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -104,6 +104,12 @@ public class TimeDateUtils {
 		return null;
 	}
 
+
+	public static String getDateFormatted(String format) {
+		return getDateFormatted(getCurrentDate(), format);
+	}
+
+
 	/**
 	 * Date formatted with DEFAULT FORMAT
 	 */
@@ -120,11 +126,17 @@ public class TimeDateUtils {
 		return null;
 	}
 
+
 	/**
 	 * Time formatted with DEFAULT FORMAT
 	 */
 	public static String getTimeFormatted(Time time) {
 		return getTimeFormatted(time, DEFAULT_TIME_FORMAT);
+	}
+
+
+	public static String getTimeFormatted(String format) {
+		return getTimeFormatted(getCurrentTime(), format);
 	}
 
 
@@ -334,7 +346,22 @@ public class TimeDateUtils {
 
 	public static int getDaysSinceMonday(Calendar calendar) {
 		int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
-		return dayOfWeek==Calendar.SUNDAY ? Calendar.SATURDAY : dayOfWeek-1;
+		return dayOfWeek==Calendar.SUNDAY ? 7 : dayOfWeek-1;
+	}
+
+
+	public static int getHour(Calendar calendar){
+		return calendar.get(Calendar.HOUR_OF_DAY);
+	}
+
+
+	public static int getMinute(Calendar calendar){
+		return calendar.get(Calendar.MINUTE);
+	}
+
+
+	public static int getSecond(Calendar calendar){
+		return calendar.get(Calendar.SECOND);
 	}
 
 
@@ -359,17 +386,17 @@ public class TimeDateUtils {
 
 
 	public static int getCurrentHour(){
-		return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		return getHour(Calendar.getInstance());
 	}
 
 
 	public static int getCurrentMinute(){
-		return Calendar.getInstance().get(Calendar.MINUTE);
+		return getMinute(Calendar.getInstance());
 	}
 
 
 	public static int getCurrentSecond(){
-		return Calendar.getInstance().get(Calendar.SECOND);
+		return getSecond(Calendar.getInstance());
 	}
 
 
@@ -381,11 +408,6 @@ public class TimeDateUtils {
 	 */
 	public static Date getCurrentDate() {
 		return new Date();
-	}
-
-
-	public static String getCurrentDate(String format) {
-		return getDateFormatted(getCurrentDate(),format);
 	}
 
 
@@ -513,7 +535,7 @@ public class TimeDateUtils {
 
 	public static Date getCurrentWeek1() {
 		Calendar calendar=Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_YEAR, (getDaysSinceMonday(calendar)-1)*-1);
+		calendar.add(Calendar.DAY_OF_YEAR, -getDaysSinceMonday(calendar)+1);
 		return calendar.getTime();
 	}
 

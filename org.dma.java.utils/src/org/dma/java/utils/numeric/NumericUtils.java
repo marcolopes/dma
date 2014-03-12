@@ -43,7 +43,7 @@ public class NumericUtils {
 
 		}catch(NumberFormatException e){}
 
-		return BigDecimal.valueOf(0);
+		return BigDecimal.ZERO;
 
 	}
 

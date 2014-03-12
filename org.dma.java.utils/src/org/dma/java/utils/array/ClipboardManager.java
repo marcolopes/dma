@@ -15,7 +15,7 @@ public class ClipboardManager extends ArrayList<Object> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static ClipboardManager INSTANCE = new ClipboardManager();
+	private static final ClipboardManager INSTANCE = new ClipboardManager();
 
 	public static void clearClipboard() {
 		INSTANCE.clear();
