@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Core Utils
 Bundle-SymbolicName: org.dma.eclipse.core;singleton:=true
-Bundle-Version: 4.1.0
+Bundle-Version: 4.2.0
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

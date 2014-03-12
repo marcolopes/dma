@@ -88,15 +88,15 @@ public class UIHelper {
 
 
 	/**
-	 * Adiciona os shortcuts de todas as OUTRAS perspectivas ao
-	 * layout para serem apresentados no PerspectiveBarManager
+	 * Adds all other perspective shortcuts to the layout
+	 * so they can be present in the PerspectiveBarManager
 	 */
 	public static void addOtherPerspectiveShortcuts(String perspectiveId, IPageLayout layout){
 		try{
 			IConfigurationElement[] elements=Platform.getExtensionRegistry().
 					getConfigurationElementsFor("org.eclipse.ui.perspectives");
-			for(int i=0; i<elements.length; i++){
-				String id=elements[i].getAttribute("id");
+			for(IConfigurationElement element: elements){
+				String id=element.getAttribute("id");
 				if (!id.equals(perspectiveId)){
 					layout.addPerspectiveShortcut(id);
 					Debug.out("ADDED", id);
