@@ -46,9 +46,7 @@ public class CustomShell extends Shell {
 	public void openAndSleep(){
 		open();
 		while (!isDisposed()){
-			if (!getDisplay().readAndDispatch()){
-				getDisplay().sleep();
-			}
+			if (!getDisplay().readAndDispatch()) getDisplay().sleep();
 		}
 	}
 
