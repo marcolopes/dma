@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -34,7 +34,7 @@ public class BundleUtils {
 			try{
 				String path=FileLocator.resolve(url).getFile();
 				//normalize path
-				return new File(path).getAbsolutePath()+File.separator;
+				return new File(path).getAbsolutePath();
 			}catch(IOException e){}
 		}
 
@@ -67,7 +67,7 @@ public class BundleUtils {
 			try{
 				String path=FileLocator.toFileURL(url).getFile();
 				//normalize path
-				return new File(path).getAbsolutePath()+File.separator;
+				return new File(path).getAbsolutePath();
 			}catch(IOException e){}
 		}
 
@@ -83,9 +83,9 @@ public class BundleUtils {
 	}
 
 
-	public static String jarPathResolver(Class cl, String fullPath) {
+	public static String jarPathResolver(Class klass, String fullPath) {
 
-		return jarPathResolver(FrameworkUtil.getBundle(cl), fullPath);
+		return jarPathResolver(FrameworkUtil.getBundle(klass), fullPath);
 
 	}
 
