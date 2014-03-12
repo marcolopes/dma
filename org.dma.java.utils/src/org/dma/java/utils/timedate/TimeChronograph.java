@@ -7,14 +7,14 @@ package org.dma.java.utils.timedate;
 
 public class TimeChronograph {
 
-	private static final TimeChronograph instance=new TimeChronograph();
+	private static final TimeChronograph INSTANCE = new TimeChronograph();
 
 	private long startTime;
 	private long endTime;
 	private boolean running=false;
 
 	public static TimeChronograph getInstance(){
-		return !instance.running ? instance : new TimeChronograph();
+		return !INSTANCE.running ? INSTANCE : new TimeChronograph();
 	}
 
 

@@ -188,8 +188,8 @@ public class StringUtils {
 
 		int index=0;
 		while((index=string.indexOf(searchFor, index))!=-1) {
-			count++;
 			index+=searchFor.length();
+			count++;
 		}
 
 		return count;
