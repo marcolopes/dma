@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -11,7 +11,8 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
+import org.dma.java.utils.timedate.TimeDateUtils;
 
 public class Certificate {
 
@@ -58,11 +59,8 @@ public class Certificate {
 
 		try{
 			X509Cert=(X509Certificate)keyStore.getCertificate(alias());
-			if (X509Cert==null){
-				throw new Exception("Alias not found: "+alias);
-			}
-	    	daysToExpire=TimeUnit.MILLISECONDS.toDays(
-	    			X509Cert.getNotAfter().getTime()-new Date().getTime());
+			if (X509Cert==null) throw new Exception("Alias not found: "+alias);
+	    	daysToExpire=TimeDateUtils.getDaysBetween(X509Cert.getNotAfter(), new Date());
 
 			return true;
 
@@ -85,8 +83,13 @@ public class Certificate {
 	}
 
 
+	public boolean isExpired(int daysToExpire){
+		return this.daysToExpire<daysToExpire;
+	}
+
+
 	public boolean isExpired(){
-		return daysToExpire<0;
+		return isExpired(0);
 	}
 
 
@@ -115,7 +118,7 @@ public class Certificate {
 	public void debug(){
 		try{
 	    	System.out.println("-----X509 CERTIFICATE-----");
-	    	System.out.println("KEYSTORE: " + filename);
+	    	System.out.println("STORE: " + filename);
 	    	System.out.println("ALIAS: " + alias());
 	    	System.out.println("USAGE: " + getKeyUsage());
 	    	System.out.println("SERIAL: " + X509Cert.getSerialNumber());
@@ -123,8 +126,26 @@ public class Certificate {
 	    	System.out.println("SUBJECT: " + X509Cert.getSubjectX500Principal());
 	    	System.out.println("EXPIRATION: " + X509Cert.getNotAfter());
 	    	System.out.println("DAYS LEFT: " + daysToExpire);
+	    	System.out.println("HASH CODE: " + X509Cert.hashCode());
 
 		}catch(Exception e){}
+	}
+
+
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public int hashCode() {
+		return X509Cert==null ? 0 : X509Cert.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return hashCode()==obj.hashCode();
 	}
 
 

@@ -38,19 +38,12 @@ public final class VersionNumber {
 
 		Debug.out(version);
 
-		if (major>version.major)
-			return false;
-		else if (major<version.major)
-			return true;
-		else if (minor>version.minor)
-			return false;
-		else if (minor<version.minor)
-			return true;
-		else if (macro>version.macro)
-			return false;
-		else if (macro<version.macro)
-			return true;
-
+		if (major>version.major) return false;
+		if (major<version.major) return true;
+		if (minor>version.minor) return false;
+		if (minor<version.minor) return true;
+		if (macro>version.macro) return false;
+		if (macro<version.macro) return true;
 		return false; //equal!
 
 	}

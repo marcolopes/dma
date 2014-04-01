@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: DMA Java Utils
 Bundle-SymbolicName: org.dma.java.utils;singleton:=true
-Bundle-Version: 4.6.0
+Bundle-Version: 4.7.0
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -99,7 +99,6 @@ Export-Package: com.thebuzzmedia.imgscalr,
  org.dma.java.utils.klass,
  org.dma.java.utils.net,
  org.dma.java.utils.numeric,
- org.dma.java.utils.object,
  org.dma.java.utils.pdf,
  org.dma.java.utils.security,
  org.dma.java.utils.snippets,

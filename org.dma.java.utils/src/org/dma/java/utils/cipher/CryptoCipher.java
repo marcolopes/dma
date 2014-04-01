@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -18,6 +18,9 @@ import javax.crypto.NoSuchPaddingException;
 import org.apache.commons.codec.binary.Base64;
 
 public class CryptoCipher {
+
+	public static final String BLOWFISH = "Blowfish";
+	public static final String ECB_PKCS5Padding = "AES/ECB/PKCS5Padding";
 
 	private Cipher cipher;
 	private Cipher decipher;
@@ -51,13 +54,14 @@ public class CryptoCipher {
 
 	/**
 	 * Encrypts using the initialized ALGORITHM<br>
+	 * <b>NOTE: Use alternate method for Strings</b>
 	 * <p>
 	 * <b>Message is processed as follows:</b><br>
-	 * - encrypted<br>
-	 * - encoded to BASE64<br>
+	 * - Encrypt Bytes<br>
+	 * - Encode Bytes to BASE64<br>
+	 * - Convert Bytes to String (UTF8 charset)<br>
 	 *
 	 * @param messageBytes - the message to encrypt.
-	 * <b>Use alternate method to encrypt Strings</b>
 	 * @param lineLength - the lenghth of each text line.
 	 * 0 = no line break
 	 */
@@ -65,8 +69,10 @@ public class CryptoCipher {
 		try{
 			// Encrypt Bytes
 			byte[] encrypted = cipher.doFinal(messageBytes);
-			// Enconde Bytes to Base64 String
-			return new Base64(lineLength).encodeToString(encrypted);
+			// Encode Bytes to BASE64
+			byte[] base64Bytes = new Base64(lineLength).encode(encrypted);
+			// Convert Bytes to String (UTF8 charset)
+			return new String(base64Bytes, "UTF8");
 
 		}catch (IllegalBlockSizeException e){
 			System.out.println(e);
@@ -83,9 +89,10 @@ public class CryptoCipher {
 	 * Encrypts using the initialized ALGORITHM
 	 * <p>
 	 * <b>Message is processed as follows:</b><br>
-	 * - converted to UTF8 array<br>
-	 * - encrypted<br>
-	 * - encoded to BASE64<br>
+	 * - Convert String to Bytes (UTF8 charset)<br>
+	 * - Encrypt Bytes<br>
+	 * - Encode Bytes to BASE64<br>
+	 * - Convert Bytes to String (UTF8 charset)<br>
 	 *
 	 * @param message - the message to encrypt.
 	 * @param lineLength - the lenghth of each text line.
@@ -93,12 +100,40 @@ public class CryptoCipher {
 	 */
 	public String encrypt(String message, int lineLength) {
 		try{
-			// Convert String to UTF8 Array
+			// Convert String to Bytes (UTF8 charset)
 			byte[] messageBytes = message.getBytes("UTF8");
-			// Encrypt Bytes
-			byte[] encrypted = cipher.doFinal(messageBytes);
-			// Enconde Bytes to Base64 String
-			return new Base64(lineLength).encodeToString(encrypted);
+
+			return encrypt(messageBytes, lineLength);
+
+		}catch (UnsupportedEncodingException e){
+			System.out.println(e);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+	/**
+	 * Decrypts using the initialized ALGORITHM<br>
+	 * <b>NOTE: Use alternate method for Strings</b>
+	 * <p>
+	 * <b>Message is processed as follows:</b><br>
+	 * - Decode Bytes from BASE64<br>
+	 * - Decrypt Bytes<br>
+	 * - Convert Bytes to String (UTF8 charset)
+	 *
+	 * @param messageBytes - the message to decrypt.
+	 * <b>Must be in BASE64</b>
+	 */
+	public String decrypt(byte[] messageBytes) {
+		try{
+			// Decode Bytes from BASE64
+			byte[] base64Bytes = new Base64(0).decode(messageBytes);
+			// Decrypt Bytes
+			byte[] decrypted = decipher.doFinal(base64Bytes);
+			// Convert Bytes to String (UTF8 charset)
+			return new String(decrypted, "UTF8");
 
 		}catch (UnsupportedEncodingException e){
 			System.out.println(e);
@@ -117,27 +152,22 @@ public class CryptoCipher {
 	 * Decrypts using the initialized ALGORITHM
 	 * <p>
 	 * <b>Message is processed as follows:</b><br>
-	 * - decoded from BASE64<br>
-	 * - decrypted<br>
-	 * - converted to UTF8 String
+	 * - Convert String to Bytes (UTF8 charset)<br>
+	 * - Decode Bytes from BASE64<br>
+	 * - Decrypt Bytes<br>
+	 * - Convert Bytes to String (UTF8 charset)
 	 *
 	 * @param messageBytes - the message to decrypt.
 	 * <b>Must be in BASE64</b>
 	 */
-	public String decrypt(byte[] messageBytes) {
+	public String decrypt(String message) {
 		try{
-			// Decode Base64 String to Bytes
-			byte[] bytes = new Base64(0).decode(messageBytes);
-			// Decrypt Bytes
-			byte[] decrypted = decipher.doFinal(bytes);
-			// Convert Bytes to UTF8 String
-			return new String(decrypted, "UTF8");
+			// Convert String to Bytes (UTF8 charset)
+			byte[] messageBytes = message.getBytes("UTF8");
+
+			return decrypt(messageBytes);
 
 		}catch (UnsupportedEncodingException e){
-			System.out.println(e);
-		}catch (IllegalBlockSizeException e){
-			System.out.println(e);
-		}catch (BadPaddingException e){
 			System.out.println(e);
 		}catch (Exception e){
 			e.printStackTrace();

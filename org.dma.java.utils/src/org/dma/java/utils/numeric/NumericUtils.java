@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -56,7 +56,7 @@ public class NumericUtils {
 	 */
 	public static Integer random(int length) {
 
-		return new Integer(StringUtils.random("0123456789", length));
+		return new Integer(StringUtils.randomNumbers(length));
 
 	}
 

@@ -10,7 +10,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class BlowfishCipher extends CryptoCipher {
 
 	public BlowfishCipher(String key) {
-		super(new SecretKeySpec(key.getBytes(), "Blowfish"));
+		super(new SecretKeySpec(key.getBytes(), BLOWFISH));
 	}
 
 }

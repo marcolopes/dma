@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import org.dma.java.utils.array.ArrayUtils;
 import org.dma.java.utils.array.CollectionUtils;
 
 public class StringUtils {
@@ -63,26 +64,26 @@ public class StringUtils {
 	 */
 	public static String replicate(String string, int replicas) {
 
-		String result="";
+		StringBuilder result=new StringBuilder();
 
 		for(int i=0; i<replicas; i++){
-			result+=string;
+			result.append(string);
 		}
 
-		return result;
+		return result.toString();
 
 	}
 
 
 	public static String replicate(char character, int replicas) {
 
-		String result="";
+		StringBuilder result=new StringBuilder();
 
 		for(int i=0; i<replicas; i++){
-			result+=character;
+			result.append(character);
 		}
 
-		return result;
+		return result.toString();
 
 	}
 
@@ -101,9 +102,16 @@ public class StringUtils {
 	}
 
 
-	public static String random(int length) {
+	public static String randomLetters(int length) {
 
 		return random("abcdefghijklmnopqrstuvwxyz", length);
+
+	}
+
+
+	public static String randomNumbers(int length) {
+
+		return random("0123456789", length);
 
 	}
 
@@ -227,6 +235,13 @@ public class StringUtils {
 	}
 
 
+	public static String[] trim(String string, String separator) {
+
+		return ArrayUtils.trim(string.split(separator));
+
+	}
+
+
 	public static String escape(String string) {
 
 		return string.replace("\\","\\\\");
@@ -281,47 +296,44 @@ public class StringUtils {
 
 	public static String numbers(String string) {
 
-		String numbers="";
+		StringBuilder result=new StringBuilder();
 
 		char[] chars=string.toCharArray();
 		for(int i=0; i<chars.length; i++){
-			if (chars[i]>='0' && chars[i]<='9'){
-				numbers+=string.substring(i, i+1);
-			}
+			if (chars[i]>='0' && chars[i]<='9')
+				result.append(string.substring(i, i+1));
 		}
 
-		return numbers;
+		return result.toString();
 
 	}
 
 
 	public static String letters(String string) {
 
-		String letters="";
+		StringBuilder result=new StringBuilder();
 
 		char[] chars = string.toCharArray();
 		for(int i=0; i<chars.length; i++){
-			if ((chars[i]>='A' && chars[i]<='Z') || (chars[i]>='a' && chars[i]<='z')){
-				letters+=string.substring(i, i+1);
-			}
+			if ((chars[i]>='A' && chars[i]<='Z') || (chars[i]>='a' && chars[i]<='z'))
+				result.append(string.substring(i, i+1));
 		}
 
-		return letters;
+		return result.toString();
 
 	}
 
 
 	public static String chars(String string, int...indices) {
 
-		String chars="";
+		StringBuilder result=new StringBuilder();
 
 		for (int i=0; i<indices.length; i++){
-			if (indices[i]<string.length()){
-				chars+=string.charAt(indices[i]);
-			}
+			if (indices[i]<string.length())
+				result.append(string.charAt(indices[i]));
 		}
 
-		return chars;
+		return result.toString();
 
 	}
 
@@ -439,16 +451,16 @@ public class StringUtils {
 	public static String indent(String text) {
 
 		String[] lines=text.split("\n");
-		text="";
+		StringBuilder result=new StringBuilder();
 
 		int tabCount=0;
 		for(int i=0; i<lines.length; i++) {
 			if (lines[i].contains("}")) tabCount--;
-			text+=replicate("\t", tabCount) + lines[i] + "\n";
+			result.append(replicate("\t", tabCount) + lines[i] + "\n");
 			if (lines[i].contains("{")) tabCount++;
 		}
 
-		return text;
+		return result.toString();
 
 	}
 

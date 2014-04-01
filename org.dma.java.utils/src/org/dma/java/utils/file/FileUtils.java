@@ -94,17 +94,11 @@ public class FileUtils {
 	 */
 	public static String encodeToBase64(String filename, int lineLength) {
 
-		final String pad="-----";
-
 		try{
 			File file=new File(filename);
-			byte[] key=FileUtils.readBytesStream(file);
+			byte[] bytes=FileUtils.readBytesStream(file);
 
-			String encoded=new Base64(lineLength).encodeToString(key);
-
-			return pad+"BEGIN "+file.getName().toUpperCase()+" BASE64"+pad+
-				"\n"+encoded+
-				pad+"END "+file.getName().toUpperCase()+" BASE64"+pad;
+			return new Base64(lineLength).encodeToString(bytes);
 
 		}catch (Exception e){
 			e.printStackTrace();
