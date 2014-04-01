@@ -57,7 +57,7 @@ public class DocumentosTransporteProxy extends SOAPMessageHandler {
 	 */
 	public StockMovementResponse register(StockMovement request) throws Exception {
 
-		// obtem o wsdl (por defeito e' usado o wsdlLocation definido no servico)
+		// obtem o wsdl (wsdlLocation predefinido esta' definido no servico)
 		URL wsdlLocation = this.getClass().getClassLoader().getResource("documentosTransporte.wsdl");
 		System.out.println(wsdlLocation);
 

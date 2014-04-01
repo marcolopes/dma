@@ -57,7 +57,7 @@ public class FaturasProxy extends SOAPMessageHandler {
 	 */
 	public RegisterInvoiceResponseType register(RegisterInvoiceType request) throws Exception {
 
-		// obtem o wsdl (por defeito e' usado o wsdlLocation definido no servico)
+		// obtem o wsdl (wsdlLocation predefinido esta' definido no servico)
 		URL wsdlLocation = this.getClass().getClassLoader().getResource("faturas.wsdl");
 		System.out.println(wsdlLocation);
 
