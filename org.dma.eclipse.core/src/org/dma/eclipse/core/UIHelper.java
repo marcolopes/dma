@@ -64,7 +64,7 @@ public class UIHelper {
 	 * Aberto BUG de ECLIPSE UI
 	 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
 	 */
-	public static void disablePerspectiveToolbarMenu() {
+	public static void disablePerspectiveToolBarMenu() {
 		try{
 			PerspectiveBarManager perspectiveBarManager=
 					((WorkbenchWindow)getWorkbenchWindow()).getPerspectiveBar();
