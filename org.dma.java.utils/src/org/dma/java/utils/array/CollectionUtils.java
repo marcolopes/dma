@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -65,14 +65,14 @@ public class CollectionUtils {
 	 */
 	public static <T> String concat(Collection<T> collection, String separator) {
 
-		String string="";
+		StringBuilder result=new StringBuilder();
 
 		for (T element: collection){
-			string=string.isEmpty() ?
-				element.toString() : string+separator+element;
+			if (result.length()>0) result.append(separator);
+			result.append(element.toString());
 		}
 
-		return string;
+		return result.toString();
 
 	}
 
@@ -82,9 +82,7 @@ public class CollectionUtils {
 		Collection<T> removeList=new ArrayList();
 
 		for (T element: collection){
-			if(element.toString().contains(searchFor)){
-				removeList.add(element);
-			}
+			if(element.toString().contains(searchFor)) removeList.add(element);
 		}
 
 		collection.removeAll(removeList);

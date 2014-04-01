@@ -15,8 +15,6 @@ import org.dma.java.utils.string.StringUtils;
 
 public class AESCipher extends CryptoCipher {
 
-	public static final String ECB_PKCS5Padding = "AES/ECB/PKCS5Padding";
-
 	public AESCipher(byte[] key, String transformation) {
 		super(new SecretKeySpec(key, "AES"), transformation);
 	}
@@ -37,8 +35,8 @@ public class AESCipher extends CryptoCipher {
 	 */
 	private static byte[] generateKey(int keyLength) {
 		try{
-			String password=StringUtils.random(64);
-			String salt=StringUtils.random(16);
+			String password=StringUtils.randomLetters(64);
+			String salt=StringUtils.randomLetters(16);
 			KeySpec spec=new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, keyLength);
 
 			SecretKeyFactory factory=SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");

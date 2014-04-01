@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -59,6 +60,7 @@ public class TimeDateUtils {
 	/*
 	 * Time
 	 */
+	public static final long MILLISECOND_PER_DAY = 60 * 60 * 24 * 1000;
 	public static final String TIME_HOUR_FORMAT = String.valueOf(new char[]{JAVA_HOUR_IN_DAY24,JAVA_HOUR_IN_DAY24});
 	public static final String TIME_MINUTE_FORMAT = String.valueOf(new char[]{JAVA_MINUTE,JAVA_MINUTE});
 	public static final String TIME_SECOND_FORMAT = String.valueOf(new char[]{JAVA_SECOND,JAVA_SECOND});
@@ -350,6 +352,19 @@ public class TimeDateUtils {
 	}
 
 
+	public static long getDaysBetween(Calendar calendar1, Calendar calendar2){
+		calendar1.set(Calendar.HOUR_OF_DAY, 0); // Crucial
+		calendar1.set(Calendar.MINUTE, 0);
+		calendar1.set(Calendar.SECOND, 0);
+		calendar1.set(Calendar.MILLISECOND, 0);
+		calendar2.set(Calendar.HOUR_OF_DAY, 0); // Crucial
+		calendar2.set(Calendar.MINUTE, 0);
+		calendar2.set(Calendar.SECOND, 0);
+		calendar2.set(Calendar.MILLISECOND, 0);
+		return TimeUnit.MILLISECONDS.toDays(calendar1.getTimeInMillis()-calendar2.getTimeInMillis());
+	}
+
+
 	public static int getHour(Calendar calendar){
 		return calendar.get(Calendar.HOUR_OF_DAY);
 	}
@@ -510,6 +525,11 @@ public class TimeDateUtils {
 
 	public static int getMonth(Date date) {
 		return getMonth(getCalendar(date));
+	}
+
+
+	public static long getDaysBetween(Date date1, Date date2){
+		return getDaysBetween(getCalendar(date1), getCalendar(date2));
 	}
 
 

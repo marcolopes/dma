@@ -20,158 +20,198 @@ public class ArrayUtils {
 	 */
 	public static <T> Set<T> toSet(T[] array) {
 
-		Set<T> set=new HashSet(array.length);
+		Set<T> result=new HashSet(array.length);
 
 		for(int i=0; i<array.length; i++){
-			set.add(array[i]);
+			result.add(array[i]);
 		}
 
-		return set;
+		return result;
 
 	}
 
 
 	public static <T> Set<String> toStringSet(T[] array) {
 
-		return toSet(toStringArray(array));
+		Set<String> result=new HashSet(array.length);
+
+		for(int i=0; i<array.length; i++){
+			result.add(array[i].toString());
+		}
+
+		return result;
 
 	}
 
 
 	public static <T> List<T> toList(T[] array) {
 
-		List<T> list=new ArrayList(array.length);
+		List<T> result=new ArrayList(array.length);
 
 		for(int i=0; i<array.length; i++){
-			list.add(array[i]);
+			result.add(array[i]);
 		}
 
-		return list;
+		return result;
 
 	}
 
 
 	public static <T> List<String> toStringList(T[] array) {
 
-		return toList(toStringArray(array));
-
-	}
-
-
-	public static char[] toCharArray(int[] array) {
-
-		char[] array2=new char[array.length];
+		List<String> result=new ArrayList(array.length);
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=(char)array[i];
+			result.add(array[i].toString());
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static byte[] toByteArray(int[] array) {
 
-		byte[] array2=new byte[array.length];
+		byte[] result=new byte[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=(byte)array[i];
+			result[i]=(byte)array[i];
 		}
 
-		return array2;
+		return result;
+
+	}
+
+
+	public static char[] toCharArray(int[] array) {
+
+		char[] result=new char[array.length];
+
+		for(int i=0; i<array.length; i++){
+			result[i]=(char)array[i];
+		}
+
+		return result;
 
 	}
 
 
 	public static int[] toIntArray(String[] array) {
 
-		int[] array2=new int[array.length];
+		int[] result=new int[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=StringUtils.val(array[i]);
+			result[i]=StringUtils.val(array[i]);
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static <T> String[] toStringArray(T[] array) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=array[i].toString();
+			result[i]=array[i].toString();
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static String[] toStringArray(char[] array) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=String.valueOf(array[i]);
+			result[i]=String.valueOf(array[i]);
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static String[] toStringArray(int[] array) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=String.valueOf(array[i]);
+			result[i]=String.valueOf(array[i]);
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static String toString(byte[] array) {
 
-		String string="";
+		StringBuilder result=new StringBuilder();
 
 		for(int i=0; i<array.length; i++){
-			string+=array[i];
+			result.append((char)array[i]);
 		}
 
-		return string;
+		return result.toString();
+
+	}
+
+
+	public static String toString(char[] array) {
+
+		StringBuilder result=new StringBuilder();
+
+		for(int i=0; i<array.length; i++){
+			result.append(array[i]);
+		}
+
+		return result.toString();
 
 	}
 
 
 	public static String toHex(byte[] array) {
 
-		String string="";
+		StringBuilder result=new StringBuilder();
 
 		for (byte b: array){
-			string+=StringUtils.toHex(b);
+			result.append(StringUtils.toHex(b));
 		}
 
-		return string;
+		return result.toString();
 
 	}
 
 
 	public static String toHexString(byte[] array) {
 
-		String string="";
+		StringBuilder result=new StringBuilder();
 
 		for (byte b: array){
 			String hexString=Integer.toHexString(0x00ff & b);
-			string+=hexString.length()==1 ? "0"+hexString : hexString;
+			result.append(hexString.length()==1 ? "0"+hexString : hexString);
 		}
 
-		return string;
+		return result.toString();
+
+	}
+
+
+	public static String[] toHexArray(byte[] array) {
+
+		String[] result=new String[array.length];
+
+		int index=0;
+		for (byte b: array){
+			String hexString=Integer.toHexString(0x00ff & b);
+			result[index++]=hexString.length()==1 ? "0"+hexString : hexString;
+		}
+
+		return result;
 
 	}
 
@@ -186,15 +226,13 @@ public class ArrayUtils {
 
 		if (array.length==0) return "";
 
-		String larger=array[0];
+		String result=array[0];
 
 		for (int i=1; i<array.length; i++){
-			if(array[i].length()>larger.length()){
-				larger=array[i];
-			}
+			if(array[i].length()>result.length()) result=array[i];
 		}
 
-		return larger;
+		return result;
 
 	}
 
@@ -203,15 +241,13 @@ public class ArrayUtils {
 
 		if (array.length==0) return 0;
 
-		int greater=array[0];
+		int result=array[0];
 
 		for(int i=1; i<array.length; i++){
-			if(array[i]>greater){
-				greater=array[i];
-			}
+			if(array[i]>result) result=array[i];
 		}
 
-		return greater;
+		return result;
 
 	}
 
@@ -220,15 +256,13 @@ public class ArrayUtils {
 
 		if (array.length==0) return 0;
 
-		int smaller=array[0];
+		int result=array[0];
 
 		for(int i=0; i<array.length; i++){
-			if(array[i]<smaller){
-				smaller=array[i];
-			}
+			if(array[i]<result) result=array[i];
 		}
 
-		return smaller;
+		return result;
 
 	}
 
@@ -236,11 +270,9 @@ public class ArrayUtils {
 	public static int startsWith(String[] array, String element) {
 
 		if(element!=null && !element.isEmpty()){
-
 			for(int i=0; i<array.length; i++){
 				if(array[i].startsWith(element)) return i;
 			}
-
 		}
 
 		return -1;
@@ -299,20 +331,13 @@ public class ArrayUtils {
 	 */
 	public static String[] trim(String[] array) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=array[i].trim();
+			result[i]=array[i].trim();
 		}
 
-		return array2;
-
-	}
-
-
-	public static String[] trim(String string, String separator) {
-
-		return trim(string.split(separator));
+		return result;
 
 	}
 
@@ -326,80 +351,80 @@ public class ArrayUtils {
 
 	public static String[] compact(String[] array){
 
-		Collection<String> list=new ArrayList(array.length);
+		Collection<String> result=new ArrayList(array.length);
 
 		for(int i=0; i<array.length; i++){
 			if(!array[i].trim().isEmpty()){
-				list.add(array[i]);
+				result.add(array[i]);
 			}
 		}
 
-		return CollectionUtils.toArray(list,String.class);
+		return CollectionUtils.toArray(result,String.class);
 
 	}
 
 
 	public static <T> String[] capitalize(T[] array) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=StringUtils.capitalize(array[i].toString());
+			result[i]=StringUtils.capitalize(array[i].toString());
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static <T> String[] uncapitalize(T[] array) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=StringUtils.uncapitalize(array[i].toString());
+			result[i]=StringUtils.uncapitalize(array[i].toString());
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static <T> String[] numbers(T[] array) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=StringUtils.numbers(array[i].toString());
+			result[i]=StringUtils.numbers(array[i].toString());
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static <T> String[] subArray(T[][] array, int index) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=array[i][index].toString();
+			result[i]=array[i][index].toString();
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static <T> String[] headArray(T[] array) {
 
-		String[] array2=new String[array.length-1];
+		String[] result=new String[array.length-1];
 
 		for(int i=0; i<array.length-1; i++){
-			array2[i]=array[i].toString();
+			result[i]=array[i].toString();
 		}
 
-		return array2;
+		return result;
 
 	}
 
@@ -413,13 +438,13 @@ public class ArrayUtils {
 
 	public static <T> String[] tailArray(T[] array) {
 
-		String[] array2=new String[array.length-1];
+		String[] result=new String[array.length-1];
 
 		for(int i=1; i<array.length; i++){
-			array2[i-1]=array[i].toString();
+			result[i-1]=array[i].toString();
 		}
 
-		return array2;
+		return result;
 
 	}
 
@@ -433,13 +458,13 @@ public class ArrayUtils {
 
 	public static String[] removeFromAll(String[] array, String searchFor) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=StringUtils.remove(array[i], searchFor);
+			result[i]=StringUtils.remove(array[i], searchFor);
 		}
 
-		return array2;
+		return result;
 
 	}
 
@@ -452,13 +477,13 @@ public class ArrayUtils {
 				toIndex>=array.length ||
 				toIndex-fromIndex<0) return "";
 
-		String string=array[fromIndex].toString();
+		StringBuilder result=new StringBuilder(array[fromIndex].toString());
 
 		for(int i=fromIndex+1; i<=toIndex; i++){
-			string+=separator+array[i];
+			result.append(separator + array[i].toString());
 		}
 
-		return string;
+		return result.toString();
 
 	}
 
@@ -486,59 +511,59 @@ public class ArrayUtils {
 
 	public static <T> String[] addPrefix(T[] array, String prefix) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=prefix+array[i];
+			result[i]=prefix+array[i];
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static <T> String[] addSuffix(T[] array, String suffix) {
 
-		String[] array2=new String[array.length];
+		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			array2[i]=array[i]+suffix;
+			result[i]=array[i]+suffix;
 		}
 
-		return array2;
+		return result;
 
 	}
 
 
 	public static <T> T[] insert(T[] array, T element, int position) {
 
-		List<T> list=toList(array);
+		List<T> result=toList(array);
 
-		list.add(position, element);
+		result.add(position, element);
 
-		return CollectionUtils.toArray(list,element.getClass());
+		return CollectionUtils.toArray(result,element.getClass());
 
 	}
 
 
 	public static <T> T[] removeContaining(T[] array, String searchFor){
 
-		List<T> list=toList(array);
+		List<T> result=toList(array);
 
-		CollectionUtils.removeContaining(list, searchFor);
+		CollectionUtils.removeContaining(result, searchFor);
 
-		return CollectionUtils.toArray(list,array[0].getClass());
+		return CollectionUtils.toArray(result,array[0].getClass());
 
 	}
 
 
 	public static <T> T[] removeContaining(T[] array, String[] searchFor){
 
-		List<T> list=toList(array);
+		List<T> result=toList(array);
 
-		CollectionUtils.removeContaining(list, searchFor);
+		CollectionUtils.removeContaining(result, searchFor);
 
-		return CollectionUtils.toArray(list,array[0].getClass());
+		return CollectionUtils.toArray(result,array[0].getClass());
 
 	}
 
@@ -548,15 +573,13 @@ public class ArrayUtils {
 		if(fromArray==null || fromArray.length==0) return intoArray;
 		if(intoArray==null || intoArray.length==0) return fromArray;
 
-		List<T> list=toList(intoArray);
+		List<T> result=toList(intoArray);
 
 		for(int i=0; i<fromArray.length; i++){
-			if (!list.contains(fromArray[i])){
-				list.add(fromArray[i]);
-			}
+			if (!result.contains(fromArray[i])) result.add(fromArray[i]);
 		}
 
-		return CollectionUtils.toArray(list,intoArray[0].getClass());
+		return CollectionUtils.toArray(result,intoArray[0].getClass());
 
 	}
 

@@ -218,7 +218,7 @@ public class RSAFactory {
 		System.out.println("encrypted: " + encrypted);
 
 		RSAPrivateCipher privateCipher = new RSAPrivateCipher(keyPair.getPrivate());
-		String decrypted = privateCipher.decrypt(encrypted.getBytes());
+		String decrypted = privateCipher.decrypt(encrypted);
 		System.out.println("decrypted: " + decrypted);
 
 		// Get the formats of the encoded bytes

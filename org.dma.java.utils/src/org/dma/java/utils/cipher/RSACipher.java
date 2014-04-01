@@ -61,7 +61,7 @@ public class RSACipher {
 			String encrypted = rsa.getPublicCipher().encrypt(message, 0);
 			System.out.println("encrypted: " + encrypted);
 
-			String decrypted = rsa.getPrivateCipher().decrypt(encrypted.getBytes());
+			String decrypted = rsa.getPrivateCipher().decrypt(encrypted);
 			System.out.println("decrypted: " + decrypted);
 
 			System.out.println("equal? " + decrypted.equals(message));

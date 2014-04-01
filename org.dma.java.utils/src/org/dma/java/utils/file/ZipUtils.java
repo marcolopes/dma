@@ -1,11 +1,12 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.utils.file;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,9 @@ import net.lingala.zip4j.util.Zip4jConstants;
 
 public class ZipUtils {
 
-	public static boolean createZipFile(String filename, List<File> filesToAdd, ZipParameters parameters){
+	public static void createZipFile(String filename, List<File> filesToAdd, ZipParameters parameters) throws Exception {
 
-		try {
+		try{
 			// Initiate ZipFile object with the path/name of the zip file.
 			// Zip file may not necessarily exist. If zip file exists, then
 			// all these files are added to the zip file. If zip file does not
@@ -37,13 +38,10 @@ public class ZipUtils {
 			// allow updating split zip files
 			zipFile.addFiles(new ArrayList(filesToAdd), parameters);
 
-			return true;
-
-		} catch (ZipException e) {
-			e.printStackTrace();
+		}catch(ZipException e){
+			throw new Exception(e.getCause() instanceof FileNotFoundException ?
+				e.getCause().getMessage() : e.getMessage());
 		}
-
-		return false;
 
 	}
 
@@ -55,40 +53,40 @@ public class ZipUtils {
 	 * DEFLATE_LEVEL_MAXIMUM - High compression level with a compromise of speed
 	 * DEFLATE_LEVEL_ULTRA - Highest compression level but low speed
 	 */
-	public static boolean createZipFile(String filename, List<File> filesToAdd, int compressionLevel){
+	public static void createZipFile(String filename, List<File> filesToAdd, int compressionLevel) throws Exception {
 
 		ZipParameters parameters = new ZipParameters();
 		// Set the compression level. This value has to be in between 0 to 9
 		parameters.setCompressionLevel(compressionLevel);
 
-		return createZipFile(filename, filesToAdd, parameters);
+		createZipFile(filename, filesToAdd, parameters);
 
 	}
 
 	/**
 	 * Optimal balance between compression level/speed
 	 */
-	public static boolean normalDeflate(String filename, List<File> filesToAdd){
+	public static void normalDeflate(String filename, List<File> filesToAdd) throws Exception {
 
-		return createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_NORMAL);
+		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_NORMAL);
 
 	}
 
 	/**
 	 * Lowest compression level but higher speed of compression
 	 */
-	public static boolean fastestDeflate(String filename, List<File> filesToAdd){
+	public static void fastestDeflate(String filename, List<File> filesToAdd) throws Exception {
 
-		return createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_FASTEST);
+		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_FASTEST);
 
 	}
 
 	/**
 	 * Highest compression level but low speed
 	 */
-	public static boolean ultraDeflate(String filename, List<File> filesToAdd){
+	public static void ultraDeflate(String filename, List<File> filesToAdd) throws Exception {
 
-		return createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_ULTRA);
+		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_ULTRA);
 
 	}
 

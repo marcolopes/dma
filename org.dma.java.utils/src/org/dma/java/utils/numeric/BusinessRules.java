@@ -50,7 +50,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal salePrice(BigDecimal cost, BigDecimal margin){
 
-		return cost.divide(BigDecimal.valueOf(1).subtract(margin.divide(BigDecimal.valueOf(100))),
+		return cost.divide(BigDecimal.ONE.subtract(margin.divide(BigDecimal.valueOf(100))),
 			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 			SCALE,RoundingMode.HALF_EVEN);
 
@@ -140,7 +140,7 @@ public class BusinessRules {
 	public static BigDecimal valueIncluded(BigDecimal value, BigDecimal perc){
 
 		return perc.compareTo(BigDecimal.valueOf(100))==0 ? BigDecimal.ZERO :
-			value.divide(BigDecimal.valueOf(1).subtract(perc.divide(BigDecimal.valueOf(100))),
+			value.divide(BigDecimal.ONE.subtract(perc.divide(BigDecimal.valueOf(100))),
 			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 			SCALE,RoundingMode.HALF_EVEN);
 
@@ -154,7 +154,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal valueExcluded(BigDecimal value, BigDecimal perc){
 
-		return value.divide(BigDecimal.valueOf(1).add(perc.divide(BigDecimal.valueOf(100))),
+		return value.divide(BigDecimal.ONE.add(perc.divide(BigDecimal.valueOf(100))),
 			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
 			SCALE,RoundingMode.HALF_EVEN);
 
