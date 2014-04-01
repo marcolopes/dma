@@ -26,7 +26,16 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-public abstract class TableViewerContainer<T> implements ITableViewerContainer<T> {
+public abstract class TableViewerContainer<T> {
+
+	public abstract T getNewObject();
+	public abstract void createObject();
+	public abstract void insertObject();
+	public abstract void removeObject();
+	public abstract void copyObject();
+	public abstract void editObject();
+	public abstract int getNumberOfObjects();
+	public abstract Collection<T> retrieveObjects();
 
 	protected final List<T> objectCollection=new ArrayList();
 
@@ -100,9 +109,9 @@ public abstract class TableViewerContainer<T> implements ITableViewerContainer<T
 		getTable().setSortColumn(getTable().getColumn(0));
 		getTable().setSortDirection(direction);
 
-		for(int i=0; i<getTable().getColumnCount(); i++){
+		for(TableColumn column: getTable().getColumns()){
 
-			getTable().getColumn(i).addSelectionListener(new SelectionAdapter() {
+			column.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					TableColumn column=(TableColumn)e.widget;
 					//avoids if unselected
@@ -129,9 +138,9 @@ public abstract class TableViewerContainer<T> implements ITableViewerContainer<T
 	 * Table
 	 */
 	public int computeSize(){
-		int visibleCount = (getTable().getClientArea().height-
+		int visibleCount=(getTable().getClientArea().height-
 				getTable().getHeaderHeight()+getTable().getItemHeight()-1) /
-				getTable().getItemHeight();
+					getTable().getItemHeight();
 		return visibleCount;
 	}
 
@@ -192,7 +201,7 @@ public abstract class TableViewerContainer<T> implements ITableViewerContainer<T
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.dma.eclipse.swt.viewers.ITableViewerContainer#updateTable()
+	 * @see org.dma.eclipse.swt.viewers.TableViewerContainer#updateTable()
 	 */
 	public void updateTable() {
 		objectCollection.clear();

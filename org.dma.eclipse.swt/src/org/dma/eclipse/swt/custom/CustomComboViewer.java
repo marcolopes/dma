@@ -13,7 +13,6 @@ public class CustomComboViewer extends ComboViewer {
 
 	public CustomComboViewer(Combo combo) {
 		super(combo);
-
 		setContentProvider(ArrayContentProvider.getInstance());
 		setInput(combo.getItems());
 
