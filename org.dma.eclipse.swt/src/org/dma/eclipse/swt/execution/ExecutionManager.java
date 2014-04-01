@@ -9,8 +9,8 @@ package org.dma.eclipse.swt.execution;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.dma.java.utils.Debug;
-import org.dma.java.utils.object.ObjectUtils;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -134,7 +134,7 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 		for(ExecutionDefinition execDefinition: INSTANCE.keySet()) {
 
 			if(ObjectUtils.equals(id, execDefinition.getId()) &&
-					ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
+				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
 
 				ExecutionEvent execEvent=INSTANCE.get(execDefinition);
 
@@ -156,6 +156,13 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 	}
 
 
+	public static void notifyDependentExecutions(String id) {
+
+		notifyDependentExecutions(id, null);
+
+	}
+
+
 	private static boolean hasDependentExecutions(String id, String secondaryId) {
 
 		for(ExecutionDefinition execDefinition: INSTANCE.keySet()) {
@@ -164,12 +171,19 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 
 			if(execDefinition!=null && execEvent!=null &&
 				execEvent.getPostresponseAction()!=null &&
-				ObjectUtils.equals(id, execDefinition.getId()) &&
-				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId()))
+					ObjectUtils.equals(id, execDefinition.getId()) &&
+					ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId()))
 				return true;
 		}
 
 		return false;
+
+	}
+
+
+	private static boolean hasDependentExecutions(String id) {
+
+		return hasDependentExecutions(id, null);
 
 	}
 

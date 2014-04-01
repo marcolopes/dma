@@ -18,7 +18,6 @@ public class CustomToolTip extends ToolTip {
 
 	public CustomToolTip(Shell parent, String text) {
 		super(parent, SWT.BALLOON | SWT.ICON_INFORMATION);
-
 		this.parent=parent;
 		setText(text);
 		setAutoHide(false);

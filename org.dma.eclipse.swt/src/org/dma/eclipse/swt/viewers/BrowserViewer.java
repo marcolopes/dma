@@ -44,7 +44,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 
 	public BrowserViewer(Composite parent) {
 		try{
-			createToolbarManager();
+			createToolBar();
 			createTabFolder(parent);
 			createBrowser();
 
@@ -79,7 +79,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 	}
 
 
-	private void createToolbarManager(){
+	private void createToolBar(){
 
 		button_home=new CustomAction("Home", SWTImageUtils.getImageDescriptor(
 			BrowserViewer.class, "icons/browser_home.png")){
@@ -110,16 +110,16 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 		};
 
 		//toolbar
-		IToolBarManager toolbarManager=getToolBarManager();
-		toolbarManager.add(button_home);
-		toolbarManager.add(button_stop);
-		toolbarManager.add(button_back);
-		toolbarManager.add(button_forward);
+		IToolBarManager toolBar=getToolBarManager();
+		toolBar.add(button_home);
+		toolBar.add(button_stop);
+		toolBar.add(button_back);
+		toolBar.add(button_forward);
 
 	}
 
 
-	private void updateToolbar(boolean enabled){
+	private void updateToolBar(boolean enabled){
 
 		button_home.setEnabled(enabled);
 		button_stop.setEnabled(enabled);
@@ -150,7 +150,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 			public void widgetSelected(SelectionEvent e) {
 				CTabItem tabItem=(CTabItem)e.item;
 				Debug.out("SELECTED", tabItem);
-				updateToolbar(getBrowser()!=null);
+				updateToolBar(getBrowser()!=null);
 				setFocus();
 			}
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -181,7 +181,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 				public void open(WindowEvent event) {
 					event.browser=createBrowser();
 					Debug.out("OPEN", event.browser);
-					updateToolbar(getBrowser()!=null);
+					updateToolBar(getBrowser()!=null);
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
@@ -189,7 +189,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 					CTabItem tabItem=tabFolder.getSelection();
 					Debug.out("CHANGED", tabItem);
 					tabItem.setText(getBrowser().getUrl());
-					updateToolbar(getBrowser()!=null);
+					updateToolBar(getBrowser()!=null);
 					setFocus();
 				}
 			});
