@@ -75,7 +75,7 @@ public class TraverseSupport extends ArrayList<Control> {
 
 				}
 
-			} catch (Exception e1) {
+			}catch(Exception e1) {
 				e1.printStackTrace();
 			}
 
@@ -101,7 +101,7 @@ public class TraverseSupport extends ArrayList<Control> {
 
 			}while(index!=index2 && !control.isEnabled());
 
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 

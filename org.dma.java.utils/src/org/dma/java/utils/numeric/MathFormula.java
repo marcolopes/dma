@@ -78,9 +78,9 @@ public class MathFormula {
 				Debug.out("result",result);
 			}
 
-		}catch (ScriptException e){
+		}catch(ScriptException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 

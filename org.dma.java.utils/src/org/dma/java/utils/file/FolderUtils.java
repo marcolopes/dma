@@ -20,9 +20,9 @@ public class FolderUtils {
 		try{
 			return new File(".").getCanonicalPath();
 
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -38,7 +38,7 @@ public class FolderUtils {
 
 			return folder.exists() ? true : folder.mkdir();
 
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -60,7 +60,7 @@ public class FolderUtils {
 				}
 			});
 
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -138,7 +138,7 @@ public class FolderUtils {
 				}
 			});
 
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -164,7 +164,7 @@ public class FolderUtils {
 
 			return names;
 
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 

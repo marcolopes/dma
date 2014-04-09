@@ -43,6 +43,10 @@ public abstract class ButtonKeypad extends CustomShell {
 	private String value = "";
 	private final int height;
 
+	public ButtonKeypad(){
+		this(Display.getCurrent().getClientArea().height / 10);
+	}
+
 	public ButtonKeypad(int height){
 		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
 
@@ -50,14 +54,9 @@ public abstract class ButtonKeypad extends CustomShell {
 
 		createCompositeDisplay();
 		createCompositeButtons();
-
 		setGridLayout();
 		pack();
 		setCenteredLocation();
-	}
-
-	public ButtonKeypad(){
-		this(Display.getCurrent().getClientArea().height / 10);
 	}
 
 
@@ -78,7 +77,7 @@ public abstract class ButtonKeypad extends CustomShell {
 
 
 	/*
-	 * Composites
+	 * Contents
 	 */
 	private void createCompositeDisplay() {
 

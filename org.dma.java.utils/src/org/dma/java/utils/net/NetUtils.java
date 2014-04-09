@@ -42,9 +42,9 @@ public class NetUtils {
 
 			return urlConn.getInputStream();
 
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -64,9 +64,9 @@ public class NetUtils {
 
 			return urlConn.getOutputStream();
 
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -82,16 +82,16 @@ public class NetUtils {
 
 		for (String host : hosts) {
 
-			try {
+			try{
                 InetAddress hostAddr=InetAddress.getByName(host);
                 System.out.println(hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
                 TimeInfo info=client.getTime(hostAddr);
                 Date date=new Date(info.getReturnTime());
                 return date;
 
-			}catch (IOException e){
+			}catch(IOException e){
 				System.out.println(e);
-			}catch (Exception e){
+			}catch(Exception e){
 				e.printStackTrace();
 			}
 

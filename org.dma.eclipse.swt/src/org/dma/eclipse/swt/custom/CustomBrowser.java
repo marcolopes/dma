@@ -18,15 +18,6 @@ public final class CustomBrowser extends Browser {
 	protected void checkSubclass() {}
 
 	/**
-	 * Creates a platform dependant browser<br>
-	 * Style <b>SWT.NONE</b> is used for Windows<br>
-	 * Style <b>SWT.WEBKIT</b> is used for other Plaftorms
-	 */
-	public CustomBrowser(Composite parent){
-		super(parent, SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT);
-	}
-
-	/**
 	 * Creates a </ul>CustomBrowser with a new shell as a parent<br>
 	 * A new shell is created with style SWT.NONE and
 	 * bounds are set to 0 to make it invisible.
@@ -34,6 +25,15 @@ public final class CustomBrowser extends Browser {
 	public CustomBrowser(Display display){
 		this(new Shell(display,SWT.NONE));
 		getShell().setBounds(0, 0, 0, 0);
+	}
+
+	/**
+	 * Creates a platform dependant browser<br>
+	 * Style <b>SWT.NONE</b> is used for Windows<br>
+	 * Style <b>SWT.WEBKIT</b> is used for other Plaftorms
+	 */
+	public CustomBrowser(Composite parent){
+		super(parent, SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT);
 	}
 
 

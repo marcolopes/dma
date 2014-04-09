@@ -26,14 +26,14 @@ public final class PublicServerTime {
 
 		for (String host : hosts) {
 
-			try {
+			try{
                 InetAddress hostAddr = InetAddress.getByName(host);
                 System.out.println("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
                 TimeInfo info = client.getTime(hostAddr);
                 Date date = new Date(info.getReturnTime());
                 return date;
 
-			}catch (IOException e) {
+			}catch(IOException e) {
 				e.printStackTrace();
 			}
 		}

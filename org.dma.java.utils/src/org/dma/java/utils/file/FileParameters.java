@@ -14,25 +14,19 @@ public class FileParameters {
 	private final File folder;
 	private final String filename;
 
-	public FileParameters(String prefix, String suffix, File folder){
+	public FileParameters(String prefix, String suffix){
+		this(prefix, suffix, "");
+	}
 
+	public FileParameters(String prefix, String suffix, String foldername){
+		this(prefix, suffix, new File(foldername));
+	}
+
+	public FileParameters(String prefix, String suffix, File folder){
 		this.prefix=prefix;
 		this.suffix=suffix;
 		this.folder=folder;
 		this.filename=prefix + (suffix==null ? "" : "."+suffix);
-
-	}
-
-	public FileParameters(String prefix, String suffix, String foldername){
-
-		this(prefix, suffix, new File(foldername));
-
-	}
-
-	public FileParameters(String prefix, String suffix){
-
-		this(prefix, suffix, "");
-
 	}
 
 

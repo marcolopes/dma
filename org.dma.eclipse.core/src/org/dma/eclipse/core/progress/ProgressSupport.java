@@ -42,7 +42,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			IProgressAction action=((Class<IProgressAction>)klass).newInstance();
 			add(action, action.getClass().getName());
 
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -97,7 +97,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 				}
 			});
 
-		}catch (InterruptedException e){
+		}catch(InterruptedException e){
 			Debug.out("InterruptedException");
 			return false;
 		}

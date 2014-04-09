@@ -18,14 +18,14 @@ public class FileExport extends FileDialog {
 	//subclassing
 	protected void checkSubclass() {}
 
+	public FileExport(String...extensions) {
+		this(new Shell(), extensions);
+	}
+
 	public FileExport(Shell parent, String...extensions) {
 		super(parent, SWT.SAVE);
 		setFilterExtensions(extensions);
 		System.out.println("extensions: "+Arrays.toString(extensions));
-	}
-
-	public FileExport(String...extensions) {
-		this(new Shell(), extensions);
 	}
 
 

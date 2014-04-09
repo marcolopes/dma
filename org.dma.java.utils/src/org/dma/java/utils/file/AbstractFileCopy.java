@@ -53,9 +53,9 @@ public abstract class AbstractFileCopy {
 
 			return cancel() ? false : true;
 
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -105,9 +105,9 @@ public abstract class AbstractFileCopy {
 
 			return cancel() ? false : true;
 
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
 		}catch(Exception e){
 			e.printStackTrace();

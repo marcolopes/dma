@@ -79,7 +79,7 @@ public class StatusbarSupport {
 					//re-use date object
 					date.setTime(System.currentTimeMillis());
 					item.setText(formatter.format(date));
-				} catch (Exception e){
+				}catch(Exception e){
 					e.printStackTrace();
 				}
 			}

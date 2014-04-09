@@ -34,36 +34,44 @@ public abstract class TableViewerContainer<T> {
 	public abstract void removeObject();
 	public abstract void copyObject();
 	public abstract void editObject();
-	public abstract int getNumberOfObjects();
 	public abstract Collection<T> retrieveObjects();
 
-	protected final List<T> objectCollection=new ArrayList();
+	private final List<T> objectCollection=new ArrayList();
 
 	private final TableViewer viewer;
 
-	private MouseAdapter tableDoubleClickListener;
-	private KeyListener tableEnterKeyListener;
+	private final MouseAdapter tableDoubleClickListener=new MouseAdapter() {
+		public void mouseDoubleClick(MouseEvent e) {
+			if(getSelectionElement()!=null) {
+				editObject();
+			}
+		}
+	};
+
+	private final KeyListener tableEnterKeyListener=new KeyAdapter() {
+		public void keyPressed(KeyEvent e) {
+			if (e.keyCode==SWT.CR || e.keyCode==SWT.KEYPAD_CR){
+				if(getSelectionElement()!=null) {
+					editObject();
+				}
+			}
+		}
+	};
 
 	public TableViewerContainer(TableViewer viewer) {
-
 		this.viewer=viewer;
 		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.viewer.setInput(objectCollection);
 
-		addTableDoubleClickListener();
-		addTableEnterKeyListener();
-
+		addTableListeners();
 	}
 
 
 	public void dispose() {
-
-		getTable().removeMouseListener(tableDoubleClickListener);
-		getTable().removeKeyListener(tableEnterKeyListener);
 		clearTable();
-
+		removeTableListeners();
+		//getTable().dispose();
 	}
-
 
 
 
@@ -72,34 +80,18 @@ public abstract class TableViewerContainer<T> {
 	/*
 	 * Listeners
 	 */
-	private void addTableDoubleClickListener() {
-
-		tableDoubleClickListener=new MouseAdapter() {
-			public void mouseDoubleClick(MouseEvent e) {
-				if(getSelectionElement()!=null) {
-					editObject();
-				}
-			}
-		};
+	private void addTableListeners() {
 
 		getTable().addMouseListener(tableDoubleClickListener);
+		getTable().addKeyListener(tableEnterKeyListener);
 
 	}
 
 
-	private void addTableEnterKeyListener() {
+	private void removeTableListeners() {
 
-		tableEnterKeyListener=new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				if (e.keyCode==SWT.CR || e.keyCode==SWT.KEYPAD_CR){
-					if(getSelectionElement()!=null) {
-						editObject();
-					}
-				}
-			}
-		};
-
-		getTable().addKeyListener(tableEnterKeyListener);
+		getTable().removeMouseListener(tableDoubleClickListener);
+		getTable().removeKeyListener(tableEnterKeyListener);
 
 	}
 
@@ -110,7 +102,6 @@ public abstract class TableViewerContainer<T> {
 		getTable().setSortDirection(direction);
 
 		for(TableColumn column: getTable().getColumns()){
-
 			column.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					TableColumn column=(TableColumn)e.widget;
@@ -124,11 +115,9 @@ public abstract class TableViewerContainer<T> {
 					updateTable();
 				}
 			});
-
 		}
 
 	}
-
 
 
 
@@ -160,6 +149,26 @@ public abstract class TableViewerContainer<T> {
 		viewer.refresh();
 	}
 
+
+	public void updateTable() {
+		objectCollection.clear();
+		objectCollection.addAll(retrieveObjects());
+		viewer.refresh();
+	}
+
+
+	public void moveSelectionUp(boolean wrap) {
+		int index=getTable().getSelectionIndex();
+		getTable().select(index<=0 && wrap ? getTable().getItemCount()-1 : index-1);
+		getTable().showSelection();
+	}
+
+
+	public void moveSelectionDown(boolean wrap) {
+		int index=getTable().getSelectionIndex();
+		getTable().select(index==getTable().getItemCount()-1 && wrap ? 0 : index+1);
+		getTable().showSelection();
+	}
 
 
 
@@ -198,43 +207,15 @@ public abstract class TableViewerContainer<T> {
 
 
 
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.dma.eclipse.swt.viewers.TableViewerContainer#updateTable()
-	 */
-	public void updateTable() {
-		objectCollection.clear();
-		objectCollection.addAll(retrieveObjects());
-		viewer.refresh();
-	}
-
-	public void moveSelectionUp(boolean wrap) {
-		int index=getTable().getSelectionIndex();
-		getTable().select(index<=0 && wrap ? getTable().getItemCount()-1 : index-1);
-		getTable().showSelection();
-	}
-
-	public void moveSelectionDown(boolean wrap) {
-		int index=getTable().getSelectionIndex();
-		getTable().select(index==getTable().getItemCount()-1 && wrap ? 0 : index+1);
-		getTable().showSelection();
-	}
-
-
-
-
-
-
 	/*
 	 * Getters and setters
 	 */
-	public int getSize() {
-		return objectCollection.size();
-	}
-
 	public List<T> getCollection() {
 		return objectCollection;
+	}
+
+	public int getNumberOfObjects() {
+		return getCollection().size();
 	}
 
 	public TableViewer getViewer() {
@@ -242,7 +223,7 @@ public abstract class TableViewerContainer<T> {
 	}
 
 	public Table getTable() {
-		return viewer.getTable();
+		return getViewer().getTable();
 	}
 
 

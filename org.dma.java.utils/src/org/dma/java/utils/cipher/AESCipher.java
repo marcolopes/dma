@@ -15,16 +15,16 @@ import org.dma.java.utils.string.StringUtils;
 
 public class AESCipher extends CryptoCipher {
 
-	public AESCipher(byte[] key, String transformation) {
-		super(new SecretKeySpec(key, "AES"), transformation);
-	}
-
 	/**
 	 * Algorithm: AES<br>
 	 * Length: 128bits<br>
 	 */
 	public AESCipher(String transformation) {
 		this(generateKey(128), ECB_PKCS5Padding);
+	}
+
+	public AESCipher(byte[] key, String transformation) {
+		super(new SecretKeySpec(key, "AES"), transformation);
 	}
 
 

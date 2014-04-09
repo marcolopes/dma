@@ -14,16 +14,16 @@ public class EmailAddress {
 	private String name;
 	private InternetAddress address;
 
+	public EmailAddress(String email){
+		this(email,"");
+	}
+
 	public EmailAddress(String email, String name){
 		this.email=email;
 		this.name=name;
 		try{
 			address=new InternetAddress(email);
 		}catch(AddressException e){}
-	}
-
-	public EmailAddress(String email){
-		this(email,"");
 	}
 
 
