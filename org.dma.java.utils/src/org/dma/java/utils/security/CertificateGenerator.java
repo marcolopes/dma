@@ -92,15 +92,15 @@ public class CertificateGenerator {
 
 			return cert;
 
-		} catch (CertificateEncodingException e){
+		}catch(CertificateEncodingException e){
 			e.printStackTrace();
-		} catch (InvalidKeyException e){
+		}catch(InvalidKeyException e){
 			e.printStackTrace();
-		} catch (IllegalStateException e){
+		}catch(IllegalStateException e){
 			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			e.printStackTrace();
-		} catch (SignatureException e){
+		}catch(SignatureException e){
 			e.printStackTrace();
 		}
 

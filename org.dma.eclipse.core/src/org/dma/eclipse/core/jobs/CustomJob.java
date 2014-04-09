@@ -34,6 +34,14 @@ public class CustomJob extends Job {
 
 	private boolean canceled=false;
 
+	public CustomJob() {
+		this("");
+	}
+
+	public CustomJob(String name) {
+		this(name,Job.LONG);
+	}
+
 	/**
 	 * Creates a new job
 	 * <p>
@@ -52,14 +60,6 @@ public class CustomJob extends Job {
 		setPriority(priority);
 		setUser(false); // avoid progress dialogue
 		setRule(MUTEX_RULE);
-	}
-
-	public CustomJob(String name) {
-		this(name,Job.LONG);
-	}
-
-	public CustomJob() {
-		this("");
 	}
 
 	public void reset(){
@@ -95,12 +95,6 @@ public class CustomJob extends Job {
 	}
 
 
-	public void canceling(){
-		Debug.out("JOB", this);
-		canceled=true;
-	}
-
-
 	public boolean isBusy() {
 		Debug.out("JOB STATE", getStateName());
 		int state=getState();
@@ -111,6 +105,12 @@ public class CustomJob extends Job {
 		return canceled;
 	}
 
+
+	@Override
+	public void canceling() {
+		Debug.out("JOB", this);
+		canceled=true;
+	}
 
 
 	/*
@@ -131,7 +131,7 @@ public class CustomJob extends Job {
 
 				final JobTask jtask=tasks.get(i);
 
-				monitor.setTaskName(jtask.getName());
+				monitor.subTask(jtask.getName());
 				Debug.out("JOB TASK", jtask.getName());
 
 				if (jtask instanceof JobUITask){
@@ -148,7 +148,7 @@ public class CustomJob extends Job {
 
 			}
 
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		finally{

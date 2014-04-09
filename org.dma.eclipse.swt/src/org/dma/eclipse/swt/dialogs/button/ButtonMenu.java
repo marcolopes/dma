@@ -27,28 +27,27 @@ public abstract class ButtonMenu extends CustomShell {
 	private final int labels;
 	private final int height;
 
+	public ButtonMenu(int labels){
+		this(labels, Display.getCurrent().getClientArea().height / 10);
+	}
+
 	public ButtonMenu(int labels, int height){
 		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
 
 		this.labels=labels;
 		this.height=height;
 
-		createComposite();
-
+		createContents();
 		setGridLayout();
 		pack();
 		setCenteredLocation();
 	}
 
-	public ButtonMenu(int labels){
-		this(labels, Display.getCurrent().getClientArea().height / 10);
-	}
-
 
 	/*
-	 * Composites
+	 * Contents
 	 */
-	private void createComposite() {
+	private void createContents() {
 
 		Composite composite=new Composite(this, SWT.NONE);
 		GridLayout gridLayout=new GridLayout(1, false);

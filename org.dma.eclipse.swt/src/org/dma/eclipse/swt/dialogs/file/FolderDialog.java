@@ -17,13 +17,13 @@ public class FolderDialog extends DirectoryDialog {
 	//subclassing
 	protected void checkSubclass() {}
 
+	public FolderDialog(String...extensions) {
+		this(new Shell(), extensions);
+	}
+
 	public FolderDialog(Shell parent, String...extensions) {
 		super(parent, SWT.SAVE);
 		System.out.println("extensions: "+Arrays.toString(extensions));
-	}
-
-	public FolderDialog(String...extensions) {
-		this(new Shell(), extensions);
 	}
 
 

@@ -49,11 +49,11 @@ public class RSAFactory {
 
 			return bytes;
 
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -80,11 +80,11 @@ public class RSAFactory {
 			PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
 			return kf.generatePrivate(spec);
 
-		}catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			System.out.println(e);
-		}catch (InvalidKeySpecException e){
+		}catch(InvalidKeySpecException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -119,11 +119,11 @@ public class RSAFactory {
 			X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
 			return kf.generatePublic(spec);
 
-		}catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			System.out.println(e);
-		}catch (InvalidKeySpecException e){
+		}catch(InvalidKeySpecException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -151,13 +151,13 @@ public class RSAFactory {
 			signature.update(messageBytes);
 			return signature.sign();
 
-		}catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			System.out.println(e);
-		}catch (InvalidKeyException e){
+		}catch(InvalidKeyException e){
 			System.out.println(e);
-		}catch (SignatureException e){
+		}catch(SignatureException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -176,13 +176,13 @@ public class RSAFactory {
 			signature.update(messageBytes);
 			return signature.verify(signatureBytes);
 
-		}catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			System.out.println(e);
-		}catch (InvalidKeyException e){
+		}catch(InvalidKeyException e){
 			System.out.println(e);
-		}catch (SignatureException e){
+		}catch(SignatureException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -201,7 +201,7 @@ public class RSAFactory {
 
 			return keyGen.genKeyPair();
 
-		}catch (Exception e){
+		}catch(Exception e){
 			System.out.println(e);
 		}
 		return null;
@@ -244,9 +244,9 @@ public class RSAFactory {
 			PrivateKey privateKey2 = keyFactory.generatePrivate(privateKeySpec);
 			System.out.println("Are both private keys equal? " + keyPair.getPrivate().equals(privateKey2));
 
-		}catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			System.out.println("No such algorithm: " + keyPair.getPrivate().getAlgorithm());
-		}catch (InvalidKeySpecException specException) {
+		}catch(InvalidKeySpecException specException) {
 			System.out.println("Invalid Key Spec Exception");
 		}
 
@@ -256,9 +256,9 @@ public class RSAFactory {
 			PublicKey publicKey2 = keyFactory.generatePublic(publicKeySpec);
 			System.out.println("Are both public keys equal? " + keyPair.getPublic().equals(publicKey2));
 
-		}catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			System.out.println("No such algorithm: " + keyPair.getPublic().getAlgorithm());
-		}catch (InvalidKeySpecException specException) {
+		}catch(InvalidKeySpecException specException) {
 			System.out.println("Invalid Key Spec Exception");
 		}
 

@@ -40,13 +40,13 @@ public class CryptoCipher {
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			decipher.init(Cipher.DECRYPT_MODE, key);
 
-		}catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			System.out.println(e);
-		}catch (NoSuchPaddingException e){
+		}catch(NoSuchPaddingException e){
 			System.out.println(e);
-		}catch (InvalidKeyException e){
+		}catch(InvalidKeyException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
@@ -74,11 +74,11 @@ public class CryptoCipher {
 			// Convert Bytes to String (UTF8 charset)
 			return new String(base64Bytes, "UTF8");
 
-		}catch (IllegalBlockSizeException e){
+		}catch(IllegalBlockSizeException e){
 			System.out.println(e);
-		}catch (BadPaddingException e){
+		}catch(BadPaddingException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;
@@ -105,9 +105,9 @@ public class CryptoCipher {
 
 			return encrypt(messageBytes, lineLength);
 
-		}catch (UnsupportedEncodingException e){
+		}catch(UnsupportedEncodingException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;
@@ -135,13 +135,13 @@ public class CryptoCipher {
 			// Convert Bytes to String (UTF8 charset)
 			return new String(decrypted, "UTF8");
 
-		}catch (UnsupportedEncodingException e){
+		}catch(UnsupportedEncodingException e){
 			System.out.println(e);
-		}catch (IllegalBlockSizeException e){
+		}catch(IllegalBlockSizeException e){
 			System.out.println(e);
-		}catch (BadPaddingException e){
+		}catch(BadPaddingException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;
@@ -167,9 +167,9 @@ public class CryptoCipher {
 
 			return decrypt(messageBytes);
 
-		}catch (UnsupportedEncodingException e){
+		}catch(UnsupportedEncodingException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;

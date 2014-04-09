@@ -65,7 +65,7 @@ public class FileUtils {
 
 		}catch(MalformedURLException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -100,7 +100,7 @@ public class FileUtils {
 
 			return new Base64(lineLength).encodeToString(bytes);
 
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -131,8 +131,8 @@ public class FileUtils {
 		try{
 			resource.close();
 
-		}catch (IOException e){
-		}catch (Exception e){
+		}catch(IOException e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
@@ -202,11 +202,11 @@ public class FileUtils {
 
 			return buffer.toString();
 
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -241,11 +241,11 @@ public class FileUtils {
 				close(br);
 			}
 
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -299,10 +299,10 @@ public class FileUtils {
 
 			return true;
 
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (NullPointerException e){
-		}catch (Exception e){
+		}catch(NullPointerException e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -351,11 +351,11 @@ public class FileUtils {
 				close(bis);
 			}
 
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -404,12 +404,12 @@ public class FileUtils {
 
 			return bytes.length;
 
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (NullPointerException e){
-		}catch (Exception e){
+		}catch(NullPointerException e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -441,12 +441,12 @@ public class FileUtils {
 
 			return true;
 
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (NullPointerException e){
-		}catch (Exception e){
+		}catch(NullPointerException e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -503,13 +503,13 @@ public class FileUtils {
 				close(br);
 			}
 
-		}catch (UnsupportedEncodingException e) {
+		}catch(UnsupportedEncodingException e) {
 			System.out.println(e);
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -558,11 +558,11 @@ public class FileUtils {
 				close(br);
 			}
 
-		}catch (UnsupportedEncodingException e){
+		}catch(UnsupportedEncodingException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -597,13 +597,13 @@ public class FileUtils {
 				close(br);
 			}
 
-		}catch (UnsupportedEncodingException e) {
+		}catch(UnsupportedEncodingException e) {
 			System.out.println(e);
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -660,14 +660,14 @@ public class FileUtils {
 
 			return true;
 
-		}catch (UnsupportedEncodingException e) {
+		}catch(UnsupportedEncodingException e) {
 			System.out.println(e);
-		}catch (FileNotFoundException e){
+		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch (IOException e){
+		}catch(IOException e){
 			System.out.println(e);
-		}catch (NullPointerException e){
-		}catch (Exception e){
+		}catch(NullPointerException e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -709,7 +709,7 @@ public class FileUtils {
 
 			return true;
 
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -740,7 +740,7 @@ public class FileUtils {
 
 			return file;
 
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 

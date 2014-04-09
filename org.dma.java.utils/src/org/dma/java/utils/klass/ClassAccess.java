@@ -25,13 +25,13 @@ public class ClassAccess {
 		catch (NoClassDefFoundError e){
 			error.getErrors().add(CLASS_NOT_FOUND+" "+klass.getCanonicalName()+"."+field);
 
-		}catch (NoSuchFieldException e){
+		}catch(NoSuchFieldException e){
 			error.getErrors().add(FIELD_NOT_FOUND+" "+klass.getCanonicalName()+"."+field);
 
-		}catch (IllegalAccessException e){
+		}catch(IllegalAccessException e){
 			error.getErrors().add(ILLEGAL_ACCESS+" "+klass.getCanonicalName()+"."+field);
 
-		}catch (ExceptionInInitializerError e) {
+		}catch(ExceptionInInitializerError e) {
 			error.getErrors().add(INITIALIZER_ERROR+" "+klass.getCanonicalName()+"."+field);
 		}
 

@@ -44,7 +44,7 @@ public class PasswordUtils {
 			md.update(password.getBytes());
 			return new Base64(0).encodeToString(md.digest());
 
-		} catch (NoSuchAlgorithmException e){
+		}catch(NoSuchAlgorithmException e){
 			e.printStackTrace();
 		}
 

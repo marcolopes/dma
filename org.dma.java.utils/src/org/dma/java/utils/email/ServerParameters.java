@@ -31,23 +31,23 @@ public class ServerParameters {
 	private final SECURITY security;
 	private final PasswordAuthentication authentication;
 
-	public ServerParameters(String hostname, int smtpport, SECURITY security, PasswordAuthentication authentication) {
-		this.hostname=hostname;
-		this.smtpport=smtpport;
-		this.security=security;
-		this.authentication=authentication;
-	}
-
-	public ServerParameters(String hostname, int smtpport, int security, PasswordAuthentication authentication) {
-		this(hostname, smtpport, SECURITY.get(security), authentication);
+	public ServerParameters(String hostname, int smtpport, int security) {
+		this(hostname, smtpport, SECURITY.get(security), null);
 	}
 
 	public ServerParameters(String hostname, int smtpport, SECURITY security) {
 		this(hostname, smtpport, security, null);
 	}
 
-	public ServerParameters(String hostname, int smtpport, int security) {
-		this(hostname, smtpport, SECURITY.get(security), null);
+	public ServerParameters(String hostname, int smtpport, int security, PasswordAuthentication authentication) {
+		this(hostname, smtpport, SECURITY.get(security), authentication);
+	}
+
+	public ServerParameters(String hostname, int smtpport, SECURITY security, PasswordAuthentication authentication) {
+		this.hostname=hostname;
+		this.smtpport=smtpport;
+		this.security=security;
+		this.authentication=authentication;
 	}
 
 

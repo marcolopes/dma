@@ -18,14 +18,14 @@ public class FileImport extends FileDialog {
 	//subclassing
 	protected void checkSubclass() {}
 
+	public FileImport(String...extensions) {
+		this(new Shell(), extensions);
+	}
+
 	public FileImport(Shell parent, String...extensions) {
 		super(parent, SWT.OPEN);
 		setFilterExtensions(extensions);
 		System.out.println("extensions: "+Arrays.toString(extensions));
-	}
-
-	public FileImport(String...extensions) {
-		this(new Shell(), extensions);
 	}
 
 

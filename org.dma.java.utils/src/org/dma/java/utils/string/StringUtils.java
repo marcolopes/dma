@@ -7,12 +7,13 @@ package org.dma.java.utils.string;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.dma.java.utils.array.ArrayUtils;
-import org.dma.java.utils.array.CollectionUtils;
+import org.dma.java.utils.timedate.TimeChronograph;
 
 public class StringUtils {
 
@@ -28,7 +29,7 @@ public class StringUtils {
 		try{
 			return Integer.valueOf(string);
 
-		} catch (NumberFormatException e){}
+		}catch(NumberFormatException e){}
 
 		return 0;
 
@@ -175,9 +176,9 @@ public class StringUtils {
 	}
 
 
-	public static Integer[] indexOf(String string, String searchFor) {
+	public static List<Integer> indexOf(String string, String searchFor) {
 
-		Collection<Integer> result=new ArrayList();
+		List<Integer> result=new ArrayList();
 
 		int index=0;
 		while((index=string.indexOf(searchFor, index))!=-1) {
@@ -185,7 +186,7 @@ public class StringUtils {
 			index+=searchFor.length();
 		}
 
-		return CollectionUtils.toArray(result,Integer.class);
+		return result;
 
 	}
 
@@ -242,6 +243,9 @@ public class StringUtils {
 	}
 
 
+	/**
+	 * Ensure the ESCAPE (\) char is escaped!
+	 */
 	public static String escape(String string) {
 
 		return string.replace("\\","\\\\");
@@ -249,13 +253,19 @@ public class StringUtils {
 	}
 
 
+	/**
+	 * Escape and surround with QUOTE chars
+	 */
 	public static String quote(String string, char quote) {
 
-		return quote + string.replace("\"","\\\"") + quote;
+		return quote + escape(string).replace("\"","\\\"") + quote;
 
 	}
 
 
+	/**
+	 * Escape and surround with COMMA (") chars
+	 */
 	public static String quote(String string) {
 
 		return quote(string, '\"');
@@ -263,6 +273,9 @@ public class StringUtils {
 	}
 
 
+	/**
+	 * Remove any surrounded QUOTE chars
+	 */
 	public static String unquote(String string, char quote) {
 
 		return !isQuoted(string, quote) ?
@@ -270,7 +283,9 @@ public class StringUtils {
 
 	}
 
-
+	/**
+	 * Remove any surrounded COMMA (") chars
+	 */
 	public static String unquote(String string) {
 
 		return unquote(string, '\"');
@@ -409,17 +424,6 @@ public class StringUtils {
 	}
 
 
-	public static String replaceChars(String string, String searchFor, char replaceWith) {
-
-		for(int i=0; i<searchFor.length(); i++){
-			string=string.replace(searchFor.charAt(i), replaceWith);
-		}
-
-		return string;
-
-	}
-
-
 	public static String removeChars(String string, String searchFor) {
 
 		for(int i=0; i<searchFor.length(); i++){
@@ -482,7 +486,50 @@ public class StringUtils {
 	}
 
 
+	/**
+	 * Adapted from JAVA 7 native String split
+	 */
+	public static String[] fastSplit(String string, String searchFor) {
+
+		int beginIndex=0;
+		int endIndex=0;
+		List<String> list=new ArrayList();
+		while((endIndex=string.indexOf(searchFor, beginIndex))!=-1) {
+		    list.add(string.substring(beginIndex, endIndex));
+		    beginIndex=endIndex+1;
+		}
+		// If no match was found, return this
+		if (beginIndex==0) return new String[]{string};
+		// Add remaining segment
+		list.add(string.substring(beginIndex, string.length()));
+		// Construct result
+		int resultSize=list.size();
+		// Avoid last empty element?
+		while(resultSize>0 && list.get(resultSize-1).length()==0) resultSize--;
+		return list.subList(0, resultSize).toArray(new String[resultSize]);
+
+	}
+
+
 	public static void main(String[] argvs) {
+
+		String string=".a.b.c.";
+		int repeat=1000000;
+		TimeChronograph time=new TimeChronograph();
+
+		time.start();
+		System.out.println(Arrays.asList(string.split("\\.")));
+		for(int i=0; i<repeat; i++) string.split("\\.");
+		time.stop();
+		System.out.println(time);
+
+		time.reset();
+		time.start();
+		System.out.println(Arrays.asList(fastSplit(string, ".")));
+		for(int i=0; i<repeat; i++) fastSplit(string, ".");
+		time.stop();
+		System.out.println(time);
+
 	}
 
 

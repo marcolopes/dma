@@ -118,16 +118,16 @@ public class Numerals {
 	//unit label
 	private final NumeralsUnit unit;
 
-	public Numerals(int scale, NumeralsUnit unit) {
-		this.scale=scale;
-		this.unit=unit;
-	}
-
 	/**
 	 * EURO by default
 	 */
 	public Numerals(int scale) {
 		this(scale,UNIT_EURO);
+	}
+
+	public Numerals(int scale, NumeralsUnit unit) {
+		this.scale=scale;
+		this.unit=unit;
 	}
 
 
@@ -160,7 +160,7 @@ public class Numerals {
 				s+=ordersToString(getOrders(decimal),unit.decimal);
 			}
 
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -183,7 +183,7 @@ public class Numerals {
 			}
 			orders.add(value.intValue());
 
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -264,7 +264,7 @@ public class Numerals {
 			else
 				s+=unit[1];
 
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -296,7 +296,7 @@ public class Numerals {
 				s+=value%100!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%100) : "";
 			}
 
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 

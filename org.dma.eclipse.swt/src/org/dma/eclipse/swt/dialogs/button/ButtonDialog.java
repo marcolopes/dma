@@ -31,27 +31,26 @@ public abstract class ButtonDialog extends CustomShell {
 	private Text text;
 	private final int height;
 
+	public ButtonDialog(){
+		this(Display.getCurrent().getClientArea().height / 10);
+	}
+
 	public ButtonDialog(int height){
 		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
 
 		this.height=height;
 
-		createComposite();
-
+		createContents();
 		setGridLayout();
 		pack();
 		setCenteredLocation();
 	}
 
-	public ButtonDialog(){
-		this(Display.getCurrent().getClientArea().height / 10);
-	}
-
 
 	/*
-	 * Composites
+	 * Contents
 	 */
-	private void createComposite() {
+	private void createContents() {
 
 		Composite composite=new Composite(this, SWT.NONE);
 		GridLayout gridLayout=new GridLayout(2, false);

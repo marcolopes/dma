@@ -47,7 +47,6 @@ public class Certificate {
 		}
 	}
 
-
 	public Certificate(CERTIFICATE_TYPE type, String filename, String password, String alias) {
 		this(type, filename, password);
 		load(alias);
@@ -69,7 +68,6 @@ public class Certificate {
 		}
 
 		return false;
-
 	}
 
 

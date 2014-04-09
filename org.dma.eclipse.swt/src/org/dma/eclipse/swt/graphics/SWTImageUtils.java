@@ -53,7 +53,7 @@ public class SWTImageUtils {
 			return data.transparentPixel > 0 ?
 				new Image(display, data, data.getTransparencyMask()) :
 				new Image(display, data);
-		} finally {
+		}finally{
 			stream.close();
 		}
 	}
@@ -122,7 +122,7 @@ public class SWTImageUtils {
 	public static ImageDescriptor getImageDescriptor(InputStream stream) throws IOException {
 		try{
 			return ImageDescriptor.createFromImageData(new ImageData(stream));
-		} finally {
+		}finally{
 			stream.close();
 		}
 	}

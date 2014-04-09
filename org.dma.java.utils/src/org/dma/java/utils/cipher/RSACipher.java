@@ -17,18 +17,18 @@ public class RSACipher {
 	private final RSAPublicCipher publicCipher;
 	private final RSAPrivateCipher privateCipher;
 
-	public RSACipher(PrivateKey privateKey, PublicKey publicKey){
-		this.keyPair=new KeyPair(publicKey, privateKey);
-		this.publicCipher=new RSAPublicCipher(publicKey);
-		this.privateCipher=new RSAPrivateCipher(privateKey);
+	public RSACipher(int keysize){
+		this(RSAFactory.generateKeyPair(keysize));
 	}
 
 	public RSACipher(KeyPair keyPair){
 		this(keyPair.getPrivate(), keyPair.getPublic());
 	}
 
-	public RSACipher(int keysize){
-		this(RSAFactory.generateKeyPair(keysize));
+	public RSACipher(PrivateKey privateKey, PublicKey publicKey){
+		this.keyPair=new KeyPair(publicKey, privateKey);
+		this.publicCipher=new RSAPublicCipher(publicKey);
+		this.privateCipher=new RSAPrivateCipher(privateKey);
 	}
 
 

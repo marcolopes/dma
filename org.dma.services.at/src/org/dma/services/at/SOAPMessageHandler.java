@@ -215,7 +215,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 			interceptAndRecordSoapMessage(smc);
 
-		}catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -250,7 +250,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") + sourceToXMLString(source));
 
-		}catch (Exception e) {
+		}catch(Exception e){
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));
 			LOGGER.severe("Could not intercept and log soap message\n\n" + sw.toString());

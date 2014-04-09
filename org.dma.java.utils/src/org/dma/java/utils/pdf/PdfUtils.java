@@ -121,7 +121,7 @@ public class PdfUtils {
 			}finally{
 				try{
 					doc.close();
-				}catch (IOException e){}
+				}catch(IOException e){}
 			}
 
 		}catch(IOException e){

@@ -87,7 +87,7 @@ public class Debug {
 				break;
 			}
 
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 

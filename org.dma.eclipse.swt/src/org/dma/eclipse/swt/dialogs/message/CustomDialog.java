@@ -1,10 +1,11 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.swt.dialogs.message;
 
+import org.dma.java.utils.klass.MethodResult;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -43,22 +44,28 @@ public class CustomDialog {
 	}
 
 
-	public static boolean open(String operation, String message, TYPE type) {
+	public static boolean open(String operation, String message, final TYPE type) {
 
 		if (message==null || message.isEmpty()) return type.result;
 
-		String message2=operation==null || operation.isEmpty() ?
+		final String message2=operation==null || operation.isEmpty() ?
 				message : operation +"\n"+ message;
 
-		Shell shell=Display.getDefault().getActiveShell();
-		switch (type) {
-			case ERROR: MessageDialog.openError(shell, type.title, message2); break;
-			case INFORMATION: MessageDialog.openInformation(shell, type.title, message2); break;
-			case QUESTION: return MessageDialog.openQuestion(shell, type.title, message2);
-			case CONFIRMATION: return MessageDialog.openConfirm(shell, type.title, message2);
-		}
+		final MethodResult result=new MethodResult(true);
 
-		return true;
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				Shell shell=Display.getDefault().getActiveShell();
+				switch (type) {
+					case ERROR: MessageDialog.openError(shell, type.title, message2); break;
+					case INFORMATION: MessageDialog.openInformation(shell, type.title, message2); break;
+					case QUESTION: result.value=MessageDialog.openQuestion(shell, type.title, message2); break;
+					case CONFIRMATION: result.value=MessageDialog.openConfirm(shell, type.title, message2); break;
+				}
+			}
+		});
+
+		return result.value;
 
 	}
 
