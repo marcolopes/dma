@@ -222,7 +222,7 @@ public class ArrayUtils {
 	/*
 	 * Analysis
 	 */
-	public static String larger(String[] array){
+	public static String larger(String[] array) {
 
 		if (array.length==0) return "";
 
@@ -546,7 +546,7 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> T[] removeContaining(T[] array, String searchFor){
+	public static <T> T[] removeContaining(T[] array, String searchFor) {
 
 		List<T> result=toList(array);
 
@@ -557,7 +557,7 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> T[] removeContaining(T[] array, String[] searchFor){
+	public static <T> T[] removeContaining(T[] array, String[] searchFor) {
 
 		List<T> result=toList(array);
 
@@ -575,8 +575,8 @@ public class ArrayUtils {
 
 		List<T> result=toList(intoArray);
 
-		for(int i=0; i<fromArray.length; i++){
-			if (!result.contains(fromArray[i])) result.add(fromArray[i]);
+		for(T element: fromArray){
+			if (!result.contains(element)) result.add(element);
 		}
 
 		return CollectionUtils.toArray(result,intoArray[0].getClass());
@@ -584,7 +584,7 @@ public class ArrayUtils {
 	}
 
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 	}
 
 

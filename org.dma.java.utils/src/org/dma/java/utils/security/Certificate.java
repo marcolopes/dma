@@ -59,7 +59,7 @@ public class Certificate {
 		try{
 			X509Cert=(X509Certificate)keyStore.getCertificate(alias());
 			if (X509Cert==null) throw new Exception("Alias not found: "+alias);
-	    	daysToExpire=TimeDateUtils.getDaysBetween(X509Cert.getNotAfter(), new Date());
+	    	daysToExpire=TimeDateUtils.getDaysBetween(new Date(), X509Cert.getNotAfter());
 
 			return true;
 

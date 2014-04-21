@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -50,45 +52,59 @@ public class TimeDateUtils {
 	/*
 	 * Date
 	 */
-	public static final String DATE_YEAR_FORMAT = String.valueOf(new char[]{JAVA_YEAR,JAVA_YEAR,JAVA_YEAR,JAVA_YEAR});
-	public static final String DATE_MONTH_FORMAT = String.valueOf(new char[]{JAVA_MONTH,JAVA_MONTH});
-	public static final String DATE_DAY_FORMAT = String.valueOf(new char[]{JAVA_DAY_OF_MONTH,JAVA_DAY_OF_MONTH});
+	public static final String DATE_YEAR_PATTERN = String.valueOf(new char[]{JAVA_YEAR,JAVA_YEAR,JAVA_YEAR,JAVA_YEAR});
+	public static final String DATE_MONTH_PATTERN = String.valueOf(new char[]{JAVA_MONTH,JAVA_MONTH});
+	public static final String DATE_DAY_PATTERN = String.valueOf(new char[]{JAVA_DAY_OF_MONTH,JAVA_DAY_OF_MONTH});
 
 	public static final char DEFAULT_DATE_SEPARATOR = '-';
-	public static final String DEFAULT_DATE_FORMAT = DATE_DAY_FORMAT+DEFAULT_DATE_SEPARATOR+DATE_MONTH_FORMAT+DEFAULT_DATE_SEPARATOR+DATE_YEAR_FORMAT;
+	public static final String DEFAULT_DATE_PATTERN = DATE_DAY_PATTERN+DEFAULT_DATE_SEPARATOR+DATE_MONTH_PATTERN+DEFAULT_DATE_SEPARATOR+DATE_YEAR_PATTERN;
 
 	/*
 	 * Time
 	 */
 	public static final long MILLISECOND_PER_DAY = 60 * 60 * 24 * 1000;
-	public static final String TIME_HOUR_FORMAT = String.valueOf(new char[]{JAVA_HOUR_IN_DAY24,JAVA_HOUR_IN_DAY24});
-	public static final String TIME_MINUTE_FORMAT = String.valueOf(new char[]{JAVA_MINUTE,JAVA_MINUTE});
-	public static final String TIME_SECOND_FORMAT = String.valueOf(new char[]{JAVA_SECOND,JAVA_SECOND});
-	public static final String TIME_MILISECOND_FORMAT = String.valueOf(new char[]{JAVA_MILLISECOND,JAVA_MILLISECOND,JAVA_MILLISECOND});
+	public static final String TIME_HOUR_PATTERN = String.valueOf(new char[]{JAVA_HOUR_IN_DAY24,JAVA_HOUR_IN_DAY24});
+	public static final String TIME_MINUTE_PATTERN = String.valueOf(new char[]{JAVA_MINUTE,JAVA_MINUTE});
+	public static final String TIME_SECOND_PATTERN = String.valueOf(new char[]{JAVA_SECOND,JAVA_SECOND});
+	public static final String TIME_MILISECOND_PATTERN = String.valueOf(new char[]{JAVA_MILLISECOND,JAVA_MILLISECOND,JAVA_MILLISECOND});
 
 	public static final char DEFAULT_TIME_SEPARATOR = ':';
-	public static final String DEFAULT_TIME_FORMAT = TIME_HOUR_FORMAT+DEFAULT_TIME_SEPARATOR+TIME_MINUTE_FORMAT;
+	public static final String DEFAULT_TIME_PATTERN = TIME_HOUR_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_MINUTE_PATTERN;
+
+	/*
+	 * Cache
+	 */
+	private static final Map<String, SimpleDateFormat> SDF_CACHE = new HashMap();
+
+	public static SimpleDateFormat getSimpleDateFormat(String pattern) {
+		SimpleDateFormat sdf=SDF_CACHE.get(pattern);
+		if (sdf==null){
+			sdf=new SimpleDateFormat(pattern);
+			SDF_CACHE.put(pattern, sdf);
+		}
+		return sdf;
+	}
 
 	/*
 	 * Validation
 	 */
-	public static boolean isDateFormatValid(String date, String format) {
-		return getDate(date, format)!=null;
+	public static boolean isDateFormatValid(String date, String pattern) {
+		return getDate(date, pattern)!=null;
 	}
 
 
 	public static boolean isDateFormatValid(String date) {
-		return isDateFormatValid(date, DEFAULT_DATE_FORMAT);
+		return isDateFormatValid(date, DEFAULT_DATE_PATTERN);
 	}
 
 
-	public static boolean isTimeFormatValid(String time, String format) {
-		return getTime(time, format)!=null;
+	public static boolean isTimeFormatValid(String time, String pattern) {
+		return getTime(time, pattern)!=null;
 	}
 
 
 	public static boolean isTimeFormatValid(String time) {
-		return isTimeFormatValid(time, DEFAULT_TIME_FORMAT);
+		return isTimeFormatValid(time, DEFAULT_TIME_PATTERN);
 	}
 
 
@@ -98,31 +114,31 @@ public class TimeDateUtils {
 	/*
 	 * Format
 	 */
-	public static String getDateFormatted(Date date, String format) {
+	public static String getDateFormatted(Date date, String pattern) {
 		try{
-			return new SimpleDateFormat(format).format(date);
+			return getSimpleDateFormat(pattern).format(date);
 
 		}catch(Exception e){}
 		return null;
 	}
 
 
-	public static String getDateFormatted(String format) {
-		return getDateFormatted(getCurrentDate(), format);
+	public static String getDateFormatted(String pattern) {
+		return getDateFormatted(getCurrentDate(), pattern);
 	}
 
 
 	/**
-	 * Date formatted with DEFAULT FORMAT
+	 * Date formatted with DEFAULT PATTERN
 	 */
 	public static String getDateFormatted(Date date) {
-		return getDateFormatted(date, DEFAULT_DATE_FORMAT);
+		return getDateFormatted(date, DEFAULT_DATE_PATTERN);
 	}
 
 
-	public static String getTimeFormatted(Time time, String format) {
+	public static String getTimeFormatted(Time time, String pattern) {
 		try{
-			return new SimpleDateFormat(format).format(time);
+			return getSimpleDateFormat(pattern).format(time);
 
 		}catch(Exception e){}
 		return null;
@@ -130,21 +146,21 @@ public class TimeDateUtils {
 
 
 	/**
-	 * Time formatted with DEFAULT FORMAT
+	 * Time formatted with DEFAULT PATTERN
 	 */
 	public static String getTimeFormatted(Time time) {
-		return getTimeFormatted(time, DEFAULT_TIME_FORMAT);
+		return getTimeFormatted(time, DEFAULT_TIME_PATTERN);
 	}
 
 
-	public static String getTimeFormatted(String format) {
-		return getTimeFormatted(getCurrentTime(), format);
+	public static String getTimeFormatted(String pattern) {
+		return getTimeFormatted(getCurrentTime(), pattern);
 	}
 
 
-	public static String getTimestampFormatted(Timestamp timestamp, String format) {
+	public static String getTimestampFormatted(Timestamp timestamp, String pattern) {
 		try{
-			return new SimpleDateFormat(format).format(timestamp);
+			return getSimpleDateFormat(pattern).format(timestamp);
 
 		}catch(Exception e){}
 		return null;
@@ -157,9 +173,9 @@ public class TimeDateUtils {
 	/*
 	 * Conversion
 	 */
-	public static Date getDateParsed(String date, String format) {
+	public static Date getDateParsed(String date, String pattern) {
 		try{
-			return new SimpleDateFormat(format).parse(date);
+			return getSimpleDateFormat(pattern).parse(date);
 
 		}catch(ParseException e){
 			System.out.println(e);
@@ -169,13 +185,13 @@ public class TimeDateUtils {
 
 
 	public static Date getDateParsed(String date) {
-		return getDateParsed(date, DEFAULT_DATE_FORMAT);
+		return getDateParsed(date, DEFAULT_DATE_PATTERN);
 	}
 
 
-	public static Time getTimeParsed(String time, String format) {
+	public static Time getTimeParsed(String time, String pattern) {
 		try{
-			return new Time(new SimpleDateFormat(format).parse(time).getTime());
+			return new Time(getSimpleDateFormat(pattern).parse(time).getTime());
 
 		}catch(ParseException e){
 			System.out.println(e);
@@ -185,7 +201,7 @@ public class TimeDateUtils {
 
 
 	public static Time getTimeParsed(String time) {
-		return getTimeParsed(time, DEFAULT_TIME_FORMAT);
+		return getTimeParsed(time, DEFAULT_TIME_PATTERN);
 	}
 
 
@@ -268,17 +284,17 @@ public class TimeDateUtils {
 	}
 
 
-	public static Calendar getCalendar(String date, String format){
+	public static Calendar getCalendar(String date, String pattern){
 		Calendar calendar=Calendar.getInstance();
-		calendar.setTime(getDate(date, format));
+		calendar.setTime(getDate(date, pattern));
 		return calendar;
 	}
 
 	/**
-	 * Calendar formatted with DEFAULT FORMAT
+	 * Calendar formatted with DEFAULT PATTERN
 	 */
 	public static Calendar getCalendar(String date) {
-		return getCalendar(date, DEFAULT_DATE_FORMAT);
+		return getCalendar(date, DEFAULT_DATE_PATTERN);
 	}
 
 
@@ -352,16 +368,16 @@ public class TimeDateUtils {
 	}
 
 
-	public static long getDaysBetween(Calendar calendar1, Calendar calendar2){
-		calendar1.set(Calendar.HOUR_OF_DAY, 0); // Crucial
-		calendar1.set(Calendar.MINUTE, 0);
-		calendar1.set(Calendar.SECOND, 0);
-		calendar1.set(Calendar.MILLISECOND, 0);
-		calendar2.set(Calendar.HOUR_OF_DAY, 0); // Crucial
-		calendar2.set(Calendar.MINUTE, 0);
-		calendar2.set(Calendar.SECOND, 0);
-		calendar2.set(Calendar.MILLISECOND, 0);
-		return TimeUnit.MILLISECONDS.toDays(calendar1.getTimeInMillis()-calendar2.getTimeInMillis());
+	public static long getDaysBetween(Calendar oldDate, Calendar newDate) {
+		oldDate.set(Calendar.HOUR_OF_DAY, 0); // Crucial
+		oldDate.set(Calendar.MINUTE, 0);
+		oldDate.set(Calendar.SECOND, 0);
+		oldDate.set(Calendar.MILLISECOND, 0);
+		newDate.set(Calendar.HOUR_OF_DAY, 0); // Crucial
+		newDate.set(Calendar.MINUTE, 0);
+		newDate.set(Calendar.SECOND, 0);
+		newDate.set(Calendar.MILLISECOND, 0);
+		return TimeUnit.MILLISECONDS.toDays(newDate.getTimeInMillis()-oldDate.getTimeInMillis());
 	}
 
 
@@ -426,21 +442,21 @@ public class TimeDateUtils {
 	}
 
 
-	public static Date getDate(String date, String format) {
+	public static Date getDate(String date, String pattern) {
 		try{
-			date=date.replace(DATE_YEAR_FORMAT, String.valueOf(getCurrentYear()));
-			date=date.replace(DATE_MONTH_FORMAT, String.valueOf(getCurrentMonth()));
-			date=date.replace(DATE_DAY_FORMAT, String.valueOf(getCurrentDayOfMonth()));
+			date=date.replace(DATE_YEAR_PATTERN, String.valueOf(getCurrentYear()));
+			date=date.replace(DATE_MONTH_PATTERN, String.valueOf(getCurrentMonth()));
+			date=date.replace(DATE_DAY_PATTERN, String.valueOf(getCurrentDayOfMonth()));
 		}catch(Exception e){}
-		return getDateParsed(date, format);
+		return getDateParsed(date, pattern);
 	}
 
 
 	/**
-	 * Date formatted with DEFAULT FORMAT
+	 * Date formatted with DEFAULT PATTERN
 	 */
 	public static Date getDate(String date) {
-		return getDate(date, DEFAULT_DATE_FORMAT);
+		return getDate(date, DEFAULT_DATE_PATTERN);
 	}
 
 
@@ -528,8 +544,8 @@ public class TimeDateUtils {
 	}
 
 
-	public static long getDaysBetween(Date date1, Date date2){
-		return getDaysBetween(getCalendar(date1), getCalendar(date2));
+	public static long getDaysBetween(Date oldDate, Date newDate){
+		return getDaysBetween(getCalendar(oldDate), getCalendar(newDate));
 	}
 
 
@@ -581,21 +597,21 @@ public class TimeDateUtils {
 	}
 
 
-	public static Time getTime(String time, String format) {
+	public static Time getTime(String time, String pattern) {
 		try{
-			time=time.replace(TIME_HOUR_FORMAT, String.valueOf(getCurrentHour()));
-			time=time.replace(TIME_MINUTE_FORMAT, String.valueOf(getCurrentMinute()));
-			time=time.replace(TIME_SECOND_FORMAT, String.valueOf(getCurrentSecond()));
+			time=time.replace(TIME_HOUR_PATTERN, String.valueOf(getCurrentHour()));
+			time=time.replace(TIME_MINUTE_PATTERN, String.valueOf(getCurrentMinute()));
+			time=time.replace(TIME_SECOND_PATTERN, String.valueOf(getCurrentSecond()));
 		}catch(Exception e){}
-		return getTimeParsed(time, format);
+		return getTimeParsed(time, pattern);
 	}
 
 
 	/**
-	 * Time formatted with DEFAULT FORMAT
+	 * Time formatted with DEFAULT PATTERN
 	 */
 	public static Time getTime(String time) {
-		return getTime(time, DEFAULT_TIME_FORMAT);
+		return getTime(time, DEFAULT_TIME_PATTERN);
 	}
 
 
@@ -620,8 +636,26 @@ public class TimeDateUtils {
 	}
 
 
-	public static Timestamp getTimestamp(String data, String format) {
-		return new Timestamp(getDate(data, format).getTime());
+	public static Timestamp getTimestamp(String data, String pattern) {
+		return new Timestamp(getDate(data, pattern).getTime());
+	}
+
+
+	public static void main(String[] argvs) {
+
+		System.out.println("getDaysBetween (30): "+getDaysBetween(
+				new GregorianCalendar(2014,01,01),
+				new GregorianCalendar(2014,01,31)));
+
+		System.out.println("getDaysBetween (31): "+getDaysBetween(
+				new GregorianCalendar(2014,01,01),
+				new GregorianCalendar(2014,02,01)));
+
+		System.out.println(
+				TimeUnit.MILLISECONDS.toDays(
+				new GregorianCalendar(2014,02,01).getTimeInMillis()-
+				new GregorianCalendar(2014,01,01).getTimeInMillis()));
+
 	}
 
 
