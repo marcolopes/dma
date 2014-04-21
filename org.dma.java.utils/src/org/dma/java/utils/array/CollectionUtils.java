@@ -77,15 +77,48 @@ public class CollectionUtils {
 	}
 
 
-	public static <T> void removeContaining(Collection<T> collection, String searchFor){
+	public static <T> String[] addPrefix(Collection<T> collection, String prefix) {
 
-		Collection<T> removeList=new ArrayList();
+		String[] result=new String[collection.size()];
+
+		int index=0;
+		for (T element: collection){
+			result[index++]=prefix+element;
+		}
+
+		return result;
+
+	}
+
+
+	public static <T> String[] addSuffix(Collection<T> collection, String suffix) {
+
+		String[] result=new String[collection.size()];
+
+		int index=0;
+		for (T element: collection){
+			result[index++]=element+suffix;
+		}
+
+		return result;
+
+	}
+
+
+	/**
+	 * Returns removed elements
+	 */
+	public static <T> List<T> removeContaining(Collection<T> collection, String searchFor){
+
+		List<T> removeList=new ArrayList();
 
 		for (T element: collection){
 			if(element.toString().contains(searchFor)) removeList.add(element);
 		}
 
 		collection.removeAll(removeList);
+
+		return removeList;
 
 	}
 
@@ -99,6 +132,9 @@ public class CollectionUtils {
 	}
 
 
+	/**
+	 * Returns removed elements
+	 */
 	public static <T> Collection<T> remove(List<T> list, int[] indexes) {
 
 		Collection<T> removeList=new ArrayList(indexes.length);
@@ -114,6 +150,9 @@ public class CollectionUtils {
 	}
 
 
+	/**
+	 * Returns inserted elements
+	 */
 	public static <T> Collection<T> insert(List<T> into, List<T> from, int[] indexes, int position) {
 
 		Collection<T> insertList=new ArrayList(indexes.length);
@@ -132,30 +171,16 @@ public class CollectionUtils {
 
 	public static <T> void moveDown(List<T> list, int[] indexes, int position) {
 
-		Collection<T> insertList=new ArrayList(indexes.length);
-
 		Arrays.sort(indexes);
-		for(int index: indexes){
-			insertList.add(list.get(index));
-		}
-
-		remove(list, indexes);
-		list.addAll(position, insertList);
+		list.addAll(position, remove(list, indexes));
 
 	}
 
 
 	public static <T> void moveUp(List<T> list, int[] indexes, int position) {
 
-		Collection<T> insertList=new ArrayList(indexes.length);
-
 		Arrays.sort(indexes);
-		for(int index: indexes){
-			insertList.add(list.get(index));
-		}
-
-		remove(list, indexes);
-		list.addAll(position, insertList);
+		list.addAll(position, remove(list, indexes));
 
 	}
 

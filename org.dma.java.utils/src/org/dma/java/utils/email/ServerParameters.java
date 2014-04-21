@@ -24,28 +24,34 @@ public class ServerParameters {
 			default: return NONE;
 			}
 		}
+		public static SECURITY get(String name){
+			try{
+				return valueOf(name);
+			}catch(Exception e){}
+			return NONE;
+		}
 	}
 
-	private final String hostname;
-	private final int smtpport;
+	private final String hostName;
+	private final int smtpPort;
 	private final SECURITY security;
 	private final PasswordAuthentication authentication;
 
-	public ServerParameters(String hostname, int smtpport, int security) {
-		this(hostname, smtpport, SECURITY.get(security), null);
+	public ServerParameters(String hostName, int smtpPort, int security) {
+		this(hostName, smtpPort, SECURITY.get(security), null);
 	}
 
-	public ServerParameters(String hostname, int smtpport, SECURITY security) {
-		this(hostname, smtpport, security, null);
+	public ServerParameters(String hostName, int smtpPort, SECURITY security) {
+		this(hostName, smtpPort, security, null);
 	}
 
-	public ServerParameters(String hostname, int smtpport, int security, PasswordAuthentication authentication) {
-		this(hostname, smtpport, SECURITY.get(security), authentication);
+	public ServerParameters(String hostName, int smtpPort, int security, PasswordAuthentication authentication) {
+		this(hostName, smtpPort, SECURITY.get(security), authentication);
 	}
 
-	public ServerParameters(String hostname, int smtpport, SECURITY security, PasswordAuthentication authentication) {
-		this.hostname=hostname;
-		this.smtpport=smtpport;
+	public ServerParameters(String hostName, int smtpPort, SECURITY security, PasswordAuthentication authentication) {
+		this.hostName=hostName;
+		this.smtpPort=smtpPort;
 		this.security=security;
 		this.authentication=authentication;
 	}
@@ -54,8 +60,8 @@ public class ServerParameters {
 	public void debug(){
 
 		if (Debug.STATUS){
-			System.out.println("Hostname: "+hostname);
-			System.out.println("SMTP Port:"+smtpport);
+			System.out.println("Host Name: "+hostName);
+			System.out.println("SMTP Port:"+smtpPort);
 			System.out.println("Security:" +security);
 		}
 
@@ -66,12 +72,12 @@ public class ServerParameters {
 	/*
 	 * Getters and setters
 	 */
-	public String getHostname() {
-		return hostname;
+	public String getHostName() {
+		return hostName;
 	}
 
-	public int getSmtpport() {
-		return smtpport;
+	public int getSmtpPort() {
+		return smtpPort;
 	}
 
 	public SECURITY getSecurity() {

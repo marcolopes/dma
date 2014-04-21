@@ -59,9 +59,9 @@ public class FileUtils {
 	/*
 	 * Conversion
 	 */
-	public static URL toURL(String filename){
+	public static URL toURL(File file){
 		try{
-			return new File(filename).toURI().toURL();
+			return file.toURI().toURL();
 
 		}catch(MalformedURLException e){
 			System.out.println(e);
@@ -70,6 +70,13 @@ public class FileUtils {
 		}
 
 		return null;
+	}
+
+
+	public static URL toURL(String filename){
+
+		return toURL(new File(filename));
+
 	}
 
 

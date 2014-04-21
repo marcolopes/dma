@@ -26,8 +26,8 @@ public class SendMail {
 		MultiPartEmail email = new MultiPartEmail();
 		email.setDebug(Debug.STATUS);
 
-		email.setHostName(server.getHostname());
-		email.setSmtpPort(server.getSmtpport());
+		email.setHostName(server.getHostName());
+		email.setSmtpPort(server.getSmtpPort());
 
 		//Authentication
 		if (server.getAuthentication()!=null){
