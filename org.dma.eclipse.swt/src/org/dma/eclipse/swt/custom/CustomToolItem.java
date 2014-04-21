@@ -9,18 +9,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
-public class CustomButton extends Button {
+public class CustomToolItem extends ToolItem {
 
 	//subclassing
 	protected void checkSubclass() {}
 
 	private CustomAction selectionAction;
 
-	public CustomButton(Composite parent, String text, Image image) {
-		super(parent, SWT.NONE);
+	public CustomToolItem(ToolBar parent, String text, Image image) {
+		super(parent, SWT.PUSH);
 		setToolTipText(text);
 		setImage(image);
 	}

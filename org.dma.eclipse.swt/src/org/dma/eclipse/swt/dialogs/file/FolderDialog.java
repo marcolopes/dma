@@ -23,7 +23,7 @@ public class FolderDialog extends DirectoryDialog {
 
 	public FolderDialog(Shell parent, String...extensions) {
 		super(parent, SWT.SAVE);
-		System.out.println("extensions: "+Arrays.toString(extensions));
+		System.out.println("extensions: "+Arrays.asList(extensions));
 	}
 
 

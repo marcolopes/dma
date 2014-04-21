@@ -34,13 +34,6 @@ public class CustomDialog {
 			this.title=title;
 		}
 
-		public static void setTitle(String error, String information, String question, String confirmation){
-			ERROR.setTitle(error);
-			INFORMATION.setTitle(information);
-			QUESTION.setTitle(question);
-			CONFIRMATION.setTitle(confirmation);
-		}
-
 	}
 
 
