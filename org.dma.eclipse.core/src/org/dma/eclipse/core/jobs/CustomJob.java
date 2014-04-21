@@ -38,6 +38,7 @@ public class CustomJob extends Job {
 		this("");
 	}
 
+	/** @see CustomJob#CustomJob(String, int) */
 	public CustomJob(String name) {
 		this(name,Job.LONG);
 	}
@@ -54,11 +55,15 @@ public class CustomJob extends Job {
 	 * <b>setRule(null);</b> can be used to indicate that the job has no rule and
 	 * can be executed immediately
 	 *
+	 * @param name - The job name. <b>if NULL job will be silent!</b>
+	 * @param priority - One of INTERACTIVE, SHORT, LONG, BUILD, or DECORATE.
+	 *
 	 */
 	public CustomJob(String name, int priority) {
-		super(name);
+		super(name==null ? "" : name);
 		setPriority(priority);
 		setUser(false); // avoid progress dialogue
+		setSystem(name==null); // do not reveal in any UI
 		setRule(MUTEX_RULE);
 	}
 

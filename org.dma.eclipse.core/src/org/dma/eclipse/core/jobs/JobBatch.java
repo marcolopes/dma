@@ -18,91 +18,65 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * MUTEX: MUTual EXclusion semaphore.
-	 * Global rule to avoid simultaneous executions.
-	 */
-	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
-
-	/**
-	 * Executed before first job is started
-	 */
+	/** Executed before first job is started */
 	public abstract void start();
-
-	/**
-	 * Executed when last job is done
-	 */
+	/** Executed when last job is done */
 	public abstract void done();
 
-	protected boolean running=false;
+	// MUTEX: MUTual EXclusion semaphore
+	/** Global rule to avoid simultaneous executions */
+	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
 
 	private final int radomHash=NumericUtils.random();
 
-	/**
-	 * Execute jobs with rule
-	 */
-	public void schedule(ISchedulingRule rule) {
-		JobManager.schedule(this, rule);
-	}
-
-	/**
-	 * Execute jobs with default Mutex Rule
-	 */
-	public void schedule() {
-		schedule(MUTEX_RULE);
-	}
-
+	protected boolean running=false;
 
 	public boolean isRunning() {
 		return running;
 	}
 
+	/** Execute jobs with default Mutex Rule */
+	public void schedule() {
+		schedule(MUTEX_RULE);
+	}
+
+	/** Execute jobs with rule */
+	public void schedule(ISchedulingRule rule) {
+		JobManager.schedule(this, rule);
+	}
+
 
 	public boolean cancelJobs() {
-
 		boolean result=true;
-
 		//elements can be removed elsewhere!
 		List<CustomJob> list=new ArrayList(this);
 		for(CustomJob job: list){
 			if (!job.cancel()) result=false;
 		}
-
 		return result;
-
 	}
 
 
 	public int getQueuedJobs() {
-
 		return size();
-
 	}
 
 
 	public int getPendingJobs() {
-
 		int count=0;
-
 		for(CustomJob job: this){
 			if (job.getState()==Job.WAITING) count++;
 		}
-
 		return count;
-
 	}
 
 
 	public int getRunningJobs() {
-
 		int count=0;
-
 		for(CustomJob job: this){
 			if (job.getState()==Job.RUNNING) count++;
 		}
-
 		return count;
-
 	}
 
 
@@ -115,7 +89,6 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 				System.out.println("JOB #"+i+": " + job.getStateName());
 				i++;
 			}
-
 		}
 
 	}

@@ -91,18 +91,12 @@ public class JobManager {
 
 
 	protected static void schedule(JobBatch batch, ISchedulingRule rule) {
-
 		jobSet.add(batch);
 		Debug.out("SET", jobSet);
-
 		for(CustomJob job: batch){
 			//avoid successive calls
-			if (!job.isBusy()){
-				schedule(job,rule);
-			}
-
+			if (!job.isBusy()) schedule(job,rule);
 		}
-
 	}
 
 
@@ -111,23 +105,16 @@ public class JobManager {
 	 * Remove
 	 */
 	public static boolean remove(CustomJob job) {
-
 		JobBatch batch=findJobBatch(job);
-
 		return batch.remove(job);
-
 	}
 
 
 	public static void clean() {
-
 		List<JobBatch> list=new ArrayList(jobSet);
 		for(JobBatch batch: list){
-			if(batch.isEmpty()){
-				jobSet.remove(batch);
-			}
+			if(batch.isEmpty()) jobSet.remove(batch);
 		}
-
 	}
 
 
@@ -136,17 +123,11 @@ public class JobManager {
 	 * Cancel
 	 */
 	public static boolean cancelJobs() {
-
 		boolean result=true;
-
 		for(JobBatch batch: jobSet) {
-			if (!batch.cancelJobs()){
-				result=false;
-			}
+			if (!batch.cancelJobs()) result=false;
 		}
-
 		return result;
-
 	}
 
 
@@ -156,52 +137,37 @@ public class JobManager {
 	 * Query
 	 */
 	public static JobBatch findJobBatch(CustomJob job) {
-
 		for(JobBatch batch: jobSet) {
 			if(batch.contains(job)) return batch;
 		}
-
 		return null;
-
 	}
 
 
 	public static int getQueuedJobs() {
-
 		int count=0;
-
 		for(JobBatch batch: jobSet) {
 			count+=batch.getQueuedJobs();
 		}
-
 		return count;
-
 	}
 
 
 	public static int getPendingJobs() {
-
 		int count=0;
-
 		for(JobBatch batch: jobSet) {
 			count+=batch.getPendingJobs();
 		}
-
 		return count;
-
 	}
 
 
 	public static int getRunningJobs() {
-
 		int count=0;
-
 		for(JobBatch batch: jobSet) {
 			count+=batch.getRunningJobs();
 		}
-
 		return count;
-
 	}
 
 
