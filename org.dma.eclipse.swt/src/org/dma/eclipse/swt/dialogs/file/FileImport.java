@@ -25,7 +25,7 @@ public class FileImport extends FileDialog {
 	public FileImport(Shell parent, String...extensions) {
 		super(parent, SWT.OPEN);
 		setFilterExtensions(extensions);
-		System.out.println("extensions: "+Arrays.toString(extensions));
+		System.out.println("extensions: "+Arrays.asList(extensions));
 	}
 
 

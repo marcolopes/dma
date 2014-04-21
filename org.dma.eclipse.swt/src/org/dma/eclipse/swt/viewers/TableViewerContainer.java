@@ -126,7 +126,7 @@ public abstract class TableViewerContainer<T> {
 	/*
 	 * Table
 	 */
-	public int computeSize(){
+	public int computeSize() {
 		int visibleCount=(getTable().getClientArea().height-
 				getTable().getHeaderHeight()+getTable().getItemHeight()-1) /
 					getTable().getItemHeight();
@@ -151,9 +151,16 @@ public abstract class TableViewerContainer<T> {
 
 
 	public void updateTable() {
+		updateTable(false);
+	}
+
+
+	public void updateTable(boolean updateLabels) {
 		objectCollection.clear();
 		objectCollection.addAll(retrieveObjects());
-		viewer.refresh();
+		//REMOVE TABLE: Remover depois de testado
+		//viewer.refresh();
+		viewer.refresh(updateLabels);
 	}
 
 
@@ -190,11 +197,13 @@ public abstract class TableViewerContainer<T> {
 	}
 
 	public T getSelectionElement() {
-		return (T)((StructuredSelection)viewer.getSelection()).getFirstElement();
+		StructuredSelection selection=(StructuredSelection)viewer.getSelection();
+		return (T)selection.getFirstElement();
 	}
 
 	public List<T> getSelectionList() {
-		return ((StructuredSelection)viewer.getSelection()).toList();
+		StructuredSelection selection=(StructuredSelection)viewer.getSelection();
+		return selection.toList();
 	}
 
 	public void copySelectionToClipboard() {
