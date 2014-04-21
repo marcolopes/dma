@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -60,21 +60,14 @@ import org.eclipse.ui.internal.WorkbenchWindow;
 @SuppressWarnings("restriction")
 public class UIHelper {
 
-	/*
-	 * Aberto BUG de ECLIPSE UI
-	 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
-	 */
+	//ECLIPSE BUG: https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
 	public static void disablePerspectiveToolBarMenu() {
 		try{
-			PerspectiveBarManager perspectiveBarManager=
-					((WorkbenchWindow)getWorkbenchWindow()).getPerspectiveBar();
-
-			//perspectiveBar existe?
-			if (perspectiveBarManager!=null){
-				ToolBar toolBar=perspectiveBarManager.getControl();
+			ToolBar toolBar=getPerspectiveToolBar();
+			if (toolBar!=null){
 				Listener[] listeners=toolBar.getListeners(SWT.MenuDetect);
 				if (listeners!=null){
-					for (Listener listener : listeners){
+					for (Listener listener: listeners){
 						toolBar.removeListener(SWT.MenuDetect, listener);
 						Debug.out("REMOVED", listener.toString());
 					}
@@ -84,6 +77,28 @@ public class UIHelper {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+
+
+	public static void setPerspectiveToolBarEnabled(boolean enabled) {
+
+		ToolBar toolBar=getPerspectiveToolBar();
+		if (toolBar!=null) toolBar.setEnabled(enabled);
+
+	}
+
+
+	public static ToolBar getPerspectiveToolBar() {
+		try{
+			WorkbenchWindow workbenchWindow=(WorkbenchWindow)getWorkbenchWindow();
+			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
+			if (manager!=null) return manager.getControl();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 
@@ -113,7 +128,7 @@ public class UIHelper {
 		try{
 			PreferenceManager manager=PlatformUI.getWorkbench().getPreferenceManager();
 			IPreferenceNode[] nodes=manager.getRootSubNodes();
-			for(IPreferenceNode node : nodes){
+			for(IPreferenceNode node: nodes){
 				manager.remove(node.getId());
 				Debug.out("REMOVED", node.getId());
 			}
