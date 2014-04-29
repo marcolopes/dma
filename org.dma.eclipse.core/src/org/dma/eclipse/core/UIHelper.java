@@ -81,10 +81,8 @@ public class UIHelper {
 
 
 	public static void setPerspectiveToolBarEnabled(boolean enabled) {
-
 		ToolBar toolBar=getPerspectiveToolBar();
 		if (toolBar!=null) toolBar.setEnabled(enabled);
-
 	}
 
 

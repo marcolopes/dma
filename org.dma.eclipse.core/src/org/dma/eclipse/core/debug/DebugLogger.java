@@ -71,7 +71,7 @@ public class DebugLogger extends HashMap<Integer, Integer> {
 
 
 	public boolean hasExceptions() {
-		return size()>0;
+		return !isEmpty();
 	}
 
 

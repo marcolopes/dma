@@ -70,7 +70,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 
 	public void dispose() {
 
-		while(size()>0){
+		while(!isEmpty()){
 			CTabItem tabItem=keySet().iterator().next();
 			dispose(tabItem);
 		}
@@ -166,7 +166,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 		Browser browser=null;
 
 		final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
-		tabItem.setShowClose(size()>0);
+		tabItem.setShowClose(!isEmpty());
 		tabItem.setText("Loading...");
 
 		try{
