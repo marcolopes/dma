@@ -41,22 +41,27 @@ public class CustomDialog {
 
 		if (message==null || message.isEmpty()) return type.result;
 
-		final String message2=operation==null || operation.isEmpty() ?
-				message : operation +"\n"+ message;
-
 		final MethodResult result=new MethodResult(true);
 
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				Shell shell=Display.getDefault().getActiveShell();
-				switch (type) {
-					case ERROR: MessageDialog.openError(shell, type.title, message2); break;
-					case INFORMATION: MessageDialog.openInformation(shell, type.title, message2); break;
-					case QUESTION: result.value=MessageDialog.openQuestion(shell, type.title, message2); break;
-					case CONFIRMATION: result.value=MessageDialog.openConfirm(shell, type.title, message2); break;
+		try{
+			final String message2=operation==null || operation.isEmpty() ?
+					message : operation +"\n"+ message;
+
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					Shell shell=Display.getDefault().getActiveShell();
+					switch (type) {
+						case ERROR: MessageDialog.openError(shell, type.title, message2); break;
+						case INFORMATION: MessageDialog.openInformation(shell, type.title, message2); break;
+						case QUESTION: result.value=MessageDialog.openQuestion(shell, type.title, message2); break;
+						case CONFIRMATION: result.value=MessageDialog.openConfirm(shell, type.title, message2); break;
+					}
 				}
-			}
-		});
+			});
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 		return result.value;
 

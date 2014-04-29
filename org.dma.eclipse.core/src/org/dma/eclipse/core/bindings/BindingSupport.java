@@ -59,7 +59,7 @@ public class BindingSupport extends HashMap<String, BindingDefinition> {
 
 	public void unregisterAll() {
 
-		while(size()>0){
+		while(!isEmpty()){
 			String property=keySet().iterator().next();
 			unregister(property);
 		}

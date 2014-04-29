@@ -65,25 +65,25 @@ public class Debug {
 
 	private static void log(String message, Object obj, StackTraceElement caller) {
 
-		String logMessage="";
+		String message2="";
 
 		try{
 			switch (LEVEL){
 
 			case LEVEL_BASIC:
-				logMessage=caller.getFileName()+
+				message2=caller.getFileName()+
 				"; "+ caller.getMethodName();
-				if (message!=null) logMessage+="; "+ message;
-				if (obj!=null) logMessage+=": "+obj.toString();
+				if (message!=null) message2+="; "+ message;
+				if (obj!=null) message2+=": "+obj.toString();
 				break;
 
 			case LEVEL_COMPLETE:
-				logMessage=new Date()+
+				message2=new Date()+
 				"; CLASS: " + caller.getClassName()+
 				"; METHOD: " + caller.getMethodName()+
 				"; LINE: " + caller.getLineNumber();
-				if (message!=null) logMessage+="; MENSAGEM: " + message;
-				if (obj!=null) logMessage+=", Valor: "+obj.toString();
+				if (message!=null) message2+="; MENSAGEM: " + message;
+				if (obj!=null) message2+=", Valor: "+obj.toString();
 				break;
 			}
 
@@ -91,7 +91,7 @@ public class Debug {
 			e.printStackTrace();
 		}
 
-		System.out.println(logMessage);
+		System.out.println(message2);
 
 	}
 

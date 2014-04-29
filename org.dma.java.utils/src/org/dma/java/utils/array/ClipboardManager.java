@@ -24,7 +24,7 @@ public class ClipboardManager extends ArrayList<Object> {
 
 	public static void copyToClipboard(Collection<Object> objectCollection) {
 
-		if(objectCollection!=null && objectCollection.size()>0) {
+		if(objectCollection!=null && !objectCollection.isEmpty()) {
 
 			clearClipboard();
 
