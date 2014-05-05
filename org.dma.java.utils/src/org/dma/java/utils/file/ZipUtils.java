@@ -8,7 +8,7 @@ package org.dma.java.utils.file;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -17,7 +17,7 @@ import net.lingala.zip4j.util.Zip4jConstants;
 
 public class ZipUtils {
 
-	public static void createZipFile(String filename, List<File> filesToAdd, ZipParameters parameters) throws Exception {
+	public static void createZipFile(String filename, Collection<File> filesToAdd, ZipParameters parameters) throws Exception {
 
 		try{
 			// Initiate ZipFile object with the path/name of the zip file.
@@ -53,7 +53,7 @@ public class ZipUtils {
 	 * DEFLATE_LEVEL_MAXIMUM - High compression level with a compromise of speed
 	 * DEFLATE_LEVEL_ULTRA - Highest compression level but low speed
 	 */
-	public static void createZipFile(String filename, List<File> filesToAdd, int compressionLevel) throws Exception {
+	public static void createZipFile(String filename, Collection<File> filesToAdd, int compressionLevel) throws Exception {
 
 		ZipParameters parameters = new ZipParameters();
 		// Set the compression level. This value has to be in between 0 to 9
@@ -66,7 +66,7 @@ public class ZipUtils {
 	/**
 	 * Optimal balance between compression level/speed
 	 */
-	public static void normalDeflate(String filename, List<File> filesToAdd) throws Exception {
+	public static void normalDeflate(String filename, Collection<File> filesToAdd) throws Exception {
 
 		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_NORMAL);
 
@@ -75,7 +75,7 @@ public class ZipUtils {
 	/**
 	 * Lowest compression level but higher speed of compression
 	 */
-	public static void fastestDeflate(String filename, List<File> filesToAdd) throws Exception {
+	public static void fastestDeflate(String filename, Collection<File> filesToAdd) throws Exception {
 
 		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_FASTEST);
 
@@ -84,7 +84,7 @@ public class ZipUtils {
 	/**
 	 * Highest compression level but low speed
 	 */
-	public static void ultraDeflate(String filename, List<File> filesToAdd) throws Exception {
+	public static void ultraDeflate(String filename, Collection<File> filesToAdd) throws Exception {
 
 		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_ULTRA);
 

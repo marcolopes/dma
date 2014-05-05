@@ -27,11 +27,11 @@ public abstract class ButtonMenu extends CustomShell {
 	private final int labels;
 	private final int height;
 
-	public ButtonMenu(int labels){
+	public ButtonMenu(int labels) {
 		this(labels, Display.getCurrent().getClientArea().height / 10);
 	}
 
-	public ButtonMenu(int labels, int height){
+	public ButtonMenu(int labels, int height) {
 		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
 
 		this.labels=labels;
@@ -75,7 +75,6 @@ public abstract class ButtonMenu extends CustomShell {
 		}
 
 	}
-
 
 
 }

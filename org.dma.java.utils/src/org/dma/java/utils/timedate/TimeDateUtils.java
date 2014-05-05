@@ -88,23 +88,45 @@ public class TimeDateUtils {
 	/*
 	 * Validation
 	 */
-	public static boolean isDateFormatValid(String date, String pattern) {
+	public static boolean isDateValid(String date, String pattern) {
 		return getDate(date, pattern)!=null;
 	}
 
 
-	public static boolean isDateFormatValid(String date) {
-		return isDateFormatValid(date, DEFAULT_DATE_PATTERN);
+	public static boolean isDateValid(String date) {
+		return isDateValid(date, DEFAULT_DATE_PATTERN);
 	}
 
 
-	public static boolean isTimeFormatValid(String time, String pattern) {
+	public static boolean isTimeValid(String time, String pattern) {
 		return getTime(time, pattern)!=null;
 	}
 
 
-	public static boolean isTimeFormatValid(String time) {
-		return isTimeFormatValid(time, DEFAULT_TIME_PATTERN);
+	public static boolean isTimeValid(String time) {
+		return isTimeValid(time, DEFAULT_TIME_PATTERN);
+	}
+
+
+	public static boolean isTodayAfter(Calendar calendar, int daysToAdd) {
+		Calendar today=getCalendarWithoutTime();
+		Calendar when=addDays(calendar, daysToAdd);
+		return today.after(when);
+	}
+
+
+	public static boolean isTodayAfter(Calendar calendar) {
+		return isTodayAfter(calendar, 0);
+	}
+
+
+	public static boolean isTodayAfter(Date date, int daysToAdd) {
+		return isTodayAfter(getCalendar(date), daysToAdd);
+	}
+
+
+	public static boolean isTodayAfter(Date date) {
+		return isTodayAfter(date, 0);
 	}
 
 
@@ -337,6 +359,26 @@ public class TimeDateUtils {
 	}
 
 
+	public static Calendar getCalendarWithoutTime(Calendar calendar) {
+		calendar.set(Calendar.HOUR_OF_DAY,0);
+		calendar.set(Calendar.MINUTE,0);
+		calendar.set(Calendar.SECOND,0);
+		calendar.set(Calendar.MILLISECOND,0);
+		return calendar;
+	}
+
+
+	public static Calendar getCalendarWithoutTime() {
+		return getCalendarWithoutTime(getCalendar());
+	}
+
+
+	public static Calendar addDays(Calendar calendar, int days) {
+		calendar.add(Calendar.DATE, days);
+		return calendar;
+	}
+
+
 	public static int getYear(Calendar calendar) {
 		return calendar.get(Calendar.YEAR);
 	}
@@ -472,11 +514,7 @@ public class TimeDateUtils {
 
 	public static Date getDateWithoutTime(Date date) {
 		Calendar calendar=getCalendar(date);
-		calendar.set(Calendar.HOUR_OF_DAY,0);
-		calendar.set(Calendar.MINUTE,0);
-		calendar.set(Calendar.SECOND,0);
-		calendar.set(Calendar.MILLISECOND,0);
-		return calendar.getTime();
+		return getCalendarWithoutTime(calendar).getTime();
 	}
 
 
@@ -508,28 +546,28 @@ public class TimeDateUtils {
 
 	public static Date addDays(Date date, int days) {
 		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.DATE,days);
+		calendar.add(Calendar.DATE, days);
 		return calendar.getTime();
 	}
 
 
 	public static Date addHours(Date date, int hours) {
 		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.HOUR,hours);
+		calendar.add(Calendar.HOUR, hours);
 		return getTime(calendar);
 	}
 
 
 	public static Date addMinutes(Date date, int minutes) {
 		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.MINUTE,minutes);
+		calendar.add(Calendar.MINUTE, minutes);
 		return getTime(calendar);
 	}
 
 
 	public static Date addSeconds(Date date, int seconds) {
 		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.SECOND,seconds);
+		calendar.add(Calendar.SECOND, seconds);
 		return getTime(calendar);
 	}
 

@@ -31,11 +31,11 @@ public abstract class ButtonDialog extends CustomShell {
 	private Text text;
 	private final int height;
 
-	public ButtonDialog(){
+	public ButtonDialog() {
 		this(Display.getCurrent().getClientArea().height / 10);
 	}
 
-	public ButtonDialog(int height){
+	public ButtonDialog(int height) {
 		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
 
 		this.height=height;

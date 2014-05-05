@@ -71,7 +71,7 @@ public class Certificate {
 	}
 
 
-	public String alias(){
+	public String alias() {
 		try{
 			return alias==null ? keyStore.aliases().nextElement() : alias;
 
@@ -81,17 +81,17 @@ public class Certificate {
 	}
 
 
-	public boolean isExpired(int daysToExpire){
+	public boolean isExpired(int daysToExpire) {
 		return this.daysToExpire<daysToExpire;
 	}
 
 
-	public boolean isExpired(){
+	public boolean isExpired() {
 		return isExpired(0);
 	}
 
 
-	public List<String> getKeyUsage(){
+	public List<String> getKeyUsage() {
 		String[] purposes=new String[]{
 		     "digitalSignature",
 		     "nonRepudiation",
@@ -105,15 +105,13 @@ public class Certificate {
 
 		List<String> list=new ArrayList();
 		for(int i=0; i<X509Cert.getKeyUsage().length && i<purposes.length; i++){
-			if (X509Cert.getKeyUsage()[i]){
-				list.add(purposes[i]);
-			}
+			if (X509Cert.getKeyUsage()[i]) list.add(purposes[i]);
 		}
 		return list;
 	}
 
 
-	public void debug(){
+	public void debug() {
 		try{
 	    	System.out.println("-----X509 CERTIFICATE-----");
 	    	System.out.println("STORE: " + filename);
@@ -122,7 +120,7 @@ public class Certificate {
 	    	System.out.println("SERIAL: " + X509Cert.getSerialNumber());
 	    	System.out.println("ISSUER: " + X509Cert.getIssuerX500Principal());
 	    	System.out.println("SUBJECT: " + X509Cert.getSubjectX500Principal());
-	    	System.out.println("EXPIRATION: " + X509Cert.getNotAfter());
+	    	System.out.println("EXPIRES: " + X509Cert.getNotAfter());
 	    	System.out.println("DAYS LEFT: " + daysToExpire);
 	    	System.out.println("HASH CODE: " + X509Cert.hashCode());
 
