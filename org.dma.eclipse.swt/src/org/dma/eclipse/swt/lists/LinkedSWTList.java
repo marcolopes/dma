@@ -6,7 +6,7 @@
 package org.dma.eclipse.swt.lists;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import org.dma.java.utils.array.ArrayUtils;
 import org.dma.java.utils.array.CollectionUtils;
@@ -17,7 +17,7 @@ public class LinkedSWTList extends ArrayList<String> {
 
 	private final CustomSWTList SWTList;
 
-	public LinkedSWTList(CustomSWTList SWTList, List<String> list){
+	public LinkedSWTList(CustomSWTList SWTList, Collection<String> list){
 		this.SWTList=SWTList;
 		addAll(list);
 	}

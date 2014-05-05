@@ -43,11 +43,11 @@ public abstract class ButtonKeypad extends CustomShell {
 	private String value = "";
 	private final int height;
 
-	public ButtonKeypad(){
+	public ButtonKeypad() {
 		this(Display.getCurrent().getClientArea().height / 10);
 	}
 
-	public ButtonKeypad(int height){
+	public ButtonKeypad(int height) {
 		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
 
 		this.height=height;
@@ -60,17 +60,17 @@ public abstract class ButtonKeypad extends CustomShell {
 	}
 
 
-	public void setValue(String value){
+	public void setValue(String value) {
 		this.value=value;
 		text.setText(value);
 		text.selectAll();
 	}
 
-	public void setValue(BigDecimal value){
+	public void setValue(BigDecimal value) {
 		setValue(value.toPlainString());
 	}
 
-	public void setValue(BigDecimal value, int scale){
+	public void setValue(BigDecimal value, int scale) {
 		setValue(value.setScale(scale));
 	}
 

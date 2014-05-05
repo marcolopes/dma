@@ -29,9 +29,9 @@ import org.eclipse.swt.widgets.TableColumn;
 public abstract class TableViewerContainer<T> {
 
 	public abstract T getNewObject();
-	public abstract void createObject();
 	public abstract void insertObject();
 	public abstract void removeObject();
+	public abstract void createObject();
 	public abstract void copyObject();
 	public abstract void editObject();
 	public abstract Collection<T> retrieveObjects();

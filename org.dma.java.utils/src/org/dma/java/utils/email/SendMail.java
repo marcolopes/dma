@@ -30,11 +30,9 @@ public class SendMail {
 		email.setSmtpPort(server.getSmtpPort());
 
 		//Authentication
-		if (server.getAuthentication()!=null){
-			email.setAuthentication(
-				server.getAuthentication().getUserName(),
-				server.getAuthentication().getPassword());
-		}
+		if (server.getAuthentication()!=null) email.setAuthentication(
+			server.getAuthentication().getUserName(),
+			server.getAuthentication().getPassword());
 
 		//Security
 		email.setStartTLSEnabled(server.getSecurity()==SECURITY.STARTTLS);
@@ -44,9 +42,7 @@ public class SendMail {
 		email.addTo(to.getEmail(), to.getName());
 		email.setSubject(subject);
 		email.setMsg(message);
-		if (attachment!=null){
-			email.attach(attachment);
-		}
+		if (attachment!=null) email.attach(attachment);
 
 		email.send();
 

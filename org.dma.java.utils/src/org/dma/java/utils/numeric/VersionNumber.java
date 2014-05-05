@@ -29,7 +29,7 @@ public final class VersionNumber {
 
 
 	/**
-	 * Checks if the current version is smaller than VERSION
+	 * Checks if the current version is smaller
 	 * @return
 	 * TRUE if the current version is SMALLER;
 	 * FALSE if the current version is EQUAL of GREATER

@@ -6,7 +6,6 @@
 package org.dma.java.utils.array;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -351,12 +350,10 @@ public class ArrayUtils {
 
 	public static String[] compact(String[] array){
 
-		Collection<String> result=new ArrayList(array.length);
+		List<String> result=new ArrayList(array.length);
 
 		for(int i=0; i<array.length; i++){
-			if(!array[i].trim().isEmpty()){
-				result.add(array[i]);
-			}
+			if(!array[i].trim().isEmpty()) result.add(array[i]);
 		}
 
 		return CollectionUtils.toArray(result,String.class);

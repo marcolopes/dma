@@ -38,7 +38,7 @@ public class ServerParameters {
 	private final PasswordAuthentication authentication;
 
 	public ServerParameters(String hostName, int smtpPort, int security) {
-		this(hostName, smtpPort, SECURITY.get(security), null);
+		this(hostName, smtpPort, security, null);
 	}
 
 	public ServerParameters(String hostName, int smtpPort, SECURITY security) {

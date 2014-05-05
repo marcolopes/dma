@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,7 +10,7 @@ import javax.mail.internet.InternetAddress;
 
 public class EmailAddress {
 
-	private String email;
+	private final String email;
 	private String name;
 	private InternetAddress address;
 
@@ -52,10 +52,6 @@ public class EmailAddress {
 	 */
 	public String getEmail() {
 		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email=email;
 	}
 
 	public String getName() {
