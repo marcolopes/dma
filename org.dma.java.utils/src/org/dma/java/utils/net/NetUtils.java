@@ -86,8 +86,7 @@ public class NetUtils {
                 InetAddress hostAddr=InetAddress.getByName(host);
                 System.out.println(hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
                 TimeInfo info=client.getTime(hostAddr);
-                Date date=new Date(info.getReturnTime());
-                return date;
+                return new Date(info.getReturnTime());
 
 			}catch(IOException e){
 				System.out.println(e);
