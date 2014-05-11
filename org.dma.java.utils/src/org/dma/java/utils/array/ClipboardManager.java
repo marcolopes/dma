@@ -22,7 +22,7 @@ public class ClipboardManager extends ArrayList<Object> {
 	}
 
 
-	public static void copyToClipboard(Collection<Object> objectCollection) {
+	public static void copyToClipboard(Collection<?> objectCollection) {
 
 		if(objectCollection!=null && !objectCollection.isEmpty()) {
 
