@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import org.dma.eclipse.swt.custom.CustomShell;
 import org.dma.eclipse.swt.graphics.SWTColorUtils;
 import org.dma.eclipse.swt.graphics.SWTFontUtils;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;

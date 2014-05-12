@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.numeric.NumericUtils;
+
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 

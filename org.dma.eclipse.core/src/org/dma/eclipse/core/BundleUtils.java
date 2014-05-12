@@ -9,11 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 public class BundleUtils {
 

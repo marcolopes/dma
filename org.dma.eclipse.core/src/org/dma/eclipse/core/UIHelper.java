@@ -6,6 +6,7 @@
 package org.dma.eclipse.core;
 
 import org.dma.java.utils.Debug;
+
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;

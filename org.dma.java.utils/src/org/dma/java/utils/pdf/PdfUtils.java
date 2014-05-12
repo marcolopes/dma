@@ -18,12 +18,12 @@ import java.security.PrivateKey;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-
 import com.lowagie.text.pdf.PdfCopyFields;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfSignatureAppearance;
 import com.lowagie.text.pdf.PdfStamper;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class PdfUtils {
 

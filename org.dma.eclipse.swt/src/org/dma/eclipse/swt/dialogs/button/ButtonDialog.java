@@ -7,6 +7,7 @@ package org.dma.eclipse.swt.dialogs.button;
 
 import org.dma.eclipse.swt.custom.CustomShell;
 import org.dma.eclipse.swt.graphics.SWTFontUtils;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

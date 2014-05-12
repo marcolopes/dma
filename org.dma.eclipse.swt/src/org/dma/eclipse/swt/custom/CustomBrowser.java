@@ -6,6 +6,7 @@
 package org.dma.eclipse.swt.custom;
 
 import org.apache.commons.lang.SystemUtils;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Composite;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.numeric.NumericUtils;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
