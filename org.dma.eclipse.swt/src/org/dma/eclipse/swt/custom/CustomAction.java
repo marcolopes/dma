@@ -7,6 +7,7 @@ package org.dma.eclipse.swt.custom;
 
 import org.dma.eclipse.swt.graphics.SWTImageUtils;
 import org.dma.java.utils.Debug;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 

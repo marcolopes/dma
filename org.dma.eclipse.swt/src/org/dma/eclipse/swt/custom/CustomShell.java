@@ -6,6 +6,7 @@
 package org.dma.eclipse.swt.custom;
 
 import org.dma.java.utils.numeric.NumericUtils;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;

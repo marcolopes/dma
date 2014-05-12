@@ -6,6 +6,7 @@
 package org.dma.eclipse.swt.dragndrop;
 
 import org.dma.java.utils.Debug;
+
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DragSourceEvent;

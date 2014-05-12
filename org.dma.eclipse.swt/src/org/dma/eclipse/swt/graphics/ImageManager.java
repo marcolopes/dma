@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import org.dma.java.utils.awt.ImageUtils;
+
 import org.eclipse.swt.graphics.Image;
 
 public class ImageManager extends HashMap<String, Image> {

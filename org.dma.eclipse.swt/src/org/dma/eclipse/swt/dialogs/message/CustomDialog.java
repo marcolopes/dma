@@ -6,6 +6,7 @@
 package org.dma.eclipse.swt.dialogs.message;
 
 import org.dma.java.utils.klass.MethodResult;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;

@@ -8,6 +8,7 @@ package org.dma.eclipse.core.debug;
 import java.io.PrintStream;
 
 import org.dma.java.utils.Debug;
+
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.MessageConsole;
