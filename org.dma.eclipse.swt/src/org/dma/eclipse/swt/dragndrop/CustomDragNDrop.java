@@ -17,8 +17,7 @@ public abstract class CustomDragNDrop implements IDragNDropSupport {
 	private DragSource source = null;
 	private DropTarget target = null;
 
-	public CustomDragNDrop(){
-	}
+	public CustomDragNDrop() {}
 
 
 	public Control getSourceControl() {
