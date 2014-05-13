@@ -17,8 +17,7 @@ public class BindingSupport extends HashMap<String, BindingDefinition> {
 
 	private final DataBindingContext bindingContext=new DataBindingContext();
 
-	public BindingSupport() {
-	}
+	public BindingSupport() {}
 
 
 	public void register(String property, BindingDefinition definition) {
