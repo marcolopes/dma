@@ -11,8 +11,7 @@ public class MessageList extends LinkedHashSet<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	public MessageList(){
-	}
+	public MessageList() {}
 
 
 	public void print() {
