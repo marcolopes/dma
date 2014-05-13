@@ -175,8 +175,7 @@ public class CollectionUtils {
 	}
 
 
-	public static void main(String[] argvs){
-	}
+	public static void main(String[] argvs){}
 
 
 }

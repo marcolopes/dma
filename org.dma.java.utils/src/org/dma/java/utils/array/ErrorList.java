@@ -10,14 +10,13 @@ public class ErrorList {
 	private final MessageList errors=new MessageList();
 	private final MessageList warnings=new MessageList();
 
-	public ErrorList(){
-	}
+	public ErrorList() {}
 
 
 	/**
 	 * Clears errors and warnings
 	 */
-	public void clear(){
+	public void clear() {
 		errors.clear();
 		warnings.clear();
 	}
@@ -33,7 +32,7 @@ public class ErrorList {
 	/**
 	 * Adds errors and warnings
 	 */
-	public void add(ErrorList list){
+	public void add(ErrorList list) {
 		errors.add(list.getErrors());
 		warnings.add(list.getWarnings());
 	}
@@ -43,7 +42,7 @@ public class ErrorList {
 	/*
 	 * Getters and Setters
 	 */
-	public boolean hasErrors(){
+	public boolean hasErrors() {
 		return !errors.isEmpty();
 	}
 

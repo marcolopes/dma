@@ -581,8 +581,7 @@ public class ArrayUtils {
 	}
 
 
-	public static void main(String[] argvs) {
-	}
+	public static void main(String[] argvs) {}
 
 
 }
