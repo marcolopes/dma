@@ -64,7 +64,7 @@ public class ClipboardManager extends ArrayList<Object> {
 
 
 	public static Collection getCollection(Class klass) {
-		return !hasObject(klass) ? null : INSTANCE;
+		return !hasObject(klass) ? new ArrayList(0) : INSTANCE;
 	}
 
 
