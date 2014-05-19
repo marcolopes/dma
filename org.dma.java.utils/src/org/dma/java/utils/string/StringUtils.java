@@ -474,14 +474,14 @@ public class StringUtils {
 	 */
 	public static String normalize(String string) {
 
-		final char[] ILLEGAL_CHARACTERS =
+		final char[] ILLEGAL_CHARS =
 			{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'};
 		//decompose accented letters into LETTERS + ACCENTS
 		return remove(Normalizer.normalize(string, Normalizer.Form.NFD).
 				//remove accents
 				replaceAll("\\p{InCombiningDiacriticalMarks}+", ""),
 				//remove illegal characters
-				ILLEGAL_CHARACTERS);
+				ILLEGAL_CHARS);
 
 	}
 

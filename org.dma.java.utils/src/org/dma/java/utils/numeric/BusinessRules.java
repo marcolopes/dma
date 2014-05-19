@@ -1,16 +1,17 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.utils.numeric;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class BusinessRules {
 
-	public static final int SCALE = 20;
+	public static final BigDecimal BD100=BigDecimal.valueOf(100);
 
 	/**
 	 * Proportional value<br>
@@ -21,9 +22,7 @@ public class BusinessRules {
 	public static BigDecimal proportionalValue(BigDecimal a, BigDecimal b, BigDecimal c){
 
 		return a.signum()==0 ? BigDecimal.ZERO :
-			b.multiply(c).
-			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
-			divide(a,SCALE,RoundingMode.HALF_EVEN);
+			b.multiply(c).divide(a,MathContext.DECIMAL64);
 
 	}
 
@@ -37,8 +36,7 @@ public class BusinessRules {
 
 		return entries.signum()<=0 ? price1 :
 			(stock.abs().multiply(price1).add(entries.multiply(price2))).
-				//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
-				divide(stock.abs().add(entries),SCALE,RoundingMode.HALF_EVEN);
+				divide(stock.abs().add(entries),MathContext.DECIMAL64);
 
 	}
 
@@ -50,9 +48,8 @@ public class BusinessRules {
 	 */
 	public static BigDecimal salePrice(BigDecimal cost, BigDecimal margin){
 
-		return cost.divide(BigDecimal.ONE.subtract(margin.divide(BigDecimal.valueOf(100))),
-			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
-			SCALE,RoundingMode.HALF_EVEN);
+		return cost.divide(BigDecimal.ONE.
+				subtract(margin.divide(BD100)),MathContext.DECIMAL64);
 
 	}
 
@@ -65,9 +62,7 @@ public class BusinessRules {
 	public static BigDecimal markupPercentage(BigDecimal price, BigDecimal cost){
 
 		return cost.signum()==0 ? BigDecimal.ZERO :
-			(price.subtract(cost)).
-			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
-			divide(cost,SCALE,RoundingMode.HALF_EVEN).multiply(BigDecimal.valueOf(100));
+			(price.subtract(cost)).divide(cost,MathContext.DECIMAL64).multiply(BD100);
 
 	}
 
@@ -79,8 +74,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal addedPercentages(BigDecimal perc1, BigDecimal perc2){
 
-		return perc1.add((BigDecimal.valueOf(100).subtract(perc1)).
-				multiply(perc2.divide(BigDecimal.valueOf(100))));
+		return perc1.add((BD100.subtract(perc1)).multiply(perc2.divide(BD100)));
 
 	}
 
@@ -93,8 +87,8 @@ public class BusinessRules {
 	public static BigDecimal addedPercentages(BigDecimal...perc){
 
 		BigDecimal result=BigDecimal.ZERO;
-		BigDecimal total=BigDecimal.valueOf(100);
 
+		BigDecimal total=BD100;
 		for(int i=0; i<perc.length; i++){
 			BigDecimal value=percentageValue(total, perc[i]);
 			result=result.add(value);
@@ -113,9 +107,7 @@ public class BusinessRules {
 	public static BigDecimal valuePercentage(BigDecimal total, BigDecimal value){
 
 		return total.signum()==0 ? BigDecimal.ZERO :
-			value.multiply(BigDecimal.valueOf(100)).
-			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
-			divide(total,SCALE,RoundingMode.HALF_EVEN);
+			value.multiply(BD100).divide(total,MathContext.DECIMAL64);
 
 	}
 
@@ -127,7 +119,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal percentageValue(BigDecimal total, BigDecimal perc){
 
-		return total.multiply(perc).divide(BigDecimal.valueOf(100));
+		return total.multiply(perc).divide(BD100);
 
 	}
 
@@ -139,10 +131,9 @@ public class BusinessRules {
 	 */
 	public static BigDecimal valueIncluded(BigDecimal value, BigDecimal perc){
 
-		return perc.compareTo(BigDecimal.valueOf(100))==0 ? BigDecimal.ZERO :
-			value.divide(BigDecimal.ONE.subtract(perc.divide(BigDecimal.valueOf(100))),
-			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
-			SCALE,RoundingMode.HALF_EVEN);
+		return perc.compareTo(BD100)==0 ? BigDecimal.ZERO :
+			value.divide(BigDecimal.ONE.
+					subtract(perc.divide(BD100)),MathContext.DECIMAL64);
 
 	}
 
@@ -154,9 +145,8 @@ public class BusinessRules {
 	 */
 	public static BigDecimal valueExcluded(BigDecimal value, BigDecimal perc){
 
-		return value.divide(BigDecimal.ONE.add(perc.divide(BigDecimal.valueOf(100))),
-			//AVOIDS: Non-terminating decimal expansion; no exact representable decimal result.
-			SCALE,RoundingMode.HALF_EVEN);
+		return value.divide(BigDecimal.ONE.
+				add(perc.divide(BD100)),MathContext.DECIMAL64);
 
 	}
 
