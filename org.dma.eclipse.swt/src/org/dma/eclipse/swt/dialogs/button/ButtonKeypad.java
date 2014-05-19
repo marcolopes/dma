@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -69,6 +69,10 @@ public abstract class ButtonKeypad extends CustomShell {
 
 	public void setValue(BigDecimal value) {
 		setValue(value.toPlainString());
+	}
+
+	public void setValue(Double value) {
+		setValue(BigDecimal.valueOf(value));
 	}
 
 	public void setValue(BigDecimal value, int scale) {
