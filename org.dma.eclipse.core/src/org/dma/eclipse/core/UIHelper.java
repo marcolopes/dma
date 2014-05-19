@@ -57,6 +57,8 @@ import org.eclipse.ui.internal.WorkbenchWindow;
  * all the plug-ins that implement the parts. Figure 9.1 Spider graph shows how a view
  * (ContentOutline) and an editor (WelcomeEditor) each has its own site, which is hosted by
  * a page, inside a workbench window
+ *
+ * http://www.eclipse.org/articles/Article-UI-Workbench/workbench.html
  */
 @SuppressWarnings("restriction")
 public class UIHelper {
@@ -173,6 +175,13 @@ public class UIHelper {
 		return PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(perspectiveId);
 	}
 
+	public static boolean isPerspectiveOpen(String perspectiveId) {
+		for(IPerspectiveDescriptor perspective: getActivePage().getOpenPerspectives()) {
+			if(perspective.getId().equals(perspectiveId)) return true;
+		}
+		return false;
+	}
+
 	public static void setPerspective(IPerspectiveDescriptor perspective) {
 		getActivePage().setPerspective(perspective);
 	}
@@ -201,6 +210,14 @@ public class UIHelper {
 		return findViewReference(viewId, null);
 	}
 
+	public static boolean isViewOpen(String viewId, String secondaryId) {
+		return findViewReference(viewId, secondaryId)!=null;
+	}
+
+	public static boolean isViewOpen(String viewId) {
+		return findViewReference(viewId)!=null;
+	}
+
 	public static void hideView(IViewReference view) {
 		getActivePage().hideView(view);
 	}
@@ -209,6 +226,18 @@ public class UIHelper {
 	/*
 	 * IViewPart
 	 */
+	public static boolean isViewOpen(IViewPart view) {
+		return isViewOpen(view.getViewSite().getId(), view.getViewSite().getSecondaryId());
+	}
+
+	public static IViewPart openView(String viewId, String secondaryId) throws Exception {
+		return getActivePage().showView(viewId, secondaryId, IWorkbenchPage.VIEW_VISIBLE);
+	}
+
+	public static IViewPart openView(String viewId) throws Exception {
+		return openView(viewId, null);
+	}
+
 	public static IViewPart showView(String viewId, String secondaryId) throws Exception {
 		return getActivePage().showView(viewId, secondaryId, IWorkbenchPage.VIEW_ACTIVATE);
 	}
@@ -217,16 +246,12 @@ public class UIHelper {
 		return showView(viewId, null);
 	}
 
+	public static void showView(IViewPart view) throws Exception {
+		showView(view.getViewSite().getId(), view.getViewSite().getSecondaryId());
+	}
+
 	public static void hideView(IViewPart view) {
 		getActivePage().hideView(view);
-	}
-
-	public static IViewPart findView(String viewId) {
-		return getActivePage().findView(viewId);
-	}
-
-	public static boolean isViewOpen(IViewPart view) {
-		return findViewReference(view.getViewSite().getId(), view.getViewSite().getSecondaryId())!=null;
 	}
 
 
