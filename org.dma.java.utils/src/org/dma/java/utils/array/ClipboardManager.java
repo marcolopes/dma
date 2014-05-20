@@ -8,30 +8,29 @@ package org.dma.java.utils.array;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.dma.java.utils.Debug;
 
-public class ClipboardManager extends ArrayList<Object> {
+public class ClipboardManager {
 
-	private static final long serialVersionUID = 1L;
-
-	private static final ClipboardManager INSTANCE = new ClipboardManager();
+	private static final List<Object> objectCollection=new ArrayList();
 
 	public static void clearClipboard() {
-		INSTANCE.clear();
+		objectCollection.clear();
 	}
 
 
-	public static void copyToClipboard(Collection<?> objectCollection) {
+	public static void copyToClipboard(Collection<?> col) {
 
-		if(objectCollection!=null && !objectCollection.isEmpty()) {
+		if(col!=null && !col.isEmpty()) {
 
 			clearClipboard();
 
-			INSTANCE.addAll(objectCollection);
+			objectCollection.addAll(col);
 
-			Debug.out("COLLECTION", objectCollection.size());
-			Debug.out("CLIPBOARD", INSTANCE.size());
+			Debug.out("COLLECTION", col.size());
+			Debug.out("CLIPBOARD", objectCollection.size());
 			Debug.out("CLASS", getObjectClass());
 
 		}
@@ -44,12 +43,12 @@ public class ClipboardManager extends ArrayList<Object> {
 	 * Getters and setters
 	 */
 	public static boolean hasObject() {
-		return !INSTANCE.isEmpty();
+		return !objectCollection.isEmpty();
 	}
 
 
 	public static Class getObjectClass() {
-		return INSTANCE.iterator().next().getClass();
+		return objectCollection.iterator().next().getClass();
 	}
 
 
@@ -59,17 +58,17 @@ public class ClipboardManager extends ArrayList<Object> {
 
 
 	public static <T> T getObject(Class klass) {
-		return !hasObject(klass) ? null : (T)INSTANCE.iterator().next();
+		return !hasObject(klass) ? null : (T)objectCollection.iterator().next();
 	}
 
 
-	public static Collection getCollection(Class klass) {
-		return !hasObject(klass) ? new ArrayList(0) : INSTANCE;
+	public static List<Object> getCollection(Class klass) {
+		return !hasObject(klass) ? new ArrayList(0) : objectCollection;
 	}
 
 
-	public static Collection getClipboard() {
-		return INSTANCE;
+	public static List<Object> getClipboard() {
+		return objectCollection;
 	}
 
 
