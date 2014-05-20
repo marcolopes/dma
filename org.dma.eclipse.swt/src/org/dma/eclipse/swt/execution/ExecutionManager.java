@@ -8,6 +8,7 @@ package org.dma.eclipse.swt.execution;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.dma.java.utils.Debug;
@@ -20,11 +21,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEvent> {
+public class ExecutionManager {
 
-	private static final long serialVersionUID = 1L;
-
-	private static final ExecutionManager INSTANCE = new ExecutionManager();
+	private static final Map<ExecutionDefinition, ExecutionEvent> map=new HashMap();
 
 	/*
 	 * Register
@@ -58,7 +57,7 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 	private static void register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
 		try{
-			if(!INSTANCE.containsKey(execDefinition)) {
+			if(!map.containsKey(execDefinition)) {
 
 				execDefinition.addKeyListener(new KeyAdapter() {
 					public void keyPressed(KeyEvent event) {
@@ -85,9 +84,9 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 
 				}
 
-				INSTANCE.put(execDefinition, execEvent);
+				map.put(execDefinition, execEvent);
 
-				Debug.out(execEvent.getExecutionAction().getId(), INSTANCE.size());
+				Debug.out(execEvent.getExecutionAction().getId(), map.size());
 
 			}else{
 				throw new Exception("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
@@ -106,18 +105,18 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 	 */
 	public static void unregister(Control control) {
 
-		for(Iterator<ExecutionDefinition> iterator=INSTANCE.keySet().iterator(); iterator.hasNext();) {
+		for(Iterator<ExecutionDefinition> iterator=map.keySet().iterator(); iterator.hasNext();) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
 			if(execDefinition.getControl().equals(control)){
 
-				ExecutionEvent execEvent=INSTANCE.get(execDefinition);
+				ExecutionEvent execEvent=map.get(execDefinition);
 
 				execDefinition.removeListeners();
 				iterator.remove();
 
-				Debug.out(execEvent.getExecutionAction().getId(), INSTANCE.size());
+				Debug.out(execEvent.getExecutionAction().getId(), map.size());
 
 			}
 
@@ -132,12 +131,12 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 	 */
 	public static void notifyDependentExecutions(String id, String secondaryId) {
 
-		for(ExecutionDefinition execDefinition: INSTANCE.keySet()) {
+		for(ExecutionDefinition execDefinition: map.keySet()) {
 
 			if(ObjectUtils.equals(id, execDefinition.getId()) &&
 				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
 
-				ExecutionEvent execEvent=INSTANCE.get(execDefinition);
+				ExecutionEvent execEvent=map.get(execDefinition);
 
 				if(execEvent.getResponseAction()!=null && execEvent.isActionExecuted()) {
 
@@ -166,9 +165,9 @@ public class ExecutionManager extends HashMap<ExecutionDefinition, ExecutionEven
 
 	private static boolean hasDependentExecutions(String id, String secondaryId) {
 
-		for(ExecutionDefinition execDefinition: INSTANCE.keySet()) {
+		for(ExecutionDefinition execDefinition: map.keySet()) {
 
-			ExecutionEvent execEvent=INSTANCE.get(execDefinition);
+			ExecutionEvent execEvent=map.get(execDefinition);
 
 			if(execDefinition!=null && execEvent!=null &&
 				execEvent.getPostresponseAction()!=null &&
