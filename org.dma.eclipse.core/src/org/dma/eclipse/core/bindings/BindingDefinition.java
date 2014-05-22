@@ -17,8 +17,8 @@ public class BindingDefinition {
 	private final IConverter targetToModelConverter;
 	private final IConverter modelToTargetConverter;
 
-	private final UpdateValueStrategy targetToModel;
-	private final UpdateValueStrategy modelToTarget;
+	private final UpdateValueStrategy targetToModelUpdate=new UpdateValueStrategy();
+	private final UpdateValueStrategy modelToTargetUpdate=new UpdateValueStrategy();
 
 	/**
 	 * NO convertion
@@ -51,8 +51,8 @@ public class BindingDefinition {
 		this.targetToModelConverter=targetToModelConverter;
 		this.modelToTargetConverter=modelToTargetConverter;
 
-		this.targetToModel=new UpdateValueStrategy().setConverter(targetToModelConverter);
-		this.modelToTarget=new UpdateValueStrategy().setConverter(modelToTargetConverter);
+		targetToModelUpdate.setConverter(targetToModelConverter);
+		modelToTargetUpdate.setConverter(modelToTargetConverter);
 
 	}
 
@@ -88,12 +88,12 @@ public class BindingDefinition {
 	}
 
 
-	public UpdateValueStrategy getTargetToModel() {
-		return targetToModel;
+	public UpdateValueStrategy getTargetToModelUpdate() {
+		return targetToModelUpdate;
 	}
 
-	public UpdateValueStrategy getModelToTarget() {
-		return modelToTarget;
+	public UpdateValueStrategy getModelToTargetUpdate() {
+		return modelToTargetUpdate;
 	}
 
 

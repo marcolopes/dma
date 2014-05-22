@@ -30,8 +30,8 @@ public class BindingSupport extends HashMap<String, BindingDefinition> {
 				bindingContext.bindValue(
 					definition.getTargetObservableValue(),
 					definition.getModelObservableValue(),
-					definition.getTargetToModel(),
-					definition.getModelToTarget());
+					definition.getTargetToModelUpdate(),
+					definition.getModelToTargetUpdate());
 
 				Debug.out(property, keySet());
 
