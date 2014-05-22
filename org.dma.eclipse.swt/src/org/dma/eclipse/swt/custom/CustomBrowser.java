@@ -23,7 +23,7 @@ public final class CustomBrowser extends Browser {
 	 * A new shell is created with style SWT.NONE and
 	 * bounds are set to 0 to make it invisible.
 	 */
-	public CustomBrowser(Display display){
+	public CustomBrowser(Display display) {
 		this(new Shell(display,SWT.NONE));
 		getShell().setBounds(0, 0, 0, 0);
 	}
@@ -33,7 +33,7 @@ public final class CustomBrowser extends Browser {
 	 * Style <b>SWT.NONE</b> is used for Windows<br>
 	 * Style <b>SWT.WEBKIT</b> is used for other Plaftorms
 	 */
-	public CustomBrowser(Composite parent){
+	public CustomBrowser(Composite parent) {
 		super(parent, SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT);
 	}
 

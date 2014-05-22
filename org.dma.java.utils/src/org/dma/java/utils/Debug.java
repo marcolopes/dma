@@ -68,8 +68,7 @@ public class Debug {
 		String message2="";
 
 		try{
-			switch (LEVEL){
-
+			switch(LEVEL){
 			case LEVEL_BASIC:
 				message2=caller.getFileName()+
 				"; "+ caller.getMethodName();

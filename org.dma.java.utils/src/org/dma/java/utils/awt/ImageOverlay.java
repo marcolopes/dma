@@ -94,19 +94,19 @@ public class ImageOverlay {
 		FontMetrics fm = g2d.getFontMetrics();
 
 		int x=0;
-		switch (horizontalAlignment){
+		switch(horizontalAlignment){
 		case LEFT: x=margin; break;
 		case RIGHT: x=image.getWidth() - fm.stringWidth(text) - margin; break;
 		case CENTER: x=(image.getWidth() - fm.stringWidth(text))/2; break;
 		}
 
 		int y=0;
-		switch (verticalAlignment){
+		switch(verticalAlignment){
 		case TOP: y=fm.getHeight(); break;
 		case BOTTOM: y=image.getHeight() - margin; break;
 		}
 
-		switch (style){
+		switch(style){
 		case OUTLINE: drawOutline(text, x, y); break;
 		case SHADOW: drawShadow(text, x, y); break;
 		}
