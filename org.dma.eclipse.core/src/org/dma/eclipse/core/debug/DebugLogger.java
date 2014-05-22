@@ -87,7 +87,7 @@ public class DebugLogger extends HashMap<Integer, Integer> {
 		System.out.println("### DEBUG BY SEVERITY ###");
 		for(Integer key: keySet()){
 			System.out.print("Type "+key+" (");
-			switch (key){
+			switch(key){
 				case SEVERITY_OK: System.out.print("OK"); break;
 				case SEVERITY_INFO: System.out.print("INFO"); break;
 				case SEVERITY_WARNING: System.out.print("WARNING"); break;

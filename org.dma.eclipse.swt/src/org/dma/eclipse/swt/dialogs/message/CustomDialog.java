@@ -51,7 +51,7 @@ public class CustomDialog {
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
 					Shell shell=Display.getDefault().getActiveShell();
-					switch (type) {
+					switch(type) {
 						case ERROR: MessageDialog.openError(shell, type.title, message2); break;
 						case INFORMATION: MessageDialog.openInformation(shell, type.title, message2); break;
 						case QUESTION: result.value=MessageDialog.openQuestion(shell, type.title, message2); break;

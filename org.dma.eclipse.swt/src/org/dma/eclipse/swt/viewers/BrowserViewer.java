@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 
 import org.dma.eclipse.swt.custom.CustomAction;
 import org.dma.eclipse.swt.custom.CustomBrowser;
+import org.dma.eclipse.swt.custom.CustomCTabItem;
 import org.dma.eclipse.swt.graphics.SWTImageUtils;
 import org.dma.java.utils.Debug;
 
@@ -29,7 +30,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
+public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, CustomBrowser> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,9 +60,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 
 		Debug.out("DISPOSE", tabItem);
 		Browser browser=get(tabItem);
-		if (browser!=null){
-			browser.dispose();
-		}
+		if (browser!=null) browser.dispose();
 		tabItem.dispose();
 		remove(tabItem);
 		Debug.out("SIZE", size());
@@ -80,7 +79,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 	}
 
 
-	private void createToolBar(){
+	private void createToolBar() {
 
 		button_home=new CustomAction("Home", SWTImageUtils.getImageDescriptor(
 			BrowserViewer.class, "icons/browser_home.png")){
@@ -120,7 +119,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 	}
 
 
-	private void updateToolBar(boolean enabled){
+	private void updateToolBar(boolean enabled) {
 
 		button_home.setEnabled(enabled);
 		button_stop.setEnabled(enabled);
@@ -162,11 +161,11 @@ public abstract class BrowserViewer extends LinkedHashMap<CTabItem, Browser> {
 	}
 
 
-	private Browser createBrowser() {
+	private CustomBrowser createBrowser() {
 
-		Browser browser=null;
+		CustomBrowser browser=null;
 
-		final CTabItem tabItem=new CTabItem(tabFolder, SWT.NONE);
+		final CustomCTabItem tabItem=new CustomCTabItem(tabFolder);
 		tabItem.setShowClose(!isEmpty());
 		tabItem.setText("Loading...");
 
