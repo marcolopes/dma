@@ -60,9 +60,7 @@ public class PasswordUtils {
 	}
 
 
-	/**
-	 * Blowfish Password
-	 */
+	/** Blowfish Password */
 	public static String BlowfishPasswordEnconde(String password, String key) {
 
 		BlowfishCipher cipher=new BlowfishCipher(key);

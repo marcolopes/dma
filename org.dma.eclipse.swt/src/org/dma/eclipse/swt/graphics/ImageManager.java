@@ -65,9 +65,7 @@ public class ImageManager {
 	}
 
 
-	/**
-	 * Dispose all of the cached images
-	 */
+	/** Dispose all of the cached images */
 	public static void disposeImages() {
 		debug();
 		// dispose created images

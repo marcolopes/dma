@@ -13,25 +13,19 @@ public class ErrorList {
 	public ErrorList() {}
 
 
-	/**
-	 * Clears errors and warnings
-	 */
+	/** Clears errors and warnings */
 	public void clear() {
 		errors.clear();
 		warnings.clear();
 	}
 
-	/**
-	 * Prints errors and warnings
-	 */
+	/** Prints errors and warnings */
 	public void print() {
 		errors.print();
 		warnings.print();
 	}
 
-	/**
-	 * Adds errors and warnings
-	 */
+	/** Adds errors and warnings */
 	public void add(ErrorList list) {
 		errors.add(list.getErrors());
 		warnings.add(list.getWarnings());

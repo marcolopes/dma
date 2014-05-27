@@ -98,9 +98,7 @@ public class PdfUtils {
 	}
 
 
-	/**
-	 * Prints a PDF using apache pdfbox
-	 */
+	/** Prints a PDF using apache pdfbox */
 	public static void print(File file, PrinterJob job, boolean silent) throws Exception {
 
 		job.setJobName(file.getName());

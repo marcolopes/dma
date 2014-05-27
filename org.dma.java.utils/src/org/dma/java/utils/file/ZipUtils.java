@@ -63,27 +63,21 @@ public class ZipUtils {
 
 	}
 
-	/**
-	 * Optimal balance between compression level/speed
-	 */
+	/** Optimal balance between compression level/speed */
 	public static void normalDeflate(String filename, Collection<File> filesToAdd) throws Exception {
 
 		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_NORMAL);
 
 	}
 
-	/**
-	 * Lowest compression level but higher speed of compression
-	 */
+	/** Lowest compression level but higher speed of compression */
 	public static void fastestDeflate(String filename, Collection<File> filesToAdd) throws Exception {
 
 		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_FASTEST);
 
 	}
 
-	/**
-	 * Highest compression level but low speed
-	 */
+	/** Highest compression level but low speed */
 	public static void ultraDeflate(String filename, Collection<File> filesToAdd) throws Exception {
 
 		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_ULTRA);
