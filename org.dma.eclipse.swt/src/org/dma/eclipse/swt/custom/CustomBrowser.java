@@ -30,7 +30,8 @@ public final class CustomBrowser extends Browser {
 	/**
 	 * Creates a platform dependant browser
 	 * <p>
-	 * <b>One of these should be present in VM parameters:</b><br>
+	 * <b>If running on Linux or Mac</b>
+	 * one of these should be present in VM parameters:<br>
 	 * -Dorg.eclipse.swt.browser.DefaultType=mozilla<br>
 	 * -Dorg.eclipse.swt.browser.DefaultType=webkit
 	 */
