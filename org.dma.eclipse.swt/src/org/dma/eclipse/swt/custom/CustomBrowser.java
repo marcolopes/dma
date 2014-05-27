@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -17,7 +17,8 @@ public final class CustomBrowser extends Browser {
 	protected void checkSubclass() {}
 
 	/**
-	 * Creates a </ul>CustomBrowser with a new shell as a parent<br>
+	 * Creates a Browser with a new shell as a parent
+	 * <p>
 	 * A new shell is created with style SWT.NONE and
 	 * bounds are set to 0 to make it invisible.
 	 */
@@ -27,9 +28,11 @@ public final class CustomBrowser extends Browser {
 	}
 
 	/**
-	 * Creates a platform dependant browser<br>
-	 * Style <b>SWT.NONE</b> is used for Windows<br>
-	 * Style <b>SWT.WEBKIT</b> is used for other Plaftorms
+	 * Creates a platform dependant browser
+	 * <p>
+	 * <b>One of these should be present in VM parameters:</b><br>
+	 * -Dorg.eclipse.swt.browser.DefaultType=mozilla<br>
+	 * -Dorg.eclipse.swt.browser.DefaultType=webkit
 	 */
 	public CustomBrowser(Composite parent) {
 		super(parent, SWT.NONE);
