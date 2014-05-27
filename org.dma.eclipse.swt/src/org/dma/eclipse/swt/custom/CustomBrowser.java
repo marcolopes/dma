@@ -5,8 +5,6 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
 
-import org.apache.commons.lang.SystemUtils;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Composite;
@@ -34,7 +32,8 @@ public final class CustomBrowser extends Browser {
 	 * Style <b>SWT.WEBKIT</b> is used for other Plaftorms
 	 */
 	public CustomBrowser(Composite parent) {
-		super(parent, SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT);
+		super(parent, SWT.NONE);
+		//super(parent, SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT);
 	}
 
 
