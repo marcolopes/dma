@@ -41,7 +41,7 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 		schedule(MUTEX_RULE);
 	}
 
-	/** Execute jobs with rule */
+	/** Execute jobs with rule (null=immediately) */
 	public void schedule(ISchedulingRule rule) {
 		JobManager.schedule(this, rule);
 	}
