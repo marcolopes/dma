@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -34,17 +34,14 @@ public class CustomShell extends Shell {
 	}
 
 
-
-	/*
-	 * Overrided
-	 */
-	public void open(){
+	@Override
+	public void open() {
 		super.open();
 		setFocus();
 	}
 
 
-	public void openAndSleep(){
+	public void openAndSleep() {
 		open();
 		while (!isDisposed()){
 			if (!getDisplay().readAndDispatch()) getDisplay().sleep();
@@ -52,16 +49,22 @@ public class CustomShell extends Shell {
 	}
 
 
-	public void pack(){
+	@Override
+	public void pack() {
 		super.pack();
 		setMinimumSize();
 	}
 
 
-	/*
-	 * Contributed
-	 */
-	public void setCenteredLocation(){
+	@Override
+	public void setLocation (int x, int y) {
+		super.setLocation(
+			Math.max(x, getDisplay().getBounds().x),
+			Math.max(y, getDisplay().getBounds().y));
+	}
+
+
+	public void setCenteredLocation() {
 		Rectangle parentBounds = getParent()==null ?
 				getDisplay().getPrimaryMonitor().getBounds() :
 				getParent().getBounds();
@@ -72,19 +75,19 @@ public class CustomShell extends Shell {
 	}
 
 
-	public void setParentBounds(){
-		setBounds(getParent().getBounds());
-	}
-
-
-	public void setMinimumSize(){
+	public void setMinimumSize() {
 		if (NumericUtils.bit(getStyle(), SWT.RESIZE)){
 			setMinimumSize(getSize().x, getSize().y);
 		}
 	}
 
 
-	public GridLayout setGridLayout(){
+	public void setParentBounds() {
+		setBounds(getParent().getBounds());
+	}
+
+
+	public GridLayout setGridLayout() {
 		GridLayout layout=new GridLayout();
 		setLayout(layout);
 		return layout;
