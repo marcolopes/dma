@@ -140,9 +140,7 @@ public class RSAFactory {
 	}
 
 
-	/**
-	 * Compute signature
-	 */
+	/** Compute signature */
 	public static byte[] signWithSHA1(PrivateKey privateKey, byte[] messageBytes) {
 
 		try{
@@ -165,9 +163,7 @@ public class RSAFactory {
 	}
 
 
-	/**
-	 * Verify signature
-	 */
+	/** Verify signature */
 	public static boolean verifySHA1Signature(PublicKey publicKey, byte[] signatureBytes, byte[] messageBytes) {
 
 		try{
@@ -190,9 +186,7 @@ public class RSAFactory {
 	}
 
 
-	/**
-	 * Generate Key Pair
-	 */
+	/** Generate Key Pair */
 	public static KeyPair generateKeyPair(int keysize){
 		try{
 			// Generate the private/public key pair

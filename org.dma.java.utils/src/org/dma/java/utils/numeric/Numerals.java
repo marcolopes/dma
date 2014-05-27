@@ -118,9 +118,7 @@ public class Numerals {
 	//unit label
 	private final NumeralsUnit unit;
 
-	/**
-	 * EURO by default
-	 */
+	/** EURO by default */
 	public Numerals(int scale) {
 		this(scale,UNIT_EURO);
 	}

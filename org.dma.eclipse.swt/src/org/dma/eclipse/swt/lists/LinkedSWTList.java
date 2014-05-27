@@ -56,9 +56,7 @@ public class LinkedSWTList extends ArrayList<String> {
 	}
 
 
-	/**
-	 * Move SELECTED elements UP
-	 */
+	/** Move SELECTED elements UP */
 	public void moveUp() {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
@@ -69,9 +67,7 @@ public class LinkedSWTList extends ArrayList<String> {
 	}
 
 
-	/**
-	 * Move SELECTED elements DOWN
-	 */
+	/** Move SELECTED elements DOWN */
 	public void moveDown() {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();

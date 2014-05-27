@@ -25,9 +25,7 @@ public class BundleUtils {
 	}
 
 
-	/**
-	 * PATH resolver for FOLDER plugin
-	 */
+	/** PATH resolver for FOLDER plugin */
 	public static String pathResolver(Bundle bundle, String fullPath) {
 
 		URL url=urlResolver(bundle, fullPath);
@@ -58,9 +56,7 @@ public class BundleUtils {
 	}
 
 
-	/**
-	 * PATH resolver for JAR plugin
-	 */
+	/** PATH resolver for JAR plugin */
 	public static String jarPathResolver(Bundle bundle, String fullPath) {
 
 		URL url=urlResolver(bundle, fullPath);

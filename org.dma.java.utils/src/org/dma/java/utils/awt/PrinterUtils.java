@@ -79,9 +79,7 @@ public class PrinterUtils {
 	}
 
 
-	/**
-	 * Prints STREAM DATA using java print
-	 */
+	/** Prints STREAM DATA using java print */
 	public static void print(InputStream is, PrintService ps) throws PrintException {
 
 		DocPrintJob job = ps.createPrintJob();
@@ -91,9 +89,7 @@ public class PrinterUtils {
 	}
 
 
-	/**
-	 * Prints RAW DATA using java print
-	 */
+	/** Prints RAW DATA using java print */
 	public static void print(byte[] data, PrintService ps) throws PrintException {
 
 		print(new ByteArrayInputStream(data), ps);
@@ -101,9 +97,7 @@ public class PrinterUtils {
 	}
 
 
-	/**
-	 * Prints RAW DATA using java print
-	 */
+	/** Prints RAW DATA using java print */
 	public static void print(byte[] data, String printerName) throws PrintException {
 
 		print(data, lookupPrintService(printerName));
@@ -111,10 +105,7 @@ public class PrinterUtils {
 	}
 
 
-	/**
-	 * Prints RAW DATA using java print
-	 * Assumes the DEFAULT print service.
-	 */
+	/** Prints RAW DATA using java print (DEFAULT print service) */
 	public static void print(byte[] data) throws PrintException {
 
 		print(data, lookupDefaultPrintService());
@@ -122,9 +113,7 @@ public class PrinterUtils {
 	}
 
 
-	/**
-	 * Prints FILE DATA using java print
-	 */
+	/** Prints FILE DATA using java print */
 	public static void print(File file, PrintService ps) throws FileNotFoundException, PrintException {
 
 		print(new FileInputStream(file), ps);
@@ -132,9 +121,7 @@ public class PrinterUtils {
 	}
 
 
-	/**
-	 * Prints FILE DATA using java print
-	 */
+	/** Prints FILE DATA using java print */
 	public static void print(File file, String printerName) throws FileNotFoundException, PrintException {
 
 		print(file, lookupPrintService(printerName));
@@ -142,9 +129,7 @@ public class PrinterUtils {
 	}
 
 
-	/**
-	 * Prints FILE DATA using java print
-	 */
+	/** Prints FILE DATA using java print */
 	public static void print(File file) throws FileNotFoundException, PrintException {
 
 		print(file, lookupDefaultPrintService());

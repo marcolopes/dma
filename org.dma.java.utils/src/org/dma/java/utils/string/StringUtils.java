@@ -243,9 +243,7 @@ public class StringUtils {
 	}
 
 
-	/**
-	 * Ensure the ESCAPE (\) char is escaped!
-	 */
+	/** Ensure the ESCAPE (\) char is escaped! */
 	public static String escape(String string) {
 
 		return string.replace("\\","\\\\");
@@ -253,9 +251,7 @@ public class StringUtils {
 	}
 
 
-	/**
-	 * Escape and surround with QUOTE chars
-	 */
+	/** Escape and surround with QUOTE chars */
 	public static String quote(String string, char quote) {
 
 		return quote + escape(string).replace("\"","\\\"") + quote;
@@ -263,9 +259,7 @@ public class StringUtils {
 	}
 
 
-	/**
-	 * Escape and surround with COMMA (") chars
-	 */
+	/** Escape and surround with COMMA (") chars */
 	public static String quote(String string) {
 
 		return quote(string, '\"');
@@ -273,9 +267,7 @@ public class StringUtils {
 	}
 
 
-	/**
-	 * Remove any surrounded QUOTE chars
-	 */
+	/** Remove any surrounded QUOTE chars */
 	public static String unquote(String string, char quote) {
 
 		return !isQuoted(string, quote) ?
@@ -283,9 +275,7 @@ public class StringUtils {
 
 	}
 
-	/**
-	 * Remove any surrounded COMMA (") chars
-	 */
+	/** Remove any surrounded COMMA (") chars */
 	public static String unquote(String string) {
 
 		return unquote(string, '\"');
@@ -469,9 +459,7 @@ public class StringUtils {
 	}
 
 
-	/**
-	 * Removes accents and illegal characters
-	 */
+	/** Removes accents and illegal characters */
 	public static String normalize(String string) {
 
 		final char[] ILLEGAL_CHARS =
@@ -486,9 +474,7 @@ public class StringUtils {
 	}
 
 
-	/**
-	 * Adapted from JAVA 7 native String split
-	 */
+	/** Adapted from JAVA 7 native String split */
 	public static String[] fastSplit(String string, String searchFor) {
 
 		int beginIndex=0;

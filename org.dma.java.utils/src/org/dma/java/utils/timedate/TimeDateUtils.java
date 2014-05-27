@@ -150,9 +150,7 @@ public class TimeDateUtils {
 	}
 
 
-	/**
-	 * Date formatted with DEFAULT PATTERN
-	 */
+	/** Date formatted with DEFAULT PATTERN */
 	public static String getDateFormatted(Date date) {
 		return getDateFormatted(date, DEFAULT_DATE_PATTERN);
 	}
@@ -167,9 +165,7 @@ public class TimeDateUtils {
 	}
 
 
-	/**
-	 * Time formatted with DEFAULT PATTERN
-	 */
+	/** Time formatted with DEFAULT PATTERN */
 	public static String getTimeFormatted(Time time) {
 		return getTimeFormatted(time, DEFAULT_TIME_PATTERN);
 	}
@@ -312,9 +308,7 @@ public class TimeDateUtils {
 		return calendar;
 	}
 
-	/**
-	 * Calendar formatted with DEFAULT PATTERN
-	 */
+	/** Calendar formatted with DEFAULT PATTERN */
 	public static Calendar getCalendar(String date) {
 		return getCalendar(date, DEFAULT_DATE_PATTERN);
 	}
@@ -494,9 +488,7 @@ public class TimeDateUtils {
 	}
 
 
-	/**
-	 * Date formatted with DEFAULT PATTERN
-	 */
+	/** Date formatted with DEFAULT PATTERN */
 	public static Date getDate(String date) {
 		return getDate(date, DEFAULT_DATE_PATTERN);
 	}
@@ -645,9 +637,7 @@ public class TimeDateUtils {
 	}
 
 
-	/**
-	 * Time formatted with DEFAULT PATTERN
-	 */
+	/** Time formatted with DEFAULT PATTERN */
 	public static Time getTime(String time) {
 		return getTime(time, DEFAULT_TIME_PATTERN);
 	}
