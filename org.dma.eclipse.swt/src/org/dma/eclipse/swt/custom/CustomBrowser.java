@@ -35,7 +35,7 @@ public final class CustomBrowser extends Browser {
 	 * -Dorg.eclipse.swt.browser.DefaultType=webkit
 	 */
 	public CustomBrowser(Composite parent) {
-		super(parent, SWT.DEFAULT);
+		super(parent, SWT.NONE);
 		//super(parent, SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT);
 	}
 
