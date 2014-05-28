@@ -15,11 +15,11 @@ public abstract class CustomAction extends Action {
 
 	public final String ID=getClass().getName();
 
-	public CustomAction(String toolTip, String imagePath){
+	public CustomAction(String toolTip, String imagePath) {
 		this(toolTip, SWTImageUtils.getImageDescriptor(imagePath));
 	}
 
-	public CustomAction(String toolTip, ImageDescriptor image){
+	public CustomAction(String toolTip, ImageDescriptor image) {
 		this();
 		setToolTipText(toolTip);
 		setImageDescriptor(image);
