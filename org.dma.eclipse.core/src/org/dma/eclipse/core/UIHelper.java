@@ -26,6 +26,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.internal.PerspectiveBarManager;
+import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.ui.internal.WorkbenchWindow;
 
 /**
@@ -252,6 +253,11 @@ public class UIHelper {
 
 	public static void hideView(IViewPart view) {
 		getActivePage().hideView(view);
+	}
+
+	public static void detachView(IViewPart view) {
+		WorkbenchPage page=(WorkbenchPage)view.getViewSite().getPage();
+		page.detachView(findViewReference(view.getViewSite().getId(), view.getViewSite().getSecondaryId()));
 	}
 
 
