@@ -5,7 +5,11 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
 
+import org.apache.commons.lang.SystemUtils;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -15,6 +19,30 @@ public final class CustomBrowser extends Browser {
 
 	//subclassing
 	protected void checkSubclass() {}
+
+	public static Integer detectStyle() {
+		return SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT;
+	}
+
+	public static Integer detectStyle(Composite parent) {
+		int[] styles={SWT.MOZILLA, SWT.WEBKIT, SWT.NONE};
+		for(int style: styles){
+			try{
+				System.out.print("STYLE: "+style);
+				Browser b=new Browser(parent, style);
+				b.dispose();
+				return style;
+
+			}catch(SWTError e){
+				e.printStackTrace();
+			}catch(SWTException e){
+				e.printStackTrace();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Creates a Browser with a new shell as a parent
@@ -36,10 +64,8 @@ public final class CustomBrowser extends Browser {
 	 * -Dorg.eclipse.swt.browser.DefaultType=webkit
 	 */
 	public CustomBrowser(Composite parent) {
-		super(parent, SWT.NONE);
-		//super(parent, SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT);
+		super(parent, SWT.None /*detectStyle(parent)*/);
 	}
-
 
 	public boolean setFile(String filename) {
 		return setUrl(filename);
