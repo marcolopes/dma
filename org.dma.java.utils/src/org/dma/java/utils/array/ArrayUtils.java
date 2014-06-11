@@ -21,8 +21,8 @@ public class ArrayUtils {
 
 		Set<T> result=new HashSet(array.length);
 
-		for(int i=0; i<array.length; i++){
-			result.add(array[i]);
+		for(T element: array){
+			result.add(element);
 		}
 
 		return result;
@@ -34,8 +34,8 @@ public class ArrayUtils {
 
 		Set<String> result=new HashSet(array.length);
 
-		for(int i=0; i<array.length; i++){
-			result.add(array[i].toString());
+		for(T element: array){
+			result.add(element.toString());
 		}
 
 		return result;
@@ -47,8 +47,8 @@ public class ArrayUtils {
 
 		List<T> result=new ArrayList(array.length);
 
-		for(int i=0; i<array.length; i++){
-			result.add(array[i]);
+		for(T element: array){
+			result.add(element);
 		}
 
 		return result;
@@ -60,8 +60,8 @@ public class ArrayUtils {
 
 		List<String> result=new ArrayList(array.length);
 
-		for(int i=0; i<array.length; i++){
-			result.add(array[i].toString());
+		for(T element: array){
+			result.add(element.toString());
 		}
 
 		return result;
@@ -151,8 +151,8 @@ public class ArrayUtils {
 
 		StringBuilder result=new StringBuilder();
 
-		for(int i=0; i<array.length; i++){
-			result.append((char)array[i]);
+		for(byte b: array){
+			result.append((char)b);
 		}
 
 		return result.toString();
@@ -164,8 +164,8 @@ public class ArrayUtils {
 
 		StringBuilder result=new StringBuilder();
 
-		for(int i=0; i<array.length; i++){
-			result.append(array[i]);
+		for(char c: array){
+			result.append(c);
 		}
 
 		return result.toString();
@@ -257,8 +257,8 @@ public class ArrayUtils {
 
 		int result=array[0];
 
-		for(int i=0; i<array.length; i++){
-			if(array[i]<result) result=array[i];
+		for(int i: array){
+			if(i<result) result=i;
 		}
 
 		return result;
@@ -266,11 +266,11 @@ public class ArrayUtils {
 	}
 
 
-	public static int startsWith(String[] array, String element) {
+	public static int startsWith(String[] array, String searchFor) {
 
-		if(element!=null && !element.isEmpty()){
+		if(searchFor!=null && !searchFor.isEmpty()){
 			for(int i=0; i<array.length; i++){
-				if(array[i].startsWith(element)) return i;
+				if(array[i].startsWith(searchFor)) return i;
 			}
 		}
 
@@ -279,9 +279,9 @@ public class ArrayUtils {
 	}
 
 
-	public static int startsWithOrFirst(String[] array, String element) {
+	public static int startsWithOrFirst(String[] array, String searchFor) {
 
-		int index=startsWith(array, element);
+		int index=startsWith(array, searchFor);
 
 		return index==-1 ? 0 : index;
 
@@ -295,10 +295,10 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> int indexOf(T[] array, T element) {
+	public static <T> int indexOf(T[] array, T searchFor) {
 
 		for(int i=0; i<array.length; i++){
-			if(array[i].equals(element)) return i;
+			if(array[i].equals(searchFor)) return i;
 		}
 
 		return -1;
@@ -306,18 +306,18 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> int indexOrFirst(T[] array, T element) {
+	public static <T> int indexOrFirst(T[] array, T searchFor) {
 
-		int index=indexOf(array, element);
+		int index=indexOf(array, searchFor);
 
 		return index==-1 ? 0 : index;
 
 	}
 
 
-	public static <T> boolean contains(T[] array, T element) {
+	public static <T> boolean contains(T[] array, T searchFor) {
 
-		return indexOf(array, element)!=-1;
+		return indexOf(array, searchFor)!=-1;
 
 	}
 
@@ -328,39 +328,6 @@ public class ArrayUtils {
 	/*
 	 * Transformation
 	 */
-	public static String[] trim(String[] array) {
-
-		String[] result=new String[array.length];
-
-		for(int i=0; i<array.length; i++){
-			result[i]=array[i].trim();
-		}
-
-		return result;
-
-	}
-
-
-	public static String trim(String[] array, String separator) {
-
-		return concat(trim(array), separator);
-
-	}
-
-
-	public static String[] compact(String[] array){
-
-		List<String> result=new ArrayList(array.length);
-
-		for(int i=0; i<array.length; i++){
-			if(!array[i].trim().isEmpty()) result.add(array[i]);
-		}
-
-		return CollectionUtils.toArray(result,String.class);
-
-	}
-
-
 	public static <T> String[] capitalize(T[] array) {
 
 		String[] result=new String[array.length];
@@ -453,20 +420,6 @@ public class ArrayUtils {
 	}
 
 
-	public static String[] removeFromAll(String[] array, String searchFor) {
-
-		String[] result=new String[array.length];
-
-		for(int i=0; i<array.length; i++){
-			result[i]=StringUtils.removeAll(array[i], searchFor);
-		}
-
-		return result;
-
-	}
-
-
-
 	public static <T> String concat(T[] array, int fromIndex, int toIndex, String separator) {
 
 		if(array.length==0 ||
@@ -528,6 +481,52 @@ public class ArrayUtils {
 		}
 
 		return result;
+
+	}
+
+
+	public static String[] trim(String[] array) {
+
+		String[] result=new String[array.length];
+
+		for(int i=0; i<array.length; i++){
+			result[i]=array[i].trim();
+		}
+
+		return result;
+
+	}
+
+
+	public static String trim(String[] array, String separator) {
+
+		return concat(trim(array), separator);
+
+	}
+
+
+	public static String[] removeFromAll(String[] array, String searchFor) {
+
+		String[] result=new String[array.length];
+
+		for(int i=0; i<array.length; i++){
+			result[i]=StringUtils.removeAll(array[i], searchFor);
+		}
+
+		return result;
+
+	}
+
+
+	public static String[] compact(String[] array){
+
+		List<String> result=new ArrayList(array.length);
+
+		for(String element: array){
+			if(!element.trim().isEmpty()) result.add(element);
+		}
+
+		return CollectionUtils.toArray(result,String.class);
 
 	}
 
