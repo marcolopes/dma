@@ -47,10 +47,10 @@ public class StringUtils {
 	public static String toHex(byte b) {
 
 		//return Integer.toString(b, 16);
-		char[] HEX_DIGIT = {
+		char[] HEX_DIGITS={
 			'0', '1', '2', '3', '4', '5', '6', '7',
 			'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-		char[] array = {HEX_DIGIT[(b >> 4) & 0x0f], HEX_DIGIT[b & 0x0f]};
+		char[] array = {HEX_DIGITS[(b >> 4) & 0x0f], HEX_DIGITS[b & 0x0f]};
 
 		return new String(array);
 
@@ -65,7 +65,7 @@ public class StringUtils {
 	 */
 	public static String replicate(String string, int replicas) {
 
-		StringBuilder result=new StringBuilder();
+		StringBuilder result=new StringBuilder(replicas);
 
 		for(int i=0; i<replicas; i++){
 			result.append(string);
@@ -78,7 +78,7 @@ public class StringUtils {
 
 	public static String replicate(char character, int replicas) {
 
-		StringBuilder result=new StringBuilder();
+		StringBuilder result=new StringBuilder(replicas);
 
 		for(int i=0; i<replicas; i++){
 			result.append(character);
@@ -165,7 +165,7 @@ public class StringUtils {
 	}
 
 
-	public static int startsWith(String string, String[] searchFor) {
+	public static int startsWith(String string, String...searchFor) {
 
 		for(int i=0; i<searchFor.length; i++){
 			if (string.startsWith(searchFor[i])) return i;
@@ -191,12 +191,27 @@ public class StringUtils {
 	}
 
 
+	public static int ocurrences(String string, char...searchFor) {
+
+		int count=0;
+
+		for(int i=0; i<string.length(); i++){
+			for(char c: searchFor){
+				if(string.charAt(i)==c) count++;
+			}
+		}
+
+		return count;
+
+	}
+
+
 	public static int ocurrences(String string, String searchFor) {
 
 		int count=0;
 
 		int index=0;
-		while((index=string.indexOf(searchFor, index))!=-1) {
+		while((index=string.indexOf(searchFor, index))!=-1){
 			index+=searchFor.length();
 			count++;
 		}
@@ -206,12 +221,26 @@ public class StringUtils {
 	}
 
 
+	public static boolean contains(String string, String searchFor) {
+
+		return ocurrences(string, searchFor)>0;
+
+	}
+
+
+	public static boolean contains(String string, char...searchFor) {
+
+		return ocurrences(string, searchFor)>0;
+
+	}
+
+
 	public static boolean isQuoted(String string, char...quotes) {
 
 		return quotes.length>=2 &&
 				string.length()>=2 &&
-				string.startsWith(String.valueOf(quotes[0])) &&
-				string.endsWith(String.valueOf(quotes[1]));
+				string.charAt(0)==quotes[0] &&
+				string.charAt(string.length()-1)==quotes[1];
 
 	}
 
@@ -229,16 +258,195 @@ public class StringUtils {
 	/*
 	 * Transformation
 	 */
-	public static String trimAll(String string) {
+	public static String left(String string, int lenght) {
 
-		return remove(string, " ");
+		return string.length()<=lenght ?
+				string : string.substring(0,lenght);
 
 	}
 
 
-	public static String[] trim(String string, String separator) {
+	public static String right(String string, int lenght) {
+
+		return string.length()<lenght ?
+				string : string.substring(string.length()-lenght);
+
+	}
+
+
+	public static String numbers(String string) {
+
+		StringBuilder result=new StringBuilder(string.length());
+
+		final char[] CHARS=string.toCharArray();
+		for(int i=0; i<CHARS.length; i++){
+			if (CHARS[i]>='0' && CHARS[i]<='9')
+				result.append(string.substring(i, i+1));
+		}
+
+		return result.toString();
+
+	}
+
+
+	public static String letters(String string) {
+
+		StringBuilder result=new StringBuilder(string.length());
+
+		char[] CHARS=string.toCharArray();
+		for(int i=0; i<CHARS.length; i++){
+			if ((CHARS[i]>='A' && CHARS[i]<='Z') || (CHARS[i]>='a' && CHARS[i]<='z'))
+				result.append(string.substring(i, i+1));
+		}
+
+		return result.toString();
+
+	}
+
+
+	public static String chars(String string, int...indices) {
+
+		StringBuilder result=new StringBuilder(string.length());
+
+		for (int i=0; i<indices.length; i++){
+			if (indices[i]<string.length())
+				result.append(string.charAt(indices[i]));
+		}
+
+		return result.toString();
+
+	}
+
+
+	public static String replace(String string, String searchFor, String replaceWith, int count) {
+
+		StringBuilder result=new StringBuilder();
+
+		int index=0;
+		int beginIndex=0;
+		while((index=string.indexOf(searchFor, index))!=-1 && count!=0){
+			result.append(string.substring(beginIndex, index)+replaceWith);
+			index+=searchFor.length();
+			beginIndex=index;
+			count--;
+		}
+		result.append(string.substring(beginIndex, string.length()));
+
+		return result.toString();
+
+	}
+
+
+	public static String replaceAll(String string, String searchFor, String replaceWith) {
+
+		return replace(string, searchFor, replaceWith, -1);
+
+	}
+
+
+	public static String replaceFirst(String string, String searchFor, String replaceWith) {
+
+		return replace(string, searchFor, replaceWith, 1);
+
+	}
+
+
+	public static String removeAll(String string, String searchFor) {
+
+		return replace(string, searchFor, "", -1);
+
+	}
+
+
+	public static String removeFirst(String string, String searchFor) {
+
+		return replaceFirst(string, searchFor, "");
+
+	}
+
+
+	public static String removeChars(String string, char...searchFor) {
+
+		StringBuilder result=new StringBuilder(string.length());
+
+		final String CHARS=new String(searchFor);
+		for(int i=0; i<string.length(); i++){
+			char at=string.charAt(i);
+			if(ocurrences(CHARS, at)==0) result.append(at);
+		}
+
+		return result.toString();
+
+	}
+
+
+	public static String removeChars(String string, String searchFor) {
+
+		for(int i=0; i<searchFor.length(); i++){
+			string=removeChars(string, searchFor.charAt(i));
+		}
+
+		return string;
+
+	}
+
+
+	public static String trimAll(String string) {
+
+		return removeAll(string, " ");
+
+	}
+
+
+	public static String[] splitAndTrim(String string, String separator) {
 
 		return ArrayUtils.trim(string.split(separator));
+
+	}
+
+
+	public static String addIfEmpy(String string, String toAdd) {
+
+		return string.isEmpty() ? toAdd : string;
+
+	}
+
+
+	public static String addIfNotEmpy(String string, String toAdd) {
+
+		return string.isEmpty() ? string : string+toAdd;
+
+	}
+
+
+	public static String padLeft(String string, int lenght, char character) {
+
+		return string.length()>=lenght ?
+				string : replicate(character, lenght-string.length())+string;
+
+	}
+
+
+	public static String padRight(String string, int lenght, char character) {
+
+		return string.length()>=lenght ?
+				string : string+replicate(character, lenght-string.length());
+
+	}
+
+
+	public static String capitalize(String string) {
+
+		return string.isEmpty() ? string :
+			string.substring(0,1).toUpperCase() + string.substring(1);
+
+	}
+
+
+	public static String uncapitalize(String string) {
+
+		return string.isEmpty() ? string :
+			string.substring(0,1).toLowerCase() + string.substring(1);
 
 	}
 
@@ -267,15 +475,22 @@ public class StringUtils {
 	}
 
 
-	/** Remove any surrounded QUOTE chars */
-	public static String unquote(String string, char quote) {
+	/** Remove surrounded QUOTE chars */
+	public static String unquote(String string, char...quote) {
 
 		return !isQuoted(string, quote) ?
 				string : string.substring(1, string.length()-1);
 
 	}
 
-	/** Remove any surrounded COMMA (") chars */
+	/** Remove surrounded QUOTE chars */
+	public static String unquote(String string, char quote) {
+
+		return unquote(string, quote, quote);
+
+	}
+
+	/** Remove surrounded COMMA (") chars */
 	public static String unquote(String string) {
 
 		return unquote(string, '\"');
@@ -283,175 +498,15 @@ public class StringUtils {
 	}
 
 
-	public static String capitalize(String string) {
-
-		return string.isEmpty() ? string :
-			string.substring(0,1).toUpperCase()+string.substring(1);
-
-	}
-
-
-	public static String uncapitalize(String string) {
-
-		return string.isEmpty() ? string :
-			string.substring(0,1).toLowerCase()+string.substring(1);
-
-	}
-
-
-	public static String numbers(String string) {
-
-		StringBuilder result=new StringBuilder();
-
-		char[] chars=string.toCharArray();
-		for(int i=0; i<chars.length; i++){
-			if (chars[i]>='0' && chars[i]<='9')
-				result.append(string.substring(i, i+1));
-		}
-
-		return result.toString();
-
-	}
-
-
-	public static String letters(String string) {
-
-		StringBuilder result=new StringBuilder();
-
-		char[] chars = string.toCharArray();
-		for(int i=0; i<chars.length; i++){
-			if ((chars[i]>='A' && chars[i]<='Z') || (chars[i]>='a' && chars[i]<='z'))
-				result.append(string.substring(i, i+1));
-		}
-
-		return result.toString();
-
-	}
-
-
-	public static String chars(String string, int...indices) {
-
-		StringBuilder result=new StringBuilder();
-
-		for (int i=0; i<indices.length; i++){
-			if (indices[i]<string.length())
-				result.append(string.charAt(indices[i]));
-		}
-
-		return result.toString();
-
-	}
-
-
-	public static String left(String string, int lenght) {
-
-		return string.length()<=lenght ?
-				string : string.substring(0,lenght);
-
-	}
-
-
-	public static String right(String string, int lenght) {
-
-		return string.length()<lenght ?
-				string : string.substring(string.length()-lenght);
-
-	}
-
-
-	public static String padLeft(String string, int lenght, String character) {
-
-		return string.length()>=lenght ?
-				string : replicate(character, lenght-string.length())+string;
-
-	}
-
-
-	public static String padRight(String string, int lenght, String character) {
-
-		return string.length()>=lenght ?
-				string : string+replicate(character, lenght-string.length());
-
-	}
-
-
-	public static String addIfEmpy(String string, String toAdd) {
-
-		return string.isEmpty() ? toAdd : string;
-
-	}
-
-
-	public static String addIfNotEmpy(String string, String toAdd) {
-
-		return string.isEmpty() ? string : string+toAdd;
-
-	}
-
-
-	public static String remove(String string, String searchFor) {
-
-		return string.replace(searchFor, "");
-
-	}
-
-
-	public static String remove(String string, char searchFor) {
-
-		return remove(string, String.valueOf(searchFor));
-
-	}
-
-
-	public static String remove(String string, char[] searchFor) {
-
-		for(int i=0; i<searchFor.length; i++){
-			string=remove(string, searchFor[i]);
-		}
-
-		return string;
-
-	}
-
-
-	public static String removeChars(String string, String searchFor) {
-
-		for(int i=0; i<searchFor.length(); i++){
-			string=remove(string, searchFor.charAt(i));
-		}
-
-		return string;
-
-	}
-
-
-	public static String replaceFirst(String string, String searchFor, String replaceWith) {
-
-		int index=string.indexOf(searchFor);
-		return index==-1 ? string :
-			string.substring(0, index) + replaceWith +
-				string.substring(index+searchFor.length());
-
-	}
-
-
-	public static String removeFirst(String string, String searchFor) {
-
-		return replaceFirst(string, searchFor, "");
-
-	}
-
-
 	public static String indent(String text) {
 
-		String[] lines=text.split("\n");
 		StringBuilder result=new StringBuilder();
 
-		int tabCount=0;
-		for(int i=0; i<lines.length; i++) {
-			if (lines[i].contains("}")) tabCount--;
-			result.append(replicate("\t", tabCount) + lines[i] + "\n");
-			if (lines[i].contains("{")) tabCount++;
+		int count=0;
+		for(String line: text.split("\n")) {
+			if (line.contains("}")) count--;
+			result.append(replicate("\t", count) + line + "\n");
+			if (line.contains("{")) count++;
 		}
 
 		return result.toString();
@@ -462,10 +517,9 @@ public class StringUtils {
 	/** Removes accents and illegal characters */
 	public static String normalize(String string) {
 
-		final char[] ILLEGAL_CHARS =
-			{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'};
+		final char[] ILLEGAL_CHARS={'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'};
 		//decompose accented letters into LETTERS + ACCENTS
-		return remove(Normalizer.normalize(string, Normalizer.Form.NFD).
+		return removeChars(Normalizer.normalize(string, Normalizer.Form.NFD).
 				//remove accents
 				replaceAll("\\p{InCombiningDiacriticalMarks}+", ""),
 				//remove illegal characters
@@ -475,7 +529,7 @@ public class StringUtils {
 
 
 	/** Adapted from JAVA 7 native String split */
-	public static String[] fastSplit(String string, String searchFor) {
+	public static String[] split(String string, String searchFor) {
 
 		int beginIndex=0;
 		int endIndex=0;
@@ -499,22 +553,60 @@ public class StringUtils {
 
 	public static void main(String[] argvs) {
 
-		String string=".a.b.c.";
+		StringBuilder sb=new StringBuilder(".");
+		for(char c='a'; c<='z'; c++) sb.append(new char[]{c,'.'});
+		String string=sb.toString();
+		System.out.println(string);
+
+		System.out.println(Arrays.asList(Pattern.compile("\\.").split(string)));
+		System.out.println(Arrays.asList(string.split("\\.")));
+		System.out.println(Arrays.asList(split(string, ".")));
+
+		System.out.println(string.replaceAll("\\.", "**"));
+		System.out.println(string.replace(".", "**"));
+		System.out.println(replace(string, ".", "**", 0));
+		System.out.println(replace(string, ".", "**", 3));
+		System.out.println(replace(string, ".", "**", -1));
+		System.out.println(replaceAll(string, ".", "**"));
+
 		int repeat=1000000;
 		TimeChronograph time=new TimeChronograph();
 
+		time.reset();
 		time.start();
-		System.out.println(Arrays.asList(string.split("\\.")));
-		for(int i=0; i<repeat; i++) string.split("\\.");
+		for(int i=0; i<repeat; i++) Pattern.compile("\\.").split(string);
 		time.stop();
-		System.out.println(time);
+		System.out.println("regex.split: "+time);
 
 		time.reset();
 		time.start();
-		System.out.println(Arrays.asList(fastSplit(string, ".")));
-		for(int i=0; i<repeat; i++) fastSplit(string, ".");
+		for(int i=0; i<repeat; i++) string.split("\\.");
 		time.stop();
-		System.out.println(time);
+		System.out.println("string.split: "+time);
+
+		time.reset();
+		time.start();
+		for(int i=0; i<repeat; i++) split(string, ".");
+		time.stop();
+		System.out.println("split (java7): "+time);
+
+		time.reset();
+		time.start();
+		for(int i=0; i<repeat; i++) string.replace("z", "**");
+		time.stop();
+		System.out.println("string.replace: "+time);
+
+		time.reset();
+		time.start();
+		for(int i=0; i<repeat; i++) string.replaceAll("z", "**");
+		time.stop();
+		System.out.println("string.replaceAll: "+time);
+
+		time.reset();
+		time.start();
+		for(int i=0; i<repeat; i++) replaceAll(string, "z", "**");
+		time.stop();
+		System.out.println("replaceAll: "+time);
 
 	}
 

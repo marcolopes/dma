@@ -53,21 +53,22 @@ public class MathFormula {
 		try{
 			Debug.out("formula",formula);
 
+			int i=0;
 			String enumeration=formula;
-			for (int i=0; i<symbols.length; i++){
+			for (FormulaSymbol symbol: symbols){
 
-				if (symbols[i]!=null && !symbols[i].isEmpty()){
-					Debug.out("symbol #"+i,symbols[i]);
-					String name=lowercase ? symbols[i].name.toLowerCase() : symbols[i].name;
-
-					enumeration=enumeration.replace(name, String.valueOf(symbols[i].value));
-					Debug.out("enumeration #"+i,enumeration);
+				if (symbol!=null && !symbol.isEmpty()){
+					String name=lowercase ? symbol.name.toLowerCase() : symbol.name;
+					enumeration=enumeration.replace(name, String.valueOf(symbol.value));
+					Debug.out("symbol #"+i, symbol);
+					Debug.out("enumeration #"+i, enumeration);
+					i++;
 				}
 
 			}
 
-			Debug.out("formula",formula);
-			Debug.out("enumeration",enumeration);
+			Debug.out("formula", formula);
+			Debug.out("enumeration", enumeration);
 
 			if (!enumeration.equals(formula)){
 

@@ -24,8 +24,8 @@ public class PasswordUtils {
 	public static String datePassword() {
 
 		Calendar calendar=Calendar.getInstance();
-		String month=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.MONTH)+1),2,"0");
-		String day=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)),2,"0");
+		String month=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.MONTH)+1),2,'0');
+		String day=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)),2,'0');
 
 		return month+day;
 
@@ -89,8 +89,8 @@ public class PasswordUtils {
 		for(char c: string.toCharArray()) {
 			char lc = Character.toLowerCase(c);
 			result.append(c += //avoids cast to char
-					((lc >= 'a' && lc <= 'm') ? 13 :
-						((lc >= 'n' && lc <= 'z') ? -13 : 0))) ;
+				(lc >= 'a' && lc <= 'm' ? 13 :
+					(lc >= 'n' && lc <= 'z' ? -13 : 0)));
 		}
 
 		return result.toString();
@@ -112,8 +112,8 @@ public class PasswordUtils {
 
 		for(char c: string.toCharArray()){
 			result.append(c += //avoids cast to char
-					((c >= '!' && c <= 'O') ? 47 :
-						((c >= 'P' && c <= '~') ? -47 : 0)));
+					(c >= '!' && c <= 'O' ? 47 :
+						(c >= 'P' && c <= '~' ? -47 : 0)));
 		}
 
 		return result.toString();

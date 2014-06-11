@@ -1,10 +1,12 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.utils.file;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -18,7 +20,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -231,7 +232,7 @@ public class FileUtils {
 
 	public static String readTextFileLines(File file, int count) {
 
-		String text="";
+		StringBuffer buffer=new StringBuffer();
 
 		try{
 			final BufferedReader br =
@@ -241,7 +242,7 @@ public class FileUtils {
 			try{
 				String line;
 				while((line = br.readLine()) != null && count--!=0){
-					text += line + "\n";
+					buffer.append(line + "\n");
 				}
 
 			}finally{
@@ -256,7 +257,7 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 
-		return text;
+		return buffer.toString();
 
 	}
 
@@ -339,15 +340,13 @@ public class FileUtils {
 	 */
 	public static byte[] readBytesStream(File file) {
 
-		byte[] buffer=null;
-
 		try{
 			final BufferedInputStream bis =
 					new BufferedInputStream(
 							new FileInputStream(file));
 
 			try{
-				buffer=new AbstractByteReader(){
+				return new AbstractByteReader(){
 					public int read(byte[] b, int off, int len) throws IOException {
 						return bis.read(b, off, len);
 					}
@@ -366,7 +365,7 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 
-		return buffer;
+		return null;
 
 	}
 
@@ -374,6 +373,41 @@ public class FileUtils {
 	public static byte[] readBytesStream(String filename) {
 
 		return readBytesStream(new File(filename));
+
+	}
+
+
+	public static Object readXmlStream(File file) {
+
+		try{
+			final XMLDecoder decoder =
+					new XMLDecoder(
+							new BufferedInputStream(
+									new FileInputStream(file)));
+
+			try{
+				return decoder.readObject();
+
+			}finally{
+				decoder.close();
+			}
+
+		}catch(FileNotFoundException e){
+			System.out.println(e);
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.out.println(e);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+
+	public static Object readXmlStream(String filename) {
+
+		return readXmlStream(new File(filename));
 
 	}
 
@@ -432,27 +466,25 @@ public class FileUtils {
 	}
 
 
-	public static boolean writeObjectStream(Object obj, File file) {
+	public static boolean writeXmlStream(Object obj, File file) {
 
 		try{
-			final ObjectOutputStream oos =
-					new ObjectOutputStream(
-							new FileOutputStream(file));
+			XMLEncoder encoder =
+				new XMLEncoder(
+					new BufferedOutputStream(
+						new FileOutputStream(file)));
 
 			try{
-				oos.writeObject(obj);
+				encoder.writeObject(obj);
 
 			}finally{
-				close(oos);
+				encoder.close();
 			}
 
 			return true;
 
 		}catch(FileNotFoundException e){
 			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
-		}catch(NullPointerException e){
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -462,11 +494,12 @@ public class FileUtils {
 	}
 
 
-	public static boolean writeObjectStream(Object obj, String filename) {
+	public static boolean writeXmlStream(Object obj, String filename) {
 
-		return writeObjectStream(obj, new File(filename));
+		return writeXmlStream(obj, new File(filename));
 
 	}
+
 
 
 
@@ -586,7 +619,7 @@ public class FileUtils {
 
 	public static String readTextStreamLines(File file, int count, String charset) {
 
-		String text="";
+		StringBuffer buffer=new StringBuffer();
 
 		try{
 			final BufferedReader br =
@@ -597,7 +630,7 @@ public class FileUtils {
 			try{
 				String line;
 				while((line = br.readLine()) != null && count--!=0){
-					text += line + "\n";
+					buffer.append(line + "\n");
 				}
 
 			}finally{
@@ -614,7 +647,7 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 
-		return text;
+		return buffer.toString();
 
 	}
 
@@ -708,8 +741,8 @@ public class FileUtils {
 		try{
 			String text=FileUtils.readTextStreamUTF8(file);
 
-			for(int i=0; i<searchReplace.length; i++){
-				text=text.replaceAll(searchReplace[i][0], searchReplace[i][1]);
+			for(String[] array: searchReplace){
+				text=text.replaceAll(array[0], array[1]);
 			}
 
 			FileUtils.writeTextStreamUTF8(text, file);

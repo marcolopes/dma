@@ -314,10 +314,10 @@ public class Numerals {
 			new BigDecimal("293572"),
 			new BigDecimal("332415741211")};
 
-		for(int i=0; i<VALUES.length; i++){
+		for(BigDecimal value: VALUES){
 			System.out.println(String.format(
-					"%-14s", VALUES[i].toPlainString())+
-					": "+numerals.toString(VALUES[i]));
+					"%-14s", value.toPlainString())+
+					": "+numerals.toString(value));
 		}
 
 		//teste de intervalos
@@ -343,12 +343,13 @@ public class Numerals {
 			{1010010000,1010010002,1},
 			{1234567890,1234567891,1}};
 
-		for(int i=0; i<INTERVALS.length; i++){
+		int i=0;
+		for(double[] interval: INTERVALS){
 			System.out.println();
-			System.out.println("===INTERVALO #"+(i+1)+"===");
-			for(BigDecimal j=BigDecimal.valueOf(INTERVALS[i][0]);
-					j.doubleValue()<=INTERVALS[i][1];
-					j=j.add(BigDecimal.valueOf(INTERVALS[i][2]))){
+			System.out.println("===INTERVALO #"+(i++)+"===");
+			for(BigDecimal j=BigDecimal.valueOf(interval[0]);
+					j.doubleValue()<=interval[1];
+					j=j.add(BigDecimal.valueOf(interval[2]))){
 				System.out.println(String.format(
 						"%-14s", j.toPlainString())+
 						": "+numerals.toString(j));
