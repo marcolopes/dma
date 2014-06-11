@@ -236,5 +236,9 @@ public abstract class TableViewerContainer<T> {
 		return getViewer().getTable();
 	}
 
+	public boolean isEmpty() {
+		return getTable().getItemCount()==0;
+	}
+
 
 }

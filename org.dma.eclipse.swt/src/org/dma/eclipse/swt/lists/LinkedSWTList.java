@@ -11,13 +11,13 @@ import java.util.Collection;
 import org.dma.java.utils.array.ArrayUtils;
 import org.dma.java.utils.array.CollectionUtils;
 
-public class LinkedSWTList extends ArrayList<String> {
+public class LinkedSWTList<T> extends ArrayList<T> {
 
 	private static final long serialVersionUID = 1L;
 
 	private final CustomSWTList SWTList;
 
-	public LinkedSWTList(CustomSWTList SWTList, Collection<String> list){
+	public LinkedSWTList(CustomSWTList SWTList, Collection<T> list){
 		this.SWTList=SWTList;
 		addAll(list);
 	}
