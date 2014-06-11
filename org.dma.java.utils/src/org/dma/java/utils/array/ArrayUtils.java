@@ -458,7 +458,7 @@ public class ArrayUtils {
 		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			result[i]=StringUtils.remove(array[i], searchFor);
+			result[i]=StringUtils.removeAll(array[i], searchFor);
 		}
 
 		return result;

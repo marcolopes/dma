@@ -31,11 +31,9 @@ public class FolderUtils {
 	}
 
 
-	public static boolean createFolder(String foldername) {
+	public static boolean createFolder(File folder) {
 
 		try{
-			File folder=new File(foldername);
-
 			return folder.exists() ? true : folder.mkdir();
 
 		}catch(Exception e){
@@ -43,6 +41,13 @@ public class FolderUtils {
 		}
 
 		return false;
+
+	}
+
+
+	public static boolean createFolder(String foldername) {
+
+		return createFolder(new File(foldername));
 
 	}
 
@@ -157,9 +162,10 @@ public class FolderUtils {
 	public static String[] getFileNames(File[] files) {
 
 		try{
+			int i=0;
 			String[] names=new String[files.length];
-			for(int i=0; i<files.length; i++){
-				names[i]=files[i].getName();
+			for(File file: files){
+				names[i++]=file.getName();
 			}
 
 			return names;

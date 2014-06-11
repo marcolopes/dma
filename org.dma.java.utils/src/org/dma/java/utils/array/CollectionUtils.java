@@ -44,8 +44,8 @@ public class CollectionUtils {
 
 		int count=0;
 
-		for (T element: collection){
-			if(element.toString().contains(searchFor)) count++;
+		for (T e: collection){
+			if(e.toString().contains(searchFor)) count++;
 		}
 
 		return count;
@@ -63,9 +63,12 @@ public class CollectionUtils {
 
 		StringBuilder result=new StringBuilder();
 
-		for (T element: collection){
-			if (result.length()>0) result.append(separator);
-			result.append(element.toString());
+		for (T e: collection){
+			String str=e.toString();
+			if (!str.isEmpty()){
+				if (result.length()>0) result.append(separator);
+				result.append(str);
+			}
 		}
 
 		return result.toString();
@@ -78,8 +81,8 @@ public class CollectionUtils {
 		String[] result=new String[collection.size()];
 
 		int index=0;
-		for (T element: collection){
-			result[index++]=prefix+element;
+		for (T e: collection){
+			result[index++]=prefix+e;
 		}
 
 		return result;
@@ -92,8 +95,8 @@ public class CollectionUtils {
 		String[] result=new String[collection.size()];
 
 		int index=0;
-		for (T element: collection){
-			result[index++]=element+suffix;
+		for (T e: collection){
+			result[index++]=e+suffix;
 		}
 
 		return result;
@@ -106,8 +109,8 @@ public class CollectionUtils {
 
 		List<T> removeList=new ArrayList();
 
-		for (T element: collection){
-			if(element.toString().contains(searchFor)) removeList.add(element);
+		for (T e: collection){
+			if(e.toString().contains(searchFor)) removeList.add(e);
 		}
 
 		collection.removeAll(removeList);

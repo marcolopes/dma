@@ -15,8 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.KeyStore;
 import java.security.PrivateKey;
+import java.util.Collection;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import com.lowagie.text.pdf.PdfCopyFields;
 import com.lowagie.text.pdf.PdfReader;
@@ -35,14 +35,14 @@ public class PdfUtils {
 			String reason, String location, String contact) throws Exception {
 
 		FileInputStream fis=new FileInputStream(file);
-		File outfile=new File(file+".tmp");
+		File output=new File(file+".tmp");
 
 		String alias=keyStore.aliases().nextElement();
 		PrivateKey privateKey=(PrivateKey)keyStore.getKey(alias, password.toCharArray());
 
 		PdfStamper stamper=PdfStamper.createSignature(
 				new PdfReader(fis),
-				new FileOutputStream(outfile),
+				new FileOutputStream(output),
 				'\0'); // keep pdf version
 
 		PdfSignatureAppearance signature=stamper.getSignatureAppearance();
@@ -60,7 +60,7 @@ public class PdfUtils {
 		stamper.close();
 		fis.close(); //PdfReader does not close stream
 		file.delete();
-		outfile.renameTo(file);
+		output.renameTo(file);
 
 	}
 
@@ -68,27 +68,27 @@ public class PdfUtils {
 	public static void addScript(File file, String script) throws Exception {
 
 		FileInputStream fis=new FileInputStream(file);
-		File outfile=new File(file+".tmp");
+		File output=new File(file+".tmp");
 
 		PdfStamper stamper=new PdfStamper(
 				new PdfReader(fis),
-				new FileOutputStream(outfile));
+				new FileOutputStream(output));
 
 		stamper.addJavaScript(script);
 
 		stamper.close();
 		fis.close(); //PdfReader does not close stream
 		file.delete();
-		outfile.renameTo(file);
+		output.renameTo(file);
 
 	}
 
 
-	public static void merge(List<File> fileList, File outfile) throws Exception {
+	public static void merge(Collection<File> files, File output) throws Exception {
 
-		PdfCopyFields copy=new PdfCopyFields(new FileOutputStream(outfile));
+		PdfCopyFields copy=new PdfCopyFields(new FileOutputStream(output));
 
-		for(File file: fileList){
+		for(File file: files){
 			PdfReader reader=new PdfReader(file.getAbsolutePath());
 			copy.addDocument(reader);
 		}
