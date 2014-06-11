@@ -30,7 +30,7 @@ public class FileExport extends FileDialog {
 	}
 
 
-	public File filePicker(String defaultPath, String filename){
+	public File filePicker(String defaultPath, String filename) {
 
 		try{
 			// FileDialog SWT 3.7 BUG
@@ -49,21 +49,30 @@ public class FileExport extends FileDialog {
 	}
 
 
-	public File filePicker(String filename){
+	public File filePicker(String filename) {
 		return filePicker(null,filename);
 	}
 
 
-	public File filePicker(){
+	public File filePicker() {
 		return filePicker(null);
 	}
 
 
-	public void writeText(String text, String defaultFile, String charset){
+	public void writeText(String text, String defaultFile, String charset) {
 		setFileName(defaultFile);
 		if(open()!=null){
 			String filename=getFilterPath()+File.separator+getFileName();
 			FileUtils.writeTextStream(text, filename, charset);
+		}
+	}
+
+
+	public void writeXml(Object obj, String defaultFile) {
+		setFileName(defaultFile);
+		if(open()!=null){
+			String filename=getFilterPath()+File.separator+getFileName();
+			FileUtils.writeXmlStream(obj, filename);
 		}
 	}
 

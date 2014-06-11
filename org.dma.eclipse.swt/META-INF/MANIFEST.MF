@@ -3,14 +3,14 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse SWT Utils
 Bundle-SymbolicName: org.dma.eclipse.swt;singleton:=true
-Bundle-Version: 4.2.9
+Bundle-Version: 4.2.10.qualifier
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.swt;bundle-version="3.7.2",
  org.eclipse.jface;bundle-version="3.7.0",
- org.dma.java.utils;bundle-version="4.7.1"
+ org.dma.java.utils;bundle-version="4.9.0"
 Export-Package: org.dma.eclipse.swt.copypaste,
  org.dma.eclipse.swt.custom,
  org.dma.eclipse.swt.dialogs.button,
