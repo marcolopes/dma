@@ -173,9 +173,7 @@ public class JobManager {
 
 
 
-	/*
-	 * Debug
-	 */
+	/** Debug */
 	public static void debug() {
 
 		Debug.out("JOB MANAGER");
