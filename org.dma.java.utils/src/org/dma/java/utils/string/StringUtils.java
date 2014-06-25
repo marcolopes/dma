@@ -391,7 +391,7 @@ public class StringUtils {
 	}
 
 
-	public static String trimAll(String string) {
+	public static String compact(String string) {
 
 		return removeAll(string, " ");
 
@@ -517,13 +517,12 @@ public class StringUtils {
 	/** Removes accents and illegal characters */
 	public static String normalize(String string) {
 
-		final char[] ILLEGAL_CHARS={'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'};
 		//decompose accented letters into LETTERS + ACCENTS
 		return removeChars(Normalizer.normalize(string, Normalizer.Form.NFD).
-				//remove accents
-				replaceAll("\\p{InCombiningDiacriticalMarks}+", ""),
-				//remove illegal characters
-				ILLEGAL_CHARS);
+			//remove accents
+			replaceAll("\\p{InCombiningDiacriticalMarks}+", ""),
+			//remove illegal characters
+			new char[]{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'});
 
 	}
 

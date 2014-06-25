@@ -6,6 +6,8 @@
 package org.dma.java.utils.security;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class Certificate {
 	 * @param type - JKS, PKCS12 (enumerator)
 	 * @param filename - keystore filename
 	 * @param password - keystore password
-	 * @param alias - keystore alias (if NULL, first key will be used)
+	 * @param alias - keystore alias (null=first key will be used)
 	 */
 	public Certificate(CERTIFICATE_TYPE type, String filename, String password) {
 		this.filename=filename;
@@ -42,6 +44,10 @@ public class Certificate {
 			keyStore.load(fis, password.toCharArray());
 			fis.close();
 
+		}catch(FileNotFoundException e){
+			System.out.println(e);
+		}catch(IOException e){
+			System.out.println(e);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -53,6 +59,18 @@ public class Certificate {
 	}
 
 
+	/** Returns first alias */
+	public String alias() {
+		try{
+			return alias==null ? keyStore.aliases().nextElement() : alias;
+
+		}catch(Exception e){}
+
+		return null;
+	}
+
+
+	/** Load alias */
 	public boolean load(String alias) {
 		this.alias=alias;
 
@@ -64,20 +82,16 @@ public class Certificate {
 			return true;
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return false;
 	}
 
 
-	public String alias() {
-		try{
-			return alias==null ? keyStore.aliases().nextElement() : alias;
-
-		}catch(Exception e){}
-
-		return null;
+	/** Load first alias */
+	public boolean load() {
+		return load(null);
 	}
 
 
