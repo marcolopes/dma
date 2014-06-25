@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.dma.java.utils.klass;
 
+import org.dma.java.utils.Command;
+
 public final class ClassUtils {
 
 	/**
@@ -31,8 +33,8 @@ public final class ClassUtils {
 
 	public static void main(String[] args) throws Exception {
 
-		org.dma.java.utils.Runtime instance=newInstance(
-				org.dma.java.utils.Runtime.class, "org.dma.java.utils.Runtime");
+		Command instance=newInstance(
+				Command.class, "org.dma.java.utils.Command");
 
 		System.out.println(instance);
 
