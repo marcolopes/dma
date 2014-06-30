@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -13,6 +13,10 @@ public class CustomPrintDialog extends PrintDialog {
 
 	//subclassing
 	protected void checkSubclass() {}
+
+	public CustomPrintDialog(){
+		this(new Shell());
+	}
 
 	public CustomPrintDialog(Shell parent){
 		super(parent);
