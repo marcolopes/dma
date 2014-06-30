@@ -242,20 +242,20 @@ public class BusinessRules {
 		System.out.println("round Down (0): "+roundDown(new BigDecimal("5.0"), new BigDecimal("10.0")));
 
 		//DIVISION by ZERO test
-		proportionalValue(new BigDecimal(0), new BigDecimal(0), new BigDecimal(0));
-		averagePrice(new BigDecimal(0), new BigDecimal(0), new BigDecimal(0), new BigDecimal(0));
-		salePrice(new BigDecimal(0), new BigDecimal(0));
-		markupPercentage(new BigDecimal(0), new BigDecimal(0));
-		addedPercentages(new BigDecimal(0), new BigDecimal(0));
-		addedPercentages(new BigDecimal(0));
-		valuePercentage(new BigDecimal(0), new BigDecimal(0));
-		percentageValue(new BigDecimal(0), new BigDecimal(0));
-		valueIncluded(new BigDecimal(0), new BigDecimal(100));
-		valueExcluded(new BigDecimal(0), new BigDecimal(0));
-		valueAdded(new BigDecimal(0), new BigDecimal(0));
-		netValue(new BigDecimal(0), new BigDecimal(0));
-		roundUp(new BigDecimal(0), new BigDecimal(0));
-		roundDown(new BigDecimal(0), new BigDecimal(0));
+		proportionalValue(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+		averagePrice(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+		salePrice(BigDecimal.ZERO, BigDecimal.ZERO);
+		markupPercentage(BigDecimal.ZERO, BigDecimal.ZERO);
+		addedPercentages(BigDecimal.ZERO, BigDecimal.ZERO);
+		addedPercentages(BigDecimal.ZERO);
+		valuePercentage(BigDecimal.ZERO, BigDecimal.ZERO);
+		percentageValue(BigDecimal.ZERO, BigDecimal.ZERO);
+		valueIncluded(BigDecimal.ZERO, new BigDecimal(100));
+		valueExcluded(BigDecimal.ZERO, BigDecimal.ZERO);
+		valueAdded(BigDecimal.ZERO, BigDecimal.ZERO);
+		netValue(BigDecimal.ZERO, BigDecimal.ZERO);
+		roundUp(BigDecimal.ZERO, BigDecimal.ZERO);
+		roundDown(BigDecimal.ZERO, BigDecimal.ZERO);
 
 		//JAVA BigDecimal test
 		BigDecimal value=new BigDecimal("1.005");

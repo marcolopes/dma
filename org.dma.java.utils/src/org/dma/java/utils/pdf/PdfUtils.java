@@ -99,7 +99,7 @@ public class PdfUtils {
 
 
 	/** Prints a PDF using apache pdfbox */
-	public static void print(File file, PrinterJob job, boolean silent) throws Exception {
+	public static boolean print(File file, PrinterJob job, boolean silent) throws Exception {
 
 		job.setJobName(file.getName());
 
@@ -113,6 +113,8 @@ public class PdfUtils {
 					doc.print(job);
 				}
 
+				return true;
+
 			}catch(PrinterAbortException e){ //avoid abort exception
 			}catch(PrinterException e){
 				throw new Exception("Error while printing");
@@ -125,6 +127,8 @@ public class PdfUtils {
 		}catch(IOException e){
 			throw new Exception("Error reading file "+file);
 		}
+
+		return false;
 
 	}
 
