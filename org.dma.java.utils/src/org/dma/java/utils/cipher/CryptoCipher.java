@@ -46,9 +46,7 @@ public class CryptoCipher {
 			System.out.println(e);
 		}catch(InvalidKeyException e){
 			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(Exception e){}
 	}
 
 
@@ -78,9 +76,7 @@ public class CryptoCipher {
 			System.out.println(e);
 		}catch(BadPaddingException e){
 			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(Exception e){}
 		return null;
 	}
 
@@ -107,9 +103,7 @@ public class CryptoCipher {
 
 		}catch(UnsupportedEncodingException e){
 			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(Exception e){}
 		return null;
 	}
 
@@ -141,9 +135,7 @@ public class CryptoCipher {
 			System.out.println(e);
 		}catch(BadPaddingException e){
 			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(Exception e){}
 		return null;
 	}
 
@@ -169,9 +161,7 @@ public class CryptoCipher {
 
 		}catch(UnsupportedEncodingException e){
 			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(Exception e){}
 		return null;
 	}
 

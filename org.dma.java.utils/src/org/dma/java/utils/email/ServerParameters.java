@@ -8,6 +8,7 @@ package org.dma.java.utils.email;
 import javax.mail.PasswordAuthentication;
 
 import org.dma.java.utils.Debug;
+import org.dma.java.utils.array.ArrayUtils;
 
 public class ServerParameters {
 
@@ -29,6 +30,9 @@ public class ServerParameters {
 				return valueOf(name);
 			}catch(Exception e){}
 			return NONE;
+		}
+		public static String[] toStringArray(){
+			return ArrayUtils.toStringArray(values());
 		}
 	}
 
