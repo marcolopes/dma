@@ -30,38 +30,12 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> Set<String> toStringSet(T[] array) {
-
-		Set<String> result=new HashSet(array.length);
-
-		for(T element: array){
-			result.add(element.toString());
-		}
-
-		return result;
-
-	}
-
-
 	public static <T> List<T> toList(T[] array) {
 
 		List<T> result=new ArrayList(array.length);
 
 		for(T element: array){
 			result.add(element);
-		}
-
-		return result;
-
-	}
-
-
-	public static <T> List<String> toStringList(T[] array) {
-
-		List<String> result=new ArrayList(array.length);
-
-		for(T element: array){
-			result.add(element.toString());
 		}
 
 		return result;
