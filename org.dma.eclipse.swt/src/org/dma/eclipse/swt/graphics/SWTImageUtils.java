@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * IBM Corporation and others
@@ -22,11 +22,36 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
 public class SWTImageUtils {
+
+	/**
+	 * Saves an {@link Image}
+	 * to file in the specified SWT format.
+	 */
+	public static boolean saveImage(Image image, String filename, int format) {
+		try{
+			ImageLoader saver=new ImageLoader();
+			saver.data=new ImageData[]{image.getImageData()};
+			saver.save(filename, SWT.IMAGE_PNG);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean savePNG(Image image, String filename) {
+		return saveImage(image, filename, SWT.IMAGE_PNG);
+	}
+
+	public static boolean saveJPEG(Image image, String filename) {
+		return saveImage(image, filename, SWT.IMAGE_JPEG);
+	}
+
 
 	/**
 	 * Returns an {@link Image}
@@ -79,9 +104,8 @@ public class SWTImageUtils {
 	public static Image createImage(String path) {
 		try{
 			return createImage(new FileInputStream(path));
-		}catch(Exception e){
-			return null;
-		}
+		}catch(Exception e){}
+		return null;
 	}
 
 
@@ -109,9 +133,8 @@ public class SWTImageUtils {
 	public static Image createImage(BufferedImage bufferedImage) {
 		try{
 			return new Image(Display.getCurrent(), toSWTImage(bufferedImage));
-		}catch(Exception e){
-			return null;
-		}
+		}catch(Exception e){}
+		return null;
 	}
 
 
@@ -135,9 +158,8 @@ public class SWTImageUtils {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		try{
 			return getImageDescriptor(new FileInputStream(path));
-		}catch(Exception e){
-			return null;
-		}
+		}catch(Exception e){}
+		return null;
 	}
 
 
@@ -163,9 +185,8 @@ public class SWTImageUtils {
 	public static ImageDescriptor getImageDescriptor(BufferedImage bufferedImage) {
 		try{
 			return ImageDescriptor.createFromImageData(toSWTImage(bufferedImage));
-		}catch(Exception e){
-			return null;
-		}
+		}catch(Exception e){}
+		return null;
 	}
 
 
