@@ -18,19 +18,9 @@ public class ImageManager {
 
 	private static final Map<String, Image> cache=new HashMap();
 
-	/**
-	 * Returns the cached image or a new one if it does not exist;
-	 * Cache Map key based on byte-array hash
-	 */
-	public static Image getImage(byte[] bytes) {
-		String key=String.valueOf(Arrays.hashCode(bytes));
-		Image image=cache.get(key);
-		if (image==null) {
-			image=SWTImageUtils.createImage(bytes);
-			cache.put(key, image);
-		}
-
-		return image;
+	public static void putImage(String key, Image image) {
+		image=cache.put(key, image);
+		if (image!=null) image.dispose();
 	}
 
 
@@ -43,6 +33,22 @@ public class ImageManager {
 		if (image==null) {
 			image=SWTImageUtils.createImage(path);
 			cache.put(path, image);
+		}
+
+		return image;
+	}
+
+
+	/**
+	 * Returns the cached image or a new one if it does not exist;
+	 * Cache Map key based on byte-array hash
+	 */
+	public static Image getImage(byte[] bytes) {
+		String key=String.valueOf(Arrays.hashCode(bytes));
+		Image image=cache.get(key);
+		if (image==null) {
+			image=SWTImageUtils.createImage(bytes);
+			cache.put(key, image);
 		}
 
 		return image;
