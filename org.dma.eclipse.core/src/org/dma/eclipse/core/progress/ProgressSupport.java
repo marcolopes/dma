@@ -9,7 +9,6 @@ import java.util.LinkedHashMap;
 
 import org.dma.java.utils.Debug;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -37,7 +36,8 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 	public void add(Class klass) {
 
-		Assert.isTrue(IProgressAction.class.isAssignableFrom(klass));
+		if (!IProgressAction.class.isAssignableFrom(klass))
+			throw new UnsupportedOperationException();
 
 		try{
 			IProgressAction action=((Class<IProgressAction>)klass).newInstance();
