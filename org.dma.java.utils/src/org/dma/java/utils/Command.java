@@ -58,7 +58,7 @@ public class Command {
 		String line;
 		BufferedReader br=new BufferedReader(new InputStreamReader(process.getInputStream()));
 		try{
-			while((line=br.readLine())!=null) {
+			while((line=br.readLine())!=null){
 				System.out.println(line);
 			}
 		}finally{
