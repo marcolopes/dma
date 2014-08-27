@@ -64,7 +64,7 @@ public final class CustomBrowser extends Browser {
 	 * -Dorg.eclipse.swt.browser.DefaultType=webkit
 	 */
 	public CustomBrowser(Composite parent) {
-		super(parent, SWT.None /*detectStyle(parent)*/);
+		super(parent, detectStyle(parent));
 	}
 
 	public boolean setFile(String filename) {
