@@ -21,25 +21,23 @@ public final class CustomBrowser extends Browser {
 	protected void checkSubclass() {}
 
 	public static Integer detectStyle(Composite parent) {
-		if (SystemUtils.IS_OS_WINDOWS){
-			for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT}){
-				try{
-					System.out.print("STYLE: "+style);
-					Browser b=new Browser(parent, style);
-					b.dispose();
-					return style;
+		if (SystemUtils.IS_OS_WINDOWS) return SWT.NONE;
+		for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT}){
+			try{
+				System.out.print("STYLE: "+style);
+				Browser b=new Browser(parent, style);
+				b.dispose();
+				return style;
 
-				}catch(SWTError e){
-					e.printStackTrace();
-				}catch(SWTException e){
-					e.printStackTrace();
-				}catch(Exception e){
-					e.printStackTrace();
-				}
+			}catch(SWTError e){
+				e.printStackTrace();
+			}catch(SWTException e){
+				e.printStackTrace();
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-			return null;
 		}
-		return SWT.NONE;
+		return null;
 	}
 
 	/**
