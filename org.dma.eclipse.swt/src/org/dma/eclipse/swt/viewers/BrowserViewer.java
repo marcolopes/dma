@@ -122,6 +122,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	private void updateToolBar() {
 
 		Browser browser=getBrowser();
+		//browser may not exist!
 		button_home.setEnabled(browser!=null);
 		button_stop.setEnabled(browser!=null);
 		button_back.setEnabled(browser!=null && browser.isBackEnabled());
