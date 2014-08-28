@@ -25,8 +25,7 @@ public final class CustomBrowser extends Browser {
 	}
 
 	public static Integer detectStyle(Composite parent) {
-		int[] styles={SWT.MOZILLA, SWT.WEBKIT, SWT.NONE};
-		for(int style: styles){
+		for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT, SWT.NONE}){
 			try{
 				System.out.print("STYLE: "+style);
 				Browser b=new Browser(parent, style);
