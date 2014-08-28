@@ -21,7 +21,9 @@ public final class CustomBrowser extends Browser {
 	protected void checkSubclass() {}
 
 	public static Integer detectStyle(Composite parent) {
+		//WINDOWS
 		if (SystemUtils.IS_OS_WINDOWS) return SWT.NONE;
+		//LINUX e MAC
 		for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT}){
 			try{
 				System.out.print("STYLE: "+style);
