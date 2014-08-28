@@ -20,12 +20,9 @@ public final class CustomBrowser extends Browser {
 	//subclassing
 	protected void checkSubclass() {}
 
-	public static Integer detectStyle() {
-		return SystemUtils.IS_OS_WINDOWS ? SWT.NONE : SWT.WEBKIT;
-	}
-
 	public static Integer detectStyle(Composite parent) {
-		for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT, SWT.NONE}){
+		if (!SystemUtils.IS_OS_WINDOWS)
+		for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT}){
 			try{
 				System.out.print("STYLE: "+style);
 				Browser b=new Browser(parent, style);
@@ -40,7 +37,7 @@ public final class CustomBrowser extends Browser {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return SWT.NONE;
 	}
 
 	/**

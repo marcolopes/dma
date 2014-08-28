@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -119,12 +119,13 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	}
 
 
-	private void updateToolBar(boolean enabled) {
+	private void updateToolBar() {
 
-		button_home.setEnabled(enabled);
-		button_stop.setEnabled(enabled);
-		button_back.setEnabled(getBrowser().isBackEnabled());
-		button_forward.setEnabled(getBrowser().isForwardEnabled());
+		Browser browser=getBrowser();
+		button_home.setEnabled(browser!=null);
+		button_stop.setEnabled(browser!=null);
+		button_back.setEnabled(browser!=null && browser.isBackEnabled());
+		button_forward.setEnabled(browser!=null && browser.isForwardEnabled());
 
 	}
 
@@ -150,7 +151,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 			public void widgetSelected(SelectionEvent e) {
 				CTabItem tabItem=(CTabItem)e.item;
 				Debug.out("SELECTED", tabItem);
-				updateToolBar(getBrowser()!=null);
+				updateToolBar();
 				setFocus();
 			}
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -181,7 +182,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 				public void open(WindowEvent event) {
 					event.browser=createBrowser();
 					Debug.out("OPEN", event.browser);
-					updateToolBar(getBrowser()!=null);
+					updateToolBar();
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
@@ -189,7 +190,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 					CTabItem tabItem=tabFolder.getSelection();
 					Debug.out("CHANGED", tabItem);
 					tabItem.setText(getBrowser().getUrl());
-					updateToolBar(getBrowser()!=null);
+					updateToolBar();
 					setFocus();
 				}
 			});
@@ -202,6 +203,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 		tabFolder.setSelection(size());
 		put(tabItem, browser);
+		updateToolBar();
 
 		return browser;
 
@@ -214,28 +216,28 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 
 	public void setFocus() {
+		Browser browser=getBrowser();
 		//browser may not exist!
-		if (getBrowser()!=null){
-			getBrowser().setFocus();
-		}
+		if (browser==null) return;
+		browser.setFocus();
 	}
 
 
 	public void setInvisible() {
+		Browser browser=getBrowser();
 		//browser may not exist!
-		if (getBrowser()!=null){
-			getBrowser().setVisible(false);
-			getBrowser().setBounds(0, 0, 1, 1);
-		}
+		if (browser==null) return;
+		browser.setVisible(false);
+		browser.setBounds(0, 0, 1, 1);
 	}
 
 
 	public void goHome(String homeUrl) {
 		this.homeUrl=homeUrl;
+		Browser browser=getBrowser();
 		//browser may not exist!
-		if (getBrowser()!=null){
-			getBrowser().setUrl(homeUrl);
-		}
+		if (browser==null) return;
+		browser.setUrl(homeUrl);
 	}
 
 
