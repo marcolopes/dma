@@ -24,7 +24,7 @@ public final class CustomBrowser extends Browser {
 		//WINDOWS
 		if (SystemUtils.IS_OS_WINDOWS) return SWT.NONE;
 		//LINUX e MAC
-		for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT, SWT.NONE}){
+		for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT}){
 			try{
 				System.out.print("STYLE: "+style);
 				Browser b=new Browser(parent, style);
