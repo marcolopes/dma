@@ -55,14 +55,21 @@ public final class CustomBrowser extends Browser {
 
 	/**
 	 * Creates a platform dependant browser
+	 */
+	public CustomBrowser(Composite parent) {
+		this(parent, detectStyle(parent));
+	}
+
+	/**
+	 * Creates a platform dependant browser
 	 * <p>
 	 * <b>If running on Linux or Mac</b>
 	 * one of these should be present in VM parameters:<br>
 	 * -Dorg.eclipse.swt.browser.DefaultType=mozilla<br>
 	 * -Dorg.eclipse.swt.browser.DefaultType=webkit
 	 */
-	public CustomBrowser(Composite parent) {
-		super(parent, detectStyle(parent));
+	public CustomBrowser(Composite parent, int style) {
+		super(parent, style);
 	}
 
 	public boolean setFile(String filename) {
