@@ -35,8 +35,11 @@ public class FileUtils {
 	 * Unicode Byte Order Mark<br>
 	 * http://unicode.org/faq/utf_bom.html
 	 */
-	public static final String UTF8_BOM = "\ufeff";
 	public static final String UTF8_CHARSET = "UTF-8";
+	public static final String UTF8_BOM = new String(new char[]{0xEF,0xBB,0xBF});
+
+	public static final String UTF16_CHARSET = "UTF-16";
+	public static final String UTF16_BOM = "\ufeff";
 
 	public static final String ISO_CHARSET = "ISO-8859-1";
 	public static final String WIN1252_CHARSET = "Windows-1252";
