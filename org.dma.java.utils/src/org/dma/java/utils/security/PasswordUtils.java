@@ -89,8 +89,8 @@ public class PasswordUtils {
 		for(char c: string.toCharArray()) {
 			char lc = Character.toLowerCase(c);
 			result.append(c += //avoids cast to char
-				(lc >= 'a' && lc <= 'm' ? 13 :
-					(lc >= 'n' && lc <= 'z' ? -13 : 0)));
+					(lc >= 'a' && lc <= 'm' ? 13 :
+						(lc >= 'n' && lc <= 'z' ? -13 : 0)));
 		}
 
 		return result.toString();
