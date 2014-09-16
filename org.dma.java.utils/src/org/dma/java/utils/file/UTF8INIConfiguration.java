@@ -20,15 +20,15 @@ public class UTF8INIConfiguration extends HierarchicalINIConfiguration {
 	}
 
 	private UTF8INIConfiguration(File file) {
-		//not supported
+		throw new UnsupportedOperationException();
 	}
 
 	private UTF8INIConfiguration(String filename) {
-		//not supported
+		throw new UnsupportedOperationException();
 	}
 
 	private UTF8INIConfiguration(URL url) {
-		//not supported
+		throw new UnsupportedOperationException();
 	}
 
 
