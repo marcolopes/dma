@@ -141,6 +141,7 @@ public class UIHelper {
 	}
 
 
+
 	/*
 	 * IWorkbench
 	 */
@@ -151,6 +152,7 @@ public class UIHelper {
 	public static IWorkbenchHelpSystem getHelpSystem() {
 		return PlatformUI.getWorkbench().getHelpSystem();
 	}
+
 
 
 	/*
@@ -167,6 +169,7 @@ public class UIHelper {
 	public static Shell getWorkbenchShell() {
 		return getWorkbenchWindow().getShell();
 	}
+
 
 
 	/*
@@ -200,6 +203,7 @@ public class UIHelper {
 	}
 
 
+
 	/*
 	 * IViewReference
 	 */
@@ -222,6 +226,7 @@ public class UIHelper {
 	public static void hideView(IViewReference view) {
 		getActivePage().hideView(view);
 	}
+
 
 
 	/*

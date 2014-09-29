@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -22,26 +22,17 @@ public class BindingSupport extends HashMap<String, BindingDefinition> {
 
 	public void register(String property, BindingDefinition definition) {
 
-		try{
-			if (!containsKey(property)){
+		if (containsKey(property)) throw new Error("BINDING ALREADY REGISTERED: "+property);
 
-				put(property, definition);
+		put(property, definition);
 
-				bindingContext.bindValue(
-					definition.getTargetObservableValue(),
-					definition.getModelObservableValue(),
-					definition.getTargetToModelUpdate(),
-					definition.getModelToTargetUpdate());
+		bindingContext.bindValue(
+			definition.getTargetObservableValue(),
+			definition.getModelObservableValue(),
+			definition.getTargetToModelUpdate(),
+			definition.getModelToTargetUpdate());
 
-				Debug.out(property, keySet());
-
-			}else{
-				throw new Exception("BINDING ALREADY REGISTERED: "+property);
-			}
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		Debug.out(property, keySet());
 
 	}
 

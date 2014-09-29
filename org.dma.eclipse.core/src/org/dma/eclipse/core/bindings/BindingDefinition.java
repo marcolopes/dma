@@ -60,7 +60,6 @@ public class BindingDefinition {
 
 
 
-
 	/*
 	 * Getters and setters
 	 */
