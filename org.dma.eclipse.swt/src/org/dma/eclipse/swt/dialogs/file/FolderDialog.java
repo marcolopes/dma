@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class FolderDialog extends DirectoryDialog {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	public FolderDialog(String...extensions) {

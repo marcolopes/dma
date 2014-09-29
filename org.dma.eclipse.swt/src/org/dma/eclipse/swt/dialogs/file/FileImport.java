@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class FileImport extends FileDialog {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	public FileImport(String...extensions) {

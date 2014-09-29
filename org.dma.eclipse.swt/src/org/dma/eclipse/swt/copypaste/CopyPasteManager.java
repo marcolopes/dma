@@ -26,7 +26,6 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 	}
 
 
-
 	public void executeCopy() {
 
 		header.executeCopy();

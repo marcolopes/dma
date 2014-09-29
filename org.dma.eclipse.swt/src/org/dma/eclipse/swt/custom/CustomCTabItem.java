@@ -13,7 +13,7 @@ import org.eclipse.swt.graphics.FontData;
 
 public class CustomCTabItem extends CTabItem {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	public CustomCTabItem(CTabFolder parent) {

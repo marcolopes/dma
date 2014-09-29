@@ -48,6 +48,7 @@ public abstract class ButtonDialog extends CustomShell {
 	}
 
 
+
 	/*
 	 * Contents
 	 */

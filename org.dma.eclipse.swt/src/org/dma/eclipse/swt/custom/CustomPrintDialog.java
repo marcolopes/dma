@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class CustomPrintDialog extends PrintDialog {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	public CustomPrintDialog(){

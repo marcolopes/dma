@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Event;
 
 public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	public CustomSWTList(Composite parent, int style){

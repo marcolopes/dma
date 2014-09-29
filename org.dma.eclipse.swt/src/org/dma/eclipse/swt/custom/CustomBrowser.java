@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public final class CustomBrowser extends Browser {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	public static Integer detectStyle(Composite parent) {

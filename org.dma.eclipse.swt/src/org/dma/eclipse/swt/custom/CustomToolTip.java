@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.ToolTip;
 
 public class CustomToolTip extends ToolTip {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	private final Shell parent;
