@@ -56,45 +56,36 @@ public class ExecutionManager {
 
 	private static void register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
-		try{
-			if(!map.containsKey(execDefinition)) {
+		if(map.containsKey(execDefinition)) throw new Error("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
 
-				execDefinition.addKeyListener(new KeyAdapter() {
-					public void keyPressed(KeyEvent event) {
-						for(int keyCode: execEvent.getKeycode()){
-							if(keyCode==event.keyCode) {
-								Debug.out("EXECUTION");
-								execEvent.getExecutionAction().run();
-								execEvent.setActionExecuted(true);
-								event.doit=false;
-							}
-						}
+		execDefinition.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent event) {
+				for(int keyCode: execEvent.getKeycode()){
+					if(keyCode==event.keyCode) {
+						Debug.out("EXECUTION");
+						execEvent.getExecutionAction().run();
+						execEvent.setActionExecuted(true);
+						event.doit=false;
 					}
-				});
-
-				if(execDefinition.getControl() instanceof Combo) {
-
-					execDefinition.addSelectionListener(new Listener() {
-						public void handleEvent(Event event) {
-							Debug.out("EXECUTION");
-							execEvent.getExecutionAction().run();
-							execEvent.setActionExecuted(true);
-						}
-					});
-
 				}
-
-				map.put(execDefinition, execEvent);
-
-				Debug.out(execEvent.getExecutionAction().getId(), map.size());
-
-			}else{
-				throw new Exception("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
 			}
+		});
 
-		}catch(Exception e){
-			e.printStackTrace();
+		if(execDefinition.getControl() instanceof Combo) {
+
+			execDefinition.addSelectionListener(new Listener() {
+				public void handleEvent(Event event) {
+					Debug.out("EXECUTION");
+					execEvent.getExecutionAction().run();
+					execEvent.setActionExecuted(true);
+				}
+			});
+
 		}
+
+		map.put(execDefinition, execEvent);
+
+		Debug.out(execEvent.getExecutionAction().getId(), map.size());
 
 	}
 

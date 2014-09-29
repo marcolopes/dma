@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 
 public class CustomButton extends Button {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	private CustomAction selectionAction;

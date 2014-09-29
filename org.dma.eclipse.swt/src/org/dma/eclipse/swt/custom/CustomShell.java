@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class CustomShell extends Shell {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	/*

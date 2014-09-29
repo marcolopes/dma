@@ -76,8 +76,6 @@ public abstract class TableViewerContainer<T> {
 
 
 
-
-
 	/*
 	 * Listeners
 	 */
@@ -119,8 +117,6 @@ public abstract class TableViewerContainer<T> {
 		}
 
 	}
-
-
 
 
 
@@ -180,8 +176,6 @@ public abstract class TableViewerContainer<T> {
 
 
 
-
-
 	/*
 	 * Viewer
 	 */
@@ -212,8 +206,6 @@ public abstract class TableViewerContainer<T> {
 		Debug.out("Selection", selectionList);
 		ClipboardManager.copyToClipboard(selectionList);
 	}
-
-
 
 
 

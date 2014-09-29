@@ -58,8 +58,8 @@ public class SWTImageUtils {
 	 * that can be used as placeholder for missing image.
 	 */
 	public static Image createImage(int size) {
-		Image image = new Image(Display.getCurrent(), size, size);
-		GC gc = new GC(image);
+		Image image=new Image(Display.getCurrent(), size, size);
+		GC gc=new GC(image);
 		gc.setBackground(Display.getCurrent().getSystemColor(SWT.TRANSPARENT));
 		gc.fillRectangle(0, 0, size, size);
 		gc.dispose();
@@ -73,8 +73,8 @@ public class SWTImageUtils {
 	 */
 	public static Image createImage(InputStream stream) throws IOException {
 		try{
-			Display display = Display.getCurrent();
-			ImageData data = new ImageData(stream);
+			Display display=Display.getCurrent();
+			ImageData data=new ImageData(stream);
 			return data.transparentPixel > 0 ?
 				new Image(display, data, data.getTransparencyMask()) :
 				new Image(display, data);

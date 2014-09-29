@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class FileExport extends FileDialog {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	public FileExport(String...extensions) {

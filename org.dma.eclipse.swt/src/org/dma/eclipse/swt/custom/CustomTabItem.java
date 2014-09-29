@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.TabItem;
 
 public class CustomTabItem extends TabItem {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	public CustomTabItem(TabFolder parent) {
@@ -36,5 +36,6 @@ public class CustomTabItem extends TabItem {
 		//tab seleccionado?
 		return control!=null && control.equals(getControl());
 	}
+
 
 }

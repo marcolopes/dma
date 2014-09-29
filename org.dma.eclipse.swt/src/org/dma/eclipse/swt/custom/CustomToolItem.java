@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 public class CustomToolItem extends ToolItem {
 
-	//subclassing
+	@Override //subclassing
 	protected void checkSubclass() {}
 
 	private CustomAction selectionAction;
