@@ -44,7 +44,7 @@ public class PrinterUtils {
 		try{
 			PrintService[] ps = PrinterJob.lookupPrintServices();
 			for (int i=0; i<ps.length; i++) {
-				if (ps[i].getName().indexOf(printerName) >= 0) return ps[i];
+				if (ps[i].getName().indexOf(printerName)>=0) return ps[i];
 			}
 
 		}catch(Exception e){}
@@ -54,17 +54,10 @@ public class PrinterUtils {
 	}
 
 
-	public static PrinterJob createPrinterJob(PrintService ps) throws Exception {
+	public static PrinterJob createPrinterJob(PrintService ps) throws PrinterException {
 
 		PrinterJob job=PrinterJob.getPrinterJob();
-
-		try{
-			job.setPrintService(ps);
-
-		}catch(PrinterException e){
-			throw new Exception("Invalid printer");
-		}
-
+		job.setPrintService(ps);
 		return job;
 
 	}
@@ -72,65 +65,74 @@ public class PrinterUtils {
 
 	public static PrinterJob createPrinterJob(String printerName) throws Exception {
 
-		return createPrinterJob(lookupPrintService(printerName));
+		PrintService ps=lookupPrintService(printerName);
+
+		try{
+			return createPrinterJob(ps);
+
+		}catch(PrinterException e){
+			throw new Exception("Invalid printer "+printerName);
+		}
 
 	}
 
 
 	/** Prints STREAM DATA using java print */
-	public static void print(InputStream is, PrintService ps) throws PrintException {
+	public static boolean print(InputStream is, PrintService ps) throws PrintException {
 
-		DocPrintJob job = ps.createPrintJob();
-		Doc document = new SimpleDoc(is, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+		DocPrintJob job=ps.createPrintJob();
+		Doc document=new SimpleDoc(is, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 		job.print(document, null);
 
-	}
-
-
-	/** Prints RAW DATA using java print */
-	public static void print(byte[] data, PrintService ps) throws PrintException {
-
-		print(new ByteArrayInputStream(data), ps);
+		return true;
 
 	}
 
 
 	/** Prints RAW DATA using java print */
-	public static void print(byte[] data, String printerName) throws PrintException {
+	public static boolean print(byte[] data, PrintService ps) throws PrintException {
 
-		print(data, lookupPrintService(printerName));
+		return print(new ByteArrayInputStream(data), ps);
+
+	}
+
+
+	/** Prints RAW DATA using java print */
+	public static boolean print(byte[] data, String printerName) throws PrintException {
+
+		return print(data, lookupPrintService(printerName));
 
 	}
 
 
 	/** Prints RAW DATA using java print (DEFAULT print service) */
-	public static void print(byte[] data) throws PrintException {
+	public static boolean print(byte[] data) throws PrintException {
 
-		print(data, lookupDefaultPrintService());
-
-	}
-
-
-	/** Prints FILE DATA using java print */
-	public static void print(File file, PrintService ps) throws FileNotFoundException, PrintException {
-
-		print(new FileInputStream(file), ps);
+		return print(data, lookupDefaultPrintService());
 
 	}
 
 
 	/** Prints FILE DATA using java print */
-	public static void print(File file, String printerName) throws FileNotFoundException, PrintException {
+	public static boolean print(File file, PrintService ps) throws FileNotFoundException, PrintException {
 
-		print(file, lookupPrintService(printerName));
+		return print(new FileInputStream(file), ps);
 
 	}
 
 
 	/** Prints FILE DATA using java print */
-	public static void print(File file) throws FileNotFoundException, PrintException {
+	public static boolean print(File file, String printerName) throws FileNotFoundException, PrintException {
 
-		print(file, lookupDefaultPrintService());
+		return print(file, lookupPrintService(printerName));
+
+	}
+
+
+	/** Prints FILE DATA using java print */
+	public static boolean print(File file) throws FileNotFoundException, PrintException {
+
+		return print(file, lookupDefaultPrintService());
 
 	}
 
