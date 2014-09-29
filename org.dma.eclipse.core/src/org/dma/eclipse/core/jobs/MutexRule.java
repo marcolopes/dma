@@ -17,5 +17,4 @@ public class MutexRule implements ISchedulingRule {
 		return rule==this;
 	}
 
-
 }

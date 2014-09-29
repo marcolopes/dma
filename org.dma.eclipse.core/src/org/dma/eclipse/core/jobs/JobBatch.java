@@ -32,6 +32,15 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 
 	protected boolean running=false;
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.util.HashSet#add(java.lang.Object)
+	 */
+	@Override
+	public boolean add(CustomJob e) {
+		return e.hasTasks() ? super.add(e) : false;
+	}
+
 	public boolean isRunning() {
 		return running;
 	}
@@ -95,15 +104,11 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 	}
 
 
+
 	/*
 	 * (non-Javadoc)
-	 * @see java.util.HashSet#add(java.lang.Object)
+	 * @see java.util.AbstractSet#hashCode()
 	 */
-	@Override
-	public boolean add(CustomJob e) {
-		return e.hasTasks() ? super.add(e) : false;
-	}
-
 	@Override
 	public int hashCode() {
 		return radomHash;

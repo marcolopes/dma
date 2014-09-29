@@ -35,6 +35,7 @@ public class DebugLogger extends HashMap<Integer, Integer> {
 	}
 
 
+
 	/*
 	 * File log
 	 */
