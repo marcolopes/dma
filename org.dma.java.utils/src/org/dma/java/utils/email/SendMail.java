@@ -13,9 +13,16 @@ import org.apache.commons.mail.MultiPartEmail;
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.email.ServerParameters.SECURITY;
 
-public class SendMail {
+public class SendMail extends MultiPartEmail {
 
-	public static void send(ServerParameters server, EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) throws Exception {
+	private final ServerParameters server;
+
+	public SendMail(ServerParameters server) {
+		this.server=server;
+	}
+
+
+	public String send(EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) throws Exception {
 
 		server.debug();
 		Debug.out("from", from);
@@ -23,7 +30,7 @@ public class SendMail {
 		Debug.out("subject", subject);
 		Debug.out("message", message);
 
-		MultiPartEmail email = new MultiPartEmail();
+		MultiPartEmail email=new MultiPartEmail();
 		email.setDebug(Debug.STATUS);
 
 		email.setHostName(server.getHostName());
@@ -44,14 +51,14 @@ public class SendMail {
 		email.setMsg(message);
 		if (attachment!=null) email.attach(attachment);
 
-		email.send();
+		return email.send();
 
 	}
 
 
-	public static void send(ServerParameters server, EmailAddress from, EmailAddress to, String subject, String message) throws Exception {
+	public String send(EmailAddress from, EmailAddress to, String subject, String message) throws Exception {
 
-		send(server, from, to, subject, message, null);
+		return send(from, to, subject, message, null);
 
 	}
 
@@ -59,15 +66,15 @@ public class SendMail {
 	public static void main(String arg[]) {
 
 		try{
-			ServerParameters server=new ServerParameters(
-				"mail.projectocolibri.com", 25, SECURITY.STARTTLS,
-				new PasswordAuthentication("marcolopes@projectocolibri.com", "***"));
+			SendMail mail=new SendMail(new ServerParameters(
+					"mail.projectocolibri.com", 25, SECURITY.STARTTLS,
+					new PasswordAuthentication("marcolopes@projectocolibri.com", "***")));
 
 			EmailAddress from=new EmailAddress("suporte@projectocolibri.com", "FROM: Projecto Colibri");
 			EmailAddress to=new EmailAddress("marcolopes@projectocolibri.com", "TO: Marco Lopes");
 
-			send(server, from, to, "SUBJECT: Simple Mail Test", "MESSAGE: Simple Mail Test");
-			send(server,from, to, "SUBJECT: Attachment Mail Test", "MESSAGE: Attachment Mail Test",
+			mail.send(from, to, "SUBJECT: Simple Mail Test", "MESSAGE: Simple Mail Test");
+			mail.send(from, to, "SUBJECT: Attachment Mail Test", "MESSAGE: Attachment Mail Test",
 				new EmailAttachment(new File("email.txt"), "Attachment Description"));
 
 		}catch(Exception e){
