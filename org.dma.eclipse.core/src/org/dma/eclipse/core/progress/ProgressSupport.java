@@ -17,7 +17,6 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 	private static final long serialVersionUID = 1L;
 
-	private Class actionClass;
 	private final String title;
 	private int work;
 
@@ -74,8 +73,6 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 					// execute the tasks
 					for(IProgressAction action: keySet()){
 
-						actionClass=action.getClass();
-
 						//task name
 						String taskName=get(action);
 						Debug.out("TASK", taskName);
@@ -105,11 +102,6 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 		return true;
 
-	}
-
-
-	public String getActionClass() {
-		return actionClass.getCanonicalName();
 	}
 
 
