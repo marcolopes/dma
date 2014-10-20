@@ -9,8 +9,9 @@ public class MethodResult {
 
 	public boolean value;
 
+	/** Return value = false */
 	public MethodResult(){
-		this(true);
+		this(false);
 	}
 
 	public MethodResult(boolean value){
