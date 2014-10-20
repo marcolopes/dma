@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -151,6 +152,11 @@ public class UIHelper {
 
 	public static IWorkbenchHelpSystem getHelpSystem() {
 		return PlatformUI.getWorkbench().getHelpSystem();
+	}
+
+	/** @see BusyIndicator */
+	public static void showWhile(Runnable runnable) {
+		BusyIndicator.showWhile(getDisplay(), runnable);
 	}
 
 
