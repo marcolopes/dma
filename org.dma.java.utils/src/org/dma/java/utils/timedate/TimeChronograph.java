@@ -7,45 +7,46 @@ package org.dma.java.utils.timedate;
 
 public class TimeChronograph {
 
-	private long startTime;
 	private long endTime;
+	private long startTime;
 	private long elapsedTime=0;
 	private boolean running=false;
 
-	public void start(){
+	public void start() {
 		if (running) throw new RuntimeException("STOP timer first!");
 		running=true;
 		startTime=System.nanoTime();
 	}
 
 
-	public long stop(){
+	/** Returns elapsed time */
+	public long stop() {
 		if (!running) throw new RuntimeException("START timer first!");
 		elapsedTime=elapsed();
 		running=false;
-		return elapsedTime/1000000;
+		return elapsed()/1000000;
 	}
 
 
-	public void reset(){
-		elapsedTime=0;
+	public void reset() {
 		endTime=0;
 		startTime=System.nanoTime();
+		elapsedTime=0;
 	}
 
 
-	public long elapsed(){
+	public long elapsed() {
 		return running ?
 			elapsedTime+System.nanoTime()-startTime : elapsedTime;
 	}
 
 
-	public String toString(){
+	public String toString() {
 		return elapsed()/1000000+"ms";
 	}
 
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 
 		try{
 			TimeChronograph timer=new TimeChronograph();
@@ -57,7 +58,7 @@ public class TimeChronograph {
 			Thread.sleep(100);
 			System.out.println("TIMER (~200): "+timer.toString());
 
-			timer.stop();
+			System.out.println(timer.stop());
 			Thread.sleep(100);
 			System.out.println("TIMER (~200): "+timer.toString());
 
@@ -65,7 +66,7 @@ public class TimeChronograph {
 			Thread.sleep(100);
 			System.out.println("TIMER (~300): "+timer.toString());
 
-			timer.stop();
+			System.out.println(timer.stop());
 			System.out.println("TIMER (~300): "+timer.toString());
 
 			timer.start();
