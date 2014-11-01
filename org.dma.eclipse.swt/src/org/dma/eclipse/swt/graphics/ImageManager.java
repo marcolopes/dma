@@ -16,10 +16,10 @@ import org.eclipse.swt.graphics.Image;
 
 public class ImageManager {
 
-	private static final Map<String, Image> cache=new HashMap();
+	private static final Map<String, Image> CACHE=new HashMap();
 
 	public static void putImage(String key, Image image) {
-		image=cache.put(key, image);
+		image=CACHE.put(key, image);
 		if (image!=null) image.dispose();
 	}
 
@@ -29,10 +29,10 @@ public class ImageManager {
 	 * Cache Map key based on path string
 	 */
 	public static Image getImage(String path) {
-		Image image=cache.get(path);
+		Image image=CACHE.get(path);
 		if (image==null) {
 			image=SWTImageUtils.createImage(path);
-			cache.put(path, image);
+			CACHE.put(path, image);
 		}
 
 		return image;
@@ -45,10 +45,10 @@ public class ImageManager {
 	 */
 	public static Image getImage(byte[] bytes) {
 		String key=String.valueOf(Arrays.hashCode(bytes));
-		Image image=cache.get(key);
+		Image image=CACHE.get(key);
 		if (image==null) {
 			image=SWTImageUtils.createImage(bytes);
-			cache.put(key, image);
+			CACHE.put(key, image);
 		}
 
 		return image;
@@ -61,10 +61,10 @@ public class ImageManager {
 	 */
 	public static Image getImage(BufferedImage bufferedImage) {
 		String key=String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(bufferedImage)));
-		Image image=cache.get(key);
+		Image image=CACHE.get(key);
 		if (image==null) {
 			image=SWTImageUtils.createImage(bufferedImage);
-			cache.put(key, image);
+			CACHE.put(key, image);
 		}
 
 		return image;
@@ -74,21 +74,19 @@ public class ImageManager {
 	/** Dispose all of the cached images */
 	public static void disposeImages() {
 		debug();
-		// dispose created images
-		for(Image image: cache.values()){
+		//dispose created images
+		for(Image image: CACHE.values()){
 			if (image!=null) image.dispose();
 		}
-		cache.clear();
+		CACHE.clear();
 	}
 
 
-	/*
-	 * Debug
-	 */
+	/** Debug */
 	public static void debug() {
-		System.out.println("IMAGE CACHE: " + cache.size());
-		for(String key: cache.keySet()){
-			System.out.println(key+": "+cache.get(key));
+		System.out.println("IMAGE CACHE: " + CACHE.size());
+		for(String key: CACHE.keySet()){
+			System.out.println(key+": "+CACHE.get(key));
 		}
 	}
 
