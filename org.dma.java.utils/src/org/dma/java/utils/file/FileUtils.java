@@ -203,7 +203,7 @@ public class FileUtils {
 
 			try{
 				int ch;
-				while ((ch = br.read()) > -1){
+				while((ch = br.read()) > -1){
 					buffer.append((char)ch);
 				}
 
@@ -538,7 +538,7 @@ public class FileUtils {
 
 			try{
 				int ch;
-				while ((ch = br.read()) > -1){
+				while((ch = br.read()) > -1){
 					buffer.append((char)ch);
 				}
 
@@ -593,7 +593,7 @@ public class FileUtils {
 
 			try{
 				int ch;
-				while ((ch = br.read()) > -1){
+				while((ch = br.read()) > -1){
 					buffer.append((char)ch);
 				}
 

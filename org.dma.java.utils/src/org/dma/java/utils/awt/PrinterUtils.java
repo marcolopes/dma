@@ -43,8 +43,8 @@ public class PrinterUtils {
 
 		try{
 			PrintService[] ps = PrinterJob.lookupPrintServices();
-			for (int i=0; i<ps.length; i++) {
-				if (ps[i].getName().indexOf(printerName)>=0) return ps[i];
+			for(int i=0; i<ps.length; i++) {
+				if(ps[i].getName().indexOf(printerName)>=0) return ps[i];
 			}
 
 		}catch(Exception e){}

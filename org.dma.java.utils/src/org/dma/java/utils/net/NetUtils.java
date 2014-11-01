@@ -80,7 +80,7 @@ public class NetUtils {
 		NTPUDPClient client=new NTPUDPClient();
 		client.setDefaultTimeout(timeout);
 
-		for (String host : hosts) {
+		for(String host : hosts) {
 
 			try{
                 InetAddress hostAddr=InetAddress.getByName(host);

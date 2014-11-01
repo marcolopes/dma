@@ -55,9 +55,9 @@ public class MathFormula {
 
 			int i=0;
 			String enumeration=formula;
-			for (FormulaSymbol symbol: symbols){
+			for(FormulaSymbol symbol: symbols){
 
-				if (symbol!=null && !symbol.isEmpty()){
+				if(symbol!=null && !symbol.isEmpty()){
 					String name=lowercase ? symbol.name.toLowerCase() : symbol.name;
 					enumeration=enumeration.replace(name, String.valueOf(symbol.value));
 					Debug.out("symbol #"+i, symbol);
@@ -70,7 +70,7 @@ public class MathFormula {
 			Debug.out("formula", formula);
 			Debug.out("enumeration", enumeration);
 
-			if (!enumeration.equals(formula)){
+			if(!enumeration.equals(formula)){
 
 				Object value=interpreter.eval("result="+enumeration);
 				Debug.out("value",interpreter.get("result"));
@@ -93,7 +93,7 @@ public class MathFormula {
 	public boolean isValid(String...vars) {
 
 		FormulaSymbol[] symbols=new FormulaSymbol[vars.length];
-		for (int i=0; i<vars.length; i++){
+		for(int i=0; i<vars.length; i++){
 			symbols[i]=new FormulaSymbol(vars[i], BigDecimal.valueOf(i+1));
 		}
 

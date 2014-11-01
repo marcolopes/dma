@@ -17,7 +17,7 @@ public class CollectionUtils {
 	 * Conversion
 	 */
 	public static <T> T[] toArray(Collection<T> c, T[] a) {
-		if (c.size()>a.length){
+		if(c.size()>a.length){
 			a=(T[])Array.newInstance(a.getClass().getComponentType(), c.size());
 		}
 		return c.toArray(a);
@@ -44,7 +44,7 @@ public class CollectionUtils {
 
 		int count=0;
 
-		for (T e: collection){
+		for(T e: collection){
 			if(e.toString().contains(searchFor)) count++;
 		}
 
@@ -63,10 +63,10 @@ public class CollectionUtils {
 
 		StringBuilder result=new StringBuilder();
 
-		for (T e: collection){
+		for(T e: collection){
 			String str=e.toString();
-			if (!str.isEmpty()){
-				if (result.length()>0) result.append(separator);
+			if(!str.isEmpty()){
+				if(result.length()>0) result.append(separator);
 				result.append(str);
 			}
 		}
@@ -81,7 +81,7 @@ public class CollectionUtils {
 		String[] result=new String[collection.size()];
 
 		int index=0;
-		for (T e: collection){
+		for(T e: collection){
 			result[index++]=prefix+e;
 		}
 
@@ -95,7 +95,7 @@ public class CollectionUtils {
 		String[] result=new String[collection.size()];
 
 		int index=0;
-		for (T e: collection){
+		for(T e: collection){
 			result[index++]=e+suffix;
 		}
 
@@ -109,7 +109,7 @@ public class CollectionUtils {
 
 		List<T> removeList=new ArrayList();
 
-		for (T e: collection){
+		for(T e: collection){
 			if(e.toString().contains(searchFor)) removeList.add(e);
 		}
 
