@@ -113,7 +113,7 @@ public class UIHelper {
 		try{
 			IConfigurationElement[] elements=Platform.getExtensionRegistry().
 					getConfigurationElementsFor("org.eclipse.ui.perspectives");
-			for(IConfigurationElement element: elements){
+			for (IConfigurationElement element: elements){
 				String id=element.getAttribute("id");
 				if (!id.equals(perspectiveId)){
 					layout.addPerspectiveShortcut(id);
@@ -131,7 +131,7 @@ public class UIHelper {
 		try{
 			PreferenceManager manager=PlatformUI.getWorkbench().getPreferenceManager();
 			IPreferenceNode[] nodes=manager.getRootSubNodes();
-			for(IPreferenceNode node: nodes){
+			for (IPreferenceNode node: nodes){
 				manager.remove(node.getId());
 				Debug.out("REMOVED", node.getId());
 			}
@@ -186,8 +186,8 @@ public class UIHelper {
 	}
 
 	public static boolean isPerspectiveOpen(String perspectiveId) {
-		for(IPerspectiveDescriptor perspective: getActivePage().getOpenPerspectives()) {
-			if(perspective.getId().equals(perspectiveId)) return true;
+		for (IPerspectiveDescriptor perspective: getActivePage().getOpenPerspectives()) {
+			if (perspective.getId().equals(perspectiveId)) return true;
 		}
 		return false;
 	}
