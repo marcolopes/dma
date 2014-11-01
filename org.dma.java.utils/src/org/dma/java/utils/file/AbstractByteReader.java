@@ -27,7 +27,7 @@ public abstract class AbstractByteReader {
 		int numRead = 0;
 
 		// Read in the bytes
-		while (offset < buffer.length && (numRead=read(buffer, offset, buffer.length-offset)) >= 0){
+		while(offset < buffer.length && (numRead=read(buffer, offset, buffer.length-offset)) >= 0){
 			offset += numRead;
 		}
 

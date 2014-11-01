@@ -151,7 +151,7 @@ public class ArrayUtils {
 
 		StringBuilder result=new StringBuilder();
 
-		for (byte b: array){
+		for(byte b: array){
 			result.append(StringUtils.toHex(b));
 		}
 
@@ -164,7 +164,7 @@ public class ArrayUtils {
 
 		StringBuilder result=new StringBuilder();
 
-		for (byte b: array){
+		for(byte b: array){
 			String hexString=Integer.toHexString(0x00ff & b);
 			result.append(hexString.length()==1 ? "0"+hexString : hexString);
 		}
@@ -179,7 +179,7 @@ public class ArrayUtils {
 		String[] result=new String[array.length];
 
 		int index=0;
-		for (byte b: array){
+		for(byte b: array){
 			String hexString=Integer.toHexString(0x00ff & b);
 			result[index++]=hexString.length()==1 ? "0"+hexString : hexString;
 		}
@@ -197,11 +197,11 @@ public class ArrayUtils {
 	 */
 	public static String larger(String[] array) {
 
-		if (array.length==0) return "";
+		if(array.length==0) return "";
 
 		String result=array[0];
 
-		for (int i=1; i<array.length; i++){
+		for(int i=1; i<array.length; i++){
 			if(array[i].length()>result.length()) result=array[i];
 		}
 
@@ -212,7 +212,7 @@ public class ArrayUtils {
 
 	public static int greater(int[] array) {
 
-		if (array.length==0) return 0;
+		if(array.length==0) return 0;
 
 		int result=array[0];
 
@@ -227,7 +227,7 @@ public class ArrayUtils {
 
 	public static int smaller(int[] array) {
 
-		if (array.length==0) return 0;
+		if(array.length==0) return 0;
 
 		int result=array[0];
 
@@ -546,7 +546,7 @@ public class ArrayUtils {
 		List<T> result=toList(intoArray);
 
 		for(T element: fromArray){
-			if (!result.contains(element)) result.add(element);
+			if(!result.contains(element)) result.add(element);
 		}
 
 		return CollectionUtils.toArray(result,intoArray[0].getClass());
