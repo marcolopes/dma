@@ -74,7 +74,7 @@ public class TimeDateUtils {
 	/*
 	 * Cache
 	 */
-	private static final Map<String, SimpleDateFormat> SDF_CACHE=new HashMap();
+	private static final Map<String, SimpleDateFormat> SDF_CACHE = new HashMap();
 
 	public static SimpleDateFormat getSimpleDateFormat(String pattern) {
 		SimpleDateFormat sdf=SDF_CACHE.get(pattern);
