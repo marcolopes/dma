@@ -24,18 +24,10 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 	/** Executed when last job is done */
 	public abstract void done();
 
-	// MUTEX: MUTual EXclusion semaphore
-	/** Global rule to avoid simultaneous executions */
-	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
-
-	private final int radomHash=NumericUtils.random();
+	private final int radomHash = NumericUtils.random();
 
 	protected boolean running=false;
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.util.HashSet#add(java.lang.Object)
-	 */
 	@Override
 	public boolean add(CustomJob e) {
 		return e.hasTasks() ? super.add(e) : false;
@@ -47,7 +39,7 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 
 	/** Execute jobs with default Mutex Rule */
 	public void schedule() {
-		schedule(MUTEX_RULE);
+		schedule(CustomJob.MUTEX_RULE);
 	}
 
 	/** Execute jobs with rule (null=immediately) */

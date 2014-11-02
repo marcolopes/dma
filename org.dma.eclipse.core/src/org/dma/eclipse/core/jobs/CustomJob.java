@@ -25,11 +25,9 @@ import org.eclipse.swt.widgets.Display;
  */
 public class CustomJob extends Job {
 
-	/**
-	 * MUTEX: MUTual EXclusion semaphore.
-	 * Global rule to avoid simultaneous executions.
-	 */
-	public static final ISchedulingRule MUTEX_RULE=new MutexRule();
+	// MUTEX: MUTual EXclusion semaphore
+	/** Global rule to avoid simultaneous executions */
+	public static final ISchedulingRule MUTEX_RULE = new MutexRule();
 
 	private final List<JobTask> tasks=new ArrayList();
 
@@ -50,10 +48,10 @@ public class CustomJob extends Job {
 	 * The new job is created with a MUTUAL EXCLUSION rule that prevents
 	 * two or more jobs with the same rule from executing at the same time
 	 * <p>
-	 * <b>setRule(new MutexRule());</b> can be used to create a new rule for a new
+	 * <b>setRule(MUTEX_RULE)</b> can be used to create a new rule for a new
 	 * batch of jobs that need to be mutal exclusive.
 	 * <p>
-	 * <b>setRule(null);</b> can be used to indicate that the job has no rule and
+	 * <b>setRule(null)</b> can be used to indicate that the job has no rule and
 	 * can be executed immediately
 	 *
 	 * @param name - The job name. <b>if NULL job will be silent!</b>
@@ -148,7 +146,7 @@ public class CustomJob extends Job {
 						}
 					});
 				}else{
-					//normal task
+					//NORMAL task
 					jtask.getAction().run();
 				}
 

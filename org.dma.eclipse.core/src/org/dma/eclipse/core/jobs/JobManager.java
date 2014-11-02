@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
-	private static final Set<JobBatch> jobSet=new HashSet();
+	private static final Set<JobBatch> QUEUE = new HashSet();
 
 	protected static void schedule(CustomJob job, ISchedulingRule rule) {
 
@@ -75,7 +75,7 @@ public class JobManager {
 						});
 						batch.running=false;
 						//remove batch
-						jobSet.remove(batch);
+						QUEUE.remove(batch);
 					}
 
 					debug();
@@ -92,8 +92,8 @@ public class JobManager {
 
 
 	protected static void schedule(JobBatch batch, ISchedulingRule rule) {
-		jobSet.add(batch);
-		Debug.out("SET", jobSet);
+		QUEUE.add(batch);
+		Debug.out("QUEUE", QUEUE);
 		for(CustomJob job: batch){
 			//avoid successive calls
 			if (!job.isBusy()) schedule(job,rule);
@@ -112,9 +112,9 @@ public class JobManager {
 
 
 	public static void clean() {
-		List<JobBatch> list=new ArrayList(jobSet);
+		List<JobBatch> list=new ArrayList(QUEUE);
 		for(JobBatch batch: list){
-			if(batch.isEmpty()) jobSet.remove(batch);
+			if(batch.isEmpty()) QUEUE.remove(batch);
 		}
 	}
 
@@ -125,7 +125,7 @@ public class JobManager {
 	 */
 	public static boolean cancelJobs() {
 		boolean result=true;
-		for(JobBatch batch: jobSet) {
+		for(JobBatch batch: QUEUE) {
 			if (!batch.cancelJobs()) result=false;
 		}
 		return result;
@@ -137,7 +137,7 @@ public class JobManager {
 	 * Query
 	 */
 	public static JobBatch findJobBatch(CustomJob job) {
-		for(JobBatch batch: jobSet) {
+		for(JobBatch batch: QUEUE) {
 			if(batch.contains(job)) return batch;
 		}
 		return null;
@@ -146,7 +146,7 @@ public class JobManager {
 
 	public static int getQueuedJobs() {
 		int count=0;
-		for(JobBatch batch: jobSet) {
+		for(JobBatch batch: QUEUE) {
 			count+=batch.getQueuedJobs();
 		}
 		return count;
@@ -155,7 +155,7 @@ public class JobManager {
 
 	public static int getPendingJobs() {
 		int count=0;
-		for(JobBatch batch: jobSet) {
+		for(JobBatch batch: QUEUE) {
 			count+=batch.getPendingJobs();
 		}
 		return count;
@@ -164,7 +164,7 @@ public class JobManager {
 
 	public static int getRunningJobs() {
 		int count=0;
-		for(JobBatch batch: jobSet) {
+		for(JobBatch batch: QUEUE) {
 			count+=batch.getRunningJobs();
 		}
 		return count;
@@ -181,7 +181,7 @@ public class JobManager {
 			System.out.println("QUEUED: " + getQueuedJobs());
 			System.out.println("PENDING: " + getPendingJobs());
 			System.out.println("RUNNING: " + getRunningJobs());
-			for(JobBatch batch: jobSet) {
+			for(JobBatch batch: QUEUE) {
 				batch.debug();
 			}
 		}
