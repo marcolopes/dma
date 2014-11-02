@@ -16,7 +16,7 @@ import org.eclipse.swt.graphics.Image;
 
 public class ImageManager {
 
-	private static final Map<String, Image> CACHE=new HashMap();
+	private static final Map<String, Image> CACHE = new HashMap();
 
 	public static void putImage(String key, Image image) {
 		image=CACHE.put(key, image);
@@ -25,7 +25,7 @@ public class ImageManager {
 
 
 	/**
-	 * Returns the cached image or a new one if it does not exist;
+	 * Returns the CACHED image or a new one if it does not exist;
 	 * Cache Map key based on path string
 	 */
 	public static Image getImage(String path) {
@@ -40,7 +40,7 @@ public class ImageManager {
 
 
 	/**
-	 * Returns the cached image or a new one if it does not exist;
+	 * Returns the CACHED image or a new one if it does not exist;
 	 * Cache Map key based on byte-array hash
 	 */
 	public static Image getImage(byte[] bytes) {
@@ -56,7 +56,7 @@ public class ImageManager {
 
 
 	/**
-	 * Returns the cached image or a new one if it does not exist;
+	 * Returns the CACHED image or a new one if it does not exist;
 	 * Cache Map key based on image hash
 	 */
 	public static Image getImage(BufferedImage bufferedImage) {
@@ -71,7 +71,7 @@ public class ImageManager {
 	}
 
 
-	/** Dispose all of the cached images */
+	/** Dispose all of the CACHED images */
 	public static void disposeImages() {
 		debug();
 		//dispose created images

@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Listener;
 
 public class ExecutionManager {
 
-	private static final Map<ExecutionDefinition, ExecutionEvent> map=new HashMap();
+	private static final Map<ExecutionDefinition, ExecutionEvent> EVENTS = new HashMap();
 
 	/*
 	 * Register
@@ -56,7 +56,7 @@ public class ExecutionManager {
 
 	private static void register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
-		if(map.containsKey(execDefinition)) throw new Error("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
+		if(EVENTS.containsKey(execDefinition)) throw new Error("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
 
 		execDefinition.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent event) {
@@ -83,9 +83,9 @@ public class ExecutionManager {
 
 		}
 
-		map.put(execDefinition, execEvent);
+		EVENTS.put(execDefinition, execEvent);
 
-		Debug.out(execEvent.getExecutionAction().getId(), map.size());
+		Debug.out(execEvent.getExecutionAction().getId(), EVENTS.size());
 
 	}
 
@@ -96,18 +96,18 @@ public class ExecutionManager {
 	 */
 	public static void unregister(Control control) {
 
-		for(Iterator<ExecutionDefinition> iterator=map.keySet().iterator(); iterator.hasNext();) {
+		for(Iterator<ExecutionDefinition> iterator=EVENTS.keySet().iterator(); iterator.hasNext();) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
 			if(execDefinition.getControl().equals(control)){
 
-				ExecutionEvent execEvent=map.get(execDefinition);
+				ExecutionEvent execEvent=EVENTS.get(execDefinition);
 
 				execDefinition.removeListeners();
 				iterator.remove();
 
-				Debug.out(execEvent.getExecutionAction().getId(), map.size());
+				Debug.out(execEvent.getExecutionAction().getId(), EVENTS.size());
 
 			}
 
@@ -122,12 +122,12 @@ public class ExecutionManager {
 	 */
 	public static void notifyDependentExecutions(String id, String secondaryId) {
 
-		for(ExecutionDefinition execDefinition: map.keySet()) {
+		for(ExecutionDefinition execDefinition: EVENTS.keySet()) {
 
 			if(ObjectUtils.equals(id, execDefinition.getId()) &&
 				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
 
-				ExecutionEvent execEvent=map.get(execDefinition);
+				ExecutionEvent execEvent=EVENTS.get(execDefinition);
 
 				if(execEvent.getResponseAction()!=null && execEvent.isActionExecuted()) {
 
@@ -156,9 +156,9 @@ public class ExecutionManager {
 
 	private static boolean hasDependentExecutions(String id, String secondaryId) {
 
-		for(ExecutionDefinition execDefinition: map.keySet()) {
+		for(ExecutionDefinition execDefinition: EVENTS.keySet()) {
 
-			ExecutionEvent execEvent=map.get(execDefinition);
+			ExecutionEvent execEvent=EVENTS.get(execDefinition);
 
 			if(execDefinition!=null && execEvent!=null &&
 				execEvent.getPostresponseAction()!=null &&
