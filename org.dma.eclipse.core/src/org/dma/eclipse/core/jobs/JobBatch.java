@@ -53,7 +53,7 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 		//elements can be removed elsewhere!
 		List<CustomJob> list=new ArrayList(this);
 		for(CustomJob job: list){
-			if (!job.cancel()) result=false;
+			if(!job.cancel()) result=false;
 		}
 		return result;
 	}
@@ -67,7 +67,7 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 	public int getPendingJobs() {
 		int count=0;
 		for(CustomJob job: this){
-			if (job.getState()==Job.WAITING) count++;
+			if(job.getState()==Job.WAITING) count++;
 		}
 		return count;
 	}
@@ -76,7 +76,7 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 	public int getRunningJobs() {
 		int count=0;
 		for(CustomJob job: this){
-			if (job.getState()==Job.RUNNING) count++;
+			if(job.getState()==Job.RUNNING) count++;
 		}
 		return count;
 	}
@@ -84,7 +84,7 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 
 	public void debug() {
 
-		if (Debug.STATUS){
+		if(Debug.STATUS){
 			System.out.println("BATCH: " + this);
 			int i=0;
 			for(CustomJob job: this){
