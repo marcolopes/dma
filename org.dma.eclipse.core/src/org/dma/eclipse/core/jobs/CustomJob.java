@@ -138,7 +138,7 @@ public class CustomJob extends Job {
 				monitor.subTask(jtask.getName());
 				Debug.out("JOB TASK", jtask.getName());
 
-				if (jtask instanceof JobUITask){
+				if(jtask instanceof JobUITask){
 					//UI task
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {

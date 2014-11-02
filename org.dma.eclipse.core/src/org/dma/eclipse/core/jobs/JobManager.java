@@ -32,15 +32,12 @@ public class JobManager {
 			public void scheduled(IJobChangeEvent event) {
 				try{
 					debug();
-
-					final CustomJob job=(CustomJob)event.getJob();
+					CustomJob job=(CustomJob)event.getJob();
 					Debug.out("STARTED", job);
 					//find batch
 					final JobBatch batch=findJobBatch(job);
 					Debug.out("BATCH", batch);
-					//first job?
-					//if (batch.getPendingJobs()==0 && batch.getRunningJobs()==1)
-					if (!batch.running){
+					if(!batch.running){
 						batch.running=true;
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
@@ -53,6 +50,7 @@ public class JobManager {
 					e.printStackTrace();
 				}
 			}
+
 			/*
 			 * The only way to be sure that a CANCELED job
 			 * has finished is by overriding the done method
@@ -60,24 +58,23 @@ public class JobManager {
 			@Override
 			public void done(final IJobChangeEvent event) {
 				try{
-					final CustomJob job=(CustomJob)event.getJob();
+					CustomJob job=(CustomJob)event.getJob();
 					Debug.out("DONE", job);
 					//remove listener
 					job.removeJobChangeListener(this);
 					//find batch
 					final JobBatch batch=findJobBatch(job);
 					Debug.out("BATCH", batch);
-					if (remove(job) && batch.getQueuedJobs()==0){
+					if(remove(job) && batch.getQueuedJobs()==0){
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
 								batch.done();
 							}
 						});
-						batch.running=false;
 						//remove batch
 						QUEUE.remove(batch);
+						batch.running=false;
 					}
-
 					debug();
 
 				}catch(Exception e){
@@ -96,7 +93,7 @@ public class JobManager {
 		Debug.out("QUEUE", QUEUE);
 		for(CustomJob job: batch){
 			//avoid successive calls
-			if (!job.isBusy()) schedule(job,rule);
+			if(!job.isBusy()) schedule(job,rule);
 		}
 	}
 
@@ -126,7 +123,7 @@ public class JobManager {
 	public static boolean cancelJobs() {
 		boolean result=true;
 		for(JobBatch batch: QUEUE) {
-			if (!batch.cancelJobs()) result=false;
+			if(!batch.cancelJobs()) result=false;
 		}
 		return result;
 	}
@@ -177,7 +174,7 @@ public class JobManager {
 
 		Debug.out("JOB MANAGER");
 
-		if (Debug.STATUS){
+		if(Debug.STATUS){
 			System.out.println("QUEUED: " + getQueuedJobs());
 			System.out.println("PENDING: " + getPendingJobs());
 			System.out.println("RUNNING: " + getRunningJobs());
