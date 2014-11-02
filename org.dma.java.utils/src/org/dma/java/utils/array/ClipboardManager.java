@@ -14,10 +14,10 @@ import org.dma.java.utils.Debug;
 
 public class ClipboardManager {
 
-	private static final List objectCollection=new ArrayList();
+	private static final List<Object> CLIPBOARD = new ArrayList();
 
 	public static void clearClipboard() {
-		objectCollection.clear();
+		CLIPBOARD.clear();
 	}
 
 
@@ -27,10 +27,10 @@ public class ClipboardManager {
 
 			clearClipboard();
 
-			objectCollection.addAll(col);
+			CLIPBOARD.addAll(col);
 
 			Debug.out("COLLECTION", col.size());
-			Debug.out("CLIPBOARD", objectCollection.size());
+			Debug.out("CLIPBOARD", CLIPBOARD.size());
 			Debug.out("CLASS", getObjectClass());
 
 		}
@@ -43,12 +43,12 @@ public class ClipboardManager {
 	 * Getters and setters
 	 */
 	public static boolean hasObject() {
-		return !objectCollection.isEmpty();
+		return !CLIPBOARD.isEmpty();
 	}
 
 
 	public static Class getObjectClass() {
-		return objectCollection.get(0).getClass();
+		return CLIPBOARD.get(0).getClass();
 	}
 
 
@@ -58,17 +58,17 @@ public class ClipboardManager {
 
 
 	public static <T> T getObject(Class klass) {
-		return !hasObject(klass) ? null : (T)objectCollection.get(0);
+		return !hasObject(klass) ? null : (T)CLIPBOARD.get(0);
 	}
 
 
 	public static <T> Collection<T> getCollection(Class klass) {
-		return !hasObject(klass) ? new ArrayList(0) : objectCollection;
+		return !hasObject(klass) ? new ArrayList(0) : CLIPBOARD;
 	}
 
 
 	public static Collection<?> getClipboard() {
-		return objectCollection;
+		return CLIPBOARD;
 	}
 
 
