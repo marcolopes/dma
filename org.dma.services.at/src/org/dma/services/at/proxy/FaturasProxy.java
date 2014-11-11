@@ -6,6 +6,8 @@ import java.util.List;
 import javax.xml.ws.Binding;
 import javax.xml.ws.handler.Handler;
 
+import com.sun.xml.ws.developer.WSBindingProvider;
+
 import org.dma.java.utils.security.Certificate;
 import org.dma.services.at.SOAPMessageHandler;
 
@@ -13,8 +15,6 @@ import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
 import pt.gov.portaldasfinancas.servicos.faturas.Faturas_Service;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceResponseType;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
-
-import com.sun.xml.ws.developer.WSBindingProvider;
 /**
  * PROXY para ligacao ao endpoint do webservice
  *

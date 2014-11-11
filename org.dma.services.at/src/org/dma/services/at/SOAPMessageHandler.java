@@ -35,13 +35,13 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
+import com.sun.xml.ws.developer.JAXWSProperties;
+import com.sun.xml.ws.developer.WSBindingProvider;
+
 import org.dma.java.utils.net.NetUtils;
 import org.dma.java.utils.net.NetUtils.NTPServers;
 import org.dma.java.utils.security.Certificate;
 import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
-
-import com.sun.xml.ws.developer.JAXWSProperties;
-import com.sun.xml.ws.developer.WSBindingProvider;
 /**
  * SOAP Message Handler
  *
@@ -95,7 +95,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			kmf.init(swCertificate.keyStore, swCertificate.password.toCharArray());
 
 			// adiciona um Trust Store que aceita ligacao SSL sem validar o certificado
-			SSLContext sslContext = SSLContext.getInstance("TLS");
+			SSLContext sslContext = SSLContext.getInstance("TLSv1"); // JAVA8 usa TLSv2
 			sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, null);
 
 			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
