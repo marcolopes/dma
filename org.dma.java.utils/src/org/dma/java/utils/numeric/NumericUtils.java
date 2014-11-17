@@ -17,7 +17,7 @@ public class NumericUtils {
 	 */
 	public static String toString(int value){
 
-		return Integer.toString(value);
+		return String.valueOf(value);
 
 	}
 
