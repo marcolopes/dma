@@ -52,6 +52,7 @@ public class FacturaRegister {
 		request.setDocumentTotals(documentTotals);
 
 		return request;
+
 	}
 
 
