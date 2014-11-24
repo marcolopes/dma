@@ -12,7 +12,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 
-public class XmlUtils {
+public class XMLUtils {
 
 	public static void xmlWriter(Object obj, File file){
 

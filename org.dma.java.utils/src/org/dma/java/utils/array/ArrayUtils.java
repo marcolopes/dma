@@ -160,20 +160,6 @@ public class ArrayUtils {
 	}
 
 
-	public static String toHexString(byte[] array) {
-
-		StringBuilder result=new StringBuilder();
-
-		for(byte b: array){
-			String hexString=Integer.toHexString(0x00ff & b);
-			result.append(hexString.length()==1 ? "0"+hexString : hexString);
-		}
-
-		return result.toString();
-
-	}
-
-
 	public static String[] toHexArray(byte[] array) {
 
 		String[] result=new String[array.length];
@@ -185,6 +171,19 @@ public class ArrayUtils {
 		}
 
 		return result;
+
+	}
+
+
+	public static String toHexString(byte[] array) {
+
+		StringBuilder result=new StringBuilder();
+
+		for(String s: toHexArray(array)){
+			result.append(s);
+		}
+
+		return result.toString();
 
 	}
 
@@ -341,19 +340,6 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> String[] subArray(T[][] array, int index) {
-
-		String[] result=new String[array.length];
-
-		for(int i=0; i<array.length; i++){
-			result[i]=array[i][index].toString();
-		}
-
-		return result;
-
-	}
-
-
 	public static <T> String[] headArray(T[] array) {
 
 		String[] result=new String[array.length-1];
@@ -414,21 +400,21 @@ public class ArrayUtils {
 
 	public static <T> String concat(T[] array, String separator) {
 
-		return concat(array,0,array.length-1,separator);
+		return concat(array, 0, array.length-1, separator);
 
 	}
 
 
 	public static <T> String concatFrom(T[] array, int fromIndex, String separator) {
 
-		return concat(array,fromIndex,array.length-1,separator);
+		return concat(array, fromIndex, array.length-1, separator);
 
 	}
 
 
 	public static <T> String concatUpto(T[] array, int toIndex, String separator) {
 
-		return concat(array,0,toIndex,separator);
+		return concat(array, 0, toIndex, separator);
 
 	}
 
@@ -500,7 +486,7 @@ public class ArrayUtils {
 			if(!element.trim().isEmpty()) result.add(element);
 		}
 
-		return CollectionUtils.toArray(result,String.class);
+		return result.toArray(array);
 
 	}
 
@@ -511,7 +497,7 @@ public class ArrayUtils {
 
 		result.add(position, element);
 
-		return CollectionUtils.toArray(result,element.getClass());
+		return result.toArray(array);
 
 	}
 
@@ -522,7 +508,7 @@ public class ArrayUtils {
 
 		CollectionUtils.removeContaining(result, searchFor);
 
-		return CollectionUtils.toArray(result,array[0].getClass());
+		return result.toArray(array);
 
 	}
 
@@ -533,7 +519,7 @@ public class ArrayUtils {
 
 		CollectionUtils.removeContaining(result, searchFor);
 
-		return CollectionUtils.toArray(result,array[0].getClass());
+		return result.toArray(array);
 
 	}
 
@@ -549,7 +535,7 @@ public class ArrayUtils {
 			if(!result.contains(element)) result.add(element);
 		}
 
-		return CollectionUtils.toArray(result,intoArray[0].getClass());
+		return result.toArray(intoArray);
 
 	}
 

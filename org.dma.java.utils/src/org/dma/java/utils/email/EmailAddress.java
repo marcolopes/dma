@@ -11,14 +11,14 @@ import javax.mail.internet.InternetAddress;
 public class EmailAddress {
 
 	private final String email;
-	private String name;
+	private final String name;
 	private InternetAddress address;
 
-	public EmailAddress(String email){
+	public EmailAddress(String email) {
 		this(email,"");
 	}
 
-	public EmailAddress(String email, String name){
+	public EmailAddress(String email, String name) {
 		this.email=email;
 		this.name=name;
 		try{
@@ -61,10 +61,6 @@ public class EmailAddress {
 
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name=name;
 	}
 
 	public InternetAddress getAddress() {

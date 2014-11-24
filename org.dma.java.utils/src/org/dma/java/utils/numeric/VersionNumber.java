@@ -80,7 +80,7 @@ public final class VersionNumber {
 
 	@Override
 	public boolean equals(Object obj) {
-		return hashCode()==obj.toString().hashCode();
+		return hashCode()==obj.hashCode();
 	}
 
 

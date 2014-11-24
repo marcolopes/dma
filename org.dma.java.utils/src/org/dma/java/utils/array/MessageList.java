@@ -39,7 +39,7 @@ public class MessageList extends LinkedHashSet<String> {
 
 
 	public String[] toArray(){
-		return CollectionUtils.toArray(this,String.class);
+		return CollectionUtils.toArray(this, String.class);
 	}
 
 

@@ -16,10 +16,9 @@ public class CollectionUtils {
 	/*
 	 * Conversion
 	 */
+	/** USE NATIVE c.toArray(a) */
+	@Deprecated
 	public static <T> T[] toArray(Collection<T> c, T[] a) {
-		if(c.size()>a.length){
-			a=(T[])Array.newInstance(a.getClass().getComponentType(), c.size());
-		}
 		return c.toArray(a);
 	}
 

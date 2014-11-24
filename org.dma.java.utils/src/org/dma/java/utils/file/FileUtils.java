@@ -45,6 +45,7 @@ public class FileUtils {
 	public static final String WIN1252_CHARSET = "Windows-1252";
 
 	public static final int BASE64_LINE_LENGTH = 64;
+	public static final int STRING_BUFFER_LENGTH = 4096;
 
 	/**
 	 * Generic File Copy<br>
@@ -106,8 +107,7 @@ public class FileUtils {
 	public static String encodeToBase64(String filename, int lineLength) {
 
 		try{
-			File file=new File(filename);
-			byte[] bytes=FileUtils.readBytesStream(file);
+			byte[] bytes=readBytesStream(filename);
 
 			return new Base64(lineLength).encodeToString(bytes);
 
@@ -199,7 +199,7 @@ public class FileUtils {
 					new BufferedReader(
 							new FileReader(file));
 
-			final StringBuffer buffer=new StringBuffer();
+			final StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 			try{
 				int ch;
@@ -233,9 +233,9 @@ public class FileUtils {
 	}
 
 
-	public static String readTextFileLines(File file, int count) {
+	public static String readTextFile(File file, int lines) {
 
-		StringBuffer buffer=new StringBuffer();
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			final BufferedReader br =
@@ -244,7 +244,7 @@ public class FileUtils {
 
 			try{
 				String line;
-				while((line = br.readLine()) != null && count--!=0){
+				while((line = br.readLine()) != null && lines--!=0){
 					buffer.append(line + "\n");
 				}
 
@@ -265,9 +265,9 @@ public class FileUtils {
 	}
 
 
-	public static String readTextFileLines(String filename, int count) {
+	public static String readTextFile(String filename, int lines) {
 
-		return readTextFileLines(new File(filename), count);
+		return readTextFile(new File(filename), lines);
 
 	}
 
@@ -353,10 +353,9 @@ public class FileUtils {
 					public int read(byte[] b, int off, int len) throws IOException {
 						return bis.read(b, off, len);
 					}
-				}.readBytes(file);
+				}.readFile(file);
 
 			}finally{
-				// Close the input stream
 				close(bis);
 			}
 
@@ -380,7 +379,7 @@ public class FileUtils {
 	}
 
 
-	public static Object readXmlStream(File file) {
+	public static Object readXMLStream(File file) {
 
 		try{
 			final XMLDecoder decoder =
@@ -408,9 +407,9 @@ public class FileUtils {
 	}
 
 
-	public static Object readXmlStream(String filename) {
+	public static Object readXMLStream(String filename) {
 
-		return readXmlStream(new File(filename));
+		return readXMLStream(new File(filename));
 
 	}
 
@@ -469,7 +468,7 @@ public class FileUtils {
 	}
 
 
-	public static boolean writeXmlStream(Object obj, File file) {
+	public static boolean writeXMLStream(Object obj, File file) {
 
 		try{
 			XMLEncoder encoder =
@@ -497,9 +496,9 @@ public class FileUtils {
 	}
 
 
-	public static boolean writeXmlStream(Object obj, String filename) {
+	public static boolean writeXMLStream(Object obj, String filename) {
 
-		return writeXmlStream(obj, new File(filename));
+		return writeXMLStream(obj, new File(filename));
 
 	}
 
@@ -528,7 +527,7 @@ public class FileUtils {
 	 */
 	public static String readTextStream(File file, String charset) {
 
-		StringBuffer buffer=new StringBuffer();
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			final BufferedReader br =
@@ -568,22 +567,64 @@ public class FileUtils {
 	}
 
 
-	public static String readTextStreamUTF8(File file) {
+	public static String readUTF8TextStream(File file) {
 
 		return readTextStream(file, UTF8_CHARSET);
 	}
 
 
-	public static String readTextStreamUTF8(String filename) {
+	public static String readUTF8TextStream(String filename) {
 
-		return readTextStreamUTF8(new File(filename));
+		return readUTF8TextStream(new File(filename));
+
+	}
+
+
+	public static String readTextStream(File file, String charset, int lines) {
+
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
+
+		try{
+			final BufferedReader br =
+				new BufferedReader(
+						new InputStreamReader(
+								new FileInputStream(file), charset));
+
+			try{
+				String line;
+				while((line = br.readLine()) != null && lines--!=0){
+					buffer.append(line + "\n");
+				}
+
+			}finally{
+				close(br);
+			}
+
+		}catch(UnsupportedEncodingException e) {
+			System.out.println(e);
+		}catch(FileNotFoundException e){
+			System.out.println(e);
+		}catch(IOException e){
+			System.out.println(e);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return buffer.toString();
+
+	}
+
+
+	public static String readTextStream(String filename, String charset, int lines) {
+
+		return readTextStream(new File(filename), charset, lines);
 
 	}
 
 
 	public static String readURLTextStream(String fileurl, String charset) {
 
-		final StringBuffer buffer=new StringBuffer();
+		final StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			final BufferedReader br =
@@ -614,51 +655,9 @@ public class FileUtils {
 	}
 
 
-	public static String readURLTextStreamUTF8(String fileurl) {
+	public static String readUTF8URLTextStream(String fileurl) {
 
 		return readURLTextStream(fileurl, UTF8_CHARSET);
-	}
-
-
-	public static String readTextStreamLines(File file, int count, String charset) {
-
-		StringBuffer buffer=new StringBuffer();
-
-		try{
-			final BufferedReader br =
-				new BufferedReader(
-						new InputStreamReader(
-								new FileInputStream(file), charset));
-
-			try{
-				String line;
-				while((line = br.readLine()) != null && count--!=0){
-					buffer.append(line + "\n");
-				}
-
-			}finally{
-				close(br);
-			}
-
-		}catch(UnsupportedEncodingException e) {
-			System.out.println(e);
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return buffer.toString();
-
-	}
-
-
-	public static String readTextStreamLines(String filename, int count, String charset) {
-
-		return readTextStreamLines(new File(filename), count, charset);
-
 	}
 
 
@@ -726,78 +725,16 @@ public class FileUtils {
 	}
 
 
-	public static boolean writeTextStreamUTF8(String text, File file) {
+	public static boolean writeUTF8TextStream(String text, File file) {
 
 		return writeTextStream(text, file, UTF8_CHARSET);
 
 	}
 
 
-	public static boolean writeTextStreamUTF8(String text, String filename) {
+	public static boolean writeUTF8TextStream(String text, String filename) {
 
-		return writeTextStreamUTF8(text, new File(filename));
-
-	}
-
-
-	public static boolean replaceOcurrencesUTF8(File file, String[][] searchReplace) {
-		try{
-			String text=FileUtils.readTextStreamUTF8(file);
-
-			for(String[] array: searchReplace){
-				text=text.replaceAll(array[0], array[1]);
-			}
-
-			FileUtils.writeTextStreamUTF8(text, file);
-
-			return true;
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return false;
-
-	}
-
-
-	/*
-	 * Temporary Files
-	 *
-	 * prefix - The prefix string to be used in generating the file's name;
-	 * 			must be at least three characters long
-	 *
-	 * suffix - The suffix string to be used in generating the file's name;
-	 * 			may be null, in which case the suffix ".tmp" will be used
-	 *
-	 * directory - The directory in which the file is to be created,
-	 * 			or null if the default temporary-file directory is to be used
-	 *
-	 */
-	public static File createTempFile(FileParameters parameters){
-
-		try{
-			File directory=parameters.getFolder()==null ? null : parameters.getFolder();
-			File file=File.createTempFile(parameters.getPrefix(), "."+parameters.getSuffix(), directory);
-			file.deleteOnExit();
-
-			return file;
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return null;
-
-	}
-
-
-	public static File createTempFile(byte[] bytes, FileParameters parameters) {
-
-		File file=createTempFile(parameters);
-		writeBytesStream(bytes, file);
-
-		return file;
+		return writeUTF8TextStream(text, new File(filename));
 
 	}
 
