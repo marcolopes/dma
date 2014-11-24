@@ -18,6 +18,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 	private static final long serialVersionUID = 1L;
 
 	private final String title;
+
 	private int work;
 
 	public ProgressSupport(String title){
