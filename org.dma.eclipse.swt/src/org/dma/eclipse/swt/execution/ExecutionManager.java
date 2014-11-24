@@ -49,8 +49,8 @@ public class ExecutionManager {
 	}
 
 	public static void register(Control control, int keycode[], String id, String secondaryId, IAction action, IAction responseAction, IAction postresponseAction) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(id,secondaryId,control);
-		ExecutionEvent execEvent=new ExecutionEvent(action,responseAction,postresponseAction,keycode);
+		ExecutionDefinition execDefinition=new ExecutionDefinition(id, secondaryId, control);
+		ExecutionEvent execEvent=new ExecutionEvent(action, responseAction, postresponseAction, keycode);
 		register(execDefinition, execEvent);
 	}
 

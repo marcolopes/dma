@@ -68,11 +68,11 @@ public class FileExport extends FileDialog {
 	}
 
 
-	public void writeXml(Object obj, String defaultFile) {
+	public void writeXML(Object obj, String defaultFile) {
 		setFileName(defaultFile);
 		if(open()!=null){
 			String filename=getFilterPath()+File.separator+getFileName();
-			FileUtils.writeXmlStream(obj, filename);
+			FileUtils.writeXMLStream(obj, filename);
 		}
 	}
 

@@ -76,10 +76,10 @@ public class FileImport extends FileDialog {
 	}
 
 
-	public Object readXml() {
+	public Object readXML() {
 		String filename=open();
 		return filename==null ?
-				null : FileUtils.readXmlStream(filename);
+				null : FileUtils.readXMLStream(filename);
 	}
 
 

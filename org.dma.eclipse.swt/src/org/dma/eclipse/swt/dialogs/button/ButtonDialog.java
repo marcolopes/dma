@@ -17,7 +17,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
 
 public abstract class ButtonDialog extends CustomShell {
 
@@ -26,10 +25,8 @@ public abstract class ButtonDialog extends CustomShell {
 
 	private static final String OK = IDialogConstants.OK_LABEL;
 	private static final String CANCEL = IDialogConstants.CANCEL_LABEL;
+	private static final String[] LABELS = new String[]{OK, CANCEL};
 
-	private static final String[] LABELS = new String[]{OK,CANCEL};
-
-	private Text text;
 	private final int height;
 
 	public ButtonDialog() {
