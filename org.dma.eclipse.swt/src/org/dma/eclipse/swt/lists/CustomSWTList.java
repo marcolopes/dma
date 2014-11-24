@@ -29,7 +29,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 		List<String> list=ArrayUtils.toList(getItems());
 		list.addAll(index, Arrays.asList(array));
-		setItems(CollectionUtils.toArray(list,String.class));
+		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
 		select(index, index+array.length-1);
 		showSelection(); // scroll items
@@ -42,7 +42,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 		List<String> list=ArrayUtils.toList(getItems());
 		CollectionUtils.remove(list, indexes);
-		setItems(CollectionUtils.toArray(list,String.class));
+		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
 		showSelection(); // scroll items
 		notifyListeners(SWT.Selection, new Event());
@@ -54,7 +54,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 		List<String> list=ArrayUtils.toList(getItems());
 		CollectionUtils.moveUp(list, indexes, position);
-		setItems(CollectionUtils.toArray(list,String.class));
+		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
 		select(position, position+indexes.length-1);
 		showSelection(); // scroll items
@@ -67,7 +67,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 		List<String> list=ArrayUtils.toList(getItems());
 		CollectionUtils.moveDown(list, indexes, position);
-		setItems(CollectionUtils.toArray(list,String.class));
+		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
 		select(position, position+indexes.length-1);
 		showSelection(); // scroll items

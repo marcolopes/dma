@@ -42,6 +42,7 @@ public abstract class ButtonKeypad extends CustomShell {
 
 	private Text text;
 	private String value = "";
+
 	private final int height;
 
 	public ButtonKeypad() {

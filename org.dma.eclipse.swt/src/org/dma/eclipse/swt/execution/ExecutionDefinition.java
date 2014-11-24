@@ -32,12 +32,12 @@ public class ExecutionDefinition {
 	 * Listeners
 	 */
 	public void addSelectionListener(Listener selectionListener) {
-		this.selectionListener = selectionListener;
+		this.selectionListener=selectionListener;
 		control.addListener(SWT.Selection, selectionListener);
 	}
 
 	public void addKeyListener(KeyListener keyListener) {
-		this.keyListener = keyListener;
+		this.keyListener=keyListener;
 		control.addKeyListener(keyListener);
 	}
 
@@ -45,7 +45,6 @@ public class ExecutionDefinition {
 		if(selectionListener!=null) {
 			control.removeListener(SWT.Selection, selectionListener);
 		}
-
 		if(keyListener!=null) {
 			control.removeKeyListener(keyListener);
 		}
