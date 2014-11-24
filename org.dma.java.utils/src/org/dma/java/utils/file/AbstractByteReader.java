@@ -12,7 +12,7 @@ public abstract class AbstractByteReader {
 
 	public abstract int read(byte[] b, int off, int len) throws IOException;
 
-	public byte[] readBytes(File file) throws IOException {
+	public byte[] readFile(File file) throws IOException {
 
 		// Get the size of the file
 		long length = file.length();

@@ -91,7 +91,7 @@ public class ImageOverlay {
 	public void writeText(String text, int horizontalAlignment, int verticalAlignment, int style) {
 
 		g2d.setFont(font);
-		FontMetrics fm = g2d.getFontMetrics();
+		FontMetrics fm=g2d.getFontMetrics();
 
 		int x=0;
 		switch(horizontalAlignment){
@@ -126,7 +126,7 @@ public class ImageOverlay {
 	}
 
 	public void setTextColor(Color textColor) {
-		this.textColor = textColor;
+		this.textColor=textColor;
 	}
 
 
@@ -135,7 +135,7 @@ public class ImageOverlay {
 	}
 
 	public void setOutlineColor(Color outlineColor) {
-		this.outlineColor = outlineColor;
+		this.outlineColor=outlineColor;
 	}
 
 
@@ -144,7 +144,7 @@ public class ImageOverlay {
 	}
 
 	public void setMargin(int margin) {
-		this.margin = margin;
+		this.margin=margin;
 	}
 
 
@@ -153,7 +153,7 @@ public class ImageOverlay {
 	}
 
 	public void setFont(Font font) {
-		this.font = font;
+		this.font=font;
 	}
 
 
