@@ -62,7 +62,7 @@ public class ClipboardManager {
 	}
 
 
-	public static <T> Collection<T> getCollection(Class klass) {
+	public static <T> Collection<T> getClipboard(Class klass) {
 		return !hasObject(klass) ? new ArrayList(0) : CLIPBOARD;
 	}
 
