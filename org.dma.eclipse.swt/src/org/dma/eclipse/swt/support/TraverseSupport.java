@@ -28,7 +28,7 @@ public class TraverseSupport extends ArrayList<Control> {
 				//control actual
 				Control actualControl=(Control)e.getSource();
 
-				//e' uma TEXT multi-linha?
+				//TEXT multi-linha?
 				if (actualControl instanceof Text &&
 						NumericUtils.bit(((Text)actualControl).getStyle(), SWT.MULTI)){
 
