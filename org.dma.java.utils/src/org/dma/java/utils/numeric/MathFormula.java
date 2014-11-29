@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -21,8 +21,8 @@ public class MathFormula {
 		public BigDecimal value;
 
 		public FormulaSymbol(String var, BigDecimal value){
-			this.name = var;
-			this.value = value;
+			this.name=var;
+			this.value=value;
 		}
 
 		public boolean isEmpty(){
@@ -47,8 +47,6 @@ public class MathFormula {
 
 
 	public BigDecimal eval(FormulaSymbol...symbols) {
-
-		BigDecimal result=null;
 
 		try{
 			Debug.out("formula",formula);
@@ -75,8 +73,11 @@ public class MathFormula {
 				Object value=interpreter.eval("result="+enumeration);
 				Debug.out("value",interpreter.get("result"));
 
-				result=BigDecimal.valueOf((Double)value);
+				BigDecimal result=new BigDecimal(value.toString());
 				Debug.out("result",result);
+
+				return result;
+
 			}
 
 		}catch(ScriptException e){
@@ -85,7 +86,7 @@ public class MathFormula {
 			e.printStackTrace();
 		}
 
-		return result;
+		return null;
 
 	}
 
