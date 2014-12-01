@@ -110,7 +110,7 @@ public class TimeDateUtils {
 
 	public static boolean isTodayAfter(Calendar calendar, int daysToAdd) {
 		Calendar when=(Calendar)calendar.clone();
-		when.add(Calendar.DATE, daysToAdd);
+		when.add(Calendar.DAY_OF_MONTH, daysToAdd);
 		return getCalendarWithoutTime().after(when);
 	}
 
@@ -532,7 +532,7 @@ public class TimeDateUtils {
 
 	public static Date addDays(Date date, int days) {
 		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.DATE, days);
+		calendar.add(Calendar.DAY_OF_MONTH, days);
 		return calendar.getTime();
 	}
 
