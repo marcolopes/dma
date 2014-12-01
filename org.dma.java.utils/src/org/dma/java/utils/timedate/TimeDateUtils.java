@@ -109,9 +109,9 @@ public class TimeDateUtils {
 
 
 	public static boolean isTodayAfter(Calendar calendar, int daysToAdd) {
-		Calendar today=getCalendarWithoutTime();
-		Calendar when=addDays(calendar, daysToAdd);
-		return today.after(when);
+		Calendar when=(Calendar)calendar.clone();
+		when.add(Calendar.DATE, daysToAdd);
+		return getCalendarWithoutTime().after(when);
 	}
 
 
@@ -302,7 +302,7 @@ public class TimeDateUtils {
 	}
 
 
-	public static Calendar getCalendar(String date, String pattern){
+	public static Calendar getCalendar(String date, String pattern) {
 		Calendar calendar=Calendar.getInstance();
 		calendar.setTime(getDate(date, pattern));
 		return calendar;
@@ -367,12 +367,6 @@ public class TimeDateUtils {
 	}
 
 
-	public static Calendar addDays(Calendar calendar, int days) {
-		calendar.add(Calendar.DATE, days);
-		return calendar;
-	}
-
-
 	public static int getYear(Calendar calendar) {
 		return calendar.get(Calendar.YEAR);
 	}
@@ -417,32 +411,32 @@ public class TimeDateUtils {
 	}
 
 
-	public static int getHour(Calendar calendar){
+	public static int getHour(Calendar calendar) {
 		return calendar.get(Calendar.HOUR_OF_DAY);
 	}
 
 
-	public static int getMinute(Calendar calendar){
+	public static int getMinute(Calendar calendar) {
 		return calendar.get(Calendar.MINUTE);
 	}
 
 
-	public static int getSecond(Calendar calendar){
+	public static int getSecond(Calendar calendar) {
 		return calendar.get(Calendar.SECOND);
 	}
 
 
-	public static int getCurrentYear(){
+	public static int getCurrentYear() {
 		return getYear(Calendar.getInstance());
 	}
 
 
-	public static int getCurrentMonth(){
+	public static int getCurrentMonth() {
 		return getMonth(Calendar.getInstance());
 	}
 
 
-	public static int getCurrentDayOfMonth(){
+	public static int getCurrentDayOfMonth() {
 		return getDayOfMonth(Calendar.getInstance());
 	}
 
@@ -452,17 +446,17 @@ public class TimeDateUtils {
 	}
 
 
-	public static int getCurrentHour(){
+	public static int getCurrentHour() {
 		return getHour(Calendar.getInstance());
 	}
 
 
-	public static int getCurrentMinute(){
+	public static int getCurrentMinute() {
 		return getMinute(Calendar.getInstance());
 	}
 
 
-	public static int getCurrentSecond(){
+	public static int getCurrentSecond() {
 		return getSecond(Calendar.getInstance());
 	}
 
@@ -574,7 +568,7 @@ public class TimeDateUtils {
 	}
 
 
-	public static long getDaysBetween(Date oldDate, Date newDate){
+	public static long getDaysBetween(Date oldDate, Date newDate) {
 		return getDaysBetween(getCalendar(oldDate), getCalendar(newDate));
 	}
 
