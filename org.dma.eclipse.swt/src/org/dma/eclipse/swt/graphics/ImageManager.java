@@ -16,7 +16,7 @@ import org.eclipse.swt.graphics.Image;
 
 public class ImageManager {
 
-	private static final Map<String, Image> CACHE = new HashMap();
+	private static final Map<String, Image> CACHE=new HashMap();
 
 	public static void putImage(String key, Image image) {
 		image=CACHE.put(key, image);
