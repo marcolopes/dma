@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Listener;
 
 public class ExecutionManager {
 
-	private static final Map<ExecutionDefinition, ExecutionEvent> EVENTS = new HashMap();
+	private static final Map<ExecutionDefinition, ExecutionEvent> EVENTS=new HashMap();
 
 	/*
 	 * Register
