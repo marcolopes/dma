@@ -6,8 +6,8 @@
 package org.dma.eclipse.core.jobs;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.dma.java.utils.Debug;
@@ -109,8 +109,8 @@ public class JobManager {
 
 
 	public static void clean() {
-		List<JobBatch> list=new ArrayList(QUEUE);
-		for(JobBatch batch: list){
+		Collection<JobBatch> col=new ArrayList(QUEUE);
+		for(JobBatch batch: col){
 			if(batch.isEmpty()) QUEUE.remove(batch);
 		}
 	}

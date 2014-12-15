@@ -106,7 +106,7 @@ public class CollectionUtils {
 	/** Returns removed elements */
 	public static <T> Collection<T> removeContaining(Collection<T> collection, String searchFor){
 
-		List<T> removeList=new ArrayList();
+		Collection<T> removeList=new ArrayList();
 
 		for(T e: collection){
 			if(e.toString().contains(searchFor)) removeList.add(e);
@@ -131,7 +131,7 @@ public class CollectionUtils {
 	/** Returns removed elements */
 	public static <T> Collection<T> remove(List<T> list, int[] indexes) {
 
-		List<T> removeList=new ArrayList(indexes.length);
+		Collection<T> removeList=new ArrayList(indexes.length);
 
 		for(int index: indexes){
 			removeList.add(list.get(index));
@@ -147,7 +147,7 @@ public class CollectionUtils {
 	/** Returns inserted elements */
 	public static <T> Collection<T> insert(List<T> into, List<T> from, int[] indexes, int position) {
 
-		List<T> insertList=new ArrayList(indexes.length);
+		Collection<T> insertList=new ArrayList(indexes.length);
 
 		Arrays.sort(indexes);
 		for(int index: indexes){

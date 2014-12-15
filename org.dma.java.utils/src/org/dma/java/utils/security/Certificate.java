@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.dma.java.utils.timedate.TimeDateUtils;
 
@@ -105,7 +105,7 @@ public class Certificate {
 	}
 
 
-	public List<String> getKeyUsage() {
+	public Collection<String> getKeyUsage() {
 		String[] purposes=new String[]{
 		     "digitalSignature",
 		     "nonRepudiation",
@@ -117,11 +117,11 @@ public class Certificate {
 		     "encipherOnly",
 		     "decipherOnly"};
 
-		List<String> list=new ArrayList();
+		Collection<String> col=new ArrayList();
 		for(int i=0; i<X509Cert.getKeyUsage().length && i<purposes.length; i++){
-			if (X509Cert.getKeyUsage()[i]) list.add(purposes[i]);
+			if (X509Cert.getKeyUsage()[i]) col.add(purposes[i]);
 		}
-		return list;
+		return col;
 	}
 
 
