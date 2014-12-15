@@ -6,8 +6,8 @@
 package org.dma.eclipse.core.jobs;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 import org.dma.java.utils.Debug;
 import org.dma.java.utils.numeric.NumericUtils;
@@ -51,8 +51,8 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 	public boolean cancelJobs() {
 		boolean result=true;
 		//elements can be removed elsewhere!
-		List<CustomJob> list=new ArrayList(this);
-		for(CustomJob job: list){
+		Collection<CustomJob> col=new ArrayList(this);
+		for(CustomJob job: col){
 			if(!job.cancel()) result=false;
 		}
 		return result;
