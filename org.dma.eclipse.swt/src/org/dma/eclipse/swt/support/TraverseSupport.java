@@ -110,6 +110,7 @@ public class TraverseSupport extends ArrayList<Control> {
 
 	}
 
+
 	@Override
 	public boolean add(Control control) {
 		control.addTraverseListener(traverseListener);
@@ -121,6 +122,7 @@ public class TraverseSupport extends ArrayList<Control> {
 			add(e);
 		}
 	}
+
 
 	public boolean remove(Control control) {
 		control.removeTraverseListener(traverseListener);
