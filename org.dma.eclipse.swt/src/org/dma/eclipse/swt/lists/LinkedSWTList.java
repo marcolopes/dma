@@ -5,13 +5,13 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.lists;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import org.dma.java.utils.array.ArrayUtils;
 import org.dma.java.utils.array.CollectionUtils;
 
-public class LinkedSWTList<T> extends ArrayList<T> {
+public class LinkedSWTList<T> extends LinkedList<T> {
 
 	private static final long serialVersionUID = 1L;
 

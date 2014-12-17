@@ -21,11 +21,6 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 	}
 
 
-	public void add(ICopyPaste element, TabItem item) {
-		put(element, item);
-	}
-
-
 	public void executeCopy() {
 
 		header.executeCopy();
