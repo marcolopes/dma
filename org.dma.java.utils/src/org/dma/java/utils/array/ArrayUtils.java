@@ -6,9 +6,8 @@
 package org.dma.java.utils.array;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.dma.java.utils.string.StringUtils;
 
@@ -17,32 +16,6 @@ public class ArrayUtils {
 	/*
 	 * Conversion
 	 */
-	public static <T> Set<T> toSet(T[] array) {
-
-		Set<T> result=new HashSet(array.length);
-
-		for(T element: array){
-			result.add(element);
-		}
-
-		return result;
-
-	}
-
-
-	public static <T> List<T> toList(T[] array) {
-
-		List<T> result=new ArrayList(array.length);
-
-		for(T element: array){
-			result.add(element);
-		}
-
-		return result;
-
-	}
-
-
 	public static byte[] toByteArray(int[] array) {
 
 		byte[] result=new byte[array.length];
@@ -493,7 +466,7 @@ public class ArrayUtils {
 
 	public static <T> T[] insert(T[] array, T element, int position) {
 
-		List<T> result=toList(array);
+		List<T> result=new ArrayList(Arrays.asList(array));
 
 		result.add(position, element);
 
@@ -504,7 +477,7 @@ public class ArrayUtils {
 
 	public static <T> T[] removeContaining(T[] array, String searchFor) {
 
-		List<T> result=toList(array);
+		List<T> result=new ArrayList(Arrays.asList(array));
 
 		CollectionUtils.removeContaining(result, searchFor);
 
@@ -515,7 +488,7 @@ public class ArrayUtils {
 
 	public static <T> T[] removeContaining(T[] array, String[] searchFor) {
 
-		List<T> result=toList(array);
+		List<T> result=new ArrayList(Arrays.asList(array));
 
 		CollectionUtils.removeContaining(result, searchFor);
 
@@ -529,7 +502,7 @@ public class ArrayUtils {
 		if(fromArray==null || fromArray.length==0) return intoArray;
 		if(intoArray==null || intoArray.length==0) return fromArray;
 
-		List<T> result=toList(intoArray);
+		List<T> result=new ArrayList(Arrays.asList(intoArray));
 
 		for(T element: fromArray){
 			if(!result.contains(element)) result.add(element);

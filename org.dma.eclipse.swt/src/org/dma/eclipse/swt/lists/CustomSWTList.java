@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.lists;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	public void insert(String[] array, int index) {
 
-		List<String> list=ArrayUtils.toList(getItems());
+		List<String> list=new ArrayList(Arrays.asList(getItems()));
 		list.addAll(index, Arrays.asList(array));
 		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
@@ -40,7 +41,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	public void remove(int[] indexes) {
 
-		List<String> list=ArrayUtils.toList(getItems());
+		List<String> list=new ArrayList(Arrays.asList(getItems()));
 		CollectionUtils.remove(list, indexes);
 		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
@@ -52,7 +53,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	public void moveUp(int[] indexes, int position) {
 
-		List<String> list=ArrayUtils.toList(getItems());
+		List<String> list=new ArrayList(Arrays.asList(getItems()));
 		CollectionUtils.moveUp(list, indexes, position);
 		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
@@ -65,7 +66,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	public void moveDown(int[] indexes, int position) {
 
-		List<String> list=ArrayUtils.toList(getItems());
+		List<String> list=new ArrayList(Arrays.asList(getItems()));
 		CollectionUtils.moveDown(list, indexes, position);
 		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
