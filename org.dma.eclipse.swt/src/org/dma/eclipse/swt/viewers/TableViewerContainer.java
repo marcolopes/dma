@@ -155,8 +155,6 @@ public abstract class TableViewerContainer<T> {
 	public void updateTable(boolean updateLabels) {
 		objectCollection.clear();
 		objectCollection.addAll(retrieveObjects());
-		//REMOVE TABLE: Remover depois de testado
-		//viewer.refresh();
 		viewer.refresh(updateLabels);
 	}
 
