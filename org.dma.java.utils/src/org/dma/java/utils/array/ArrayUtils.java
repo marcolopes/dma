@@ -55,12 +55,12 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> String[] toStringArray(T[] array) {
+	public static String[] toStringArray(int[] array) {
 
 		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			result[i]=array[i].toString();
+			result[i]=String.valueOf(array[i]);
 		}
 
 		return result;
@@ -81,12 +81,12 @@ public class ArrayUtils {
 	}
 
 
-	public static String[] toStringArray(int[] array) {
+	public static <T> String[] toStringArray(T[] array) {
 
 		String[] result=new String[array.length];
 
 		for(int i=0; i<array.length; i++){
-			result[i]=String.valueOf(array[i]);
+			result[i]=array[i].toString();
 		}
 
 		return result;
@@ -107,40 +107,13 @@ public class ArrayUtils {
 	}
 
 
-	public static String toString(char[] array) {
-
-		StringBuilder result=new StringBuilder();
-
-		for(char c: array){
-			result.append(c);
-		}
-
-		return result.toString();
-
-	}
-
-
-	public static String toHex(byte[] array) {
-
-		StringBuilder result=new StringBuilder();
-
-		for(byte b: array){
-			result.append(StringUtils.toHex(b));
-		}
-
-		return result.toString();
-
-	}
-
-
 	public static String[] toHexArray(byte[] array) {
 
 		String[] result=new String[array.length];
 
 		int index=0;
 		for(byte b: array){
-			String hexString=Integer.toHexString(0x00ff & b);
-			result[index++]=hexString.length()==1 ? "0"+hexString : hexString;
+			result[index++]=StringUtils.toHex(b);
 		}
 
 		return result;
@@ -363,7 +336,8 @@ public class ArrayUtils {
 		StringBuilder result=new StringBuilder(array[fromIndex].toString());
 
 		for(int i=fromIndex+1; i<=toIndex; i++){
-			result.append(separator + array[i].toString());
+			result.append(separator);
+			result.append(array[i].toString());
 		}
 
 		return result.toString();
@@ -513,7 +487,14 @@ public class ArrayUtils {
 	}
 
 
-	public static void main(String[] argvs) {}
+	public static void main(String[] argvs) {
+
+		byte[] hexArray=new byte[]{0x01, 0x0f};
+
+		System.out.println("toHexArray: " + Arrays.asList(toHexArray(hexArray)));
+		System.out.println("toHexString: " + toHexString(hexArray));
+
+	}
 
 
 }

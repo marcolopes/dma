@@ -18,6 +18,7 @@ public class ServerParameters {
 
 	public enum SECURITY {
 		NONE, STARTTLS, SSLTLS;
+		public static final String[] NAMES = ArrayUtils.toStringArray(values());
 		public static SECURITY get(int security){
 			switch(security){
 			case SECURITY_STARTTLS: return STARTTLS;
@@ -30,9 +31,6 @@ public class ServerParameters {
 				return valueOf(name);
 			}catch(Exception e){}
 			return NONE;
-		}
-		public static String[] toStringArray(){
-			return ArrayUtils.toStringArray(values());
 		}
 	}
 
