@@ -7,11 +7,11 @@ package org.dma.eclipse.swt.viewers;
 
 import java.util.LinkedHashMap;
 
-import org.dma.eclipse.swt.custom.CustomAction;
 import org.dma.eclipse.swt.custom.CustomBrowser;
 import org.dma.eclipse.swt.custom.CustomCTabItem;
 import org.dma.eclipse.swt.graphics.SWTImageUtils;
 import org.dma.java.utils.Debug;
+import org.dma.java.utils.awt.ImageUtils;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -44,7 +44,12 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	private Action button_back;
 	private Action button_forward;
 
-	public BrowserViewer(Composite parent) {
+	private final int iconSize;
+
+	public BrowserViewer(Composite parent, int iconSize) {
+
+		this.iconSize=iconSize;
+
 		try{
 			createToolBar();
 			createTabFolder(parent);
@@ -81,33 +86,38 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 	private void createToolBar() {
 
-		button_home=new CustomAction("Home", SWTImageUtils.getImageDescriptor(
-			BrowserViewer.class, "icons/browser_home.png")){
+		button_home=new Action("Home"){
 			public final void run(){
 				goHome();
 			}
 		};
 
-		button_stop=new CustomAction("Stop", SWTImageUtils.getImageDescriptor(
-			BrowserViewer.class, "icons/browser_stop.png")){
+		button_stop=new Action("Stop"){
 			public final void run(){
 				getBrowser().stop();
 			}
 		};
 
-		button_back=new CustomAction("Back", SWTImageUtils.getImageDescriptor(
-			BrowserViewer.class, "icons/browser_back.png")){
+		button_back=new Action("Back"){
 			public final void run(){
 				getBrowser().back();
 			}
 		};
 
-		button_forward=new CustomAction("Forward", SWTImageUtils.getImageDescriptor(
-			BrowserViewer.class, "icons/browser_forward.png")){
+		button_forward=new Action("Forward"){
 			public final void run(){
 				getBrowser().forward();
 			}
 		};
+
+		button_home.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_home.png", iconSize)));
+		button_stop.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_stop.png", iconSize)));
+		button_back.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_back.png", iconSize)));
+		button_forward.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_forward.png", iconSize)));
 
 		//toolbar
 		IToolBarManager toolBar=getToolBarManager();

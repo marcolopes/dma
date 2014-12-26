@@ -5,10 +5,11 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
 
-import org.eclipse.swt.SWT;
+import org.dma.eclipse.swt.graphics.ImageManager;
+import org.dma.java.utils.awt.ImageUtils;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
@@ -19,11 +20,21 @@ public class CustomButton extends Button {
 
 	private CustomAction selectionAction;
 
-	public CustomButton(Composite parent, String text, Image image) {
-		super(parent, SWT.NONE);
-		setToolTipText(text);
-		setImage(image);
+	public CustomButton(Composite parent, int style) {
+		super(parent, style);
 	}
+
+
+	public void setImage(String imagePath, int imageSize) {
+		setImage(ImageManager.getImage(
+				ImageUtils.resizeImage(imagePath, imageSize)));
+	}
+
+	public void setImage(String imagePath) {
+		super.setImage(ImageManager.getImage(imagePath));
+	}
+
+
 
 	/*
 	 * (non-Javadoc)

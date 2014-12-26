@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
 
+import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.utils.numeric.NumericUtils;
 
 import org.eclipse.swt.SWT;
@@ -26,11 +27,16 @@ public class CustomShell extends Shell {
 	public static final int STYLE_MESSAGE = SWT.TITLE | SWT.PRIMARY_MODAL;
 
 	public CustomShell(int style) {
-		super(Display.getDefault().getActiveShell(), style);
+		this(Display.getDefault().getActiveShell(), style);
 	}
 
 	public CustomShell(Shell parent, int style) {
 		super(parent, style);
+	}
+
+
+	public void setImage(String imagePath) {
+		setImage(ImageManager.getImage(imagePath));
 	}
 
 
