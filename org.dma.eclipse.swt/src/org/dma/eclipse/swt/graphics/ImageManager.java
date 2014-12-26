@@ -34,7 +34,6 @@ public class ImageManager {
 			image=SWTImageUtils.createImage(path);
 			CACHE.put(path, image);
 		}
-
 		return image;
 	}
 
@@ -50,7 +49,6 @@ public class ImageManager {
 			image=SWTImageUtils.createImage(bytes);
 			CACHE.put(key, image);
 		}
-
 		return image;
 	}
 
@@ -66,7 +64,6 @@ public class ImageManager {
 			image=SWTImageUtils.createImage(bufferedImage);
 			CACHE.put(key, image);
 		}
-
 		return image;
 	}
 

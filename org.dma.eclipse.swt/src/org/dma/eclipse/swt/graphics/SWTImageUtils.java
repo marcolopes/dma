@@ -132,7 +132,7 @@ public class SWTImageUtils {
 	 */
 	public static Image createImage(BufferedImage bufferedImage) {
 		try{
-			return new Image(Display.getCurrent(), toSWTImage(bufferedImage));
+			return new Image(Display.getCurrent(), convertToSWT(bufferedImage));
 		}catch(Exception e){}
 		return null;
 	}
@@ -184,7 +184,7 @@ public class SWTImageUtils {
 	 */
 	public static ImageDescriptor getImageDescriptor(BufferedImage bufferedImage) {
 		try{
-			return ImageDescriptor.createFromImageData(toSWTImage(bufferedImage));
+			return ImageDescriptor.createFromImageData(convertToSWT(bufferedImage));
 		}catch(Exception e){}
 		return null;
 	}
@@ -196,7 +196,8 @@ public class SWTImageUtils {
 	 * For a list of all SWT example snippets see
 	 * http://www.eclipse.org/swt/snippets/
 	 */
-	public static BufferedImage toAWTImage(ImageData data) {
+	@Deprecated
+	public static BufferedImage convertToAWT(ImageData data) {
 		PaletteData palette = data.palette;
 		if (palette.isDirect) {
 			ColorModel colorModel = new DirectColorModel(data.depth, palette.redMask, palette.greenMask, palette.blueMask);
@@ -247,12 +248,16 @@ public class SWTImageUtils {
 	 * For a list of all SWT example snippets see
 	 * http://www.eclipse.org/swt/snippets/
 	 */
-	public static ImageData toSWTImage(BufferedImage bufferedImage) {
+	public static ImageData convertToSWT(BufferedImage bufferedImage) {
 		if (bufferedImage.getColorModel() instanceof DirectColorModel) {
 			/*
 			DirectColorModel colorModel = (DirectColorModel)bufferedImage.getColorModel();
-			PaletteData palette = new PaletteData(colorModel.getRedMask(), colorModel.getGreenMask(), colorModel.getBlueMask());
-			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
+			PaletteData palette = new PaletteData(
+					colorModel.getRedMask(),
+					colorModel.getGreenMask(),
+					colorModel.getBlueMask());
+			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(),
+					colorModel.getPixelSize(), palette);
 			WritableRaster raster = bufferedImage.getRaster();
 			int[] pixelArray = new int[3];
 			for (int y = 0; y < data.height; y++) {
@@ -264,8 +269,12 @@ public class SWTImageUtils {
 			}
 			*/
 			DirectColorModel colorModel = (DirectColorModel)bufferedImage.getColorModel();
-			PaletteData palette = new PaletteData(colorModel.getRedMask(), colorModel.getGreenMask(), colorModel.getBlueMask());
-			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
+			PaletteData palette = new PaletteData(
+					colorModel.getRedMask(),
+					colorModel.getGreenMask(),
+					colorModel.getBlueMask());
+			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(),
+					colorModel.getPixelSize(), palette);
 			for (int y = 0; y < data.height; y++) {
 				for (int x = 0; x < data.width; x++) {
 					int rgb = bufferedImage.getRGB(x, y);
@@ -292,7 +301,8 @@ public class SWTImageUtils {
 				rgbs[i] = new RGB(reds[i] & 0xFF, greens[i] & 0xFF, blues[i] & 0xFF);
 			}
 			PaletteData palette = new PaletteData(rgbs);
-			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
+			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(),
+					colorModel.getPixelSize(), palette);
 			data.transparentPixel = colorModel.getTransparentPixel();
 			WritableRaster raster = bufferedImage.getRaster();
 			int[] pixelArray = new int[1];
@@ -308,7 +318,8 @@ public class SWTImageUtils {
 			ComponentColorModel colorModel = (ComponentColorModel)bufferedImage.getColorModel();
 			//ASSUMES: 3 BYTE BGR IMAGE TYPE
 			PaletteData palette = new PaletteData(0x0000FF, 0x00FF00,0xFF0000);
-			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
+			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(),
+					colorModel.getPixelSize(), palette);
 			//This is valid because we are using a 3-byte Data model with no transparent pixels
 			data.transparentPixel = -1;
 			WritableRaster raster = bufferedImage.getRaster();

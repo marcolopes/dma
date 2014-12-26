@@ -5,10 +5,12 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
 
+import org.dma.eclipse.swt.graphics.ImageManager;
+import org.dma.java.utils.awt.ImageUtils;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
@@ -19,16 +21,26 @@ public class CustomToolItem extends ToolItem {
 
 	private CustomAction selectionAction;
 
-	public CustomToolItem(ToolBar parent, String text, Image image) {
-		super(parent, SWT.PUSH);
+	public CustomToolItem(ToolBar parent, String text) {
+		this(parent, SWT.PUSH);
 		setToolTipText(text);
-		setImage(image);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.swt.widgets.Control#setEnabled(boolean)
-	 */
+	public CustomToolItem(ToolBar parent, int style) {
+		super(parent, style);
+	}
+
+
+	public void setImage(String imagePath, int imageSize) {
+		setImage(ImageManager.getImage(
+				ImageUtils.resizeImage(imagePath, imageSize)));
+	}
+
+	public void setImage(String imagePath) {
+		setImage(ImageManager.getImage(imagePath));
+	}
+
+
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
