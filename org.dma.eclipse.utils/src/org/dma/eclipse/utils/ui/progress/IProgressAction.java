@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.eclipse.utils.core.progress;
+package org.dma.eclipse.utils.ui.progress;
 
 public interface IProgressAction {
 

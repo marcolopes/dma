@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.eclipse.utils;
+package org.dma.eclipse.utils.ui;
 
 import org.dma.java.utils.Debug;
 
