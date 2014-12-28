@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
-Bundle-Name: Eclipse Utils
+Bundle-Name: DMA Eclipse Utils
 Bundle-SymbolicName: org.dma.utils.eclipse;singleton:=true
 Bundle-Version: 5.0.0.qualifier
 Bundle-Vendor: marcolopes@netc.pt
