@@ -8,8 +8,8 @@ package org.dma.utils.eclipse.swt.lists;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.dma.java.utils.array.ArrayUtils;
-import org.dma.java.utils.array.CollectionUtils;
+import org.dma.utils.java.array.ArrayUtils;
+import org.dma.utils.java.array.CollectionUtils;
 
 public class LinkedSWTList<T> extends LinkedList<T> {
 

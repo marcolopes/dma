@@ -38,9 +38,9 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
-import org.dma.java.utils.net.NetUtils;
-import org.dma.java.utils.net.NetUtils.NTPServers;
-import org.dma.java.utils.security.Certificate;
+import org.dma.utils.java.net.NetUtils;
+import org.dma.utils.java.net.NetUtils.NTPServers;
+import org.dma.utils.java.security.Certificate;
 import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
 /**
  * SOAP Message Handler

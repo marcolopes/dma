@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.dragndrop;
 
-import org.dma.java.utils.Debug;
+import org.dma.utils.java.Debug;
 
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;

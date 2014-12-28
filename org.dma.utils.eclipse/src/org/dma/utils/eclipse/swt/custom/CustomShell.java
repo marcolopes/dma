@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.custom;
 
-import org.dma.java.utils.numeric.NumericUtils;
+import org.dma.utils.java.numeric.NumericUtils;
 import org.dma.utils.eclipse.swt.graphics.ImageManager;
 
 import org.eclipse.swt.SWT;

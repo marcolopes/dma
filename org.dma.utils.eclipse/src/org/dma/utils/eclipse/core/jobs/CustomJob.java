@@ -8,7 +8,7 @@ package org.dma.utils.eclipse.core.jobs;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dma.java.utils.Debug;
+import org.dma.utils.java.Debug;
 import org.dma.utils.eclipse.core.jobs.tasks.JobTask;
 import org.dma.utils.eclipse.core.jobs.tasks.JobUITask;
 

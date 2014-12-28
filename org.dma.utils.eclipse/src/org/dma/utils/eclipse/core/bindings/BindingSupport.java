@@ -7,8 +7,7 @@ package org.dma.utils.eclipse.core.bindings;
 
 import java.util.HashMap;
 
-import org.dma.java.utils.Debug;
-
+import org.dma.utils.java.Debug;
 import org.eclipse.core.databinding.DataBindingContext;
 
 public class BindingSupport extends HashMap<String, BindingDefinition> {

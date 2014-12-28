@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.dma.java.utils.Debug;
-import org.dma.java.utils.array.ArrayUtils;
-import org.dma.java.utils.array.ClipboardManager;
-
+import org.dma.utils.java.Debug;
+import org.dma.utils.java.array.ArrayUtils;
+import org.dma.utils.java.array.ClipboardManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
