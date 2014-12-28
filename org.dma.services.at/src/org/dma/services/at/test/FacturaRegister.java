@@ -5,8 +5,8 @@ import java.util.Random;
 
 import javax.xml.datatype.DatatypeFactory;
 
-import org.dma.java.utils.security.Certificate;
-import org.dma.java.utils.security.Certificate.CERTIFICATE_TYPE;
+import org.dma.utils.java.security.Certificate;
+import org.dma.utils.java.security.Certificate.CERTIFICATE_TYPE;
 import org.dma.services.at.proxy.FaturasProxy;
 import org.dma.services.at.proxy.FaturasProxy.A10_ENDPOINTS;
 

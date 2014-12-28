@@ -7,7 +7,7 @@ package org.dma.utils.eclipse.ui.progress;
 
 import java.util.LinkedHashMap;
 
-import org.dma.java.utils.Debug;
+import org.dma.utils.java.Debug;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;

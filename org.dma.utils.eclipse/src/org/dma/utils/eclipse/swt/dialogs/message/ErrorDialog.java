@@ -5,8 +5,8 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.dialogs.message;
 
-import org.dma.java.utils.array.ArrayUtils;
-import org.dma.java.utils.array.MessageList;
+import org.dma.utils.java.array.ArrayUtils;
+import org.dma.utils.java.array.MessageList;
 
 public class ErrorDialog extends CustomDialog {
 

@@ -5,8 +5,8 @@
  *******************************************************************************/
 package org.dma.utils.eclipse.swt.custom;
 
-import org.dma.java.utils.Debug;
-import org.dma.java.utils.awt.ImageUtils;
+import org.dma.utils.java.Debug;
+import org.dma.utils.java.awt.ImageUtils;
 import org.dma.utils.eclipse.swt.graphics.SWTImageUtils;
 
 import org.eclipse.jface.action.Action;

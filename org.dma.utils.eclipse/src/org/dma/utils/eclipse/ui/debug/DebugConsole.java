@@ -7,7 +7,7 @@ package org.dma.utils.eclipse.ui.debug;
 
 import java.io.PrintStream;
 
-import org.dma.java.utils.Debug;
+import org.dma.utils.java.Debug;
 
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
