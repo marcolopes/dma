@@ -71,7 +71,8 @@ public abstract class TableViewerContainer<T> {
 	public void dispose() {
 		clearTable();
 		removeTableListeners();
-		//getTable().dispose();
+		//FIXME TEST: Analisar dispose TABLE
+		getTable().dispose();
 	}
 
 
@@ -227,7 +228,7 @@ public abstract class TableViewerContainer<T> {
 	}
 
 	public boolean isEmpty() {
-		return getTable().getItemCount()==0;
+		return getCollection().isEmpty();
 	}
 
 

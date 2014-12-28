@@ -26,12 +26,12 @@ public class CustomButton extends Button {
 
 
 	public void setImage(String imagePath, int imageSize) {
-		setImage(ImageManager.getImage(
+		setImage(ImageManager.createImage(
 				ImageUtils.resizeImage(imagePath, imageSize)));
 	}
 
 	public void setImage(String imagePath) {
-		super.setImage(ImageManager.getImage(imagePath));
+		super.setImage(ImageManager.createImage(imagePath));
 	}
 
 

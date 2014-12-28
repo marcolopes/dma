@@ -10,7 +10,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.swt;bundle-version="3.7.2",
  org.eclipse.jface;bundle-version="3.7.0",
- org.dma.java.utils;bundle-version="4.9.0"
+ org.dma.java.utils;bundle-version="4.12.0"
 Export-Package: org.dma.eclipse.swt.copypaste,
  org.dma.eclipse.swt.custom,
  org.dma.eclipse.swt.dialogs.button,
