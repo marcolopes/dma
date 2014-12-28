@@ -12,41 +12,41 @@ import java.awt.image.ComponentColorModel;
 import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Display;
 
 public class SWTImageUtils {
 
 	/**
 	 * Saves an {@link Image}
-	 * to file in the specified SWT format.
+	 * to file in the specified {@link SWT} format.
 	 */
 	public static boolean saveImage(Image image, String filename, int format) {
 		try{
 			ImageLoader saver=new ImageLoader();
 			saver.data=new ImageData[]{image.getImageData()};
 			saver.save(filename, SWT.IMAGE_PNG);
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return false;
 	}
 
+
 	public static boolean savePNG(Image image, String filename) {
 		return saveImage(image, filename, SWT.IMAGE_PNG);
 	}
+
 
 	public static boolean saveJPEG(Image image, String filename) {
 		return saveImage(image, filename, SWT.IMAGE_JPEG);
@@ -54,97 +54,13 @@ public class SWTImageUtils {
 
 
 	/**
-	 * Returns an {@link Image}
-	 * that can be used as placeholder for missing image.
-	 */
-	public static Image createImage(int size) {
-		Image image=new Image(Display.getCurrent(), size, size);
-		GC gc=new GC(image);
-		gc.setBackground(Display.getCurrent().getSystemColor(SWT.TRANSPARENT));
-		gc.fillRectangle(0, 0, size, size);
-		gc.dispose();
-		return image;
-	}
-
-
-	/**
-	 * Returns an {@link Image}
-	 * encoded by the specified {@link InputStream}.
-	 */
-	public static Image createImage(InputStream stream) throws IOException {
-		try{
-			Display display=Display.getCurrent();
-			ImageData data=new ImageData(stream);
-			return data.transparentPixel > 0 ?
-				new Image(display, data, data.getTransparencyMask()) :
-				new Image(display, data);
-		}finally{
-			stream.close();
-		}
-	}
-
-
-	/**
-	 * Returns an {@link Image}
-	 * encoded by the specified buffer.
-	 */
-	public static Image createImage(byte[] bytes) {
-		try{
-			return createImage(new ByteArrayInputStream(bytes));
-		}catch(Exception e){
-			return null;
-		}
-	}
-
-
-	/**
-	 * Returns an {@link Image}
-	 * encoded by the specified file at the specified path.
-	 */
-	public static Image createImage(String path) {
-		try{
-			return createImage(new FileInputStream(path));
-		}catch(Exception e){}
-		return null;
-	}
-
-
-	/**
-	 * Returns an {@link Image}
-	 * encoded by the specified resource at the specified location.
-	 * <p>
-	 * Resource is loaded with {@link ClassLoader#getResourceAsStream(String)}.
-	 */
-	public static Image createImage(Class location, String resource) {
-		try{
-			return createImage(location.getClassLoader().getResourceAsStream(resource));
-		}catch(Exception e){
-			return null;
-		}
-	}
-
-
-	/**
-	 * Returns an {@link Image}
-	 * encoded by the specified {@link BufferedImage}.
-	 * <p>
-	 * The AWT BufferedImage is converted to an SWT ImageData.
-	 */
-	public static Image createImage(BufferedImage bufferedImage) {
-		try{
-			return new Image(Display.getCurrent(), convertToSWT(bufferedImage));
-		}catch(Exception e){}
-		return null;
-	}
-
-
-	/**
-	 * Creates and returns a new image descriptor {@link ImageDescriptor}
+	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the specified {@link InputStream}.
 	 */
 	public static ImageDescriptor getImageDescriptor(InputStream stream) throws IOException {
 		try{
 			return ImageDescriptor.createFromImageData(new ImageData(stream));
+
 		}finally{
 			stream.close();
 		}
@@ -152,24 +68,26 @@ public class SWTImageUtils {
 
 
 	/**
-	 * Returns an {@link ImageDescriptor}
+	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the the file at the specified path.
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		try{
 			return getImageDescriptor(new FileInputStream(path));
+
 		}catch(Exception e){}
 		return null;
 	}
 
 
 	/**
-	 * Returns an {@link ImageDescriptor}
+	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the resource at the specified location.
 	 */
 	public static ImageDescriptor getImageDescriptor(Class location, String resource) {
 		try{
 			return getImageDescriptor(location.getClassLoader().getResourceAsStream(resource));
+
 		}catch(Exception e){
 			return null;
 		}
@@ -177,7 +95,7 @@ public class SWTImageUtils {
 
 
 	/**
-	 * Returns an {@link Image}
+	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the specified {@link BufferedImage}.
 	 * <p>
 	 * The AWT BufferedImage is converted to an SWT ImageData.
@@ -185,6 +103,7 @@ public class SWTImageUtils {
 	public static ImageDescriptor getImageDescriptor(BufferedImage bufferedImage) {
 		try{
 			return ImageDescriptor.createFromImageData(convertToSWT(bufferedImage));
+
 		}catch(Exception e){}
 		return null;
 	}
@@ -222,12 +141,9 @@ public class SWTImageUtils {
 			green[i] = (byte)rgb.green;
 			blue[i] = (byte)rgb.blue;
 		}
-		ColorModel colorModel = null;
-		if (data.transparentPixel != -1) {
-			colorModel = new IndexColorModel(data.depth, rgbs.length, red, green, blue, data.transparentPixel);
-		} else {
-			colorModel = new IndexColorModel(data.depth, rgbs.length, red, green, blue);
-		}
+		ColorModel colorModel = data.transparentPixel == -1 ?
+				new IndexColorModel(data.depth, rgbs.length, red, green, blue) :
+				new IndexColorModel(data.depth, rgbs.length, red, green, blue, data.transparentPixel);
 		BufferedImage bufferedImage = new BufferedImage(colorModel, colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
 		WritableRaster raster = bufferedImage.getRaster();
 		int[] pixelArray = new int[1];

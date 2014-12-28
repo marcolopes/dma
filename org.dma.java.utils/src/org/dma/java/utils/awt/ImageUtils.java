@@ -71,9 +71,9 @@ public class ImageUtils {
 	 * Returns an {@link BufferedImage}
 	 * encoded by the specified file at the specified path.
 	 */
-	public static BufferedImage createImage(String imagePath) {
+	public static BufferedImage createImage(String path) {
 		try{
-			return drawImage(ImageIO.read(new File(imagePath)));
+			return drawImage(ImageIO.read(new File(path)));
 
 		}catch(Exception e){
 			System.out.println(e.getMessage());
@@ -98,9 +98,9 @@ public class ImageUtils {
 	}
 
 
-	public static BufferedImage resizeImage(BufferedImage bufferedImage, int pixels) {
+	public static BufferedImage resizeImage(BufferedImage bufferedImage, int size) {
 		try{
-			return Scalr.resize(bufferedImage, pixels);
+			return Scalr.resize(bufferedImage, size);
 
 		}catch(Exception e){
 			System.out.println(e.getMessage());
@@ -109,21 +109,21 @@ public class ImageUtils {
 	}
 
 
-	public static BufferedImage resizeImage(byte[] bytes, int pixels) {
-		BufferedImage image=createImage(bytes);
-		return pixels==0 ? image : resizeImage(image, pixels);
+	public static BufferedImage resizeImage(byte[] bytes, int size) {
+		BufferedImage bufferedImage=createImage(bytes);
+		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
 	}
 
 
-	public static BufferedImage resizeImage(String imagePath, int pixels) {
-		BufferedImage image=createImage(imagePath);
-		return pixels==0 ? image : resizeImage(image, pixels);
+	public static BufferedImage resizeImage(String path, int size) {
+		BufferedImage bufferedImage=createImage(path);
+		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
 	}
 
 
-	public static BufferedImage resizeImage(Class location, String resource, int pixels) {
-		BufferedImage image=createImage(location, resource);
-		return pixels==0 ? image : resizeImage(image, pixels);
+	public static BufferedImage resizeImage(Class location, String resource, int size) {
+		BufferedImage bufferedImage=createImage(location, resource);
+		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
 	}
 
 

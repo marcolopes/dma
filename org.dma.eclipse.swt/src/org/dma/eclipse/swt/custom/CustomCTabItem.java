@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2014 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,6 +10,7 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.widgets.Control;
 
 public class CustomCTabItem extends CTabItem {
 
@@ -17,19 +18,34 @@ public class CustomCTabItem extends CTabItem {
 	protected void checkSubclass() {}
 
 	public CustomCTabItem(CTabFolder parent) {
-		super(parent, SWT.NONE);
+		this(parent, SWT.NONE);
+	}
+
+	public CustomCTabItem(CTabFolder parent, int style) {
+		super(parent, style);
 	}
 
 
-	public void setStyle(int style) {
+	public void update() {
+		if (isDisposed()) return;
+		getControl().update();
+	}
 
+
+	public boolean isSelected() {
+		if (isDisposed()) return false;
+		Control control=getParent().getSelection().getControl();
+		//tab seleccionado?
+		return control!=null && control.equals(getControl());
+	}
+
+
+	public void setFontStyle(int style) {
 		FontData[] fd = getFont().getFontData();
 		for(int i=0; i<fd.length; i++){
 			fd[i].setStyle(style);
 		}
-
 		setFont(new Font(getDisplay(), fd));
-
 	}
 
 }
