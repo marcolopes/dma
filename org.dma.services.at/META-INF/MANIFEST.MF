@@ -16,5 +16,5 @@ Export-Package: org.dma.services.at,
  org.dma.services.at.proxy,
  pt.gov.portaldasfinancas.servicos.documentosTransporte,
  pt.gov.portaldasfinancas.servicos.faturas
-Require-Bundle: org.dma.utils.java;bundle-version="5.0.0"
+Require-Bundle: org.dma.java;bundle-version="5.0.0"
 
