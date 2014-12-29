@@ -31,7 +31,7 @@ public class NetUtils {
 
 	}
 
-	public static InputStream getInputStream(String url){
+	public static InputStream getInputStream(String url) {
 
 		try{
 			URLConnection urlConn = new URL(url).openConnection();
@@ -53,7 +53,7 @@ public class NetUtils {
 	}
 
 
-	public static OutputStream getOutputStream(String url){
+	public static OutputStream getOutputStream(String url) {
 
 		try{
 			URLConnection urlConn = new URL(url).openConnection();
