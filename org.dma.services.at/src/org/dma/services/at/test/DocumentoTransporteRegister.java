@@ -5,8 +5,8 @@ import java.util.Random;
 
 import javax.xml.datatype.DatatypeFactory;
 
-import org.dma.utils.java.security.Certificate;
-import org.dma.utils.java.security.Certificate.CERTIFICATE_TYPE;
+import org.dma.java.security.Certificate;
+import org.dma.java.security.Certificate.CERTIFICATE_TYPE;
 import org.dma.services.at.proxy.DocumentosTransporteProxy;
 import org.dma.services.at.proxy.DocumentosTransporteProxy.A10_ENDPOINTS;
 

@@ -8,7 +8,7 @@ import javax.xml.ws.handler.Handler;
 
 import com.sun.xml.ws.developer.WSBindingProvider;
 
-import org.dma.utils.java.security.Certificate;
+import org.dma.java.security.Certificate;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
