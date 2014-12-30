@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java.klass;
+package org.dma.java;
 
 public interface MethodCallback<T> {
 
