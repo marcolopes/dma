@@ -12,6 +12,7 @@ import java.util.List;
 import org.dma.java.Debug;
 import org.dma.java.array.ArrayUtils;
 import org.dma.java.array.ClipboardManager;
+
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -71,7 +72,7 @@ public abstract class TableViewerContainer<T> {
 		clearTable();
 		removeTableListeners();
 		//FIXME TEST: Analisar dispose TABLE
-		getTable().dispose();
+		//getTable().dispose();
 	}
 
 
