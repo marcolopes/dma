@@ -35,8 +35,8 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import org.dma.java.net.NetUtils;
-import org.dma.java.net.NetUtils.NTPServers;
+import org.dma.java.io.NetUtils;
+import org.dma.java.io.NetUtils.NTPServers;
 import org.dma.java.security.Certificate;
 import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
 
