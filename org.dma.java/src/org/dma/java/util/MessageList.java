@@ -5,13 +5,25 @@
  *******************************************************************************/
 package org.dma.java.util;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 
 public class MessageList extends LinkedHashSet<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	public MessageList() {}
+	public MessageList(String[] message) {
+		this(Arrays.asList(message));
+	}
+
+	public MessageList(Collection<String> message) {
+		super(message);
+	}
+
+	public MessageList() {
+		super();
+	}
 
 
 	public void print() {
@@ -24,15 +36,15 @@ public class MessageList extends LinkedHashSet<String> {
 	}
 
 
-	public void add(String[] message) {
-		for(int i=0; i<message.length; i++){
-			add(message[i]);
-		}
+	public void add(String...message) {
+		add(new MessageList(message));
 	}
 
 
 	public void add(MessageList list) {
-		add(list.toArray());
+		for(String message: list){
+			add(message);
+		}
 	}
 
 
