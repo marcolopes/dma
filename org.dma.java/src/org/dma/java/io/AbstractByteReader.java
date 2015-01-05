@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java.file;
+package org.dma.java.io;
 
 import java.io.File;
 import java.io.IOException;

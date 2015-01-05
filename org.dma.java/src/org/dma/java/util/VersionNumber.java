@@ -3,10 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java.numeric;
-
-import org.dma.java.Debug;
-import org.dma.java.array.ArrayUtils;
+package org.dma.java.util;
 
 public final class VersionNumber {
 

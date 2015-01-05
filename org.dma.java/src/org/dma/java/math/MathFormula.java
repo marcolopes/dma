@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java.numeric;
+package org.dma.java.math;
 
 import java.math.BigDecimal;
 
@@ -11,7 +11,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import org.dma.java.Debug;
+import org.dma.java.util.Debug;
 
 public class MathFormula {
 

@@ -1,4 +1,4 @@
-package org.dma.java.file;
+package org.dma.java.io;
 
 import java.io.InputStream;
 import java.util.Enumeration;

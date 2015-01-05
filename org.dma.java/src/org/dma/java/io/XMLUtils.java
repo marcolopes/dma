@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java.file;
+package org.dma.java.io;
 
 import java.io.File;
 
@@ -17,8 +17,8 @@ public class XMLUtils {
 	public static void xmlWriter(Object obj, File file){
 
 		try{
-			JAXBContext context = JAXBContext.newInstance(obj.getClass());
-			Marshaller m = context.createMarshaller();
+			JAXBContext context=JAXBContext.newInstance(obj.getClass());
+			Marshaller m=context.createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			System.out.println("### XML BEGIN ###");
 			m.marshal(obj, System.out);

@@ -3,9 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java;
-
-import org.dma.java.array.ErrorList;
+package org.dma.java.util;
 
 public class ClassAccess {
 
