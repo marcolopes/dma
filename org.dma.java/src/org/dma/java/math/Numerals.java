@@ -24,7 +24,7 @@
  * Nova Gramatica do Portugues Contemporaneo, Edicoes Joao Sa da Costa
  *
  *******************************************************************************/
-package org.dma.java.numeric;
+package org.dma.java.math;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

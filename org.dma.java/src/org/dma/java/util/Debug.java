@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java;
+package org.dma.java.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

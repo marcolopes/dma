@@ -3,12 +3,12 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java.numeric;
+package org.dma.java.math;
 
 import java.math.BigDecimal;
 import java.util.Random;
 
-import org.dma.java.string.StringUtils;
+import org.dma.java.util.StringUtils;
 
 public class NumericUtils {
 

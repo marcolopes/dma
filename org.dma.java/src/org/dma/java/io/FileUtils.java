@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java.file;
+package org.dma.java.io;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -26,8 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.codec.binary.Base64;
-import org.dma.java.net.NetUtils;
-import org.dma.java.string.StringUtils;
+import org.dma.java.util.StringUtils;
 
 public class FileUtils {
 

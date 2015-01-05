@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.java.numeric;
+package org.dma.java.math;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
