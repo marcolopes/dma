@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.java.security;
 
-import org.dma.java.string.StringUtils;
+import org.dma.java.util.StringUtils;
 
 public class CheckDigits {
 
