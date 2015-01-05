@@ -11,7 +11,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.dma.java.string.StringUtils;
+import org.dma.java.util.StringUtils;
 
 public class AESCipher extends CryptoCipher {
 

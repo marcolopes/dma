@@ -7,8 +7,8 @@ package org.dma.java.email;
 
 import javax.mail.PasswordAuthentication;
 
-import org.dma.java.Debug;
-import org.dma.java.array.ArrayUtils;
+import org.dma.java.util.ArrayUtils;
+import org.dma.java.util.Debug;
 
 public class ServerParameters {
 
