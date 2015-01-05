@@ -8,7 +8,6 @@ package org.dma.eclipse.swt.custom;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.ToolBar;
@@ -20,11 +19,6 @@ public class CustomToolItem extends ToolItem {
 	protected void checkSubclass() {}
 
 	private CustomAction selectionAction;
-
-	public CustomToolItem(ToolBar parent, String text) {
-		this(parent, SWT.PUSH);
-		setToolTipText(text);
-	}
 
 	public CustomToolItem(ToolBar parent, int style) {
 		super(parent, style);

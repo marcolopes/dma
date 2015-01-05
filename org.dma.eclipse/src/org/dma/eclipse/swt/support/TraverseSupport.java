@@ -7,8 +7,8 @@ package org.dma.eclipse.swt.support;
 
 import java.util.ArrayList;
 
-import org.dma.java.Debug;
-import org.dma.java.numeric.NumericUtils;
+import org.dma.java.math.NumericUtils;
+import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.TraverseEvent;

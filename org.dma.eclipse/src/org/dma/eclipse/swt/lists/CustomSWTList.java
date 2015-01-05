@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.dma.java.array.ArrayUtils;
-import org.dma.java.array.CollectionUtils;
+import org.dma.java.util.ArrayUtils;
+import org.dma.java.util.CollectionUtils;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;

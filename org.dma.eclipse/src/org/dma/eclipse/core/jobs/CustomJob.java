@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.dma.eclipse.core.jobs.tasks.JobTask;
 import org.dma.eclipse.core.jobs.tasks.JobUITask;
-import org.dma.java.Debug;
+import org.dma.java.util.Debug;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;

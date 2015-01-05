@@ -13,9 +13,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.dma.java.Debug;
 import org.dma.java.awt.ImageUtils;
-import org.dma.java.file.FileUtils;
+import org.dma.java.io.FileUtils;
+import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;

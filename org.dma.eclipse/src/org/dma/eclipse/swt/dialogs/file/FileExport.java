@@ -8,7 +8,7 @@ package org.dma.eclipse.swt.dialogs.file;
 import java.io.File;
 import java.util.Arrays;
 
-import org.dma.java.file.FileUtils;
+import org.dma.java.io.FileUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
