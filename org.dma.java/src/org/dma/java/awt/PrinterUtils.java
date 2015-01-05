@@ -1,16 +1,18 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.awt;
 
+import java.awt.print.PrinterAbortException;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.print.Doc;
@@ -20,6 +22,8 @@ import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class PrinterUtils {
 
@@ -73,6 +77,49 @@ public class PrinterUtils {
 		}catch(PrinterException e){
 			throw new Exception("Invalid printer "+printerName);
 		}
+
+	}
+
+
+	/** Prints a PDF using apache pdfbox */
+	public static boolean printPdf(File file, PrinterJob job, boolean silent) throws Exception {
+
+		job.setJobName(file.getName());
+
+		try{
+			PDDocument doc=PDDocument.load(file);
+
+			try{
+				if (silent){
+					doc.silentPrint(job);
+				}else{
+					doc.print(job);
+				}
+
+				return true;
+
+			}catch(PrinterAbortException e){ //avoid abort exception
+			}catch(PrinterException e){
+				throw new Exception("Error while printing");
+			}finally{
+				try{
+					doc.close();
+				}catch(IOException e){}
+			}
+
+		}catch(IOException e){
+			throw new Exception("Error reading file "+file);
+		}
+
+		return false;
+
+	}
+
+
+	/** Prints a PDF using apache pdfbox */
+	public static boolean printPdf(File file, String printerName, boolean silent) throws Exception {
+
+		return printPdf(file, createPrinterJob(printerName), silent);
 
 	}
 

@@ -10,8 +10,8 @@ import java.io.File;
 import javax.mail.PasswordAuthentication;
 
 import org.apache.commons.mail.MultiPartEmail;
-import org.dma.java.Debug;
 import org.dma.java.email.ServerParameters.SECURITY;
+import org.dma.java.util.Debug;
 
 public class SendMail extends MultiPartEmail {
 
