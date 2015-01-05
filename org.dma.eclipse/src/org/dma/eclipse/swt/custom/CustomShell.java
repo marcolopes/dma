@@ -6,7 +6,7 @@
 package org.dma.eclipse.swt.custom;
 
 import org.dma.eclipse.swt.graphics.ImageManager;
-import org.dma.java.numeric.NumericUtils;
+import org.dma.java.math.NumericUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;

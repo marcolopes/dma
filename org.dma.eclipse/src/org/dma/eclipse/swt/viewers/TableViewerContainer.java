@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.dma.java.Debug;
-import org.dma.java.array.ArrayUtils;
-import org.dma.java.array.ClipboardManager;
+import org.dma.java.util.ArrayUtils;
+import org.dma.java.util.ClipboardManager;
+import org.dma.java.util.Debug;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -71,7 +71,6 @@ public abstract class TableViewerContainer<T> {
 	public void dispose() {
 		clearTable();
 		removeTableListeners();
-		//FIXME TEST: Analisar dispose TABLE
 		//getTable().dispose();
 	}
 

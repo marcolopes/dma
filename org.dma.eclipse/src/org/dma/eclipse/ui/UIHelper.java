@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.eclipse.ui;
 
-import org.dma.java.Debug;
+import org.dma.java.util.Debug;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;

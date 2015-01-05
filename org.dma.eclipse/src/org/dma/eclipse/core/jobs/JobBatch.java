@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import org.dma.java.Debug;
-import org.dma.java.numeric.NumericUtils;
+import org.dma.java.math.NumericUtils;
+import org.dma.java.util.Debug;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
