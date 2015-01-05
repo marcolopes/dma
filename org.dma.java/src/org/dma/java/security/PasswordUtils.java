@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 import org.apache.commons.codec.binary.Base64;
 import org.dma.java.cipher.BlowfishCipher;
-import org.dma.java.string.StringUtils;
+import org.dma.java.util.StringUtils;
 
 public class PasswordUtils {
 

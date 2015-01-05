@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import org.dma.java.timedate.TimeDateUtils;
+import org.dma.java.util.TimeDateUtils;
 
 public class Certificate {
 
