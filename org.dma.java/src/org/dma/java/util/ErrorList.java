@@ -44,7 +44,7 @@ public class ErrorList {
 		return errors;
 	}
 
-	public boolean hasWarnings(){
+	public boolean hasWarnings() {
 		return !warnings.isEmpty();
 	}
 

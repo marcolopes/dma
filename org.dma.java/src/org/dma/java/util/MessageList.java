@@ -19,29 +19,31 @@ public class MessageList extends LinkedHashSet<String> {
 	}
 
 
-	public void add(String source, String message){
+	public void add(String source, String message) {
 		add(source+": "+message);
 	}
 
 
-	public void add(String[] message){
+	public void add(String[] message) {
 		for(int i=0; i<message.length; i++){
 			add(message[i]);
 		}
 	}
 
 
-	public void add(MessageList list){
+	public void add(MessageList list) {
 		add(list.toArray());
 	}
 
 
-	public String[] toArray(){
+	@Override
+	public String[] toArray() {
 		return CollectionUtils.toArray(this, String.class);
 	}
 
 
-	public String toString(){
+	@Override
+	public String toString() {
 		return ArrayUtils.concat(toArray(),"\n");
 	}
 
