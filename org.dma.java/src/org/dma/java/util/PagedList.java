@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -14,25 +14,18 @@ public class PagedList<E> extends ArrayList<E> {
 	private int index=0;
 	private int count=0;
 
-	public void reset() {
-		reset(0);
-	}
-
-	public void reset(int index) {
-		clear();
-		setIndex(index);
-	}
-
 	public void home() {
 		index=0;
 	}
 
 	public void next() {
-		index=index+count>=size() ? size() : index+count;
+		int index=this.index+count;
+		this.index=index>=size() ? size() : index;
 	}
 
 	public void previous() {
-		index=index-count<=0 ? 0 : index-count;
+		int index=this.index-count;
+		this.index=index<=0 ? 0 : index;
 	}
 
 	public boolean hasNext() {
