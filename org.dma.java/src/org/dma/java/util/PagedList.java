@@ -28,7 +28,7 @@ public class PagedList<E> extends ArrayList<E> {
 	}
 
 	public void next() {
-		index=index+count>=size() ?	size() : index+count;
+		index=index+count>=size() ? size() : index+count;
 	}
 
 	public void previous() {
