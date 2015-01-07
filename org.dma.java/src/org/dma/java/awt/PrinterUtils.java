@@ -24,6 +24,9 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.Orientation;
+import org.apache.pdfbox.printing.PDFPrinter;
+import org.apache.pdfbox.printing.Scaling;
 
 public class PrinterUtils {
 
@@ -82,7 +85,7 @@ public class PrinterUtils {
 
 
 	/** Prints a PDF using apache pdfbox */
-	public static boolean printPdf(File file, PrinterJob job, boolean silent) throws Exception {
+	public static boolean printPdf(File file, PrinterJob job) throws Exception {
 
 		job.setJobName(file.getName());
 
@@ -90,11 +93,10 @@ public class PrinterUtils {
 			PDDocument doc=PDDocument.load(file);
 
 			try{
-				if (silent){
-					doc.silentPrint(job);
-				}else{
-					doc.print(job);
-				}
+				//doc.print(job);
+				PDFPrinter printer=new PDFPrinter(doc, Scaling.ACTUAL_SIZE, Orientation.AUTO);
+				job.setPageable(printer.getPageable());
+				job.print();
 
 				return true;
 
@@ -117,9 +119,9 @@ public class PrinterUtils {
 
 
 	/** Prints a PDF using apache pdfbox */
-	public static boolean printPdf(File file, String printerName, boolean silent) throws Exception {
+	public static boolean printPdf(File file, String printerName) throws Exception {
 
-		return printPdf(file, createPrinterJob(printerName), silent);
+		return printPdf(file, createPrinterJob(printerName));
 
 	}
 
