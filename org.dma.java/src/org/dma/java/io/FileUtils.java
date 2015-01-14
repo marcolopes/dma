@@ -201,9 +201,9 @@ public class FileUtils {
 			final StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 			try{
-				int ch;
-				while((ch = br.read()) > -1){
-					buffer.append((char)ch);
+				String line;
+				while((line = br.readLine()) != null){
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
 			}finally{
@@ -244,7 +244,7 @@ public class FileUtils {
 			try{
 				String line;
 				while((line = br.readLine()) != null && lines--!=0){
-					buffer.append(line + "\n");
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
 			}finally{
@@ -535,9 +535,9 @@ public class FileUtils {
 								new FileInputStream(file), charset));
 
 			try{
-				int ch;
-				while((ch = br.read()) > -1){
-					buffer.append((char)ch);
+				String line;
+				while((line = br.readLine()) != null){
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
 			}finally{
