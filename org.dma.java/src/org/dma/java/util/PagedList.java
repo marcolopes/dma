@@ -7,7 +7,7 @@ package org.dma.java.util;
 
 import java.util.ArrayList;
 
-public class PagedList<E> extends ArrayList<E> {
+public class PagedList<T> extends ArrayList<T> {
 
 	private static final long serialVersionUID = 1L;
 
