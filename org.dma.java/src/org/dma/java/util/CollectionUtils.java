@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,9 +7,7 @@ package org.dma.java.util;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class CollectionUtils {
 
@@ -128,56 +126,7 @@ public class CollectionUtils {
 	}
 
 
-	/** Returns removed elements */
-	public static <T> Collection<T> remove(List<T> list, int[] indexes) {
-
-		Collection<T> removeList=new ArrayList(indexes.length);
-
-		for(int index: indexes){
-			removeList.add(list.get(index));
-		}
-
-		list.removeAll(removeList);
-
-		return removeList;
-
-	}
-
-
-	/** Returns inserted elements */
-	public static <T> Collection<T> insert(List<T> into, List<T> from, int[] indexes, int position) {
-
-		Collection<T> insertList=new ArrayList(indexes.length);
-
-		Arrays.sort(indexes);
-		for(int index: indexes){
-			insertList.add(from.get(index));
-		}
-
-		into.addAll(position, insertList);
-
-		return insertList;
-
-	}
-
-
-	public static <T> void moveDown(List<T> list, int[] indexes, int position) {
-
-		Arrays.sort(indexes);
-		list.addAll(position, remove(list, indexes));
-
-	}
-
-
-	public static <T> void moveUp(List<T> list, int[] indexes, int position) {
-
-		Arrays.sort(indexes);
-		list.addAll(position, remove(list, indexes));
-
-	}
-
-
-	public static void main(String[] argvs){}
+	public static void main(String[] argvs) {}
 
 
 }
