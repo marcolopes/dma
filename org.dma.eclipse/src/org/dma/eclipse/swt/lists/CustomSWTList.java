@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2014 Public Domain
+ * 2010-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.CollectionUtils;
+import org.dma.java.util.MovableList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -41,8 +42,8 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	public void remove(int[] indexes) {
 
-		List<String> list=new ArrayList(Arrays.asList(getItems()));
-		CollectionUtils.remove(list, indexes);
+		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
+		list.remove(indexes);
 		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
 		showSelection(); // scroll items
@@ -53,8 +54,8 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	public void moveUp(int[] indexes, int position) {
 
-		List<String> list=new ArrayList(Arrays.asList(getItems()));
-		CollectionUtils.moveUp(list, indexes, position);
+		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
+		list.moveTo(position, indexes);
 		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
 		select(position, position+indexes.length-1);
@@ -66,8 +67,8 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	public void moveDown(int[] indexes, int position) {
 
-		List<String> list=new ArrayList(Arrays.asList(getItems()));
-		CollectionUtils.moveDown(list, indexes, position);
+		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
+		list.moveTo(position, indexes);
 		setItems(CollectionUtils.toArray(list, String.class));
 		deselectAll(); // needed in MAC
 		select(position, position+indexes.length-1);

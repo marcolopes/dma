@@ -1,17 +1,16 @@
 /*******************************************************************************
- * 2010-2014 Public Domain
+ * 2010-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.swt.lists;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 import org.dma.java.util.ArrayUtils;
-import org.dma.java.util.CollectionUtils;
+import org.dma.java.util.MovableList;
 
-public class LinkedSWTList<T> extends LinkedList<T> {
+public class LinkedSWTList<T> extends MovableList<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,9 +29,9 @@ public class LinkedSWTList<T> extends LinkedList<T> {
 	public void moveToTop(LinkedSWTList into) {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
-		//CollectionUtils.insert(into, this, selectionIndices, 0);
-		//CollectionUtils.remove(this, selectionIndices);
-		removeAll(CollectionUtils.insert(into, this, selectionIndices, 0));
+		//into.insert(this, 0, selectionIndices);
+		//remove(selectionIndices);
+		removeAll(into.insert(this, 0, selectionIndices));
 		into.getSWTList().insert(SWTList.getSelection(), 0);
 		SWTList.remove(selectionIndices);
 
@@ -47,9 +46,9 @@ public class LinkedSWTList<T> extends LinkedList<T> {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
 		int itemCount = into.getSWTList().getItemCount();
-		//CollectionUtils.insert(into, this, selectionIndices, itemCount);
-		//CollectionUtils.remove(this, selectionIndices);
-		removeAll(CollectionUtils.insert(into, this, selectionIndices, itemCount));
+		//into.insert(this, itemCount, selectionIndices);
+		//remove(selectionIndices);
+		removeAll(into.insert(this, itemCount, selectionIndices));
 		into.getSWTList().insert(SWTList.getSelection(), itemCount);
 		SWTList.remove(selectionIndices);
 
@@ -61,7 +60,7 @@ public class LinkedSWTList<T> extends LinkedList<T> {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
 		int selectionIndex = ArrayUtils.smaller(selectionIndices);
-		CollectionUtils.moveUp(this, selectionIndices, selectionIndex-1);
+		moveTo(selectionIndex-1, selectionIndices);
 		SWTList.moveUp(selectionIndices, selectionIndex-1);
 
 	}
@@ -72,7 +71,7 @@ public class LinkedSWTList<T> extends LinkedList<T> {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
 		int selectionIndex = ArrayUtils.smaller(selectionIndices);
-		CollectionUtils.moveDown(this, selectionIndices, selectionIndex+1);
+		moveTo(selectionIndex+1, selectionIndices);
 		SWTList.moveDown(selectionIndices, selectionIndex+1);
 
 	}
