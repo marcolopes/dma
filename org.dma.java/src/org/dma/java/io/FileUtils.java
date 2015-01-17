@@ -193,12 +193,12 @@ public class FileUtils {
 	 */
 	public static String readTextFile(File file) {
 
+		final StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
+
 		try{
 			final BufferedReader br =
 					new BufferedReader(
 							new FileReader(file));
-
-			final StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 			try{
 				String line;
@@ -210,8 +210,6 @@ public class FileUtils {
 				close(br);
 			}
 
-			return buffer.toString();
-
 		}catch(FileNotFoundException e){
 			System.out.println(e);
 		}catch(IOException e){
@@ -220,7 +218,7 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 
-		return null;
+		return buffer.toString();
 
 	}
 
@@ -521,7 +519,7 @@ public class FileUtils {
 	 *
 	 * For top efficiency, consider wrapping an InputStreamReader within a BufferedReader.
 	 * For example:
-	 *  BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	 * BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	 *
 	 */
 	public static String readTextStream(File file, String charset) {
@@ -592,7 +590,7 @@ public class FileUtils {
 			try{
 				String line;
 				while((line = br.readLine()) != null && lines--!=0){
-					buffer.append(line + "\n");
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
 			}finally{
@@ -680,7 +678,8 @@ public class FileUtils {
 	 *
 	 * Note that the characters passed to the write() methods are not buffered.
 	 * For top efficiency, consider wrapping an OutputStreamWriter within a BufferedWriter
-	 * so as to avoid frequent converter invocations. For example:
+	 * so as to avoid frequent converter invocations.
+	 * For example:
 	 * Writer out = new BufferedWriter(new OutputStreamWriter(System.out));
 	 *
 	 */
