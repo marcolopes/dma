@@ -35,15 +35,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RegisterInvoiceResponseType", propOrder = {
+@XmlType(name="RegisterInvoiceResponseType", propOrder={
 	"returnCode",
 	"returnMessage"
 })
 public class RegisterInvoiceResponseType {
 
-	@XmlElement(name = "ReturnCode", namespace = "")
+	@XmlElement(name="ReturnCode", namespace="")
 	protected int returnCode;
-	@XmlElement(name = "ReturnMessage", namespace = "", required = true)
+	@XmlElement(name="ReturnMessage", namespace="", required=true)
 	protected String returnMessage;
 
 	/**
@@ -59,7 +59,7 @@ public class RegisterInvoiceResponseType {
 	 * 
 	 */
 	public void setReturnCode(int value) {
-		this.returnCode = value;
+		this.returnCode=value;
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class RegisterInvoiceResponseType {
 	 * 
 	 */
 	public void setReturnMessage(String value) {
-		this.returnMessage = value;
+		this.returnMessage=value;
 	}
 
 }

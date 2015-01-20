@@ -1,6 +1,7 @@
 package pt.gov.portaldasfinancas.servicos.faturas;
 
 import java.math.BigDecimal;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -32,19 +33,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
+@XmlType(name="", propOrder={
 	"taxType",
 	"taxCountryRegion",
 	"taxPercentage"
 })
-@XmlRootElement(name = "Tax")
+@XmlRootElement(name="Tax")
 public class Tax {
 
-	@XmlElement(name = "TaxType", required = true)
+	@XmlElement(name="TaxType", required=true)
 	protected String taxType;
-	@XmlElement(name = "TaxCountryRegion", required = true)
+	@XmlElement(name="TaxCountryRegion", required=true)
 	protected String taxCountryRegion;
-	@XmlElement(name = "TaxPercentage", required = true)
+	@XmlElement(name="TaxPercentage", required=true)
 	protected BigDecimal taxPercentage;
 
 	/**
@@ -66,7 +67,7 @@ public class Tax {
 	 * 
 	 */
 	public void setTaxType(String value) {
-		this.taxType = value;
+		this.taxType=value;
 	}
 
 	/**
@@ -88,7 +89,7 @@ public class Tax {
 	 * 
 	 */
 	public void setTaxCountryRegion(String value) {
-		this.taxCountryRegion = value;
+		this.taxCountryRegion=value;
 	}
 
 	/**
@@ -110,7 +111,7 @@ public class Tax {
 	 * 
 	 */
 	public void setTaxPercentage(BigDecimal value) {
-		this.taxPercentage = value;
+		this.taxPercentage=value;
 	}
 
 }

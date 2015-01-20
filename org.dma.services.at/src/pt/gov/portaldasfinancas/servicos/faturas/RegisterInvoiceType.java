@@ -3,6 +3,7 @@ package pt.gov.portaldasfinancas.servicos.faturas;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -26,7 +27,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element ref="{http://servicos.portaldasfinancas.gov.pt/faturas/}InvoiceNo"/>
  *         &lt;element ref="{http://servicos.portaldasfinancas.gov.pt/faturas/}InvoiceDate"/>
  *         &lt;element ref="{http://servicos.portaldasfinancas.gov.pt/faturas/}InvoiceType"/>
- *         &lt;element ref="{http://servicos.portaldasfinancas.gov.pt/faturas/}InvoiceStatus"/>
+ *         &lt;element ref="{http://servicos.portaldasfinancas.gov.pt/faturas/}InvoiceStatus" minOccurs="0"/>
  *         &lt;choice>
  *           &lt;element name="CustomerTaxID" type="{http://servicos.portaldasfinancas.gov.pt/faturas/}SAFPTPortugueseVatNumber"/>
  *           &lt;element ref="{http://servicos.portaldasfinancas.gov.pt/faturas/}InternationalCustomerTaxID"/>
@@ -69,7 +70,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RegisterInvoiceType", propOrder = {
+@XmlType(name="RegisterInvoiceType", propOrder={
 	"taxRegistrationNumber",
 	"invoiceNo",
 	"invoiceDate",
@@ -82,23 +83,23 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class RegisterInvoiceType {
 
-	@XmlElement(name = "TaxRegistrationNumber", namespace = "")
+	@XmlElement(name="TaxRegistrationNumber", namespace="")
 	protected int taxRegistrationNumber;
-	@XmlElement(name = "InvoiceNo", required = true)
+	@XmlElement(name="InvoiceNo", required=true)
 	protected String invoiceNo;
-	@XmlElement(name = "InvoiceDate", required = true)
+	@XmlElement(name="InvoiceDate", required=true)
 	protected XMLGregorianCalendar invoiceDate;
-	@XmlElement(name = "InvoiceType", required = true)
+	@XmlElement(name="InvoiceType", required=true)
 	protected String invoiceType;
-	@XmlElement(name = "InvoiceStatus", required = true)
+	@XmlElement(name="InvoiceStatus")
 	protected String invoiceStatus;
-	@XmlElement(name = "CustomerTaxID", namespace = "")
+	@XmlElement(name="CustomerTaxID", namespace="")
 	protected Integer customerTaxID;
-	@XmlElement(name = "InternationalCustomerTaxID")
+	@XmlElement(name="InternationalCustomerTaxID")
 	protected InternationalCustomerTaxID internationalCustomerTaxID;
-	@XmlElement(name = "Line", namespace = "", required = true)
+	@XmlElement(name="Line", namespace="", required=true)
 	protected List<RegisterInvoiceType.Line> line;
-	@XmlElement(name = "DocumentTotals", namespace = "", required = true)
+	@XmlElement(name="DocumentTotals", namespace="", required=true)
 	protected RegisterInvoiceType.DocumentTotals documentTotals;
 
 	/**
@@ -114,7 +115,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	public void setTaxRegistrationNumber(int value) {
-		this.taxRegistrationNumber = value;
+		this.taxRegistrationNumber=value;
 	}
 
 	/**
@@ -136,7 +137,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	public void setInvoiceNo(String value) {
-		this.invoiceNo = value;
+		this.invoiceNo=value;
 	}
 
 	/**
@@ -158,7 +159,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	public void setInvoiceDate(XMLGregorianCalendar value) {
-		this.invoiceDate = value;
+		this.invoiceDate=value;
 	}
 
 	/**
@@ -180,7 +181,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	public void setInvoiceType(String value) {
-		this.invoiceType = value;
+		this.invoiceType=value;
 	}
 
 	/**
@@ -202,7 +203,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	public void setInvoiceStatus(String value) {
-		this.invoiceStatus = value;
+		this.invoiceStatus=value;
 	}
 
 	/**
@@ -224,7 +225,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	public void setCustomerTaxID(Integer value) {
-		this.customerTaxID = value;
+		this.customerTaxID=value;
 	}
 
 	/**
@@ -246,7 +247,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	public void setInternationalCustomerTaxID(InternationalCustomerTaxID value) {
-		this.internationalCustomerTaxID = value;
+		this.internationalCustomerTaxID=value;
 	}
 
 	/**
@@ -274,7 +275,7 @@ public class RegisterInvoiceType {
 	 */
 	public List<RegisterInvoiceType.Line> getLine() {
 		if(line == null){
-			line = new ArrayList<RegisterInvoiceType.Line>();
+			line=new ArrayList<RegisterInvoiceType.Line>();
 		}
 		return this.line;
 	}
@@ -298,7 +299,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	public void setDocumentTotals(RegisterInvoiceType.DocumentTotals value) {
-		this.documentTotals = value;
+		this.documentTotals=value;
 	}
 
 	/**
@@ -326,18 +327,18 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "", propOrder = {
+	@XmlType(name="", propOrder={
 		"taxPayable",
 		"netTotal",
 		"grossTotal"
 	})
 	public static class DocumentTotals {
 
-		@XmlElement(name = "TaxPayable", required = true)
+		@XmlElement(name="TaxPayable", required=true)
 		protected BigDecimal taxPayable;
-		@XmlElement(name = "NetTotal", required = true)
+		@XmlElement(name="NetTotal", required=true)
 		protected BigDecimal netTotal;
-		@XmlElement(name = "GrossTotal", required = true)
+		@XmlElement(name="GrossTotal", required=true)
 		protected BigDecimal grossTotal;
 
 		/**
@@ -359,7 +360,7 @@ public class RegisterInvoiceType {
 		 * 
 		 */
 		public void setTaxPayable(BigDecimal value) {
-			this.taxPayable = value;
+			this.taxPayable=value;
 		}
 
 		/**
@@ -381,7 +382,7 @@ public class RegisterInvoiceType {
 		 * 
 		 */
 		public void setNetTotal(BigDecimal value) {
-			this.netTotal = value;
+			this.netTotal=value;
 		}
 
 		/**
@@ -403,7 +404,7 @@ public class RegisterInvoiceType {
 		 * 
 		 */
 		public void setGrossTotal(BigDecimal value) {
-			this.grossTotal = value;
+			this.grossTotal=value;
 		}
 
 	}
@@ -436,7 +437,7 @@ public class RegisterInvoiceType {
 	 * 
 	 */
 	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "", propOrder = {
+	@XmlType(name="", propOrder={
 		"debitAmount",
 		"creditAmount",
 		"tax",
@@ -444,13 +445,13 @@ public class RegisterInvoiceType {
 	})
 	public static class Line {
 
-		@XmlElement(name = "DebitAmount")
+		@XmlElement(name="DebitAmount")
 		protected BigDecimal debitAmount;
-		@XmlElement(name = "CreditAmount")
+		@XmlElement(name="CreditAmount")
 		protected BigDecimal creditAmount;
-		@XmlElement(name = "Tax", required = true)
+		@XmlElement(name="Tax", required=true)
 		protected Tax tax;
-		@XmlElement(name = "TaxExemptionReason")
+		@XmlElement(name="TaxExemptionReason")
 		protected String taxExemptionReason;
 
 		/**
@@ -472,7 +473,7 @@ public class RegisterInvoiceType {
 		 * 
 		 */
 		public void setDebitAmount(BigDecimal value) {
-			this.debitAmount = value;
+			this.debitAmount=value;
 		}
 
 		/**
@@ -494,7 +495,7 @@ public class RegisterInvoiceType {
 		 * 
 		 */
 		public void setCreditAmount(BigDecimal value) {
-			this.creditAmount = value;
+			this.creditAmount=value;
 		}
 
 		/**
@@ -516,7 +517,7 @@ public class RegisterInvoiceType {
 		 * 
 		 */
 		public void setTax(Tax value) {
-			this.tax = value;
+			this.tax=value;
 		}
 
 		/**
@@ -538,7 +539,7 @@ public class RegisterInvoiceType {
 		 * 
 		 */
 		public void setTaxExemptionReason(String value) {
-			this.taxExemptionReason = value;
+			this.taxExemptionReason=value;
 		}
 
 	}

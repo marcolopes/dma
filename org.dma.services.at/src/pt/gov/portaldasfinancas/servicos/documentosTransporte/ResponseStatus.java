@@ -1,6 +1,7 @@
 package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -36,15 +37,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResponseStatus", propOrder = {
+@XmlType(name="ResponseStatus", propOrder={
 	"returnCode",
 	"returnMessage"
 })
 public class ResponseStatus {
 
-	@XmlElement(name = "ReturnCode", required = true)
+	@XmlElement(name="ReturnCode", required=true)
 	protected BigInteger returnCode;
-	@XmlElement(name = "ReturnMessage")
+	@XmlElement(name="ReturnMessage")
 	protected String returnMessage;
 
 	/**
@@ -66,7 +67,7 @@ public class ResponseStatus {
 	 * 
 	 */
 	public void setReturnCode(BigInteger value) {
-		this.returnCode = value;
+		this.returnCode=value;
 	}
 
 	/**
@@ -88,7 +89,7 @@ public class ResponseStatus {
 	 * 
 	 */
 	public void setReturnMessage(String value) {
-		this.returnMessage = value;
+		this.returnMessage=value;
 	}
 
 }
