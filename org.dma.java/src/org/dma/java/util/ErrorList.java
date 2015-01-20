@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -11,6 +11,10 @@ public class ErrorList {
 	private final MessageList warnings=new MessageList();
 
 	public ErrorList() {}
+
+	public ErrorList(Exception e) {
+		errors.add(e.getMessage());
+	}
 
 
 	/** Clears errors and warnings */
