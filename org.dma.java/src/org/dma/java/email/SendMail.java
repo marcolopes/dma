@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,6 +9,7 @@ import java.io.File;
 
 import javax.mail.PasswordAuthentication;
 
+import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.MultiPartEmail;
 import org.dma.java.email.ServerParameters.SECURITY;
 import org.dma.java.util.Debug;
@@ -31,6 +32,7 @@ public class SendMail extends MultiPartEmail {
 		Debug.out("message", message);
 
 		MultiPartEmail email=new MultiPartEmail();
+		email.setCharset(EmailConstants.UTF_8);
 		email.setDebug(Debug.STATUS);
 
 		email.setHostName(server.getHostName());
@@ -49,7 +51,10 @@ public class SendMail extends MultiPartEmail {
 		email.addTo(to.getEmail(), to.getName());
 		email.setSubject(subject);
 		email.setMsg(message);
-		if (attachment!=null) email.attach(attachment);
+		if (attachment!=null){
+			email.attach(attachment);
+			email.setBoolHasAttachments(true);
+		}
 
 		return email.send();
 
