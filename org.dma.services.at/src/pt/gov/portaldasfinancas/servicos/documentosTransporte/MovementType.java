@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name = "MovementType")
+@XmlType(name="MovementType")
 @XmlEnum
 public enum MovementType {
 

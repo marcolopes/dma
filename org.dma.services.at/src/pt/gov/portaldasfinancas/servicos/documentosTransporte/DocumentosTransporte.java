@@ -14,9 +14,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * 
  */
 @WebService(
-	name = "documentosTransporte",
-	targetNamespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/")
-@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+	name="documentosTransporte",
+	targetNamespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/")
+@SOAPBinding(parameterStyle=SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
 	ObjectFactory.class
 })
@@ -30,16 +30,16 @@ public interface DocumentosTransporte {
 	 *         documentostransporte.StockMovementResponse
 	 */
 	@WebMethod(
-		action = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/")
+		action="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/")
 	@WebResult(
-		name = "envioDocumentoTransporteResponseElem",
-		targetNamespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/",
-		partName = "StockMovementResponse")
+		name="envioDocumentoTransporteResponseElem",
+		targetNamespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/",
+		partName="StockMovementResponse")
 	public StockMovementResponse envioDocumentoTransporte(
 			@WebParam(
-				name = "envioDocumentoTransporteRequestElem",
-				targetNamespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/",
-				partName = "StockMovement")
+				name="envioDocumentoTransporteRequestElem",
+				targetNamespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/",
+				partName="StockMovement")
 			StockMovement stockMovement);
 
 }

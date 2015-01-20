@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AddressStructurePT", propOrder = {
+@XmlType(name="AddressStructurePT", propOrder={
 	"addressdetail",
 	"city",
 	"postalCode",
@@ -39,13 +39,13 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class AddressStructurePT {
 
-	@XmlElement(name = "Addressdetail")
+	@XmlElement(name="Addressdetail")
 	protected String addressdetail;
-	@XmlElement(name = "City")
+	@XmlElement(name="City")
 	protected String city;
-	@XmlElement(name = "PostalCode")
+	@XmlElement(name="PostalCode")
 	protected String postalCode;
-	@XmlElement(name = "Country")
+	@XmlElement(name="Country")
 	protected String country;
 
 	/**
@@ -67,7 +67,7 @@ public class AddressStructurePT {
 	 * 
 	 */
 	public void setAddressdetail(String value) {
-		this.addressdetail = value;
+		this.addressdetail=value;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class AddressStructurePT {
 	 * 
 	 */
 	public void setCity(String value) {
-		this.city = value;
+		this.city=value;
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class AddressStructurePT {
 	 * 
 	 */
 	public void setPostalCode(String value) {
-		this.postalCode = value;
+		this.postalCode=value;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class AddressStructurePT {
 	 * 
 	 */
 	public void setCountry(String value) {
-		this.country = value;
+		this.country=value;
 	}
 
 }

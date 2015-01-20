@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "faturas",
-	targetNamespace = "http://servicos.portaldasfinancas.gov.pt/faturas/")
-@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+@WebService(name="faturas",
+	targetNamespace="http://servicos.portaldasfinancas.gov.pt/faturas/")
+@SOAPBinding(parameterStyle=SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
 	ObjectFactory.class
 })
@@ -29,16 +29,16 @@ public interface Faturas {
 	 *         RegisterInvoiceResponseType
 	 */
 	@WebMethod(
-		operationName = "RegisterInvoice",
-		action = "http://servicos.portaldasfinancas.gov.pt/faturas/RegisterInvoice")
-	@WebResult(name = "RegisterInvoiceResponseElem",
-		targetNamespace = "http://servicos.portaldasfinancas.gov.pt/faturas/",
-		partName = "RegisterInvoiceResponse")
+		operationName="RegisterInvoice",
+		action="http://servicos.portaldasfinancas.gov.pt/faturas/RegisterInvoice")
+	@WebResult(name="RegisterInvoiceResponseElem",
+		targetNamespace="http://servicos.portaldasfinancas.gov.pt/faturas/",
+		partName="RegisterInvoiceResponse")
 	public RegisterInvoiceResponseType registerInvoice(
 			@WebParam(
-				name = "RegisterInvoiceElem",
-				targetNamespace = "http://servicos.portaldasfinancas.gov.pt/faturas/",
-				partName = "RegisterInvoiceRequest")
+				name="RegisterInvoiceElem",
+				targetNamespace="http://servicos.portaldasfinancas.gov.pt/faturas/",
+				partName="RegisterInvoiceRequest")
 			RegisterInvoiceType registerInvoiceRequest);
 
 }

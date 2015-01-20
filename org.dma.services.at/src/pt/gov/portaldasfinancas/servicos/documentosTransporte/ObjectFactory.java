@@ -21,8 +21,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-	private final static QName _EnvioDocumentoTransporteRequestElem_QNAME = new QName("https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", "envioDocumentoTransporteRequestElem");
-	private final static QName _EnvioDocumentoTransporteResponseElem_QNAME = new QName("https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", "envioDocumentoTransporteResponseElem");
+	private final static QName _EnvioDocumentoTransporteRequestElem_QNAME=new QName("https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", "envioDocumentoTransporteRequestElem");
+	private final static QName _EnvioDocumentoTransporteResponseElem_QNAME=new QName("https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", "envioDocumentoTransporteResponseElem");
 
 	/**
 	 * Create a new ObjectFactory that can be used to create new instances of
@@ -30,7 +30,7 @@ public class ObjectFactory {
 	 * https.servicos_portaldasfinancas_gov_pt.sgdtws.documentostransporte
 	 * 
 	 */
-	public ObjectFactory(){}
+	public ObjectFactory() {}
 
 	/**
 	 * Create an instance of {@link StockMovementResponse }
@@ -86,8 +86,8 @@ public class ObjectFactory {
 	 * 
 	 */
 	@XmlElementDecl(
-		namespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/",
-		name = "envioDocumentoTransporteRequestElem")
+		namespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/",
+		name="envioDocumentoTransporteRequestElem")
 	public JAXBElement<StockMovement> createEnvioDocumentoTransporteRequestElem(StockMovement value) {
 		return new JAXBElement<StockMovement>(_EnvioDocumentoTransporteRequestElem_QNAME, StockMovement.class, null, value);
 	}
@@ -98,8 +98,8 @@ public class ObjectFactory {
 	 * 
 	 */
 	@XmlElementDecl(
-		namespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/",
-		name = "envioDocumentoTransporteResponseElem")
+		namespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/",
+		name="envioDocumentoTransporteResponseElem")
 	public JAXBElement<StockMovementResponse> createEnvioDocumentoTransporteResponseElem(StockMovementResponse value) {
 		return new JAXBElement<StockMovementResponse>(_EnvioDocumentoTransporteResponseElem_QNAME, StockMovementResponse.class, null, value);
 	}

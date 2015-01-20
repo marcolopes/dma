@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name = "MovementStatus")
+@XmlType(name="MovementStatus")
 @XmlEnum
 public enum MovementStatus {
 

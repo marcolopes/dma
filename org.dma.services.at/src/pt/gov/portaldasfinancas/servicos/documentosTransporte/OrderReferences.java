@@ -28,12 +28,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "OrderReferences", propOrder = {
+@XmlType(name="OrderReferences", propOrder={
 	"originatingON"
 })
 public class OrderReferences {
 
-	@XmlElement(name = "OriginatingON")
+	@XmlElement(name="OriginatingON")
 	protected String originatingON;
 
 	/**
@@ -55,7 +55,7 @@ public class OrderReferences {
 	 * 
 	 */
 	public void setOriginatingON(String value) {
-		this.originatingON = value;
+		this.originatingON=value;
 	}
 
 }

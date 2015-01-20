@@ -3,6 +3,7 @@ package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -35,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Line", propOrder = {
+@XmlType(name="Line", propOrder={
 	"orderReferences",
 	"productDescription",
 	"quantity",
@@ -44,15 +45,15 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class Line {
 
-	@XmlElement(name = "OrderReferences")
+	@XmlElement(name="OrderReferences")
 	protected List<OrderReferences> orderReferences;
-	@XmlElement(name = "ProductDescription", required = true)
+	@XmlElement(name="ProductDescription", required=true)
 	protected String productDescription;
-	@XmlElement(name = "Quantity", required = true)
+	@XmlElement(name="Quantity", required=true)
 	protected BigDecimal quantity;
-	@XmlElement(name = "UnitOfMeasure", required = true)
+	@XmlElement(name="UnitOfMeasure", required=true)
 	protected String unitOfMeasure;
-	@XmlElement(name = "UnitPrice", required = true)
+	@XmlElement(name="UnitPrice", required=true)
 	protected BigDecimal unitPrice;
 
 	/**
@@ -80,7 +81,7 @@ public class Line {
 	 */
 	public List<OrderReferences> getOrderReferences() {
 		if(orderReferences == null){
-			orderReferences = new ArrayList<OrderReferences>();
+			orderReferences=new ArrayList<OrderReferences>();
 		}
 		return this.orderReferences;
 	}
@@ -104,7 +105,7 @@ public class Line {
 	 * 
 	 */
 	public void setProductDescription(String value) {
-		this.productDescription = value;
+		this.productDescription=value;
 	}
 
 	/**
@@ -126,7 +127,7 @@ public class Line {
 	 * 
 	 */
 	public void setQuantity(BigDecimal value) {
-		this.quantity = value;
+		this.quantity=value;
 	}
 
 	/**
@@ -148,7 +149,7 @@ public class Line {
 	 * 
 	 */
 	public void setUnitOfMeasure(String value) {
-		this.unitOfMeasure = value;
+		this.unitOfMeasure=value;
 	}
 
 	/**
@@ -170,7 +171,7 @@ public class Line {
 	 * 
 	 */
 	public void setUnitPrice(BigDecimal value) {
-		this.unitPrice = value;
+		this.unitPrice=value;
 	}
 
 }

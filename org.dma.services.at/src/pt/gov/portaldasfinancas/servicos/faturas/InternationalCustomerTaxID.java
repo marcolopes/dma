@@ -30,16 +30,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
+@XmlType(name="", propOrder={
 	"taxIDNumber",
 	"taxIDCountry"
 })
-@XmlRootElement(name = "InternationalCustomerTaxID")
+@XmlRootElement(name="InternationalCustomerTaxID")
 public class InternationalCustomerTaxID {
 
-	@XmlElement(name = "TaxIDNumber", namespace = "", required = true)
+	@XmlElement(name="TaxIDNumber", namespace="", required=true)
 	protected String taxIDNumber;
-	@XmlElement(name = "TaxIDCountry", namespace = "", required = true)
+	@XmlElement(name="TaxIDCountry", namespace="", required=true)
 	protected String taxIDCountry;
 
 	/**
@@ -61,7 +61,7 @@ public class InternationalCustomerTaxID {
 	 * 
 	 */
 	public void setTaxIDNumber(String value) {
-		this.taxIDNumber = value;
+		this.taxIDNumber=value;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class InternationalCustomerTaxID {
 	 * 
 	 */
 	public void setTaxIDCountry(String value) {
-		this.taxIDCountry = value;
+		this.taxIDCountry=value;
 	}
 
 }

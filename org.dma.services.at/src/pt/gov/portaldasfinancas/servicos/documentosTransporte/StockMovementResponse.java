@@ -2,6 +2,7 @@ package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -34,18 +35,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StockMovementResponse", propOrder = {
+@XmlType(name="StockMovementResponse", propOrder={
 	"responseStatus",
 	"documentNumber",
 	"atDocCodeID"
 })
 public class StockMovementResponse {
 
-	@XmlElement(name = "ResponseStatus", required = true)
+	@XmlElement(name="ResponseStatus", required=true)
 	protected List<ResponseStatus> responseStatus;
-	@XmlElement(name = "DocumentNumber")
+	@XmlElement(name="DocumentNumber")
 	protected String documentNumber;
-	@XmlElement(name = "ATDocCodeID")
+	@XmlElement(name="ATDocCodeID")
 	protected String atDocCodeID;
 
 	/**
@@ -73,7 +74,7 @@ public class StockMovementResponse {
 	 */
 	public List<ResponseStatus> getResponseStatus() {
 		if(responseStatus == null){
-			responseStatus = new ArrayList<ResponseStatus>();
+			responseStatus=new ArrayList<ResponseStatus>();
 		}
 		return this.responseStatus;
 	}
@@ -97,7 +98,7 @@ public class StockMovementResponse {
 	 * 
 	 */
 	public void setDocumentNumber(String value) {
-		this.documentNumber = value;
+		this.documentNumber=value;
 	}
 
 	/**
@@ -119,7 +120,7 @@ public class StockMovementResponse {
 	 * 
 	 */
 	public void setATDocCodeID(String value) {
-		this.atDocCodeID = value;
+		this.atDocCodeID=value;
 	}
 
 }

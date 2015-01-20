@@ -2,6 +2,7 @@ package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -52,7 +53,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StockMovement", propOrder = {
+@XmlType(name="StockMovement", propOrder={
 	"taxRegistrationNumber",
 	"companyName",
 	"companyAddress",
@@ -74,41 +75,41 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class StockMovement {
 
-	@XmlElement(name = "TaxRegistrationNumber")
+	@XmlElement(name="TaxRegistrationNumber")
 	protected int taxRegistrationNumber;
-	@XmlElement(name = "CompanyName", required = true)
+	@XmlElement(name="CompanyName", required=true)
 	protected String companyName;
-	@XmlElement(name = "CompanyAddress", required = true)
+	@XmlElement(name="CompanyAddress", required=true)
 	protected AddressStructurePT companyAddress;
-	@XmlElement(name = "DocumentNumber", required = true)
+	@XmlElement(name="DocumentNumber", required=true)
 	protected String documentNumber;
-	@XmlElement(name = "ATDocCodeID")
+	@XmlElement(name="ATDocCodeID")
 	protected String atDocCodeID;
-	@XmlElement(name = "MovementStatus", required = true)
+	@XmlElement(name="MovementStatus", required=true)
 	protected MovementStatus movementStatus;
-	@XmlElement(name = "MovementDate", required = true)
+	@XmlElement(name="MovementDate", required=true)
 	protected XMLGregorianCalendar movementDate;
-	@XmlElement(name = "MovementType", required = true)
+	@XmlElement(name="MovementType", required=true)
 	protected MovementType movementType;
-	@XmlElement(name = "CustomerTaxID")
+	@XmlElement(name="CustomerTaxID")
 	protected String customerTaxID;
-	@XmlElement(name = "SupplierTaxID")
+	@XmlElement(name="SupplierTaxID")
 	protected String supplierTaxID;
-	@XmlElement(name = "CustomerAddress")
+	@XmlElement(name="CustomerAddress")
 	protected AddressStructurePT customerAddress;
-	@XmlElement(name = "CustomerName")
+	@XmlElement(name="CustomerName")
 	protected String customerName;
-	@XmlElement(name = "AddressTo")
+	@XmlElement(name="AddressTo")
 	protected AddressStructurePT addressTo;
-	@XmlElement(name = "AddressFrom", required = true)
+	@XmlElement(name="AddressFrom", required=true)
 	protected AddressStructurePT addressFrom;
-	@XmlElement(name = "MovementEndTime")
+	@XmlElement(name="MovementEndTime")
 	protected XMLGregorianCalendar movementEndTime;
-	@XmlElement(name = "MovementStartTime", required = true)
+	@XmlElement(name="MovementStartTime", required=true)
 	protected XMLGregorianCalendar movementStartTime;
-	@XmlElement(name = "VehicleID")
+	@XmlElement(name="VehicleID")
 	protected String vehicleID;
-	@XmlElement(name = "Line", required = true)
+	@XmlElement(name="Line", required=true)
 	protected List<Line> line;
 
 	/**
@@ -124,7 +125,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setTaxRegistrationNumber(int value) {
-		this.taxRegistrationNumber = value;
+		this.taxRegistrationNumber=value;
 	}
 
 	/**
@@ -146,7 +147,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setCompanyName(String value) {
-		this.companyName = value;
+		this.companyName=value;
 	}
 
 	/**
@@ -168,7 +169,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setCompanyAddress(AddressStructurePT value) {
-		this.companyAddress = value;
+		this.companyAddress=value;
 	}
 
 	/**
@@ -190,7 +191,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setDocumentNumber(String value) {
-		this.documentNumber = value;
+		this.documentNumber=value;
 	}
 
 	/**
@@ -212,7 +213,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setATDocCodeID(String value) {
-		this.atDocCodeID = value;
+		this.atDocCodeID=value;
 	}
 
 	/**
@@ -234,7 +235,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setMovementStatus(MovementStatus value) {
-		this.movementStatus = value;
+		this.movementStatus=value;
 	}
 
 	/**
@@ -256,7 +257,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setMovementDate(XMLGregorianCalendar value) {
-		this.movementDate = value;
+		this.movementDate=value;
 	}
 
 	/**
@@ -278,7 +279,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setMovementType(MovementType value) {
-		this.movementType = value;
+		this.movementType=value;
 	}
 
 	/**
@@ -300,7 +301,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setCustomerTaxID(String value) {
-		this.customerTaxID = value;
+		this.customerTaxID=value;
 	}
 
 	/**
@@ -322,7 +323,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setSupplierTaxID(String value) {
-		this.supplierTaxID = value;
+		this.supplierTaxID=value;
 	}
 
 	/**
@@ -344,7 +345,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setCustomerAddress(AddressStructurePT value) {
-		this.customerAddress = value;
+		this.customerAddress=value;
 	}
 
 	/**
@@ -366,7 +367,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setCustomerName(String value) {
-		this.customerName = value;
+		this.customerName=value;
 	}
 
 	/**
@@ -388,7 +389,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setAddressTo(AddressStructurePT value) {
-		this.addressTo = value;
+		this.addressTo=value;
 	}
 
 	/**
@@ -410,7 +411,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setAddressFrom(AddressStructurePT value) {
-		this.addressFrom = value;
+		this.addressFrom=value;
 	}
 
 	/**
@@ -432,7 +433,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setMovementEndTime(XMLGregorianCalendar value) {
-		this.movementEndTime = value;
+		this.movementEndTime=value;
 	}
 
 	/**
@@ -454,7 +455,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setMovementStartTime(XMLGregorianCalendar value) {
-		this.movementStartTime = value;
+		this.movementStartTime=value;
 	}
 
 	/**
@@ -476,7 +477,7 @@ public class StockMovement {
 	 * 
 	 */
 	public void setVehicleID(String value) {
-		this.vehicleID = value;
+		this.vehicleID=value;
 	}
 
 	/**
@@ -503,7 +504,7 @@ public class StockMovement {
 	 */
 	public List<Line> getLine() {
 		if(line == null){
-			line = new ArrayList<Line>();
+			line=new ArrayList<Line>();
 		}
 		return this.line;
 	}
