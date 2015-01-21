@@ -133,33 +133,29 @@ public class Numerals {
 
 		String s="";
 
-		try{
-			value=value.abs().setScale(scale, RoundingMode.HALF_EVEN);
+		value=value.abs().setScale(scale, RoundingMode.HALF_EVEN);
 
-			//retrieves integer and decimal
-			BigInteger integer=value.abs().toBigInteger();
-			/*
-			BigInteger decimal=value.remainder(BigDecimal.ONE).
-				multiply(BigDecimal.valueOf(100)).toBigInteger();
-			*/
-			BigInteger decimal=(value.subtract(new BigDecimal(integer))).
-					multiply(new BigDecimal(100)).toBigInteger();
+		//retrieves integer and decimal
+		BigInteger integer=value.abs().toBigInteger();
+		/*
+		BigInteger decimal=value.remainder(BigDecimal.ONE).
+			multiply(BigDecimal.valueOf(100)).toBigInteger();
+		*/
+		BigInteger decimal=(value.subtract(new BigDecimal(integer))).
+				multiply(new BigDecimal(100)).toBigInteger();
 
-			//processes ZERO
-			if (value.signum()==0){
-				s+=orderToString(0)+unit.integer[1];
-			}//processes integer
-			else if (integer.signum()>0){
-				s+=ordersToString(getOrders(integer), unit.integer);
-			}
-			//processes decimal
-			if (decimal.signum()>0){
-				s+=s.isEmpty() ? "" : " "+CONJUNCTION.AND.name+" ";
-				s+=ordersToString(getOrders(decimal), unit.decimal);
-			}
-
-		}catch(Exception e){
-			e.printStackTrace();
+		//processes ZERO
+		if (value.signum()==0){
+			s+=orderToString(0)+unit.integer[1];
+		}
+		//processes integer
+		else if (integer.signum()>0){
+			s+=ordersToString(getOrders(integer), unit.integer);
+		}
+		//processes decimal
+		if (decimal.signum()>0){
+			s+=s.isEmpty() ? "" : " "+CONJUNCTION.AND.name+" ";
+			s+=ordersToString(getOrders(decimal), unit.decimal);
 		}
 
 		//capitalize
@@ -173,16 +169,11 @@ public class Numerals {
 
 		List<Integer> orders=new ArrayList();
 
-		try{
-			while(value.compareTo(BigInteger.valueOf(1000))>=0) {
-				orders.add(value.remainder(BigInteger.valueOf(1000)).intValue());
-				value=value.divide(BigInteger.valueOf(1000));
-			}
-			orders.add(value.intValue());
-
-		}catch(Exception e){
-			e.printStackTrace();
+		while(value.compareTo(BigInteger.valueOf(1000))>=0) {
+			orders.add(value.remainder(BigInteger.valueOf(1000)).intValue());
+			value=value.divide(BigInteger.valueOf(1000));
 		}
+		orders.add(value.intValue());
 
 		return orders;
 
