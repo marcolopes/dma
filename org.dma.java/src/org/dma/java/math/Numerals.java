@@ -150,12 +150,12 @@ public class Numerals {
 				s+=orderToString(0)+unit.integer[1];
 			}//processes integer
 			else if (integer.signum()>0){
-				s+=ordersToString(getOrders(integer),unit.integer);
+				s+=ordersToString(getOrders(integer), unit.integer);
 			}
 			//processes decimal
 			if (decimal.signum()>0){
 				s+=s.isEmpty() ? "" : " "+CONJUNCTION.AND.name+" ";
-				s+=ordersToString(getOrders(decimal),unit.decimal);
+				s+=ordersToString(getOrders(decimal), unit.decimal);
 			}
 
 		}catch(Exception e){
@@ -168,9 +168,7 @@ public class Numerals {
 	}
 
 
-	/*
-	 * Dismembers value into orders
-	 */
+	/** Dismembers value into orders */
 	private List<Integer> getOrders(BigInteger value) {
 
 		List<Integer> orders=new ArrayList();
@@ -190,9 +188,7 @@ public class Numerals {
 
 	}
 
-	/*
-	 * Concatenates all the orders
-	 */
+	/** Concatenates all the orders */
 	private String ordersToString(List<Integer> orders, String[] unit) {
 
 		String s="";
@@ -212,8 +208,8 @@ public class Numerals {
 				if (value!=0){
 
 					String q=value==1 ?
-							QUALIFIERS.SINGULAR.names[i-1] :
-							QUALIFIERS.PLURAL.names[i-1];
+						QUALIFIERS.SINGULAR.names[i-1] :
+						QUALIFIERS.PLURAL.names[i-1];
 					/*
 					 * ordem actual >= MILHOES
 					 * ordem anterior = CENTENAS
@@ -222,23 +218,24 @@ public class Numerals {
 					 */
 					if (i>=2 && last==0 && order0==0){
 						q+=" "+CONJUNCTION.OF.name+" ";
+					}
 					/*
 					 * ordem anterior = CENTENAS
 					 * existem centenas (EVITA MIL E ?)
 					 * centenas inferiores a 100 (E UM; E DOIS; etc)
 					 * centenas multiplas de 100 (E CEM; E DUZENTOS; etc)
 					 */
-					}else if (last==0 && order0>0 &&	(order0<100 || order0%100==0)){
+					else if (last==0 && order0>0 && (order0<100 || order0%100==0)){
 						q+=" "+CONJUNCTION.AND.name+" ";
+					}
 					/*
 					 * ordem actual >= MILHOES
 					 * (SEPARA MILHOES, BILIOES, etc)
 					 */
-					}else if (i>=2){
+					else if (i>=2){
 						q+=", ";
-					}else{
-						q+=" ";
 					}
+					else q+=" ";
 
 					/*
 					 * ordem actual = MILHARES
@@ -272,9 +269,7 @@ public class Numerals {
 	}
 
 
-	/*
-	 * Creates order string
-	 */
+	/** Creates order string */
 	private String orderToString(Integer value) {
 
 		String s="";
@@ -303,6 +298,7 @@ public class Numerals {
 	}
 
 
+	/** Test Case */
 	public static void main(String[] argvs){
 
 		Numerals numerals=new Numerals(2);
@@ -317,8 +313,7 @@ public class Numerals {
 
 		for(BigDecimal value: VALUES){
 			System.out.println(String.format(
-					"%-14s", value.toPlainString())+
-					": "+numerals.toString(value));
+					"%-14s", value.toPlainString())+": "+numerals.toString(value));
 		}
 
 		//teste de intervalos
@@ -349,11 +344,9 @@ public class Numerals {
 			System.out.println();
 			System.out.println("===INTERVALO #"+(i++)+"===");
 			for(BigDecimal j=BigDecimal.valueOf(interval[0]);
-					j.doubleValue()<=interval[1];
-					j=j.add(BigDecimal.valueOf(interval[2]))){
+					j.doubleValue()<=interval[1]; j=j.add(BigDecimal.valueOf(interval[2]))){
 				System.out.println(String.format(
-						"%-14s", j.toPlainString())+
-						": "+numerals.toString(j));
+						"%-14s", j.toPlainString())+": "+numerals.toString(j));
 			}
 		}
 
