@@ -265,27 +265,23 @@ public class Numerals {
 
 		String s="";
 
-		try{
-			if (value<20){
-				s+=NUMERALS.GROUP0_19.names[value]+" ";
-			}
-			else if (value<100){
-				s+=NUMERALS.GROUP20_90.names[value/10-2]+" ";
-				s+=value%10!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%10) : "";
-			}
-			else if (value==100){
-				s+=NUMERALS.GROUP100.names[0]+" ";
-			}
-			else if (value<1000){
-				s+=NUMERALS.GROUP101_900.names[value/100-1]+" ";
-				s+=value%100!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%100) : "";
-			}
-
-		}catch(Exception e){
-			e.printStackTrace();
+		if (value<20){
+			s+=NUMERALS.GROUP0_19.names[value]+" ";
+		}
+		else if (value<100){
+			s+=NUMERALS.GROUP20_90.names[value/10-2]+" ";
+			s+=value%10!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%10) : "";
+		}
+		else if (value==100){
+			s+=NUMERALS.GROUP100.names[0]+" ";
+		}
+		else if (value<1000){
+			s+=NUMERALS.GROUP101_900.names[value/100-1]+" ";
+			s+=value%100!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%100) : "";
 		}
 
 		return s;
+
 	}
 
 
