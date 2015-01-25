@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -89,7 +89,7 @@ public class TimeDateUtils {
 	 * Validation
 	 */
 	public static boolean isDateValid(String date, String pattern) {
-		return getDate(date, pattern)!=null;
+		return getDateParsed(date, pattern)!=null;
 	}
 
 
@@ -99,7 +99,7 @@ public class TimeDateUtils {
 
 
 	public static boolean isTimeValid(String time, String pattern) {
-		return getTime(time, pattern)!=null;
+		return getTimeParsed(time, pattern)!=null;
 	}
 
 
@@ -304,7 +304,9 @@ public class TimeDateUtils {
 
 	public static Calendar getCalendar(String date, String pattern) {
 		Calendar calendar=Calendar.getInstance();
-		calendar.setTime(getDate(date, pattern));
+		try{
+			calendar.setTime(getDateParsed(date, pattern));
+		}catch(Exception e){}
 		return calendar;
 	}
 
@@ -472,19 +474,9 @@ public class TimeDateUtils {
 	}
 
 
-	public static Date getDate(String date, String pattern) {
-		try{
-			date=date.replace(DATE_YEAR_PATTERN, String.valueOf(getCurrentYear()));
-			date=date.replace(DATE_MONTH_PATTERN, String.valueOf(getCurrentMonth()));
-			date=date.replace(DATE_DAY_PATTERN, String.valueOf(getCurrentDayOfMonth()));
-		}catch(Exception e){}
-		return getDateParsed(date, pattern);
-	}
-
-
 	/** Date formatted with DEFAULT PATTERN */
 	public static Date getDate(String date) {
-		return getDate(date, DEFAULT_DATE_PATTERN);
+		return getDateParsed(date, DEFAULT_DATE_PATTERN);
 	}
 
 
@@ -621,19 +613,9 @@ public class TimeDateUtils {
 	}
 
 
-	public static Time getTime(String time, String pattern) {
-		try{
-			time=time.replace(TIME_HOUR_PATTERN, String.valueOf(getCurrentHour()));
-			time=time.replace(TIME_MINUTE_PATTERN, String.valueOf(getCurrentMinute()));
-			time=time.replace(TIME_SECOND_PATTERN, String.valueOf(getCurrentSecond()));
-		}catch(Exception e){}
-		return getTimeParsed(time, pattern);
-	}
-
-
 	/** Time formatted with DEFAULT PATTERN */
 	public static Time getTime(String time) {
-		return getTime(time, DEFAULT_TIME_PATTERN);
+		return getTimeParsed(time, DEFAULT_TIME_PATTERN);
 	}
 
 
@@ -659,7 +641,10 @@ public class TimeDateUtils {
 
 
 	public static Timestamp getTimestamp(String data, String pattern) {
-		return new Timestamp(getDate(data, pattern).getTime());
+		try{
+			return new Timestamp(getDateParsed(data, pattern).getTime());
+		}catch(Exception e){}
+		return null;
 	}
 
 

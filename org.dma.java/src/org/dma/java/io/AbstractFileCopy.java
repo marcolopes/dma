@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -27,7 +27,8 @@ public abstract class AbstractFileCopy {
 	 */
 	public boolean copyFile(File src, File dst) {
 
-		try{
+		if (!src.equals(dst)) try{
+
 			final InputStream bis =
 				new BufferedInputStream(
 						new FileInputStream(src));
