@@ -89,11 +89,11 @@ public class DebugLogger extends HashMap<Integer, Integer> {
 		for(Integer key: keySet()){
 			System.out.print("Type "+key+" (");
 			switch(key){
-				case SEVERITY_OK: System.out.print("OK"); break;
-				case SEVERITY_INFO: System.out.print("INFO"); break;
-				case SEVERITY_WARNING: System.out.print("WARNING"); break;
-				case SEVERITY_ERROR: System.out.print("ERROR"); break;
-				case SEVERITY_CANCEL: System.out.print("CANCEL"); break;
+			case SEVERITY_OK: System.out.print("OK"); break;
+			case SEVERITY_INFO: System.out.print("INFO"); break;
+			case SEVERITY_WARNING: System.out.print("WARNING"); break;
+			case SEVERITY_ERROR: System.out.print("ERROR"); break;
+			case SEVERITY_CANCEL: System.out.print("CANCEL"); break;
 			}
 			System.out.println(") = "+get(key));
 		}
