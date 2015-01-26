@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,14 +10,21 @@ import java.util.HashMap;
 import org.dma.java.util.Debug;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.Realm;
 
 public class BindingSupport extends HashMap<String, BindingDefinition> {
 
 	private static final long serialVersionUID = 1L;
 
-	private final DataBindingContext bindingContext=new DataBindingContext();
+	private final DataBindingContext bindingContext;
 
-	public BindingSupport() {}
+	public BindingSupport() {
+		this(Realm.getDefault());
+	}
+
+	public BindingSupport(Realm realm) {
+		bindingContext=new DataBindingContext(realm);
+	}
 
 
 	public void register(String property, BindingDefinition definition) {

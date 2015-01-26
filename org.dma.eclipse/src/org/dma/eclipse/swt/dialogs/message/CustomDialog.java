@@ -52,10 +52,10 @@ public class CustomDialog {
 				public void run() {
 					Shell shell=Display.getDefault().getActiveShell();
 					switch(type) {
-						case ERROR: MessageDialog.openError(shell, type.title, message2); break;
-						case INFORMATION: MessageDialog.openInformation(shell, type.title, message2); break;
-						case QUESTION: result.value=MessageDialog.openQuestion(shell, type.title, message2); break;
-						case CONFIRMATION: result.value=MessageDialog.openConfirm(shell, type.title, message2); break;
+					case ERROR: MessageDialog.openError(shell, type.title, message2); break;
+					case INFORMATION: MessageDialog.openInformation(shell, type.title, message2); break;
+					case QUESTION: result.value=MessageDialog.openQuestion(shell, type.title, message2); break;
+					case CONFIRMATION: result.value=MessageDialog.openConfirm(shell, type.title, message2); break;
 					}
 				}
 			});

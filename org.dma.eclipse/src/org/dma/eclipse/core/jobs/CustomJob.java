@@ -169,10 +169,10 @@ public class CustomJob extends Job {
 	public String getStateName() {
 
 		switch(getState()){
-			case Job.RUNNING: return "RUNNING";
-			case Job.WAITING: return "WAITING";
-			case Job.SLEEPING: return "SLEEPING";
-			default: return "NONE";
+		case Job.RUNNING: return "RUNNING";
+		case Job.WAITING: return "WAITING";
+		case Job.SLEEPING: return "SLEEPING";
+		default: return "NONE";
 		}
 
 	}
