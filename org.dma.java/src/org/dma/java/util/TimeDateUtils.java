@@ -364,6 +364,11 @@ public class TimeDateUtils {
 	}
 
 
+	public static Calendar getCalendarWithoutTime(Date date) {
+		return getCalendarWithoutTime(getCalendar(date));
+	}
+
+
 	public static Calendar getCalendarWithoutTime() {
 		return getCalendarWithoutTime(getCalendar());
 	}
