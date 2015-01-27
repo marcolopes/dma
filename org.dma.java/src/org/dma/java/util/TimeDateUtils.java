@@ -20,6 +20,9 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+/**
+ * http://www.odi.ch/prog/design/datetime.php
+ */
 public class TimeDateUtils {
 
 	/*
