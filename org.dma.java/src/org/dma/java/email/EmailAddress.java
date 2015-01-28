@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -23,7 +23,7 @@ public class EmailAddress {
 		this.name=name;
 		try{
 			address=new InternetAddress(email);
-		}catch(AddressException e){}
+		}catch(Exception e){}
 	}
 
 

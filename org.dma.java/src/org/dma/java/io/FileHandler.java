@@ -8,10 +8,11 @@ package org.dma.java.io;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 import org.dma.java.util.StringUtils;
 
-public class FileUtils {
+public class FileHandler {
 
 	/**
 	 * Unicode Byte Order Mark<br>
@@ -39,11 +40,40 @@ public class FileUtils {
 		}
 	};
 
+	public final File file;
+	public final String charset;
 
-	/*
-	 * Delete
+	public FileHandler(String filename) {
+		this(new File(filename));
+	}
+
+	public FileHandler(File file) {
+		this(file, Charset.defaultCharset().name());
+	}
+
+	public FileHandler(String filename, String charset) {
+		this(new File(filename), charset);
+	}
+
+	public FileHandler(File file, String charset) {
+		this.file=file;
+		this.charset=charset;
+	}
+
+
+	/**
+	 * Removes accents and illegal characters<br>
+	 * Replaces SPACES with UNDERLINES
 	 */
-	public static boolean deleteFile(File file){
+	public static String normalize(String filename) {
+
+		return StringUtils.normalize(filename).
+				replace("- ","-").replace(" -","-").replace(" ","_");
+
+	}
+
+
+	public boolean deleteFile(){
 
 		try{
 			return file.delete();
@@ -57,18 +87,7 @@ public class FileUtils {
 	}
 
 
-	public static boolean deleteFile(String filename) {
-
-		return deleteFile(new File(filename));
-
-	}
-
-
-
-	/*
-	 * Conversion
-	 */
-	public static URL toURL(File file){
+	public URL toURL(){
 		try{
 			return file.toURI().toURL();
 
@@ -79,25 +98,6 @@ public class FileUtils {
 		}
 
 		return null;
-	}
-
-
-	public static URL toURL(String filename){
-
-		return toURL(new File(filename));
-
-	}
-
-
-	/**
-	 * Removes accents and illegal characters<br>
-	 * Replaces SPACES with UNDERLINES
-	 */
-	public static String normalize(String filename){
-
-		return StringUtils.normalize(filename).
-				replace("- ","-").replace(" -","-").replace(" ","_");
-
 	}
 
 

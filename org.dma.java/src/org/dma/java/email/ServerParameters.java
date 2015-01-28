@@ -17,7 +17,9 @@ public class ServerParameters {
 	public static final int SECURITY_SSLTLS = 2;
 
 	public enum SECURITY {
+
 		NONE, STARTTLS, SSLTLS;
+
 		public static final String[] NAMES = ArrayUtils.toStringArray(values());
 		public static SECURITY get(int security){
 			switch(security){
@@ -26,12 +28,14 @@ public class ServerParameters {
 			default: return NONE;
 			}
 		}
+
 		public static SECURITY get(String name){
 			try{
 				return valueOf(name);
 			}catch(Exception e){}
 			return NONE;
 		}
+
 	}
 
 	private final String hostName;

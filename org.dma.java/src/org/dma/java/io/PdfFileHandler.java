@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Sergio Gomes (s.miguelgomes@hotmail.com)
@@ -19,13 +19,24 @@ import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfSignatureAppearance;
 import com.lowagie.text.pdf.PdfStamper;
 
-public class PdfUtils {
+public class PdfFileHandler {
+
+	public final File file;
+
+	public PdfFileHandler(String filename) {
+		this(new File(filename));
+	}
+
+	public PdfFileHandler(File file) {
+		this.file=file;
+	}
+
 
 	/**
 	 * <a href=http://itextpdf.sourceforge.net/howtosign.html>
 	 * How to sign a PDF using iText</a>
 	 */
-	public static void sign(File file, KeyStore keyStore, String password,
+	public void sign(KeyStore keyStore, String password,
 			String reason, String location, String contact) throws Exception {
 
 		FileInputStream fis=new FileInputStream(file);
@@ -59,7 +70,7 @@ public class PdfUtils {
 	}
 
 
-	public static void addScript(File file, String script) throws Exception {
+	public void addScript(String script) throws Exception {
 
 		FileInputStream fis=new FileInputStream(file);
 		File output=new File(file+".tmp");
@@ -78,9 +89,10 @@ public class PdfUtils {
 	}
 
 
-	public static void merge(Collection<File> files, File output) throws Exception {
+	/** Parameterized file will be used as OUTPUT */
+	public void merge(Collection<File> files) throws Exception {
 
-		PdfCopyFields copy=new PdfCopyFields(new FileOutputStream(output));
+		PdfCopyFields copy=new PdfCopyFields(new FileOutputStream(file));
 
 		for(File file: files){
 			PdfReader reader=new PdfReader(file.getAbsolutePath());

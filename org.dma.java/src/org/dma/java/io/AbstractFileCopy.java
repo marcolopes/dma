@@ -7,6 +7,7 @@ package org.dma.java.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,10 +15,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public abstract class AbstractFileCopy {
 
 	public abstract boolean cancel();
+
+	private void close(Closeable resource) {
+		try{
+			resource.close();
+		}catch(IOException e){
+			System.out.println(e);
+		}
+	}
+
 
 	/**
 	 * Copies a file from SOURCE to DESTINATION
@@ -25,7 +37,7 @@ public abstract class AbstractFileCopy {
 	 * TRUE if copy was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean copyFile(File src, File dst) {
+	public boolean copy(File src, File dst) {
 
 		if (!src.equals(dst)) try{
 
@@ -46,8 +58,8 @@ public abstract class AbstractFileCopy {
 				}
 
 			}finally{
-				FileUtils.close(bos);
-				FileUtils.close(bis);
+				close(bos);
+				close(bis);
 			}
 
 			return cancel() ? false : true;
@@ -65,9 +77,9 @@ public abstract class AbstractFileCopy {
 	}
 
 
-	public boolean copyFile(String src, String dst) {
+	public boolean copy(String src, String dst) {
 
-		return copyFile(new File(src), new File(dst));
+		return copy(new File(src), new File(dst));
 
 	}
 
@@ -78,12 +90,16 @@ public abstract class AbstractFileCopy {
 	 * TRUE if download was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean downloadFile(String src, String dst) {
+	public boolean download(String src, String dst) {
 
 		try{
+			URLConnection urlConn = new URL(src).openConnection();
+			urlConn.setDoInput(true); //input connection
+			urlConn.setUseCaches(false); //avoid a cached file
+
 			final BufferedInputStream bis =
 				new BufferedInputStream(
-					NetUtils.getInputStream(src));
+						urlConn.getInputStream());
 
 			final OutputStream bos =
 					new BufferedOutputStream(
@@ -98,8 +114,8 @@ public abstract class AbstractFileCopy {
 				}
 
 			}finally{
-				FileUtils.close(bos);
-				FileUtils.close(bis);
+				close(bos);
+				close(bis);
 			}
 
 			return cancel() ? false : true;

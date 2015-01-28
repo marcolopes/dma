@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,10 +9,10 @@ import java.io.File;
 
 public class FileParameters {
 
-	private final String prefix;
-	private final String suffix;
-	private final File folder;
-	private final String filename;
+	public final String prefix;
+	public final String suffix;
+	public final File folder;
+	public final String filename;
 
 	public FileParameters(String prefix, String suffix){
 		this(prefix, suffix, "");
@@ -64,7 +64,7 @@ public class FileParameters {
 	public File createTempFile(byte[] bytes) {
 
 		File file=createTempFile();
-		FileUtils.writeBytesStream(bytes, file);
+		new ByteFileHandler(file).write(bytes);
 
 		return file;
 
@@ -84,27 +84,6 @@ public class FileParameters {
 	@Override
 	public String toString(){
 		return folder.getAbsolutePath() + File.separator + filename;
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public String getPrefix() {
-		return prefix;
-	}
-
-	public String getSuffix() {
-		return suffix;
-	}
-
-	public File getFolder() {
-		return folder;
-	}
-
-	public String getFilename(){
-		return filename;
 	}
 
 

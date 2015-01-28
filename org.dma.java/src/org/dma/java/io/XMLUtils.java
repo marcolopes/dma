@@ -14,7 +14,7 @@ import javax.xml.bind.PropertyException;
 
 public class XMLUtils {
 
-	public static void xmlWriter(Object obj, File file){
+	public static void xmlWriter(Object obj, File file) {
 
 		try{
 			JAXBContext context=JAXBContext.newInstance(obj.getClass());
