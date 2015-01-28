@@ -26,10 +26,8 @@ public class SendMail extends MultiPartEmail {
 	public String send(EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) throws Exception {
 
 		server.debug();
-		Debug.out("from", from);
-		Debug.out("to", to);
-		Debug.out("subject", subject);
-		Debug.out("message", message);
+		if (!from.isValid()) throw new Exception("Invalid email address (from): "+from);
+		if (!to.isValid()) throw new Exception("Invalid email address (to): "+to);
 
 		MultiPartEmail email=new MultiPartEmail();
 		email.setCharset(EmailConstants.UTF_8);

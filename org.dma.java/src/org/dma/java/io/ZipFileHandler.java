@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -15,16 +15,27 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 
-public class ZipUtils {
+public class ZipFileHandler {
 
-	public static void createZipFile(String filename, Collection<File> filesToAdd, ZipParameters parameters) throws Exception {
+	public final File file;
+
+	public ZipFileHandler(String filename) {
+		this(new File(filename));
+	}
+
+	public ZipFileHandler(File file) {
+		this.file=file;
+	}
+
+
+	public void create(Collection<File> filesToAdd, ZipParameters parameters) throws Exception {
 
 		try{
 			// Initiate ZipFile object with the path/name of the zip file.
 			// Zip file may not necessarily exist. If zip file exists, then
 			// all these files are added to the zip file. If zip file does not
 			// exist, then a new zip file is created with the files mentioned
-			ZipFile zipFile = new ZipFile(filename);
+			ZipFile zipFile = new ZipFile(file);
 
 			// Initiate Zip Parameters which define various properties such
 			// as compression method, etc. More parameters are explained in other
@@ -53,34 +64,34 @@ public class ZipUtils {
 	 * DEFLATE_LEVEL_MAXIMUM - High compression level with a compromise of speed
 	 * DEFLATE_LEVEL_ULTRA - Highest compression level but low speed
 	 */
-	public static void createZipFile(String filename, Collection<File> filesToAdd, int compressionLevel) throws Exception {
+	public void create(Collection<File> filesToAdd, int compressionLevel) throws Exception {
 
 		ZipParameters parameters = new ZipParameters();
 		// Set the compression level. This value has to be in between 0 to 9
 		parameters.setCompressionLevel(compressionLevel);
 
-		createZipFile(filename, filesToAdd, parameters);
+		create(filesToAdd, parameters);
 
 	}
 
 	/** Optimal balance between compression level/speed */
-	public static void normalDeflate(String filename, Collection<File> filesToAdd) throws Exception {
+	public void normalDeflate(Collection<File> filesToAdd) throws Exception {
 
-		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_NORMAL);
+		create(filesToAdd, Zip4jConstants.DEFLATE_LEVEL_NORMAL);
 
 	}
 
 	/** Lowest compression level but higher speed of compression */
-	public static void fastestDeflate(String filename, Collection<File> filesToAdd) throws Exception {
+	public void fastestDeflate(Collection<File> filesToAdd) throws Exception {
 
-		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_FASTEST);
+		create(filesToAdd, Zip4jConstants.DEFLATE_LEVEL_FASTEST);
 
 	}
 
 	/** Highest compression level but low speed */
-	public static void ultraDeflate(String filename, Collection<File> filesToAdd) throws Exception {
+	public void ultraDeflate(Collection<File> filesToAdd) throws Exception {
 
-		createZipFile(filename, filesToAdd, Zip4jConstants.DEFLATE_LEVEL_ULTRA);
+		create(filesToAdd, Zip4jConstants.DEFLATE_LEVEL_ULTRA);
 
 	}
 
