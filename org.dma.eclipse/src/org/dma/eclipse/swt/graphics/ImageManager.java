@@ -8,13 +8,13 @@ package org.dma.eclipse.swt.graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.dma.java.awt.ImageUtils;
-import org.dma.java.io.FileUtils;
 import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
@@ -82,9 +82,10 @@ public class ImageManager {
 
 		}catch(Exception e){
 			System.out.println(e);
-		}finally{
-			FileUtils.close(stream);
-		}
+		}try{
+			stream.close();
+		}catch(IOException e){}
+
 		return null;
 	}
 

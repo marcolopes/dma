@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -8,7 +8,8 @@ package org.dma.eclipse.swt.dialogs.file;
 import java.io.File;
 import java.util.Arrays;
 
-import org.dma.java.io.FileUtils;
+import org.dma.java.io.ByteFileHandler;
+import org.dma.java.io.TextFileHandler;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -63,7 +64,7 @@ public class FileExport extends FileDialog {
 		setFileName(defaultFile);
 		if(open()!=null){
 			String filename=getFilterPath()+File.separator+getFileName();
-			FileUtils.writeTextStream(text, filename, charset);
+			new TextFileHandler(filename, charset).write(text);
 		}
 	}
 
@@ -72,7 +73,7 @@ public class FileExport extends FileDialog {
 		setFileName(defaultFile);
 		if(open()!=null){
 			String filename=getFilterPath()+File.separator+getFileName();
-			FileUtils.writeXMLStream(obj, filename);
+			new ByteFileHandler(filename).writeXML(obj);
 		}
 	}
 
