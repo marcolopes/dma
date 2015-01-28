@@ -35,13 +35,13 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-import org.dma.java.io.NetUtils;
-import org.dma.java.io.NetUtils.NTPServers;
-import org.dma.java.security.Certificate;
-import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
-
 import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
+
+import org.dma.java.io.NTPServerHandler;
+import org.dma.java.io.NTPServerHandler.NTPServers;
+import org.dma.java.security.Certificate;
+import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
 /**
  * SOAP Message Handler
  *
@@ -153,7 +153,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				String formattedDate = sdf.format(calendar.getTime());
 				*/
 
-				Date OALdate=NetUtils.getNTPDate(500, NTPServers.OAL.hosts);
+				Date OALdate=new NTPServerHandler(NTPServers.OAL).getDate(500);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 				String formattedDate = sdf.format(OALdate==null ? new Date(): OALdate);
