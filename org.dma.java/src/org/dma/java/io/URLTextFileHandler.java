@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 
 public class URLTextFileHandler extends FileHandler {
 
@@ -18,8 +19,7 @@ public class URLTextFileHandler extends FileHandler {
 
 	/** Uses the JAVA DEFAULT charset */
 	public URLTextFileHandler(String fileurl) {
-		super("");
-		this.fileurl=fileurl;
+		this(fileurl, Charset.defaultCharset().name());
 	}
 
 	public URLTextFileHandler(String fileurl, String charset) {
@@ -43,7 +43,7 @@ public class URLTextFileHandler extends FileHandler {
 	 *
 	 * For top efficiency, consider wrapping an InputStreamReader within a BufferedReader.
 	 * For example:
-	 * BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	 * BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
 	 *
 	 */
 	public String read() {
@@ -51,18 +51,18 @@ public class URLTextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			URLConnection urlConn = new URL(fileurl).openConnection();
-			urlConn.setDoInput(true); //input connection
-			urlConn.setUseCaches(false); //avoid a cached file
+			URLConnection conn=new URL(fileurl).openConnection();
+			conn.setDoInput(true); //input connection
+			conn.setUseCaches(false); //avoid a cached file
 
-			BufferedReader br =
+			BufferedReader br=
 					new BufferedReader(
 							new InputStreamReader(
-									urlConn.getInputStream(), charset));
+									conn.getInputStream(), charset));
 
 			try{
 				String line;
-				while((line = br.readLine()) != null){
+				while((line=br.readLine()) != null){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 

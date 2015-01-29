@@ -33,7 +33,7 @@ public class ZipFileHandler extends FileHandler {
 			// Zip file may not necessarily exist. If zip file exists, then
 			// all these files are added to the zip file. If zip file does not
 			// exist, then a new zip file is created with the files mentioned
-			ZipFile zipFile = new ZipFile(file);
+			ZipFile zipFile=new ZipFile(file);
 
 			// Initiate Zip Parameters which define various properties such
 			// as compression method, etc. More parameters are explained in other
@@ -64,7 +64,7 @@ public class ZipFileHandler extends FileHandler {
 	 */
 	public void create(Collection<File> filesToAdd, int compressionLevel) throws Exception {
 
-		ZipParameters parameters = new ZipParameters();
+		ZipParameters parameters=new ZipParameters();
 		// Set the compression level. This value has to be in between 0 to 9
 		parameters.setCompressionLevel(compressionLevel);
 

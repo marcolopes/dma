@@ -42,7 +42,7 @@ public class XMLFileHandler extends FileHandler {
 	public Object read() {
 
 		try{
-			XMLDecoder decoder =
+			XMLDecoder decoder=
 					new XMLDecoder(
 							new BufferedInputStream(
 									new FileInputStream(file)));
@@ -85,10 +85,10 @@ public class XMLFileHandler extends FileHandler {
 	public boolean write(Object obj) {
 
 		try{
-			XMLEncoder encoder =
-				new XMLEncoder(
-					new BufferedOutputStream(
-						new FileOutputStream(file)));
+			XMLEncoder encoder=
+					new XMLEncoder(
+							new BufferedOutputStream(
+									new FileOutputStream(file)));
 
 			try{
 				encoder.writeObject(obj);

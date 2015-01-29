@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -18,14 +18,6 @@ public class Command {
 
 	private final ProcessBuilder pb;
 
-	/** Build command list */
-	public static List<String> buildCommand(String program, List<String> args) {
-		List<String> command=new ArrayList(args.size()+1);
-		command.add(program);
-		command.addAll(args);
-		return Collections.unmodifiableList(command);
-	}
-
 	public Command(String program, String...args) {
 		this(program, Arrays.asList(args));
 	}
@@ -38,6 +30,15 @@ public class Command {
 		pb=new ProcessBuilder(command);
 		//redirect errors to standard output
 		pb.redirectErrorStream(true);
+	}
+
+
+	/** Build command list */
+	public static List<String> buildCommand(String program, List<String> args) {
+		List<String> command=new ArrayList(args.size()+1);
+		command.add(program);
+		command.addAll(args);
+		return Collections.unmodifiableList(command);
 	}
 
 
@@ -55,9 +56,12 @@ public class Command {
 
 		Process process=pb.start();
 
-		String line;
-		BufferedReader br=new BufferedReader(new InputStreamReader(process.getInputStream()));
+		BufferedReader br=
+				new BufferedReader(
+						new InputStreamReader(
+								process.getInputStream()));
 		try{
+			String line;
 			while((line=br.readLine())!=null){
 				System.out.println(line);
 			}

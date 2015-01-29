@@ -42,9 +42,9 @@ public abstract class AbstractFileCopy {
 
 		try{
 			int len;
-			byte[] buf = new byte[1024];
+			byte[] buf=new byte[1024];
 			// Transfer bytes from input to output
-			while(!cancel() && (len = bis.read(buf)) > 0){
+			while(!cancel() && (len=bis.read(buf)) > 0){
 				bos.write(buf, 0, len);
 			}
 
@@ -64,15 +64,15 @@ public abstract class AbstractFileCopy {
 	 * TRUE if copy was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean copyTo(File dst) {
+	public boolean to(File dst) {
 
 		if (!new File(src).equals(dst)) try{
 
-			InputStream bis =
+			InputStream bis=
 					new BufferedInputStream(
 							new FileInputStream(src));
 
-			final OutputStream bos =
+			final OutputStream bos=
 					new BufferedOutputStream(
 							new FileOutputStream(dst));
 
@@ -99,18 +99,18 @@ public abstract class AbstractFileCopy {
 	 * TRUE if download was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean downloadTo(String dst) {
+	public boolean url(String dst) {
 
 		try{
-			URLConnection urlConn = new URL(src).openConnection();
-			urlConn.setDoInput(true); //input connection
-			urlConn.setUseCaches(false); //avoid a cached file
+			URLConnection conn=new URL(src).openConnection();
+			conn.setDoInput(true); //input connection
+			conn.setUseCaches(false); //avoid a cached file
 
-			BufferedInputStream bis =
+			BufferedInputStream bis=
 					new BufferedInputStream(
-							urlConn.getInputStream());
+							conn.getInputStream());
 
-			final OutputStream bos =
+			final OutputStream bos=
 					new BufferedOutputStream(
 							new FileOutputStream(dst));
 
