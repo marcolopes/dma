@@ -89,6 +89,18 @@ public class FileHandler {
 	}
 
 
+	public boolean rename(String filename) {
+		try{
+			return file.renameTo(new File(filename));
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+
+		return false;
+	}
+
+
 	public URL toURL() {
 		try{
 			return file.toURI().toURL();

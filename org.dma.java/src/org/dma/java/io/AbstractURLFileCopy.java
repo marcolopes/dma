@@ -7,6 +7,7 @@ package org.dma.java.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -61,13 +62,17 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 					new BufferedInputStream(
 							getInputStream(src));
 
+			File tmp=new File(dst+".tmp");
+
 			final OutputStream bos=
 					new BufferedOutputStream(
-							new FileOutputStream(dst));
+							new FileOutputStream(tmp));
 
 			copy(bis, bos);
 
-			return true;
+			new File(dst).delete();
+
+			return tmp.renameTo(new File(dst));
 
 		}catch(FileNotFoundException e){
 			System.out.println(e);
