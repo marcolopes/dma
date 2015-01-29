@@ -17,22 +17,12 @@ import org.apache.commons.codec.binary.Base64;
 
 public class ByteFileHandler extends FileHandler {
 
-	/** Uses the JAVA DEFAULT charset */
 	public ByteFileHandler(String filename) {
 		super(filename);
 	}
 
-	/** Uses the JAVA DEFAULT charset */
 	public ByteFileHandler(File file) {
 		super(file);
-	}
-
-	public ByteFileHandler(String filename, String charset) {
-		super(filename, charset);
-	}
-
-	public ByteFileHandler(File file, String charset) {
-		super(file, charset);
 	}
 
 
