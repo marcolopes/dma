@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import org.dma.java.io.ByteFileHandler;
 import org.dma.java.io.TextFileHandler;
+import org.dma.java.io.XMLFileHandler;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -80,7 +81,7 @@ public class FileImport extends FileDialog {
 	public Object readXML() {
 		String filename=open();
 		return filename==null ?
-				null : new ByteFileHandler(filename).readXML();
+				null : new XMLFileHandler(filename).read();
 	}
 
 
