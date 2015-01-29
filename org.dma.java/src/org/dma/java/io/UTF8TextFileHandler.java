@@ -10,11 +10,11 @@ import java.io.File;
 public class UTF8TextFileHandler extends TextFileHandler {
 
 	public UTF8TextFileHandler(String filename) {
-		this(new File(filename));
+		super(filename, FileHandler.UTF8_CHARSET);
 	}
 
 	public UTF8TextFileHandler(File file) {
-		super(file, FileUtils.UTF8_CHARSET);
+		super(file, FileHandler.UTF8_CHARSET);
 	}
 
 

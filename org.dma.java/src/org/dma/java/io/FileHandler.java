@@ -5,7 +5,9 @@
  *******************************************************************************/
 package org.dma.java.io;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -30,23 +32,15 @@ public class FileHandler {
 	public static final int BASE64_LINE_LENGTH = 64;
 	public static final int STRING_BUFFER_LENGTH = 4096;
 
-	/**
-	 * Generic File Copy<br>
-	 * Does not cancel the operation
-	 */
-	public static final AbstractFileCopy FILECOPY = new AbstractFileCopy(){
-		public boolean cancel() {
-			return false;
-		}
-	};
-
 	public final File file;
 	public final String charset;
 
+	/** Uses the JAVA DEFAULT charset */
 	public FileHandler(String filename) {
 		this(new File(filename));
 	}
 
+	/** Uses the JAVA DEFAULT charset */
 	public FileHandler(File file) {
 		this(file, Charset.defaultCharset().name());
 	}
@@ -73,7 +67,31 @@ public class FileHandler {
 	}
 
 
-	public boolean deleteFile(){
+	public void close(Closeable resource) {
+		try{
+			resource.close();
+		}catch(IOException e){
+			System.out.println(e);
+		}
+	}
+
+
+	/**
+	 * Generic File Copy<br>
+	 * Does not cancel the operation
+	 */
+	public boolean copyTo(File dst) {
+
+		return new AbstractFileCopy(file.getAbsolutePath()){
+			public boolean cancel() {
+				return false;
+			}
+		}.copyTo(dst);
+
+	}
+
+
+	public boolean delete() {
 
 		try{
 			return file.delete();
@@ -87,7 +105,7 @@ public class FileHandler {
 	}
 
 
-	public URL toURL(){
+	public URL toURL() {
 		try{
 			return file.toURI().toURL();
 

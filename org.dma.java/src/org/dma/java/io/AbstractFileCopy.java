@@ -22,6 +22,13 @@ public abstract class AbstractFileCopy {
 
 	public abstract boolean cancel();
 
+	public final String src;
+
+	public AbstractFileCopy(String src) {
+		this.src=src;
+	}
+
+
 	private void close(Closeable resource) {
 		try{
 			resource.close();
@@ -31,38 +38,47 @@ public abstract class AbstractFileCopy {
 	}
 
 
+	private void copy(InputStream bis, OutputStream bos) throws Exception {
+
+		try{
+			int len;
+			byte[] buf = new byte[1024];
+			// Transfer bytes from input to output
+			while(!cancel() && (len = bis.read(buf)) > 0){
+				bos.write(buf, 0, len);
+			}
+
+			if (cancel()) throw new InterruptedException();
+
+		}finally{
+			close(bos);
+			close(bis);
+		}
+
+	}
+
+
 	/**
 	 * Copies a file from SOURCE to DESTINATION
 	 * @return
 	 * TRUE if copy was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean copy(File src, File dst) {
+	public boolean copyTo(File dst) {
 
-		if (!src.equals(dst)) try{
+		if (!new File(src).equals(dst)) try{
 
-			final InputStream bis =
-				new BufferedInputStream(
-						new FileInputStream(src));
+			InputStream bis =
+					new BufferedInputStream(
+							new FileInputStream(src));
 
 			final OutputStream bos =
-				new BufferedOutputStream(
-						new FileOutputStream(dst));
+					new BufferedOutputStream(
+							new FileOutputStream(dst));
 
-			try{
-				// Transfer bytes from input to output
-				byte[] buf = new byte[1024];
-				int len;
-				while((len = bis.read(buf)) > 0 && !cancel()){
-					bos.write(buf, 0, len);
-				}
+			copy(bis, bos);
 
-			}finally{
-				close(bos);
-				close(bis);
-			}
-
-			return cancel() ? false : true;
+			return true;
 
 		}catch(FileNotFoundException e){
 			System.out.println(e);
@@ -77,48 +93,30 @@ public abstract class AbstractFileCopy {
 	}
 
 
-	public boolean copy(String src, String dst) {
-
-		return copy(new File(src), new File(dst));
-
-	}
-
-
 	/**
 	 * Downloads a file from SOURCE to DESTINATION
 	 * @return
 	 * TRUE if download was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean download(String src, String dst) {
+	public boolean downloadTo(String dst) {
 
 		try{
 			URLConnection urlConn = new URL(src).openConnection();
 			urlConn.setDoInput(true); //input connection
 			urlConn.setUseCaches(false); //avoid a cached file
 
-			final BufferedInputStream bis =
-				new BufferedInputStream(
-						urlConn.getInputStream());
+			BufferedInputStream bis =
+					new BufferedInputStream(
+							urlConn.getInputStream());
 
 			final OutputStream bos =
 					new BufferedOutputStream(
 							new FileOutputStream(dst));
 
-			try{
-				// Transfer bytes from input to output
-				byte[] buf = new byte[1024];
-				int len;
-				while((len = bis.read(buf)) > 0 && !cancel()){
-					bos.write(buf, 0, len);
-				}
+			copy(bis, bos);
 
-			}finally{
-				close(bos);
-				close(bis);
-			}
-
-			return cancel() ? false : true;
+			return true;
 
 		}catch(FileNotFoundException e){
 			System.out.println(e);

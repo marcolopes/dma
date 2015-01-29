@@ -7,7 +7,6 @@ package org.dma.java.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,39 +17,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
-public class TextFileHandler {
-
-	public final File file;
-	public final String charset;
+public class TextFileHandler extends FileHandler {
 
 	/** Uses the JAVA DEFAULT charset */
 	public TextFileHandler(String filename) {
-		this(new File(filename));
+		super(filename);
 	}
 
 	/** Uses the JAVA DEFAULT charset */
 	public TextFileHandler(File file) {
-		this(file, Charset.defaultCharset().name());
+		super(file);
 	}
 
 	public TextFileHandler(String filename, String charset) {
-		this(new File(filename), charset);
+		super(filename, charset);
 	}
 
 	public TextFileHandler(File file, String charset) {
-		this.file=file;
-		this.charset=charset;
-	}
-
-
-	private void close(Closeable resource) {
-		try{
-			resource.close();
-		}catch(IOException e){
-			System.out.println(e);
-		}
+		super(file, charset);
 	}
 
 
@@ -71,7 +56,7 @@ public class TextFileHandler {
 	/** WARNING: Uses JAVA DEFAULT charset */
 	public String readText() {
 
-		StringBuffer buffer=new StringBuffer(FileUtils.STRING_BUFFER_LENGTH);
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			BufferedReader br =
@@ -105,7 +90,7 @@ public class TextFileHandler {
 	/** WARNING: Uses JAVA DEFAULT charset */
 	public String readText(int lines) {
 
-		StringBuffer buffer=new StringBuffer(FileUtils.STRING_BUFFER_LENGTH);
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			BufferedReader br =
@@ -206,7 +191,7 @@ public class TextFileHandler {
 	 */
 	public String read() {
 
-		StringBuffer buffer=new StringBuffer(FileUtils.STRING_BUFFER_LENGTH);
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			BufferedReader br =
@@ -241,7 +226,7 @@ public class TextFileHandler {
 
 	public String read(int lines) {
 
-		StringBuffer buffer=new StringBuffer(FileUtils.STRING_BUFFER_LENGTH);
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			BufferedReader br =

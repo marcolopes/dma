@@ -14,14 +14,6 @@ public class FolderHandler {
 
 	public final File folder;
 
-	public static String currentFolder() {
-		try{
-			return new File(".").getCanonicalPath();
-		}catch(IOException e){
-			return null;
-		}
-	}
-
 	/** Uses CURRENT FOLDER */
 	public FolderHandler() {
 		this(currentFolder());
@@ -33,6 +25,15 @@ public class FolderHandler {
 
 	public FolderHandler(File folder) {
 		this.folder=folder;
+	}
+
+
+	public static String currentFolder() {
+		try{
+			return new File(".").getCanonicalPath();
+		}catch(IOException e){
+			return null;
+		}
 	}
 
 

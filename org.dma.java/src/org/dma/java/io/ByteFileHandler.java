@@ -5,49 +5,34 @@
  *******************************************************************************/
 package org.dma.java.io;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 import org.apache.commons.codec.binary.Base64;
 
-public class ByteFileHandler {
+public class ByteFileHandler extends FileHandler {
 
-	public final File file;
-	public final String charset;
-
+	/** Uses the JAVA DEFAULT charset */
 	public ByteFileHandler(String filename) {
-		this(new File(filename));
+		super(filename);
 	}
 
+	/** Uses the JAVA DEFAULT charset */
 	public ByteFileHandler(File file) {
-		this(file, Charset.defaultCharset().name());
+		super(file);
 	}
 
 	public ByteFileHandler(String filename, String charset) {
-		this(new File(filename), charset);
+		super(filename, charset);
 	}
 
 	public ByteFileHandler(File file, String charset) {
-		this.file=file;
-		this.charset=charset;
-	}
-
-
-	private void close(Closeable resource) {
-		try{
-			resource.close();
-		}catch(IOException e){
-			System.out.println(e);
-		}
+		super(file, charset);
 	}
 
 
@@ -79,7 +64,7 @@ public class ByteFileHandler {
 	 */
 	public String readBase64() {
 
-		return readBase64(FileUtils.BASE64_LINE_LENGTH);
+		return readBase64(BASE64_LINE_LENGTH);
 
 	}
 
@@ -115,34 +100,6 @@ public class ByteFileHandler {
 		}catch(FileNotFoundException e){
 			System.out.println(e);
 		}catch(IOException e){
-			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return null;
-
-	}
-
-
-	public Object readXML() {
-
-		try{
-			XMLDecoder decoder =
-					new XMLDecoder(
-							new BufferedInputStream(
-									new FileInputStream(file)));
-
-			try{
-				return decoder.readObject();
-
-			}finally{
-				decoder.close();
-			}
-
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(ArrayIndexOutOfBoundsException e){
 			System.out.println(e);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -196,35 +153,6 @@ public class ByteFileHandler {
 		return 0;
 
 	}
-
-
-	public boolean writeXML(Object obj) {
-
-		try{
-			XMLEncoder encoder =
-				new XMLEncoder(
-					new BufferedOutputStream(
-						new FileOutputStream(file)));
-
-			try{
-				encoder.writeObject(obj);
-
-			}finally{
-				encoder.close();
-			}
-
-			return true;
-
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return false;
-
-	}
-
 
 
 }
