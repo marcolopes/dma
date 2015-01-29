@@ -32,7 +32,7 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 	 */
 	public boolean to(File dst) {
 
-		if (!src.equals(dst)) try{
+		if (!new FileHandler(src).equals(dst)) try{
 
 			InputStream bis=
 					new BufferedInputStream(

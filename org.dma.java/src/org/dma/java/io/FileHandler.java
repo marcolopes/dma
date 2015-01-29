@@ -116,4 +116,15 @@ public class FileHandler {
 	}
 
 
+	public boolean equals(File file){
+		try{
+			return this.file.getCanonicalFile().
+					equals(file.getCanonicalFile());
+
+		}catch(IOException e){}
+
+		return false;
+	}
+
+
 }
