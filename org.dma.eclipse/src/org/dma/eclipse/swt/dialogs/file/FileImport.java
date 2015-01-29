@@ -54,12 +54,12 @@ public class FileImport extends FileDialog {
 	}
 
 
-	public File filePicker(String filename){
+	public File filePicker(String filename) {
 		return filePicker(null,filename);
 	}
 
 
-	public File filePicker(){
+	public File filePicker() {
 		return filePicker(null);
 	}
 

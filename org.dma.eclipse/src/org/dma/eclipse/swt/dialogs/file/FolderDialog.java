@@ -27,7 +27,7 @@ public class FolderDialog extends DirectoryDialog {
 	}
 
 
-	public File folderPicker(String defaultPath){
+	public File folderPicker(String defaultPath) {
 
 		try{
 			// FileDialog SWT 3.7 BUG
@@ -46,7 +46,7 @@ public class FolderDialog extends DirectoryDialog {
 	}
 
 
-	public File folderPicker(){
+	public File folderPicker() {
 		return folderPicker(null);
 	}
 
