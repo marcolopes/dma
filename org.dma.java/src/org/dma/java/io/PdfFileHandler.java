@@ -19,16 +19,14 @@ import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfSignatureAppearance;
 import com.lowagie.text.pdf.PdfStamper;
 
-public class PdfFileHandler {
-
-	public final File file;
+public class PdfFileHandler extends FileHandler {
 
 	public PdfFileHandler(String filename) {
-		this(new File(filename));
+		super(filename);
 	}
 
 	public PdfFileHandler(File file) {
-		this.file=file;
+		super(file);
 	}
 
 

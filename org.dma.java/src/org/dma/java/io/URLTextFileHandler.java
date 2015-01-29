@@ -6,36 +6,25 @@
 package org.dma.java.io;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
 
-public class URLTextFileHandler {
+public class URLTextFileHandler extends FileHandler {
 
 	public final String fileurl;
-	public final String charset;
 
 	/** Uses the JAVA DEFAULT charset */
 	public URLTextFileHandler(String fileurl) {
-		this(fileurl, Charset.defaultCharset().name());
+		super("");
+		this.fileurl=fileurl;
 	}
 
 	public URLTextFileHandler(String fileurl, String charset) {
+		super("", charset);
 		this.fileurl=fileurl;
-		this.charset=charset;
-	}
-
-
-	private void close(Closeable resource) {
-		try{
-			resource.close();
-		}catch(IOException e){
-			System.out.println(e);
-		}
 	}
 
 
@@ -59,7 +48,7 @@ public class URLTextFileHandler {
 	 */
 	public String read() {
 
-		StringBuffer buffer=new StringBuffer(FileUtils.STRING_BUFFER_LENGTH);
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			URLConnection urlConn = new URL(fileurl).openConnection();

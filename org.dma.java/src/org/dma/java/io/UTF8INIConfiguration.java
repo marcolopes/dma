@@ -16,7 +16,7 @@ public class UTF8INIConfiguration extends HierarchicalINIConfiguration {
 
 	public UTF8INIConfiguration() {
 		super();
-		setEncoding(FileUtils.UTF8_CHARSET);
+		setEncoding(FileHandler.UTF8_CHARSET);
 	}
 
 	private UTF8INIConfiguration(File file) {
