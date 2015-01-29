@@ -16,14 +16,14 @@ public class URLTextFileHandler extends TextFileHandler {
 
 	public final String fileurl;
 
-	/** Uses the JAVA DEFAULT charset */
+	/** Uses JAVA DEFAULT charset */
 	public URLTextFileHandler(String fileurl) {
-		super(fileurl);
-		this.fileurl=fileurl;
+		this(fileurl, null);
 	}
 
-	public URLTextFileHandler(String fileurl, String charset) {
-		super(fileurl, charset);
+	/** charsetName=null uses JAVA DEFAULT charset */
+	public URLTextFileHandler(String fileurl, String charsetName) {
+		super(fileurl, charsetName);
 		this.fileurl=fileurl;
 	}
 

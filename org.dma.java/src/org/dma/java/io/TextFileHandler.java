@@ -17,25 +17,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 public class TextFileHandler extends FileHandler {
 
-	/** Uses the JAVA DEFAULT charset */
+	public final Charset charset;
+
+	/** Uses JAVA DEFAULT charset */
 	public TextFileHandler(String filename) {
-		super(filename);
+		this(new File(filename));
 	}
 
-	/** Uses the JAVA DEFAULT charset */
+	/** Uses JAVA DEFAULT charset */
 	public TextFileHandler(File file) {
+		this(file, null);
+	}
+
+	/** charsetName=null uses JAVA DEFAULT charset */
+	public TextFileHandler(String filename, String charsetName) {
+		this(new File(filename), charsetName);
+	}
+
+	/** charsetName=null uses JAVA DEFAULT charset */
+	public TextFileHandler(File file, String charsetName) {
 		super(file);
-	}
-
-	public TextFileHandler(String filename, String charset) {
-		super(filename, charset);
-	}
-
-	public TextFileHandler(File file, String charset) {
-		super(file, charset);
+		this.charset=charsetName==null ?
+				Charset.defaultCharset() : Charset.forName(charsetName);
 	}
 
 
