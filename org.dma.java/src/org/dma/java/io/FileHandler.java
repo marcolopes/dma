@@ -55,20 +55,6 @@ public class FileHandler {
 	}
 
 
-	public URL toURL() {
-		try{
-			return file.toURI().toURL();
-
-		}catch(MalformedURLException e){
-			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
-
 	/**
 	 * Removes accents and illegal characters<br>
 	 * Replaces SPACES with UNDERLINES
@@ -78,6 +64,16 @@ public class FileHandler {
 				replace("- ","-").
 				replace(" -","-").
 				replace(" ","_");
+	}
+
+
+	public static void close(Closeable resource) {
+		try{
+			resource.close();
+
+		}catch(IOException e){
+			System.out.println(e);
+		}
 	}
 
 
@@ -94,15 +90,6 @@ public class FileHandler {
 	}
 
 
-	public void close(Closeable resource) {
-		try{
-			resource.close();
-		}catch(IOException e){
-			System.out.println(e);
-		}
-	}
-
-
 	public boolean delete() {
 		try{
 			return file.delete();
@@ -112,6 +99,20 @@ public class FileHandler {
 		}
 
 		return false;
+	}
+
+
+	public URL toURL() {
+		try{
+			return file.toURI().toURL();
+
+		}catch(MalformedURLException e){
+			System.out.println(e);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 
