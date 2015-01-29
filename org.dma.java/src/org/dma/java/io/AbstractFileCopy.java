@@ -7,7 +7,6 @@ package org.dma.java.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,46 +14,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
-public abstract class AbstractFileCopy {
+public abstract class AbstractFileCopy extends AbstractStreamCopy {
 
-	public abstract boolean cancel();
+	public final File src;
 
-	public final String src;
-
-	public AbstractFileCopy(String src) {
+	public AbstractFileCopy(File src) {
 		this.src=src;
-	}
-
-
-	private void close(Closeable resource) {
-		try{
-			resource.close();
-		}catch(IOException e){
-			System.out.println(e);
-		}
-	}
-
-
-	private void copy(InputStream bis, OutputStream bos) throws Exception {
-
-		try{
-			int len;
-			byte[] buf=new byte[1024];
-			// Transfer bytes from input to output
-			while(!cancel() && (len=bis.read(buf)) > 0){
-				bos.write(buf, 0, len);
-			}
-
-			if (cancel()) throw new InterruptedException();
-
-		}finally{
-			close(bos);
-			close(bis);
-		}
-
 	}
 
 
@@ -66,49 +32,11 @@ public abstract class AbstractFileCopy {
 	 */
 	public boolean to(File dst) {
 
-		if (!new File(src).equals(dst)) try{
+		if (!src.equals(dst)) try{
 
 			InputStream bis=
 					new BufferedInputStream(
 							new FileInputStream(src));
-
-			final OutputStream bos=
-					new BufferedOutputStream(
-							new FileOutputStream(dst));
-
-			copy(bis, bos);
-
-			return true;
-
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return false;
-
-	}
-
-
-	/**
-	 * Downloads a file from SOURCE to DESTINATION
-	 * @return
-	 * TRUE if download was completed;
-	 * FALSE if canceled or error
-	 */
-	public boolean url(String dst) {
-
-		try{
-			URLConnection conn=new URL(src).openConnection();
-			conn.setDoInput(true); //input connection
-			conn.setUseCaches(false); //avoid a cached file
-
-			BufferedInputStream bis=
-					new BufferedInputStream(
-							conn.getInputStream());
 
 			final OutputStream bos=
 					new BufferedOutputStream(

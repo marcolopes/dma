@@ -61,7 +61,9 @@ public class FileHandler {
 	 */
 	public static String normalize(String filename) {
 		return StringUtils.normalize(filename).
-				replace("- ","-").replace(" -","-").replace(" ","_");
+				replace("- ","-").
+				replace(" -","-").
+				replace(" ","_");
 	}
 
 
@@ -70,7 +72,7 @@ public class FileHandler {
 	 * Does not cancel the operation
 	 */
 	public AbstractFileCopy copy() {
-		return new AbstractFileCopy(file.getAbsolutePath()){
+		return new AbstractFileCopy(file){
 			public boolean cancel() {
 				return false;
 			}
