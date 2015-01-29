@@ -45,9 +45,7 @@ public class ByteFileHandler extends FileHandler {
 	public String readBase64(int lineLength) {
 
 		try{
-			byte[] bytes=read();
-
-			return new Base64(lineLength).encodeToString(bytes);
+			return new Base64(lineLength).encodeToString(read());
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -82,7 +80,7 @@ public class ByteFileHandler extends FileHandler {
 	public byte[] read() {
 
 		try{
-			final BufferedInputStream bis =
+			final BufferedInputStream bis=
 					new BufferedInputStream(
 							new FileInputStream(file));
 
@@ -91,7 +89,7 @@ public class ByteFileHandler extends FileHandler {
 					public int read(byte[] b, int off, int len) throws IOException {
 						return bis.read(b, off, len);
 					}
-				}.readFile(file);
+				}.read(file);
 
 			}finally{
 				close(bis);
@@ -128,7 +126,7 @@ public class ByteFileHandler extends FileHandler {
 	public int write(byte[] bytes) {
 
 		try{
-			BufferedOutputStream bos =
+			BufferedOutputStream bos=
 					new BufferedOutputStream(
 							new FileOutputStream(file));
 

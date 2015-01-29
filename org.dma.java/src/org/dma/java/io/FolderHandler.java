@@ -89,24 +89,24 @@ public class FolderHandler {
 	 */
 	public int deleteFiles(String wildcards) {
 
-		int n=0;
+		int count=0;
 
 		File[] files=listFiles(wildcards);
 		if(files!=null){
 
 			for(File file: files) try{
 
-				if(file.delete()) n++;
+				if(file.delete()) count++;
 
 			}catch(Exception e){
 				System.out.println(e);
 			}
 
-			System.out.println(n+"/"+files.length+" files deleted in "+
+			System.out.println(count+"/"+files.length+" files deleted in "+
 					folder.getAbsolutePath()+File.separator+wildcards);
 		}
 
-		return n;
+		return count;
 
 	}
 
@@ -150,18 +150,15 @@ public class FolderHandler {
 	public String[] getFileNames(String wildcards) {
 
 		File[] files=listFiles(wildcards);
+		if (files==null) return null;
 
-		if (files!=null){
-			int i=0;
-			String[] names=new String[files.length];
-			for(File file: files){
-				names[i++]=file.getName();
-			}
-
-			return names;
+		int i=0;
+		String[] names=new String[files.length];
+		for(File file: files){
+			names[i++]=file.getName();
 		}
 
-		return null;
+		return names;
 
 	}
 

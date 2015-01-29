@@ -59,13 +59,13 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader br =
+			BufferedReader br=
 					new BufferedReader(
 							new FileReader(file));
 
 			try{
 				String line;
-				while((line = br.readLine()) != null){
+				while((line=br.readLine()) != null){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
@@ -93,13 +93,13 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader br =
+			BufferedReader br=
 					new BufferedReader(
 							new FileReader(file));
 
 			try{
 				String line;
-				while((line = br.readLine()) != null && lines--!=0){
+				while((line=br.readLine()) != null && lines--!=0){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
@@ -145,7 +145,7 @@ public class TextFileHandler extends FileHandler {
 	public boolean writeText(String text) {
 
 		try{
-			BufferedWriter bw =
+			BufferedWriter bw=
 					new BufferedWriter(
 							new FileWriter(file));
 
@@ -186,7 +186,7 @@ public class TextFileHandler extends FileHandler {
 	 *
 	 * For top efficiency, consider wrapping an InputStreamReader within a BufferedReader.
 	 * For example:
-	 * BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	 * BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
 	 *
 	 */
 	public String read() {
@@ -194,14 +194,14 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader br =
-				new BufferedReader(
-						new InputStreamReader(
-								new FileInputStream(file), charset));
+			BufferedReader br=
+					new BufferedReader(
+							new InputStreamReader(
+									new FileInputStream(file), charset));
 
 			try{
 				String line;
-				while((line = br.readLine()) != null){
+				while((line=br.readLine()) != null){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
@@ -229,14 +229,14 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader br =
-				new BufferedReader(
-						new InputStreamReader(
-								new FileInputStream(file), charset));
+			BufferedReader br=
+					new BufferedReader(
+							new InputStreamReader(
+									new FileInputStream(file), charset));
 
 			try{
 				String line;
-				while((line = br.readLine()) != null && lines--!=0){
+				while((line=br.readLine()) != null && lines--!=0){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
@@ -279,13 +279,13 @@ public class TextFileHandler extends FileHandler {
 	 * For top efficiency, consider wrapping an OutputStreamWriter within a BufferedWriter
 	 * so as to avoid frequent converter invocations.
 	 * For example:
-	 * Writer out = new BufferedWriter(new OutputStreamWriter(System.out));
+	 * Writer out=new BufferedWriter(new OutputStreamWriter(System.out));
 	 *
 	 */
 	public boolean write(String text) {
 
 		try{
-			BufferedWriter bw =
+			BufferedWriter bw=
 					new BufferedWriter(
 							new OutputStreamWriter(
 									new FileOutputStream(file), charset));

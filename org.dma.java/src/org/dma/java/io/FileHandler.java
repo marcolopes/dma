@@ -60,10 +60,21 @@ public class FileHandler {
 	 * Replaces SPACES with UNDERLINES
 	 */
 	public static String normalize(String filename) {
-
 		return StringUtils.normalize(filename).
 				replace("- ","-").replace(" -","-").replace(" ","_");
+	}
 
+
+	/**
+	 * Generic File Copy<br>
+	 * Does not cancel the operation
+	 */
+	public AbstractFileCopy copy() {
+		return new AbstractFileCopy(file.getAbsolutePath()){
+			public boolean cancel() {
+				return false;
+			}
+		};
 	}
 
 
@@ -76,23 +87,7 @@ public class FileHandler {
 	}
 
 
-	/**
-	 * Generic File Copy<br>
-	 * Does not cancel the operation
-	 */
-	public boolean copyTo(File dst) {
-
-		return new AbstractFileCopy(file.getAbsolutePath()){
-			public boolean cancel() {
-				return false;
-			}
-		}.copyTo(dst);
-
-	}
-
-
 	public boolean delete() {
-
 		try{
 			return file.delete();
 
@@ -101,7 +96,6 @@ public class FileHandler {
 		}
 
 		return false;
-
 	}
 
 
