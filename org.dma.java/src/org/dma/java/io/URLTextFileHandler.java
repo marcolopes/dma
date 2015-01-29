@@ -11,19 +11,19 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
 
-public class URLTextFileHandler extends FileHandler {
+public class URLTextFileHandler extends TextFileHandler {
 
 	public final String fileurl;
 
 	/** Uses the JAVA DEFAULT charset */
 	public URLTextFileHandler(String fileurl) {
-		this(fileurl, Charset.defaultCharset().name());
+		super(fileurl);
+		this.fileurl=fileurl;
 	}
 
 	public URLTextFileHandler(String fileurl, String charset) {
-		super("", charset);
+		super(fileurl, charset);
 		this.fileurl=fileurl;
 	}
 
@@ -46,6 +46,7 @@ public class URLTextFileHandler extends FileHandler {
 	 * BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
 	 *
 	 */
+	@Override
 	public String read() {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);

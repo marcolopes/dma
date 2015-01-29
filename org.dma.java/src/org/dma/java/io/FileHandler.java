@@ -55,6 +55,20 @@ public class FileHandler {
 	}
 
 
+	public URL toURL() {
+		try{
+			return file.toURI().toURL();
+
+		}catch(MalformedURLException e){
+			System.out.println(e);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+
 	/**
 	 * Removes accents and illegal characters<br>
 	 * Replaces SPACES with UNDERLINES
@@ -98,20 +112,6 @@ public class FileHandler {
 		}
 
 		return false;
-	}
-
-
-	public URL toURL() {
-		try{
-			return file.toURI().toURL();
-
-		}catch(MalformedURLException e){
-			System.out.println(e);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 
 
