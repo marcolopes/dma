@@ -8,8 +8,8 @@ package org.dma.eclipse.swt.dialogs.file;
 import java.io.File;
 import java.util.Arrays;
 
-import org.dma.java.io.ByteFileHandler;
 import org.dma.java.io.TextFileHandler;
+import org.dma.java.io.XMLFileHandler;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -73,7 +73,7 @@ public class FileExport extends FileDialog {
 		setFileName(defaultFile);
 		if(open()!=null){
 			String filename=getFilterPath()+File.separator+getFileName();
-			new ByteFileHandler(filename).writeXML(obj);
+			new XMLFileHandler(filename).write(obj);
 		}
 	}
 
