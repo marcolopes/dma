@@ -52,8 +52,8 @@ public class TextFileHandler extends FileHandler {
 	 * For reading streams of raw bytes, consider using a FileInputStream.
 	 *
 	 */
-	@Deprecated
 	/** WARNING: Uses JAVA DEFAULT charset */
+	@Deprecated
 	public String readText() {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
@@ -86,8 +86,8 @@ public class TextFileHandler extends FileHandler {
 	}
 
 
-	@Deprecated
 	/** WARNING: Uses JAVA DEFAULT charset */
+	@Deprecated
 	public String readText(int lines) {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
@@ -140,8 +140,8 @@ public class TextFileHandler extends FileHandler {
 	 * consider using a FileOutputStream.
 	 *
 	 */
-	@Deprecated
 	/** WARNING: Uses JAVA DEFAULT charset */
+	@Deprecated
 	public boolean writeText(String text) {
 
 		try{
@@ -189,6 +189,7 @@ public class TextFileHandler extends FileHandler {
 	 * BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
 	 *
 	 */
+	/** Reads text from file */
 	public String read() {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
@@ -224,6 +225,7 @@ public class TextFileHandler extends FileHandler {
 	}
 
 
+	/** Reads text lines from file */
 	public String read(int lines) {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
@@ -282,6 +284,7 @@ public class TextFileHandler extends FileHandler {
 	 * Writer out=new BufferedWriter(new OutputStreamWriter(System.out));
 	 *
 	 */
+	/** Writes text to file */
 	public boolean write(String text) {
 
 		try{

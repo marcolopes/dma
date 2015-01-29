@@ -46,6 +46,7 @@ public class URLTextFileHandler extends TextFileHandler {
 	 * BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
 	 *
 	 */
+	/** Reads text from URL */
 	@Override
 	public String read() {
 
