@@ -33,7 +33,7 @@ public class BundleUtils {
 			try{
 				String path=FileLocator.resolve(url).getFile();
 				//normalize path
-				return new File(path).getAbsolutePath();
+				return new File(path).getCanonicalPath();
 			}catch(IOException e){}
 		}
 
@@ -64,7 +64,7 @@ public class BundleUtils {
 			try{
 				String path=FileLocator.toFileURL(url).getFile();
 				//normalize path
-				return new File(path).getAbsolutePath();
+				return new File(path).getCanonicalPath();
 			}catch(IOException e){}
 		}
 
