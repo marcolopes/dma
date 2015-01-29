@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.Charset;
 
 import org.dma.java.util.StringUtils;
 
@@ -33,25 +32,13 @@ public class FileHandler {
 	public static final int STRING_BUFFER_LENGTH = 4096;
 
 	public final File file;
-	public final String charset;
 
-	/** Uses the JAVA DEFAULT charset */
 	public FileHandler(String filename) {
 		this(new File(filename));
 	}
 
-	/** Uses the JAVA DEFAULT charset */
 	public FileHandler(File file) {
-		this(file, Charset.defaultCharset().name());
-	}
-
-	public FileHandler(String filename, String charset) {
-		this(new File(filename), charset);
-	}
-
-	public FileHandler(File file, String charset) {
 		this.file=file;
-		this.charset=charset;
 	}
 
 
