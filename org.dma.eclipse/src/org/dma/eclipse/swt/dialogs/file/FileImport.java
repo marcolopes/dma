@@ -55,7 +55,7 @@ public class FileImport extends FileDialog {
 
 
 	public File filePicker(String filename) {
-		return filePicker(null,filename);
+		return filePicker(null, filename);
 	}
 
 
@@ -64,10 +64,10 @@ public class FileImport extends FileDialog {
 	}
 
 
-	public String readText(String charset) {
+	public String readText(String charsetName) {
 		String filename=open();
 		return filename==null ?
-				"" : new TextFileHandler(filename, charset).read();
+				"" : new TextFileHandler(filename, charsetName).read();
 	}
 
 

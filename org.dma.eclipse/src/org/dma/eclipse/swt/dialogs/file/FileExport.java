@@ -51,7 +51,7 @@ public class FileExport extends FileDialog {
 
 
 	public File filePicker(String filename) {
-		return filePicker(null,filename);
+		return filePicker(null, filename);
 	}
 
 
@@ -60,11 +60,11 @@ public class FileExport extends FileDialog {
 	}
 
 
-	public void writeText(String text, String defaultFile, String charset) {
+	public void writeText(String text, String defaultFile, String charsetName) {
 		setFileName(defaultFile);
 		if(open()!=null){
 			String filename=getFilterPath()+File.separator+getFileName();
-			new TextFileHandler(filename, charset).write(text);
+			new TextFileHandler(filename, charsetName).write(text);
 		}
 	}
 
