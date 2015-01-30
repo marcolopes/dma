@@ -53,15 +53,15 @@ public class RSACipher {
 	public static void main(String[] args) {
 
 		try{
-			RSACipher rsa = new RSACipher(1024);
+			RSACipher rsa=new RSACipher(1024);
 
-			String message = "The quick brown fox jumps over the lazy dog.";
+			String message="The quick brown fox jumps over the lazy dog.";
 			System.out.println("message: " + message);
 
-			String encrypted = rsa.getPublicCipher().encrypt(message, 0);
+			String encrypted=rsa.getPublicCipher().encrypt(message, 0);
 			System.out.println("encrypted: " + encrypted);
 
-			String decrypted = rsa.getPrivateCipher().decrypt(encrypted);
+			String decrypted=rsa.getPrivateCipher().decrypt(encrypted);
 			System.out.println("decrypted: " + decrypted);
 
 			System.out.println("equal? " + decrypted.equals(message));

@@ -32,8 +32,10 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 	 */
 	public boolean to(File dst) {
 
-		if (!new FileHandler(src).equals(dst)) try{
+		//avoid self copy!
+		if (new FileHandler(src).equals(dst)) return true;
 
+		try{
 			InputStream bis=
 					new BufferedInputStream(
 							new FileInputStream(src));
@@ -55,6 +57,13 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 		}
 
 		return false;
+
+	}
+
+
+	public boolean to(String dst) {
+
+		return to(new File(dst));
 
 	}
 
