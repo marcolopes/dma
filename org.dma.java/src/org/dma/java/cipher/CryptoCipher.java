@@ -22,20 +22,21 @@ public class CryptoCipher {
 	public static final String BLOWFISH = "Blowfish";
 	public static final String ECB_PKCS5Padding = "AES/ECB/PKCS5Padding";
 
+	private final Key key;
+
 	private Cipher cipher;
 	private Cipher decipher;
-
-	private Key key;
 
 	public CryptoCipher(Key key) {
 		this(key, key.getAlgorithm());
 	}
 
 	public CryptoCipher(Key key, String transformation) {
+		this.key=key;
+
 		try{
-			this.key = key;
-			this.cipher = Cipher.getInstance(transformation);
-			this.decipher = Cipher.getInstance(transformation);
+			this.cipher=Cipher.getInstance(transformation);
+			this.decipher=Cipher.getInstance(transformation);
 
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			decipher.init(Cipher.DECRYPT_MODE, key);
@@ -61,15 +62,15 @@ public class CryptoCipher {
 	 *
 	 * @param messageBytes - the message to encrypt.
 	 * @param lineLength - the lenghth of each text line.
-	 * 0 = no line break
+	 * 0=no line break
 	 */
 	public String encrypt(byte[] messageBytes, int lineLength) {
 		try{
 			// Encrypt Bytes
-			byte[] encrypted = cipher.doFinal(messageBytes);
+			byte[] encrypted=cipher.doFinal(messageBytes);
 			// Encode Bytes to BASE64
-			byte[] base64Bytes = new Base64(lineLength).encode(encrypted);
-			// Convert Bytes to String (UTF8 charset)
+			byte[] base64Bytes=new Base64(lineLength).encode(encrypted);
+			// Convert Bytes to String
 			return new String(base64Bytes, "UTF8");
 
 		}catch(IllegalBlockSizeException e){
@@ -92,12 +93,12 @@ public class CryptoCipher {
 	 *
 	 * @param message - the message to encrypt.
 	 * @param lineLength - the lenghth of each text line.
-	 * 0 = no line break
+	 * 0=no line break
 	 */
 	public String encrypt(String message, int lineLength) {
 		try{
-			// Convert String to Bytes (UTF8 charset)
-			byte[] messageBytes = message.getBytes("UTF8");
+			// Convert String to Bytes
+			byte[] messageBytes=message.getBytes("UTF8");
 
 			return encrypt(messageBytes, lineLength);
 
@@ -123,10 +124,10 @@ public class CryptoCipher {
 	public String decrypt(byte[] messageBytes) {
 		try{
 			// Decode Bytes from BASE64
-			byte[] base64Bytes = new Base64(0).decode(messageBytes);
+			byte[] base64Bytes=new Base64(0).decode(messageBytes);
 			// Decrypt Bytes
-			byte[] decrypted = decipher.doFinal(base64Bytes);
-			// Convert Bytes to String (UTF8 charset)
+			byte[] decrypted=decipher.doFinal(base64Bytes);
+			// Convert Bytes to String
 			return new String(decrypted, "UTF8");
 
 		}catch(UnsupportedEncodingException e){
@@ -154,8 +155,8 @@ public class CryptoCipher {
 	 */
 	public String decrypt(String message) {
 		try{
-			// Convert String to Bytes (UTF8 charset)
-			byte[] messageBytes = message.getBytes("UTF8");
+			// Convert String to Bytes
+			byte[] messageBytes=message.getBytes("UTF8");
 
 			return decrypt(messageBytes);
 
