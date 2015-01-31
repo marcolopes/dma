@@ -617,7 +617,7 @@ public class TimeDateUtils {
 		Calendar calendar=getCalendar();
 		//SECOND precision ONLY
 		calendar.set(Calendar.MILLISECOND, 0);
-		return new Time(calendar.getTime().getTime());
+		return getTime(calendar);
 	}
 
 
@@ -634,6 +634,20 @@ public class TimeDateUtils {
 
 	public static Time getTime(Calendar calendar) {
 		return new Time(calendar.getTime().getTime());
+	}
+
+
+	public static Time getTimeWithoutSeconds(Time time) {
+		Calendar calendar=getCalendar();
+		//MINUTE precision ONLY
+		calendar.set(Calendar.MILLISECOND, 0);
+		calendar.set(Calendar.SECOND, 0);
+		return getTime(calendar);
+	}
+
+
+	public static Time getTimeWithoutSeconds() {
+		return getTimeWithoutSeconds(getCurrentTime());
 	}
 
 
