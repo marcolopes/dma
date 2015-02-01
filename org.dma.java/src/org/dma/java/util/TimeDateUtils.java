@@ -638,7 +638,7 @@ public class TimeDateUtils {
 
 
 	public static Time getTimeWithoutSeconds(Time time) {
-		Calendar calendar=getCalendar();
+		Calendar calendar=getCalendar(time);
 		//MINUTE precision ONLY
 		calendar.set(Calendar.MILLISECOND, 0);
 		calendar.set(Calendar.SECOND, 0);
