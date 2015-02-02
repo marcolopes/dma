@@ -46,42 +46,37 @@ public class TimeChronograph {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] argvs) throws Exception {
 
-		try{
-			TimeChronograph timer=new TimeChronograph();
-			System.out.println("TIMER (0): "+timer.toString());
+		TimeChronograph timer=new TimeChronograph();
+		System.out.println("TIMER (0): "+timer.toString());
 
-			timer.start();
-			Thread.sleep(100);
-			System.out.println("TIMER (~100): "+timer.toString());
-			Thread.sleep(100);
-			System.out.println("TIMER (~200): "+timer.toString());
+		timer.start();
+		Thread.sleep(100);
+		System.out.println("TIMER (~100): "+timer.toString());
+		Thread.sleep(100);
+		System.out.println("TIMER (~200): "+timer.toString());
 
-			System.out.println(timer.stop());
-			Thread.sleep(100);
-			System.out.println("TIMER (~200): "+timer.toString());
+		System.out.println(timer.stop());
+		Thread.sleep(100);
+		System.out.println("TIMER (~200): "+timer.toString());
 
-			timer.start();
-			Thread.sleep(100);
-			System.out.println("TIMER (~300): "+timer.toString());
+		timer.start();
+		Thread.sleep(100);
+		System.out.println("TIMER (~300): "+timer.toString());
 
-			System.out.println(timer.stop());
-			System.out.println("TIMER (~300): "+timer.toString());
+		System.out.println(timer.stop());
+		System.out.println("TIMER (~300): "+timer.toString());
 
-			timer.start();
-			Thread.sleep(100);
-			System.out.println("TIMER (~400): "+timer.toString());
+		timer.start();
+		Thread.sleep(100);
+		System.out.println("TIMER (~400): "+timer.toString());
 
-			timer.reset();
-			Thread.sleep(100);
-			System.out.println("TIMER (~100): "+timer.toString());
-			Thread.sleep(100);
-			System.out.println("TIMER (~200): "+timer.toString());
-
-		}catch(InterruptedException e){
-			e.printStackTrace();
-		}
+		timer.reset();
+		Thread.sleep(100);
+		System.out.println("TIMER (~100): "+timer.toString());
+		Thread.sleep(100);
+		System.out.println("TIMER (~200): "+timer.toString());
 
 	}
 
