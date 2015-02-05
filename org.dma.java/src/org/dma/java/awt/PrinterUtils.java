@@ -24,9 +24,6 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.printing.Orientation;
-import org.apache.pdfbox.printing.PDFPrinter;
-import org.apache.pdfbox.printing.Scaling;
 
 public class PrinterUtils {
 
@@ -93,10 +90,12 @@ public class PrinterUtils {
 			PDDocument doc=PDDocument.load(file);
 
 			try{
-				//doc.print(job);
+				doc.silentPrint(job);
+				/*
 				PDFPrinter printer=new PDFPrinter(doc, Scaling.ACTUAL_SIZE, Orientation.AUTO);
 				job.setPageable(printer.getPageable());
 				job.print();
+				*/
 
 				return true;
 
