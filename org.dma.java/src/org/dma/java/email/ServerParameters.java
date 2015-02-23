@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -12,24 +12,20 @@ import org.dma.java.util.Debug;
 
 public class ServerParameters {
 
-	public static final int SECURITY_NONE = 0;
-	public static final int SECURITY_STARTTLS = 1;
-	public static final int SECURITY_SSLTLS = 2;
-
 	public enum SECURITY {
 
 		NONE, STARTTLS, SSLTLS;
 
 		public static final String[] NAMES = ArrayUtils.toStringArray(values());
-		public static SECURITY get(int security){
-			switch(security){
-			case SECURITY_STARTTLS: return STARTTLS;
-			case SECURITY_SSLTLS: return SSLTLS;
-			default: return NONE;
-			}
+
+		public static SECURITY get(int security) {
+			try{
+				return values()[security];
+			}catch(Exception e){}
+			return NONE;
 		}
 
-		public static SECURITY get(String name){
+		public static SECURITY get(String name) {
 			try{
 				return valueOf(name);
 			}catch(Exception e){}

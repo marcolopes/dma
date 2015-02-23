@@ -7,6 +7,8 @@ package org.dma.java.io;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,7 +57,7 @@ public class FileHandler {
 
 
 	public static void close(Closeable resource) {
-		try{
+		if (resource!=null) try{
 			resource.close();
 
 		}catch(IOException e){
@@ -89,7 +91,7 @@ public class FileHandler {
 	}
 
 
-	public boolean rename(String filename) {
+	public boolean renameTo(String filename) {
 		try{
 			return file.renameTo(new File(filename));
 
@@ -98,6 +100,18 @@ public class FileHandler {
 		}
 
 		return false;
+	}
+
+
+	public FileInputStream asInputStream() {
+		try{
+			return new FileInputStream(file);
+
+		}catch(FileNotFoundException e){
+			System.out.println(e);
+		}
+
+		return null;
 	}
 
 

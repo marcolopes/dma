@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -523,10 +523,13 @@ public class StringUtils {
 	/** Removes accents and illegal characters */
 	public static String normalize(String string) {
 
-		//decompose accented letters into LETTERS + ACCENTS
-		return removeChars(Normalizer.normalize(string, Normalizer.Form.NFD).
+		return removeChars(
+			//decompose accented letters into LETTERS + ACCENTS
+			Normalizer.normalize(string, Normalizer.Form.NFD).
 			//remove accents
-			replaceAll("\\p{InCombiningDiacriticalMarks}+", ""),
+			replaceAll("\\p{InCombiningDiacriticalMarks}+", "").
+			//replace slash
+			replace('/',' '),
 			//remove illegal characters
 			new char[]{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'});
 

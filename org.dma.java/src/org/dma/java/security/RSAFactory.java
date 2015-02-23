@@ -235,8 +235,8 @@ public class RSAFactory {
 			// The bytes can be converted back to public and private key objects
 			KeyFactory keyFactory=KeyFactory.getInstance(keyPair.getPrivate().getAlgorithm());
 			EncodedKeySpec privateKeySpec=new PKCS8EncodedKeySpec(keyPair.getPrivate().getEncoded());
-			PrivateKey privateKey2=keyFactory.generatePrivate(privateKeySpec);
-			System.out.println("Are both private keys equal? " + keyPair.getPrivate().equals(privateKey2));
+			PrivateKey privateKey=keyFactory.generatePrivate(privateKeySpec);
+			System.out.println("Are both private keys equal? " + keyPair.getPrivate().equals(privateKey));
 
 		}catch(NoSuchAlgorithmException e){
 			System.out.println("No such algorithm: " + keyPair.getPrivate().getAlgorithm());
@@ -247,8 +247,8 @@ public class RSAFactory {
 		try{
 			KeyFactory keyFactory=KeyFactory.getInstance(keyPair.getPublic().getAlgorithm());
 			EncodedKeySpec publicKeySpec=new X509EncodedKeySpec(keyPair.getPublic().getEncoded());
-			PublicKey publicKey2=keyFactory.generatePublic(publicKeySpec);
-			System.out.println("Are both public keys equal? " + keyPair.getPublic().equals(publicKey2));
+			PublicKey publicKey=keyFactory.generatePublic(publicKeySpec);
+			System.out.println("Are both public keys equal? " + keyPair.getPublic().equals(publicKey));
 
 		}catch(NoSuchAlgorithmException e){
 			System.out.println("No such algorithm: " + keyPair.getPublic().getAlgorithm());

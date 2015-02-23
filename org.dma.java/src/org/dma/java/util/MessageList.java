@@ -56,7 +56,7 @@ public class MessageList extends LinkedHashSet<String> {
 
 	@Override
 	public String toString() {
-		return ArrayUtils.concat(toArray(),"\n");
+		return ArrayUtils.concat(toArray(), "\n");
 	}
 
 
