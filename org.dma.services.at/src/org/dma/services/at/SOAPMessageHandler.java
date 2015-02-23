@@ -92,7 +92,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 			// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
 			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-			kmf.init(swCertificate.keyStore, swCertificate.password.toCharArray());
+			kmf.init(swCertificate.getKeyStore(), swCertificate.password.toCharArray());
 
 			// adiciona um Trust Store que aceita ligacao SSL sem validar o certificado
 			SSLContext sslContext = SSLContext.getInstance("TLSv1"); // JAVA8 usa TLSv2
@@ -188,7 +188,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				// Nonce
 				SOAPElement nonceElem = soapFactory.createElement("Nonce", AUTH_PREFIX, AUTH_NS);
 				// Encrypt with the SA public key and B64 encode the request simetric key
-				final PublicKey publicKey = saCertificate.keyStore.getCertificate(saCertificate.alias()).getPublicKey();
+				final PublicKey publicKey = saCertificate.getX509Cert().getPublicKey();
 				final byte[] encriptedSimetricKey = AutenticationCypherUtil.cypherRequestKey(publicKey, simetricKey);
 				final String b64EncryptedSimetricKey = DatatypeConverter.printBase64Binary(encriptedSimetricKey);
 				nonceElem.addTextNode(b64EncryptedSimetricKey);
