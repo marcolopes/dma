@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2014 Public Domain
+ * 2010-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -37,10 +37,6 @@ public abstract class TableViewerContainer<T> {
 	public abstract void editObject();
 	public abstract Collection<T> retrieveObjects();
 
-	private final List<T> objectCollection=new ArrayList();
-
-	private final TableViewer viewer;
-
 	private final MouseAdapter tableDoubleClickListener=new MouseAdapter() {
 		public void mouseDoubleClick(MouseEvent e) {
 			if(getSelectionElement()!=null) {
@@ -58,6 +54,10 @@ public abstract class TableViewerContainer<T> {
 			}
 		}
 	};
+
+	private final List<T> objectCollection=new ArrayList();
+
+	protected final TableViewer viewer;
 
 	public TableViewerContainer(TableViewer viewer) {
 		this.viewer=viewer;
@@ -214,8 +214,8 @@ public abstract class TableViewerContainer<T> {
 		return objectCollection;
 	}
 
-	public int getNumberOfObjects() {
-		return getCollection().size();
+	public boolean isEmpty() {
+		return getCollection().isEmpty();
 	}
 
 	public TableViewer getViewer() {
@@ -224,10 +224,6 @@ public abstract class TableViewerContainer<T> {
 
 	public Table getTable() {
 		return getViewer().getTable();
-	}
-
-	public boolean isEmpty() {
-		return getCollection().isEmpty();
 	}
 
 
