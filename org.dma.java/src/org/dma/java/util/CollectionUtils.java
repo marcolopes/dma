@@ -37,11 +37,11 @@ public class CollectionUtils {
 	/*
 	 * Analysis
 	 */
-	public static <T> int occurences(Collection<T> collection, String searchFor) {
+	public static <T> int occurences(Collection<T> col, String searchFor) {
 
 		int count=0;
 
-		for(T e: collection){
+		for(T e: col){
 			if(e.toString().contains(searchFor)) count++;
 		}
 
@@ -56,11 +56,11 @@ public class CollectionUtils {
 	/*
 	 * Transformation
 	 */
-	public static <T> String concat(Collection<T> collection, String separator) {
+	public static <T> String concat(Collection<T> col, String separator) {
 
 		StringBuilder result=new StringBuilder();
 
-		for(T e: collection){
+		for(T e: col){
 			String str=e.toString();
 			if(!str.isEmpty()){
 				if(result.length()>0) result.append(separator);
@@ -73,12 +73,12 @@ public class CollectionUtils {
 	}
 
 
-	public static <T> String[] addPrefix(Collection<T> collection, String prefix) {
+	public static <T> String[] addPrefix(Collection<T> col, String prefix) {
 
-		String[] result=new String[collection.size()];
+		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: collection){
+		for(T e: col){
 			result[index++]=prefix+e;
 		}
 
@@ -87,12 +87,12 @@ public class CollectionUtils {
 	}
 
 
-	public static <T> String[] addSuffix(Collection<T> collection, String suffix) {
+	public static <T> String[] addSuffix(Collection<T> col, String suffix) {
 
-		String[] result=new String[collection.size()];
+		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: collection){
+		for(T e: col){
 			result[index++]=e+suffix;
 		}
 
@@ -102,25 +102,25 @@ public class CollectionUtils {
 
 
 	/** Returns removed elements */
-	public static <T> Collection<T> removeContaining(Collection<T> collection, String searchFor){
+	public static <T> Collection<T> removeContaining(Collection<T> col, String searchFor){
 
 		Collection<T> removeList=new ArrayList();
 
-		for(T e: collection){
+		for(T e: col){
 			if(e.toString().contains(searchFor)) removeList.add(e);
 		}
 
-		collection.removeAll(removeList);
+		col.removeAll(removeList);
 
 		return removeList;
 
 	}
 
 
-	public static <T> void removeContaining(Collection<T> collection, String[] searchFor){
+	public static <T> void removeContaining(Collection<T> col, String[] searchFor){
 
 		for(int i=0; i<searchFor.length; i++){
-			removeContaining(collection, searchFor[i]);
+			removeContaining(col, searchFor[i]);
 		}
 
 	}
