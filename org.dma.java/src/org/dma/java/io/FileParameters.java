@@ -46,14 +46,13 @@ public class FileParameters {
 	public File createTempFile() {
 
 		try{
-			File directory=folder==null ? null : folder;
-			File file=File.createTempFile(prefix+"-", suffix, directory);
+			File file=File.createTempFile(prefix+"-", suffix, folder);
 			file.deleteOnExit();
 
 			return file;
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return null;
