@@ -14,7 +14,7 @@ public class FileParameters {
 	public final File folder;
 	public final String filename;
 
-	public FileParameters(String prefix, String suffix){
+	public FileParameters(String prefix, String suffix) {
 		this(prefix, suffix, "");
 	}
 
@@ -30,19 +30,7 @@ public class FileParameters {
 	}
 
 
-	/*
-	 * Temporary Files
-	 *
-	 * prefix - The prefix string to be used in generating the file's name;
-	 * 			must be at least three characters long
-	 *
-	 * suffix - The suffix string to be used in generating the file's name;
-	 * 			may be null, in which case the suffix ".tmp" will be used
-	 *
-	 * directory - The directory in which the file is to be created,
-	 * 			or null if the default temporary-file directory is to be used
-	 *
-	 */
+	/** @see File#createTempFile(String, String, File) */
 	public File createTempFile() {
 
 		try{
@@ -60,6 +48,7 @@ public class FileParameters {
 	}
 
 
+	/** @see #createTempFile() */
 	public File createTempFile(byte[] bytes) {
 
 		File file=createTempFile();
@@ -70,18 +59,19 @@ public class FileParameters {
 	}
 
 
-	public boolean exists(){
+	/** @see File#exists() */
+	public boolean exists() {
 		return toFile().exists();
 	}
 
 
-	public File toFile(){
+	public File toFile() {
 		return new File(toString());
 	}
 
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return folder.getAbsolutePath() + File.separator + filename;
 	}
 
