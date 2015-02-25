@@ -24,9 +24,9 @@ public class FileParameters {
 
 	public FileParameters(String prefix, String suffix, File folder){
 		this.prefix=prefix;
-		this.suffix=suffix;
+		this.suffix=suffix==null || suffix.startsWith(".") ? suffix : "."+suffix;
 		this.folder=folder;
-		this.filename=prefix + (suffix==null ? "" : "."+suffix);
+		this.filename=prefix + (suffix==null ? "" : this.suffix);
 	}
 
 
@@ -47,7 +47,7 @@ public class FileParameters {
 
 		try{
 			File directory=folder==null ? null : folder;
-			File file=File.createTempFile(prefix, "."+suffix, directory);
+			File file=File.createTempFile(prefix+"-", suffix, directory);
 			file.deleteOnExit();
 
 			return file;
