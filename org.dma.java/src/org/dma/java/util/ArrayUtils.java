@@ -7,6 +7,7 @@ package org.dma.java.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ArrayUtils {
@@ -425,7 +426,7 @@ public class ArrayUtils {
 
 	public static String[] compact(String[] array){
 
-		List<String> result=new ArrayList(array.length);
+		Collection<String> result=new ArrayList(array.length);
 
 		for(String element: array){
 			if(!element.trim().isEmpty()) result.add(element);
@@ -449,7 +450,7 @@ public class ArrayUtils {
 
 	public static <T> T[] removeContaining(T[] array, String searchFor) {
 
-		List<T> result=new ArrayList(Arrays.asList(array));
+		Collection<T> result=new ArrayList(Arrays.asList(array));
 
 		CollectionUtils.removeContaining(result, searchFor);
 
@@ -460,7 +461,7 @@ public class ArrayUtils {
 
 	public static <T> T[] removeContaining(T[] array, String[] searchFor) {
 
-		List<T> result=new ArrayList(Arrays.asList(array));
+		Collection<T> result=new ArrayList(Arrays.asList(array));
 
 		CollectionUtils.removeContaining(result, searchFor);
 
@@ -474,7 +475,7 @@ public class ArrayUtils {
 		if(fromArray==null || fromArray.length==0) return intoArray;
 		if(intoArray==null || intoArray.length==0) return fromArray;
 
-		List<T> result=new ArrayList(Arrays.asList(intoArray));
+		Collection<T> result=new ArrayList(Arrays.asList(intoArray));
 
 		for(T element: fromArray){
 			if(!result.contains(element)) result.add(element);
