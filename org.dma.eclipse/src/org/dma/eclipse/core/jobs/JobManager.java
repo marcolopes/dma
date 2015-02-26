@@ -8,7 +8,6 @@ package org.dma.eclipse.core.jobs;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 import org.dma.java.util.Debug;
 
@@ -19,7 +18,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
-	private static final Set<JobBatch> QUEUE = new HashSet();
+	private static final Collection<JobBatch> QUEUE = new HashSet();
 
 	protected static void schedule(CustomJob job, ISchedulingRule rule) {
 
