@@ -8,6 +8,8 @@ package org.dma.java.util;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 public class CollectionUtils {
 
@@ -56,19 +58,44 @@ public class CollectionUtils {
 	/*
 	 * Transformation
 	 */
-	public static <T> String concat(Collection<T> col, String separator) {
+	public static <T> String[] numbers(Collection<T> col) {
 
-		StringBuilder result=new StringBuilder();
+		String[] result=new String[col.size()];
 
+		int index=0;
 		for(T e: col){
-			String str=e.toString();
-			if(!str.isEmpty()){
-				if(result.length()>0) result.append(separator);
-				result.append(str);
-			}
+			result[index++]=StringUtils.numbers(e.toString());
 		}
 
-		return result.toString();
+		return result;
+
+	}
+
+
+	public static <T> String[] capitalize(Collection<T> col) {
+
+		String[] result=new String[col.size()];
+
+		int index=0;
+		for(T e: col){
+			result[index++]=StringUtils.capitalize(e.toString());
+		}
+
+		return result;
+
+	}
+
+
+	public static <T> String[] uncapitalize(Collection<T> col) {
+
+		String[] result=new String[col.size()];
+
+		int index=0;
+		for(T e: col){
+			result[index++]=StringUtils.uncapitalize(e.toString());
+		}
+
+		return result;
 
 	}
 
@@ -79,7 +106,7 @@ public class CollectionUtils {
 
 		int index=0;
 		for(T e: col){
-			result[index++]=prefix+e;
+			result[index++]=prefix+e.toString();
 		}
 
 		return result;
@@ -93,7 +120,99 @@ public class CollectionUtils {
 
 		int index=0;
 		for(T e: col){
-			result[index++]=e+suffix;
+			result[index++]=e.toString()+suffix;
+		}
+
+		return result;
+
+	}
+
+
+	public static <T> String[] removeFromAll(Collection<T> col, String searchFor) {
+
+		String[] result=new String[col.size()];
+
+		int index=0;
+		for(T e: col){
+			result[index++]=StringUtils.removeAll(e.toString(), searchFor);
+		}
+
+		return result;
+
+	}
+
+
+	public static <T> String[] trim(Collection<T> col) {
+
+		String[] result=new String[col.size()];
+
+		int index=0;
+		for(T e: col){
+			result[index++]=e.toString().trim();
+		}
+
+		return result;
+
+	}
+
+
+	public static <T> String concat(Collection<T> col, String separator) {
+
+		StringBuilder result=new StringBuilder();
+
+		for(T e: col){
+			if(result.length()>0) result.append(separator);
+			result.append(e.toString());
+		}
+
+		return result.toString();
+
+	}
+
+
+	public static <T> String concat(List<T> col, int fromIndex, int toIndex, String separator) {
+
+		if(fromIndex<0 || toIndex>col.size() || fromIndex>toIndex) return "";
+
+		return concat(col.subList(fromIndex+1, toIndex), separator);
+
+	}
+
+
+	public static <T> String concatFrom(List<T> col, int fromIndex, String separator) {
+
+		return concat(col, fromIndex, col.size()-1, separator);
+
+	}
+
+
+	public static <T> String concatUpto(List<T> col, int toIndex, String separator) {
+
+		return concat(col, 0, toIndex, separator);
+
+	}
+
+
+	public static <T> String[] compact(Collection<T> col) {
+
+		Collection<String> result=new ArrayList(col.size());
+
+		for(T e: col){
+			String str=e.toString();
+			if(!str.trim().isEmpty()) result.add(str);
+		}
+
+		return result.toArray(new String[result.size()]);
+
+	}
+
+
+	public static <T> Collection<T> merge(Collection<T>...col) {
+
+		Collection<T> result=new HashSet();
+
+		for(Collection<T> c: col){
+			if (c!=null) result.addAll(c);
 		}
 
 		return result;
@@ -117,11 +236,30 @@ public class CollectionUtils {
 	}
 
 
-	public static <T> void removeContaining(Collection<T> col, String[] searchFor){
+	/** Returns removed elements */
+	public static <T> Collection<T> removeContaining(Collection<T> col, String[] searchFor){
+
+		Collection<T> removeList=new ArrayList();
 
 		for(int i=0; i<searchFor.length; i++){
-			removeContaining(col, searchFor[i]);
+			removeList.addAll(removeContaining(col, searchFor[i]));
 		}
+
+		return removeList;
+
+	}
+
+
+	public static <T> List<T> head(List<T> col) {
+
+		return col.subList(0, col.size()-1);
+
+	}
+
+
+	public static <T> List<T> tail(List<T> col) {
+
+		return col.subList(1, col.size());
 
 	}
 
