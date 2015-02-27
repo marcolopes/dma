@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -139,6 +139,13 @@ public class ArrayUtils {
 	/*
 	 * Analysis
 	 */
+	public static <T> T last(T[] array) {
+
+		return array[array.length-1];
+
+	}
+
+
 	public static String larger(String[] array) {
 
 		if(array.length==0) return "";
@@ -184,7 +191,7 @@ public class ArrayUtils {
 	}
 
 
-	public static int startsWith(String[] array, String searchFor) {
+	public static int startedWith(String[] array, String searchFor) {
 
 		if(searchFor!=null && !searchFor.isEmpty()){
 			for(int i=0; i<array.length; i++){
@@ -197,29 +204,18 @@ public class ArrayUtils {
 	}
 
 
-	public static int startsWithOrFirst(String[] array, String searchFor) {
+	public static int startedOrFirst(String[] array, String searchFor) {
 
-		int index=startsWith(array, searchFor);
+		int index=startedWith(array, searchFor);
 
 		return index==-1 ? 0 : index;
 
 	}
 
 
-	public static <T> T last(T[] array) {
-
-		return array[array.length-1];
-
-	}
-
-
 	public static <T> int indexOf(T[] array, T searchFor) {
 
-		for(int i=0; i<array.length; i++){
-			if(array[i].equals(searchFor)) return i;
-		}
-
-		return -1;
+		return Arrays.asList(array).indexOf(searchFor);
 
 	}
 
@@ -246,160 +242,51 @@ public class ArrayUtils {
 	/*
 	 * Transformation
 	 */
+	public static <T> String[] numbers(T[] array) {
+
+		return CollectionUtils.numbers(Arrays.asList(array));
+
+	}
+
+
 	public static <T> String[] capitalize(T[] array) {
 
-		String[] result=new String[array.length];
-
-		for(int i=0; i<array.length; i++){
-			result[i]=StringUtils.capitalize(array[i].toString());
-		}
-
-		return result;
+		return CollectionUtils.capitalize(Arrays.asList(array));
 
 	}
 
 
 	public static <T> String[] uncapitalize(T[] array) {
 
-		String[] result=new String[array.length];
-
-		for(int i=0; i<array.length; i++){
-			result[i]=StringUtils.uncapitalize(array[i].toString());
-		}
-
-		return result;
-
-	}
-
-
-	public static <T> String[] numbers(T[] array) {
-
-		String[] result=new String[array.length];
-
-		for(int i=0; i<array.length; i++){
-			result[i]=StringUtils.numbers(array[i].toString());
-		}
-
-		return result;
-
-	}
-
-
-	public static <T> String[] headArray(T[] array) {
-
-		String[] result=new String[array.length-1];
-
-		for(int i=0; i<array.length-1; i++){
-			result[i]=array[i].toString();
-		}
-
-		return result;
-
-	}
-
-
-	public static <T> String headArray(T[] array, String separator) {
-
-		return concat(headArray(array), separator);
-
-	}
-
-
-	public static <T> String[] tailArray(T[] array) {
-
-		String[] result=new String[array.length-1];
-
-		for(int i=1; i<array.length; i++){
-			result[i-1]=array[i].toString();
-		}
-
-		return result;
-
-	}
-
-
-	public static <T> String tailArray(T[] array, String separator) {
-
-		return concat(tailArray(array), separator);
-
-	}
-
-
-	public static <T> String concat(T[] array, int fromIndex, int toIndex, String separator) {
-
-		if(array.length==0 ||
-				fromIndex<0 ||
-				toIndex>=array.length ||
-				toIndex-fromIndex<0) return "";
-
-		StringBuilder result=new StringBuilder(array[fromIndex].toString());
-
-		for(int i=fromIndex+1; i<=toIndex; i++){
-			result.append(separator);
-			result.append(array[i].toString());
-		}
-
-		return result.toString();
-
-	}
-
-
-	public static <T> String concat(T[] array, String separator) {
-
-		return concat(array, 0, array.length-1, separator);
-
-	}
-
-
-	public static <T> String concatFrom(T[] array, int fromIndex, String separator) {
-
-		return concat(array, fromIndex, array.length-1, separator);
-
-	}
-
-
-	public static <T> String concatUpto(T[] array, int toIndex, String separator) {
-
-		return concat(array, 0, toIndex, separator);
+		return CollectionUtils.uncapitalize(Arrays.asList(array));
 
 	}
 
 
 	public static <T> String[] addPrefix(T[] array, String prefix) {
 
-		String[] result=new String[array.length];
-
-		for(int i=0; i<array.length; i++){
-			result[i]=prefix+array[i];
-		}
-
-		return result;
+		return CollectionUtils.addPrefix(Arrays.asList(array), prefix);
 
 	}
 
 
 	public static <T> String[] addSuffix(T[] array, String suffix) {
 
-		String[] result=new String[array.length];
-
-		for(int i=0; i<array.length; i++){
-			result[i]=array[i]+suffix;
-		}
-
-		return result;
+		return CollectionUtils.addSuffix(Arrays.asList(array), suffix);
 
 	}
 
 
-	public static String[] trim(String[] array) {
+	public static <T> String[] removeFromAll(T[] array, String searchFor) {
 
-		String[] result=new String[array.length];
+		return CollectionUtils.removeFromAll(Arrays.asList(array), searchFor);
 
-		for(int i=0; i<array.length; i++){
-			result[i]=array[i].trim();
-		}
+	}
 
-		return result;
+
+	public static <T> String[] trim(T[] array) {
+
+		return CollectionUtils.trim(Arrays.asList(array));
 
 	}
 
@@ -411,77 +298,95 @@ public class ArrayUtils {
 	}
 
 
-	public static String[] removeFromAll(String[] array, String searchFor) {
+	public static <T> String concat(T[] array, String separator) {
 
-		String[] result=new String[array.length];
+		return CollectionUtils.concat(Arrays.asList(array), separator);
 
-		for(int i=0; i<array.length; i++){
-			result[i]=StringUtils.removeAll(array[i], searchFor);
+	}
+
+
+	public static <T> String concat(T[] array, int fromIndex, int toIndex, String separator) {
+
+		return CollectionUtils.concat(Arrays.asList(array), fromIndex, toIndex, separator);
+
+	}
+
+
+	public static <T> String concatFrom(T[] array, int fromIndex, String separator) {
+
+		return CollectionUtils.concatFrom(Arrays.asList(array), fromIndex, separator);
+
+	}
+
+
+	public static <T> String concatUpto(T[] array, int toIndex, String separator) {
+
+		return CollectionUtils.concatUpto(Arrays.asList(array), toIndex, separator);
+
+	}
+
+
+	public static <T> String[] compact(T[] array) {
+
+		return CollectionUtils.compact(Arrays.asList(array));
+
+	}
+
+
+	public static <T> T[] insert(T[] intoArray, int position, T...element) {
+
+		List<T> col=new ArrayList(Arrays.asList(intoArray));
+
+		if (element.length==1){
+			col.add(position, element[0]);
+		}else{
+			col.addAll(position, Arrays.asList(element));
 		}
 
-		return result;
-
-	}
-
-
-	public static String[] compact(String[] array){
-
-		Collection<String> result=new ArrayList(array.length);
-
-		for(String element: array){
-			if(!element.trim().isEmpty()) result.add(element);
-		}
-
-		return result.toArray(array);
-
-	}
-
-
-	public static <T> T[] insert(T[] array, T element, int position) {
-
-		List<T> result=new ArrayList(Arrays.asList(array));
-
-		result.add(position, element);
-
-		return result.toArray(array);
-
-	}
-
-
-	public static <T> T[] removeContaining(T[] array, String searchFor) {
-
-		Collection<T> result=new ArrayList(Arrays.asList(array));
-
-		CollectionUtils.removeContaining(result, searchFor);
-
-		return result.toArray(array);
-
-	}
-
-
-	public static <T> T[] removeContaining(T[] array, String[] searchFor) {
-
-		Collection<T> result=new ArrayList(Arrays.asList(array));
-
-		CollectionUtils.removeContaining(result, searchFor);
-
-		return result.toArray(array);
+		return col.toArray(intoArray);
 
 	}
 
 
 	public static <T> T[] merge(T[] intoArray, T[] fromArray) {
 
-		if(fromArray==null || fromArray.length==0) return intoArray;
-		if(intoArray==null || intoArray.length==0) return fromArray;
+		Collection<T> col=CollectionUtils.merge(
+				Arrays.asList(intoArray),
+				Arrays.asList(fromArray));
 
-		Collection<T> result=new ArrayList(Arrays.asList(intoArray));
+		return col.toArray(intoArray);
 
-		for(T element: fromArray){
-			if(!result.contains(element)) result.add(element);
-		}
+	}
 
-		return result.toArray(intoArray);
+
+	public static <T> String[] head(T[] array) {
+
+		List<T> col=CollectionUtils.head(Arrays.asList(array));
+
+		return col.toArray(new String[col.size()]);
+
+	}
+
+
+	public static <T> String[] tail(T[] array) {
+
+		List<T> col=CollectionUtils.tail(Arrays.asList(array));
+
+		return col.toArray(new String[col.size()]);
+
+	}
+
+
+	public static <T> String head(T[] array, String separator) {
+
+		return concat(head(array), separator);
+
+	}
+
+
+	public static <T> String tail(T[] array, String separator) {
+
+		return concat(tail(array), separator);
 
 	}
 
