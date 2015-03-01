@@ -139,24 +139,15 @@ public class ArrayUtils {
 	/*
 	 * Analysis
 	 */
-	public static <T> T last(T[] array) {
+	public static <T> int lenght(T[]...array) {
 
-		return array[array.length-1];
+		int lenght=0;
 
-	}
-
-
-	public static String larger(String[] array) {
-
-		if(array.length==0) return "";
-
-		String result=array[0];
-
-		for(int i=1; i<array.length; i++){
-			if(array[i].length()>result.length()) result=array[i];
+		for(T[] a: array){
+			if (a!=null) lenght+=a.length;
 		}
 
-		return result;
+		return lenght;
 
 	}
 
@@ -184,6 +175,21 @@ public class ArrayUtils {
 
 		for(int i: array){
 			if(i<result) result=i;
+		}
+
+		return result;
+
+	}
+
+
+	public static String larger(String[] array) {
+
+		if(array.length==0) return "";
+
+		String result=array[0];
+
+		for(int i=1; i<array.length; i++){
+			if(array[i].length()>result.length()) result=array[i];
 		}
 
 		return result;
@@ -277,9 +283,9 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> String[] removeFromAll(T[] array, String searchFor) {
+	public static <T> String[] removeAll(T[] array, String searchFor) {
 
-		return CollectionUtils.removeFromAll(Arrays.asList(array), searchFor);
+		return CollectionUtils.removeAll(Arrays.asList(array), searchFor);
 
 	}
 
@@ -294,6 +300,13 @@ public class ArrayUtils {
 	public static String trim(String[] array, String separator) {
 
 		return concat(trim(array), separator);
+
+	}
+
+
+	public static <T> String[] compact(T[] array) {
+
+		return CollectionUtils.compact(Arrays.asList(array));
 
 	}
 
@@ -326,53 +339,12 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> String[] compact(T[] array) {
-
-		return CollectionUtils.compact(Arrays.asList(array));
-
-	}
-
-
-	public static <T> T[] insert(T[] intoArray, int position, T...element) {
-
-		List<T> col=new ArrayList(Arrays.asList(intoArray));
-
-		if (element.length==1){
-			col.add(position, element[0]);
-		}else{
-			col.addAll(position, Arrays.asList(element));
-		}
-
-		return col.toArray(intoArray);
-
-	}
-
-
-	public static <T> T[] merge(T[] intoArray, T[] fromArray) {
-
-		Collection<T> col=CollectionUtils.merge(
-				Arrays.asList(intoArray),
-				Arrays.asList(fromArray));
-
-		return col.toArray(intoArray);
-
-	}
-
-
 	public static <T> String[] head(T[] array) {
 
-		List<T> col=CollectionUtils.head(Arrays.asList(array));
+		List<T> result=CollectionUtils.head(Arrays.asList(array));
 
-		return col.toArray(new String[col.size()]);
-
-	}
-
-
-	public static <T> String[] tail(T[] array) {
-
-		List<T> col=CollectionUtils.tail(Arrays.asList(array));
-
-		return col.toArray(new String[col.size()]);
+		//result can be empty!
+		return result.toArray(new String[result.size()]);
 
 	}
 
@@ -384,6 +356,16 @@ public class ArrayUtils {
 	}
 
 
+	public static <T> String[] tail(T[] array) {
+
+		List<T> result=CollectionUtils.tail(Arrays.asList(array));
+
+		//result can be empty!
+		return result.toArray(new String[result.size()]);
+
+	}
+
+
 	public static <T> String tail(T[] array, String separator) {
 
 		return concat(tail(array), separator);
@@ -391,12 +373,123 @@ public class ArrayUtils {
 	}
 
 
+	public static <T> T[] insert(T[] array, int index, T...element) {
+
+		//ensure exact capacity
+		List<T> result=new ArrayList(array.length+element.length);
+
+		result.addAll(Arrays.asList(array));
+		result.addAll(index, Arrays.asList(element));
+
+		return CollectionUtils.toArray(result);
+
+	}
+
+
+	public static <T> T[] append(T[] array, T...element) {
+
+		return insert(array, array.length, element);
+
+	}
+
+
+	public static <T> T[] remove(T[] array, int index) {
+
+		List<T> result=new ArrayList(Arrays.asList(array));
+
+		result.remove(index);
+
+		//result can be empty!
+		return CollectionUtils.toArray(result, array[0].getClass());
+
+	}
+
+
+	public static <T> T[] remove(T[] array, int...index) {
+
+		List<T> result=new ArrayList(Arrays.asList(array));
+
+		result.removeAll(Arrays.asList(index(array, index)));
+
+		//result can be empty!
+		return CollectionUtils.toArray(result, array[0].getClass());
+
+	}
+
+
+	/** Returns null if all arrays are empty */
+	public static <T> T[] merge(T[]...array) {
+
+		//ensure exact capacity
+		Collection<T> result=new ArrayList(lenght(array));
+
+		for(T[] a: array){
+			if (a!=null) result.addAll(Arrays.asList(a));
+		}
+
+		return CollectionUtils.toArray(result);
+
+	}
+
+
+	public static <T> T[] index(T[] array, int...index) {
+
+		Collection<T> result=CollectionUtils.index(Arrays.asList(array), index);
+
+		return CollectionUtils.toArray(result);
+
+	}
+
+
 	public static void main(String[] argvs) {
 
 		byte[] hexArray=new byte[]{0x01, 0x0f};
-
 		System.out.println("toHexArray: " + Arrays.asList(toHexArray(hexArray)));
 		System.out.println("toHexString: " + toHexString(hexArray));
+
+		String[] array=new String[]{"a=0", "b=1", "c=2"};
+		System.out.println("ARRAY: " + Arrays.asList(array));
+		System.out.println("concat: " + concat(array, ":"));
+		System.out.println("head: " + Arrays.asList(head(array)));
+		System.out.println("tail: " + Arrays.asList(tail(array)));
+		System.out.println("insert: " + Arrays.asList(array=insert(array, 0, "' '")));
+		System.out.println("append: " + Arrays.asList(array=append(array, "' '")));
+		System.out.println("removeAll: " + Arrays.asList(array=removeAll(array, "'")));
+		System.out.println("trim: " + Arrays.asList(array=trim(array)));
+		System.out.println("compact: " + Arrays.asList(array=compact(array)));
+		System.out.println("numbers: " + Arrays.asList(array=numbers(array)));
+		System.out.println("addPrefix: " + Arrays.asList(array=addPrefix(array, "-")));
+		System.out.println("addSuffix: " + Arrays.asList(array=addSuffix(array, "+")));
+		System.out.println("remove: " + Arrays.asList(array=remove(array, 0,1,2)));
+
+		String[] array1=new String[]{"0", "1", "2"};
+		String[] array2=new String[]{"3", "4", "5"};
+		String[] array3=new String[]{"6", "7", "8"};
+		System.out.println("lenght: " + lenght(array1, array2, array3));
+		System.out.println("merge: " + Arrays.asList(merge(array1, array2, array3)));
+		System.out.println("merge: " + Arrays.asList(merge(array1, array2)));
+		System.out.println("merge: " + Arrays.asList(merge(array1, null)));
+		System.out.println("merge: " + Arrays.asList(merge(null, array2)));
+		System.out.println("merge: " + merge(new String[]{}));
+
+		int repeat=10000;
+		TimeChronograph time=new TimeChronograph();
+		time.start();
+		for(int i=0; i<repeat; i++) array=insert(array, 0, "0");
+		time.stop();
+		System.out.println("insert: "+time);
+		time.reset();
+		time.start();
+		for(int i=0; i<repeat; i++) remove(array, 0);
+		time.stop();
+		System.out.println("remove: "+time);
+
+		time.reset();
+		time.start();
+		for(int i=0; i<repeat; i++) remove(array, 0,1);
+		time.stop();
+		System.out.println("remove: "+time);
+
 
 	}
 
