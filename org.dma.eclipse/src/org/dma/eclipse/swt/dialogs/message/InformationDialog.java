@@ -14,7 +14,7 @@ public class InformationDialog extends CustomDialog {
 	 * Information
 	 */
 	public static boolean open(String operation, String...message) {
-		return open(operation, ArrayUtils.concat(message,"\n"), TYPE.INFORMATION);
+		return open(operation, ArrayUtils.concat(message, "\n"), TYPE.INFORMATION);
 	}
 
 	public static boolean open(String operation, MessageList list) {

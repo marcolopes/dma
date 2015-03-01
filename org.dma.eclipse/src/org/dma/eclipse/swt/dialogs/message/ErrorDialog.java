@@ -14,7 +14,7 @@ public class ErrorDialog extends CustomDialog {
 	 * Error
 	 */
 	public static boolean open(String operation, String...message) {
-		return open(operation, ArrayUtils.concat(message,"\n"), TYPE.ERROR);
+		return open(operation, ArrayUtils.concat(message, "\n"), TYPE.ERROR);
 	}
 
 	public static boolean open(String operation, MessageList list) {
