@@ -14,7 +14,7 @@ public class QuestionDialog extends CustomDialog {
 	 * Question
 	 */
 	public static boolean open(String operation, String...message) {
-		return open(operation, ArrayUtils.concat(message,"\n"), TYPE.QUESTION);
+		return open(operation, ArrayUtils.concat(message, "\n"), TYPE.QUESTION);
 	}
 
 	public static boolean open(String operation, MessageList list) {

@@ -14,7 +14,7 @@ public class ConfirmationDialog extends CustomDialog {
 	 * Confirmation
 	 */
 	public static boolean open(String operation, String...message) {
-		return open(operation, ArrayUtils.concat(message,"\n"), TYPE.CONFIRMATION);
+		return open(operation, ArrayUtils.concat(message, "\n"), TYPE.CONFIRMATION);
 	}
 
 	public static boolean open(String operation, MessageList list) {
