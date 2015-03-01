@@ -7,8 +7,8 @@ package org.dma.java.util;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 public class CollectionUtils {
@@ -22,14 +22,14 @@ public class CollectionUtils {
 		return c.toArray(a);
 	}
 
-	/** The collection CAN be empty */
+	/** Returns a new array even if collection is empty */
 	public static <T> T[] toArray(Collection<T> c, Class klass) {
-		return c.toArray((T[])Array.newInstance(klass, c.size()));
+		return toArray(c, (T[])Array.newInstance(klass, c.size()));
 	}
 
-	/** The collection CANNOT be empty! */
+	/** Returns a new array or null if collection is empty */
 	public static <T> T[] toArray(Collection<T> c) {
-		return toArray(c, c.iterator().next().getClass());
+		return c.isEmpty() ? null : toArray(c, c.iterator().next().getClass());
 	}
 
 
@@ -128,7 +128,7 @@ public class CollectionUtils {
 	}
 
 
-	public static <T> String[] removeFromAll(Collection<T> col, String searchFor) {
+	public static <T> String[] removeAll(Collection<T> col, String searchFor) {
 
 		String[] result=new String[col.size()];
 
@@ -152,6 +152,20 @@ public class CollectionUtils {
 		}
 
 		return result;
+
+	}
+
+
+	public static <T> String[] compact(Collection<T> col) {
+
+		Collection<String> result=new ArrayList();
+
+		for(T e: col){
+			String str=e.toString();
+			if(!str.trim().isEmpty()) result.add(str);
+		}
+
+		return result.toArray(new String[result.size()]);
 
 	}
 
@@ -193,23 +207,10 @@ public class CollectionUtils {
 	}
 
 
-	public static <T> String[] compact(Collection<T> col) {
-
-		Collection<String> result=new ArrayList(col.size());
-
-		for(T e: col){
-			String str=e.toString();
-			if(!str.trim().isEmpty()) result.add(str);
-		}
-
-		return result.toArray(new String[result.size()]);
-
-	}
-
-
 	public static <T> Collection<T> merge(Collection<T>...col) {
 
-		Collection<T> result=new HashSet();
+		//ensure maximum capacity
+		Collection<T> result=new ArrayList(col.length);
 
 		for(Collection<T> c: col){
 			if (c!=null) result.addAll(c);
@@ -220,46 +221,67 @@ public class CollectionUtils {
 	}
 
 
-	/** Returns removed elements */
-	public static <T> Collection<T> removeContaining(Collection<T> col, String searchFor){
+	public static <T> List<T> index(List<T> col, int...index) {
 
-		Collection<T> removeList=new ArrayList();
+		//ensure exact capacity
+		List<T> result=new ArrayList(index.length);
 
-		for(T e: col){
-			if(e.toString().contains(searchFor)) removeList.add(e);
+		for(int i: index){
+			result.add(col.get(i));
 		}
 
-		col.removeAll(removeList);
-
-		return removeList;
+		return result;
 
 	}
 
 
-	/** Returns removed elements */
-	public static <T> Collection<T> removeContaining(Collection<T> col, String[] searchFor){
+	public static <T> List<T> index(List<T> col, int index) {
 
-		Collection<T> removeList=new ArrayList();
-
-		for(int i=0; i<searchFor.length; i++){
-			removeList.addAll(removeContaining(col, searchFor[i]));
-		}
-
-		return removeList;
+		return new ArrayList(Arrays.asList(col.get(index)));
 
 	}
 
 
 	public static <T> List<T> head(List<T> col) {
 
-		return col.subList(0, col.size()-1);
+		return col.isEmpty() ? col : col.subList(0, col.size()-1);
 
 	}
 
 
 	public static <T> List<T> tail(List<T> col) {
 
-		return col.subList(1, col.size());
+		return col.isEmpty() ? col : col.subList(1, col.size());
+
+	}
+
+
+	/** Returns removed elements */
+	public static <T> Collection<T> removeContaining(Collection<T> col, String searchFor) {
+
+		Collection<T> remove=new ArrayList();
+
+		for(T e: col){
+			if(e.toString().contains(searchFor)) remove.add(e);
+		}
+
+		col.removeAll(remove);
+
+		return remove;
+
+	}
+
+
+	/** Returns removed elements */
+	public static <T> Collection<T> removeContaining(Collection<T> col, String...searchFor) {
+
+		Collection<T> remove=new ArrayList();
+
+		for(int i=0; i<searchFor.length; i++){
+			remove.addAll(removeContaining(col, searchFor[i]));
+		}
+
+		return remove;
 
 	}
 
