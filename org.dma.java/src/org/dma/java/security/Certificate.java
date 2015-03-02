@@ -11,6 +11,7 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -127,7 +128,7 @@ public class Certificate {
 	}
 
 
-	public List<String> getKeyUsage() {
+	public Collection<String> getKeyUsage() {
 		String[] purposes=new String[]{
 		     "digitalSignature",
 		     "nonRepudiation",
