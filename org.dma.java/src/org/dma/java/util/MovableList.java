@@ -19,15 +19,15 @@ public class MovableList<T> extends LinkedList<T> {
 		super();
 	}
 
-	public MovableList(Collection<T> c) {
-		super(c);
+	public MovableList(Collection<T> list) {
+		super(list);
 	}
 
 
 	/** Returns removed elements */
-	public Collection<T> remove(int...indexes) {
+	public List<T> remove(int...indexes) {
 
-		Collection<T> removeList=new ArrayList(indexes.length);
+		List<T> removeList=new ArrayList(indexes.length);
 
 		for(int index: indexes){
 			removeList.add(get(index));
@@ -41,9 +41,9 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Returns inserted elements */
-	public Collection<T> insert(List<T> list, int position, int...indexes) {
+	public List<T> insert(List<T> list, int position, int...indexes) {
 
-		Collection<T> insertList=new ArrayList(indexes.length);
+		List<T> insertList=new ArrayList(indexes.length);
 
 		Arrays.sort(indexes);
 		for(int index: indexes){

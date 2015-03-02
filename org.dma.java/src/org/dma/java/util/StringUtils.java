@@ -8,7 +8,6 @@ package org.dma.java.util;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -183,9 +182,9 @@ public class StringUtils {
 	}
 
 
-	public static Collection<Integer> indexOf(String string, String searchFor) {
+	public static List<Integer> indexOf(String string, String searchFor) {
 
-		Collection<Integer> result=new ArrayList();
+		List<Integer> result=new ArrayList();
 
 		int index=0;
 		while((index=string.indexOf(searchFor, index))!=-1) {

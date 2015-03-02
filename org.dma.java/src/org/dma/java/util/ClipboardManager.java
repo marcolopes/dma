@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -60,12 +60,12 @@ public class ClipboardManager {
 	}
 
 
-	public static <T> Collection<T> getClipboard(Class klass) {
+	public static <T> List<T> getClipboard(Class klass) {
 		return !hasObject(klass) ? new ArrayList(0) : CLIPBOARD;
 	}
 
 
-	public static Collection<?> getClipboard() {
+	public static List<?> getClipboard() {
 		return CLIPBOARD;
 	}
 
