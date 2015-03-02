@@ -200,7 +200,7 @@ public abstract class TableViewerContainer<T> {
 	}
 
 	public void copySelectionToClipboard() {
-		Collection<T> selectionList=getSelectionList();
+		List<T> selectionList=getSelectionList();
 		Debug.out("Selection", selectionList);
 		ClipboardManager.copyToClipboard(selectionList);
 	}
