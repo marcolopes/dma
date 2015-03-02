@@ -25,7 +25,7 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Returns removed elements */
-	public List<T> remove(int...indexes) {
+	public Collection<T> remove(int...indexes) {
 
 		List<T> removeList=new ArrayList(indexes.length);
 
@@ -41,7 +41,7 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Returns inserted elements */
-	public List<T> insert(List<T> list, int position, int...indexes) {
+	public Collection<T> insert(List<T> list, int position, int...indexes) {
 
 		List<T> insertList=new ArrayList(indexes.length);
 
