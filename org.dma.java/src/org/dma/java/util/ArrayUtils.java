@@ -7,7 +7,6 @@ package org.dma.java.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class ArrayUtils {
@@ -421,7 +420,7 @@ public class ArrayUtils {
 	public static <T> T[] merge(T[]...array) {
 
 		//ensure exact capacity
-		Collection<T> result=new ArrayList(lenght(array));
+		List<T> result=new ArrayList(lenght(array));
 
 		for(T[] a: array){
 			if (a!=null) result.addAll(Arrays.asList(a));
@@ -434,7 +433,7 @@ public class ArrayUtils {
 
 	public static <T> T[] index(T[] array, int...index) {
 
-		Collection<T> result=CollectionUtils.index(Arrays.asList(array), index);
+		List<T> result=CollectionUtils.index(Arrays.asList(array), index);
 
 		return CollectionUtils.toArray(result);
 

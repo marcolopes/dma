@@ -158,7 +158,7 @@ public class CollectionUtils {
 
 	public static <T> String[] compact(Collection<T> col) {
 
-		Collection<String> result=new ArrayList();
+		List<String> result=new ArrayList();
 
 		for(T e: col){
 			String str=e.toString();
@@ -259,7 +259,7 @@ public class CollectionUtils {
 	/** Returns removed elements */
 	public static <T> Collection<T> removeContaining(Collection<T> col, String searchFor) {
 
-		Collection<T> remove=new ArrayList();
+		List<T> remove=new ArrayList();
 
 		for(T e: col){
 			if(e.toString().contains(searchFor)) remove.add(e);
@@ -275,7 +275,7 @@ public class CollectionUtils {
 	/** Returns removed elements */
 	public static <T> Collection<T> removeContaining(Collection<T> col, String...searchFor) {
 
-		Collection<T> remove=new ArrayList();
+		List<T> remove=new ArrayList();
 
 		for(int i=0; i<searchFor.length; i++){
 			remove.addAll(removeContaining(col, searchFor[i]));

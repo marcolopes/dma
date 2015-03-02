@@ -11,8 +11,8 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.dma.java.io.FileHandler;
@@ -127,7 +127,7 @@ public class Certificate {
 	}
 
 
-	public Collection<String> getKeyUsage() {
+	public List<String> getKeyUsage() {
 		String[] purposes=new String[]{
 		     "digitalSignature",
 		     "nonRepudiation",
@@ -139,7 +139,7 @@ public class Certificate {
 		     "encipherOnly",
 		     "decipherOnly"};
 
-		Collection<String> col=new ArrayList();
+		List<String> col=new ArrayList();
 		for(int i=0; i<X509Cert.getKeyUsage().length && i<purposes.length; i++){
 			if (X509Cert.getKeyUsage()[i]) col.add(purposes[i]);
 		}
