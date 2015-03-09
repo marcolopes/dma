@@ -528,8 +528,8 @@ public class StringUtils {
 			Normalizer.normalize(string, Normalizer.Form.NFD).
 			//remove accents
 			replaceAll("\\p{InCombiningDiacriticalMarks}+", "").
-			//replace slash
-			replace('/',' '),
+			//replace slashes
+			replace('/',' ').replace('\\','-'),
 			//remove illegal characters
 			new char[]{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'});
 
