@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdo xmlns="http://java.sun.com/xml/ns/jdo/jdo"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdo http://java.sun.com/xml/ns/jdo/jdo_2_2.xsd">
+
+	<package name="org.datanucleus.test">
+
+		<class name="A" detachable="true" identity-type="application">
+			<inheritance strategy="new table"/>
+
+			<field name="id" primary-key="true" persistence-modifier="persistent" default-fetch-group="true">
+				<column jdbc-type="VARCHAR" length="64"/>
+			</field>
+
+			<field name="c1" persistence-modifier="persistent" default-fetch-group="true"/>
+
+			<field name="c2" persistence-modifier="persistent" default-fetch-group="true"/>
+
+		</class>
+		
+	</package>
+
+</jdo>
