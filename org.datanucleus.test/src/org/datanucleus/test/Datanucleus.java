@@ -114,7 +114,7 @@ public class Datanucleus {
 			pm=pmf.getPersistenceManager();
 			tx=(JDOTransaction)pm.currentTransaction();
 			tx.begin();
-			A user1=pm.getObjectById(A.class,"1");
+			A user1=pm.getObjectById(A.class, "1");
 			user1=pm.detachCopy(user1);
 			tx.commit();
 
@@ -122,7 +122,7 @@ public class Datanucleus {
 			pm=pmf.getPersistenceManager();
 			tx=(JDOTransaction)pm.currentTransaction();
 			tx.begin();
-			A user2=pm.getObjectById(A.class,"1");
+			A user2=pm.getObjectById(A.class, "1");
 			user2.setC1("XXX");
 			user2.setC2("XXX");
 			pm.makePersistent(user2);
@@ -135,7 +135,7 @@ public class Datanucleus {
 			pm=pmf.getPersistenceManager();
 			tx=(JDOTransaction)pm.currentTransaction();
 			tx.begin();
-			row=pm.getObjectById(A.class,"1");
+			row=pm.getObjectById(A.class, "1");
 			tx.commit();
 			//RESULT SHOULD BE C1=XXX, C2=YYY
 			System.out.println(row);
@@ -152,7 +152,7 @@ public class Datanucleus {
 		File db=new File(DATABASE_NAME).getAbsoluteFile();
 		
 		try {
-			Backup.execute(DATABASE_NAME+".zip",db.getParent(), db.getName(), false);
+			Backup.execute(DATABASE_NAME+".zip", db.getParent(), db.getName(), false);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
