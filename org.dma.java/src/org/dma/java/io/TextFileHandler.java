@@ -77,7 +77,7 @@ public class TextFileHandler extends FileHandler {
 				}
 
 			}finally{
-				close(br);
+				br.close();
 			}
 
 		}catch(FileNotFoundException e){
@@ -111,7 +111,7 @@ public class TextFileHandler extends FileHandler {
 				}
 
 			}finally{
-				close(br);
+				br.close();
 			}
 
 		}catch(FileNotFoundException e){
@@ -160,7 +160,7 @@ public class TextFileHandler extends FileHandler {
 				bw.write(text);
 
 			}finally{
-				close(bw);
+				bw.close();
 			}
 
 			return true;
@@ -214,7 +214,7 @@ public class TextFileHandler extends FileHandler {
 				}
 
 			}finally{
-				close(br);
+				br.close();
 			}
 
 		}catch(UnsupportedEncodingException e) {
@@ -250,7 +250,7 @@ public class TextFileHandler extends FileHandler {
 				}
 
 			}finally{
-				close(br);
+				br.close();
 			}
 
 		}catch(UnsupportedEncodingException e) {
@@ -304,7 +304,7 @@ public class TextFileHandler extends FileHandler {
 				bw.write(text);
 
 			}finally{
-				close(bw);
+				bw.close();
 			}
 
 			return true;

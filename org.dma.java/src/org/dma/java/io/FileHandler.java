@@ -5,7 +5,6 @@
  *******************************************************************************/
 package org.dma.java.io;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -53,16 +52,6 @@ public class FileHandler {
 				replace("- ","-").
 				replace(" -","-").
 				replace(" ","_");
-	}
-
-
-	public static void close(Closeable resource) {
-		if (resource!=null) try{
-			resource.close();
-
-		}catch(IOException e){
-			System.out.println(e);
-		}
 	}
 
 

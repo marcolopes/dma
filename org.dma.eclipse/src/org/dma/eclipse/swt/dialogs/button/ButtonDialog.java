@@ -68,6 +68,7 @@ public abstract class ButtonDialog extends CustomShell {
 			button.setData(LABELS[i]);
 
 			button.addSelectionListener(new SelectionAdapter() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
 					String label=(String)e.widget.getData();
 					close();

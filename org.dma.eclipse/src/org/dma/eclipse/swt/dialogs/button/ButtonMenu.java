@@ -68,6 +68,7 @@ public abstract class ButtonMenu extends CustomShell {
 			button.setData(i);
 
 			button.addSelectionListener(new SelectionAdapter() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
 					int index=(Integer)e.widget.getData();
 					close();

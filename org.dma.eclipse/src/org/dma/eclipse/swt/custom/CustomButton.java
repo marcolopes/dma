@@ -50,6 +50,7 @@ public class CustomButton extends Button {
 	public void setSelectionAction(final CustomAction action) {
 		this.selectionAction=action;
 		addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				action.run();
 			}

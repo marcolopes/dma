@@ -103,6 +103,7 @@ public abstract class ButtonKeypad extends CustomShell {
 		//text.setEditable(false);
 		text.setText(value);
 		text.addVerifyListener(new VerifyListener(){
+			@Override
 			public void verifyText(VerifyEvent e) {
 				//calculates new text
 				StringBuffer newText=new StringBuffer(text.getText()).
@@ -146,6 +147,7 @@ public abstract class ButtonKeypad extends CustomShell {
 			button.setData(LABELS[i]);
 
 			button.addSelectionListener(new SelectionAdapter() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
 					String label=(String)e.widget.getData();
 					if (label.equals(RETURN)){

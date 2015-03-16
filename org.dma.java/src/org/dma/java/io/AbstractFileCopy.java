@@ -40,11 +40,17 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 					new BufferedInputStream(
 							new FileInputStream(src));
 
-			final OutputStream bos=
+			OutputStream bos=
 					new BufferedOutputStream(
 							new FileOutputStream(dst));
 
-			copy(bis, bos);
+			try{
+				copy(bis, bos);
+
+			}finally{
+				bos.close();
+				bis.close();
+			}
 
 			return true;
 

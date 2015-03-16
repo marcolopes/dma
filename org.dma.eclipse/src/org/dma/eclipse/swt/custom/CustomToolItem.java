@@ -45,6 +45,7 @@ public class CustomToolItem extends ToolItem {
 	public void setSelectionAction(final CustomAction action) {
 		this.selectionAction=action;
 		addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				action.run();
 			}

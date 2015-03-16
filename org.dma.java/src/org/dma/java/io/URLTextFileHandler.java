@@ -69,7 +69,7 @@ public class URLTextFileHandler extends TextFileHandler {
 				}
 
 			}finally{
-				close(br);
+				br.close();
 			}
 
 		}catch(UnsupportedEncodingException e){

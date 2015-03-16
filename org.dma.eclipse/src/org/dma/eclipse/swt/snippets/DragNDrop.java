@@ -152,6 +152,7 @@ public class DragNDrop {
 		moveButton.setSelection(true);
 		dragOperation = DND.DROP_MOVE;
 		moveButton.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -172,6 +173,7 @@ public class DragNDrop {
 		Button b = new Button(parent, SWT.CHECK);
 		b.setText("DND.DROP_COPY");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -192,6 +194,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("DND.DROP_LINK");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -425,6 +428,7 @@ public class DragNDrop {
 		Button b = new Button(parent, SWT.CHECK);
 		b.setText("Text Transfer");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -438,6 +442,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("RTF Transfer");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -451,6 +456,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("HTML Transfer");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -465,6 +471,7 @@ public class DragNDrop {
 		b.setText("File Transfer");
 		b.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -478,6 +485,7 @@ public class DragNDrop {
 		b.setText("Select File(s)");
 		b.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(fileList.getShell(),
 						SWT.OPEN | SWT.MULTI);
@@ -511,6 +519,7 @@ public class DragNDrop {
 		dragControl = createWidget(dragControlType, parent, "Drag Source");
 
 		combo.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Object data = dragControl.getLayoutData();
 				Composite parent = dragControl.getParent();
@@ -529,6 +538,7 @@ public class DragNDrop {
 		Button b = new Button(parent, SWT.CHECK);
 		b.setText("DragSource");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				dragEnabled = b.getSelection();
@@ -568,6 +578,7 @@ public class DragNDrop {
 		moveButton.setSelection(true);
 		dropOperation = DND.DROP_MOVE;
 		moveButton.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -589,6 +600,7 @@ public class DragNDrop {
 		final Button copyButton = new Button(parent, SWT.CHECK);
 		copyButton.setText("DND.DROP_COPY");
 		copyButton.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -610,6 +622,7 @@ public class DragNDrop {
 		final Button linkButton = new Button(parent, SWT.CHECK);
 		linkButton.setText("DND.DROP_LINK");
 		linkButton.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -632,6 +645,7 @@ public class DragNDrop {
 		b.setText("DND.DROP_DEFAULT");
 		defaultParent = new Composite(parent, SWT.NONE);
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -656,6 +670,7 @@ public class DragNDrop {
 		b = new Button(defaultParent, SWT.RADIO);
 		b.setText("DND.DROP_MOVE");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -672,6 +687,7 @@ public class DragNDrop {
 		b = new Button(defaultParent, SWT.RADIO);
 		b.setText("DND.DROP_COPY");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -688,6 +704,7 @@ public class DragNDrop {
 		b = new Button(defaultParent, SWT.RADIO);
 		b.setText("DND.DROP_LINK");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -705,6 +722,7 @@ public class DragNDrop {
 		b.setText("DND.DROP_NONE");
 		b.setSelection(true);
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -876,6 +894,7 @@ public class DragNDrop {
 		Button b = new Button(parent, SWT.CHECK);
 		b.setText("FEEDBACK_SELECT");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -889,6 +908,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("FEEDBACK_SCROLL");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -902,6 +922,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("FEEDBACK_INSERT_BEFORE");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -915,6 +936,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("FEEDBACK_INSERT_AFTER");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -928,6 +950,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("FEEDBACK_EXPAND");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -944,6 +967,7 @@ public class DragNDrop {
 		Button b = new Button(parent, SWT.CHECK);
 		b.setText("Text Transfer");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -957,6 +981,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("RTF Transfer");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -970,6 +995,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("HTML Transfer");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -983,6 +1009,7 @@ public class DragNDrop {
 		b = new Button(parent, SWT.CHECK);
 		b.setText("File Transfer");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				if(b.getSelection()){
@@ -1005,6 +1032,7 @@ public class DragNDrop {
 		dropControlType = combo.getSelectionIndex();
 		dropControl = createWidget(dropControlType, parent, "Drop Target");
 		combo.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Object data = dropControl.getLayoutData();
 				Composite parent = dropControl.getParent();
@@ -1023,6 +1051,7 @@ public class DragNDrop {
 		Button b = new Button(parent, SWT.CHECK);
 		b.setText("DropTarget");
 		b.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Button b = (Button)e.widget;
 				dropEnabled = b.getSelection();
@@ -1191,6 +1220,7 @@ public class DragNDrop {
 		MenuItem item = new MenuItem(menu, SWT.PUSH);
 		item.setText("Clear");
 		item.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				dragConsole.setText("");
 			}
@@ -1198,6 +1228,7 @@ public class DragNDrop {
 		item = new MenuItem(menu, SWT.CHECK);
 		item.setText("Show Event detail");
 		item.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				MenuItem item = (MenuItem)e.widget;
 				dragEventDetail = item.getSelection();
@@ -1237,6 +1268,7 @@ public class DragNDrop {
 		item = new MenuItem(menu, SWT.PUSH);
 		item.setText("Clear");
 		item.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				dropConsole.setText("");
 			}
@@ -1244,6 +1276,7 @@ public class DragNDrop {
 		item = new MenuItem(menu, SWT.CHECK);
 		item.setText("Show Event detail");
 		item.addSelectionListener(new SelectionAdapter(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				MenuItem item = (MenuItem)e.widget;
 				dropEventDetail = item.getSelection();

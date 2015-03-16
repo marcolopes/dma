@@ -51,17 +51,21 @@ public class Certificate {
 	public Certificate(CERTIFICATE_TYPE type, InputStream stream, String password) {
 		this.password=password;
 
-		if (stream!=null) try{
-			keyStore=KeyStore.getInstance(type.name());
-			keyStore.load(stream, password.toCharArray());
+		try{
+			try{
+				keyStore=KeyStore.getInstance(type.name());
+				keyStore.load(stream, password.toCharArray());
+			}finally{
+				stream.close();
+			}
 
 		}catch(IOException e){
 			System.out.println(e);
 		}catch(Exception e){
+			keyStore=null;
 			e.printStackTrace();
-		}finally{
-			FileHandler.close(stream);
 		}
+
 	}
 
 

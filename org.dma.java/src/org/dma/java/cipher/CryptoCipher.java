@@ -150,7 +150,7 @@ public class CryptoCipher {
 	 * - Decrypt Bytes<br>
 	 * - Convert Bytes to String (UTF8 charset)
 	 *
-	 * @param messageBytes - the message to decrypt.
+	 * @param message - the message to decrypt.
 	 * <b>Must be in BASE64</b>
 	 */
 	public String decrypt(String message) {

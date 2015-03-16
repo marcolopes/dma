@@ -159,6 +159,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 			}
 		});
 		tabFolder.addSelectionListener(new SelectionListener(){
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				CTabItem tabItem=(CTabItem)e.item;
 				Debug.out("SELECTED", tabItem);

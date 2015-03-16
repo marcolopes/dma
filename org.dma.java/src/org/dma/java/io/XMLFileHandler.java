@@ -42,16 +42,18 @@ public class XMLFileHandler extends FileHandler {
 	public Object read() {
 
 		try{
-			XMLDecoder decoder=
-					new XMLDecoder(
-							new BufferedInputStream(
-									new FileInputStream(file)));
+			BufferedInputStream bis=
+					new BufferedInputStream(
+							new FileInputStream(file));
+
+			XMLDecoder decoder=new XMLDecoder(bis);
 
 			try{
 				return decoder.readObject();
 
 			}finally{
 				decoder.close();
+				bis.close();
 			}
 
 		}catch(FileNotFoundException e){
@@ -85,16 +87,18 @@ public class XMLFileHandler extends FileHandler {
 	public boolean write(Object obj) {
 
 		try{
-			XMLEncoder encoder=
-					new XMLEncoder(
-							new BufferedOutputStream(
-									new FileOutputStream(file)));
+			BufferedOutputStream bos=
+					new BufferedOutputStream(
+							new FileOutputStream(file));
+
+			XMLEncoder encoder=new XMLEncoder(bos);
 
 			try{
 				encoder.writeObject(obj);
 
 			}finally{
 				encoder.close();
+				bos.close();
 			}
 
 			return true;

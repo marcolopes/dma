@@ -38,6 +38,7 @@ public abstract class TableViewerContainer<T> {
 	public abstract Collection<T> retrieveObjects();
 
 	private final MouseAdapter tableDoubleClickListener=new MouseAdapter() {
+		@Override
 		public void mouseDoubleClick(MouseEvent e) {
 			if(getSelectionElement()!=null) {
 				editObject();
@@ -46,6 +47,7 @@ public abstract class TableViewerContainer<T> {
 	};
 
 	private final KeyListener tableEnterKeyListener=new KeyAdapter() {
+		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.keyCode==SWT.CR || e.keyCode==SWT.KEYPAD_CR){
 				if(getSelectionElement()!=null) {
@@ -102,6 +104,7 @@ public abstract class TableViewerContainer<T> {
 
 		for(TableColumn column: getTable().getColumns()){
 			column.addSelectionListener(new SelectionAdapter() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
 					TableColumn column=(TableColumn)e.widget;
 					//avoids if unselected

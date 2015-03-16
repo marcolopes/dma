@@ -56,11 +56,12 @@ public class ZipFileHandler extends FileHandler {
 
 	/**
 	 * Several predefined compression levels are available
-	 * DEFLATE_LEVEL_FASTEST - Lowest compression level but higher speed of compression
-	 * DEFLATE_LEVEL_FAST - Low compression level but higher speed of compression
-	 * DEFLATE_LEVEL_NORMAL - Optimal balance between compression level/speed
-	 * DEFLATE_LEVEL_MAXIMUM - High compression level with a compromise of speed
-	 * DEFLATE_LEVEL_ULTRA - Highest compression level but low speed
+	 * @see Zip4jConstants
+	 * <li>DEFLATE_LEVEL_FASTEST - Lowest compression level but higher speed of compression
+	 * <li>DEFLATE_LEVEL_FAST - Low compression level but higher speed of compression
+	 * <li>DEFLATE_LEVEL_NORMAL - Optimal balance between compression level/speed
+	 * <li>DEFLATE_LEVEL_MAXIMUM - High compression level with a compromise of speed
+	 * <li>DEFLATE_LEVEL_ULTRA - Highest compression level but low speed
 	 */
 	public void create(Collection<File> filesToAdd, int compressionLevel) throws Exception {
 

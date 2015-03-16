@@ -25,7 +25,7 @@ public class SWTFontUtils {
 	 */
 	public static Font createFont(Control control, int height){
 
-		FontData[] fontData = control.getFont().getFontData();
+		FontData[] fontData=control.getFont().getFontData();
 
 		for(int i=0; i<fontData.length; ++i)
 			fontData[i].setHeight(height);
@@ -59,7 +59,7 @@ public class SWTFontUtils {
 	 * @return a <code>FontData</code> object.
 	 */
 	public static FontData toSWTFontData(Device device, java.awt.Font font,	boolean ensureSameHeight) {
-		int style = SWT.NORMAL;
+		int style=SWT.NORMAL;
 		switch (font.getStyle()) {
 			case java.awt.Font.PLAIN:
 				style |= SWT.NORMAL;
@@ -75,7 +75,7 @@ public class SWTFontUtils {
 				break;
 		}
 		// convert the font size (in pt for awt) to height in pixels for swt
-		int height = (int) Math.round(font.getSize() * 72.0	/ device.getDPI().y);
+		int height=(int) Math.round(font.getSize() * 72.0 / device.getDPI().y);
 		return new FontData(font.getFamily(), height, style);
 	}
 
@@ -83,32 +83,30 @@ public class SWTFontUtils {
 
 	/**
 	 * Create an awt font by converting as much information
-	 * as possible from the provided swt <code>FontData</code>.
+	 * as possible from the provided swt <code>Font</code>.
 	 *
 	 * @param device The swt device being drawn on (display or gc device).
-	 * @param fontData The swt font to convert.
-	 * @param ensureSameHeight A boolean used to enforce the same height
-	 * (in pixels) between the swt font and the newly created awt font.
+	 * @param font The swt font to convert.
 	 * @return An awt font converted from the provided swt font.
 	 */
 	public static java.awt.Font toAWTFont(Device device, Font font) {
-		FontData fontData = font.getFontData()[0];
+		FontData fontData=font.getFontData()[0];
 		int style;
 		switch (fontData.getStyle()) {
 			case SWT.NORMAL:
-				style = java.awt.Font.PLAIN;
+				style=java.awt.Font.PLAIN;
 				break;
 			case SWT.ITALIC:
-				style = java.awt.Font.ITALIC;
+				style=java.awt.Font.ITALIC;
 				break;
 			case SWT.BOLD:
-				style = java.awt.Font.BOLD;
+				style=java.awt.Font.BOLD;
 				break;
 			default:
-				style = java.awt.Font.PLAIN;
+				style=java.awt.Font.PLAIN;
 				break;
 		}
-		int height = (int) Math.round(fontData.height * device.getDPI().y / 72.0);
+		int height=(int) Math.round(fontData.height * device.getDPI().y / 72.0);
 		return new java.awt.Font(fontData.getName(), style, height);
 	}
 

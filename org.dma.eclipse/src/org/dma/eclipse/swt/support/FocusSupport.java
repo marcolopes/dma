@@ -15,16 +15,15 @@ public class FocusSupport {
 	private Control lastFocusControl;
 
 	private final FocusListener focusListener = new FocusListener() {
-
+		@Override
 		public void focusGained(FocusEvent e) {
 			if(e.widget instanceof Control) {
 				lastFocusControl=(Control)e.widget;
 			}
 		}
-
+		@Override
 		public void focusLost(FocusEvent e) {
 		}
-
 	};
 
 	public void reset() {

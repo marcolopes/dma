@@ -45,22 +45,22 @@ public class ClipboardManager {
 	}
 
 
-	public static Class getObjectClass() {
+	public static Class<?> getObjectClass() {
 		return CLIPBOARD.get(0).getClass();
 	}
 
 
-	public static boolean hasObject(Class klass) {
+	public static boolean hasObject(Class<?> klass) {
 		return hasObject() && klass.equals(getObjectClass());
 	}
 
 
-	public static <T> T getObject(Class klass) {
+	public static <T> T getObject(Class<?> klass) {
 		return !hasObject(klass) ? null : (T)CLIPBOARD.get(0);
 	}
 
 
-	public static <T> List<T> getClipboard(Class klass) {
+	public static <T> List<T> getClipboard(Class<?> klass) {
 		return !hasObject(klass) ? new ArrayList(0) : CLIPBOARD;
 	}
 

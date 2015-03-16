@@ -82,7 +82,7 @@ public class ByteFileHandler extends FileHandler {
 				}.read(file);
 
 			}finally{
-				close(bis);
+				bis.close();
 			}
 
 		}catch(FileNotFoundException e){
@@ -124,7 +124,7 @@ public class ByteFileHandler extends FileHandler {
 				bos.write(bytes);
 
 			}finally{
-				close(bos);
+				bos.close();
 			}
 
 			return bytes.length;

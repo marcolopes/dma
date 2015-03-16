@@ -53,7 +53,7 @@ public class StringUtils {
 	}
 
 
-	/** @see Integer.toHexString */
+	/** @see Integer#toHexString */
 	public static String toHexString(byte b) {
 
 		String hexString=Integer.toHexString(0x00ff & b);
@@ -460,7 +460,7 @@ public class StringUtils {
 	/** Ensure the ESCAPE (\) char is escaped! */
 	public static String escape(String string) {
 
-		return string.replace("\\","\\\\");
+		return string.replace("\\", "\\\\");
 
 	}
 
@@ -468,7 +468,7 @@ public class StringUtils {
 	/** Escape and surround with QUOTE chars */
 	public static String quote(String string, char quote) {
 
-		return quote + escape(string).replace("\"","\\\"") + quote;
+		return quote + escape(string).replace("\"", "\\\"") + quote;
 
 	}
 

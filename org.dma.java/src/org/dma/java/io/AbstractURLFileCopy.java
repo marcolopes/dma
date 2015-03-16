@@ -62,17 +62,23 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 					new BufferedInputStream(
 							getInputStream(src));
 
-			File tmp=new File(dst+".tmp");
+			File output=new File(dst+".tmp");
 
 			final OutputStream bos=
 					new BufferedOutputStream(
-							new FileOutputStream(tmp));
+							new FileOutputStream(output));
 
-			copy(bis, bos);
+			try{
+				copy(bis, bos);
+
+			}finally{
+				bos.close();
+				bis.close();
+			}
 
 			new File(dst).delete();
 
-			return tmp.renameTo(new File(dst));
+			return output.renameTo(new File(dst));
 
 		}catch(FileNotFoundException e){
 			System.out.println(e);

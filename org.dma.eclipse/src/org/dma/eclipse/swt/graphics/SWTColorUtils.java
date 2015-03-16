@@ -48,7 +48,6 @@ public class SWTColorUtils {
 	 * @param device The swt device to draw on (display or gc device).
 	 * @param paint The awt color to match.
 	 * @return a swt color object.
-	 * @throws Exception
 	 */
 	public static Color toSWTColor(Device device, java.awt.Paint paint) {
 		java.awt.Color color;

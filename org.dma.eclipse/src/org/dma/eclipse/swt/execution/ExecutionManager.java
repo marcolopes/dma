@@ -59,6 +59,7 @@ public class ExecutionManager {
 		if(EVENTS.containsKey(execDefinition)) throw new Error("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
 
 		execDefinition.addKeyListener(new KeyAdapter() {
+			@Override
 			public void keyPressed(KeyEvent event) {
 				for(int keyCode: execEvent.getKeycode()){
 					if(keyCode==event.keyCode) {
@@ -74,6 +75,7 @@ public class ExecutionManager {
 		if(execDefinition.getControl() instanceof Combo) {
 
 			execDefinition.addSelectionListener(new Listener() {
+				@Override
 				public void handleEvent(Event event) {
 					Debug.out("EXECUTION");
 					execEvent.getExecutionAction().run();
