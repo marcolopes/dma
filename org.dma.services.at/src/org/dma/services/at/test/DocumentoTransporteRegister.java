@@ -80,7 +80,7 @@ public class DocumentoTransporteRegister {
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
 				new Certificate(CERTIFICATE_TYPE.JKS, "saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
-				new Certificate(CERTIFICATE_TYPE.PKCS12, "TestesWebServices.pfx", "TESTEwebservice", null),
+				new Certificate(CERTIFICATE_TYPE.PKCS12, "TesteWebServices.pfx", "TESTEwebservice", null),
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 
