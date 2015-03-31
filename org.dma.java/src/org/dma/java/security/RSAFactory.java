@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -93,9 +93,16 @@ public class RSAFactory {
 	}
 
 
-	public static PrivateKey loadAndDecodePrivateKey(String derfile) {
+	public static PrivateKey base64DecodePrivateKey(String keyString) {
 
-		byte[] keyBytes=loadKeyBytes(derfile);
+		return decodePrivateKey(new Base64(0).decode(keyString));
+
+	}
+
+
+	public static PrivateKey loadAndDecodePrivateKey(String derFile) {
+
+		byte[] keyBytes=loadKeyBytes(derFile);
 		return keyBytes==null ?	null : decodePrivateKey(keyBytes);
 
 	}
@@ -132,9 +139,16 @@ public class RSAFactory {
 	}
 
 
-	public static PublicKey loadAndDecodePublicKey(String derfile) {
+	public static PublicKey base64DecodePublicKey(String keyString) {
 
-		byte[] keyBytes=loadKeyBytes(derfile);
+		return decodePublicKey(new Base64(0).decode(keyString));
+
+	}
+
+
+	public static PublicKey loadAndDecodePublicKey(String derFile) {
+
+		byte[] keyBytes=loadKeyBytes(derFile);
 		return keyBytes==null ?	null : decodePublicKey(keyBytes);
 
 	}
