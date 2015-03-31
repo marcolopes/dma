@@ -131,14 +131,12 @@ public class ExecutionManager {
 
 				ExecutionEvent execEvent=EVENTS.get(execDefinition);
 
-				if(execEvent.getResponseAction()!=null && execEvent.isActionExecuted()) {
+				if(execEvent.isActionExecuted()) {
 
-					execEvent.getResponseAction().run();
+					if(execEvent.getResponseAction()!=null) execEvent.getResponseAction().run();
+					if(execEvent.getPostresponseAction()!=null) execEvent.getPostresponseAction().run();
+
 					execEvent.setActionExecuted(false);
-
-					if(execEvent.getPostresponseAction()!=null) {
-						execEvent.getPostresponseAction().run();
-					}
 
 				}
 
@@ -156,17 +154,20 @@ public class ExecutionManager {
 	}
 
 
-	private static boolean hasDependentExecutions(String id, String secondaryId) {
+	public static boolean hasDependentExecutions(String id, String secondaryId) {
 
 		for(ExecutionDefinition execDefinition: EVENTS.keySet()) {
 
-			ExecutionEvent execEvent=EVENTS.get(execDefinition);
+			if(ObjectUtils.equals(id, execDefinition.getId()) &&
+				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())){
 
-			if(execDefinition!=null && execEvent!=null &&
-				execEvent.getPostresponseAction()!=null &&
-					ObjectUtils.equals(id, execDefinition.getId()) &&
-					ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId()))
-				return true;
+				ExecutionEvent execEvent=EVENTS.get(execDefinition);
+
+				if(execEvent.getResponseAction()!=null ||
+					execEvent.getPostresponseAction()!=null) return true;
+
+			}
+
 		}
 
 		return false;
@@ -174,7 +175,7 @@ public class ExecutionManager {
 	}
 
 
-	private static boolean hasDependentExecutions(String id) {
+	public static boolean hasDependentExecutions(String id) {
 
 		return hasDependentExecutions(id, null);
 

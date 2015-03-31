@@ -16,14 +16,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
 
 public abstract class ButtonMenu extends CustomShell {
 
 	public abstract String label(int index);
 	public abstract void done(int index);
-
-	private Text text;
 
 	private final int labels;
 	private final int height;
