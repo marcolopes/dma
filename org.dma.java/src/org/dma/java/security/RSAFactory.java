@@ -37,15 +37,17 @@ import org.dma.java.cipher.RSAPublicCipher;
  */
 public class RSAFactory {
 
-	private static byte[] loadKeyBytes(String filename) {
+	private static byte[] loadKeyBytes(File file) {
 
 		try{
 			// read
-			File file=new File(filename);
 			DataInputStream dis=new DataInputStream(new FileInputStream(file));
 			byte[] bytes=new byte[(int)file.length()];
-			dis.readFully(bytes);
-			dis.close();
+			try{
+				dis.readFully(bytes);
+			}finally{
+				dis.close();
+			}
 
 			return bytes;
 
@@ -100,10 +102,9 @@ public class RSAFactory {
 	}
 
 
-	public static PrivateKey loadAndDecodePrivateKey(String derFile) {
+	public static PrivateKey decodePrivateKey(File derFile) {
 
-		byte[] keyBytes=loadKeyBytes(derFile);
-		return keyBytes==null ?	null : decodePrivateKey(keyBytes);
+		return decodePrivateKey(loadKeyBytes(derFile));
 
 	}
 
@@ -146,10 +147,9 @@ public class RSAFactory {
 	}
 
 
-	public static PublicKey loadAndDecodePublicKey(String derFile) {
+	public static PublicKey decodePublicKey(File derFile) {
 
-		byte[] keyBytes=loadKeyBytes(derFile);
-		return keyBytes==null ?	null : decodePublicKey(keyBytes);
+		return decodePublicKey(loadKeyBytes(derFile));
 
 	}
 
@@ -268,6 +268,20 @@ public class RSAFactory {
 			System.out.println("No such algorithm: " + keyPair.getPublic().getAlgorithm());
 		}catch(InvalidKeySpecException specException) {
 			System.out.println("Invalid Key Spec Exception");
+		}
+
+	}
+
+
+	public static void main(String[] argvs) {
+
+		for (int size: new int[]{256, 512, 1024, 2048, 4096}) try{
+
+			System.out.println("KEY SIZE: "+size);
+			debug(generateKeyPair(size));
+
+		}catch(Exception e){
+			System.out.println(e);
 		}
 
 	}

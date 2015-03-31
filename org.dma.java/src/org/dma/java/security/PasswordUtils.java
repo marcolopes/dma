@@ -121,7 +121,7 @@ public class PasswordUtils {
 	}
 
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 
 		String message = "The quick brown fox jumps over the lazy dog.";
 

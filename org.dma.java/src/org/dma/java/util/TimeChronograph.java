@@ -7,7 +7,6 @@ package org.dma.java.util;
 
 public class TimeChronograph {
 
-	private long endTime;
 	private long startTime;
 	private long elapsedTime=0;
 	private boolean running=false;
@@ -29,7 +28,6 @@ public class TimeChronograph {
 
 
 	public void reset() {
-		endTime=0;
 		startTime=System.nanoTime();
 		elapsedTime=0;
 	}

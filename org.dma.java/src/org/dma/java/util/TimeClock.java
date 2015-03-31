@@ -34,7 +34,6 @@ public abstract class TimeClock {
 	private final Date date=new Date();
 	private final Timer timer=new Timer();
 
-	private final Locale locale;
 	private final CLOCK_FORMAT format;
 	private final Format formatter;
 
@@ -43,7 +42,6 @@ public abstract class TimeClock {
 	}
 
 	public TimeClock(Locale locale, CLOCK_FORMAT format) {
-		this.locale=locale;
 		this.format=format;
 		this.formatter=new SimpleDateFormat(format.pattern, locale);
 	}
