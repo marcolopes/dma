@@ -32,13 +32,41 @@ public class Enumerator {
 		}
 	}
 	
-	public static void main(String[] argvs){
+	
+	public enum Direction {
+	    NORTH, SOUTH, EAST, WEST;
+
+	    public final Direction opposite;
+	    
+	    Direction() {
+	    	opposite=opposite();
+	    }
+	    
+	    private Direction opposite() {
+	        switch(this) {
+	            case NORTH: return SOUTH;
+	            case SOUTH: return NORTH;
+	            case EAST:  return WEST;
+	            case WEST:  return EAST;
+	        }
+	        return null;
+	    }
+	}
+
+	
+	public static void main(String[] argvs) {
+		
 		System.out.println(ONE.ONE_1.e1);
 		System.out.println(ONE.ONE_1.e2);
+		
 		System.out.println(TWO.TWO_1.e1);
 		System.out.println(TWO.TWO_1.e2);
+		
 		System.out.println(THREE.THREE_1.e1);
 		System.out.println(THREE.THREE_1.e2);
+		
+		System.out.println(Direction.NORTH.opposite);
+		
 	}
 
 }
