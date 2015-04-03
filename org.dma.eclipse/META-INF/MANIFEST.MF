@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Utils
 Bundle-SymbolicName: org.dma.eclipse;singleton:=true
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 5.0.1.qualifier
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.dma.java;bundle-version="5.0.0"
 Export-Package: org.dma.eclipse.core,
  org.dma.eclipse.core.bindings,
+ org.dma.eclipse.core.bindings.converters,
  org.dma.eclipse.core.jobs,
  org.dma.eclipse.core.jobs.tasks,
  org.dma.eclipse.swt.copypaste,
