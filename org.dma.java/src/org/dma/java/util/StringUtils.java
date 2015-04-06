@@ -18,6 +18,10 @@ public class StringUtils {
 	public static final Pattern DECIMAL_PATTERN = Pattern.compile("^[0-9[.]]+$");
 	public static final Pattern UPPERCASE_PATTERN = Pattern.compile("^[^a-z]+$");
 
+	public static final String DECIMAL_NUMBERS = "0123456789";
+	public static final String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
+	public static final String UPPERCASE_LETTERS = LOWERCASE_LETTERS.toUpperCase();
+
 	/*
 	 * Conversion
 	 */
@@ -109,16 +113,23 @@ public class StringUtils {
 	}
 
 
+	public static String random(int length) {
+
+		return random(LOWERCASE_LETTERS+DECIMAL_NUMBERS, length);
+
+	}
+
+
 	public static String randomLetters(int length) {
 
-		return random("abcdefghijklmnopqrstuvwxyz", length);
+		return random(LOWERCASE_LETTERS, length);
 
 	}
 
 
 	public static String randomNumbers(int length) {
 
-		return random("0123456789", length);
+		return random(DECIMAL_NUMBERS, length);
 
 	}
 
