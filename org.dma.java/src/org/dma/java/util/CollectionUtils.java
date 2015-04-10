@@ -175,8 +175,11 @@ public class CollectionUtils {
 		StringBuilder result=new StringBuilder();
 
 		for(T e: col){
-			if(result.length()>0) result.append(separator);
-			result.append(e.toString());
+			String s=e.toString();
+			if(!s.isEmpty()){
+				if(result.length()>0) result.append(separator);
+				result.append(s);
+			}
 		}
 
 		return result.toString();
