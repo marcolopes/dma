@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -121,6 +121,7 @@ public class CustomJob extends Job {
 	 * (non-Javadoc)
 	 * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
 	 */
+	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 
 		ILock lock = getJobManager().newLock();
@@ -141,6 +142,7 @@ public class CustomJob extends Job {
 				if(jtask instanceof JobUITask){
 					//UI task
 					Display.getDefault().syncExec(new Runnable() {
+						@Override
 						public void run() {
 							jtask.getAction().run();
 						}
@@ -152,18 +154,19 @@ public class CustomJob extends Job {
 
 			}
 
+			return Status.OK_STATUS;
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		finally{
 			lock.release();
 			monitor.done();
+			Debug.out("FINISHED", this);
 		}
 
-		Debug.out("FINISHED", this);
+		return Status.CANCEL_STATUS;
 
-		return Status.OK_STATUS;
-		
 	}
 
 
