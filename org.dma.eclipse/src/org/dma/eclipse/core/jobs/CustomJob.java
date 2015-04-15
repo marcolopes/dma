@@ -66,7 +66,7 @@ public class CustomJob extends Job {
 		setRule(MUTEX_RULE);
 	}
 
-	public void reset(){
+	public void reset() {
 		canceled=false;
 	}
 
@@ -163,6 +163,7 @@ public class CustomJob extends Job {
 		Debug.out("FINISHED", this);
 
 		return Status.OK_STATUS;
+		
 	}
 
 
