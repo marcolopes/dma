@@ -74,6 +74,7 @@ public class Command {
 	}
 
 
+	/** @see Process#waitFor() */
 	public int startAndWait() throws IOException, InterruptedException {
 
 		return start().waitFor();
