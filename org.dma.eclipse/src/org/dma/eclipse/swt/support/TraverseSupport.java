@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -21,6 +21,24 @@ public class TraverseSupport extends ArrayList<Control> {
 	private static final long serialVersionUID = 1L;
 
 	private final TraverseListener traverseListener = new TraverseListener() {
+
+		private Control getNextControl(Object obj) {
+
+			int index=indexOf(obj);
+			try{
+				int index2=index;
+				do{
+					index=index+1==size() ? 0 : index+1;
+
+				}while(index!=index2 && !get(index).isEnabled());
+
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+
+			return get(index);
+
+		}
 
 		public void keyTraversed(TraverseEvent e) {
 
@@ -87,27 +105,6 @@ public class TraverseSupport extends ArrayList<Control> {
 
 	public TraverseSupport(boolean keypadReturn){
 		this.keypadReturn=keypadReturn;
-	}
-
-
-	private Control getNextControl(Object obj) {
-
-		int index=indexOf(obj);
-		try{
-			Control control;
-			int index2=index;
-			do{
-				index=index+1==size() ? 0 : index+1;
-				control=get(index);
-
-			}while(index!=index2 && !control.isEnabled());
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return get(index);
-
 	}
 
 
