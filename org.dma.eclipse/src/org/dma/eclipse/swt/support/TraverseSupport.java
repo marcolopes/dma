@@ -22,83 +22,45 @@ public class TraverseSupport extends ArrayList<Control> {
 
 	private final TraverseListener traverseListener = new TraverseListener() {
 
-		private Control getNextControl(Object obj) {
-
-			int index=indexOf(obj);
-			try{
-				int index2=index;
-				do{
-					index=index+1==size() ? 0 : index+1;
-
-				}while(index!=index2 && !get(index).isEnabled());
-
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-
-			return get(index);
-
-		}
-
 		public void keyTraversed(TraverseEvent e) {
-
 			try{
-				//control actual
-				Control actualControl=(Control)e.getSource();
+				//current control
+				Control control=(Control)e.getSource();
 
-				//TEXT multi-linha?
-				if (actualControl instanceof Text &&
-						NumericUtils.bit(((Text)actualControl).getStyle(), SWT.MULTI)){
+				//multi-line TEXT?
+				if (control instanceof Text &&
+						NumericUtils.bit(((Text)control).getStyle(), SWT.MULTI)){
 
 					Debug.out("SWT.MULTI");
 
 					if (keypadReturn){
 
-						//foi pressionado ENTER do teclado numerico?
+						//numeric keypad ENTER pressed?
 						if (e.keyCode==SWT.KEYPAD_CR){
-							Debug.out("SWT.KEYPAD_CR");
-							//NAO passa de campo
-							e.doit = false;
+							e.doit = false; // do not traverse
 						}
-						//foi pressionado ENTER principal?
+						//main ENTER pressed?
 						else if (e.keyCode==SWT.CR){
-							Debug.out("SWT.CR");
-							//NAO insere nova linha
-							e.detail = SWT.TRAVERSE_NONE;
-							//passa de campo
-							e.doit = true;
+							e.detail = SWT.TRAVERSE_NONE; // avoid NEW line
+							e.doit = true; // traverse
 						}
 
 					}
-					//foi pressionado TAB?
+					//TAB key pressed?
 					else if (e.keyCode==SWT.TAB){
-						Debug.out("SWT.TAB");
-						//passa de campo
-						e.doit = true;
+						e.doit = true; // traverse
 					}
 
 				}
 
-				//processa proximo control
-				if (e.doit){
-
-					Control nextControl=getNextControl(e.getSource());
-					nextControl.setFocus();
-					nextControl.update();
-
-					//selecciona texto caso nao seja MULTI
-					if (nextControl instanceof Text &&
-							!NumericUtils.bit(((Text)nextControl).getStyle(), SWT.MULTI)){
-						((Text)nextControl).selectAll();
-					}
-
-				}
+				//next control
+				if (e.doit) selectNext(control);
 
 			}catch(Exception e1) {
 				e1.printStackTrace();
 			}
-
 		}
+
 	};
 
 	private final boolean keypadReturn;
@@ -136,7 +98,41 @@ public class TraverseSupport extends ArrayList<Control> {
 		for(Control e: this){
 			remove(e);
 		}
+	}
 
+
+	public Control getNext(Control control) {
+		int index=indexOf(control);
+		int index2=index;
+		do{
+			index=index+1==size() ? 0 : index+1;
+		}while(index!=index2 && !get(index).isEnabled());
+		return get(index);
+	}
+
+	public void select(Control control) {
+		control.setFocus();
+		control.update();
+		//selects text
+		if (control instanceof Text){
+			Text text=(Text)control;
+			//avoid MULTI
+			if (!NumericUtils.bit(text.getStyle(), SWT.MULTI))
+				text.selectAll();
+		}
+	}
+
+	public void selectNext(Control control) {
+		select(getNext(control));
+	}
+
+	public void selectFirst() {
+		Control control=get(0);
+		if (control.isEnabled()){
+			select(control);
+		}else{
+			selectNext(control);
+		}
 	}
 
 
