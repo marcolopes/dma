@@ -333,6 +333,30 @@ public class TimeDateUtils {
 	}
 
 
+	public static Calendar getCalendarWithDay(Calendar calendar, int day) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.set(Calendar.DAY_OF_MONTH, day);
+		return calendar;
+
+	}
+
+
+	public static Calendar getCalendarWithMonth(Calendar calendar, int month) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.set(Calendar.MONTH, month);
+		return calendar;
+
+	}
+
+
+	public static Calendar getCalendarWithYear(Calendar calendar, int year) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.set(Calendar.YEAR, year);
+		return calendar;
+
+	}
+
+
 	public static Calendar getCalendarWithoutTimezone(Calendar calendar) {
 		Calendar clone=(Calendar)calendar.clone();
 		calendar.clear(); // clear all fields, including Calendar.ZONE_OFFSET
@@ -498,6 +522,25 @@ public class TimeDateUtils {
 	}
 
 
+	public static Date getDateWithDay(Date date, int day) {
+		Calendar calendar=getCalendar(date);
+		return getCalendarWithDay(calendar, day).getTime();
+
+	}
+
+
+	public static Date getDateWithMonth(Date date, int month) {
+		Calendar calendar=getCalendar(date);
+		return getCalendarWithMonth(calendar, month).getTime();
+	}
+
+
+	public static Date getDateWithYear(Date date, int year) {
+		Calendar calendar=getCalendar(date);
+		return getCalendarWithYear(calendar, year).getTime();
+	}
+
+
 	public static Date getDateWithoutTime(Date date) {
 		Calendar calendar=getCalendar(date);
 		return getCalendarWithoutTime(calendar).getTime();
@@ -526,6 +569,13 @@ public class TimeDateUtils {
 		calendar.add(Calendar.HOUR_OF_DAY, calendar2.get(Calendar.HOUR_OF_DAY));
 		calendar.add(Calendar.MINUTE, calendar2.get(Calendar.MINUTE));
 		calendar.add(Calendar.SECOND, calendar2.get(Calendar.SECOND));
+		return calendar.getTime();
+	}
+
+
+	public static Date addMonths(Date date, int months) {
+		Calendar calendar=getCalendar(date);
+		calendar.add(Calendar.MONTH, months);
 		return calendar.getTime();
 	}
 
