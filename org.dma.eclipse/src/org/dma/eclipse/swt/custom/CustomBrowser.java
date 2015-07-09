@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -70,10 +70,6 @@ public final class CustomBrowser extends Browser {
 	 */
 	public CustomBrowser(Composite parent, int style) {
 		super(parent, style);
-	}
-
-	public boolean setFile(String filename) {
-		return setUrl(filename);
 	}
 
 
