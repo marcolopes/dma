@@ -109,7 +109,7 @@ public class UIHelper {
 	 * Adds all other perspective shortcuts to the layout
 	 * so they can be present in the PerspectiveBarManager
 	 */
-	public static void addOtherPerspectiveShortcuts(String perspectiveId, IPageLayout layout){
+	public static void addOtherPerspectiveShortcuts(String perspectiveId, IPageLayout layout) {
 		try{
 			IConfigurationElement[] elements=Platform.getExtensionRegistry().
 					getConfigurationElementsFor("org.eclipse.ui.perspectives");
@@ -127,7 +127,7 @@ public class UIHelper {
 	}
 
 
-	public static void removePreferenceManagerNodes(){
+	public static void removePreferenceManagerNodes() {
 		try{
 			PreferenceManager manager=PlatformUI.getWorkbench().getPreferenceManager();
 			IPreferenceNode[] nodes=manager.getRootSubNodes();
