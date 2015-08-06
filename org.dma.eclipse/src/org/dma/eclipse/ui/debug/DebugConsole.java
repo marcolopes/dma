@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -11,9 +11,12 @@ import org.dma.java.util.Debug;
 
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 
 public class DebugConsole {
+
+	private final static IConsoleManager manager=ConsolePlugin.getDefault().getConsoleManager();
 
 	private final MessageConsole console;
 	private final PrintStream stream;
@@ -25,7 +28,7 @@ public class DebugConsole {
 		Debug.out();
 		this.console=new MessageConsole(name, null);
 		this.stream=new PrintStream(console.newMessageStream());
-		ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[]{console});
+		manager.addConsoles(new IConsole[]{console});
 	}
 
 
@@ -45,13 +48,13 @@ public class DebugConsole {
 
 	public void openConsole() {
 		start();
-		ConsolePlugin.getDefault().getConsoleManager().showConsoleView(console);
+		manager.showConsoleView(console);
 	}
 
 
 	public void closeConsole() {
 		stop();
-		ConsolePlugin.getDefault().getConsoleManager().removeConsoles(new IConsole[]{console});
+		manager.removeConsoles(new IConsole[]{console});
 	}
 
 
