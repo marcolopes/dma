@@ -38,8 +38,8 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
-import org.dma.java.io.NTPServerHandler;
 import org.dma.java.io.NTPServerHandler.NTPServers;
+import org.dma.java.io.NTPTimeInfo;
 import org.dma.java.security.Certificate;
 import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
 /**
@@ -51,13 +51,13 @@ import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
  */
 public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
-	private static final Logger LOGGER = Logger.getLogger(SOAPMessageHandler.class.getSimpleName());
+	private static final int DEFAULT_CONNECT_TIMEOUT = 10000;
+	private static final int DEFAULT_REQUEST_TIMEOUT = 10000;
 
 	private static final String AUTH_NS = "http://schemas.xmlsoap.org/ws/2002/12/secext";
 	private static final String AUTH_PREFIX = "wss";
 
-	private static final int DEFAULT_CONNECT_TIMEOUT = 10000;
-	private static final int DEFAULT_REQUEST_TIMEOUT = 10000;
+	private static final Logger LOGGER = Logger.getLogger(SOAPMessageHandler.class.getSimpleName());
 
 	private final String userName;
 	private final String password;
@@ -153,10 +153,10 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				String formattedDate = sdf.format(calendar.getTime());
 				*/
 
-				Date OALdate=new NTPServerHandler(NTPServers.OAL).getDate(500);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-				String formattedDate = sdf.format(OALdate==null ? new Date(): OALdate);
+				NTPTimeInfo time=NTPServers.OAL.getDefaultTime(500);
+				String formattedDate = sdf.format(time==null ? new Date() : time.getServerDate());
 				System.out.println("DATE: "+formattedDate);
 
 				// Generate simetric key used for this request. Nonce!
