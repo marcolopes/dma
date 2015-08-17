@@ -18,7 +18,8 @@ public class NTPServerHandler {
 	public enum NTPServers {
 
 		OAL ("ntp02.oal.ul.pt", "ntp04.oal.ul.pt"),
-		XS2ALL ("ntp.xs4all.nl");
+		XS2ALL ("ntp.xs4all.nl"),
+		WINDOWS ("time.windows.com");
 
 		private static NTPTimeInfo time;
 
@@ -29,9 +30,23 @@ public class NTPServerHandler {
 		}
 
 		/** Returns DEFAULT instance or NULL */
-		public NTPTimeInfo getDefaultTime(int timeout) {
+		public NTPTimeInfo query(int timeout) {
 			if (time==null) time=new NTPServerHandler(this).getTime(timeout);
 			return time;
+		}
+
+		/** @see NTPServers#query(int) */
+		public static NTPTimeInfo queryAll(int timeout, NTPServers...servers) {
+			for(NTPServers server: servers){
+				NTPTimeInfo time=server.query(timeout);
+				if (time!=null) return time;
+			}
+			return null;
+		}
+
+		/** @see NTPServers#queryAll(int, NTPServers...) */
+		public static NTPTimeInfo queryAll(int timeout) {
+			return queryAll(timeout, values());
 		}
 
 	}
@@ -84,14 +99,17 @@ public class NTPServerHandler {
 	public static final void main(String[] args) {
 
 		NTPServerHandler handler=new NTPServerHandler(NTPServers.OAL);
-		NTPTimeInfo time=handler.getTime(1000);
+		//NTPTimeInfo time=handler.getTime(1000);
+		NTPTimeInfo time=NTPServers.queryAll(1000);
 		System.out.println("Reference TimeStamp: "+time.getMessage().getReferenceTimeStamp().getDate());
 		System.out.println("Originate TimeStamp: "+time.getMessage().getOriginateTimeStamp().getDate());
 		System.out.println("Transmit TimeStamp: "+time.getMessage().getTransmitTimeStamp().getDate());
 		System.out.println("Receive TimeStamp: "+time.getMessage().getReceiveTimeStamp().getDate());
 		System.out.println("Return Date: "+new Date(time.getReturnTime()));
 		System.out.println("Current Date: "+new Date());
+		System.out.println("Delay: "+time.getDelay());
 		System.out.println("Offset: "+time.getOffset());
+		System.out.println("Comments: "+time.getComments());
 		System.out.println("Server Date: "+time.getServerDate());
 
 	}
