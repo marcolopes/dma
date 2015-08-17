@@ -155,7 +155,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-				NTPTimeInfo time=NTPServers.OAL.getDefaultTime(500);
+				NTPTimeInfo time=NTPServers.queryAll(500, NTPServers.OAL, NTPServers.XS2ALL, NTPServers.WINDOWS);
 				String formattedDate = sdf.format(time==null ? new Date() : time.getServerDate());
 				System.out.println("DATE: "+formattedDate);
 
