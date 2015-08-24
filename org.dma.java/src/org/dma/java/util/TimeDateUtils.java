@@ -618,6 +618,11 @@ public class TimeDateUtils {
 	}
 
 
+	public static int getDayOfMonth(Date date) {
+		return getDayOfMonth(getCalendar(date));
+	}
+
+
 	public static long getDaysBetween(Date oldDate, Date newDate) {
 		return getDaysBetween(getCalendar(oldDate), getCalendar(newDate));
 	}
