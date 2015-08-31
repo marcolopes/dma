@@ -42,6 +42,7 @@ public class BundleUtils {
 	}
 
 
+	/** @see BundleUtils#pathResolver(Bundle, String) */
 	public static String pathResolver(String bundleName, String fullPath) {
 
 		return pathResolver(Platform.getBundle(bundleName), fullPath);
@@ -49,6 +50,7 @@ public class BundleUtils {
 	}
 
 
+	/** @see BundleUtils#pathResolver(Bundle, String) */
 	public static String pathResolver(Class klass, String fullPath) {
 
 		return pathResolver(FrameworkUtil.getBundle(klass), fullPath);
@@ -73,6 +75,7 @@ public class BundleUtils {
 	}
 
 
+	/** @see BundleUtils#jarPathResolver(Bundle, String) */
 	public static String jarPathResolver(String bundleName, String fullPath) {
 
 		return jarPathResolver(Platform.getBundle(bundleName), fullPath);
@@ -80,6 +83,7 @@ public class BundleUtils {
 	}
 
 
+	/** @see BundleUtils#jarPathResolver(Bundle, String) */
 	public static String jarPathResolver(Class klass, String fullPath) {
 
 		return jarPathResolver(FrameworkUtil.getBundle(klass), fullPath);
