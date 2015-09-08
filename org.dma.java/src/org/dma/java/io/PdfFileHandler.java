@@ -111,7 +111,6 @@ public class PdfFileHandler extends FileHandler {
 		try{
 			PdfCopyFields copy=new PdfCopyFields(fos);
 
-			/*
 			try{
 				for(File file: files){
 					PdfReader reader=new PdfReader(file.getAbsolutePath());
@@ -121,21 +120,6 @@ public class PdfFileHandler extends FileHandler {
 					}finally{
 						reader.close();
 					}
-				}
-
-			}finally{
-				copy.close();
-			}
-			*/
-
-			for(File file: files) try{
-
-				PdfReader reader=new PdfReader(file.getAbsolutePath());
-				try{
-					copy.addDocument(reader);
-
-				}finally{
-					reader.close();
 				}
 
 			}finally{
