@@ -133,32 +133,4 @@ public class PdfFileHandler extends FileHandler {
 	}
 
 
-	public void merge2(Collection<File> files) throws Exception {
-
-		FileOutputStream fos=new FileOutputStream(file);
-
-		try{
-			PdfCopyFields copy=new PdfCopyFields(fos);
-
-			for(File file: files) try{
-
-				PdfReader reader=new PdfReader(file.getAbsolutePath());
-				try{
-					copy.addDocument(reader);
-
-				}finally{
-					reader.close();
-				}
-
-			}finally{
-				copy.close();
-			}
-
-		}finally{
-			fos.close();
-		}
-
-	}
-
-
 }
