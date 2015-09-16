@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -8,7 +8,6 @@ package org.dma.eclipse.swt.graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -70,7 +69,7 @@ public class ImageManager {
 
 	/**
 	 * Returns an {@link Image}
-	 * encoded by the specified {@link InputStream}.
+	 * encoded by the specified {@link InputStream}
 	 */
 	private static Image createImage(InputStream stream) {
 		try{
@@ -82,9 +81,7 @@ public class ImageManager {
 
 		}catch(Exception e){
 			System.out.println(e);
-		}try{
-			stream.close();
-		}catch(IOException e){}
+		}
 
 		return null;
 	}
@@ -121,7 +118,9 @@ public class ImageManager {
 		String key=getKey(path);
 		Image image=getImage(key);
 		if (image==null) try{
-			image=createImage(new FileInputStream(path));
+			FileInputStream stream=new FileInputStream(path);
+			image=createImage(stream);
+			stream.close();
 			putImage(image, key);
 
 		}catch(Exception e){
@@ -139,7 +138,9 @@ public class ImageManager {
 		String key=getKey(bytes);
 		Image image=getImage(key);
 		if (image==null) try{
-			image=createImage(new ByteArrayInputStream(bytes));
+			ByteArrayInputStream stream=new ByteArrayInputStream(bytes);
+			image=createImage(stream);
+			stream.close();
 			putImage(image, key);
 
 		}catch(Exception e){
