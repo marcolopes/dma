@@ -21,6 +21,7 @@ public class JobManager {
 
 	private static final Set<JobBatch> QUEUE = new HashSet();
 
+	/** Execute jobs with rule (null=immediately) */
 	protected static void schedule(CustomJob job, ISchedulingRule rule) {
 
 		//allow reuse
@@ -88,6 +89,7 @@ public class JobManager {
 	}
 
 
+	/** Execute jobs with rule (null=immediately) */
 	protected static void schedule(JobBatch batch, ISchedulingRule rule) {
 		QUEUE.add(batch);
 		Debug.out("QUEUE", QUEUE);
@@ -174,14 +176,12 @@ public class JobManager {
 
 		Debug.out("JOB MANAGER");
 
-		if(Debug.STATUS){
-			System.out.println("QUEUED: " + getQueuedJobs());
-			System.out.println("PENDING: " + getPendingJobs());
-			System.out.println("RUNNING: " + getRunningJobs());
-			for(JobBatch batch: QUEUE) {
-				batch.debug();
-			}
-		}
+		if (!Debug.STATUS) return;
+
+		System.out.println("QUEUED: " + getQueuedJobs());
+		System.out.println("PENDING: " + getPendingJobs());
+		System.out.println("RUNNING: " + getRunningJobs());
+		for(JobBatch batch: QUEUE) batch.debug();
 
 	}
 

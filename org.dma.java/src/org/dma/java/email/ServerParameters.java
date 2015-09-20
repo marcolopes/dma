@@ -61,11 +61,11 @@ public class ServerParameters {
 
 	public void debug(){
 
-		if (Debug.STATUS){
-			System.out.println("Host Name: "+hostName);
-			System.out.println("SMTP Port:"+smtpPort);
-			System.out.println("Security:" +security);
-		}
+		if (!Debug.STATUS) return;
+
+		System.out.println("Host Name: "+hostName);
+		System.out.println("SMTP Port:"+smtpPort);
+		System.out.println("Security:" +security);
 
 	}
 

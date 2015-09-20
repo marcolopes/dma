@@ -92,6 +92,7 @@ public class CustomJob extends Job {
 	/*
 	 * Execution
 	 */
+	/** Execute jobs with rule (null=immediately) */
 	public void schedule(ISchedulingRule rule) {
 		Debug.out("JOB", this);
 		setRule(rule);
