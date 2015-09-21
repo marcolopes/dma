@@ -1,16 +1,12 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.security;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 
-import org.apache.commons.codec.binary.Base64;
-import org.dma.java.cipher.BlowfishCipher;
 import org.dma.java.util.StringUtils;
 
 public class PasswordUtils {
@@ -28,51 +24,6 @@ public class PasswordUtils {
 		String day=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)),2,'0');
 
 		return month+day;
-
-	}
-
-
-	/**
-	 * MD5 Password
-	 * @return
-	 * MD5 digested password encoded in BASE64
-	 */
-	public static String MD5PasswordEnconde(String password) {
-
-		try{
-			MessageDigest md=MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-			return new Base64(0).encodeToString(md.digest());
-
-		}catch(NoSuchAlgorithmException e){
-			e.printStackTrace();
-		}
-
-		return null;
-
-	}
-
-
-	public static boolean MD5PasswordTest(String encodedPassword, String clearPassword) {
-
-		return encodedPassword.equals(MD5PasswordEnconde(clearPassword));
-
-	}
-
-
-	/** Blowfish Password */
-	public static String BlowfishPasswordEnconde(String password, String key) {
-
-		BlowfishCipher cipher=new BlowfishCipher(key);
-		return cipher.encrypt(password, 0);
-
-	}
-
-
-	public static String BlowfishPasswordDecode(String password, String key) {
-
-		BlowfishCipher cipher=new BlowfishCipher(key);
-		return cipher.decrypt(password);
 
 	}
 
@@ -124,15 +75,16 @@ public class PasswordUtils {
 	public static void main(String[] argvs) {
 
 		String message = "The quick brown fox jumps over the lazy dog.";
+		System.out.println("PLAIN: "+message);
 
 		try{
 			String rot13=rot13(message);
 			System.out.println("ROT13: "+rot13);
-			System.out.println("PLAIN: "+rot13(rot13));
+			System.out.println("ROT13: "+rot13(rot13));
 
 			String rot47=rot47(message);
 			System.out.println("ROT47: "+rot47);
-			System.out.println("PLAIN: "+rot47(rot47));
+			System.out.println("ROT47: "+rot47(rot47));
 
 		}catch(Exception e){
 			e.printStackTrace();
