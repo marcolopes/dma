@@ -1,10 +1,11 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.ui.progress;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 
 import org.dma.java.util.Debug;
@@ -26,22 +27,24 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 	}
 
 
-	public void add(IProgressAction action, String taskName) {
+	@Override
+	public String put(IProgressAction action, String taskName) {
 
-		put(action, taskName);
+		String value=super.put(action, taskName);
 		work=100/size();
+		return value;
 
 	}
 
 
-	public void add(Class klass) {
+	public void put(Class klass) {
 
 		if (!IProgressAction.class.isAssignableFrom(klass))
 			throw new UnsupportedOperationException();
 
 		try{
 			IProgressAction action=((Class<IProgressAction>)klass).newInstance();
-			add(action, action.getClass().getName());
+			put(action, action.getClass().getName());
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -67,28 +70,26 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 			dialog.run(true, true, new IRunnableWithProgress() {
 
-				public void run(IProgressMonitor monitor) throws InterruptedException {
+				@Override
+				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 
 					monitor.beginTask(title, 100);
 
 					// execute the tasks
-					for(IProgressAction action: keySet()){
+					for(IProgressAction action: keySet()) try{
 
 						//task name
 						String taskName=get(action);
 						Debug.out("TASK", taskName);
-						monitor.subTask(taskName);
 
-						try{
-							action.run();
-						}catch(Exception e){
-							throw new RuntimeException(e);
-						}
-						if (monitor.isCanceled()){
-							throw new InterruptedException();
-						}
+						monitor.subTask(taskName);
+						action.run();
 						monitor.worked(work);
 
+					}catch(Exception e){
+						throw new InvocationTargetException(e);
+					}finally{
+						if (monitor.isCanceled()) throw new InterruptedException();
 					}
 
 					monitor.done();
@@ -96,6 +97,9 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 				}
 			});
 
+		}catch(InvocationTargetException e){
+			Debug.out("InvocationTargetException");
+			throw new Exception(e.getCause().getMessage());
 		}catch(InterruptedException e){
 			Debug.out("InterruptedException");
 			return false;
