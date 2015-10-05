@@ -5,9 +5,8 @@
  *******************************************************************************/
 package org.dma.eclipse.core.jobs;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.dma.java.util.Debug;
@@ -19,7 +18,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
-	private static final Set<JobBatch> QUEUE = new HashSet();
+	private static final Set<JobBatch> QUEUE = Collections.synchronizedSet(new HashSet());
 
 	/** Execute jobs with rule (null=immediately) */
 	protected static void schedule(CustomJob job, ISchedulingRule rule) {
@@ -31,24 +30,27 @@ public class JobManager {
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void scheduled(IJobChangeEvent event) {
-				try{
-					debug();
-					CustomJob job=(CustomJob)event.getJob();
-					Debug.out("STARTED", job);
-					//find batch
-					final JobBatch batch=findJobBatch(job);
-					Debug.out("BATCH", batch);
-					if(!batch.running){
-						batch.running=true;
-						Display.getDefault().asyncExec(new Runnable() {
-							public void run() {
-								batch.start();
-							}
-						});
-					}
+				synchronized(QUEUE){
+					try{
+						CustomJob job=(CustomJob)event.getJob();
+						Debug.out("STARTED", job);
+						//find batch
+						final JobBatch batch=findJobBatch(job);
+						Debug.out("BATCH", batch);
+						if(!batch.running){
+							batch.running=true;
+							Display.getDefault().asyncExec(new Runnable() {
+								public void run() {
+									batch.start();
+								}
+							});
+						}
 
-				}catch(Exception e){
-					e.printStackTrace();
+						debug();
+
+					}catch(Exception e){
+						e.printStackTrace();
+					}
 				}
 			}
 
@@ -58,28 +60,30 @@ public class JobManager {
 			 */
 			@Override
 			public void done(final IJobChangeEvent event) {
-				try{
-					CustomJob job=(CustomJob)event.getJob();
-					Debug.out("DONE", job);
-					//remove listener
-					job.removeJobChangeListener(this);
-					//find batch
-					final JobBatch batch=findJobBatch(job);
-					Debug.out("BATCH", batch);
-					if(remove(job) && batch.getQueuedJobs()==0){
-						Display.getDefault().asyncExec(new Runnable() {
-							public void run() {
-								batch.done();
-							}
-						});
-						//remove batch
-						QUEUE.remove(batch);
-						batch.running=false;
-					}
-					debug();
+				synchronized(QUEUE){
+					try{
+						CustomJob job=(CustomJob)event.getJob();
+						Debug.out("DONE", job);
+						//remove listener
+						job.removeJobChangeListener(this);
+						//find batch
+						final JobBatch batch=findJobBatch(job);
+						if(remove(job) && batch.getQueuedJobs()==0){
+							Display.getDefault().asyncExec(new Runnable() {
+								public void run() {
+									batch.done();
+								}
+							});
+							//remove batch
+							QUEUE.remove(batch);
+							batch.running=false;
+						}
 
-				}catch(Exception e){
-					e.printStackTrace();
+						debug();
+
+					}catch(Exception e){
+						e.printStackTrace();
+					}
 				}
 			}
 		});
@@ -111,8 +115,7 @@ public class JobManager {
 
 
 	public static void clean() {
-		List<JobBatch> col=new ArrayList(QUEUE);
-		for(JobBatch batch: col){
+		for(JobBatch batch: QUEUE){
 			if(batch.isEmpty()) QUEUE.remove(batch);
 		}
 	}
@@ -173,8 +176,6 @@ public class JobManager {
 
 	/** Debug */
 	public static void debug() {
-
-		Debug.out("JOB MANAGER");
 
 		if (!Debug.STATUS) return;
 

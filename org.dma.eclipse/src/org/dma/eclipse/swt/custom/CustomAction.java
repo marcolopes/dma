@@ -1,9 +1,11 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
+
+import java.awt.image.BufferedImage;
 
 import org.dma.eclipse.swt.graphics.SWTImageUtils;
 import org.dma.java.awt.ImageUtils;
@@ -20,14 +22,12 @@ public abstract class CustomAction extends Action {
 		setId(ID);
 	}
 
-
-	public void setImageDescriptor(String imagePath, int imageSize) {
-		setImageDescriptor(SWTImageUtils.getImageDescriptor(
-				ImageUtils.resizeImage(imagePath, imageSize)));
+	public void setImageDescriptor(BufferedImage bufferedImage, int imageSize) {
+		setImageDescriptor(ImageUtils.resizeImage(bufferedImage, imageSize));
 	}
 
-	public void setImageDescriptor(String imagePath) {
-		setImageDescriptor(SWTImageUtils.getImageDescriptor(imagePath));
+	public void setImageDescriptor(BufferedImage bufferedImage) {
+		setImageDescriptor(SWTImageUtils.getImageDescriptor(bufferedImage));
 	}
 
 }

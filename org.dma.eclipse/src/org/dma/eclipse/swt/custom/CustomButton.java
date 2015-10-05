@@ -31,7 +31,7 @@ public class CustomButton extends Button {
 	}
 
 	public void setImage(String imagePath) {
-		super.setImage(ImageManager.createImage(imagePath));
+		setImage(ImageManager.createImage(imagePath));
 	}
 
 

@@ -1,17 +1,17 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.ui.debug;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-public class DebugLogger extends HashMap<Integer, Integer> {
+public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,6 @@ public class DebugLogger extends HashMap<Integer, Integer> {
 		System.out.println("LOGGER: "+pluginId);
 		this.pluginId=pluginId;
 	}
-
 
 
 	/*
@@ -97,7 +96,6 @@ public class DebugLogger extends HashMap<Integer, Integer> {
 			}
 			System.out.println(") = "+get(key));
 		}
-
 	}
 
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -22,12 +22,19 @@ public class FocusSupport {
 			}
 		}
 		@Override
-		public void focusLost(FocusEvent e) {
-		}
+		public void focusLost(FocusEvent e) {}
 	};
 
 	public void reset() {
 		lastFocusControl=null;
+	}
+
+	public boolean setFocus() {
+		return lastFocusControl==null ? false : lastFocusControl.setFocus();
+	}
+
+	public boolean forceFocus() {
+		return lastFocusControl==null ? false : lastFocusControl.forceFocus();
 	}
 
 
@@ -49,19 +56,6 @@ public class FocusSupport {
 		for(Control e: control){
 			remove(e);
 		}
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public Control getLastFocusControl() {
-		return lastFocusControl;
-	}
-
-	public void setLastFocusControl(Control lastFocusControl) {
-		this.lastFocusControl=lastFocusControl;
 	}
 
 
