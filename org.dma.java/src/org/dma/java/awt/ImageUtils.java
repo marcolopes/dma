@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -109,18 +109,21 @@ public class ImageUtils {
 	}
 
 
+	/** @see ImageUtils#resizeImage(BufferedImage, int) */
 	public static BufferedImage resizeImage(byte[] bytes, int size) {
 		BufferedImage bufferedImage=createImage(bytes);
 		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
 	}
 
 
+	/** @see ImageUtils#resizeImage(BufferedImage, int) */
 	public static BufferedImage resizeImage(String path, int size) {
 		BufferedImage bufferedImage=createImage(path);
 		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
 	}
 
 
+	/** @see ImageUtils#resizeImage(BufferedImage, int) */
 	public static BufferedImage resizeImage(Class location, String resource, int size) {
 		BufferedImage bufferedImage=createImage(location, resource);
 		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
