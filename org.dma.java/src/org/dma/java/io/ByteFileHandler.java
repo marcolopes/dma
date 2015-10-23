@@ -7,6 +7,7 @@ package org.dma.java.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,6 +24,17 @@ public class ByteFileHandler extends FileHandler {
 
 	public ByteFileHandler(File file) {
 		super(file);
+	}
+
+
+	@Override
+	public ByteArrayInputStream asInputStream() {
+		try{
+			return new ByteArrayInputStream(read());
+
+		}catch(Exception e){}
+
+		return null;
 	}
 
 

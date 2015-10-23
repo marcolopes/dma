@@ -19,7 +19,7 @@ import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.x509.X509V1CertificateGenerator;
 
-public class CertificateGenerator {
+public class CertificateFactory {
 
 	/*
 	 * CERTIFICATION
@@ -115,7 +115,7 @@ public class CertificateGenerator {
 		KeyPair kp = RSAFactory.generateKeyPair(1024);
 
 		//Generate X509 certificate
-		X509Certificate cert=CertificateGenerator.generate(kp, "SHA1withRSA");
+		X509Certificate cert=CertificateFactory.generate(kp, "SHA1withRSA");
 		System.out.println("X509Certificate: " + cert);
 
 	}

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 public class CollectionUtils {
 
@@ -51,7 +52,17 @@ public class CollectionUtils {
 
 	}
 
+	public static <T> T random(Collection<T> col) {
 
+		int index=new Random().nextInt(col.size());
+
+		for(T e: col){
+			if (--index < 0) return e;
+		}
+
+		return null;
+
+	}
 
 
 

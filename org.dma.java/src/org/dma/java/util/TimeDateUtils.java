@@ -336,7 +336,7 @@ public class TimeDateUtils {
 	public static Calendar getCalendarWithDay(Calendar calendar, int day) {
 		Calendar clone=(Calendar)calendar.clone();
 		clone.set(Calendar.DAY_OF_MONTH, day);
-		return calendar;
+		return clone;
 
 	}
 
@@ -344,7 +344,7 @@ public class TimeDateUtils {
 	public static Calendar getCalendarWithMonth(Calendar calendar, int month) {
 		Calendar clone=(Calendar)calendar.clone();
 		clone.set(Calendar.MONTH, month);
-		return calendar;
+		return clone;
 
 	}
 
@@ -352,23 +352,22 @@ public class TimeDateUtils {
 	public static Calendar getCalendarWithYear(Calendar calendar, int year) {
 		Calendar clone=(Calendar)calendar.clone();
 		clone.set(Calendar.YEAR, year);
-		return calendar;
+		return clone;
 
 	}
 
 
 	public static Calendar getCalendarWithoutTimezone(Calendar calendar) {
 		Calendar clone=(Calendar)calendar.clone();
-		calendar.clear(); // clear all fields, including Calendar.ZONE_OFFSET
-		calendar.set(
-			clone.get(Calendar.YEAR),
-			clone.get(Calendar.MONTH),
-			clone.get(Calendar.DAY_OF_MONTH),
-			clone.get(Calendar.HOUR_OF_DAY),
-			clone.get(Calendar.MINUTE),
-			clone.get(Calendar.SECOND));
-		return calendar;
-
+		clone.clear(); // clear all fields, including ZONE_OFFSET
+		clone.set(
+			calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.SECOND));
+		return clone;
 	}
 
 
@@ -383,11 +382,12 @@ public class TimeDateUtils {
 
 
 	public static Calendar getCalendarWithoutTime(Calendar calendar) {
-		calendar.set(Calendar.HOUR_OF_DAY,0);
-		calendar.set(Calendar.MINUTE,0);
-		calendar.set(Calendar.SECOND,0);
-		calendar.set(Calendar.MILLISECOND,0);
-		return calendar;
+		Calendar clone=(Calendar)calendar.clone();
+		clone.set(Calendar.HOUR_OF_DAY,0);
+		clone.set(Calendar.MINUTE,0);
+		clone.set(Calendar.SECOND,0);
+		clone.set(Calendar.MILLISECOND,0);
+		return clone;
 	}
 
 
@@ -726,6 +726,16 @@ public class TimeDateUtils {
 
 
 	public static void main(String[] argvs) {
+
+		System.out.println("getCalendar: "+getCalendar());
+
+		System.out.println("getCalendarWithoutTime: "+getCalendarWithoutTime());
+
+		System.out.println("getCalendarWithoutTimezone: "+getCalendarWithoutTimezone());
+
+		System.out.println("getDateWithMonth (12): "+getDateWithMonth(getCurrentDate(), Calendar.DECEMBER));
+
+		System.out.println("getDateWithDay (25): "+getDateWithDay(getCurrentDate(), 25));
 
 		System.out.println("getDaysBetween (30): "+getDaysBetween(
 				new GregorianCalendar(2014,01,01),

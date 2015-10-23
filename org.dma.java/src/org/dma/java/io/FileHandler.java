@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -92,7 +93,7 @@ public class FileHandler {
 	}
 
 
-	public FileInputStream asInputStream() {
+	public InputStream asInputStream() {
 		try{
 			return new FileInputStream(file);
 

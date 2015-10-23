@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
+import java.security.cert.Certificate;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
@@ -34,7 +35,7 @@ public class PdfFileHandler extends FileHandler {
 	 * <a href=http://itextpdf.sourceforge.net/howtosign.html>
 	 * How to sign a PDF using iText</a>
 	 */
-	public void sign(KeyStore keyStore, String password,
+	public void sign(PrivateKey privateKey, Certificate[] certChain,
 			String reason, String location, String contact) throws Exception {
 
 		FileInputStream fis=new FileInputStream(file);
@@ -42,17 +43,13 @@ public class PdfFileHandler extends FileHandler {
 		FileOutputStream fos=new FileOutputStream(output);
 
 		try{
-			String alias=keyStore.aliases().nextElement();
-			PrivateKey privateKey=(PrivateKey)keyStore.getKey(alias, password.toCharArray());
-
 			PdfStamper stamper=PdfStamper.createSignature(
 					new PdfReader(fis), fos, '\0'); // keep pdf version
 
 			try{
 				PdfSignatureAppearance signature=stamper.getSignatureAppearance();
-				signature.setCrypto(privateKey,
-						keyStore.getCertificateChain(alias),
-						null, PdfSignatureAppearance.WINCER_SIGNED);
+					signature.setCrypto(privateKey, certChain, null,
+						PdfSignatureAppearance.WINCER_SIGNED);
 
 				signature.setSignDate(new GregorianCalendar());
 				signature.setReason(reason);
@@ -72,6 +69,27 @@ public class PdfFileHandler extends FileHandler {
 
 		file.delete();
 		output.renameTo(file);
+
+	}
+
+
+	@Deprecated
+	public void sign(KeyStore keyStore, String password,
+			String reason, String location, String contact) throws Exception {
+
+		String alias=keyStore.aliases().nextElement();
+		PrivateKey privateKey=(PrivateKey)keyStore.getKey(alias, password.toCharArray());
+
+		sign(privateKey, keyStore.getCertificateChain(alias), reason, location, contact);
+
+
+	}
+
+
+	public void sign(org.dma.java.security.JKSCertificate cert,
+			String reason, String location, String contact) throws Exception {
+
+		sign(cert.getPrivateKey(), cert.getCertificateChain(), reason, location, contact);
 
 	}
 
