@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.dma.java.awt.ImageUtils;
-import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -63,7 +62,6 @@ public class ImageManager {
 	public static void putImage(Image image, String key) {
 		image=CACHE.put(key, image);
 		if (image!=null) image.dispose();
-		Debug.out("SIZE", CACHE.size());
 	}
 
 

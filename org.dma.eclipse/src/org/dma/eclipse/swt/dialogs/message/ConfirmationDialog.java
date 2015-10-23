@@ -8,7 +8,7 @@ package org.dma.eclipse.swt.dialogs.message;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.MessageList;
 
-public class ConfirmationDialog extends CustomDialog {
+public class ConfirmationDialog extends MessageDialog {
 
 	/*
 	 * Confirmation

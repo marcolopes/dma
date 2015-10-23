@@ -89,6 +89,7 @@ public class CustomShell extends Shell {
 
 
 	public void setParentBounds() {
+		if (getParent()==null) return;
 		setBounds(getParent().getBounds());
 	}
 

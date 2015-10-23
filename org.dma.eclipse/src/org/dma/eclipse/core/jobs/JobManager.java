@@ -5,7 +5,6 @@
  *******************************************************************************/
 package org.dma.eclipse.core.jobs;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +17,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class JobManager {
 
-	private static final Set<JobBatch> QUEUE = Collections.synchronizedSet(new HashSet());
+	private static final Set<JobBatch> QUEUE = new HashSet();
 
 	/** Execute jobs with rule (null=immediately) */
 	protected static void schedule(CustomJob job, ISchedulingRule rule) {
@@ -69,6 +68,7 @@ public class JobManager {
 						//find batch
 						final JobBatch batch=findJobBatch(job);
 						if(remove(job) && batch.getQueuedJobs()==0){
+							batch.running=false;
 							Display.getDefault().asyncExec(new Runnable() {
 								public void run() {
 									batch.done();
@@ -76,7 +76,6 @@ public class JobManager {
 							});
 							//remove batch
 							QUEUE.remove(batch);
-							batch.running=false;
 						}
 
 						debug();
@@ -133,11 +132,27 @@ public class JobManager {
 		return result;
 	}
 
+	/** @see Thread#sleep(long) */
+	public static boolean cancelJobs(long timeout) throws InterruptedException {
+		cancelJobs();
+		int interval=100;
+		while(timeout>0 && !isEmpty()){
+			Thread.sleep(interval);
+			timeout-=interval;
+		}
+		return isEmpty();
+	}
+
 
 
 	/*
 	 * Query
 	 */
+	public static boolean isEmpty() {
+		return QUEUE.isEmpty();
+	}
+
+
 	public static JobBatch findJobBatch(CustomJob job) {
 		for(JobBatch batch: QUEUE) {
 			if(batch.contains(job)) return batch;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,11 +7,10 @@ package org.dma.eclipse.swt.dialogs.message;
 
 import org.dma.java.util.MethodResult;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-public class CustomDialog {
+public class MessageDialog {
 
 	/*
 	 * Dialog
@@ -52,10 +51,10 @@ public class CustomDialog {
 				public void run() {
 					Shell shell=Display.getDefault().getActiveShell();
 					switch(type) {
-					case ERROR: MessageDialog.openError(shell, type.title, message2); break;
-					case INFORMATION: MessageDialog.openInformation(shell, type.title, message2); break;
-					case QUESTION: result.value=MessageDialog.openQuestion(shell, type.title, message2); break;
-					case CONFIRMATION: result.value=MessageDialog.openConfirm(shell, type.title, message2); break;
+					case ERROR: org.eclipse.jface.dialogs.MessageDialog.openError(shell, type.title, message2); break;
+					case INFORMATION: org.eclipse.jface.dialogs.MessageDialog.openInformation(shell, type.title, message2); break;
+					case QUESTION: result.value=org.eclipse.jface.dialogs.MessageDialog.openQuestion(shell, type.title, message2); break;
+					case CONFIRMATION: result.value=org.eclipse.jface.dialogs.MessageDialog.openConfirm(shell, type.title, message2); break;
 					}
 				}
 			});
