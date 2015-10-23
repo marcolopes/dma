@@ -40,7 +40,7 @@ import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.io.NTPServerHandler.NTPServers;
 import org.dma.java.io.NTPTimeInfo;
-import org.dma.java.security.Certificate;
+import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
 /**
  * SOAP Message Handler
@@ -61,8 +61,8 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	private final String userName;
 	private final String password;
-	private final Certificate saCertificate;
-	private final Certificate swCertificate;
+	private final JKSCertificate saCertificate;
+	private final JKSCertificate swCertificate;
 
 	/**
 	 * @param userName - Service Username
@@ -71,7 +71,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	 * @param swCertificate - Software Developer Certificate
 	 */
 	public SOAPMessageHandler(String userName, String password,
-			Certificate saCertificate, Certificate swCertificate) {
+			JKSCertificate saCertificate, JKSCertificate swCertificate) {
 		this.userName = userName;
 		this.password = password;
 		this.saCertificate = saCertificate;
@@ -188,7 +188,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				// Nonce
 				SOAPElement nonceElem = soapFactory.createElement("Nonce", AUTH_PREFIX, AUTH_NS);
 				// Encrypt with the SA public key and B64 encode the request simetric key
-				final PublicKey publicKey = saCertificate.getX509Cert().getPublicKey();
+				final PublicKey publicKey = saCertificate.getCertificate().getPublicKey();
 				final byte[] encriptedSimetricKey = AutenticationCypherUtil.cypherRequestKey(publicKey, simetricKey);
 				final String b64EncryptedSimetricKey = DatatypeConverter.printBase64Binary(encriptedSimetricKey);
 				nonceElem.addTextNode(b64EncryptedSimetricKey);

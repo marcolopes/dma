@@ -5,8 +5,8 @@ import java.util.Random;
 
 import javax.xml.datatype.DatatypeFactory;
 
-import org.dma.java.security.Certificate;
-import org.dma.java.security.Certificate.CERTIFICATE_TYPE;
+import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.services.at.proxy.FaturasProxy;
 import org.dma.services.at.proxy.FaturasProxy.A10_ENDPOINTS;
 
@@ -64,9 +64,9 @@ public class FacturaRegister {
 				//Service Username / Password
 				"599999993/0037", "testes1234",
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
-				new Certificate(CERTIFICATE_TYPE.JKS, "saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
+				new JKSCertificate(CERTIFICATE_TYPE.JKS, "saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
-				new Certificate(CERTIFICATE_TYPE.PKCS12, "TesteWebServices.pfx", "TESTEwebservice", null),
+				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "TesteWebServices.pfx", "TESTEwebservice", null),
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 

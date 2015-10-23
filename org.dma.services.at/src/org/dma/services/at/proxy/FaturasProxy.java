@@ -8,7 +8,7 @@ import javax.xml.ws.handler.Handler;
 
 import com.sun.xml.ws.developer.WSBindingProvider;
 
-import org.dma.java.security.Certificate;
+import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
@@ -45,7 +45,7 @@ public class FaturasProxy extends SOAPMessageHandler {
 	private final A10_ENDPOINTS endpoint;
 
 	public FaturasProxy(String userName, String password,
-			Certificate saCertificate, Certificate swCertificate, A10_ENDPOINTS endpoint) {
+			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
 		super(userName, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
 	}
