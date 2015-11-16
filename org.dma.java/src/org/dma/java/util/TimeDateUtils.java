@@ -628,34 +628,34 @@ public class TimeDateUtils {
 	}
 
 
-	public static Date getCurrentYear1() {
+	public static Date getCurrentYearMin() {
 		return getCalendar(getCurrentYear(), 0, 1).getTime();
 	}
 
 
-	public static Date getCurrentYear2() {
+	public static Date getCurrentYearMax() {
 		return getCalendar(getCurrentYear(), 11, getCurrentDayOfMonthMax()).getTime();
 	}
 
 
-	public static Date getCurrentMonth1() {
+	public static Date getCurrentMonthMin() {
 		return getCalendar(getCurrentYear(), getCurrentMonth(), 1).getTime();
 	}
 
 
-	public static Date getCurrentMonth2() {
+	public static Date getCurrentMonthMax() {
 		return getCalendar(getCurrentYear(), getCurrentMonth(), getCurrentDayOfMonthMax()).getTime();
 	}
 
 
-	public static Date getCurrentWeek1() {
+	public static Date getCurrentWeekMin() {
 		Calendar calendar=Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_YEAR, -getDaysSinceMonday(calendar)+1);
 		return calendar.getTime();
 	}
 
 
-	public static Date getCurrentWeek2() {
+	public static Date getCurrentWeekMax() {
 		Calendar calendar=Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_YEAR, 7-getDaysSinceMonday(calendar));
 		return calendar.getTime();

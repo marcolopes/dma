@@ -9,21 +9,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLConnection;
 
 public class URLTextFileHandler extends TextFileHandler {
 
-	public final String fileurl;
+	public final FileURL fileurl;
 
 	/** Uses JAVA DEFAULT charset */
-	public URLTextFileHandler(String fileurl) {
+	public URLTextFileHandler(FileURL fileurl) {
 		this(fileurl, null);
 	}
 
 	/** charsetName=null uses JAVA DEFAULT charset */
-	public URLTextFileHandler(String fileurl, String charsetName) {
-		super(fileurl, charsetName);
+	public URLTextFileHandler(FileURL fileurl, String charsetName) {
+		super(fileurl.toString(), charsetName);
 		this.fileurl=fileurl;
 	}
 
@@ -53,7 +52,7 @@ public class URLTextFileHandler extends TextFileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			URLConnection conn=new URL(fileurl).openConnection();
+			URLConnection conn=fileurl.url.openConnection();
 			conn.setDoInput(true); //input connection
 			conn.setUseCaches(false); //avoid a cached file
 

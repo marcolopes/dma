@@ -99,20 +99,27 @@ public class StringUtils {
 	}
 
 
-	public static String random(String string, int length) {
+	public static String random(String chars, int length, Random random) {
 
-		char[] chars=new char[length];
+		char[] result=new char[length];
 
-		Random random=new Random();
-		for (int i=0; i<chars.length; i++){
-			chars[i]=string.charAt(random.nextInt(string.length()));
+		for (int i=0; i<result.length; i++){
+			result[i]=chars.charAt(random.nextInt(chars.length()));
 		}
 
-		return new String(chars);
+		return new String(result);
 
 	}
 
 
+	public static String random(String chars, int length) {
+
+		return random(chars, length, new Random());
+
+	}
+
+
+	/** Lowercase letters + Decimal numbers */
 	public static String random(int length) {
 
 		return random(LOWERCASE_LETTERS+DECIMAL_NUMBERS, length);
@@ -120,6 +127,7 @@ public class StringUtils {
 	}
 
 
+	/** Lowercase letters */
 	public static String randomLetters(int length) {
 
 		return random(LOWERCASE_LETTERS, length);
@@ -127,6 +135,7 @@ public class StringUtils {
 	}
 
 
+	/** Decimal numbers */
 	public static String randomNumbers(int length) {
 
 		return random(DECIMAL_NUMBERS, length);
@@ -278,7 +287,7 @@ public class StringUtils {
 	public static String left(String string, int lenght) {
 
 		return string.length()<=lenght ?
-				string : string.substring(0,lenght);
+				string : string.substring(0, lenght);
 
 	}
 
@@ -335,12 +344,13 @@ public class StringUtils {
 	}
 
 
+	/** No limit if count < 0 */
 	public static String replace(String string, String searchFor, String replaceWith, int count) {
 
 		StringBuilder result=new StringBuilder();
 
 		int index=0;
-		int beginIndex=0;
+		int beginIndex=index;
 		while((index=string.indexOf(searchFor, index))!=-1 && count!=0){
 			result.append(string.substring(beginIndex, index)+replaceWith);
 			index+=searchFor.length();
@@ -354,13 +364,6 @@ public class StringUtils {
 	}
 
 
-	public static String replaceAll(String string, String searchFor, String replaceWith) {
-
-		return replace(string, searchFor, replaceWith, -1);
-
-	}
-
-
 	public static String replaceFirst(String string, String searchFor, String replaceWith) {
 
 		return replace(string, searchFor, replaceWith, 1);
@@ -368,9 +371,9 @@ public class StringUtils {
 	}
 
 
-	public static String removeAll(String string, String searchFor) {
+	public static String replaceAll(String string, String searchFor, String replaceWith) {
 
-		return replace(string, searchFor, "", -1);
+		return replace(string, searchFor, replaceWith, -1);
 
 	}
 
@@ -378,6 +381,13 @@ public class StringUtils {
 	public static String removeFirst(String string, String searchFor) {
 
 		return replaceFirst(string, searchFor, "");
+
+	}
+
+
+	public static String removeAll(String string, String searchFor) {
+
+		return replace(string, searchFor, "", -1);
 
 	}
 
@@ -411,13 +421,6 @@ public class StringUtils {
 	public static String compact(String string) {
 
 		return removeAll(string, " ");
-
-	}
-
-
-	public static String[] splitAndTrim(String string, String separator) {
-
-		return ArrayUtils.trim(string.split(separator));
 
 	}
 
@@ -543,6 +546,33 @@ public class StringUtils {
 			replace('/',' ').replace('\\','-'),
 			//remove illegal characters
 			new char[]{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'});
+
+	}
+
+
+	public static String[] splitAndTrim(String string, String regex) {
+
+		return ArrayUtils.trim(string.split(regex));
+
+	}
+
+
+	public static String[] splitFirstIndex(String string, String separator) {
+
+		int index=string.indexOf(separator);
+
+		return index==-1 ? new String[]{} :
+			new String[]{string.substring(0, index), string.substring(index+1)};
+
+	}
+
+
+	public static String[] splitLastIndex(String string, String separator) {
+
+		int index=string.lastIndexOf(separator);
+
+		return index==-1 ? new String[]{} :
+			new String[]{string.substring(0, index), string.substring(index+1)};
 
 	}
 
