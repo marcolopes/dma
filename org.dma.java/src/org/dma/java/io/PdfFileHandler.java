@@ -20,6 +20,8 @@ import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfSignatureAppearance;
 import com.lowagie.text.pdf.PdfStamper;
 
+import org.dma.java.security.JKSCertificate;
+
 public class PdfFileHandler extends FileHandler {
 
 	public PdfFileHandler(String filename) {
@@ -73,6 +75,14 @@ public class PdfFileHandler extends FileHandler {
 	}
 
 
+	public void sign(JKSCertificate cert,
+			String reason, String location, String contact) throws Exception {
+
+		sign(cert.getPrivateKey(), cert.getCertificateChain(), reason, location, contact);
+
+	}
+
+
 	@Deprecated
 	public void sign(KeyStore keyStore, String password,
 			String reason, String location, String contact) throws Exception {
@@ -82,14 +92,6 @@ public class PdfFileHandler extends FileHandler {
 
 		sign(privateKey, keyStore.getCertificateChain(alias), reason, location, contact);
 
-
-	}
-
-
-	public void sign(org.dma.java.security.JKSCertificate cert,
-			String reason, String location, String contact) throws Exception {
-
-		sign(cert.getPrivateKey(), cert.getCertificateChain(), reason, location, contact);
 
 	}
 
