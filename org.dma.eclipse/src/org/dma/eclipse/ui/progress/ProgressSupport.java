@@ -75,7 +75,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 					monitor.beginTask(title, 100);
 
-					// execute the tasks
+					//execute the tasks
 					for(IProgressAction action: keySet()) try{
 
 						//task name
