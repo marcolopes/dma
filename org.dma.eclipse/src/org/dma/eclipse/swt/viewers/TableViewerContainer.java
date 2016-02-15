@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2015 Public Domain
+ * 2010-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -34,7 +34,7 @@ public abstract class TableViewerContainer<T> {
 	public abstract void removeObject();
 	public abstract void createObject();
 	public abstract void copyObject();
-	public abstract void editObject();
+	protected void editObject() {}
 	public abstract Collection<T> retrieveObjects();
 
 	private final MouseAdapter tableDoubleClickListener=new MouseAdapter() {
@@ -60,9 +60,11 @@ public abstract class TableViewerContainer<T> {
 	private final List<T> objectCollection=new ArrayList();
 
 	protected final TableViewer viewer;
+	protected final Table table;
 
 	public TableViewerContainer(TableViewer viewer) {
 		this.viewer=viewer;
+		this.table=viewer.getTable();
 		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.viewer.setInput(objectCollection);
 
@@ -73,7 +75,7 @@ public abstract class TableViewerContainer<T> {
 	public void dispose() {
 		clearTable();
 		removeTableListeners();
-		//getTable().dispose();
+		//table.dispose();
 	}
 
 
@@ -83,37 +85,37 @@ public abstract class TableViewerContainer<T> {
 	 */
 	private void addTableListeners() {
 
-		getTable().addMouseListener(tableDoubleClickListener);
-		getTable().addKeyListener(tableEnterKeyListener);
+		table.addMouseListener(tableDoubleClickListener);
+		table.addKeyListener(tableEnterKeyListener);
 
 	}
 
 
 	private void removeTableListeners() {
 
-		getTable().removeMouseListener(tableDoubleClickListener);
-		getTable().removeKeyListener(tableEnterKeyListener);
+		table.removeMouseListener(tableDoubleClickListener);
+		table.removeKeyListener(tableEnterKeyListener);
 
 	}
 
 
 	public void addSortColumnSupport(int direction) {
 
-		getTable().setSortColumn(getTable().getColumn(0));
-		getTable().setSortDirection(direction);
+		table.setSortColumn(table.getColumn(0));
+		table.setSortDirection(direction);
 
-		for(TableColumn column: getTable().getColumns()){
+		for(TableColumn column: table.getColumns()){
 			column.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					TableColumn column=(TableColumn)e.widget;
 					//avoids if unselected
-					if(getTable().getSortColumn().getText().equals(column.getText())){
+					if(table.getSortColumn().getText().equals(column.getText())){
 						//inverts sort direction
-						getTable().setSortDirection(getTable().getSortDirection()==SWT.UP ?
+						table.setSortDirection(table.getSortDirection()==SWT.UP ?
 							SWT.DOWN : SWT.UP);
 					}
-					getTable().setSortColumn(column);
+					table.setSortColumn(column);
 					updateTable();
 				}
 			});
@@ -127,20 +129,20 @@ public abstract class TableViewerContainer<T> {
 	 * Table
 	 */
 	public int computeSize() {
-		int visibleCount=(getTable().getClientArea().height-
-				getTable().getHeaderHeight()+getTable().getItemHeight()-1) /
-					getTable().getItemHeight();
+		int visibleCount=(table.getClientArea().height-
+				table.getHeaderHeight()+table.getItemHeight()-1) /
+					table.getItemHeight();
 		return visibleCount;
 	}
 
 
 	public int getOrderingIndex() {
-		return ArrayUtils.indexOrFirst(getTable().getColumns(), getTable().getSortColumn());
+		return ArrayUtils.indexOrFirst(table.getColumns(), table.getSortColumn());
 	}
 
 
 	public void forceTableFocus() {
-		getTable().forceFocus();
+		table.forceFocus();
 	}
 
 
@@ -163,16 +165,16 @@ public abstract class TableViewerContainer<T> {
 
 
 	public void moveSelectionUp(boolean wrap) {
-		int index=getTable().getSelectionIndex();
-		getTable().select(index<=0 && wrap ? getTable().getItemCount()-1 : index-1);
-		getTable().showSelection();
+		int index=table.getSelectionIndex();
+		table.select(index<=0 && wrap ? table.getItemCount()-1 : index-1);
+		table.showSelection();
 	}
 
 
 	public void moveSelectionDown(boolean wrap) {
-		int index=getTable().getSelectionIndex();
-		getTable().select(index==getTable().getItemCount()-1 && wrap ? 0 : index+1);
-		getTable().showSelection();
+		int index=table.getSelectionIndex();
+		table.select(index==table.getItemCount()-1 && wrap ? 0 : index+1);
+		table.showSelection();
 	}
 
 
@@ -185,11 +187,11 @@ public abstract class TableViewerContainer<T> {
 	}
 
 	public int getSelectionIndex() {
-		return getTable().getSelectionIndex();
+		return table.getSelectionIndex();
 	}
 
 	public int[] getSelectionIndices() {
-		return getTable().getSelectionIndices();
+		return table.getSelectionIndices();
 	}
 
 	public T getSelectionElement() {
@@ -226,7 +228,7 @@ public abstract class TableViewerContainer<T> {
 	}
 
 	public Table getTable() {
-		return getViewer().getTable();
+		return table;
 	}
 
 
