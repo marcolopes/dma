@@ -50,7 +50,7 @@ public class PdfFileHandler extends FileHandler {
 
 			try{
 				PdfSignatureAppearance signature=stamper.getSignatureAppearance();
-					signature.setCrypto(privateKey, certChain, null,
+				signature.setCrypto(privateKey, certChain, null,
 						PdfSignatureAppearance.WINCER_SIGNED);
 
 				signature.setSignDate(new GregorianCalendar());

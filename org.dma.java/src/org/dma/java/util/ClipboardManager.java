@@ -60,12 +60,12 @@ public class ClipboardManager {
 	}
 
 
-	public static <T> List<T> getClipboard(Class<?> klass) {
+	public static <T> Collection<T> getClipboard(Class<?> klass) {
 		return !hasObject(klass) ? new ArrayList(0) : CLIPBOARD;
 	}
 
 
-	public static List<?> getClipboard() {
+	public static Collection<?> getClipboard() {
 		return CLIPBOARD;
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -8,7 +8,6 @@ package org.dma.java.email;
 import javax.mail.PasswordAuthentication;
 
 import org.dma.java.util.ArrayUtils;
-import org.dma.java.util.Debug;
 
 public class ServerParameters {
 
@@ -59,16 +58,16 @@ public class ServerParameters {
 	}
 
 
-	public void debug(){
-
-		if (!Debug.STATUS) return;
-
-		System.out.println("Host Name: "+hostName);
-		System.out.println("SMTP Port:"+smtpPort);
-		System.out.println("Security:" +security);
-
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Host Name: "+hostName+
+				"\nSMTP Port:"+smtpPort+
+				"\nSecurity:" +security;
 	}
-
 
 
 	/*

@@ -1,11 +1,14 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.io;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.net.URLConnection;
 
 import org.dma.java.util.StringUtils;
 
@@ -39,6 +42,22 @@ public class FileURL {
 		this.url=getURL(ftpurl, filename);
 	}
 
+
+	public InputStream asInputStream() throws Exception {
+		URLConnection conn=url.openConnection();
+		conn.setDoInput(true); //input connection
+		conn.setDoOutput(false); //output connection
+		conn.setUseCaches(false); //avoid a cached file
+		return conn.getInputStream();
+	}
+
+	public OutputStream asOutputStream() throws Exception {
+		URLConnection conn=url.openConnection();
+		conn.setDoInput(false); //input connection
+		conn.setDoOutput(true); //output connection
+		conn.setUseCaches(false); //avoid a cached file
+		return conn.getOutputStream();
+	}
 
 	@Override
 	public String toString() {

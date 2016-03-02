@@ -12,9 +12,9 @@ public final class VersionNumber {
 	public final int macro;
 
 	public VersionNumber(int major, int minor, int macro){
-		this.major = major;
-		this.minor = minor;
-		this.macro = macro;
+		this.major=major;
+		this.minor=minor;
+		this.macro=macro;
 	}
 
 	public VersionNumber(String version) {

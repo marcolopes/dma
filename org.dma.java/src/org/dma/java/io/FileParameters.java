@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -15,13 +15,14 @@ public class FileParameters {
 	public final String filename;
 
 	public FileParameters(String prefix, String suffix) {
-		this(prefix, suffix, "");
+		this(prefix, suffix, ".");
 	}
 
 	public FileParameters(String prefix, String suffix, String foldername){
 		this(prefix, suffix, new File(foldername));
 	}
 
+	/** suffix CAN be null, or may or may not start with DOT (.) */
 	public FileParameters(String prefix, String suffix, File folder){
 		this.prefix=prefix;
 		this.suffix=suffix==null || suffix.startsWith(".") ? suffix : "."+suffix;

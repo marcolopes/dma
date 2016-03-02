@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URLConnection;
 
 public class URLTextFileHandler extends TextFileHandler {
 
@@ -52,14 +51,10 @@ public class URLTextFileHandler extends TextFileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			URLConnection conn=fileurl.url.openConnection();
-			conn.setDoInput(true); //input connection
-			conn.setUseCaches(false); //avoid a cached file
-
 			BufferedReader br=
 					new BufferedReader(
 							new InputStreamReader(
-									conn.getInputStream(), charset));
+									fileurl.asInputStream(), charset));
 
 			try{
 				String line;

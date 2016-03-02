@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -8,8 +8,10 @@ package org.dma.java.io;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -96,6 +98,18 @@ public class FileHandler {
 	public InputStream asInputStream() {
 		try{
 			return new FileInputStream(file);
+
+		}catch(FileNotFoundException e){
+			System.out.println(e);
+		}
+
+		return null;
+	}
+
+
+	public OutputStream asOutputStream() {
+		try{
+			return new FileOutputStream(file);
 
 		}catch(FileNotFoundException e){
 			System.out.println(e);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -13,7 +13,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import com.thebuzzmedia.imgscalr.Scalr;
+import org.imgscalr.Scalr;
 
 public class ImageUtils {
 
