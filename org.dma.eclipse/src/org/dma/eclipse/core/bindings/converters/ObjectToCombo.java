@@ -6,8 +6,6 @@ package org.dma.eclipse.core.bindings.converters;
 
 import java.util.Collection;
 
-import org.dma.eclipse.core.bindings.converters.CustomConverter;
-
 public class ObjectToCombo extends CustomConverter {
 
 	private final Collection<?> objectCollection;

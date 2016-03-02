@@ -6,8 +6,6 @@ package org.dma.eclipse.core.bindings.converters;
 
 import java.math.BigDecimal;
 
-import org.dma.eclipse.core.bindings.converters.CustomConverter;
-
 public class StringToBigDecimal extends CustomConverter {
 
 	public StringToBigDecimal() {

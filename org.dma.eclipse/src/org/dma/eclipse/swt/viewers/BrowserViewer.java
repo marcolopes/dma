@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -61,7 +61,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	}
 
 
-	private void dispose(CTabItem tabItem) {
+	public void dispose(CTabItem tabItem) {
 
 		Debug.out("DISPOSE", tabItem);
 		Browser browser=get(tabItem);

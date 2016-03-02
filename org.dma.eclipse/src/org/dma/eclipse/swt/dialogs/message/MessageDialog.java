@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,6 +7,7 @@ package org.dma.eclipse.swt.dialogs.message;
 
 import org.dma.java.util.MethodResult;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -51,10 +52,10 @@ public class MessageDialog {
 				public void run() {
 					Shell shell=Display.getDefault().getActiveShell();
 					switch(type) {
-					case ERROR: org.eclipse.jface.dialogs.MessageDialog.openError(shell, type.title, message2); break;
-					case INFORMATION: org.eclipse.jface.dialogs.MessageDialog.openInformation(shell, type.title, message2); break;
-					case QUESTION: result.value=org.eclipse.jface.dialogs.MessageDialog.openQuestion(shell, type.title, message2); break;
-					case CONFIRMATION: result.value=org.eclipse.jface.dialogs.MessageDialog.openConfirm(shell, type.title, message2); break;
+					case ERROR: result.value=org.eclipse.jface.dialogs.MessageDialog.open(org.eclipse.jface.dialogs.MessageDialog.ERROR, shell, type.title, message2, SWT.NONE); break;
+					case INFORMATION: result.value=org.eclipse.jface.dialogs.MessageDialog.open(org.eclipse.jface.dialogs.MessageDialog.INFORMATION, shell, type.title, message2, SWT.NONE); break;
+					case QUESTION: result.value=org.eclipse.jface.dialogs.MessageDialog.open(org.eclipse.jface.dialogs.MessageDialog.QUESTION, shell, type.title, message2, SWT.NONE); break;
+					case CONFIRMATION: result.value=org.eclipse.jface.dialogs.MessageDialog.open(org.eclipse.jface.dialogs.MessageDialog.CONFIRM, shell, type.title, message2, SWT.NONE); break;
 					}
 				}
 			});

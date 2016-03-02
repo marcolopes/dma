@@ -4,8 +4,6 @@
  *******************************************************************************/
 package org.dma.eclipse.core.bindings.converters;
 
-import org.dma.eclipse.core.bindings.converters.CustomConverter;
-
 public class IntegerToString extends CustomConverter {
 
 	public IntegerToString() {
