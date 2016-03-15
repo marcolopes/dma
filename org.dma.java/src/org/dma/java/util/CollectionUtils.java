@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,7 +7,6 @@ package org.dma.java.util;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -169,7 +168,7 @@ public class CollectionUtils {
 
 	public static <T> String[] compact(Collection<T> col) {
 
-		List<String> result=new ArrayList();
+		Collection<String> result=new ArrayList();
 
 		for(T e: col){
 			String str=e.toString();
@@ -249,13 +248,6 @@ public class CollectionUtils {
 	}
 
 
-	public static <T> List<T> index(List<T> col, int index) {
-
-		return new ArrayList(Arrays.asList(col.get(index)));
-
-	}
-
-
 	public static <T> List<T> head(List<T> col) {
 
 		return col.isEmpty() ? col : col.subList(0, col.size()-1);
@@ -273,7 +265,7 @@ public class CollectionUtils {
 	/** Returns removed elements */
 	public static <T> Collection<T> removeContaining(Collection<T> col, String searchFor) {
 
-		List<T> remove=new ArrayList();
+		Collection<T> remove=new ArrayList();
 
 		for(T e: col){
 			if(e.toString().contains(searchFor)) remove.add(e);
@@ -289,7 +281,7 @@ public class CollectionUtils {
 	/** Returns removed elements */
 	public static <T> Collection<T> removeContaining(Collection<T> col, String...searchFor) {
 
-		List<T> remove=new ArrayList();
+		Collection<T> remove=new ArrayList();
 
 		for(int i=0; i<searchFor.length; i++){
 			remove.addAll(removeContaining(col, searchFor[i]));

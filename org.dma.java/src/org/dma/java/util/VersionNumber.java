@@ -61,7 +61,7 @@ public final class VersionNumber {
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	 * @see java.lang.Object
 	 */
 	@Override
 	public String toString(){

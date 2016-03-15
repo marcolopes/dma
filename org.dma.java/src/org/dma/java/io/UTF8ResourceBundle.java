@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * UTF-8 encoded editable .property files.
  *
  * Use:
- * ResourceBundle bundle = new UTF8ResourceBundle("baseName");
+ * ResourceBundle bundle=new UTF8ResourceBundle("baseName");
  *
  * @author Tomas Varaneckas <tomas.varaneckas@gmail.com>
  * @author Marco Lopes <marcolopes@netc.pt>
@@ -34,17 +34,17 @@ public class UTF8ResourceBundle extends ResourceBundle {
 	}
 
 	public UTF8ResourceBundle(ResourceBundle bundle) {
-		this.bundle = bundle;
+		this.bundle=bundle;
 	}
 
 	@Override
 	protected Object handleGetObject(String key) {
-		final String value = bundle.getString(key);
-		if (value == null) return null;
-		try {
+		final String value=bundle.getString(key);
+		if (value==null) return null;
+		try{
 			return new String(value.getBytes("ISO-8859-1"), "UTF-8");
-		} catch (final UnsupportedEncodingException e) {
-			throw new RuntimeException("Encoding not supported", e);
+		}catch(final UnsupportedEncodingException e) {
+			throw new UnsupportedOperationException("Encoding not supported", e);
 		}
 	}
 

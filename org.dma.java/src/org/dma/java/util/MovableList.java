@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -27,15 +27,15 @@ public class MovableList<T> extends LinkedList<T> {
 	/** Returns removed elements */
 	public Collection<T> remove(int...indexes) {
 
-		List<T> removeList=new ArrayList(indexes.length);
+		Collection<T> remove=new ArrayList(indexes.length);
 
 		for(int index: indexes){
-			removeList.add(get(index));
+			remove.add(get(index));
 		}
 
-		removeAll(removeList);
+		removeAll(remove);
 
-		return removeList;
+		return remove;
 
 	}
 
@@ -43,16 +43,16 @@ public class MovableList<T> extends LinkedList<T> {
 	/** Returns inserted elements */
 	public Collection<T> insert(List<T> list, int position, int...indexes) {
 
-		List<T> insertList=new ArrayList(indexes.length);
+		Collection<T> insert=new ArrayList(indexes.length);
 
 		Arrays.sort(indexes);
 		for(int index: indexes){
-			insertList.add(list.get(index));
+			insert.add(list.get(index));
 		}
 
-		addAll(position, insertList);
+		addAll(position, insert);
 
-		return insertList;
+		return insert;
 
 	}
 

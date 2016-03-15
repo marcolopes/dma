@@ -17,16 +17,16 @@ public class ServerParameters {
 
 		public static final String[] NAMES = ArrayUtils.toStringArray(values());
 
-		public static SECURITY get(int security) {
+		public static SECURITY get(String name) {
 			try{
-				return values()[security];
+				return valueOf(name);
 			}catch(Exception e){}
 			return NONE;
 		}
 
-		public static SECURITY get(String name) {
+		public static SECURITY get(int security) {
 			try{
-				return valueOf(name);
+				return values()[security];
 			}catch(Exception e){}
 			return NONE;
 		}
@@ -60,7 +60,7 @@ public class ServerParameters {
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	 * @see java.lang.Object
 	 */
 	@Override
 	public String toString() {

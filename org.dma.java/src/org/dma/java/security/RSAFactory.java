@@ -279,6 +279,7 @@ public class RSAFactory {
 
 			System.out.println("KEY SIZE: "+size);
 			debug(generateKeyPair(size));
+			System.out.println();
 
 		}catch(Exception e){
 			System.out.println(e);

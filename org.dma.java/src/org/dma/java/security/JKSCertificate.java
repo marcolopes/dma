@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import org.dma.java.io.ByteFileHandler;
 import org.dma.java.util.TimeDateUtils;
@@ -25,11 +24,11 @@ import org.dma.java.util.TimeDateUtils;
 public class JKSCertificate {
 
 	public enum CERTIFICATE_TYPE {
-		/** The proprietary keystore implementation provided by the SunJCE provider */
-		JCEKS,
 		/** The proprietary keystore implementation provided by the SUN provider */
 		JKS,
-		/** The transfer syntax for personal identity information as defined in PKCS #12 */
+		/** The proprietary keystore implementation provided by the SunJCE provider */
+		JCEKS,
+		/** The transfer syntax for personal identity information as defined in PKCS#12 */
 		PKCS12
 	}
 
@@ -155,7 +154,7 @@ public class JKSCertificate {
 		     "encipherOnly",
 		     "decipherOnly"};
 
-		List<String> col=new ArrayList();
+		Collection<String> col=new ArrayList();
 		boolean[] usage=X509Cert.getKeyUsage();
 		for(int i=0; i<usage.length && i<purposes.length; i++){
 			if (usage[i]) col.add(purposes[i]);
@@ -166,7 +165,7 @@ public class JKSCertificate {
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	 * @see java.lang.Object
 	 */
 	@Override
 	public String toString() {

@@ -31,7 +31,7 @@ public class RSAPublicCipher extends CryptoCipher {
 
 	@Deprecated
 	public String decrypt(byte[] buffer) {
-		throw new RuntimeException("Decrypt not possible with PublicKey");
+		throw new UnsupportedOperationException("Decrypt not possible with PublicKey");
 	}
 
 

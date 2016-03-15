@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -32,7 +32,8 @@ public abstract class TimeClock {
 	}
 
 	private final Date date=new Date();
-	private final Timer timer=new Timer();
+	/** Daemon thread avoids the need to CANCEL */
+	private final Timer timer=new Timer(true);
 
 	private final CLOCK_FORMAT format;
 	private final Format formatter;

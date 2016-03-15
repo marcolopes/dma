@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -8,6 +8,7 @@ package org.dma.java.util;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -16,7 +17,9 @@ public class StringUtils {
 
 	public static final Pattern NUMERIC_PATTERN = Pattern.compile("^[0-9]+$");
 	public static final Pattern DECIMAL_PATTERN = Pattern.compile("^[0-9[.]]+$");
+	public static final Pattern LETTERS_PATTERN = Pattern.compile("^[A-Za-z]+$");
 	public static final Pattern UPPERCASE_PATTERN = Pattern.compile("^[^a-z]+$");
+	public static final Pattern LOWERCASE_PATTERN = Pattern.compile("^[^A-Z]+$");
 
 	public static final String DECIMAL_NUMBERS = "0123456789";
 	public static final String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
@@ -184,9 +187,23 @@ public class StringUtils {
 	}
 
 
+	public static boolean isLetters(String string) {
+
+		return LETTERS_PATTERN.matcher(string).matches();
+
+	}
+
+
 	public static boolean isUppercase(String string) {
 
 		return UPPERCASE_PATTERN.matcher(string).matches();
+
+	}
+
+
+	public static boolean isLowercase(String string) {
+
+		return LOWERCASE_PATTERN.matcher(string).matches();
 
 	}
 
@@ -202,9 +219,9 @@ public class StringUtils {
 	}
 
 
-	public static List<Integer> indexOf(String string, String searchFor) {
+	public static Collection<Integer> indexOf(String string, String searchFor) {
 
-		List<Integer> result=new ArrayList();
+		Collection<Integer> result=new ArrayList();
 
 		int index=0;
 		while((index=string.indexOf(searchFor, index))!=-1) {

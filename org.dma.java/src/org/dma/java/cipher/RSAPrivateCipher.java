@@ -31,7 +31,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 
 	@Deprecated
 	public String encrypt(byte[] buffer, int lineLength) {
-		throw new RuntimeException("Encrypt not possible with PrivateKey");
+		throw new UnsupportedOperationException("Encrypt not possible with PrivateKey");
 	}
 
 

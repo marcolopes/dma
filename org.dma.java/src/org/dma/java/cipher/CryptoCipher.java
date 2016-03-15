@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -14,31 +14,88 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
 public class CryptoCipher {
 
-	public static final String BLOWFISH = "Blowfish";
-	public static final String ECB_PKCS5Padding = "AES/ECB/PKCS5Padding";
+	/** https://docs.oracle.com/javase/7/docs/api/javax/crypto/Cipher.html */
+	public enum CIPHERS {
 
-	private final Key key;
+		AES_CBC ("AES", "CBC", 128),
+		AES_CBC_PKCS5 ("AES", "CBC", "PKCS5Padding", 128),
+		AES_ECB ("AES", "ECB", 128),
+		AES_ECB_PKCS5 ("AES", "ECB", "PKCS5Padding", 128),
+		DES_CBC ("DES", "CBC", 56),
+		DES_CBC_PKCS5 ("DES", "CBC", "PKCS5Padding", 56),
+		DES_ECB ("DES", "ECB", 56),
+		DES_ECB_PKCS5 ("DES", "ECB", "PKCS5Padding", 56),
+		DESede_CBC ("DESede", "CBC", 168),
+		DESede_CBC_PKCS5 ("DESede", "CBC", "PKCS5Padding", 168),
+		DESede_ECB ("DESede", "ECB", 168),
+		DESede_ECB_PKCS5 ("DESede", "ECB", "PKCS5Padding", 168),
+		RSA_ECB_PKCS1 ("RSA", "ECB", "PKCS1Padding", 1024, 2048),
+		RSA_ECB_OAEPWithSHA_1AndMGF1 ("RSA", "ECB", "OAEPWithSHA-1AndMGF1Padding", 1024, 2048),
+		RSA_ECB_OAEPWithSHA_256AndMGF1 ("RSA", "ECB", "OAEPWithSHA-256AndMGF1Padding", 1024, 2048);
+
+		public final String algorithm, mode, padding, transformation;
+		public final int[] keysize;
+
+		private CIPHERS(String algorithm, String mode, int...keysize) {
+			this(algorithm, mode, "NoPadding", keysize);
+		}
+
+		private CIPHERS(String algorithm, String mode, String padding, int...keysize) {
+			this.algorithm=algorithm;
+			this.mode=mode;
+			this.padding=padding;
+			this.transformation=algorithm+"/"+mode+"/"+padding;
+			this.keysize=keysize;
+		}
+
+		/** MAX key size */
+		public int keySize() {
+			return keysize[keysize.length-1];
+		}
+
+	}
 
 	private Cipher cipher;
 	private Cipher decipher;
 
+	private final Key key;
+
+	public CryptoCipher(byte[] key, CIPHERS cipher) {
+		this(key, cipher.algorithm, cipher.transformation);
+	}
+
+	public CryptoCipher(byte[] key, String algorithm, String transformation) {
+		this(new SecretKeySpec(key, algorithm), transformation);
+	}
+
+	/** transformation = algorithm */
+	public CryptoCipher(byte[] key, String algorithm) {
+		this(new SecretKeySpec(key, algorithm));
+	}
+
+	/** transformation = algorithm */
 	public CryptoCipher(Key key) {
 		this(key, key.getAlgorithm());
+	}
+
+	public CryptoCipher(Key key, CIPHERS cipher) {
+		this(key, cipher.transformation);
 	}
 
 	public CryptoCipher(Key key, String transformation) {
 		this.key=key;
 
 		try{
-			this.cipher=Cipher.getInstance(transformation);
-			this.decipher=Cipher.getInstance(transformation);
-
+			cipher=Cipher.getInstance(transformation);
 			cipher.init(Cipher.ENCRYPT_MODE, key);
+
+			decipher=Cipher.getInstance(transformation);
 			decipher.init(Cipher.DECRYPT_MODE, key);
 
 		}catch(NoSuchAlgorithmException e){

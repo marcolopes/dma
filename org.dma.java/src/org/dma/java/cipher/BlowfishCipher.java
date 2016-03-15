@@ -1,16 +1,14 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.cipher;
 
-import javax.crypto.spec.SecretKeySpec;
-
 public class BlowfishCipher extends CryptoCipher {
 
 	public BlowfishCipher(String key) {
-		super(new SecretKeySpec(key.getBytes(), BLOWFISH));
+		super(key.getBytes(), "Blowfish");
 	}
 
 }
