@@ -33,7 +33,7 @@ public class CheckVatResult {
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	 * @see java.lang.Object
 	 */
 	@Override
 	public String toString(){
