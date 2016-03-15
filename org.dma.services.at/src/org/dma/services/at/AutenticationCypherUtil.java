@@ -5,6 +5,8 @@ import java.security.PublicKey;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.dma.java.cipher.CryptoCipher.CIPHERS;
 /**
  * Rotinas de autenticacao
  *
@@ -13,26 +15,6 @@ import javax.crypto.spec.SecretKeySpec;
  *
  */
 public class AutenticationCypherUtil {
-
-	public enum AES_CIPHER {
-
-		ALGORITHM ("AES"),
-		MODE ("ECB"),
-		PADDING ("PKCS5Padding");
-
-		public static final String TRANSFORMATION =
-				ALGORITHM.value + "/" +
-						MODE.value + "/" +
-						PADDING.value;
-
-		public final String value;
-
-		private AES_CIPHER(String value) {
-			this.value = value;
-		}
-
-	}
-
 
 	public static byte[] cypherRequestKey(PublicKey publicKey, byte[] requestKey) throws Exception {
 
@@ -54,8 +36,8 @@ public class AutenticationCypherUtil {
 
 	public static byte[] cypherCredentialBuffer(byte[] requestKey, byte[] credential) throws Exception {
 
-		Cipher cipher = Cipher.getInstance(AES_CIPHER.TRANSFORMATION);
-		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(requestKey, AES_CIPHER.ALGORITHM.value));
+		Cipher cipher = Cipher.getInstance(CIPHERS.AES_ECB_PKCS5.transformation);
+		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(requestKey, CIPHERS.AES_ECB_PKCS5.algorithm));
 		return cipher.doFinal(credential);
 
 	}
@@ -70,8 +52,8 @@ public class AutenticationCypherUtil {
 
 	public static byte[] decypherCredentialBuffer(byte[] requestKey, byte[] encriptedCredential) throws Exception {
 
-		Cipher decipher = Cipher.getInstance(AES_CIPHER.TRANSFORMATION);
-		decipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(requestKey, AES_CIPHER.ALGORITHM.value));
+		Cipher decipher = Cipher.getInstance(CIPHERS.AES_ECB_PKCS5.transformation);
+		decipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(requestKey, CIPHERS.AES_ECB_PKCS5.algorithm));
 		return decipher.doFinal(encriptedCredential);
 
 	}

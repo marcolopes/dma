@@ -38,10 +38,10 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
+import org.dma.java.cipher.CryptoCipher.CIPHERS;
 import org.dma.java.io.NTPServerHandler.NTPServers;
 import org.dma.java.io.NTPTimeInfo;
 import org.dma.java.security.JKSCertificate;
-import org.dma.services.at.AutenticationCypherUtil.AES_CIPHER;
 /**
  * SOAP Message Handler
  *
@@ -160,7 +160,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				System.out.println("DATE: "+formattedDate);
 
 				// Generate simetric key used for this request. Nonce!
-				KeyGenerator generator = KeyGenerator.getInstance(AES_CIPHER.ALGORITHM.value);
+				KeyGenerator generator = KeyGenerator.getInstance(CIPHERS.AES_ECB_PKCS5.algorithm);
 				generator.init(128); // Implementacao JAVA permite apenas 128 bits
 				final byte[] simetricKey = generator.generateKey().getEncoded();
 
