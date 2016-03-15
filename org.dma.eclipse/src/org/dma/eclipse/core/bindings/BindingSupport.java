@@ -1,18 +1,18 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.core.bindings;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.dma.java.util.Debug;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.Realm;
 
-public class BindingSupport extends HashMap<String, BindingDefinition> {
+public class BindingSupport extends LinkedHashMap<String, BindingDefinition> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,23 +39,20 @@ public class BindingSupport extends HashMap<String, BindingDefinition> {
 			definition.getTargetToModelUpdate(),
 			definition.getModelToTargetUpdate());
 
-		Debug.out(property, keySet());
-
 	}
 
 
 	public void unregister(String property) {
 
 		BindingDefinition binding=remove(property);
-		if (binding!=null){
-			Debug.out(property, keySet());
-			binding.dispose();
-		}
+		if (binding!=null) binding.dispose();
 
 	}
 
 
 	public void unregisterAll() {
+
+		Debug.out(keySet());
 
 		while(!isEmpty()){
 			String property=keySet().iterator().next();

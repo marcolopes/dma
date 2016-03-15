@@ -120,7 +120,7 @@ public class CustomJob extends Job {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
+	 * @see org.eclipse.core.runtime.jobs.Job
 	 */
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {

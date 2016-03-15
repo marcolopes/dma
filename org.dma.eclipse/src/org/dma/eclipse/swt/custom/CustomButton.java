@@ -35,10 +35,9 @@ public class CustomButton extends Button {
 	}
 
 
-
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.swt.widgets.Control#setEnabled(boolean)
+	 * @see org.eclipse.swt.widgets.Control
 	 */
 	@Override
 	public void setEnabled(boolean enabled) {

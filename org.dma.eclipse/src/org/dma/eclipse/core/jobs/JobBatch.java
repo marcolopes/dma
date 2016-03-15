@@ -99,7 +99,7 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 
 	/*
 	 * (non-Javadoc)
-	 * @see java.util.AbstractSet#hashCode()
+	 * @see java.util.AbstractSet
 	 */
 	@Override
 	public int hashCode() {

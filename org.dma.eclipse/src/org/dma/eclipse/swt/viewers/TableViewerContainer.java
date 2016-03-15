@@ -205,9 +205,9 @@ public abstract class TableViewerContainer<T> {
 	}
 
 	public void copySelectionToClipboard() {
-		List<T> selectionList=getSelectionList();
-		Debug.out("Selection", selectionList);
-		ClipboardManager.copyToClipboard(selectionList);
+		Collection<T> selection=getSelectionList();
+		Debug.out("Selection", selection);
+		ClipboardManager.copyToClipboard(selection);
 	}
 
 

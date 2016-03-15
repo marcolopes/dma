@@ -52,7 +52,7 @@ public class MessageDialog {
 				public void run() {
 					Shell shell=Display.getDefault().getActiveShell();
 					switch(type) {
-					case ERROR: result.value=org.eclipse.jface.dialogs.MessageDialog.open(org.eclipse.jface.dialogs.MessageDialog.ERROR, shell, type.title, message2, SWT.NONE); break;
+					case ERROR: org.eclipse.jface.dialogs.MessageDialog.openError(shell, type.title, message2); break;
 					case INFORMATION: result.value=org.eclipse.jface.dialogs.MessageDialog.open(org.eclipse.jface.dialogs.MessageDialog.INFORMATION, shell, type.title, message2, SWT.NONE); break;
 					case QUESTION: result.value=org.eclipse.jface.dialogs.MessageDialog.open(org.eclipse.jface.dialogs.MessageDialog.QUESTION, shell, type.title, message2, SWT.NONE); break;
 					case CONFIRMATION: result.value=org.eclipse.jface.dialogs.MessageDialog.open(org.eclipse.jface.dialogs.MessageDialog.CONFIRM, shell, type.title, message2, SWT.NONE); break;

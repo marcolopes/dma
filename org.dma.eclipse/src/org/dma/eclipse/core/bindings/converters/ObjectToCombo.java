@@ -10,6 +10,7 @@ public class ObjectToCombo extends CustomConverter {
 
 	private final Collection<?> objectCollection;
 
+	/** Beware of objects equals() method */
 	public ObjectToCombo(Collection<?> objectCollection){
 		super(Object.class, Object.class);
 		this.objectCollection=objectCollection;
@@ -19,7 +20,7 @@ public class ObjectToCombo extends CustomConverter {
 	@Override
 	public Object convert(Object fromObject) {
 		for(Object obj: objectCollection){
-			if(fromObject.toString().equals(obj.toString())) return obj;
+			if(fromObject.equals(obj)) return obj;
 		}
 		return null;
 	}
