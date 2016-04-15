@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -432,16 +433,16 @@ public class TimeDateUtils {
 	}
 
 
-	public static long getDaysBetween(Calendar oldDate, Calendar newDate) {
-		oldDate.set(Calendar.HOUR_OF_DAY, 0); // Crucial
-		oldDate.set(Calendar.MINUTE, 0);
-		oldDate.set(Calendar.SECOND, 0);
-		oldDate.set(Calendar.MILLISECOND, 0);
-		newDate.set(Calendar.HOUR_OF_DAY, 0); // Crucial
-		newDate.set(Calendar.MINUTE, 0);
-		newDate.set(Calendar.SECOND, 0);
-		newDate.set(Calendar.MILLISECOND, 0);
-		return TimeUnit.MILLISECONDS.toDays(newDate.getTimeInMillis()-oldDate.getTimeInMillis());
+	public static long getDaysBetween(Calendar startDate, Calendar endDate) {
+		startDate.set(Calendar.HOUR_OF_DAY, 0); // Crucial
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.SECOND, 0);
+		startDate.set(Calendar.MILLISECOND, 0);
+		endDate.set(Calendar.HOUR_OF_DAY, 0); // Crucial
+		endDate.set(Calendar.MINUTE, 0);
+		endDate.set(Calendar.SECOND, 0);
+		endDate.set(Calendar.MILLISECOND, 0);
+		return TimeUnit.MILLISECONDS.toDays(endDate.getTimeInMillis()-startDate.getTimeInMillis());
 	}
 
 
@@ -623,8 +624,8 @@ public class TimeDateUtils {
 	}
 
 
-	public static long getDaysBetween(Date oldDate, Date newDate) {
-		return getDaysBetween(getCalendar(oldDate), getCalendar(newDate));
+	public static long getDaysBetween(Date startDate, Date endDate) {
+		return getDaysBetween(getCalendar(startDate), getCalendar(endDate));
 	}
 
 
@@ -727,6 +728,11 @@ public class TimeDateUtils {
 
 	public static void main(String[] argvs) {
 
+
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		System.out.println("SimpleDateFormat: "+sdf.format(new Date()));
+
 		System.out.println("getCalendar: "+getCalendar());
 
 		System.out.println("getCalendarWithoutTime: "+getCalendarWithoutTime());
@@ -738,17 +744,12 @@ public class TimeDateUtils {
 		System.out.println("getDateWithDay (25): "+getDateWithDay(getCurrentDate(), 25));
 
 		System.out.println("getDaysBetween (30): "+getDaysBetween(
-				new GregorianCalendar(2014,01,01),
-				new GregorianCalendar(2014,01,31)));
+				getCalendar(2014,0,1),
+				getCalendar(2014,0,31)));
 
 		System.out.println("getDaysBetween (31): "+getDaysBetween(
-				new GregorianCalendar(2014,01,01),
-				new GregorianCalendar(2014,02,01)));
-
-		System.out.println(
-				TimeUnit.MILLISECONDS.toDays(
-				new GregorianCalendar(2014,02,01).getTimeInMillis()-
-				new GregorianCalendar(2014,01,01).getTimeInMillis()));
+				getCalendar(2014,0,1),
+				getCalendar(2014,1,1)));
 
 	}
 
