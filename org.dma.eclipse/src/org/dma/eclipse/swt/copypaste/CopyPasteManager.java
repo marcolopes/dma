@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -23,8 +23,6 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 
 	public void executeCopy() {
 
-		header.executeCopy();
-
 		for(ICopyPaste element: keySet()){
 
 			TabItem item=get(element);
@@ -36,12 +34,12 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 
 		}
 
+		header.executeCopy();
+
 	}
 
 
 	public void executePaste() {
-
-		header.executePaste();
 
 		for(ICopyPaste element: keySet()){
 
@@ -53,6 +51,8 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 			}
 
 		}
+
+		header.executePaste();
 
 	}
 

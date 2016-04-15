@@ -8,13 +8,14 @@ package org.dma.eclipse.swt.dialogs.message;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.MessageList;
 
-public class QuestionDialog extends MessageDialog {
+public class QuestionDialog {
 
 	/*
 	 * Question
 	 */
 	public static boolean open(String operation, String...message) {
-		return open(operation, ArrayUtils.concat(message, "\n"), TYPE.QUESTION);
+		return MessageDialog.open(operation, ArrayUtils.concat(message, "\n"),
+				MessageDialog.TYPE.QUESTION);
 	}
 
 	public static boolean open(String operation, MessageList list) {
