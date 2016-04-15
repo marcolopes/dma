@@ -147,12 +147,11 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 				// create timestamp
 				/*
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 				String formattedDate = sdf.format(calendar.getTime());
 				*/
-
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 				NTPTimeInfo time=NTPServers.queryAll(500, NTPServers.OAL, NTPServers.XS2ALL, NTPServers.WINDOWS);
