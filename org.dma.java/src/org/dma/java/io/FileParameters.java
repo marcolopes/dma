@@ -14,6 +14,7 @@ public class FileParameters {
 	public final File folder;
 	public final String filename;
 
+	/** folder = "." (always reflects current system folder)*/
 	public FileParameters(String prefix, String suffix) {
 		this(prefix, suffix, ".");
 	}
