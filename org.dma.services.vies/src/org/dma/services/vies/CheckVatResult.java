@@ -12,9 +12,9 @@ public class CheckVatResult {
 	private final String address;
 
 	public CheckVatResult(Boolean valid, String name, String address){
-		this.valid = valid;
-		this.name = name.trim();
-		this.address = address.trim();
+		this.valid=valid;
+		this.name=name.trim();
+		this.address=address.trim();
 	}
 
 

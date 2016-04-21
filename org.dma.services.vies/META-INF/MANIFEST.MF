@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: VAT Information Exchange System
 Bundle-SymbolicName: org.dma.services.vies;singleton:=true
-Bundle-Version: 1.0.1.qualifier
+Bundle-Version: 1.0.2.qualifier
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
