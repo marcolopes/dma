@@ -1,10 +1,12 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.util;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -13,7 +15,7 @@ public class MessageList extends LinkedHashSet<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	public MessageList(String[] message) {
+	public MessageList(String...message) {
 		this(Arrays.asList(message));
 	}
 
@@ -27,24 +29,19 @@ public class MessageList extends LinkedHashSet<String> {
 
 
 	public void print() {
-		if (!isEmpty()) System.out.println(toString());
+		print(System.out);
 	}
 
 
-	public void add(String source, String message) {
-		add(source+": "+message);
+	public void print(OutputStream out) {
+		if (!isEmpty()) try{
+			out.write(toString().getBytes());
+		}catch(IOException e){}
 	}
 
 
-	public void add(String...message) {
-		add(new MessageList(message));
-	}
-
-
-	public void add(MessageList list) {
-		for(String message: list){
-			add(message);
-		}
+	public void add(String prefix, String message) {
+		add(prefix+": "+message);
 	}
 
 
@@ -57,6 +54,15 @@ public class MessageList extends LinkedHashSet<String> {
 	@Override
 	public String toString() {
 		return ArrayUtils.concat(toArray(), "\n");
+	}
+
+
+	public static void main(String[] argvs) {
+
+		MessageList list=new MessageList("dummy one", "dummy two");
+		list.add("prefix", "dummy");
+		list.print();
+
 	}
 
 

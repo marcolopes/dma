@@ -21,16 +21,16 @@ public class ClassAccess {
 
 		}
 		catch (NoClassDefFoundError e){
-			error.getErrors().add(CLASS_NOT_FOUND+" "+klass.getCanonicalName()+"."+field);
+			error.addError(CLASS_NOT_FOUND+" "+klass.getCanonicalName()+"."+field);
 
 		}catch(NoSuchFieldException e){
-			error.getErrors().add(FIELD_NOT_FOUND+" "+klass.getCanonicalName()+"."+field);
+			error.addError(FIELD_NOT_FOUND+" "+klass.getCanonicalName()+"."+field);
 
 		}catch(IllegalAccessException e){
-			error.getErrors().add(ILLEGAL_ACCESS+" "+klass.getCanonicalName()+"."+field);
+			error.addError(ILLEGAL_ACCESS+" "+klass.getCanonicalName()+"."+field);
 
 		}catch(ExceptionInInitializerError e) {
-			error.getErrors().add(INITIALIZER_ERROR+" "+klass.getCanonicalName()+"."+field);
+			error.addError(INITIALIZER_ERROR+" "+klass.getCanonicalName()+"."+field);
 		}
 
 		return null;

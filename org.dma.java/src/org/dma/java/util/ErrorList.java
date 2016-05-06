@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -13,46 +13,65 @@ public class ErrorList {
 	public ErrorList() {}
 
 	public ErrorList(Exception e) {
-		errors.add(e.getMessage());
+		addError(e.getMessage());
 	}
 
 
-	/** Clears errors and warnings */
+	/** Clears ERRORS and WARNINGS */
 	public void clear() {
 		errors.clear();
 		warnings.clear();
 	}
 
-	/** Prints errors and warnings */
+	/** Prints ERRORS and WARNINGS */
 	public void print() {
 		errors.print();
 		warnings.print();
 	}
 
-	/** Adds errors and warnings */
+	/** Adds ERRORS and WARNINGS */
 	public void add(ErrorList list) {
-		errors.add(list.getErrors());
-		warnings.add(list.getWarnings());
+		errors.addAll(list.errors);
+		warnings.addAll(list.warnings);
 	}
 
 
-
 	/*
-	 * Getters and Setters
+	 * Errors
 	 */
+	public void addError(String prefix, String message) {
+		errors.add(prefix, message);
+	}
+
+	public void addError(String message) {
+		errors.add(message);
+	}
+
 	public boolean hasErrors() {
 		return !errors.isEmpty();
 	}
 
-	public MessageList getErrors() {
+	public MessageList errors() {
 		return errors;
+	}
+
+
+	/*
+	 * Warnings
+	 */
+	public void addWarning(String prefix, String message) {
+		warnings.add(prefix, message);
+	}
+
+	public void addWarning(String message) {
+		warnings.add(message);
 	}
 
 	public boolean hasWarnings() {
 		return !warnings.isEmpty();
 	}
 
-	public MessageList getWarnings() {
+	public MessageList warnings() {
 		return warnings;
 	}
 
