@@ -40,17 +40,22 @@ public class MessageDialog extends org.eclipse.jface.dialogs.MessageDialog {
 
 	private static boolean result;
 
-	public static boolean open(final String operation, final String message, final TYPE type) {
+	public static boolean open(final String message, final TYPE type) {
+		return open(null, message, type);
+	}
+
+	public static boolean open(String header, String message, final TYPE type) {
 
 		if (message==null || message.isEmpty()) return type.result;
+
+		final String message2=header==null || header.isEmpty() ?
+				message : header+"\n"+message;
 
 		result=true;
 
 		try{
 			Display.getDefault().syncExec(new Runnable() {
 				public void run() {
-					String message2=operation==null || operation.isEmpty() ?
-							message : operation +"\n"+ message;
 					Shell shell=Display.getDefault().getActiveShell();
 					switch(type) {
 					case ERROR: openError(shell, type.title, message2); break;

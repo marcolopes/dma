@@ -83,8 +83,8 @@ public class CustomTrayItem {
 		toolTip.show(message);
 	}
 
-	public void showTip(String operation, String message) {
-		showTip(operation+": "+message);
+	public void showTip(String prefix, String message) {
+		showTip(prefix+": "+message);
 	}
 
 

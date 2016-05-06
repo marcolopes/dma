@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -10,18 +10,43 @@ import org.eclipse.jface.action.IAction;
 
 public class ExecutionEvent {
 
-	private final IAction executionAction;
-	private final IAction responseAction;
-	private final IAction postresponseAction;
 	private final int[] keycode;
+	private final IAction executionAction;
+	private final IAction[] responseAction;
 
-	private boolean actionExecuted=false;
+	private boolean executed=false;
 
-	public ExecutionEvent(IAction executionAction, IAction responseAction, IAction postresponseAction, int[] keycode) {
+	public ExecutionEvent(int[] keycode, IAction executionAction, IAction...responseAction) {
+		this.keycode=keycode;
 		this.executionAction=executionAction;
 		this.responseAction=responseAction;
-		this.postresponseAction=postresponseAction;
-		this.keycode=keycode;
+	}
+
+
+	public void execute() {
+		executionAction.run();
+		executed=true;
+	}
+
+
+	public void executeResponse() {
+		for(IAction action: responseAction) action.run();
+		executed=false;
+	}
+
+
+	public boolean hasResponseAction() {
+		return responseAction.length>0;
+	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object
+	 */
+	@Override
+	public String toString() {
+		return executionAction.getId();
 	}
 
 
@@ -29,28 +54,20 @@ public class ExecutionEvent {
 	/*
 	 * Getters and setters
 	 */
-	public IAction getExecutionAction() {
-		return executionAction;
-	}
-
-	public IAction getResponseAction() {
-		return responseAction;
-	}
-
-	public IAction getPostresponseAction() {
-		return postresponseAction;
-	}
-
 	public int[] getKeycode() {
 		return keycode;
 	}
 
-	public boolean isActionExecuted() {
-		return actionExecuted;
+	public IAction getExecutionAction() {
+		return executionAction;
 	}
 
-	public void setActionExecuted(boolean actionExecuted) {
-		this.actionExecuted=actionExecuted;
+	public IAction[] getResponseAction() {
+		return responseAction;
+	}
+
+	public boolean isExecuted() {
+		return executed;
 	}
 
 

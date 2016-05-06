@@ -23,13 +23,13 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 
 	public void executeCopy() {
 
-		for(ICopyPaste element: keySet()){
+		for(ICopyPaste key: keySet()){
 
-			TabItem item=get(element);
+			TabItem item=get(key);
 
 			if (!item.isDisposed() && !item.getControl().isDisposed() &&
 				item.getControl().isVisible()){
-				element.executeCopy();
+				key.executeCopy();
 			}
 
 		}
@@ -41,13 +41,13 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 
 	public void executePaste() {
 
-		for(ICopyPaste element: keySet()){
+		for(ICopyPaste key: keySet()){
 
-			TabItem item=get(element);
+			TabItem item=get(key);
 
 			if (!item.isDisposed() && !item.getControl().isDisposed() &&
 				item.getControl().isVisible()){
-				element.executePaste();
+				key.executePaste();
 			}
 
 		}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -33,24 +33,20 @@ public class ExecutionManager {
 	}
 
 	public static void register(Control control, int keycode[], IAction action) {
-		register(control, keycode, null, action);
+		register(control, null, keycode, action);
 	}
 
-	public static void register(Control control, int keycode[], String id, IAction action) {
-		register(control, keycode, id, null, action);
+	public static void register(Control control, String id, int keycode[], IAction action) {
+		register(control, id, null, keycode, action);
 	}
 
-	public static void register(Control control, int keycode[], String id, String secondaryId, IAction action) {
-		register(control, keycode, id, secondaryId, action, null, null);
+	public static void register(Control control, String id, int keycode[], IAction action, IAction...responseAction) {
+		register(control, id, null, keycode, action, responseAction);
 	}
 
-	public static void register(Control control, int keycode[], String id, IAction action, IAction responseAction, IAction postresponseAction) {
-		register(control, keycode, id, null, action, responseAction, postresponseAction);
-	}
-
-	public static void register(Control control, int keycode[], String id, String secondaryId, IAction action, IAction responseAction, IAction postresponseAction) {
-		ExecutionDefinition execDefinition=new ExecutionDefinition(id, secondaryId, control);
-		ExecutionEvent execEvent=new ExecutionEvent(action, responseAction, postresponseAction, keycode);
+	public static void register(Control control, String id, String secondaryId, int keycode[], IAction action, IAction...responseAction) {
+		ExecutionDefinition execDefinition=new ExecutionDefinition(control, id, secondaryId);
+		ExecutionEvent execEvent=new ExecutionEvent(keycode, action, responseAction);
 		register(execDefinition, execEvent);
 	}
 
@@ -64,8 +60,7 @@ public class ExecutionManager {
 				for(int keyCode: execEvent.getKeycode()){
 					if(keyCode==event.keyCode) {
 						Debug.out("EXECUTION");
-						execEvent.getExecutionAction().run();
-						execEvent.setActionExecuted(true);
+						execEvent.execute();
 						event.doit=false;
 					}
 				}
@@ -73,21 +68,18 @@ public class ExecutionManager {
 		});
 
 		if(execDefinition.getControl() instanceof Combo) {
-
 			execDefinition.addSelectionListener(new Listener() {
 				@Override
 				public void handleEvent(Event event) {
 					Debug.out("EXECUTION");
-					execEvent.getExecutionAction().run();
-					execEvent.setActionExecuted(true);
+					execEvent.execute();
 				}
 			});
-
 		}
 
 		EVENTS.put(execDefinition, execEvent);
 
-		Debug.out(execEvent.getExecutionAction().getId(), EVENTS.size());
+		Debug.out(execEvent.toString(), EVENTS.size());
 
 	}
 
@@ -109,7 +101,7 @@ public class ExecutionManager {
 				execDefinition.removeListeners();
 				iterator.remove();
 
-				Debug.out(execEvent.getExecutionAction().getId(), EVENTS.size());
+				Debug.out(execEvent.toString(), EVENTS.size());
 
 			}
 
@@ -122,7 +114,7 @@ public class ExecutionManager {
 	/*
 	 * Executions
 	 */
-	public static void notifyDependentExecutions(String id, String secondaryId) {
+	public static void notifyPendingExecutions(String id, String secondaryId) {
 
 		for(ExecutionDefinition execDefinition: EVENTS.keySet()) {
 
@@ -130,15 +122,7 @@ public class ExecutionManager {
 				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
 
 				ExecutionEvent execEvent=EVENTS.get(execDefinition);
-
-				if(execEvent.isActionExecuted()) {
-
-					if(execEvent.getResponseAction()!=null) execEvent.getResponseAction().run();
-					if(execEvent.getPostresponseAction()!=null) execEvent.getPostresponseAction().run();
-
-					execEvent.setActionExecuted(false);
-
-				}
+				if(execEvent.isExecuted()) execEvent.executeResponse();
 
 			}
 
@@ -147,14 +131,14 @@ public class ExecutionManager {
 	}
 
 
-	public static void notifyDependentExecutions(String id) {
+	public static void notifyPendingExecutions(String id) {
 
-		notifyDependentExecutions(id, null);
+		notifyPendingExecutions(id, null);
 
 	}
 
 
-	public static boolean hasDependentExecutions(String id, String secondaryId) {
+	public static boolean hasPendingExecutions(String id, String secondaryId) {
 
 		for(ExecutionDefinition execDefinition: EVENTS.keySet()) {
 
@@ -163,8 +147,7 @@ public class ExecutionManager {
 
 				ExecutionEvent execEvent=EVENTS.get(execDefinition);
 
-				if(execEvent.getResponseAction()!=null ||
-					execEvent.getPostresponseAction()!=null) return true;
+				if(execEvent.hasResponseAction()) return true;
 
 			}
 
@@ -175,9 +158,9 @@ public class ExecutionManager {
 	}
 
 
-	public static boolean hasDependentExecutions(String id) {
+	public static boolean hasPendingExecutions(String id) {
 
-		return hasDependentExecutions(id, null);
+		return hasPendingExecutions(id, null);
 
 	}
 

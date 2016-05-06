@@ -186,6 +186,10 @@ public abstract class TableViewerContainer<T> {
 		viewer.getControl().setEnabled(enabled);
 	}
 
+	public void setFocus() {
+		viewer.getTable().setFocus();
+	}
+
 	public int getSelectionIndex() {
 		return table.getSelectionIndex();
 	}

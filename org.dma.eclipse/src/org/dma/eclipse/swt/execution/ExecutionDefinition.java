@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2011 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Paulo Silva (wickay@hotmail.com)
@@ -13,17 +13,17 @@ import org.eclipse.swt.widgets.Listener;
 
 public class ExecutionDefinition {
 
+	private final Control control;
 	private final String id;
 	private final String secondaryId;
-	private final Control control;
 
 	private Listener selectionListener;
 	private KeyListener keyListener;
 
-	public ExecutionDefinition(String id, String secondaryId, Control control) {
+	public ExecutionDefinition(Control control, String id, String secondaryId) {
+		this.control=control;
 		this.id=id;
 		this.secondaryId=secondaryId;
-		this.control=control;
 	}
 
 
@@ -42,12 +42,8 @@ public class ExecutionDefinition {
 	}
 
 	public void removeListeners() {
-		if(selectionListener!=null) {
-			control.removeListener(SWT.Selection, selectionListener);
-		}
-		if(keyListener!=null) {
-			control.removeKeyListener(keyListener);
-		}
+		if(selectionListener!=null) control.removeListener(SWT.Selection, selectionListener);
+		if(keyListener!=null) control.removeKeyListener(keyListener);
 	}
 
 
@@ -55,16 +51,17 @@ public class ExecutionDefinition {
 	/*
 	 * Getters and setters
 	 */
+
+	public Control getControl() {
+		return control;
+	}
+
 	public String getId() {
 		return id;
 	}
 
 	public String getSecondaryId() {
 		return secondaryId;
-	}
-
-	public Control getControl() {
-		return control;
 	}
 
 
