@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,6 +7,7 @@ package org.dma.eclipse.ui;
 
 import org.dma.java.util.Debug;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
@@ -141,6 +142,15 @@ public class UIHelper {
 		}
 	}
 
+
+	public static void saveWorkspaceState(boolean full) {
+		try{
+			ResourcesPlugin.getWorkspace().save(full, null);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
 
 	/*
