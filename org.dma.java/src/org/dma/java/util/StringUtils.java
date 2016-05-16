@@ -50,12 +50,13 @@ public class StringUtils {
 
 	public static String toHex(byte b) {
 
-		char[] HEX_DIGITS={
+		final char[] HEX_DIGITS={
 			'0', '1', '2', '3', '4', '5', '6', '7',
 			'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-		char[] array = {HEX_DIGITS[(b >> 4) & 0x0f], HEX_DIGITS[b & 0x0f]};
 
-		return new String(array);
+		return new String(new char[]{
+			HEX_DIGITS[(b >> 4) & 0x0f],
+			HEX_DIGITS[b & 0x0f]});
 
 	}
 
@@ -63,7 +64,7 @@ public class StringUtils {
 	/** @see Integer#toHexString */
 	public static String toHexString(byte b) {
 
-		String hexString=Integer.toHexString(0x00ff & b);
+		String hexString=Integer.toHexString(0xff & b);
 
 		return hexString.length()==1 ? "0"+hexString : hexString;
 
@@ -618,6 +619,9 @@ public class StringUtils {
 
 
 	public static void main(String[] argvs) {
+
+		System.out.println("toHex: "+toHex((byte)255));
+		System.out.println("toHexString: "+toHexString((byte)255));
 
 		StringBuilder sb=new StringBuilder(".");
 		for(char c='a'; c<='z'; c++) sb.append(new char[]{c,'.'});
