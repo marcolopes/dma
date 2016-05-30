@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * Sergio Gomes (s.miguelgomes@hotmail.com)
@@ -125,6 +125,8 @@ public class PdfFileHandler extends FileHandler {
 
 	/** Parameterized file will be used as OUTPUT */
 	public void merge(Collection<File> files) throws Exception {
+
+		if (files.size()==0) return;
 
 		FileOutputStream fos=new FileOutputStream(file);
 

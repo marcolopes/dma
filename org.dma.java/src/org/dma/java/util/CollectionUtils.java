@@ -32,6 +32,18 @@ public class CollectionUtils {
 		return c.isEmpty() ? null : toArray(c, c.iterator().next().getClass());
 	}
 
+	public static <T> String[] toStringArray(Collection<T> col) {
+
+		String[] result=new String[col.size()];
+
+		int index=0;
+		for(T e: col){
+			result[index++]=e.toString();
+		}
+
+		return result;
+	}
+
 
 
 
