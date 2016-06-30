@@ -45,8 +45,8 @@ public class BindingDefinition {
 		this.targetToModelConverter=targetToModelConverter;
 		this.modelToTargetConverter=modelToTargetConverter;
 
-		targetToModelUpdate.setConverter(targetToModelConverter);
-		modelToTargetUpdate.setConverter(modelToTargetConverter);
+		this.targetToModelUpdate.setConverter(targetToModelConverter);
+		this.modelToTargetUpdate.setConverter(modelToTargetConverter);
 
 	}
 

@@ -9,8 +9,8 @@ import org.dma.java.util.Debug;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.dynamichelpers.IExtensionChangeHandler;
 import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.swt.SWT;
@@ -66,43 +66,43 @@ import org.eclipse.ui.internal.WorkbenchWindow;
 @SuppressWarnings("restriction")
 public class UIHelper {
 
+	public static ToolBar getPerspectiveToolBar() {
+		try{
+			WorkbenchWindow workbenchWindow=(WorkbenchWindow)getWorkbenchWindow();
+			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
+			return manager.getControl();
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+
+		return null;
+	}
+
+
 	//ECLIPSE BUG: https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
 	public static void disablePerspectiveToolBarMenu() {
 		try{
 			ToolBar toolBar=getPerspectiveToolBar();
-			if (toolBar!=null){
-				Listener[] listeners=toolBar.getListeners(SWT.MenuDetect);
-				if (listeners!=null){
-					for (Listener listener: listeners){
-						toolBar.removeListener(SWT.MenuDetect, listener);
-						Debug.out("REMOVED", listener.toString());
-					}
-				}
+			for (Listener listener: toolBar.getListeners(SWT.MenuDetect)){
+				toolBar.removeListener(SWT.MenuDetect, listener);
+				Debug.out("REMOVED", listener.toString());
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 
 
 	public static void setPerspectiveToolBarEnabled(boolean enabled) {
-		ToolBar toolBar=getPerspectiveToolBar();
-		if (toolBar!=null) toolBar.setEnabled(enabled);
-	}
-
-
-	public static ToolBar getPerspectiveToolBar() {
 		try{
-			WorkbenchWindow workbenchWindow=(WorkbenchWindow)getWorkbenchWindow();
-			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
-			if (manager!=null) return manager.getControl();
+			ToolBar toolBar=getPerspectiveToolBar();
+			toolBar.setEnabled(enabled);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
-
-		return null;
 	}
 
 
@@ -112,9 +112,8 @@ public class UIHelper {
 	 */
 	public static void addOtherPerspectiveShortcuts(String perspectiveId, IPageLayout layout) {
 		try{
-			IConfigurationElement[] elements=Platform.getExtensionRegistry().
-					getConfigurationElementsFor("org.eclipse.ui.perspectives");
-			for (IConfigurationElement element: elements){
+			for (IConfigurationElement element: Platform.getExtensionRegistry().
+					getConfigurationElementsFor("org.eclipse.ui.perspectives")){
 				String id=element.getAttribute("id");
 				if (!id.equals(perspectiveId)){
 					layout.addPerspectiveShortcut(id);
@@ -122,8 +121,8 @@ public class UIHelper {
 				}
 			}
 
-		}catch(InvalidRegistryObjectException e){
-			e.printStackTrace();
+		}catch(Exception e){
+			System.out.println(e);
 		}
 	}
 
@@ -131,14 +130,13 @@ public class UIHelper {
 	public static void removePreferenceManagerNodes() {
 		try{
 			PreferenceManager manager=PlatformUI.getWorkbench().getPreferenceManager();
-			IPreferenceNode[] nodes=manager.getRootSubNodes();
-			for (IPreferenceNode node: nodes){
+			for (IPreferenceNode node: manager.getRootSubNodes()){
 				manager.remove(node.getId());
 				Debug.out("REMOVED", node.getId());
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 
@@ -148,7 +146,7 @@ public class UIHelper {
 			ResourcesPlugin.getWorkspace().save(full, null);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 
@@ -217,6 +215,12 @@ public class UIHelper {
 	public static void closePerspective(String perspectiveId) {
 		closePerspective(findPerspectiveWithId(perspectiveId));
 	}
+
+	public static void removePerspective(String perspectiveId) {
+		IExtensionChangeHandler handler=(IExtensionChangeHandler)PlatformUI.getWorkbench().getPerspectiveRegistry();
+		handler.removeExtension(null, new Object[]{findPerspectiveWithId(perspectiveId)});
+	}
+
 
 
 

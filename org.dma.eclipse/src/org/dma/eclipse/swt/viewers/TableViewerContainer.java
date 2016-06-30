@@ -12,6 +12,7 @@ import java.util.List;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.ClipboardManager;
 import org.dma.java.util.Debug;
+import org.dma.java.util.ErrorList;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -30,29 +31,26 @@ import org.eclipse.swt.widgets.TableColumn;
 public abstract class TableViewerContainer<T> {
 
 	public abstract T getNewObject();
-	public abstract void insertObject();
-	public abstract void removeObject();
+	public abstract ErrorList insertObject();
+	public abstract ErrorList removeObject();
 	public abstract void createObject();
 	public abstract void copyObject();
-	protected void editObject() {}
 	public abstract Collection<T> retrieveObjects();
+
+	protected void editObject() {}
 
 	private final MouseAdapter tableDoubleClickListener=new MouseAdapter() {
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
-			if(getSelectionElement()!=null) {
-				editObject();
-			}
+			if(getSelectionElement()!=null) editObject();
 		}
 	};
 
 	private final KeyListener tableEnterKeyListener=new KeyAdapter() {
 		@Override
 		public void keyPressed(KeyEvent e) {
-			if (e.keyCode==SWT.CR || e.keyCode==SWT.KEYPAD_CR){
-				if(getSelectionElement()!=null) {
-					editObject();
-				}
+			if(e.keyCode==SWT.CR || e.keyCode==SWT.KEYPAD_CR){
+				if(getSelectionElement()!=null) editObject();
 			}
 		}
 	};
@@ -146,7 +144,7 @@ public abstract class TableViewerContainer<T> {
 	}
 
 
-	public void clearTable(){
+	public void clearTable() {
 		objectCollection.clear();
 		viewer.refresh();
 	}

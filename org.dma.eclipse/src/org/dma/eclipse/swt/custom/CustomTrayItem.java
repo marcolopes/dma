@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -46,17 +46,6 @@ public class CustomTrayItem {
 	}
 
 
-	public void dispose() {
-		if (trayItem==null) return;
-		//listeners
-		trayItem.removeListener(SWT.Selection, maximizeListener);
-		//item
-		trayItem.setToolTip(null);
-		trayItem.dispose();
-		trayItem=null;
-	}
-
-
 	private void create(boolean minimized) {
 		//check if tray exists
 		if (sysTray==null || !minimized) return;
@@ -68,6 +57,17 @@ public class CustomTrayItem {
 		if (!SystemUtils.IS_OS_WINDOWS_7) trayItem.setToolTip(toolTip);
 		//listeners
 		trayItem.addListener(SWT.Selection, maximizeListener);
+	}
+
+
+	public void dispose() {
+		if (trayItem==null) return;
+		//listeners
+		trayItem.removeListener(SWT.Selection, maximizeListener);
+		//item
+		trayItem.setToolTip(null);
+		trayItem.dispose();
+		trayItem=null;
 	}
 
 
@@ -87,11 +87,6 @@ public class CustomTrayItem {
 		showTip(prefix+": "+message);
 	}
 
-
-
-	/*
-	 * Getters and setters
-	 */
 	public boolean isVisible() {
 		return trayItem!=null;
 	}

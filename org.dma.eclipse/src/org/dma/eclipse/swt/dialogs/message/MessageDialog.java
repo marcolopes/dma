@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class MessageDialog extends org.eclipse.jface.dialogs.MessageDialog {
 
+	@SuppressWarnings("hiding")
 	public enum TYPE {
 
 		ERROR ("Error", false),

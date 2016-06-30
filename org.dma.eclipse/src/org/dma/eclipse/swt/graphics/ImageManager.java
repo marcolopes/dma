@@ -27,22 +27,22 @@ public class ImageManager {
 
 	/** Returns the {@link Image} key based on image-size hash */
 	public static String getKey(Integer size) {
-		return "SIZE:"+String.valueOf(size.hashCode());
+		return "size:"+String.valueOf(size.hashCode());
 	}
 
 	/** Returns the {@link Image} key based on image-path string */
 	public static String getKey(String path) {
-		return "PATH:"+path;
+		return "path:"+path;
 	}
 
 	/** Returns the {@link Image} key based on image-bytes hash */
 	public static String getKey(byte[] bytes) {
-		return "BYTES:"+String.valueOf(Arrays.hashCode(bytes));
+		return "bytes:"+String.valueOf(Arrays.hashCode(bytes));
 	}
 
 	/** Returns the {@link Image} key based on {@link BufferedImage} hash */
 	public static String getKey(BufferedImage bufferedImage) {
-		return "PIXELS:"+String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(bufferedImage)));
+		return "pixels:"+String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(bufferedImage)));
 	}
 
 
