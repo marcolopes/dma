@@ -73,12 +73,12 @@ public class CertificateFactory {
 	public static X509Certificate generate(KeyPair keyPair, String signatureAlgorithm) {
 
 		try{
-			Date startDate = new Date(); // time from which certificate is valid
-			Date expiryDate = new Date(); // time after which certificate is not valid
-			BigInteger serialNumber = BigInteger.valueOf(1); // serial number for certificate
+			Date startDate=new Date(); // time from which certificate is valid
+			Date expiryDate=new Date(); // time after which certificate is not valid
+			BigInteger serialNumber=BigInteger.valueOf(1); // serial number for certificate
 
-			X509V1CertificateGenerator cg = new X509V1CertificateGenerator();
-			X500Principal distinguishedName  = new X500Principal("CN=Test CA Certificate");
+			X509V1CertificateGenerator cg=new X509V1CertificateGenerator();
+			X500Principal distinguishedName=new X500Principal("CN=Test CA Certificate");
 
 			cg.setSerialNumber(serialNumber);
 			cg.setIssuerDN(distinguishedName);
@@ -88,7 +88,7 @@ public class CertificateFactory {
 			cg.setPublicKey(keyPair.getPublic());
 			cg.setSignatureAlgorithm(signatureAlgorithm);
 
-			X509Certificate cert = cg.generate(keyPair.getPrivate() /*, "BC"*/);
+			X509Certificate cert=cg.generate(keyPair.getPrivate() /*, "BC"*/);
 
 			return cert;
 
@@ -112,11 +112,11 @@ public class CertificateFactory {
 	public static void main(String[] args) {
 
 		//Generate a 1024-bit RSA key pair
-		KeyPair kp = RSAFactory.generateKeyPair(1024);
+		KeyPair kp=RSAFactory.generateKeyPair(1024);
 
 		//Generate X509 certificate
 		X509Certificate cert=CertificateFactory.generate(kp, "SHA1withRSA");
-		System.out.println("X509Certificate: " + cert);
+		System.out.println("X509Certificate: "+cert);
 
 	}
 

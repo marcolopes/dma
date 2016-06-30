@@ -155,7 +155,7 @@ public class NumericUtils {
 	}
 
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 
 		System.out.println("double");
 		double d=0d;
@@ -166,7 +166,7 @@ public class NumericUtils {
 
 		System.out.println("float");
 		float f=0f;
-		for (int i=1; i<=100000; i++) {
+		for (int i=1; i<=100; i++) {
 			f+=0.01;
 			System.out.println(f);
 		}

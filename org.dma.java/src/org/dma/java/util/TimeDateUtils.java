@@ -76,20 +76,6 @@ public class TimeDateUtils {
 	public static final String DEFAULT_TIME_PATTERN = TIME_HOUR_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_MINUTE_PATTERN;
 
 	/*
-	 * Cache
-	 */
-	private static final Map<String, SimpleDateFormat> SDF_CACHE=new HashMap();
-
-	public static SimpleDateFormat getSimpleDateFormat(String pattern) {
-		SimpleDateFormat sdf=SDF_CACHE.get(pattern);
-		if (sdf==null){
-			sdf=new SimpleDateFormat(pattern);
-			SDF_CACHE.put(pattern, sdf);
-		}
-		return sdf;
-	}
-
-	/*
 	 * Validation
 	 */
 	public static boolean isDateValid(String date, String pattern) {
@@ -136,10 +122,18 @@ public class TimeDateUtils {
 
 
 
-
 	/*
 	 * Format
 	 */
+	/** Simple Date Format CACHE */
+	private static final Map<String, SimpleDateFormat> SDF_CACHE=new HashMap();
+
+	public static SimpleDateFormat getSimpleDateFormat(String pattern) {
+		SimpleDateFormat sdf=SDF_CACHE.get(pattern);
+		if (sdf==null) SDF_CACHE.put(pattern, sdf=new SimpleDateFormat(pattern));
+		return sdf;
+	}
+
 	public static String getDateFormatted(Date date, String pattern) {
 		try{
 			return getSimpleDateFormat(pattern).format(date);
@@ -191,7 +185,6 @@ public class TimeDateUtils {
 
 
 
-
 	/*
 	 * Conversion
 	 */
@@ -225,7 +218,6 @@ public class TimeDateUtils {
 	public static Time getTimeParsed(String time) {
 		return getTimeParsed(time, DEFAULT_TIME_PATTERN);
 	}
-
 
 
 
@@ -265,7 +257,6 @@ public class TimeDateUtils {
 
 
 
-
 	/*
 	 * Gregorian Calendar
 	 */
@@ -275,20 +266,20 @@ public class TimeDateUtils {
 
 
 	public static GregorianCalendar getGregorianCalendar(Calendar calendar) {
-		return new GregorianCalendar(
-				calendar.get(Calendar.YEAR),
+		GregorianCalendar clone=new GregorianCalendar(calendar.getTimeZone());
+		clone.set(calendar.get(Calendar.YEAR),
 				calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE),
 				calendar.get(Calendar.SECOND));
+		return clone;
 	}
 
 
 	public static GregorianCalendar getGregorianCalendar(Date date) {
 		return getGregorianCalendar(getCalendar(date));
 	}
-
 
 
 
@@ -307,7 +298,7 @@ public class TimeDateUtils {
 
 
 	public static Calendar getCalendar(String date, String pattern) {
-		Calendar calendar=Calendar.getInstance();
+		Calendar calendar=getCalendar();
 		try{
 			calendar.setTime(getDateParsed(date, pattern));
 		}catch(Exception e){}
@@ -321,16 +312,26 @@ public class TimeDateUtils {
 
 
 	public static Calendar getCalendar(Date date) {
-		Calendar calendar=Calendar.getInstance();
+		Calendar calendar=getCalendar();
 		calendar.setTime(date);
 		return calendar;
 	}
 
 
 	public static Calendar getCalendar(Time time) {
-		Calendar calendar=Calendar.getInstance();
+		Calendar calendar=getCalendar();
 		calendar.setTime(time);
 		return calendar;
+	}
+
+
+	public static Calendar getCalendarWithTime(Calendar calendar, Time time) {
+		Calendar clone=(Calendar)calendar.clone();
+		Calendar calendar2=getCalendar(time);
+		clone.set(Calendar.HOUR_OF_DAY, calendar2.get(Calendar.HOUR_OF_DAY));
+		clone.set(Calendar.MINUTE, calendar2.get(Calendar.MINUTE));
+		clone.set(Calendar.SECOND, calendar2.get(Calendar.SECOND));
+		return clone;
 	}
 
 
@@ -338,7 +339,11 @@ public class TimeDateUtils {
 		Calendar clone=(Calendar)calendar.clone();
 		clone.set(Calendar.DAY_OF_MONTH, day);
 		return clone;
+	}
 
+
+	public static Calendar getCalendarWithDayOfMonthMax(Calendar calendar) {
+		return getCalendarWithDay(calendar, getDayOfMonthMax(calendar));
 	}
 
 
@@ -346,7 +351,6 @@ public class TimeDateUtils {
 		Calendar clone=(Calendar)calendar.clone();
 		clone.set(Calendar.MONTH, month);
 		return clone;
-
 	}
 
 
@@ -354,7 +358,26 @@ public class TimeDateUtils {
 		Calendar clone=(Calendar)calendar.clone();
 		clone.set(Calendar.YEAR, year);
 		return clone;
+	}
 
+
+	public static Calendar getCalendarWithoutTime(Calendar calendar) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.set(Calendar.HOUR_OF_DAY, 0);
+		clone.set(Calendar.MINUTE, 0);
+		clone.set(Calendar.SECOND, 0);
+		clone.set(Calendar.MILLISECOND, 0);
+		return clone;
+	}
+
+
+	public static Calendar getCalendarWithoutTime(Date date) {
+		return getCalendarWithoutTime(getCalendar(date));
+	}
+
+
+	public static Calendar getCalendarWithoutTime() {
+		return getCalendarWithoutTime(getCalendar());
 	}
 
 
@@ -382,23 +405,55 @@ public class TimeDateUtils {
 	}
 
 
-	public static Calendar getCalendarWithoutTime(Calendar calendar) {
+	public static Calendar addTime(Calendar calendar, Time time) {
 		Calendar clone=(Calendar)calendar.clone();
-		clone.set(Calendar.HOUR_OF_DAY,0);
-		clone.set(Calendar.MINUTE,0);
-		clone.set(Calendar.SECOND,0);
-		clone.set(Calendar.MILLISECOND,0);
+		Calendar calendar2=getCalendar(time);
+		clone.add(Calendar.HOUR_OF_DAY, calendar2.get(Calendar.HOUR_OF_DAY));
+		clone.add(Calendar.MINUTE, calendar2.get(Calendar.MINUTE));
+		clone.add(Calendar.SECOND, calendar2.get(Calendar.SECOND));
 		return clone;
 	}
 
 
-	public static Calendar getCalendarWithoutTime(Date date) {
-		return getCalendarWithoutTime(getCalendar(date));
+	public static Calendar addYears(Calendar calendar, int years) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.add(Calendar.YEAR, years);
+		return clone;
 	}
 
 
-	public static Calendar getCalendarWithoutTime() {
-		return getCalendarWithoutTime(getCalendar());
+	public static Calendar addMonths(Calendar calendar, int months) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.add(Calendar.MONTH, months);
+		return clone;
+	}
+
+
+	public static Calendar addDays(Calendar calendar, int days) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.add(Calendar.DAY_OF_MONTH, days);
+		return clone;
+	}
+
+
+	public static Calendar addHours(Calendar calendar, int hours) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.add(Calendar.HOUR, hours);
+		return clone;
+	}
+
+
+	public static Calendar addMinutes(Calendar calendar, int minutes) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.add(Calendar.MINUTE, minutes);
+		return clone;
+	}
+
+
+	public static Calendar addSeconds(Calendar calendar, int seconds) {
+		Calendar clone=(Calendar)calendar.clone();
+		clone.add(Calendar.SECOND, seconds);
+		return clone;
 	}
 
 
@@ -422,11 +477,6 @@ public class TimeDateUtils {
 	}
 
 
-	public static int getDayOfMonthMax(int year, int month) {
-		return getDayOfMonthMax(getCalendar(year, month, 1));
-	}
-
-
 	public static int getDaysSinceMonday(Calendar calendar) {
 		int dayOfWeek=calendar.get(Calendar.DAY_OF_WEEK);
 		return dayOfWeek==Calendar.SUNDAY ? 7 : dayOfWeek-1;
@@ -434,15 +484,17 @@ public class TimeDateUtils {
 
 
 	public static long getDaysBetween(Calendar startDate, Calendar endDate) {
-		startDate.set(Calendar.HOUR_OF_DAY, 0); // Crucial
-		startDate.set(Calendar.MINUTE, 0);
-		startDate.set(Calendar.SECOND, 0);
-		startDate.set(Calendar.MILLISECOND, 0);
-		endDate.set(Calendar.HOUR_OF_DAY, 0); // Crucial
-		endDate.set(Calendar.MINUTE, 0);
-		endDate.set(Calendar.SECOND, 0);
-		endDate.set(Calendar.MILLISECOND, 0);
-		return TimeUnit.MILLISECONDS.toDays(endDate.getTimeInMillis()-startDate.getTimeInMillis());
+		Calendar clone1=(Calendar)startDate.clone();
+		clone1.set(Calendar.HOUR_OF_DAY, 0); // Crucial
+		clone1.set(Calendar.MINUTE, 0);
+		clone1.set(Calendar.SECOND, 0);
+		clone1.set(Calendar.MILLISECOND, 0);
+		Calendar clone2=(Calendar)endDate.clone();
+		clone2.set(Calendar.HOUR_OF_DAY, 0); // Crucial
+		clone2.set(Calendar.MINUTE, 0);
+		clone2.set(Calendar.SECOND, 0);
+		clone2.set(Calendar.MILLISECOND, 0);
+		return TimeUnit.MILLISECONDS.toDays(clone2.getTimeInMillis()-clone1.getTimeInMillis());
 	}
 
 
@@ -462,39 +514,38 @@ public class TimeDateUtils {
 
 
 	public static int getCurrentYear() {
-		return getYear(Calendar.getInstance());
+		return getYear(getCalendar());
 	}
 
 
 	public static int getCurrentMonth() {
-		return getMonth(Calendar.getInstance());
+		return getMonth(getCalendar());
 	}
 
 
 	public static int getCurrentDayOfMonth() {
-		return getDayOfMonth(Calendar.getInstance());
+		return getDayOfMonth(getCalendar());
 	}
 
 
 	public static int getCurrentDayOfMonthMax() {
-		return getDayOfMonthMax(Calendar.getInstance());
+		return getDayOfMonthMax(getCalendar());
 	}
 
 
 	public static int getCurrentHour() {
-		return getHour(Calendar.getInstance());
+		return getHour(getCalendar());
 	}
 
 
 	public static int getCurrentMinute() {
-		return getMinute(Calendar.getInstance());
+		return getMinute(getCalendar());
 	}
 
 
 	public static int getCurrentSecond() {
-		return getSecond(Calendar.getInstance());
+		return getSecond(getCalendar());
 	}
-
 
 
 
@@ -504,128 +555,6 @@ public class TimeDateUtils {
 	 */
 	public static Date getCurrentDate() {
 		return new Date();
-	}
-
-
-	/** Date formatted with DEFAULT PATTERN */
-	public static Date getDate(String date) {
-		return getDateParsed(date, DEFAULT_DATE_PATTERN);
-	}
-
-
-	public static Date getDate(Time time) {
-		return new Date(time.getTime());
-	}
-
-
-	public static Date getDate(Calendar calendar) {
-		return calendar.getTime();
-	}
-
-
-	public static Date getDateWithDay(Date date, int day) {
-		Calendar calendar=getCalendar(date);
-		return getCalendarWithDay(calendar, day).getTime();
-
-	}
-
-
-	public static Date getDateWithMonth(Date date, int month) {
-		Calendar calendar=getCalendar(date);
-		return getCalendarWithMonth(calendar, month).getTime();
-	}
-
-
-	public static Date getDateWithYear(Date date, int year) {
-		Calendar calendar=getCalendar(date);
-		return getCalendarWithYear(calendar, year).getTime();
-	}
-
-
-	public static Date getDateWithoutTime(Date date) {
-		Calendar calendar=getCalendar(date);
-		return getCalendarWithoutTime(calendar).getTime();
-	}
-
-
-	public static Date getDateWithoutTime() {
-		return getDateWithoutTime(getCurrentDate());
-	}
-
-
-	public static Date getDate(Date date, Time time) {
-		Calendar calendar=getCalendar(date);
-		Calendar calendar2=getCalendar(time);
-		calendar.set(Calendar.HOUR_OF_DAY, calendar2.get(Calendar.HOUR_OF_DAY));
-		calendar.set(Calendar.MINUTE, calendar2.get(Calendar.MINUTE));
-		calendar.set(Calendar.SECOND, calendar2.get(Calendar.SECOND));
-		return calendar.getTime();
-	}
-
-
-	public static Date addTime(Date date, Time time) {
-		//return new Date(date.getTime()+time.getTime()-Time.valueOf("00:00:00").getTime());
-		Calendar calendar=getCalendar(date);
-		Calendar calendar2=getCalendar(time);
-		calendar.add(Calendar.HOUR_OF_DAY, calendar2.get(Calendar.HOUR_OF_DAY));
-		calendar.add(Calendar.MINUTE, calendar2.get(Calendar.MINUTE));
-		calendar.add(Calendar.SECOND, calendar2.get(Calendar.SECOND));
-		return calendar.getTime();
-	}
-
-
-	public static Date addMonths(Date date, int months) {
-		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.MONTH, months);
-		return calendar.getTime();
-	}
-
-
-	public static Date addDays(Date date, int days) {
-		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.DAY_OF_MONTH, days);
-		return calendar.getTime();
-	}
-
-
-	public static Date addHours(Date date, int hours) {
-		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.HOUR, hours);
-		return getTime(calendar);
-	}
-
-
-	public static Date addMinutes(Date date, int minutes) {
-		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.MINUTE, minutes);
-		return getTime(calendar);
-	}
-
-
-	public static Date addSeconds(Date date, int seconds) {
-		Calendar calendar=getCalendar(date);
-		calendar.add(Calendar.SECOND, seconds);
-		return getTime(calendar);
-	}
-
-
-	public static int getYear(Date date) {
-		return getYear(getCalendar(date));
-	}
-
-
-	public static int getMonth(Date date) {
-		return getMonth(getCalendar(date));
-	}
-
-
-	public static int getDayOfMonth(Date date) {
-		return getDayOfMonth(getCalendar(date));
-	}
-
-
-	public static long getDaysBetween(Date startDate, Date endDate) {
-		return getDaysBetween(getCalendar(startDate), getCalendar(endDate));
 	}
 
 
@@ -650,18 +579,119 @@ public class TimeDateUtils {
 
 
 	public static Date getCurrentWeekMin() {
-		Calendar calendar=Calendar.getInstance();
+		Calendar calendar=getCalendar();
 		calendar.add(Calendar.DAY_OF_YEAR, -getDaysSinceMonday(calendar)+1);
 		return calendar.getTime();
 	}
 
 
 	public static Date getCurrentWeekMax() {
-		Calendar calendar=Calendar.getInstance();
+		Calendar calendar=getCalendar();
 		calendar.add(Calendar.DAY_OF_YEAR, 7-getDaysSinceMonday(calendar));
 		return calendar.getTime();
 	}
 
+
+	/** Date formatted with DEFAULT PATTERN */
+	public static Date getDate(String date) {
+		return getDateParsed(date, DEFAULT_DATE_PATTERN);
+	}
+
+
+	public static Date getDate(Calendar calendar) {
+		return calendar.getTime();
+	}
+
+
+	public static Date getDate(Time time) {
+		return new Date(time.getTime());
+	}
+
+
+	public static Date getDateWithTime(Date date, Time time) {
+		return getCalendarWithTime(getCalendar(date), time).getTime();
+	}
+
+
+	public static Date getDateWithDay(Date date, int day) {
+		return getCalendarWithDay(getCalendar(date), day).getTime();
+	}
+
+
+	public static Date getDateWithMonth(Date date, int month) {
+		return getCalendarWithMonth(getCalendar(date), month).getTime();
+	}
+
+
+	public static Date getDateWithYear(Date date, int year) {
+		return getCalendarWithYear(getCalendar(date), year).getTime();
+	}
+
+
+	public static Date getDateWithoutTime(Date date) {
+		return getCalendarWithoutTime(getCalendar(date)).getTime();
+	}
+
+
+	public static Date getDateWithoutTime() {
+		return getCalendarWithoutTime().getTime();
+	}
+
+
+	public static Date addTime(Date date, Time time) {
+		//return new Date(date.getTime()+time.getTime()-Time.valueOf("00:00:00").getTime());
+		return addTime(getCalendar(date), time).getTime();
+	}
+
+
+	public static Date addYears(Date date, int years) {
+		return addYears(getCalendar(date), years).getTime();
+	}
+
+
+	public static Date addMonths(Date date, int months) {
+		return addMonths(getCalendar(date), months).getTime();
+	}
+
+
+	public static Date addDays(Date date, int days) {
+		return addDays(getCalendar(date), days).getTime();
+	}
+
+
+	public static Date addHours(Date date, int hours) {
+		return addHours(getCalendar(date), hours).getTime();
+	}
+
+
+	public static Date addMinutes(Date date, int minutes) {
+		return addMinutes(getCalendar(date), minutes).getTime();
+	}
+
+
+	public static Date addSeconds(Date date, int seconds) {
+		return addSeconds(getCalendar(date), seconds).getTime();
+	}
+
+
+	public static int getYear(Date date) {
+		return getYear(getCalendar(date));
+	}
+
+
+	public static int getMonth(Date date) {
+		return getMonth(getCalendar(date));
+	}
+
+
+	public static int getDayOfMonth(Date date) {
+		return getDayOfMonth(getCalendar(date));
+	}
+
+
+	public static long getDaysBetween(Date startDate, Date endDate) {
+		return getDaysBetween(getCalendar(startDate), getCalendar(endDate));
+	}
 
 
 
@@ -709,7 +739,6 @@ public class TimeDateUtils {
 
 
 
-
 	/*
 	 * Timestamp
 	 */
@@ -733,7 +762,12 @@ public class TimeDateUtils {
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 		System.out.println("SimpleDateFormat: "+sdf.format(new Date()));
 
-		System.out.println("getCalendar: "+getCalendar());
+		Calendar calendar=getCalendar();
+		calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+		System.out.println("getCalendar: "+calendar);
+
+		System.out.println("getGregorianCalendar: "+getGregorianCalendar(calendar));
 
 		System.out.println("getCalendarWithoutTime: "+getCalendarWithoutTime());
 

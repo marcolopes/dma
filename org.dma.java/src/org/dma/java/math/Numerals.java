@@ -286,7 +286,7 @@ public class Numerals {
 
 
 	/** Test Case */
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 
 		Numerals numerals=new Numerals(2);
 

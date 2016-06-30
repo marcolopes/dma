@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2015 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -13,12 +13,19 @@ import org.apache.commons.codec.binary.Base64;
 
 public class MD5Password {
 
+	private final String password;
+
+	public MD5Password(String password) {
+		this.password=password;
+	}
+
+
 	/**
 	 * MD5 Password
 	 * @return
 	 * MD5 digested password encoded in BASE64
 	 */
-	public String encode(String password) {
+	public String encode() {
 
 		try{
 			MessageDigest md=MessageDigest.getInstance("MD5");
@@ -36,9 +43,9 @@ public class MD5Password {
 	}
 
 
-	public boolean test(String encodedPassword, String clearPassword) {
+	public boolean test(String password) {
 
-		return encodedPassword.equals(encode(clearPassword));
+		return password.equals(encode());
 
 	}
 

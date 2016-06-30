@@ -201,7 +201,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal roundUp(BigDecimal value, BigDecimal rounding){
 
-		return round(value,rounding,RoundingMode.HALF_UP);
+		return round(value, rounding, RoundingMode.HALF_UP);
 
 	}
 
@@ -219,12 +219,12 @@ public class BusinessRules {
 	 */
 	public static BigDecimal roundDown(BigDecimal value, BigDecimal rounding){
 
-		return round(value,rounding,RoundingMode.HALF_DOWN);
+		return round(value, rounding, RoundingMode.HALF_DOWN);
 
 	}
 
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 
 		System.out.println("Proportional Value (50): "+proportionalValue(new BigDecimal("100"), new BigDecimal("25"), new BigDecimal("200")));
 		System.out.println("Average Price (15): "+averagePrice(new BigDecimal("100"), new BigDecimal("10"), new BigDecimal("100"), new BigDecimal("20")));
@@ -258,16 +258,18 @@ public class BusinessRules {
 		roundDown(BigDecimal.ZERO, BigDecimal.ZERO);
 
 		//JAVA BigDecimal test
-		BigDecimal value=new BigDecimal("1.005");
-		System.out.println(new BigDecimal(1.005));
-		System.out.println(value);
-		BigDecimal rounding=new BigDecimal("0.01");
-		System.out.println(new BigDecimal(0.01));
-		System.out.println(rounding);
-		System.out.println(value.setScale(2, RoundingMode.HALF_UP));
-		System.out.println(value.divide(rounding,0,RoundingMode.HALF_UP).multiply(rounding));
-		System.out.println(value.setScale(2, RoundingMode.HALF_DOWN));
-		System.out.println(value.divide(rounding,0,RoundingMode.HALF_DOWN).multiply(rounding));
+		BigDecimal value1=new BigDecimal("100.005");
+		BigDecimal value2=new BigDecimal("10.01");
+		System.out.println(value1);
+		System.out.println(value2);
+		System.out.println(new BigDecimal(100.005));
+		System.out.println(new BigDecimal(10.01));
+		System.out.println(value1.setScale(2, RoundingMode.HALF_UP));
+		System.out.println(value1.setScale(2, RoundingMode.HALF_DOWN));
+		System.out.println(value1.divide(value2, 0, RoundingMode.HALF_UP).multiply(value2));
+		System.out.println(value1.divide(value2, 0, RoundingMode.HALF_DOWN).multiply(value2));
+		System.out.println(value1.divide(value2, MathContext.DECIMAL32).multiply(value2));
+		System.out.println(value1.divide(value2, MathContext.DECIMAL64).multiply(value2));
 
 	}
 

@@ -10,8 +10,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-/** Extends <tt>ArrayList</tt> backed by a <tt>HashSet</tt>
- * and guarantees no duplicate elements */
+/**
+ * Extends <tt>ArrayList</tt> backed by a <tt>HashSet</tt>
+ * and guarantees no duplicate elements
+ */
 public class UniqueArrayList<T> extends ArrayList<T> {
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +30,7 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 	}
 
 	public UniqueArrayList(Collection<? extends T> col) {
-		super(col);
+		addAll(col);
 	}
 
 	/** Used by addAll methods */

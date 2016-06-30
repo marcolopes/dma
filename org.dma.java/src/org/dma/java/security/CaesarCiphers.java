@@ -1,30 +1,16 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.security;
 
-import java.util.Calendar;
+public class CaesarCiphers {
 
-import org.dma.java.util.StringUtils;
+	private final String message;
 
-public class PasswordUtils {
-
-	/**
-	 * @return
-	 * A 4 digit date-based password (MMDD)<br>
-	 * MM=Current MONTH<br>
-	 * DD=Current DAY
-	 */
-	public static String datePassword() {
-
-		Calendar calendar=Calendar.getInstance();
-		String month=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.MONTH)+1),2,'0');
-		String day=StringUtils.padLeft(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)),2,'0');
-
-		return month+day;
-
+	public CaesarCiphers(String message) {
+		this.message=message;
 	}
 
 
@@ -33,11 +19,11 @@ public class PasswordUtils {
 	 * that involves only the alphabetical characters
 	 * and uses a step of 13.
 	 */
-	public static String rot13(String string) {
+	public String rot13() {
 
 		StringBuilder result=new StringBuilder() ;
 
-		for(char c: string.toCharArray()) {
+		for(char c: message.toCharArray()) {
 			char lc = Character.toLowerCase(c);
 			result.append(c += //avoids cast to char
 					(lc >= 'a' && lc <= 'm' ? 13 :
@@ -57,11 +43,11 @@ public class PasswordUtils {
 	 *  the numerals and quite a few punctuation marks
 	 *  and special characters besides the plain letters.
 	 */
-	public static String rot47(String string) {
+	public String rot47() {
 
 		StringBuilder result=new StringBuilder() ;
 
-		for(char c: string.toCharArray()){
+		for(char c: message.toCharArray()){
 			result.append(c += //avoids cast to char
 					(c >= '!' && c <= 'O' ? 47 :
 						(c >= 'P' && c <= '~' ? -47 : 0)));
@@ -74,17 +60,16 @@ public class PasswordUtils {
 
 	public static void main(String[] argvs) {
 
-		String message = "The quick brown fox jumps over the lazy dog.";
+		String message="The quick brown fox jumps over the lazy dog.";
 		System.out.println("PLAIN: "+message);
 
 		try{
-			String rot13=rot13(message);
-			System.out.println("ROT13: "+rot13);
-			System.out.println("ROT13: "+rot13(rot13));
+			CaesarCiphers cipher=new CaesarCiphers(message);
+			System.out.println("ROT13: "+cipher.rot13());
+			System.out.println("ROT13: "+new CaesarCiphers(cipher.rot13()).rot13());
 
-			String rot47=rot47(message);
-			System.out.println("ROT47: "+rot47);
-			System.out.println("ROT47: "+rot47(rot47));
+			System.out.println("ROT47: "+cipher.rot47());
+			System.out.println("ROT47: "+new CaesarCiphers(cipher.rot47()).rot47());
 
 		}catch(Exception e){
 			e.printStackTrace();

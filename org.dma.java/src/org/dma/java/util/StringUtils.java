@@ -15,15 +15,18 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
 
-	public static final Pattern NUMERIC_PATTERN = Pattern.compile("^[0-9]+$");
-	public static final Pattern DECIMAL_PATTERN = Pattern.compile("^[0-9[.]]+$");
-	public static final Pattern LETTERS_PATTERN = Pattern.compile("^[A-Za-z]+$");
-	public static final Pattern UPPERCASE_PATTERN = Pattern.compile("^[^a-z]+$");
-	public static final Pattern LOWERCASE_PATTERN = Pattern.compile("^[^A-Z]+$");
+	public static final Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+");
+	public static final Pattern DECIMAL_PATTERN = Pattern.compile("[0-9[.]]+");
+	public static final Pattern LETTERS_PATTERN = Pattern.compile("[A-Za-z]+");
+	public static final Pattern UPPERCASE_PATTERN = Pattern.compile("[^a-z]+");
+	public static final Pattern LOWERCASE_PATTERN = Pattern.compile("[^A-Z]+");
 
 	public static final String DECIMAL_NUMBERS = "0123456789";
 	public static final String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
 	public static final String UPPERCASE_LETTERS = LOWERCASE_LETTERS.toUpperCase();
+
+	public static final String EMPTY_QUOTE = quote("");
+	public static final String QUOTED_SPACE = quote(" ");
 
 	/*
 	 * Conversion

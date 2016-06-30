@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,10 +10,31 @@ import java.net.InetAddress;
 import java.util.Date;
 
 import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.NtpV3Packet;
 import org.apache.commons.net.ntp.TimeInfo;
 
 /** Network Time Protocol */
 public class NTPServerHandler {
+
+	public class NTPTimeInfo extends TimeInfo {
+
+		/** COMPUTES message */
+		public NTPTimeInfo(NtpV3Packet message, long returnTime) {
+			super(message, returnTime, true);
+		}
+
+
+		/** Returns CURRENT TIME with SERVER OFFSET */
+		public long getServerTime() {
+			return System.currentTimeMillis()+getOffset();
+		}
+
+		/** Returns CURRENT DATE with SERVER OFFSET */
+		public Date getServerDate() {
+			return new Date(getServerTime());
+		}
+
+	}
 
 	public enum NTPServers {
 

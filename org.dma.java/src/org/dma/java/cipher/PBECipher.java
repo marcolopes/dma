@@ -15,7 +15,7 @@ public class PBECipher extends CryptoCipher {
 
 	/**
 	 * KeyLength above 128bits requires to install the
-	 * Java Cryptography Extension (JCE) unlimited strength jurisdiction policy files
+	 * Java Cryptography Extension (JCE) unlimited strength jurisdiction policy files<br>
 	 * http://stackoverflow.com/questions/992019/java-256-bit-aes-password-based-encryption/992413#992413
 	 */
 	public static SecretKey generateKey(KeySpec spec) {

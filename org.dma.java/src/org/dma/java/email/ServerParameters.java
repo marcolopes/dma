@@ -11,6 +11,10 @@ import org.dma.java.util.ArrayUtils;
 
 public class ServerParameters {
 
+	public final static int SECURITY_NONE = SECURITY.NONE.ordinal();
+	public final static int SECURITY_STARTTLS = SECURITY.STARTTLS.ordinal();
+	public final static int SECURITY_SSLTLS = SECURITY.SSLTLS.ordinal();
+
 	public enum SECURITY {
 
 		NONE, STARTTLS, SSLTLS;

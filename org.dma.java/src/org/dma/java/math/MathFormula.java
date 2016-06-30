@@ -103,4 +103,16 @@ public class MathFormula {
 	}
 
 
+	public static void main(String[] argvs) {
+
+		MathFormula mf=new MathFormula("x * y", true);
+
+		BigDecimal result=mf.eval(
+			new FormulaSymbol("x", new BigDecimal("10.01")),
+			new FormulaSymbol("y", new BigDecimal("10.02")));
+
+		System.out.println(result);
+
+	}
+
 }
