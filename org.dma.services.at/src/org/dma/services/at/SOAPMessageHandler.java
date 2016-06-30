@@ -40,7 +40,7 @@ import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.cipher.CryptoCipher.CIPHERS;
 import org.dma.java.io.NTPServerHandler.NTPServers;
-import org.dma.java.io.NTPTimeInfo;
+import org.dma.java.io.NTPServerHandler.NTPTimeInfo;
 import org.dma.java.security.JKSCertificate;
 /**
  * SOAP Message Handler

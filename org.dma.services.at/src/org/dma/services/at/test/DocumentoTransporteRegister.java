@@ -70,7 +70,7 @@ public class DocumentoTransporteRegister {
 	}
 
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
 
 		try{
 			//ambiente de testes
