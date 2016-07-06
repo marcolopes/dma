@@ -39,8 +39,8 @@ import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.cipher.CryptoCipher.CIPHERS;
-import org.dma.java.io.NTPServerHandler.NTPServers;
 import org.dma.java.io.NTPServerHandler.NTPTimeInfo;
+import org.dma.java.io.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.security.JKSCertificate;
 /**
  * SOAP Message Handler
@@ -154,7 +154,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				*/
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-				NTPTimeInfo time=NTPServers.queryAll(500, NTPServers.OAL, NTPServers.XS2ALL, NTPServers.WINDOWS);
+				NTPTimeInfo time = NTP_SERVERS.queryAll(500, NTP_SERVERS.OAL, NTP_SERVERS.XS2ALL, NTP_SERVERS.WINDOWS);
 				String formattedDate = sdf.format(time==null ? new Date() : time.getServerDate());
 				System.out.println("DATE: "+formattedDate);
 

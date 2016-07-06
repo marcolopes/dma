@@ -23,7 +23,6 @@ public class NTPServerHandler {
 			super(message, returnTime, true);
 		}
 
-
 		/** Returns CURRENT TIME with SERVER OFFSET */
 		public long getServerTime() {
 			return System.currentTimeMillis()+getOffset();
@@ -36,7 +35,7 @@ public class NTPServerHandler {
 
 	}
 
-	public enum NTPServers {
+	public enum NTP_SERVERS {
 
 		OAL ("ntp02.oal.ul.pt", "ntp04.oal.ul.pt"),
 		XS2ALL ("ntp.xs4all.nl"),
@@ -46,7 +45,7 @@ public class NTPServerHandler {
 
 		public String[] hosts;
 
-		private NTPServers(String...hosts){
+		private NTP_SERVERS(String...hosts){
 			this.hosts=hosts;
 		}
 
@@ -56,16 +55,16 @@ public class NTPServerHandler {
 			return time;
 		}
 
-		/** @see NTPServers#query(int) */
-		public static NTPTimeInfo queryAll(int timeout, NTPServers...servers) {
-			for(NTPServers server: servers){
+		/** @see NTP_SERVERS#query(int) */
+		public static NTPTimeInfo queryAll(int timeout, NTP_SERVERS...servers) {
+			for(NTP_SERVERS server: servers){
 				NTPTimeInfo time=server.query(timeout);
 				if (time!=null) return time;
 			}
 			return null;
 		}
 
-		/** @see NTPServers#queryAll(int, NTPServers...) */
+		/** @see NTP_SERVERS#queryAll(int, NTP_SERVERS...) */
 		public static NTPTimeInfo queryAll(int timeout) {
 			return queryAll(timeout, values());
 		}
@@ -74,7 +73,7 @@ public class NTPServerHandler {
 
 	private final String[] hosts;
 
-	public NTPServerHandler(NTPServers server) {
+	public NTPServerHandler(NTP_SERVERS server) {
 		this(server.hosts);
 	}
 
@@ -89,7 +88,7 @@ public class NTPServerHandler {
 		NTPUDPClient client=new NTPUDPClient();
 		client.setDefaultTimeout(timeout);
 
-		for(String host : hosts) try{
+		for(String host: hosts) try{
 
 			InetAddress hostAddr=InetAddress.getByName(host);
 			System.out.println(hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
@@ -119,9 +118,9 @@ public class NTPServerHandler {
 
 	public static final void main(String[] args) {
 
-		NTPServerHandler handler=new NTPServerHandler(NTPServers.OAL);
+		NTPServerHandler handler=new NTPServerHandler(NTP_SERVERS.OAL);
 		//NTPTimeInfo time=handler.getTime(1000);
-		NTPTimeInfo time=NTPServers.queryAll(1000);
+		NTPTimeInfo time=NTP_SERVERS.queryAll(1000);
 		System.out.println("Reference TimeStamp: "+time.getMessage().getReferenceTimeStamp().getDate());
 		System.out.println("Originate TimeStamp: "+time.getMessage().getOriginateTimeStamp().getDate());
 		System.out.println("Transmit TimeStamp: "+time.getMessage().getTransmitTimeStamp().getDate());
