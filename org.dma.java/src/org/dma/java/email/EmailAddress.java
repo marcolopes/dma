@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -48,6 +48,16 @@ public class EmailAddress {
 	@Override
 	public String toString() {
 		return name + " <"+email+">";
+	}
+
+	@Override
+	public int hashCode() {
+		return email==null ? 0 : email.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return hashCode()==obj.hashCode();
 	}
 
 

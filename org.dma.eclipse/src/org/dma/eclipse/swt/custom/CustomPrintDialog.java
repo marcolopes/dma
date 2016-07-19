@@ -30,8 +30,9 @@ public class CustomPrintDialog extends PrintDialog {
 	 */
 	public String openDialog() {
 
-		PrinterData printerData=open();
-		return printerData==null ? null : printerData.name;
+		PrinterData pd=open();
+
+		return pd==null ? null : pd.name;
 
 	}
 
