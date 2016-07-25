@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -11,15 +11,50 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
 
 public class XMLFileHandler extends FileHandler {
+
+	/**
+	 * Marshalling
+	 *<p>
+	 * The Marshaller class provides the client application the ability
+	 * to convert a Java content tree back into XML data.
+	 * There is no difference between marshalling a content tree that is
+	 * created manually using the factory methods and marshalling a content
+	 * tree that is the result an unmarshal operation.
+	 *<p>
+	 * Clients can marshal a java content tree back to XML data to a
+	 * java.io.OutputStream or a java.io.Writer. The marshalling process can
+	 * alternatively produce SAX2 event streams to a registered ContentHandler
+	 * or produce a DOM Node object.
+	 *<p>
+	 * Client applications have control over the output encoding as well as whether
+	 * or not to marshal the XML data as a complete document or as a fragment.
+	 */
+	public static boolean marshal(Object obj) {
+
+		try{
+			JAXBContext context=JAXBContext.newInstance(obj.getClass());
+			Marshaller m=context.createMarshaller();
+			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			System.out.println("### XML BEGIN ###");
+			m.marshal(obj, System.out);
+			System.out.println("### XML END ###");
+
+			return true;
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+
+		return false;
+
+	}
+
 
 	public XMLFileHandler(String filename) {
 		super(filename);
@@ -56,12 +91,8 @@ public class XMLFileHandler extends FileHandler {
 				bis.close();
 			}
 
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(ArrayIndexOutOfBoundsException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return null;
@@ -103,49 +134,11 @@ public class XMLFileHandler extends FileHandler {
 
 			return true;
 
-		}catch(FileNotFoundException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return false;
-
-	}
-
-
-	/**
-	 * Marshalling
-	 *<p>
-	 * The Marshaller class provides the client application the ability
-	 * to convert a Java content tree back into XML data.
-	 * There is no difference between marshalling a content tree that is
-	 * created manually using the factory methods and marshalling a content
-	 * tree that is the result an unmarshal operation.
-	 *<p>
-	 * Clients can marshal a java content tree back to XML data to a
-	 * java.io.OutputStream or a java.io.Writer. The marshalling process can
-	 * alternatively produce SAX2 event streams to a registered ContentHandler
-	 * or produce a DOM Node object.
-	 *<p>
-	 * Client applications have control over the output encoding as well as whether
-	 * or not to marshal the XML data as a complete document or as a fragment.
-	 */
-	public static void marshal(Object obj, File file) {
-
-		try{
-			JAXBContext context=JAXBContext.newInstance(obj.getClass());
-			Marshaller m=context.createMarshaller();
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			System.out.println("### XML BEGIN ###");
-			m.marshal(obj, System.out);
-			System.out.println("### XML END ###");
-
-		}catch(PropertyException e){
-			e.printStackTrace();
-		}catch(JAXBException e){
-			e.printStackTrace();
-		}
 
 	}
 

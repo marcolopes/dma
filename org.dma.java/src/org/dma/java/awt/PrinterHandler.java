@@ -45,34 +45,34 @@ public class PrinterHandler {
 
 	/** Returns default printer if invalid */
 	public static String getPrinterNameOrDefault(String printerName) {
-		return new PrinterHandler(printerName).isPrinterValid() ?
-				printerName : lookupDefaultPrinterName();
+		try{
+			new PrinterHandler(printerName).checkPrinter();
+			return printerName;
+		}
+		catch(PrinterException e){}
+		return lookupDefaultPrinterName();
 	}
 
-	private final PrintService ps;
+	private final PrintService service;
 
 	private final String printerName;
 
 	public PrinterHandler(String printerName) {
 		this.printerName=printerName;
-		this.ps=printerName==null ? null : lookupPrintService(printerName);
+		this.service=printerName==null ? null : lookupPrintService(printerName);
 	}
 
 
-	public boolean isPrinterValid() {
-
-		return ps!=null;
-
+	public void checkPrinter() throws PrinterException {
+		if (service==null) throw new PrinterException("Invalid printer "+printerName);
 	}
 
 
 	public PrinterJob createPrinterJob() throws PrinterException {
 
-		if (!isPrinterValid()) throw new PrinterException("Invalid printer "+printerName);
-
+		checkPrinter();
 		PrinterJob job=PrinterJob.getPrinterJob();
-		job.setPrintService(ps);
-
+		job.setPrintService(service);
 		return job;
 
 	}
@@ -81,9 +81,8 @@ public class PrinterHandler {
 	/** Prints STREAM DATA using java print */
 	public void print(InputStream is) throws PrinterException, PrintException {
 
-		if (!isPrinterValid()) throw new PrinterException("Invalid printer "+printerName);
-
-		DocPrintJob job=ps.createPrintJob();
+		checkPrinter();
+		DocPrintJob job=service.createPrintJob();
 		Doc document=new SimpleDoc(is, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 		job.print(document, null);
 

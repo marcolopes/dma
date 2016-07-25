@@ -40,12 +40,13 @@ public class UTF8ResourceBundle extends ResourceBundle {
 	@Override
 	protected Object handleGetObject(String key) {
 		final String value=bundle.getString(key);
-		if (value==null) return null;
-		try{
+		if (value!=null) try{
 			return new String(value.getBytes("ISO-8859-1"), "UTF-8");
-		}catch(final UnsupportedEncodingException e) {
+
+		}catch(UnsupportedEncodingException e) {
 			throw new UnsupportedOperationException("Encoding not supported", e);
 		}
+		return null;
 	}
 
 	@Override

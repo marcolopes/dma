@@ -5,7 +5,6 @@
  *******************************************************************************/
 package org.dma.java.io;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Date;
 
@@ -96,10 +95,8 @@ public class NTPServerHandler {
 			client.close();
 			return new NTPTimeInfo(time.getMessage(), time.getReturnTime());
 
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return null;

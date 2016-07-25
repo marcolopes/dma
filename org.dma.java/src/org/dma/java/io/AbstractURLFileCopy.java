@@ -9,9 +9,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
@@ -47,12 +45,8 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
 			return output.renameTo(new File(dst));
 
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return false;
@@ -87,12 +81,8 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
 			return true;
 
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return false;

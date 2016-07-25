@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,14 +7,11 @@ package org.dma.java.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import org.apache.commons.codec.binary.Base64;
 
 public class ByteFileHandler extends FileHandler {
 
@@ -24,48 +21,6 @@ public class ByteFileHandler extends FileHandler {
 
 	public ByteFileHandler(File file) {
 		super(file);
-	}
-
-
-	@Override
-	public ByteArrayInputStream asInputStream() {
-		try{
-			return new ByteArrayInputStream(read());
-
-		}catch(Exception e){}
-
-		return null;
-	}
-
-
-	/**
-	 * Reads and encodes into BASE64
-	 * @param lineLength - Each line of encoded data will be
-	 * at most of the given length. If lineLength <= 0, then
-	 * the output will not be divided into lines.
-	 */
-	public String readBase64(int lineLength) {
-
-		try{
-			return new Base64(lineLength).encodeToString(read());
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return null;
-
-	}
-
-
-	/**
-	 * Reads and encodes into BASE64
-	 * with a line length of 64
-	 */
-	public String readBase64() {
-
-		return readBase64(BASE64_LINE_LENGTH);
-
 	}
 
 
@@ -97,15 +52,37 @@ public class ByteFileHandler extends FileHandler {
 				bis.close();
 			}
 
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return null;
+
+	}
+
+
+	public byte[] readFully() {
+
+		byte[] bytes=new byte[(int)file.length()];
+
+		try{
+			DataInputStream dis=
+					new DataInputStream(
+							new BufferedInputStream(
+									new FileInputStream(file)));
+
+			try{
+				dis.readFully(bytes);
+
+			}finally{
+				dis.close();
+			}
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+
+		return bytes;
 
 	}
 
@@ -141,13 +118,8 @@ public class ByteFileHandler extends FileHandler {
 
 			return bytes.length;
 
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
-		}catch(NullPointerException e){
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return 0;

@@ -7,12 +7,9 @@ package org.dma.java.io;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.dma.java.util.StringUtils;
@@ -78,7 +75,6 @@ public class FileHandler {
 		}catch(Exception e){
 			System.out.println(e);
 		}
-
 		return false;
 	}
 
@@ -90,7 +86,6 @@ public class FileHandler {
 		}catch(Exception e){
 			System.out.println(e);
 		}
-
 		return false;
 	}
 
@@ -99,7 +94,7 @@ public class FileHandler {
 		try{
 			return new FileInputStream(file);
 
-		}catch(FileNotFoundException e){
+		}catch(Exception e){
 			System.out.println(e);
 		}
 
@@ -111,7 +106,7 @@ public class FileHandler {
 		try{
 			return new FileOutputStream(file);
 
-		}catch(FileNotFoundException e){
+		}catch(Exception e){
 			System.out.println(e);
 		}
 
@@ -123,10 +118,8 @@ public class FileHandler {
 		try{
 			return file.toURI().toURL();
 
-		}catch(MalformedURLException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return null;
@@ -138,7 +131,9 @@ public class FileHandler {
 			return this.file.getCanonicalFile().
 					equals(file.getCanonicalFile());
 
-		}catch(IOException e){}
+		}catch(Exception e){
+			System.out.println(e);
+		}
 
 		return false;
 	}

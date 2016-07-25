@@ -7,10 +7,19 @@ package org.dma.java.io;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class FolderHandler {
+
+	public static String currentFolder() {
+		try{
+			return new File(".").getCanonicalPath();
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+		return null;
+	}
 
 	public final File folder;
 
@@ -25,15 +34,6 @@ public class FolderHandler {
 
 	public FolderHandler(File folder) {
 		this.folder=folder;
-	}
-
-
-	public static String currentFolder() {
-		try{
-			return new File(".").getCanonicalPath();
-		}catch(IOException e){
-			return null;
-		}
 	}
 
 
@@ -68,7 +68,7 @@ public class FolderHandler {
 			});
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return null;
@@ -132,7 +132,7 @@ public class FolderHandler {
 			});
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return null;

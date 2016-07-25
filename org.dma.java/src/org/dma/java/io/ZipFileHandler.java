@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -26,7 +26,7 @@ public class ZipFileHandler extends FileHandler {
 	}
 
 
-	public void create(Collection<File> filesToAdd, ZipParameters parameters) throws Exception {
+	public void create(Collection<File> filesToAdd, ZipParameters parameters) throws ZipException {
 
 		try{
 			// Initiate ZipFile object with the path/name of the zip file.
@@ -48,7 +48,7 @@ public class ZipFileHandler extends FileHandler {
 			zipFile.addFiles(new ArrayList(filesToAdd), parameters);
 
 		}catch(ZipException e){
-			throw new Exception(e.getCause() instanceof FileNotFoundException ?
+			throw new ZipException(e.getCause() instanceof FileNotFoundException ?
 				e.getCause().getMessage() : e.getMessage());
 		}
 
@@ -63,7 +63,7 @@ public class ZipFileHandler extends FileHandler {
 	 * <li>DEFLATE_LEVEL_MAXIMUM - High compression level with a compromise of speed
 	 * <li>DEFLATE_LEVEL_ULTRA - Highest compression level but low speed
 	 */
-	public void create(Collection<File> filesToAdd, int compressionLevel) throws Exception {
+	public void create(Collection<File> filesToAdd, int compressionLevel) throws ZipException {
 
 		ZipParameters parameters=new ZipParameters();
 		// Set the compression level. This value has to be in between 0 to 9
@@ -74,21 +74,21 @@ public class ZipFileHandler extends FileHandler {
 	}
 
 	/** Optimal balance between compression level/speed */
-	public void normalDeflate(Collection<File> filesToAdd) throws Exception {
+	public void normalDeflate(Collection<File> filesToAdd) throws ZipException {
 
 		create(filesToAdd, Zip4jConstants.DEFLATE_LEVEL_NORMAL);
 
 	}
 
 	/** Lowest compression level but higher speed of compression */
-	public void fastestDeflate(Collection<File> filesToAdd) throws Exception {
+	public void fastestDeflate(Collection<File> filesToAdd) throws ZipException {
 
 		create(filesToAdd, Zip4jConstants.DEFLATE_LEVEL_FASTEST);
 
 	}
 
 	/** Highest compression level but low speed */
-	public void ultraDeflate(Collection<File> filesToAdd) throws Exception {
+	public void ultraDeflate(Collection<File> filesToAdd) throws ZipException {
 
 		create(filesToAdd, Zip4jConstants.DEFLATE_LEVEL_ULTRA);
 

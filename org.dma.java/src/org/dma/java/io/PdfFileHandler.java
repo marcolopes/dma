@@ -9,12 +9,17 @@ package org.dma.java.io;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
+import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfCopyFields;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfSignatureAppearance;
@@ -35,10 +40,9 @@ public class PdfFileHandler extends FileHandler {
 
 	/**
 	 * <a href=http://itextpdf.sourceforge.net/howtosign.html>
-	 * How to sign a PDF using iText</a>
-	 */
+	 * How to sign a PDF using iText</a> */
 	public void sign(PrivateKey privateKey, Certificate[] certChain,
-			String reason, String location, String contact) throws Exception {
+			String reason, String location, String contact) throws DocumentException, IOException {
 
 		FileInputStream fis=new FileInputStream(file);
 		File output=new File(file+".tmp");
@@ -75,8 +79,8 @@ public class PdfFileHandler extends FileHandler {
 	}
 
 
-	public void sign(JKSCertificate cert,
-			String reason, String location, String contact) throws Exception {
+	public void sign(JKSCertificate cert, String reason, String location, String contact)
+			throws KeyStoreException, DocumentException, IOException {
 
 		sign(cert.getPrivateKey(), cert.getCertificateChain(), reason, location, contact);
 
@@ -84,19 +88,18 @@ public class PdfFileHandler extends FileHandler {
 
 
 	@Deprecated
-	public void sign(KeyStore keyStore, String password,
-			String reason, String location, String contact) throws Exception {
+	public void sign(KeyStore keyStore, String password, String reason, String location, String contact)
+			throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, DocumentException, IOException {
 
 		String alias=keyStore.aliases().nextElement();
 		PrivateKey privateKey=(PrivateKey)keyStore.getKey(alias, password.toCharArray());
 
 		sign(privateKey, keyStore.getCertificateChain(alias), reason, location, contact);
 
-
 	}
 
 
-	public void addScript(String script) throws Exception {
+	public void addScript(String script) throws DocumentException, IOException {
 
 		File output=new File(file+".tmp");
 		FileInputStream fis=new FileInputStream(file);
@@ -124,7 +127,7 @@ public class PdfFileHandler extends FileHandler {
 
 
 	/** Parameterized file will be used as OUTPUT */
-	public void merge(Collection<File> files) throws Exception {
+	public void merge(Collection<File> files) throws DocumentException, IOException {
 
 		if (files.size()==0) return;
 

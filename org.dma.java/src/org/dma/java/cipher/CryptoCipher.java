@@ -5,15 +5,11 @@
  *******************************************************************************/
 package org.dma.java.cipher;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
@@ -41,7 +37,9 @@ public class CryptoCipher {
 		RSA_ECB_OAEPWithSHA_1AndMGF1 ("RSA", "ECB", "OAEPWithSHA-1AndMGF1Padding", 1024, 2048),
 		RSA_ECB_OAEPWithSHA_256AndMGF1 ("RSA", "ECB", "OAEPWithSHA-256AndMGF1Padding", 1024, 2048);
 
-		public final String algorithm, mode, padding, transformation;
+		public final String algorithm, mode, padding;
+		/** algorithm/mode/padding */
+		public final String transformation;
 		public final int[] keysize;
 
 		private CIPHERS(String algorithm, String mode, int...keysize) {
@@ -61,12 +59,24 @@ public class CryptoCipher {
 			return keysize[keysize.length-1];
 		}
 
+		public SecretKey generateKey(int keySize) {
+			try{
+				KeyGenerator generator=KeyGenerator.getInstance(algorithm);
+				generator.init(keySize);
+				return generator.generateKey();
+
+			}catch(Exception e){
+				System.out.println(e);
+			}
+			return null;
+		}
+
 	}
+
+	private final Key key;
 
 	private Cipher cipher;
 	private Cipher decipher;
-
-	private final Key key;
 
 	public CryptoCipher(byte[] key, CIPHERS cipher) {
 		this(key, cipher.algorithm, cipher.transformation);
@@ -76,20 +86,29 @@ public class CryptoCipher {
 		this(new SecretKeySpec(key, algorithm), transformation);
 	}
 
-	/** transformation = algorithm */
+	/** Uses algorithm as transformation */
 	public CryptoCipher(byte[] key, String algorithm) {
 		this(new SecretKeySpec(key, algorithm));
 	}
 
-	/** transformation = algorithm */
+	/** Uses algorithm as transformation */
 	public CryptoCipher(Key key) {
 		this(key, key.getAlgorithm());
+	}
+
+	public CryptoCipher(CIPHERS cipher) {
+		this(cipher, cipher.keySize());
+	}
+
+	public CryptoCipher(CIPHERS cipher, int keySize) {
+		this(cipher.generateKey(keySize), cipher.transformation);
 	}
 
 	public CryptoCipher(Key key, CIPHERS cipher) {
 		this(key, cipher.transformation);
 	}
 
+	/** @see CIPHERS#transformation */
 	public CryptoCipher(Key key, String transformation) {
 		this.key=key;
 
@@ -100,20 +119,29 @@ public class CryptoCipher {
 			decipher=Cipher.getInstance(transformation);
 			decipher.init(Cipher.DECRYPT_MODE, key);
 
-		}catch(NoSuchAlgorithmException e){
+		}catch(Exception e){
 			System.out.println(e);
-		}catch(NoSuchPaddingException e){
+		}
+	}
+
+
+	/** @see Cipher#doFinal(byte[]) */
+	public byte[] encrypt(byte[] messageBytes) {
+
+		try{
+			// Encrypt Bytes
+			return cipher.doFinal(messageBytes);
+
+		}catch(Exception e){
 			System.out.println(e);
-		}catch(InvalidKeyException e){
-			System.out.println(e);
-		}catch(Exception e){}
+		}
+
+		return null;
+
 	}
 
 
 	/**
-	 * Encrypts using the initialized ALGORITHM<br>
-	 * <b>NOTE: Use alternate method for Strings</b>
-	 * <p>
 	 * <b>Message is processed as follows:</b><br>
 	 * - Encrypt Bytes<br>
 	 * - Encode Bytes to BASE64<br>
@@ -123,27 +151,26 @@ public class CryptoCipher {
 	 * @param lineLength - the lenghth of each text line.
 	 * 0=no line break
 	 */
-	public String encrypt(byte[] messageBytes, int lineLength) {
+	public String BASE64encrypt(byte[] messageBytes, int lineLength) {
+
 		try{
 			// Encrypt Bytes
-			byte[] encrypted=cipher.doFinal(messageBytes);
+			byte[] encrypted=encrypt(messageBytes);
 			// Encode Bytes to BASE64
 			byte[] base64Bytes=new Base64(lineLength).encode(encrypted);
 			// Convert Bytes to String
 			return new String(base64Bytes, "UTF8");
 
-		}catch(IllegalBlockSizeException e){
+		}catch(Exception e){
 			System.out.println(e);
-		}catch(BadPaddingException e){
-			System.out.println(e);
-		}catch(Exception e){}
+		}
+
 		return null;
+
 	}
 
 
 	/**
-	 * Encrypts using the initialized ALGORITHM
-	 * <p>
 	 * <b>Message is processed as follows:</b><br>
 	 * - Convert String to Bytes (UTF8 charset)<br>
 	 * - Encrypt Bytes<br>
@@ -154,24 +181,40 @@ public class CryptoCipher {
 	 * @param lineLength - the lenghth of each text line.
 	 * 0=no line break
 	 */
-	public String encrypt(String message, int lineLength) {
+	public String BASE64encrypt(String message, int lineLength) {
+
 		try{
 			// Convert String to Bytes
 			byte[] messageBytes=message.getBytes("UTF8");
+			// Encrypt Bytes
+			return BASE64encrypt(messageBytes, lineLength);
 
-			return encrypt(messageBytes, lineLength);
-
-		}catch(UnsupportedEncodingException e){
+		}catch(Exception e){
 			System.out.println(e);
-		}catch(Exception e){}
+		}
+
 		return null;
+
+	}
+
+
+	/** @see Cipher#doFinal(byte[]) */
+	public byte[] decrypt(byte[] messageBytes) {
+
+		try{
+			// Decrypt Bytes
+			return decipher.doFinal(messageBytes);
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+
+		return null;
+
 	}
 
 
 	/**
-	 * Decrypts using the initialized ALGORITHM<br>
-	 * <b>NOTE: Use alternate method for Strings</b>
-	 * <p>
 	 * <b>Message is processed as follows:</b><br>
 	 * - Decode Bytes from BASE64<br>
 	 * - Decrypt Bytes<br>
@@ -180,29 +223,26 @@ public class CryptoCipher {
 	 * @param messageBytes - the message to decrypt.
 	 * <b>Must be in BASE64</b>
 	 */
-	public String decrypt(byte[] messageBytes) {
+	public String BASE64decrypt(byte[] messageBytes) {
+
 		try{
 			// Decode Bytes from BASE64
 			byte[] base64Bytes=new Base64(0).decode(messageBytes);
 			// Decrypt Bytes
-			byte[] decrypted=decipher.doFinal(base64Bytes);
+			byte[] decrypted=decrypt(base64Bytes);
 			// Convert Bytes to String
 			return new String(decrypted, "UTF8");
 
-		}catch(UnsupportedEncodingException e){
+		}catch(Exception e){
 			System.out.println(e);
-		}catch(IllegalBlockSizeException e){
-			System.out.println(e);
-		}catch(BadPaddingException e){
-			System.out.println(e);
-		}catch(Exception e){}
+		}
+
 		return null;
+
 	}
 
 
 	/**
-	 * Decrypts using the initialized ALGORITHM
-	 * <p>
 	 * <b>Message is processed as follows:</b><br>
 	 * - Convert String to Bytes (UTF8 charset)<br>
 	 * - Decode Bytes from BASE64<br>
@@ -212,17 +252,20 @@ public class CryptoCipher {
 	 * @param message - the message to decrypt.
 	 * <b>Must be in BASE64</b>
 	 */
-	public String decrypt(String message) {
+	public String BASE64decrypt(String message) {
+
 		try{
 			// Convert String to Bytes
 			byte[] messageBytes=message.getBytes("UTF8");
+			// Decrypt Bytes
+			return BASE64decrypt(messageBytes);
 
-			return decrypt(messageBytes);
-
-		}catch(UnsupportedEncodingException e){
+		}catch(Exception e){
 			System.out.println(e);
-		}catch(Exception e){}
+		}
+
 		return null;
+
 	}
 
 

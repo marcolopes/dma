@@ -7,17 +7,14 @@
 package org.dma.java.security;
 
 import java.math.BigInteger;
-import java.security.InvalidKeyException;
 import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
-import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
 import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.x509.X509V1CertificateGenerator;
+import org.dma.java.cipher.RSACipher;
 
 public class CertificateFactory {
 
@@ -92,16 +89,8 @@ public class CertificateFactory {
 
 			return cert;
 
-		}catch(CertificateEncodingException e){
-			e.printStackTrace();
-		}catch(InvalidKeyException e){
-			e.printStackTrace();
-		}catch(IllegalStateException e){
-			e.printStackTrace();
-		}catch(NoSuchAlgorithmException e){
-			e.printStackTrace();
-		}catch(SignatureException e){
-			e.printStackTrace();
+		}catch(Exception e){
+			System.out.println(e);
 		}
 
 		return null;
@@ -112,7 +101,7 @@ public class CertificateFactory {
 	public static void main(String[] args) {
 
 		//Generate a 1024-bit RSA key pair
-		KeyPair kp=RSAFactory.generateKeyPair(1024);
+		KeyPair kp=RSACipher.generateKeyPair(1024);
 
 		//Generate X509 certificate
 		X509Certificate cert=CertificateFactory.generate(kp, "SHA1withRSA");

@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.java.io;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -43,20 +44,28 @@ public class FileURL {
 	}
 
 
-	public InputStream asInputStream() throws Exception {
+	public InputStream asInputStream() throws IOException {
+
 		URLConnection conn=url.openConnection();
+
 		conn.setDoInput(true); //input connection
 		conn.setDoOutput(false); //output connection
 		conn.setUseCaches(false); //avoid a cached file
+
 		return conn.getInputStream();
+
 	}
 
-	public OutputStream asOutputStream() throws Exception {
+	public OutputStream asOutputStream() throws IOException {
+
 		URLConnection conn=url.openConnection();
+
 		conn.setDoInput(false); //input connection
 		conn.setDoOutput(true); //output connection
 		conn.setUseCaches(false); //avoid a cached file
+
 		return conn.getOutputStream();
+
 	}
 
 	@Override

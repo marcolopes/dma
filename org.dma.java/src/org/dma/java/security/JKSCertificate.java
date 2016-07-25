@@ -1,16 +1,14 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.security;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -38,30 +36,46 @@ public class JKSCertificate {
 
 	public final String password;
 
-	public JKSCertificate(CERTIFICATE_TYPE type, String filename, String password) {
-		this(type, new ByteFileHandler(filename).asInputStream(), password, null);
-	}
-
-	public JKSCertificate(CERTIFICATE_TYPE type, String filename, String password, String alias) {
-		this(type, new ByteFileHandler(filename).asInputStream(), password, alias);
-	}
-
-	public JKSCertificate(CERTIFICATE_TYPE type, InputStream stream, String password) {
-		this(type, stream, password, null);
+	/**
+	 * @param type - the certificate type
+	 * @param keystore - the keystore filename
+	 * @param password - the keystore password (null=no integrity checking)
+	 */
+	public JKSCertificate(CERTIFICATE_TYPE type, String keystore, String password) {
+		this(type, new ByteFileHandler(keystore).read(), password, null);
 	}
 
 	/**
-	 * @param type - JKS, PKCS12 (enumerator)
-	 * @param stream - keystore stream
-	 * @param password - keystore password (null=no integrity checking)
-	 * @param alias - alias to load (null=use first alias found)
+	 * @param type - the certificate type
+	 * @param keystore - the keystore filename
+	 * @param password - the keystore password (null=no integrity checking)
+	 * @param alias - the alias to load (null=use first alias found)
 	 */
-	public JKSCertificate(CERTIFICATE_TYPE type, InputStream stream, String password, String alias) {
+	public JKSCertificate(CERTIFICATE_TYPE type, String keystore, String password, String alias) {
+		this(type, new ByteFileHandler(keystore).read(), password, alias);
+	}
+
+	/**
+	 * @param type - the certificate type
+	 * @param keystore - the keystore data
+	 * @param password - the keystore password (null=no integrity checking)
+	 */
+	public JKSCertificate(CERTIFICATE_TYPE type, byte[] keystore, String password) {
+		this(type, keystore, password, null);
+	}
+
+	/**
+	 * @param type - the certificate type
+	 * @param keystore - the keystore data
+	 * @param password - the keystore password (null=no integrity checking)
+	 * @param alias - the alias to load (null=use first alias found)
+	 */
+	public JKSCertificate(CERTIFICATE_TYPE type, byte[] keystore, String password, String alias) {
 		this.password=password;
 
 		try{
 			this.keyStore=KeyStore.getInstance(type.name());
-			this.keyStore.load(stream, password==null ? null : password.toCharArray());
+			this.keyStore.load(new ByteArrayInputStream(keystore), password==null ? null : password.toCharArray());
 			this.alias=alias==null ? keyStore.aliases().nextElement() : alias;
 			this.X509Cert=(X509Certificate)keyStore.getCertificate(this.alias);
 
@@ -73,7 +87,7 @@ public class JKSCertificate {
 	}
 
 
-	private void checkKeystore() throws KeyStoreException {
+	public void checkKeystore() throws KeyStoreException {
 		if (keyStore==null) throw new KeyStoreException("KeyStore not loaded");
 	}
 
@@ -94,9 +108,7 @@ public class JKSCertificate {
 			return (PrivateKey)keyStore.getKey(alias,
 					password==null ? null : password.toCharArray());
 
-		}catch(UnrecoverableKeyException e){
-			System.out.println(e);
-		}catch(NoSuchAlgorithmException e){
+		}catch(Exception e){
 			System.out.println(e);
 		}
 

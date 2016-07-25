@@ -6,9 +6,7 @@
 package org.dma.java.io;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 public class URLTextFileHandler extends TextFileHandler {
 
@@ -66,12 +64,8 @@ public class URLTextFileHandler extends TextFileHandler {
 				br.close();
 			}
 
-		}catch(UnsupportedEncodingException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return buffer.toString();

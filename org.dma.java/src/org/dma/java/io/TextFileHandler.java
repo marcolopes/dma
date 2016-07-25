@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,14 +9,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 public class TextFileHandler extends FileHandler {
@@ -80,12 +77,8 @@ public class TextFileHandler extends FileHandler {
 				br.close();
 			}
 
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return buffer.toString();
@@ -114,12 +107,8 @@ public class TextFileHandler extends FileHandler {
 				br.close();
 			}
 
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return buffer.toString();
@@ -165,11 +154,8 @@ public class TextFileHandler extends FileHandler {
 
 			return true;
 
-		}catch(IOException e){
-			System.out.println(e);
-		}catch(NullPointerException e){
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return false;
@@ -217,14 +203,8 @@ public class TextFileHandler extends FileHandler {
 				br.close();
 			}
 
-		}catch(UnsupportedEncodingException e) {
-			System.out.println(e);
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return buffer.toString();
@@ -253,14 +233,8 @@ public class TextFileHandler extends FileHandler {
 				br.close();
 			}
 
-		}catch(UnsupportedEncodingException e) {
-			System.out.println(e);
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return buffer.toString();
@@ -309,15 +283,8 @@ public class TextFileHandler extends FileHandler {
 
 			return true;
 
-		}catch(UnsupportedEncodingException e) {
-			System.out.println(e);
-		}catch(FileNotFoundException e){
-			System.out.println(e);
-		}catch(IOException e){
-			System.out.println(e);
-		}catch(NullPointerException e){
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e);
 		}
 
 		return false;

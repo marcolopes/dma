@@ -1,52 +1,30 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.java.security;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.dma.java.cipher.MessageDigest;
 
-import org.apache.commons.codec.binary.Base64;
-
-public class MD5Password {
+public class MD5Password extends MessageDigest {
 
 	private final String password;
 
 	public MD5Password(String password) {
+		super(ALGORITHMS.MD5);
 		this.password=password;
 	}
 
 
-	/**
-	 * MD5 Password
-	 * @return
-	 * MD5 digested password encoded in BASE64
-	 */
+	/** @see MessageDigest#BASE64digest(String) */
 	public String encode() {
-
-		try{
-			MessageDigest md=MessageDigest.getInstance("MD5");
-			md.update(password.getBytes("UTF8"));
-			return new Base64(0).encodeToString(md.digest());
-
-		}catch(UnsupportedEncodingException e){
-			System.out.println(e);
-		}catch(NoSuchAlgorithmException e){
-			System.out.println(e);
-		}
-
-		return null;
-
+		return BASE64digest(password);
 	}
 
 
 	public boolean test(String password) {
-
 		return password.equals(encode());
-
 	}
 
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -13,15 +13,15 @@ public class BlowfishPassword extends BlowfishCipher {
 		super(key);
 	}
 
-	/** @see BlowfishCipher#encrypt(String, int) */
+	/** @see BlowfishCipher#BASE64encrypt(String, int) */
 	public String encode(String password) {
-		return encrypt(password, 0);
+		return BASE64encrypt(password, 0);
 	}
 
 
-	/** @see BlowfishCipher#decrypt(String) */
+	/** @see BlowfishCipher#BASE64decrypt(String) */
 	public String decode(String password) {
-		return decrypt(password);
+		return BASE64decrypt(password);
 	}
 
 
