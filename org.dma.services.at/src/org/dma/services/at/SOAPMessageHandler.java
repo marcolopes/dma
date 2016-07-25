@@ -4,8 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,17 +11,14 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
-import javax.crypto.KeyGenerator;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-import javax.xml.bind.DatatypeConverter;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPFactory;
 import javax.xml.soap.SOAPHeader;
-import javax.xml.soap.SOAPMessage;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -38,7 +33,11 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
+import org.dma.java.cipher.CryptoCipher;
 import org.dma.java.cipher.CryptoCipher.CIPHERS;
+import org.dma.java.cipher.MessageDigest;
+import org.dma.java.cipher.MessageDigest.ALGORITHMS;
+import org.dma.java.cipher.RSAPublicCipher;
 import org.dma.java.io.NTPServerHandler.NTPTimeInfo;
 import org.dma.java.io.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.security.JKSCertificate;
@@ -59,20 +58,20 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	private static final Logger LOGGER = Logger.getLogger(SOAPMessageHandler.class.getSimpleName());
 
-	private final String userName;
+	private final String username;
 	private final String password;
 	private final JKSCertificate saCertificate;
 	private final JKSCertificate swCertificate;
 
 	/**
-	 * @param userName - Service Username
+	 * @param username - Service Username
 	 * @param password - Service Password
 	 * @param saCertificate - Scheme Administrator Certificate
 	 * @param swCertificate - Software Developer Certificate
 	 */
-	public SOAPMessageHandler(String userName, String password,
+	public SOAPMessageHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate) {
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
 		this.saCertificate = saCertificate;
 		this.swCertificate = swCertificate;
@@ -98,15 +97,16 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			SSLContext sslContext = SSLContext.getInstance("TLSv1"); // JAVA8 usa TLSv2
 			sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, null);
 
-			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 			/*
-			KeyStore ts = KeyStore.getInstance("JKS");
-			ts.load(this.getClass().getClassLoader().getResourceAsStream("trustStore"), "cliente".toCharArray());
+			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
+			KeyStore ks = KeyStore.getInstance("JKS");
+			ks.load(this.getClass().getClassLoader().getResourceAsStream("trustStore"), "cliente".toCharArray());
 			TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-			tmf.init(ts);
+			tmf.init(ks);
 			SSLContext sslContext = SSLContext.getInstance("TLS");
 			sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
-			 */
+			*/
+
 			bp.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
 
 		}
@@ -145,70 +145,84 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 			if(direction){
 
-				// create timestamp
+				// Generate simetric key used for this request!
+				final CryptoCipher simetricKeyCipher = new CryptoCipher(CIPHERS.AES_ECB_PKCS5);
+				final byte[] simetricKey = simetricKeyCipher.getKey().getEncoded();
+				/*
+				KeyGenerator generator = KeyGenerator.getInstance(CIPHERS.AES_ECB_PKCS5.algorithm);
+				generator.init(128); // Implementacao JAVA permite apenas 128 bits
+				final byte[] simetricKey = generator.generateKey().getEncoded();
+				*/
+
+				// create Timestamp
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+				NTPTimeInfo time = NTP_SERVERS.queryAll(500, NTP_SERVERS.OAL, NTP_SERVERS.XS2ALL, NTP_SERVERS.WINDOWS);
+				final String timestamp = sdf.format(time==null ? new Date() : time.getServerDate());
+				System.out.println("DATE: "+timestamp);
 				/*
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 				String formattedDate = sdf.format(calendar.getTime());
 				*/
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
-				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-				NTPTimeInfo time = NTP_SERVERS.queryAll(500, NTP_SERVERS.OAL, NTP_SERVERS.XS2ALL, NTP_SERVERS.WINDOWS);
-				String formattedDate = sdf.format(time==null ? new Date() : time.getServerDate());
-				System.out.println("DATE: "+formattedDate);
 
-				// Generate simetric key used for this request. Nonce!
-				KeyGenerator generator = KeyGenerator.getInstance(CIPHERS.AES_ECB_PKCS5.algorithm);
-				generator.init(128); // Implementacao JAVA permite apenas 128 bits
-				final byte[] simetricKey = generator.generateKey().getEncoded();
-
-				// WSSecurity header
-				SOAPFactory soapFactory = SOAPFactory.newInstance();
-				SOAPElement wsSecurityHeaderElem = soapFactory.createElement("Security", AUTH_PREFIX, AUTH_NS);
-				SOAPElement userNameTokenElem = soapFactory.createElement("UsernameToken", AUTH_PREFIX, AUTH_NS);
+				// create SOAP Factory
+				final SOAPFactory soapFactory = SOAPFactory.newInstance();
 
 				// Username
-				SOAPElement userNameElem = soapFactory.createElement("Username", AUTH_PREFIX, AUTH_NS);
-				userNameElem.addTextNode(userName);
+				final SOAPElement usernameElem = soapFactory.createElement("Username", AUTH_PREFIX, AUTH_NS);
+				usernameElem.addTextNode(username);
 
 				// Password
-				SOAPElement passwordElem = soapFactory.createElement("Password", AUTH_PREFIX, AUTH_NS);
+				final SOAPElement passwordElem = soapFactory.createElement("Password", AUTH_PREFIX, AUTH_NS);
 				// Encrypt with the simetric key and B64 encode the password
-				final byte[] encryptedPassword = AutenticationCypherUtil.cypherCredential(simetricKey, password);
+				passwordElem.addTextNode(simetricKeyCipher.BASE64encrypt(password, 0));
+				/*
+				final byte[] encryptedPassword = new AutenticationCypher(simetricKey).cypherCredential(password);
 				final String b64EncryptedPassword = DatatypeConverter.printBase64Binary(encryptedPassword);
 				passwordElem.addTextNode(b64EncryptedPassword);
-				// Calculate password digest
-				final byte[] computedDigest = buildPasswordDigest(simetricKey, formattedDate, password);
-				final byte[] encryptedDigest = AutenticationCypherUtil.cypherCredentialBuffer(simetricKey, computedDigest);
+				*/
+				// Encrypt with the simetric key and B64 encode the digest
+				byte[] passwordDigest = createPasswordDigest(simetricKey, timestamp, password);
+				passwordElem.addAttribute(soapFactory.createName("Digest"),
+						simetricKeyCipher.BASE64encrypt(passwordDigest, 0));
+				/*
+				final byte[] encryptedDigest = new AutenticationCypher(simetricKey).cypherCredentialBuffer(computedDigest);
 				final String b64EncryptedDigest = DatatypeConverter.printBase64Binary(encryptedDigest);
 				passwordElem.addAttribute(soapFactory.createName("Digest"), b64EncryptedDigest);
+				*/
 
 				// Nonce
-				SOAPElement nonceElem = soapFactory.createElement("Nonce", AUTH_PREFIX, AUTH_NS);
+				final SOAPElement nonceElem = soapFactory.createElement("Nonce", AUTH_PREFIX, AUTH_NS);
 				// Encrypt with the SA public key and B64 encode the request simetric key
-				final PublicKey publicKey = saCertificate.getCertificate().getPublicKey();
-				final byte[] encriptedSimetricKey = AutenticationCypherUtil.cypherRequestKey(publicKey, simetricKey);
-				final String b64EncryptedSimetricKey = DatatypeConverter.printBase64Binary(encriptedSimetricKey);
+				PublicKey publicKey = saCertificate.getCertificate().getPublicKey();
+				nonceElem.addTextNode(new RSAPublicCipher(publicKey).BASE64encrypt(simetricKey, 0));
+				/*
+				final byte[] encryptedSimetricKey = new AutenticationCypher(simetricKey).cypherRequestKey(publicKey);
+				final String b64EncryptedSimetricKey = DatatypeConverter.printBase64Binary(encryptedSimetricKey);
 				nonceElem.addTextNode(b64EncryptedSimetricKey);
+				*/
 
 				// Created
-				SOAPElement createdElem = soapFactory.createElement("Created", AUTH_PREFIX, AUTH_NS);
-				createdElem.addTextNode(formattedDate);
+				final SOAPElement createdElem = soapFactory.createElement("Created", AUTH_PREFIX, AUTH_NS);
+				createdElem.addTextNode(timestamp);
 
-				// add child elements to the root element
-				userNameTokenElem.addChildElement(userNameElem);
-				userNameTokenElem.addChildElement(passwordElem);
-				userNameTokenElem.addChildElement(nonceElem);
-				userNameTokenElem.addChildElement(createdElem);
-				wsSecurityHeaderElem.addChildElement(userNameTokenElem);
+				// Username Token
+				final SOAPElement usernameTokenElem = soapFactory.createElement("UsernameToken", AUTH_PREFIX, AUTH_NS);
+				usernameTokenElem.addChildElement(usernameElem);
+				usernameTokenElem.addChildElement(passwordElem);
+				usernameTokenElem.addChildElement(nonceElem);
+				usernameTokenElem.addChildElement(createdElem);
+
+				// Security
+				final SOAPElement securityHeaderElem = soapFactory.createElement("Security", AUTH_PREFIX, AUTH_NS);
+				securityHeaderElem.addChildElement(usernameTokenElem);
 
 				// create SOAPHeader instance for SOAP envelope
-				SOAPEnvelope envelope = smc.getMessage().getSOAPPart().getEnvelope();
-				SOAPHeader sh = envelope.addHeader();
-
-				// add SOAP element for header to SOAP header object
-				sh.addChildElement(wsSecurityHeaderElem);
+				final SOAPEnvelope envelope = smc.getMessage().getSOAPPart().getEnvelope();
+				final SOAPHeader header = envelope.addHeader();
+				header.addChildElement(securityHeaderElem);
 
 			}
 
@@ -223,20 +237,21 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	private byte[] buildPasswordDigest(byte[] simetricKey, String timestamp, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+	private byte[] createPasswordDigest(byte[] simetricKey, String timestamp, String password) throws UnsupportedEncodingException {
 
-		byte[] bytesNonce = simetricKey;
-		byte[] bytesCreated = timestamp.getBytes("UTF-8");
-		byte[] bytesPassword = password.getBytes("UTF-8");
+		byte[] createdBytes = timestamp.getBytes("UTF8");
+		byte[] passwordBytes = password.getBytes("UTF8");
 
-		byte[] digestInput = new byte[bytesNonce.length + bytesCreated.length + bytesPassword.length];
-		System.arraycopy(bytesNonce, 0, digestInput, 0, bytesNonce.length);
-		System.arraycopy(bytesCreated, 0, digestInput, bytesNonce.length, bytesCreated.length);
-		System.arraycopy(bytesPassword, 0, digestInput, bytesNonce.length + bytesCreated.length, bytesPassword.length);
+		byte[] message = new byte[simetricKey.length + createdBytes.length + passwordBytes.length];
+		System.arraycopy(simetricKey, 0, message, 0, simetricKey.length);
+		System.arraycopy(createdBytes, 0, message, simetricKey.length, createdBytes.length);
+		System.arraycopy(passwordBytes, 0, message, simetricKey.length + createdBytes.length, passwordBytes.length);
 
+		return new MessageDigest(ALGORITHMS.SHA1).digest(message);
+		/*
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
-
 		return md.digest(digestInput);
+		*/
 
 	}
 
@@ -244,8 +259,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	private void interceptAndRecordSoapMessage(SOAPMessageContext smc) {
 
 		try{
-			SOAPMessage message = smc.getMessage();
-			Source source = message.getSOAPPart().getContent();
+			Source source = smc.getMessage().getSOAPPart().getContent();
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") + sourceToXMLString(source));
 
@@ -267,6 +281,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		transformer.transform(source, new StreamResult(out));
+
 		return out.toString("UTF-8");
 
 	}

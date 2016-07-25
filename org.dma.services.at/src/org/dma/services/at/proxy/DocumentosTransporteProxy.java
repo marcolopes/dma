@@ -44,9 +44,9 @@ public class DocumentosTransporteProxy extends SOAPMessageHandler {
 
 	private final A10_ENDPOINTS endpoint;
 
-	public DocumentosTransporteProxy(String userName, String password,
+	public DocumentosTransporteProxy(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
-		super(userName, password, saCertificate, swCertificate);
+		super(username, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
 	}
 
