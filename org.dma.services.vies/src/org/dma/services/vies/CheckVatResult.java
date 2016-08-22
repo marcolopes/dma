@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,12 +9,12 @@ public class CheckVatResult {
 
 	private final Boolean valid;
 	private final String name;
-	private final String address;
+	private final CheckVatAddress address;
 
-	public CheckVatResult(Boolean valid, String name, String address){
+	public CheckVatResult(Boolean valid, String name, CheckVatAddress address) {
 		this.valid=valid;
 		this.name=name.trim();
-		this.address=address.trim();
+		this.address=address;
 	}
 
 
@@ -26,7 +26,7 @@ public class CheckVatResult {
 		return name;
 	}
 
-	public String getAddress() {
+	public CheckVatAddress getAddress() {
 		return address;
 	}
 

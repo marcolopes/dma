@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -139,12 +139,12 @@ public abstract class ButtonKeypad extends CustomShell {
 		composite.setLayout(gridLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
-		for(int i=0; i<LABELS.length; i++){
+		for(String label: LABELS){
 			Button button=new Button(composite, SWT.PUSH);
 			button.setLayoutData(new GridData(height,height));
 			button.setFont(SWTFontUtils.createFont(button, 20));
-			button.setText(LABELS[i]);
-			button.setData(LABELS[i]);
+			button.setText(label);
+			button.setData(label);
 
 			button.addSelectionListener(new SelectionAdapter() {
 				@Override

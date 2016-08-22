@@ -162,8 +162,12 @@ public class UIHelper {
 		return PlatformUI.getWorkbench().getHelpSystem();
 	}
 
+	public static boolean isWorkbenchClosing() {
+		return PlatformUI.getWorkbench().isClosing();
+	}
+
 	/** @see BusyIndicator */
-	public static void showWhile(Runnable runnable) {
+	public static void showBusyWhile(Runnable runnable) {
 		BusyIndicator.showWhile(getDisplay(), runnable);
 	}
 

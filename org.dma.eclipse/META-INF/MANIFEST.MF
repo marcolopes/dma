@@ -3,16 +3,16 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Utils
 Bundle-SymbolicName: org.dma.eclipse;singleton:=true
-Bundle-Version: 5.5.0.qualifier
+Bundle-Version: 5.6.0.qualifier
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .
-Require-Bundle: org.eclipse.ui;bundle-version="3.8.2",
- org.eclipse.ui.console;bundle-version="3.5.100",
- org.eclipse.core.runtime;bundle-version="3.8.0",
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
  org.eclipse.core.resources;bundle-version="3.8.1",
  org.eclipse.core.databinding;bundle-version="1.4.1",
+ org.eclipse.ui.console;bundle-version="3.5.100",
+ org.eclipse.ui;bundle-version="3.8.2",
  org.dma.java;bundle-version="5.8.0"
 Export-Package: org.dma.eclipse.core,
  org.dma.eclipse.core.bindings,
@@ -33,5 +33,4 @@ Export-Package: org.dma.eclipse.core,
  org.dma.eclipse.swt.support,
  org.dma.eclipse.swt.viewers,
  org.dma.eclipse.ui,
- org.dma.eclipse.ui.debug,
  org.dma.eclipse.ui.progress

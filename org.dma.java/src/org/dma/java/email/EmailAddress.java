@@ -33,7 +33,7 @@ public class EmailAddress {
 			return true;
 
 		}catch(AddressException e){
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		}catch(Exception e){}
 
 		return false;

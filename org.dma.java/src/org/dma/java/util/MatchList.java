@@ -26,7 +26,7 @@ public class MatchList extends UniqueArrayList<String> {
 
 	public MatchList(String message, Collection<String> col) {
 		super(col);
-		this.message=message.replace("\\n"," \n");
+		this.message=message;
 	}
 
 

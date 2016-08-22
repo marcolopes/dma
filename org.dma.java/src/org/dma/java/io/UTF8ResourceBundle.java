@@ -1,10 +1,3 @@
-package org.dma.java.io;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 /**
  * UTF-8 friendly ResourceBundle support
  *
@@ -18,6 +11,13 @@ import java.util.ResourceBundle;
  * @author Tomas Varaneckas <tomas.varaneckas@gmail.com>
  * @author Marco Lopes <marcolopes@netc.pt>
  */
+package org.dma.java.io;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class UTF8ResourceBundle extends ResourceBundle {
 
 	/** Bundle with unicode data */
@@ -25,12 +25,12 @@ public class UTF8ResourceBundle extends ResourceBundle {
 
 	/** Loads with getSystemClassLoader() */
 	public UTF8ResourceBundle(String baseName) {
-		this(baseName, ClassLoader.getSystemClassLoader());
+		this(baseName, Locale.getDefault(), ClassLoader.getSystemClassLoader());
 	}
 
 	/** @see ResourceBundle#getBundle(String, Locale, ClassLoader) */
-	public UTF8ResourceBundle(String baseName, ClassLoader loader) {
-		this(getBundle(baseName, Locale.getDefault(), loader));
+	public UTF8ResourceBundle(String baseName, Locale locale, ClassLoader loader) {
+		this(getBundle(baseName, locale, loader));
 	}
 
 	public UTF8ResourceBundle(ResourceBundle bundle) {
