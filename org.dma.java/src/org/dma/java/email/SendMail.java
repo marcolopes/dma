@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.mail.PasswordAuthentication;
 
 import org.apache.commons.mail.EmailConstants;
+import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 import org.dma.java.email.ServerParameters.SECURITY;
 import org.dma.java.io.FileParameters;
@@ -26,12 +27,12 @@ public class SendMail extends MultiPartEmail {
 	}
 
 
-	public String send(EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) throws Exception {
+	public String send(EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) throws EmailException {
 
 		Debug.out(server);
 
-		if (!from.isValid()) throw new Exception("Invalid email address (from): "+from);
-		if (!to.isValid()) throw new Exception("Invalid email address (to): "+to);
+		if (!from.isValid()) throw new EmailException("Invalid email address (from): "+from);
+		if (!to.isValid()) throw new EmailException("Invalid email address (to): "+to);
 
 		MultiPartEmail email=new MultiPartEmail();
 		email.setCharset(EmailConstants.UTF_8);
@@ -63,7 +64,7 @@ public class SendMail extends MultiPartEmail {
 	}
 
 
-	public String send(EmailAddress from, EmailAddress to, String subject, String message) throws Exception {
+	public String send(EmailAddress from, EmailAddress to, String subject, String message) throws EmailException {
 
 		return send(from, to, subject, message, null);
 
