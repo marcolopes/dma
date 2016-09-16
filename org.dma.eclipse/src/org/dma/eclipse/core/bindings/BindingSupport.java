@@ -9,12 +9,19 @@ import java.util.LinkedHashMap;
 
 import org.dma.java.util.Debug;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.Realm;
 
-public class BindingSupport extends LinkedHashMap<String, BindingDefinition> {
+public class BindingSupport extends LinkedHashMap<String, Binding> {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID=1L;
+
+	@Override
+	public Binding put(String key, Binding binding) {
+		if (containsKey(key)) throw new Error("BINDING ALREADY REGISTERED: "+key);
+		return super.put(key, binding);
+	}
 
 	private final DataBindingContext bindingContext;
 
@@ -27,24 +34,32 @@ public class BindingSupport extends LinkedHashMap<String, BindingDefinition> {
 	}
 
 
-	public void register(String property, BindingDefinition definition) {
+	public void register(String property, ValueBindingDefinition definition) {
 
-		if (containsKey(property)) throw new Error("BINDING ALREADY REGISTERED: "+property);
+		put(property, bindingContext.bindValue(
+				definition.getTargetObservableValue(),
+				definition.getModelObservableValue(),
+				definition.getTargetToModelUpdate(),
+				definition.getModelToTargetUpdate()));
 
-		put(property, definition);
+	}
 
-		bindingContext.bindValue(
-			definition.getTargetObservableValue(),
-			definition.getModelObservableValue(),
-			definition.getTargetToModelUpdate(),
-			definition.getModelToTargetUpdate());
+
+	public void register(String property, ListBindingDefinition definition) {
+
+		put(property, bindingContext.bindList(
+				definition.getTargetObservableList(),
+				definition.getModelObservableList(),
+				definition.getTargetToModelUpdate(),
+				definition.getModelToTargetUpdate()));
 
 	}
 
 
 	public void unregister(String property) {
 
-		BindingDefinition binding=remove(property);
+		Binding binding=remove(property);
+
 		if (binding!=null) binding.dispose();
 
 	}
@@ -61,16 +76,6 @@ public class BindingSupport extends LinkedHashMap<String, BindingDefinition> {
 
 		bindingContext.dispose();
 
-	}
-
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public DataBindingContext getBindingContext() {
-		return bindingContext;
 	}
 
 

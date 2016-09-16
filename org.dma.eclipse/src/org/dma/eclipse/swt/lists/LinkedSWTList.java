@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2015 Public Domain
+ * 2010-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -16,9 +16,14 @@ public class LinkedSWTList<T> extends MovableList<T> {
 
 	private final CustomSWTList SWTList;
 
-	public LinkedSWTList(CustomSWTList SWTList, Collection<T> list){
+	public LinkedSWTList(CustomSWTList SWTList) {
+		super();
 		this.SWTList=SWTList;
-		addAll(list);
+	}
+
+	public LinkedSWTList(CustomSWTList SWTList, Collection<T> list) {
+		super(list);
+		this.SWTList=SWTList;
 	}
 
 
