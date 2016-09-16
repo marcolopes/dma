@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -16,6 +16,14 @@ import java.util.Map;
 
 public class Command {
 
+	/** Build command list */
+	public static List<String> buildCommand(String program, List<String> args) {
+		List<String> command=new ArrayList(args.size()+1);
+		command.add(program);
+		command.addAll(args);
+		return Collections.unmodifiableList(command);
+	}
+
 	private final ProcessBuilder pb;
 
 	public Command(String program, String...args) {
@@ -30,15 +38,6 @@ public class Command {
 		pb=new ProcessBuilder(command);
 		//redirect errors to standard output
 		pb.redirectErrorStream(true);
-	}
-
-
-	/** Build command list */
-	public static List<String> buildCommand(String program, List<String> args) {
-		List<String> command=new ArrayList(args.size()+1);
-		command.add(program);
-		command.addAll(args);
-		return Collections.unmodifiableList(command);
 	}
 
 
@@ -79,6 +78,12 @@ public class Command {
 
 		return start().waitFor();
 
+	}
+
+
+	@Override
+	public String toString() {
+		return pb.command().toString();
 	}
 
 

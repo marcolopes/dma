@@ -44,14 +44,13 @@ public final class VersionNumber {
 	 */
 	public boolean smallerThan(VersionNumber version) {
 		Debug.out(version);
-		if (major>version.major) return false;
-		if (major<version.major) return true;
-		if (minor>version.minor) return false;
-		if (minor<version.minor) return true;
-		if (macro>version.macro) return false;
-		if (macro<version.macro) return true;
-		if (build>version.build) return false;
-		if (build<version.build) return true;
+		int[] THIS=toArray();
+		int[] OTHER=version.toArray();
+		//major to minor
+		for (int i=0; i<THIS.length; i++){
+			if (THIS[i]>OTHER[i]) return false;
+			if (THIS[i]<OTHER[i]) return true;
+		}
 		return false; //equal!
 	}
 
@@ -69,17 +68,24 @@ public final class VersionNumber {
 	}
 
 
+	public String toString(int length) {
+		StringBuilder result=new StringBuilder();
+		int[] values=toArray();
+		for(int i=0; i<length; i++){
+			if (result.length()>0) result.append('.');
+			result.append(values[i]);
+		}
+		return result.toString();
+	}
+
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object
 	 */
 	@Override
-	public String toString(){
-		return String.valueOf(major)+"."+
-			String.valueOf(minor)+"."+
-			String.valueOf(macro)+"."+
-			String.valueOf(build);
+	public String toString() {
+		return toString(4);
 	}
 
 	@Override

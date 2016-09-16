@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -25,12 +25,12 @@ public class AddOnlyArrayList<T> extends ArrayList<T> {
 	}
 
 	@Override
-	public boolean remove(Object o) {
+	public T remove(int index) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public T remove(int index) {
+	public boolean remove(Object o) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -44,5 +44,14 @@ public class AddOnlyArrayList<T> extends ArrayList<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public T set(int index, T element) {
+		throw new UnsupportedOperationException();
+	}
 
 }

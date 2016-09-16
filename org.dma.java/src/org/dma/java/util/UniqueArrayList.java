@@ -30,7 +30,7 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 	}
 
 	public UniqueArrayList(Collection<? extends T> col) {
-		addAll(col);
+		addAll(col); // override!
 	}
 
 	/** Used by addAll methods */
@@ -40,6 +40,12 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 			if (set.add(e)) unique.add(e);
 		}
 		return unique;
+	}
+
+
+	@Override
+	public void add(int index, T e) {
+		if (set.add(e)) super.add(index, e);
 	}
 
 	@Override
@@ -53,13 +59,49 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 	}
 
 	@Override
-	public void add(int index, T e) {
-		if (set.add(e)) super.add(index, e);
-	}
-
-	@Override
 	public boolean addAll(int index, Collection<? extends T> col) {
 		return super.addAll(index, addUnique(col));
 	}
+
+	@Override
+	public T set(int index, T e) {
+		T remove=get(index);
+		return set.remove(remove) &&
+				set.add(e) ? super.set(index, e) : null;
+	}
+
+	@Override
+	public T remove(int index) {
+		T remove=get(index);
+		return set.remove(remove) ? super.remove(index) : null;
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		return set.remove(o) ? super.remove(o) : null;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		return set.removeAll(c) ? super.removeAll(c) : false;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		return set.retainAll(c) ? super.retainAll(c) : false;
+	}
+
+	@Override
+	protected void removeRange(int fromIndex, int toIndex) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void clear() {
+		set.clear();
+		super.clear();
+	}
+
+
 
 }

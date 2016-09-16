@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -34,6 +34,15 @@ public class FolderHandler {
 
 	public FolderHandler(File folder) {
 		this.folder=folder;
+	}
+
+
+	public String getRelativePath() {
+		String current=currentFolder();
+		String THIS=folder.getAbsolutePath();
+		return THIS.toLowerCase().startsWith(current.toLowerCase()) &&
+				THIS.length()>current.length() ?
+						THIS.substring(current.length()+1) : THIS;
 	}
 
 
@@ -172,8 +181,10 @@ public class FolderHandler {
 
 	public static final void main(String[] args) {
 
-		FolderHandler handler=new FolderHandler();
-		System.out.println(handler.folder);
+		System.out.println(currentFolder());
+		FolderHandler handler=new FolderHandler(currentFolder()+"/tmp/");
+		System.out.println(handler.folder.getAbsolutePath());
+		System.out.println(handler.getRelativePath());
 
 	}
 
