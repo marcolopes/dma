@@ -59,7 +59,7 @@ public class PrinterHandler {
 
 	public PrinterHandler(String printerName) {
 		this.printerName=printerName;
-		this.service=printerName==null ? null : lookupPrintService(printerName);
+		this.service=lookupPrintService(printerName);
 	}
 
 
