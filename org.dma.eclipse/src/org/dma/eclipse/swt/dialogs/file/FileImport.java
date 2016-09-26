@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -13,6 +13,7 @@ import org.dma.java.io.TextFileHandler;
 import org.dma.java.io.XMLFileHandler;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -22,7 +23,7 @@ public class FileImport extends FileDialog {
 	protected void checkSubclass() {}
 
 	public FileImport(String...extensions) {
-		this(new Shell(), extensions);
+		this(Display.getDefault().getActiveShell(), extensions);
 	}
 
 	public FileImport(Shell parent, String...extensions) {

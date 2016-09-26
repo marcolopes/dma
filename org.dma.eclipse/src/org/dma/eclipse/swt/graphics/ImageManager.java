@@ -71,7 +71,7 @@ public class ImageManager {
 	 */
 	private static Image createImage(InputStream stream) {
 		try{
-			Display display=Display.getCurrent();
+			Display display=Display.getDefault();
 			ImageData data=new ImageData(stream);
 			return data.transparentPixel > 0 ?
 				new Image(display, data, data.getTransparencyMask()) :
@@ -94,9 +94,9 @@ public class ImageManager {
 		String key=getKey(size);
 		Image image=getImage(key);
 		if (image==null) try{
-			image=new Image(Display.getCurrent(), size, size);
+			image=new Image(Display.getDefault(), size, size);
 			GC gc=new GC(image);
-			gc.setBackground(Display.getCurrent().getSystemColor(SWT.TRANSPARENT));
+			gc.setBackground(Display.getDefault().getSystemColor(SWT.TRANSPARENT));
 			gc.fillRectangle(0, 0, size, size);
 			gc.dispose();
 			putImage(image, key);
@@ -156,7 +156,7 @@ public class ImageManager {
 		String key=getKey(bufferedImage);
 		Image image=getImage(key);
 		if (image==null) try{
-			image=new Image(Display.getCurrent(), SWTImageUtils.convertToSWT(bufferedImage));
+			image=new Image(Display.getDefault(), SWTImageUtils.convertToSWT(bufferedImage));
 			putImage(image, key);
 
 		}catch(Exception e){

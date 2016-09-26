@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public abstract class ButtonMenu extends CustomShell {
 
@@ -26,11 +27,19 @@ public abstract class ButtonMenu extends CustomShell {
 	private final int height;
 
 	public ButtonMenu(int labels) {
-		this(labels, Display.getCurrent().getClientArea().height / 10);
+		this(Display.getDefault().getActiveShell(), labels);
 	}
 
 	public ButtonMenu(int labels, int height) {
-		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
+		this(Display.getDefault().getActiveShell(), labels, height);
+	}
+
+	public ButtonMenu(Shell parent, int labels) {
+		this(parent, labels, Display.getDefault().getClientArea().height / 10);
+	}
+
+	public ButtonMenu(Shell parent, int labels, int height) {
+		super(parent, STYLE_FIXED);
 
 		this.labels=labels;
 		this.height=height;
@@ -59,7 +68,7 @@ public abstract class ButtonMenu extends CustomShell {
 
 		for(int i=0; i<labels; i++){
 			Button button=new Button(composite, SWT.PUSH);
-			button.setLayoutData(new GridData(height*4,height));
+			button.setLayoutData(new GridData(height*4, height));
 			button.setFont(SWTFontUtils.createFont(button, 15));
 			button.setText(label(i));
 			button.setData(i);

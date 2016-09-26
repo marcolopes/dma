@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public abstract class ButtonDialog extends CustomShell {
 
@@ -30,11 +31,19 @@ public abstract class ButtonDialog extends CustomShell {
 	private final int height;
 
 	public ButtonDialog() {
-		this(Display.getCurrent().getClientArea().height / 10);
+		this(Display.getDefault().getActiveShell());
 	}
 
 	public ButtonDialog(int height) {
-		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
+		this(Display.getDefault().getActiveShell(), height);
+	}
+
+	public ButtonDialog(Shell parent) {
+		this(parent, Display.getDefault().getClientArea().height / 10);
+	}
+
+	public ButtonDialog(Shell parent, int height) {
+		super(parent, STYLE_FIXED);
 
 		this.height=height;
 
@@ -62,7 +71,7 @@ public abstract class ButtonDialog extends CustomShell {
 
 		for(int i=0; i<LABELS.length; i++){
 			Button button=new Button(composite, SWT.PUSH);
-			button.setLayoutData(new GridData(height*2,height));
+			button.setLayoutData(new GridData(height*2, height));
 			button.setFont(SWTFontUtils.createFont(button, 15));
 			button.setText(LABELS[i]);
 			button.setData(LABELS[i]);

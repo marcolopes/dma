@@ -21,6 +21,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class ButtonKeypad extends CustomShell {
@@ -46,11 +47,19 @@ public abstract class ButtonKeypad extends CustomShell {
 	private final int height;
 
 	public ButtonKeypad() {
-		this(Display.getCurrent().getClientArea().height / 10);
+		this(Display.getDefault().getActiveShell());
 	}
 
 	public ButtonKeypad(int height) {
-		super(Display.getCurrent().getActiveShell(), STYLE_FIXED);
+		this(Display.getDefault().getActiveShell(), height);
+	}
+
+	public ButtonKeypad(Shell parent) {
+		this(parent, Display.getDefault().getClientArea().height / 10);
+	}
+
+	public ButtonKeypad(Shell parent, int height) {
+		super(parent, STYLE_FIXED);
 
 		this.height=height;
 
@@ -114,12 +123,10 @@ public abstract class ButtonKeypad extends CustomShell {
 					newText.insert(0, "0");
 					e.text="0"+e.text;
 				}
-				if (newText.length()>0){
-					try{
-						new BigDecimal(newText.toString());
-					}catch(NumberFormatException e1){
-						e.doit=false;
-					}
+				if (newText.length()>0) try{
+					new BigDecimal(newText.toString());
+				}catch(NumberFormatException e1){
+					e.doit=false;
 				}
 				value=e.doit ? newText.toString() : value;
 			}
@@ -176,6 +183,18 @@ public abstract class ButtonKeypad extends CustomShell {
 				}
 			});
 		}
+
+	}
+
+
+	public static void main(String[] argvs) {
+
+		new ButtonKeypad() {
+			@Override
+			public boolean done(String result) {
+				return true;
+			}
+		}.openAndSleep();
 
 	}
 

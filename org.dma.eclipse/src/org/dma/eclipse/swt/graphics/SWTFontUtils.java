@@ -30,7 +30,7 @@ public class SWTFontUtils {
 		for(int i=0; i<fontData.length; ++i)
 			fontData[i].setHeight(height);
 
-		final Font font=new Font(Display.getCurrent(), fontData);
+		final Font font=new Font(Display.getDefault(), fontData);
 
 		// Since you created the font, you must dispose it
 		control.addDisposeListener(new DisposeListener() {

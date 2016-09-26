@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class FolderDialog extends DirectoryDialog {
@@ -18,7 +19,7 @@ public class FolderDialog extends DirectoryDialog {
 	protected void checkSubclass() {}
 
 	public FolderDialog(String...extensions) {
-		this(new Shell(), extensions);
+		this(Display.getDefault().getActiveShell(), extensions);
 	}
 
 	public FolderDialog(Shell parent, String...extensions) {

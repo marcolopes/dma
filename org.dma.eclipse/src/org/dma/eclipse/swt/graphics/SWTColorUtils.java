@@ -21,7 +21,7 @@ public class SWTColorUtils {
 	 * @return the system {@link Color} matching the specific ID
 	 */
 	public static Color getColor(int systemColorID) {
-		Display display = Display.getCurrent();
+		Display display = Display.getDefault();
 		return display.getSystemColor(systemColorID);
 	}
 
