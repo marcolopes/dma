@@ -5,7 +5,6 @@
  *******************************************************************************/
 package org.dma.java.util;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 public class MatchList extends UniqueArrayList<String> {
@@ -18,15 +17,8 @@ public class MatchList extends UniqueArrayList<String> {
 		return super.add(e.trim());
 	}
 
-	public final String message;
-
-	public MatchList(String message, String...array) {
-		this(message, Arrays.asList(array));
-	}
-
-	public MatchList(String message, Collection<String> col) {
+	public MatchList(Collection<String> col) {
 		super(col);
-		this.message=message;
 	}
 
 
@@ -48,18 +40,6 @@ public class MatchList extends UniqueArrayList<String> {
 			if (matches(regex)) return true;
 		}
 		return false;
-	}
-
-
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.util.AbstractCollection
-	 */
-	@Override
-	public String toString() {
-		return "message = "+message+
-				"\nlist = "+super.toString();
 	}
 
 }
