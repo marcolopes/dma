@@ -707,6 +707,21 @@ public class TimeDateUtils {
 	}
 
 
+	public static Time getTime(int hour, int minute, int second) {
+		Calendar calendar=getCalendar();
+		calendar.set(Calendar.HOUR_OF_DAY, hour);
+		calendar.set(Calendar.MINUTE, minute);
+		calendar.set(Calendar.SECOND, second);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return getTime(calendar);
+	}
+
+
+	public static Time getTime(int hour, int minute) {
+		return getTime(hour, minute, 0);
+	}
+
+
 	/** Time formatted with DEFAULT PATTERN */
 	public static Time getTime(String time) {
 		return getTimeParsed(time, DEFAULT_TIME_PATTERN);
@@ -726,8 +741,8 @@ public class TimeDateUtils {
 	public static Time getTimeWithoutSeconds(Time time) {
 		Calendar calendar=getCalendar(time);
 		//MINUTE precision ONLY
-		calendar.set(Calendar.MILLISECOND, 0);
 		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 		return getTime(calendar);
 	}
 
