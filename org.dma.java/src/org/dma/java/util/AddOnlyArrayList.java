@@ -20,8 +20,8 @@ public class AddOnlyArrayList<T> extends ArrayList<T> {
 		super();
 	}
 
-	public AddOnlyArrayList(Collection<? extends T> c) {
-		super(c);
+	public AddOnlyArrayList(Collection<? extends T> col) {
+		super(col);
 	}
 
 	@Override

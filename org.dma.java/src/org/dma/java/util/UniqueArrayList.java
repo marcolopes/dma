@@ -21,6 +21,15 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 	/** Unique elements SET */
 	private final Set<T> set=new HashSet();
 
+	/** Used by addAll methods */
+	private Collection<T> addUnique(Collection<? extends T> col) {
+		Collection<T> unique=new ArrayList();
+		for(T e: col){
+			if (set.add(e)) unique.add(e);
+		}
+		return unique;
+	}
+
 	public UniqueArrayList(int initialCapacity) {
 		super(initialCapacity);
 	}
@@ -30,16 +39,7 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 	}
 
 	public UniqueArrayList(Collection<? extends T> col) {
-		addAll(col); // override!
-	}
-
-	/** Used by addAll methods */
-	private Collection<T> addUnique(Collection<? extends T> col) {
-		Collection<T> unique=new ArrayList();
-		for(T e: col){
-			if (set.add(e)) unique.add(e);
-		}
-		return unique;
+		super.addAll(addUnique(col)); // avoid addAll OVERRIDE!
 	}
 
 
@@ -102,6 +102,30 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 		super.clear();
 	}
 
+	@Override
+	public int indexOf(Object o) {
+		for (int i=0; i<size(); i++){
+			if (get(i).equals(o)) return i;
+		}
+		return -1;
+	}
+
+
+	public int indexOf(Collection<?> col) {
+		for(Object o: col){
+			int index=indexOf(o);
+			if (index!=-1) return index;
+		}
+		return -1;
+	}
+
+
+	public boolean containsAny(Collection<?> col) {
+		for(Object o: col){
+			if (contains(o)) return true;
+		}
+		return false;
+	}
 
 
 }
