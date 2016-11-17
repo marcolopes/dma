@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2016 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -8,8 +8,8 @@ package org.dma.eclipse.core.jobs;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Random;
 
-import org.dma.java.math.NumericUtils;
 import org.dma.java.util.Debug;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -24,7 +24,10 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 	/** Executed when last job is done */
 	public abstract void done();
 
-	private final int radomHash = NumericUtils.random();
+	/** Random seed for unique ID */
+	public static final Random RANDOM = new Random();
+
+	private final int radomHash = RANDOM.nextInt(Integer.MAX_VALUE);
 
 	protected boolean running=false;
 

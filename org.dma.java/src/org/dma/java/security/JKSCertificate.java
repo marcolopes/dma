@@ -30,11 +30,11 @@ public class JKSCertificate {
 		PKCS12
 	}
 
-	private X509Certificate X509Cert;
+	public final String password;
+
 	private KeyStore keyStore;
 	private String alias;
-
-	public final String password;
+	private X509Certificate X509Cert;
 
 	/**
 	 * @param type - the certificate type
@@ -196,12 +196,20 @@ public class JKSCertificate {
 
 	@Override
 	public int hashCode() {
-		return !isValid() ? 0 : X509Cert.hashCode();
+		return alias.hashCode()+
+				(!isValid() ? 0 : X509Cert.hashCode());
 	}
 
+	public boolean equals(JKSCertificate other) {
+		return alias.equals(other.alias) &&
+				X509Cert==null ? other.X509Cert==null : X509Cert.equals(other.X509Cert);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
-		return hashCode()==obj.hashCode();
+		if (obj instanceof JKSCertificate)
+			return equals((JKSCertificate)obj);
+		return false;
 	}
 
 

@@ -55,14 +55,6 @@ public final class VersionNumber {
 	}
 
 
-	public boolean equals(VersionNumber version) {
-		return major==version.major &&
-				minor==version.minor &&
-				macro==version.macro &&
-				build==version.build;
-	}
-
-
 	public int[] toArray(){
 		return new int[]{major, minor, macro, build};
 	}
@@ -93,9 +85,22 @@ public final class VersionNumber {
 		return toString().hashCode();
 	}
 
+	public boolean equals(VersionNumber version) {
+		return major==version.major &&
+				minor==version.minor &&
+				macro==version.macro &&
+				build==version.build;
+	}
+
+	public boolean equals(String version) {
+		return equals(new VersionNumber(version));
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		return hashCode()==obj.hashCode();
+		if (obj instanceof VersionNumber)
+			return equals((VersionNumber)obj);
+		return equals(obj.toString());
 	}
 
 

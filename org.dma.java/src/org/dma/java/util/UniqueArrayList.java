@@ -104,6 +104,7 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 
 	@Override
 	public int indexOf(Object o) {
+		//avoid o.equals
 		for (int i=0; i<size(); i++){
 			if (get(i).equals(o)) return i;
 		}
