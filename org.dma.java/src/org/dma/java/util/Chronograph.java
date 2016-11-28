@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.java.util;
 
-public class TimeChronograph {
+public class Chronograph {
 
 	private long startTime;
 	private long elapsedTime=0;
@@ -46,7 +46,7 @@ public class TimeChronograph {
 
 	public static void main(String[] argvs) throws Exception {
 
-		TimeChronograph timer=new TimeChronograph();
+		Chronograph timer=new Chronograph();
 		System.out.println("TIMER (0): "+timer.toString());
 
 		timer.start();

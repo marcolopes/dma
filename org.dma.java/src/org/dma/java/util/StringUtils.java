@@ -643,7 +643,7 @@ public class StringUtils {
 		System.out.println(replaceAll(string, ".", "**"));
 
 		int repeat=1000000;
-		TimeChronograph time=new TimeChronograph();
+		Chronograph time=new Chronograph();
 
 		time.reset();
 		time.start();

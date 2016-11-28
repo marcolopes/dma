@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class TimeClock {
+public abstract class TimerClock {
 
 	public abstract void event();
 
@@ -38,11 +38,11 @@ public abstract class TimeClock {
 	private final CLOCK_FORMAT format;
 	private final Format formatter;
 
-	public TimeClock(Locale locale) {
+	public TimerClock(Locale locale) {
 		this(locale, CLOCK_FORMAT.SIMPLE);
 	}
 
-	public TimeClock(Locale locale, CLOCK_FORMAT format) {
+	public TimerClock(Locale locale, CLOCK_FORMAT format) {
 		this.format=format;
 		this.formatter=new SimpleDateFormat(format.pattern, locale);
 	}

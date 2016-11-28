@@ -472,7 +472,7 @@ public class ArrayUtils {
 		System.out.println("merge: " + merge(new String[]{}));
 
 		int repeat=10000;
-		TimeChronograph time=new TimeChronograph();
+		Chronograph time=new Chronograph();
 		time.start();
 		for(int i=0; i<repeat; i++) array=insert(array, 0, "0");
 		time.stop();
