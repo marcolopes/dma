@@ -39,6 +39,7 @@ public class Chronograph {
 	}
 
 
+	@Override
 	public String toString() {
 		return elapsed()/1000000+"ms";
 	}
