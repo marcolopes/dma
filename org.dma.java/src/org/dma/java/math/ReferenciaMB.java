@@ -90,11 +90,12 @@ public class ReferenciaMB {
 		}
 		result=98-(result * 10 % 97);
 		String checksum=StringUtils.right("0"+result, 2);
+		String ref=id + checksum;
 
 		return formatted ?
-				id.substring(0,3)+" "+
-				id.substring(3,6)+" "+
-				id.substring(6,7) + checksum : id + checksum;
+				ref.substring(0,3)+" "+
+				ref.substring(3,6)+" "+
+				ref.substring(6,9) : ref;
 
 	}
 
