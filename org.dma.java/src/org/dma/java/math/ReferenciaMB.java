@@ -29,20 +29,19 @@ public class ReferenciaMB {
 
 		String id7=right("0000000"+id, 7);
 		String valor8=right("00000000"+valor.multiply(new BigDecimal("100")).intValueExact(), 8);
+		String control=entidade + id7 + valor8;
 
 		System.out.println("entidade: "+entidade);
 		System.out.println("id: "+id7);
 		System.out.println("valor: "+valor8);
-
-		String control=entidade + id7 + valor8;
 		System.out.println("control: "+control);
 
-		int result1=0;
+		int result=0;
 		for(char c: control.toCharArray()){
-			result1=(result1 + Character.getNumericValue(c)) * 10 % 97;
+			result=(result + Character.getNumericValue(c)) * 10 % 97;
 		}
-		int result2=98 - (result1 * 10 % 97);
-		String checksum=right("0"+result2, 2);
+		result=98-(result * 10 % 97);
+		String checksum=right("0"+result, 2);
 
 		return id7 + checksum;
 
