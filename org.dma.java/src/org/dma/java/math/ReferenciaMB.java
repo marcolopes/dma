@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public class ReferenciaMB {
 
-	public static String right(String string, int lenght) {
+	private static String right(String string, int lenght) {
 		return string.length()<lenght ?
 				string : string.substring(string.length()-lenght);
 	}
