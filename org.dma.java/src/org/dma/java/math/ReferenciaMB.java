@@ -34,51 +34,15 @@ public class ReferenciaMB {
 		System.out.println("id: "+id7);
 		System.out.println("valor: "+valor8);
 
-		/*
-		 * Concatenar numa string:
-		 * os 5 digitos da entidade +
-		 * os 7 digitos do ID +
-		 * os 8 digitos do valor
-		 * (sem separador decimal e colocando zeros a esquerda para dar 8 caracteres)
-		 * No nosso exemplo ficaria: 11604999123400002586
-		 */
 		String control=entidade + id7 + valor8;
 		System.out.println("control: "+control);
 
-		/*
-		 * Fazer a seguinte operacao:
-		 * Resultado1=51 x 1º digito + 73 x 2º digito, etc
-		 * No nosso exemplo:
-		 * Resultado1 = 51x1 + 73x1 + 17x6 + 89x0 + 38x4 + 62x9 +
-		 * 45x9 + 53x9 + 15x1 + 50x2 + 5x3 + 49x4 + 34x0 + 81x0 +
-		 * 76x0 + 27x0 + 90x2 + 9x5 + 30x8 + 3x6 = 2627
-		 */
-		int i=0;
 		int result1=0;
-		final int[] multiplier={
-			51, 73, 17, 89, 38, 62, 45, 53, 15, 50,
-			 5, 49, 34, 81, 76, 27, 90,  9, 30,  3};
 		for(char c: control.toCharArray()){
-			result1+=Character.getNumericValue(c) * multiplier[i];
-			i++;
+			result1=(result1 + Character.getNumericValue(c)) * 10 % 97;
 		}
-		System.out.println("result 1: "+result1);
-
-		/*
-		 * Fazer a seguinte operacao:
-		 * Resultado final = 98 - (resultado1 mod 97) sendo mod o resto da divisao inteira
-		 * No nosso exemplo:
-		 * resultado final = 98 – (2627 mod 97) = 98 – 8 = 90
-		 */
-		int result2=98 - (result1 % 97);
-		System.out.println("result 2: "+result2);
-
-		/*
-		 * caso o digito de controlo so tivesse um algarismo (5 por exemplo) tera
-		 * que formata-lo para 2 algarismos colocando 0 (zero) a esquerda (05 por exemplo).
-		 */
+		int result2=98 - (result1 * 10 % 97);
 		String checksum=right("0"+result2, 2);
-		System.out.println("checksum: "+checksum);
 
 		return id7 + checksum;
 
