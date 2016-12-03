@@ -6,14 +6,14 @@
 package org.dma.java.math;
 
 import java.math.BigDecimal;
+import java.security.InvalidParameterException;
 
 import org.dma.java.util.StringUtils;
 
 public class ReferenciaMB {
 
-	private final String entidade;
-	private final String id;
-	private final BigDecimal valor;
+	public final String entidade;
+	public final String id7;
 
 	/**
 	 * IF THEN PAY
@@ -36,51 +36,44 @@ public class ReferenciaMB {
 	 * se a informacao esta correta. Se o digito de controlo so tiver um algarismo
 	 * tera que formata-lo para 2 algarismos colocando 0 (zero) a esquerda.
 	 *<p>
-	 * No exemplo de cima:<br>
-	 * 11604 e o codigo da entidade;<br>
-	 * 999 e o codigo da sub-entidade;<br>
-	 * 1234 e o ID - nº do documento/encomenda ou o nº do v/cliente;<br>
-	 * 90 sao os digitos de controlo;<br>
-	 * 25,86 € e o valor a pagar.
-	 *<p>
 	 * @param entidade - os 5 digitos da entidade (fornecida pela IF THEN)
 	 * @param subentidade - os 3 digitos da subentidade (fornecida pela IF THEN)
-	 * @param id - referencia do pagamento (serao usados os 4 digitos da direita)
-	 * @param valor - valor a pagar (maximo 8 digitos ou 9 com casa decimal)
+	 * @param id4 - referencia do pagamento (serao usados os 4 digitos da direita)
 	 */
-	public ReferenciaMB(String entidade, String subentidade, String id, BigDecimal valor) {
-		this(entidade, subentidade + StringUtils.right("0000"+id, 4), valor);
+	public ReferenciaMB(String entidade, String subentidade, String id4) {
+		this(entidade, StringUtils.right("???"+subentidade, 3) +
+				StringUtils.right("0000"+id4, 4));
 	}
 
 	/**
 	 * SIBS
 	 *
 	 * @param entidade - os 5 digitos da entidade (fornecida pelo provider)
-	 * @param id - referencia do pagamento (serao usados os 7 digitos da direita)
-	 * @param valor - valor a pagar (maximo 8 digitos ou 9 com casa decimal)
+	 * @param id7 - referencia do pagamento (serao usados os 7 digitos da direita)
 	 */
-	public ReferenciaMB(String entidade, String id, BigDecimal valor) {
+	public ReferenciaMB(String entidade, String id7) {
 		this.entidade=entidade;
-		this.id=StringUtils.right("0000000"+id, 7);
-		this.valor=valor;
+		this.id7=StringUtils.right("0000000"+id7, 7);
 	}
 
 
 	/**
+	 * @param valor - valor a pagar (maximo 8 digitos ou 9 com casa decimal)
 	 * @param formatted - separa a referencia em grupos de 3 digitos
-	 * @return referencia MULTIBANCO
+	 * @return referencia MULTIBANCO (ou 0 caso VALOR > 999 999.99)
+	 * @throws InvalidParameterException caso a ENTIDADE seja invalida
 	 */
-	public String generate(boolean formatted) throws Exception {
+	public String generate(BigDecimal valor, boolean formatted) {
 
-		if (entidade.length()!=5) throw new Exception("entidade "+entidade+" invalida");
-		if (valor.compareTo(new BigDecimal("999999.99"))>0) throw new Exception("valor "+valor+" invalido");
+		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
+		if (valor.compareTo(new BigDecimal("999999.99"))>0) return "0";
 
 		String valor8=StringUtils.right("00000000"+
 				valor.multiply(new BigDecimal("100")).intValueExact(), 8);
-		String control=entidade + id + valor8;
+		String control=entidade + id7 + valor8;
 
 		System.out.println("entidade: "+entidade);
-		System.out.println("id: "+id);
+		System.out.println("id: "+id7);
 		System.out.println("valor: "+valor8);
 		System.out.println("control: "+control);
 
@@ -90,7 +83,7 @@ public class ReferenciaMB {
 		}
 		result=98-(result * 10 % 97);
 		String checksum=StringUtils.right("0"+result, 2);
-		String ref=id + checksum;
+		String ref=id7 + checksum;
 
 		return formatted ?
 				ref.substring(0,3)+" "+
@@ -109,16 +102,16 @@ public class ReferenciaMB {
 		 * 25,86 € e o valor a pagar.
 		 */
 		System.out.println("generate (999123490): "+
-				new ReferenciaMB("11604", "999", "00001234",
-						new BigDecimal("25.86")).generate(false));
+				new ReferenciaMB("11604", "999", "00001234").
+					generate(new BigDecimal("25.86"), false));
 
 		System.out.println("generate (164262863): "+
-				new ReferenciaMB("11202", "164", "2628",
-						new BigDecimal("29914.41")).generate(true));
+				new ReferenciaMB("11202", "164", "2628").
+					generate(new BigDecimal("29914.41"), true));
 
 		System.out.println("generate (?): "+
-				new ReferenciaMB("11202", "164", "2628",
-						new BigDecimal("999999.99")).generate(false));
+				new ReferenciaMB("11202", "164", "2628").
+					generate(new BigDecimal("999999.99"), false));
 
 	}
 
