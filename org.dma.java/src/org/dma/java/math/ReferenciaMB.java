@@ -66,7 +66,11 @@ public class ReferenciaMB {
 	}
 
 
-	public String generate() throws Exception {
+	/**
+	 * @param formatted - separa a referencia em grupos de 3 digitos
+	 * @return referencia MULTIBANCO
+	 */
+	public String generate(boolean formatted) throws Exception {
 
 		if (entidade.length()!=5) throw new Exception("entidade "+entidade+" invalida");
 		if (valor.compareTo(new BigDecimal("999999.99"))>0) throw new Exception("valor "+valor+" invalido");
@@ -87,7 +91,10 @@ public class ReferenciaMB {
 		result=98-(result * 10 % 97);
 		String checksum=StringUtils.right("0"+result, 2);
 
-		return id + checksum;
+		return formatted ?
+				id.substring(0,3)+" "+
+				id.substring(3,6)+" "+
+				id.substring(6,7) + checksum : id + checksum;
 
 	}
 
@@ -101,13 +108,16 @@ public class ReferenciaMB {
 		 * 25,86 € e o valor a pagar.
 		 */
 		System.out.println("generate (999123490): "+
-				new ReferenciaMB("11604", "999", "00001234", new BigDecimal("25.86")).generate());
+				new ReferenciaMB("11604", "999", "00001234",
+						new BigDecimal("25.86")).generate(false));
 
 		System.out.println("generate (164262863): "+
-				new ReferenciaMB("11202", "164", "2628", new BigDecimal("29914.41")).generate());
+				new ReferenciaMB("11202", "164", "2628",
+						new BigDecimal("29914.41")).generate(true));
 
 		System.out.println("generate (?): "+
-				new ReferenciaMB("11202", "164", "2628", new BigDecimal("999999.99")).generate());
+				new ReferenciaMB("11202", "164", "2628",
+						new BigDecimal("999999.99")).generate(false));
 
 	}
 
