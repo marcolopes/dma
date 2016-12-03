@@ -12,6 +12,8 @@ import org.dma.java.util.StringUtils;
 
 public class ReferenciaMB {
 
+	public final static BigDecimal VALOR_MAX = new BigDecimal("999999.99");
+
 	public final String entidade;
 	public final String id7;
 
@@ -65,7 +67,7 @@ public class ReferenciaMB {
 	public String plain(BigDecimal valor) {
 
 		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
-		if (valor.compareTo(new BigDecimal("999999.99"))>0) return "0";
+		if (valor.compareTo(VALOR_MAX)>0) return "0";
 
 		String valor8=StringUtils.right("00000000"+
 				valor.multiply(new BigDecimal("100")).intValueExact(), 8);
