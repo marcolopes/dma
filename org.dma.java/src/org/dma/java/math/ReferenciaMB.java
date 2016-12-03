@@ -26,7 +26,7 @@ public class ReferenciaMB {
 	 * Este codigo e atribuido pela IFTHEN.
 	 *<p>
 	 * DDDD: quatro digitos que identificam o nº do documento/encomenda a pagar
-	 * ou o nºdo v/ cliente (conforme prefiram associar o pagamento a um documento
+	 * ou o nº do v/cliente (conforme prefiram associar o pagamento a um documento
 	 * ou a um cliente). Este ID tera que ter obrigatoriamente 4 digitos, pelo que
 	 * caso o nº do documento/encomenda ou o nº do cliente tenha mais que 4 digitos
 	 * tera que utilizar apenas os 4 mais a direita, caso tenha menos de 4 digitos
@@ -39,7 +39,7 @@ public class ReferenciaMB {
 	 * No exemplo de cima:<br>
 	 * 11604 e o codigo da entidade;<br>
 	 * 999 e o codigo da sub-entidade;<br>
-	 * 1234 e o ID - nº do documento/encomenda ou o numero do v/cliente;<br>
+	 * 1234 e o ID - nº do documento/encomenda ou o nº do v/cliente;<br>
 	 * 90 sao os digitos de controlo;<br>
 	 * 25,86 € e o valor a pagar.
 	 *<p>
@@ -105,7 +105,7 @@ public class ReferenciaMB {
 		/*
 		 * 11604 e o codigo da entidade;
 		 * 999 e o codigo da sub-entidade;
-		 * 1234 e o ID - nº do documento/encomenda a ser pago ou o numero do v/ cliente;
+		 * 1234 e o ID - nº do documento/encomenda ou o nº do v/cliente;
 		 * 25,86 € e o valor a pagar.
 		 */
 		System.out.println("generate (999123490): "+
