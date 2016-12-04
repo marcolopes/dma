@@ -78,7 +78,8 @@ public class ReferenciaMB {
 	 * @param id - ID de pagamento (serao usados os digitos da direita)
 	 * @param valor - valor a pagar (maximo = {@link #VALOR_MAX})
 	 *
-	 * @return referencia MULTIBANCO (ou "0" caso VALOR > maximo)
+	 * @return referencia MULTIBANCO formatada em grupos de 3 digitos
+	 * (ou "0" caso VALOR > maximo)
 	 *
 	 * @throws InvalidParameterException caso a ENTIDADE seja invalida
 	 * @throws ArithmeticException caso a parte fraccionaria do VALOR > 99
@@ -119,7 +120,8 @@ public class ReferenciaMB {
 	 * @param valor - valor a pagar (maximo = {@link #VALOR_MAX})
 	 * sem espacos e com separador decimal (ex: "1234567.89")
 	 *
-	 * @return referencia MULTIBANCO (ou "0" caso VALOR > maximo)
+	 * @return referencia MULTIBANCO formatada em grupos de 3 digitos
+	 * (ou "0" caso VALOR > maximo)
 	 *
 	 * @throws NumberFormatException caso o valor nao possa ser
 	 * representado por {@link BigDecimal}
@@ -128,7 +130,6 @@ public class ReferenciaMB {
 	 *
 	 * @see ReferenciaMB#generate(String, BigDecimal)
 	 */
-	@Deprecated
 	public String generate(String id, String valor) {
 
 		return generate(id, new BigDecimal(valor));
