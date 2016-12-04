@@ -21,59 +21,60 @@ public class ReferenciaMB {
 	/**
 	 * SIBS
 	 *<p>
-	 * A referencia e composta sempre por 9 digitos (em grupos de 3 facilita
-	 * a visualizacao) e no nosso sistema e composta do seguinte modo:
+	 * A REFERENCIA MULTIBANCO e composta sempre por 9 digitos, e por norma
+	 * deve ser separada em grupos de 3 digitos para facilitar a visualizacao.
+	 * (ex: 123 456 789)
+	 *<p>
+	 * O formato da REFERENCIA MULTIBANCO no nosso sistema e' o seguinte:
 	 * DDDDDDDCC
 	 *<p>
-	 * DDDDDDD: ID - 7 digitos que identificam o nº do documento/encomenda a pagar
-	 * ou o nº do v/cliente (conforme prefiram associar o pagamento a um documento
-	 * ou a um cliente). Este ID tera que ter obrigatoriamente 7 digitos, pelo que
-	 * caso o nº do documento/encomenda ou o nº do cliente tenha mais que 7 digitos
-	 * ira utilizar apenas os 7 mais a direita.
+	 * DDDDDDD: ID de PAGAMENTO - 7 digitos que identificam o nº do documento
+	 * a pagar ou o nº do v/cliente (conforme prefiram associar o pagamento a
+	 * um documento ou a um cliente). Caso o ID tenha mais que 7 digitos irao
+	 * ser utilizados apenas os 7 mais a direita.
 	 *<p>
-	 * CC: 2 digitos de controlo (check-digits). Serve para o terminal validar
-	 * se a informacao esta correta. Se o digito de controlo so tiver um algarismo
-	 * tera que formata-lo para 2 algarismos colocando 0 (zero) a esquerda.
+	 * CC: CHECKSUM - 2 digitos de controlo que servem para o terminal validar
+	 * se a informacao esta' correta.
 	 *<p>
 	 * @param entidade - os 5 digitos da entidade (fornecida pelo provider)
 	 */
 	public ReferenciaMB(String entidade) {
-		this(entidade, null);
+		this(entidade, "");
 	}
 
 	/**
 	 * IF THEN PAY
 	 *<p>
-	 * A referencia e composta sempre por 9 digitos (em grupos de 3 facilita
-	 * a visualizacao) e no nosso sistema e composta do seguinte modo:
+	 * A REFERENCIA MULTIBANCO e composta sempre por 9 digitos, e por norma
+	 * deve ser separada em grupos de 3 digitos para facilitar a visualizacao.
+	 * (ex: 123 456 789)
+	 *<p>
+	 * O formato da REFERENCIA MULTIBANCO no nosso sistema e' o seguinte:
 	 * SSSDDDDCC
 	 *<p>
-	 * SSS: 3 digitos que identificam a sub-entidade (o vendedor).
-	 * Este codigo e atribuido pela IFTHEN. Neste caso o ID de pagamento a
-	 * fornecer na geracao da REFERENCIA estara limitado a 4 digitos.
+	 * SSS: SUB-ENTIDADE - 3 digitos que identificam a sub-entidade (o vendedor).
+	 * Este codigo e' atribuido pela IFTHEN e ira' ocupar os PRIMEIROS DIGITOS
+	 * da ID de PAGAMENTO, que de outra forma teria o tamanho de 7 digitos.
 	 *<p>
-	 * DDDD: ID - 4 digitos que identificam o nº do documento/encomenda a pagar
-	 * ou o nº do v/cliente (conforme prefiram associar o pagamento a um documento
-	 * ou a um cliente). Este ID tera que ter obrigatoriamente 4 digitos, pelo que
-	 * caso o nº do documento/encomenda ou o nº do cliente tenha mais que 4 digitos
-	 * ira utilizar apenas os 4 mais a direita.
+	 * DDDD: ID de PAGAMENTO - 4 digitos que identificam o nº do documento
+	 * a pagar ou o nº do v/cliente (conforme prefiram associar o pagamento
+	 * a um documento ou a um cliente). Caso o ID tenha mais que 4 digitos
+	 * irao ser utilizados apenas os 4 mais a direita.
 	 *<p>
-	 * CC: 2 digitos de controlo (check-digits). Serve para o terminal validar
-	 * se a informacao esta correta. Se o digito de controlo so tiver um algarismo
-	 * tera que formata-lo para 2 algarismos colocando 0 (zero) a esquerda.
+	 * CC: CHECKSUM - 2 digitos de controlo que servem para o terminal validar
+	 * se a informacao esta' correta.
 	 *<p>
 	 * @param entidade - os 5 digitos da entidade (fornecida pela IF THEN)
 	 * @param subentidade - os 3 digitos da subentidade (fornecida pela IF THEN)
 	 */
 	public ReferenciaMB(String entidade, String subentidade) {
 		this.entidade=entidade;
-		this.subentidade=subentidade==null ?
-				null : StringUtils.right("???"+subentidade, 3);
+		this.subentidade=subentidade;
 	}
 
 
 	/**
-	 * @param id - referencia do pagamento (serao usados os digitos da direita)
+	 * @param id - ID de pagamento (serao usados os digitos da direita)
 	 * @param valor - valor a pagar (maximo 8 digitos ou 9 com casa decimal)
 	 * @return referencia MULTIBANCO (ou 0 caso VALOR > 999 999.99)
 	 * @throws InvalidParameterException caso a ENTIDADE seja invalida
@@ -83,8 +84,7 @@ public class ReferenciaMB {
 		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
 		if (valor.compareTo(VALOR_MAX)>0) return "0";
 
-		String id7=subentidade==null ? StringUtils.right("0000000"+id, 7) :
-				subentidade + StringUtils.right("0000"+id, 4);
+		String id7=subentidade + StringUtils.right("0000000"+id, 7-subentidade.length());
 		String valor8=StringUtils.right("00000000"+
 				valor.multiply(new BigDecimal("100")).intValueExact(), 8);
 		String control=entidade + id7 + valor8;
@@ -108,7 +108,7 @@ public class ReferenciaMB {
 
 
 	/**
-	 * @param id - referencia do pagamento (maximo consoante o provider)
+	 * @param id - ID de pagamento (serao usados os digitos da direita)
 	 * @param valor - valor a pagar (maximo 8 digitos ou 9 com casa decimal)
 	 * @return referencia MULTIBANCO em grupos de 3 digitos
 	 * (ou 0 caso VALOR > 999 999.99)
