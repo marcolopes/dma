@@ -12,9 +12,8 @@ import org.dma.java.util.StringUtils;
 
 public class ReferenciaMB {
 
-	/** Valor maximo a pagar = 999 999.99 */
+	/** Valor maximo a pagar = 999999.99 */
 	public final static BigDecimal VALOR_MAX = new BigDecimal("999999.99");
-	public static final BigDecimal BD100 = BigDecimal.valueOf(100);
 
 	public final String entidade;
 	public final String subentidade;
@@ -37,7 +36,7 @@ public class ReferenciaMB {
 	 *<p>
 	 * CC: CHECKSUM - 2 digitos de controlo que servem para o terminal validar
 	 * se a informacao esta' correta.
-	 *<p>
+	 *
 	 * @param entidade - os 5 digitos da entidade (fornecida pelo provider)
 	 */
 	public ReferenciaMB(String entidade) {
@@ -65,7 +64,7 @@ public class ReferenciaMB {
 	 *<p>
 	 * CC: CHECKSUM - 2 digitos de controlo que servem para o terminal validar
 	 * se a informacao esta' correta.
-	 *<p>
+	 *
 	 * @param entidade - os 5 digitos da entidade (fornecida pela IF THEN)
 	 * @param subentidade - os 3 digitos da subentidade (fornecida pela IF THEN)
 	 */
@@ -78,7 +77,9 @@ public class ReferenciaMB {
 	/**
 	 * @param id - ID de pagamento (serao usados os digitos da direita)
 	 * @param valor - valor a pagar (maximo = {@link #VALOR_MAX})
+	 *
 	 * @return referencia MULTIBANCO (ou "0" caso VALOR > maximo)
+	 *
 	 * @throws InvalidParameterException caso a ENTIDADE seja invalida
 	 * @throws ArithmeticException caso a parte fraccionaria do VALOR > 99
 	 */
@@ -88,7 +89,7 @@ public class ReferenciaMB {
 		if (valor.compareTo(VALOR_MAX)>0) return "0";
 
 		String id7=subentidade + StringUtils.right("0000000"+id, 7-subentidade.length());
-		String valor8=StringUtils.right("00000000"+valor.multiply(BD100).intValueExact(), 8);
+		String valor8=StringUtils.right("00000000"+valor.movePointRight(2).intValueExact(), 8);
 		String control=entidade + id7 + valor8;
 
 		System.out.println("entidade: "+entidade);
@@ -112,10 +113,22 @@ public class ReferenciaMB {
 
 
 	/**
+	 * Metodo auxiliar para suporte de VALORES ALFANUMERICOS.
+	 *
 	 * @param id - ID de pagamento (serao usados os digitos da direita)
-	 * @param valor - valor a pagar com PONTO decimal (ex: "123456.99")
+	 * @param valor - valor a pagar (maximo = {@link #VALOR_MAX})
+	 * sem espacos e com separador decimal (ex: "1234567.89")
+	 *
+	 * @return referencia MULTIBANCO (ou "0" caso VALOR > maximo)
+	 *
+	 * @throws NumberFormatException caso o valor nao possa ser
+	 * representado por {@link BigDecimal}
+	 * @throws InvalidParameterException caso a ENTIDADE seja invalida
+	 * @throws ArithmeticException caso a parte fraccionaria do VALOR > 99
+	 *
 	 * @see ReferenciaMB#generate(String, BigDecimal)
 	 */
+	@Deprecated
 	public String generate(String id, String valor) {
 
 		return generate(id, new BigDecimal(valor));
@@ -132,13 +145,13 @@ public class ReferenciaMB {
 		 * 25,86 € e o valor a pagar.
 		 */
 		System.out.println("generate (999 123 490): "+new ReferenciaMB("11604", "999").
-				generate("00001234", new BigDecimal("25.86")));
+				generate("00001234", "25.86"));
 
 		System.out.println("generate (999 123 490): "+new ReferenciaMB("11604").
-				generate("9991234", new BigDecimal("25.86")));
+				generate("9991234", "25.86"));
 
 		System.out.println("generate (164 262 863): "+new ReferenciaMB("11202", "164").
-				generate("2628", "29914.41"));
+				generate("2628", new BigDecimal("29914.41")));
 
 	}
 
