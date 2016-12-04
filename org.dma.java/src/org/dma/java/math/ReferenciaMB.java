@@ -12,6 +12,7 @@ import org.dma.java.util.StringUtils;
 
 public class ReferenciaMB {
 
+	/** Valor maximo a pagar = 999 999.99 */
 	public final static BigDecimal VALOR_MAX = new BigDecimal("999999.99");
 
 	public final String entidade;
@@ -75,8 +76,8 @@ public class ReferenciaMB {
 
 	/**
 	 * @param id - ID de pagamento (serao usados os digitos da direita)
-	 * @param valor - valor a pagar (maximo = 999 999.99)
-	 * @return referencia MULTIBANCO (ou 0 caso VALOR > 999 999.99)
+	 * @param valor - valor a pagar (maximo = {@link #VALOR_MAX})
+	 * @return referencia MULTIBANCO (ou "0" caso VALOR > maximo)
 	 * @throws InvalidParameterException caso a ENTIDADE seja invalida
 	 * @throws ArithmeticException caso a parte fraccionaria do VALOR > 99
 	 */
@@ -86,8 +87,7 @@ public class ReferenciaMB {
 		if (valor.compareTo(VALOR_MAX)>0) return "0";
 
 		String id7=subentidade + StringUtils.right("0000000"+id, 7-subentidade.length());
-		String valor8=StringUtils.right("00000000"+
-				valor.multiply(new BigDecimal("100")).intValueExact(), 8);
+		String valor8=StringUtils.right("00000000"+valor.movePointRight(2).intValueExact(), 8);
 		String control=entidade + id7 + valor8;
 
 		System.out.println("entidade: "+entidade);
@@ -110,6 +110,18 @@ public class ReferenciaMB {
 	}
 
 
+	/**
+	 * @param id - ID de pagamento (serao usados os digitos da direita)
+	 * @param valor - valor a pagar com PONTO decimal (ex: "123456.99")
+	 * @see ReferenciaMB#generate(String, BigDecimal)
+	 */
+	public String generate(String id, String valor) {
+
+		return generate(id, new BigDecimal(valor));
+
+	}
+
+
 	public static void main(String[] argvs) throws Exception {
 
 		/*
@@ -125,7 +137,7 @@ public class ReferenciaMB {
 				generate("9991234", new BigDecimal("25.86")));
 
 		System.out.println("generate (164 262 863): "+new ReferenciaMB("11202", "164").
-				generate("2628", new BigDecimal("29914.41")));
+				generate("2628", "29914.41"));
 
 	}
 

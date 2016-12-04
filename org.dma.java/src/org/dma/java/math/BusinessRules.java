@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 
 public class BusinessRules {
 
-	public static final BigDecimal BD100=BigDecimal.valueOf(100);
+	public static final BigDecimal BD100 = BigDecimal.valueOf(100);
 
 	/**
 	 * Proportional value<br>
