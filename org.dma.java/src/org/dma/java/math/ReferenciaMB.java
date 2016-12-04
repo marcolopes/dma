@@ -12,7 +12,7 @@ import org.dma.java.util.StringUtils;
 
 public class ReferenciaMB {
 
-	/** Valor maximo a pagar = 999999.99 */
+	/** Maximo VALOR a pagar = 999999.99 */
 	public final static BigDecimal VALOR_MAX = new BigDecimal("999999.99");
 
 	public final String entidade;
@@ -76,18 +76,19 @@ public class ReferenciaMB {
 
 	/**
 	 * @param id - ID de pagamento (serao usados os digitos da direita)
-	 * @param valor - valor a pagar (maximo = {@link #VALOR_MAX})
+	 * @param valor - VALOR a pagar (maximo = {@link #VALOR_MAX})
 	 *
 	 * @return referencia MULTIBANCO formatada em grupos de 3 digitos
-	 * (ou "0" caso VALOR > maximo)
 	 *
-	 * @throws InvalidParameterException caso a ENTIDADE seja invalida
-	 * @throws ArithmeticException caso a parte fraccionaria do VALOR > 99
+	 * @throws InvalidParameterException caso a ENTIDADE nao tenha 5 digitos
+	 * @throws InvalidParameterException caso o VALOR a pagar > {@link #VALOR_MAX}
+	 * @throws ArithmeticException caso a parte fraccionaria do VALOR a pagar
+	 * necessite de mais de 2 digitos
 	 */
 	public String generate(String id, BigDecimal valor) {
 
 		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
-		if (valor.compareTo(VALOR_MAX)>0) return "0";
+		if (valor.compareTo(VALOR_MAX)>0) throw new InvalidParameterException("Valor "+valor+" invalido");
 
 		String id7=subentidade + StringUtils.right("0000000"+id, 7-subentidade.length());
 		String valor8=StringUtils.right("00000000"+valor.movePointRight(2).intValueExact(), 8);
@@ -115,19 +116,6 @@ public class ReferenciaMB {
 
 	/**
 	 * Metodo auxiliar para suporte de VALORES ALFANUMERICOS.
-	 *
-	 * @param id - ID de pagamento (serao usados os digitos da direita)
-	 * @param valor - valor a pagar (maximo = {@link #VALOR_MAX})
-	 * sem espacos e com separador decimal (ex: "1234567.89")
-	 *
-	 * @return referencia MULTIBANCO formatada em grupos de 3 digitos
-	 * (ou "0" caso VALOR > maximo)
-	 *
-	 * @throws NumberFormatException caso o valor nao possa ser
-	 * representado por {@link BigDecimal}
-	 * @throws InvalidParameterException caso a ENTIDADE seja invalida
-	 * @throws ArithmeticException caso a parte fraccionaria do VALOR > 99
-	 *
 	 * @see ReferenciaMB#generate(String, BigDecimal)
 	 */
 	public String generate(String id, String valor) {
