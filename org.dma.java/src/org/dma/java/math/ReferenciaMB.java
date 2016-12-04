@@ -14,6 +14,7 @@ public class ReferenciaMB {
 
 	/** Valor maximo a pagar = 999 999.99 */
 	public final static BigDecimal VALOR_MAX = new BigDecimal("999999.99");
+	public static final BigDecimal BD100 = BigDecimal.valueOf(100);
 
 	public final String entidade;
 	public final String subentidade;
@@ -87,7 +88,7 @@ public class ReferenciaMB {
 		if (valor.compareTo(VALOR_MAX)>0) return "0";
 
 		String id7=subentidade + StringUtils.right("0000000"+id, 7-subentidade.length());
-		String valor8=StringUtils.right("00000000"+valor.movePointRight(2).intValueExact(), 8);
+		String valor8=StringUtils.right("00000000"+valor.multiply(BD100).intValueExact(), 8);
 		String control=entidade + id7 + valor8;
 
 		System.out.println("entidade: "+entidade);
