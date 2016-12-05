@@ -175,9 +175,9 @@ public class ReferenciaMB {
 		String checksum=checksum(id7, valor);
 		String ref9=id7 + checksum;
 
-		System.out.println("id: "+id7);
-		System.out.println("checksum: "+checksum);
+		System.out.println("id: "+id);
 		System.out.println("id7: "+id7);
+		System.out.println("checksum: "+checksum);
 
 		return ref9.substring(0,3)+" "+
 				ref9.substring(3,6)+" "+
@@ -188,24 +188,29 @@ public class ReferenciaMB {
 
 	public static void main(String[] argvs) throws Exception {
 
-		/*
-		 * 11604 e o codigo da entidade;
-		 * 999 e o codigo da sub-entidade;
-		 * 1234 e o ID - nº do documento/encomenda ou o nº do v/cliente;
-		 * 25,86 € e o valor a pagar.
-		 */
-		System.out.println("generate (999 123 490): "+new ReferenciaMB("11604", "999").
-				generate("00001234", new BigDecimal("25.86")));
+		//NOVA referencia COM sub-entidade
+		System.out.println("generate (164 262 863): "+new ReferenciaMB("11202", "164").
+				generate("***2628", new BigDecimal("29914.41")));
+		System.out.println("isValid (164 262 863): "+new ReferenciaMB("11202", "164").
+				isValid("164 262 863", new BigDecimal("29914.41")));
 
-		System.out.println("isValid (999 123 490): "+new ReferenciaMB("11604", "999").
+		//NOVA referencia SEM sub-entidade
+		System.out.println("generate (999 123 490): "+new ReferenciaMB("11604").
+				generate("***9991234", new BigDecimal("25.86")));
+		System.out.println("isValid (999 123 490): "+new ReferenciaMB("11604").
 				isValid("999 123 490", new BigDecimal("25.86")));
 
-		System.out.println("generate (999 123 490): "+new ReferenciaMB("11604").
-				generate("9991234", new BigDecimal("25.86")));
+		//referencia EXISTENTE (SEM data limite de pagamento)
+		System.out.println("isValid (784 175 012): "+new ReferenciaMB("10297").
+				isValid("784 175 012", new BigDecimal("3.11")));
 
-		System.out.println("generate (164 262 863): "+new ReferenciaMB("11202", "164").
-				generate("2628", new BigDecimal("29914.41")));
+		//referencia EXISTENTE (COM data limite de pagamento)
+		System.out.println("isValid (189 405 538): "+new ReferenciaMB("21303").
+				isValid("189 405 538", new BigDecimal("19.95")));
 
+		//referencia EXISTENTE (COM data limite de pagamento)
+		System.out.println("isValid (009 721 777): "+new ReferenciaMB("20183").
+				isValid("009 721 777", new BigDecimal("104.04")));
 
 	}
 
