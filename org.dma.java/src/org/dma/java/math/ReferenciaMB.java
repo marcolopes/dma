@@ -74,29 +74,12 @@ public class ReferenciaMB {
 	}
 
 
-	/**
-	 * @param id - ID de pagamento (serao usados os digitos da direita)
-	 * @param valor - VALOR a pagar (maximo = {@link #VALOR_MAX})
-	 *
-	 * @return referencia MULTIBANCO formatada em grupos de 3 digitos
-	 *
-	 * @throws InvalidParameterException caso a ENTIDADE nao tenha 5 digitos
-	 * @throws InvalidParameterException caso o VALOR a pagar > {@link #VALOR_MAX}
-	 * @throws ArithmeticException caso a parte fraccionaria do VALOR a pagar
-	 * necessite de mais de 2 digitos
-	 */
-	public String generate(String id, BigDecimal valor) {
+	private String checksum(String id7, BigDecimal valor) {
 
-		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
-		if (valor.compareTo(VALOR_MAX)>0) throw new InvalidParameterException("Valor "+valor+" invalido");
-
-		String id7=subentidade + StringUtils.right("0000000"+id, 7-subentidade.length());
 		String valor8=StringUtils.right("00000000"+valor.movePointRight(2).intValueExact(), 8);
-		String control=entidade + id7 + valor8;
+		System.out.println("valor8: "+valor8);
 
-		System.out.println("entidade: "+entidade);
-		System.out.println("id: "+id7);
-		System.out.println("valor: "+valor8);
+		String control=entidade + id7 + valor8;
 		System.out.println("control: "+control);
 
 		int result=0;
@@ -104,23 +87,98 @@ public class ReferenciaMB {
 			result=(result + Character.getNumericValue(c)) * 10 % 97;
 		}
 		result=98-(result * 10 % 97);
-		String checksum=StringUtils.right("0"+result, 2);
-		String ref=id7 + checksum;
 
-		return ref.substring(0,3)+" "+
-				ref.substring(3,6)+" "+
-				ref.substring(6,9);
+		return StringUtils.right("0"+result, 2);
 
 	}
 
 
 	/**
-	 * Metodo auxiliar para suporte de VALORES ALFANUMERICOS.
-	 * @see ReferenciaMB#generate(String, BigDecimal)
+	 * @param valor - VALOR a pagar
+	 *
+	 * @return true caso o VALOR a pagar seja valido
+	 * <p>
+	 * O VALOR a pagar e' considerado valido quando:<br>
+	 * - Nao ultrapasse o valor maximo permitido: {@link #VALOR_MAX}<br>
+	 * - A parte fraccionaria nao necessite de mais de 2 digitos<br>
 	 */
-	public String generate(String id, String valor) {
+	public boolean isValid(BigDecimal valor) {
 
-		return generate(id, new BigDecimal(valor));
+		if (valor.compareTo(VALOR_MAX)<=0) try{
+			valor.movePointRight(2).intValueExact();
+
+		}catch(Exception e){
+			return false;
+		}
+
+		return true;
+
+	}
+
+
+	/**
+	 * @param ref - REFERENCIA MULTIBANCO (pode conter espacos)
+	 * @param valor - VALOR a pagar
+	 *
+	 * @return true caso a REFERENCIA MULTIBANCO seja valida
+	 *
+	 * @throws InvalidParameterException caso a ENTIDADE nao tenha 5 digitos
+	 * @throws InvalidParameterException caso o VALOR a pagar seja invalido
+	 */
+	public boolean isValid(String ref, BigDecimal valor) {
+
+		System.out.println("entidade: "+entidade);
+		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
+
+		System.out.println("valor: "+valor);
+		if (!isValid(valor)) throw new InvalidParameterException("Valor "+valor+" invalido");
+
+		String ref9=ref.replaceAll(" ", "");
+		System.out.println("ref9: "+ref9);
+
+		String id7=ref9.substring(0, 7);
+		System.out.println("id7: "+id7);
+
+		String checksum=ref9.substring(7, 9);
+		System.out.println("checksum: "+checksum);
+
+		return checksum(id7, valor).equals(checksum);
+
+	}
+
+
+	/**
+	 * @param id - ID de pagamento (serao usados os digitos da direita)
+	 * @param valor - VALOR a pagar (maximo = {@link #VALOR_MAX})
+	 *
+	 * @return REFERENCIA MULTIBANCO formatada em grupos de 3 digitos
+	 * obtida a partir de ID7 + CHECKSUM
+	 *
+	 * @throws InvalidParameterException caso a ENTIDADE nao tenha 5 digitos
+	 * @throws InvalidParameterException caso o VALOR a pagar seja invalido
+	 *
+	 * @see ReferenciaMB#isValid(BigDecimal)
+	 */
+	public String generate(String id, BigDecimal valor) {
+
+		System.out.println("entidade: "+entidade);
+		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
+
+		System.out.println("valor: "+valor);
+		if (!isValid(valor)) throw new InvalidParameterException("Valor "+valor+" invalido");
+
+		String id7=subentidade + StringUtils.right("0000000"+id, 7-subentidade.length());
+		System.out.println("id: "+id7);
+
+		String checksum=checksum(id7, valor);
+		System.out.println("checksum: "+checksum);
+
+		String ref9=id7 + checksum;
+		System.out.println("id7: "+id7);
+
+		return ref9.substring(0,3)+" "+
+				ref9.substring(3,6)+" "+
+				ref9.substring(6,9);
 
 	}
 
@@ -134,13 +192,17 @@ public class ReferenciaMB {
 		 * 25,86 € e o valor a pagar.
 		 */
 		System.out.println("generate (999 123 490): "+new ReferenciaMB("11604", "999").
-				generate("00001234", "25.86"));
+				generate("00001234", new BigDecimal("25.86")));
+
+		System.out.println("isValid (999 123 490): "+new ReferenciaMB("11604", "999").
+				isValid("999 123 490", new BigDecimal("25.86")));
 
 		System.out.println("generate (999 123 490): "+new ReferenciaMB("11604").
-				generate("9991234", "25.86"));
+				generate("9991234", new BigDecimal("25.86")));
 
 		System.out.println("generate (164 262 863): "+new ReferenciaMB("11202", "164").
 				generate("2628", new BigDecimal("29914.41")));
+
 
 	}
 
