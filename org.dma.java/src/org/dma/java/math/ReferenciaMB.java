@@ -8,8 +8,6 @@ package org.dma.java.math;
 import java.math.BigDecimal;
 import java.security.InvalidParameterException;
 
-import org.dma.java.util.StringUtils;
-
 public class ReferenciaMB {
 
 	/** Maximo VALOR a pagar = 999999.99 */
@@ -74,12 +72,19 @@ public class ReferenciaMB {
 	}
 
 
+	public static String right(String string, int lenght) {
+
+		return string.substring(string.length()-lenght);
+
+	}
+
+
 	private String checksum(String id7, BigDecimal valor) {
 
-		String valor8=StringUtils.right("00000000"+valor.movePointRight(2).intValueExact(), 8);
-		System.out.println("valor8: "+valor8);
-
+		String valor8=right("00000000"+valor.movePointRight(2).intValueExact(), 8);
 		String control=entidade + id7 + valor8;
+
+		System.out.println("valor8: "+valor8);
 		System.out.println("control: "+control);
 
 		int result=0;
@@ -88,7 +93,7 @@ public class ReferenciaMB {
 		}
 		result=98-(result * 10 % 97);
 
-		return StringUtils.right("0"+result, 2);
+		return right("0"+result, 2);
 
 	}
 
@@ -128,18 +133,17 @@ public class ReferenciaMB {
 	public boolean isValid(String ref, BigDecimal valor) {
 
 		System.out.println("entidade: "+entidade);
-		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
-
 		System.out.println("valor: "+valor);
+
+		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
 		if (!isValid(valor)) throw new InvalidParameterException("Valor "+valor+" invalido");
 
 		String ref9=ref.replaceAll(" ", "");
-		System.out.println("ref9: "+ref9);
-
 		String id7=ref9.substring(0, 7);
-		System.out.println("id7: "+id7);
-
 		String checksum=ref9.substring(7, 9);
+
+		System.out.println("ref9: "+ref9);
+		System.out.println("id7: "+id7);
 		System.out.println("checksum: "+checksum);
 
 		return checksum(id7, valor).equals(checksum);
@@ -162,18 +166,17 @@ public class ReferenciaMB {
 	public String generate(String id, BigDecimal valor) {
 
 		System.out.println("entidade: "+entidade);
-		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
-
 		System.out.println("valor: "+valor);
+
+		if (entidade.length()!=5) throw new InvalidParameterException("Entidade "+entidade+" invalida");
 		if (!isValid(valor)) throw new InvalidParameterException("Valor "+valor+" invalido");
 
-		String id7=subentidade + StringUtils.right("0000000"+id, 7-subentidade.length());
-		System.out.println("id: "+id7);
-
+		String id7=subentidade + right("0000000"+id, 7-subentidade.length());
 		String checksum=checksum(id7, valor);
-		System.out.println("checksum: "+checksum);
-
 		String ref9=id7 + checksum;
+
+		System.out.println("id: "+id7);
+		System.out.println("checksum: "+checksum);
 		System.out.println("id7: "+id7);
 
 		return ref9.substring(0,3)+" "+
