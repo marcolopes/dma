@@ -188,27 +188,47 @@ public class ReferenciaMB {
 
 	public static void main(String[] argvs) throws Exception {
 
-		//NOVA referencia COM sub-entidade
+		final String SEPARATOR = "------------------------------";
+
+		//GERACAO de NOVA referencia COM sub-entidade
 		System.out.println("generate (164 262 863): "+new ReferenciaMB("11202", "164").
 				generate("***2628", new BigDecimal("29914.41")));
+
+		System.out.println(SEPARATOR);
 		System.out.println("isValid (164 262 863): "+new ReferenciaMB("11202", "164").
 				isValid("164 262 863", new BigDecimal("29914.41")));
 
-		//NOVA referencia SEM sub-entidade
+		//GERACAO de NOVA referencia SEM sub-entidade
+		System.out.println(SEPARATOR);
 		System.out.println("generate (999 123 490): "+new ReferenciaMB("11604").
 				generate("***9991234", new BigDecimal("25.86")));
+
+		System.out.println(SEPARATOR);
 		System.out.println("isValid (999 123 490): "+new ReferenciaMB("11604").
 				isValid("999 123 490", new BigDecimal("25.86")));
 
-		//referencia EXISTENTE (SEM data limite de pagamento)
+		//TESTE de REFERENCIA GERADA
+		System.out.println(SEPARATOR);
+		System.out.println("isValid (112 720 598): "+new ReferenciaMB("11024").
+				isValid("112720598", new BigDecimal("382.66")));
+
+		//TESTE de REFERENCIA GERADA
+		System.out.println(SEPARATOR);
+		System.out.println("isValid (114 150 053): "+new ReferenciaMB("11024").
+				isValid("114150053", new BigDecimal("84.96")));
+
+		//TESTE referencia EXISTENTE (SEM data limite de pagamento)
+		System.out.println(SEPARATOR);
 		System.out.println("isValid (784 175 012): "+new ReferenciaMB("10297").
 				isValid("784 175 012", new BigDecimal("3.11")));
 
-		//referencia EXISTENTE (COM data limite de pagamento)
+		//TESTE referencia EXISTENTE (COM data limite de pagamento)
+		System.out.println(SEPARATOR);
 		System.out.println("isValid (189 405 538): "+new ReferenciaMB("21303").
 				isValid("189 405 538", new BigDecimal("19.95")));
 
-		//referencia EXISTENTE (COM data limite de pagamento)
+		//TESTE referencia EXISTENTE (COM data limite de pagamento)
+		System.out.println(SEPARATOR);
 		System.out.println("isValid (009 721 777): "+new ReferenciaMB("20183").
 				isValid("009 721 777", new BigDecimal("104.04")));
 
