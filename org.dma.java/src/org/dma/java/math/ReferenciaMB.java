@@ -19,6 +19,7 @@ public class ReferenciaMB {
 
 	/**
 	 * SIBS
+	 * LUSOPAY
 	 *<p>
 	 * A REFERENCIA MULTIBANCO e composta sempre por 9 digitos, e por norma
 	 * deve ser separada em grupos de 3 digitos para facilitar a visualizacao.
@@ -32,8 +33,8 @@ public class ReferenciaMB {
 	 * um documento ou a um cliente). Caso o ID tenha mais que 7 digitos irao
 	 * ser utilizados apenas os 7 mais a direita.
 	 *<p>
-	 * CC: CHECKSUM - 2 digitos de controlo que servem para o terminal validar
-	 * se a informacao esta' correta.
+	 * CC: CHECKDIGITS - 2 digitos de controlo que servem para o terminal
+	 * validar se a informacao esta' correta.
 	 *
 	 * @param entidade - os 5 digitos da entidade (fornecida pelo provider)
 	 */
@@ -60,8 +61,8 @@ public class ReferenciaMB {
 	 * a um documento ou a um cliente). Caso o ID tenha mais que 4 digitos
 	 * irao ser utilizados apenas os 4 mais a direita.
 	 *<p>
-	 * CC: CHECKSUM - 2 digitos de controlo que servem para o terminal validar
-	 * se a informacao esta' correta.
+	 * CC: CHECKDIGITS - 2 digitos de controlo que servem para o terminal
+	 * validar se a informacao esta' correta.
 	 *
 	 * @param entidade - os 5 digitos da entidade (fornecida pela IF THEN)
 	 * @param subentidade - os 3 digitos da subentidade (fornecida pela IF THEN)
@@ -79,7 +80,7 @@ public class ReferenciaMB {
 	}
 
 
-	private String checksum(String id7, BigDecimal valor) {
+	private String checkDigits(String id7, BigDecimal valor) {
 
 		String valor8=right("00000000"+valor.movePointRight(2).intValueExact(), 8);
 		String control=entidade + id7 + valor8;
@@ -87,13 +88,13 @@ public class ReferenciaMB {
 		System.out.println("valor8: "+valor8);
 		System.out.println("control: "+control);
 
-		int result=0;
+		int checksum=0;
 		for(char c: control.toCharArray()){
-			result=(result + Character.getNumericValue(c)) * 10 % 97;
+			checksum=(checksum + Character.getNumericValue(c)) * 10 % 97;
 		}
-		result=98-(result * 10 % 97);
+		checksum=98-(checksum * 10 % 97);
 
-		return right("0"+result, 2);
+		return right("0"+checksum, 2);
 
 	}
 
@@ -140,13 +141,13 @@ public class ReferenciaMB {
 
 		String ref9=ref.replaceAll(" ", "");
 		String id7=ref9.substring(0, 7);
-		String checksum=ref9.substring(7, 9);
+		String checkDigits=ref9.substring(7, 9);
 
 		System.out.println("ref9: "+ref9);
 		System.out.println("id7: "+id7);
-		System.out.println("checksum: "+checksum);
+		System.out.println("checkDigits: "+checkDigits);
 
-		return checksum(id7, valor).equals(checksum);
+		return checkDigits(id7, valor).equals(checkDigits);
 
 	}
 
@@ -156,7 +157,7 @@ public class ReferenciaMB {
 	 * @param valor - VALOR a pagar (maximo = {@link #VALOR_MAX})
 	 *
 	 * @return REFERENCIA MULTIBANCO formatada em grupos de 3 digitos
-	 * obtida a partir de ID7 + CHECKSUM
+	 * obtida a partir de ID7 + CHECKDIGITS
 	 *
 	 * @throws InvalidParameterException caso a ENTIDADE nao tenha 5 digitos
 	 * @throws InvalidParameterException caso o VALOR a pagar seja invalido
@@ -172,12 +173,12 @@ public class ReferenciaMB {
 		if (!isValid(valor)) throw new InvalidParameterException("Valor "+valor+" invalido");
 
 		String id7=subentidade + right("0000000"+id, 7-subentidade.length());
-		String checksum=checksum(id7, valor);
-		String ref9=id7 + checksum;
+		String checkDigits=checkDigits(id7, valor);
+		String ref9=id7 + checkDigits;
 
 		System.out.println("id: "+id);
 		System.out.println("id7: "+id7);
-		System.out.println("checksum: "+checksum);
+		System.out.println("checkDigits: "+checkDigits);
 
 		return ref9.substring(0,3)+" "+
 				ref9.substring(3,6)+" "+
