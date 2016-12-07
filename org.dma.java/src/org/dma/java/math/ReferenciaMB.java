@@ -109,10 +109,9 @@ public class ReferenciaMB {
 
 		int checksum=0;
 		for(char c: control.toCharArray()){
-			checksum=(checksum * 10) + Character.getNumericValue(c);
-			if (checksum>999999999) checksum=checksum % 97;
+			checksum=(checksum + Character.getNumericValue(c)) * 10 % 97;
 		}
-		checksum=98-(checksum % 97);
+		checksum=98-(checksum * 10 % 97);
 
 		return right("0"+checksum, 2);
 
