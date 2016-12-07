@@ -18,8 +18,7 @@ public class ReferenciaMB {
 
 
 	/**
-	 * SIBS
-	 * LUSOPAY
+	 * GENERICO (SIBS)
 	 *<p>
 	 * A REFERENCIA MULTIBANCO e composta sempre por 9 digitos, e por norma
 	 * deve ser separada em grupos de 3 digitos para facilitar a visualizacao.
