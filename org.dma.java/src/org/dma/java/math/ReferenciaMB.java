@@ -87,6 +87,19 @@ public class ReferenciaMB {
 		System.out.println("valor8: "+valor8);
 		System.out.println("control: "+control);
 
+		/*
+		int i=0;
+		int checksum=0;
+		final int[] multiplier={
+			51, 73, 17, 89, 38, 62, 45, 53, 15, 50,
+			 5, 49, 34, 81, 76, 27, 90,  9, 30,  3};
+		for(char c: control.toCharArray()){
+			checksum+=Character.getNumericValue(c) * multiplier[i];
+			i++;
+		}
+		checksum=98-(checksum % 97);
+		*/
+
 		int checksum=0;
 		for(char c: control.toCharArray()){
 			checksum=(checksum + Character.getNumericValue(c)) * 10 % 97;
@@ -188,7 +201,7 @@ public class ReferenciaMB {
 
 	public static void main(String[] argvs) throws Exception {
 
-		final String SEPARATOR = "------------------------------";
+		final String SEPARATOR = "-----------------------------------";
 
 		//GERACAO de NOVA referencia COM sub-entidade
 		System.out.println("generate (164 262 863): "+new ReferenciaMB("11202", "164").
