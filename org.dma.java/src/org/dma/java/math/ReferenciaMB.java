@@ -79,6 +79,13 @@ public class ReferenciaMB {
 	}
 
 
+	/**
+	 * @param id7 - ID a processar (primeiros 7 digitos da REFERENCIA)
+	 * @param valor - VALOR a pagar
+	 * @return CHECK DIGITS (2 digitos de controle)
+	 * <p>
+	 * Utiliza o algoritmo ISO 7064 Mod 97,10 check digit
+	 */
 	private String checkDigits(String id7, BigDecimal valor) {
 
 		String valor8=right("00000000"+valor.movePointRight(2).intValueExact(), 8);
@@ -102,9 +109,10 @@ public class ReferenciaMB {
 
 		int checksum=0;
 		for(char c: control.toCharArray()){
-			checksum=(checksum + Character.getNumericValue(c)) * 10 % 97;
+			checksum=(checksum * 10) + Character.getNumericValue(c);
+			if (checksum>999999999) checksum=checksum % 97;
 		}
-		checksum=98-(checksum * 10 % 97);
+		checksum=98-(checksum % 97);
 
 		return right("0"+checksum, 2);
 
@@ -114,7 +122,7 @@ public class ReferenciaMB {
 	/**
 	 * @param valor - VALOR a pagar
 	 *
-	 * @return true caso o VALOR a pagar seja valido
+	 * @return TRUE caso o VALOR a pagar seja valido
 	 * <p>
 	 * O VALOR a pagar e' considerado valido quando:<br>
 	 * - Nao ultrapasse o valor maximo permitido: {@link #VALOR_MAX}<br>
@@ -138,7 +146,7 @@ public class ReferenciaMB {
 	 * @param ref - REFERENCIA MULTIBANCO (pode conter espacos)
 	 * @param valor - VALOR a pagar
 	 *
-	 * @return true caso a REFERENCIA MULTIBANCO seja valida
+	 * @return TRUE caso a REFERENCIA MULTIBANCO seja valida
 	 *
 	 * @throws InvalidParameterException caso a ENTIDADE nao tenha 5 digitos
 	 * @throws InvalidParameterException caso o VALOR a pagar seja invalido
