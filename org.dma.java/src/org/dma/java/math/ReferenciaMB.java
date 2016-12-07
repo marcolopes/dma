@@ -237,17 +237,17 @@ public class ReferenciaMB {
 		System.out.println("isValid (114 150 053): "+new ReferenciaMB("11024").
 				isValid("114150053", new BigDecimal("84.96")));
 
-		//TESTE referencia EXISTENTE (SEM data limite de pagamento)
+		//TESTE referencia EXISTENTE (entidade 1xxxx)
 		System.out.println(SEPARATOR);
 		System.out.println("isValid (784 175 012): "+new ReferenciaMB("10297").
 				isValid("784 175 012", new BigDecimal("3.11")));
 
-		//TESTE referencia EXISTENTE (COM data limite de pagamento)
+		//TESTE referencia EXISTENTE (entidade 2xxxx)
 		System.out.println(SEPARATOR);
 		System.out.println("isValid (189 405 538): "+new ReferenciaMB("21303").
 				isValid("189 405 538", new BigDecimal("19.95")));
 
-		//TESTE referencia EXISTENTE (COM data limite de pagamento)
+		//TESTE referencia EXISTENTE (entidade 2xxxx)
 		System.out.println(SEPARATOR);
 		System.out.println("isValid (009 721 777): "+new ReferenciaMB("20183").
 				isValid("009 721 777", new BigDecimal("104.04")));
