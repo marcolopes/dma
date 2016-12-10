@@ -340,7 +340,7 @@ public class StringUtils {
 
 		StringBuilder result=new StringBuilder(string.length());
 
-		char[] CHARS=string.toCharArray();
+		final char[] CHARS=string.toCharArray();
 		for(int i=0; i<CHARS.length; i++){
 			if ((CHARS[i]>='A' && CHARS[i]<='Z') || (CHARS[i]>='a' && CHARS[i]<='z'))
 				result.append(string.substring(i, i+1));
