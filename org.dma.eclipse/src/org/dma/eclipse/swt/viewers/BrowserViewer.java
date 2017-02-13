@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 
 import org.dma.eclipse.swt.custom.CustomBrowser;
 import org.dma.eclipse.swt.custom.CustomCTabItem;
-import org.dma.eclipse.swt.graphics.SWTImageUtils;
+import org.dma.eclipse.swt.custom.CustomImageDescriptor;
 import org.dma.java.awt.ImageUtils;
 import org.dma.java.util.Debug;
 
@@ -110,13 +110,13 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 			}
 		};
 
-		button_home.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+		button_home.setImageDescriptor(new CustomImageDescriptor(
 				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_home.png", iconSize)));
-		button_stop.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+		button_stop.setImageDescriptor(new CustomImageDescriptor(
 				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_stop.png", iconSize)));
-		button_back.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+		button_back.setImageDescriptor(new CustomImageDescriptor(
 				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_back.png", iconSize)));
-		button_forward.setImageDescriptor(SWTImageUtils.getImageDescriptor(
+		button_forward.setImageDescriptor(new CustomImageDescriptor(
 				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_forward.png", iconSize)));
 
 		//toolbar

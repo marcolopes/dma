@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -107,15 +107,6 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 		//avoid o.equals
 		for (int i=0; i<size(); i++){
 			if (get(i).equals(o)) return i;
-		}
-		return -1;
-	}
-
-
-	public int indexOf(Collection<?> col) {
-		for(Object o: col){
-			int index=indexOf(o);
-			if (index!=-1) return index;
 		}
 		return -1;
 	}

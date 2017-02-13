@@ -85,22 +85,22 @@ public final class VersionNumber {
 		return toString().hashCode();
 	}
 
-	public boolean equals(VersionNumber version) {
-		return major==version.major &&
-				minor==version.minor &&
-				macro==version.macro &&
-				build==version.build;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof VersionNumber)
+			return equals((VersionNumber)obj);
+		return equals(obj.toString());
 	}
 
 	public boolean equals(String version) {
 		return equals(new VersionNumber(version));
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof VersionNumber)
-			return equals((VersionNumber)obj);
-		return equals(obj.toString());
+	public boolean equals(VersionNumber version) {
+		return major==version.major &&
+				minor==version.minor &&
+				macro==version.macro &&
+				build==version.build;
 	}
 
 

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.dma.eclipse.swt.custom.CustomImageDescriptor;
 import org.dma.java.awt.ImageUtils;
 
 import org.eclipse.swt.SWT;
@@ -156,7 +157,7 @@ public class ImageManager {
 		String key=getKey(bufferedImage);
 		Image image=getImage(key);
 		if (image==null) try{
-			image=new Image(Display.getDefault(), SWTImageUtils.convertToSWT(bufferedImage));
+			image=new Image(Display.getDefault(), CustomImageDescriptor.convertToSWT(bufferedImage));
 			putImage(image, key);
 
 		}catch(Exception e){

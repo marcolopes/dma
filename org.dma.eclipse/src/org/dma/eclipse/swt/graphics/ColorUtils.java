@@ -11,7 +11,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.widgets.Display;
 
-public class SWTColorUtils {
+public class ColorUtils {
 
 	/**
 	 * Returns the system {@link Color} matching the specific ID.

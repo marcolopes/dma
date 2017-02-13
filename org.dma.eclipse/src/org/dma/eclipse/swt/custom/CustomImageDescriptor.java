@@ -1,10 +1,10 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  * IBM Corporation and others
  *******************************************************************************/
-package org.dma.eclipse.swt.graphics;
+package org.dma.eclipse.swt.custom;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -12,87 +12,54 @@ import java.awt.image.ComponentColorModel;
 import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.dma.java.io.FileHandler;
+
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 
-public class SWTImageUtils {
+public class CustomImageDescriptor extends ImageDescriptor {
 
-	/**
-	 * Saves an {@link Image}
-	 * to file in the specified {@link SWT} format.
-	 */
-	public static boolean saveImage(Image image, String filename, int format) {
-		try{
-			ImageLoader saver=new ImageLoader();
-			saver.data=new ImageData[]{image.getImageData()};
-			saver.save(filename, SWT.IMAGE_PNG);
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-
-	public static boolean savePNG(Image image, String filename) {
-		return saveImage(image, filename, SWT.IMAGE_PNG);
-	}
-
-
-	public static boolean saveJPEG(Image image, String filename) {
-		return saveImage(image, filename, SWT.IMAGE_JPEG);
-	}
-
-
-	/**
-	 * Creates and returns a new {@link ImageDescriptor}
-	 * stored by the specified {@link InputStream}.
-	 */
-	public static ImageDescriptor getImageDescriptor(InputStream stream) throws IOException {
-		try{
-			return ImageDescriptor.createFromImageData(new ImageData(stream));
-
-		}finally{
-			stream.close();
-		}
-	}
-
-
-	/**
-	 * Creates and returns a new {@link ImageDescriptor}
-	 * stored by the the file at the specified path.
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		try{
-			return getImageDescriptor(new FileInputStream(path));
-
-		}catch(Exception e){}
-		return null;
-	}
-
+	private final ImageData data;
 
 	/**
 	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the resource at the specified location.
 	 */
-	public static ImageDescriptor getImageDescriptor(Class location, String resource) {
-		try{
-			return getImageDescriptor(location.getClassLoader().getResourceAsStream(resource));
-
-		}catch(Exception e){
-			return null;
-		}
+	public CustomImageDescriptor(Class location, String resource) {
+		this(location.getClassLoader().getResourceAsStream(resource), true);
 	}
 
+	/**
+	 * Creates and returns a new {@link ImageDescriptor}
+	 * stored by the the file at the specified path.
+	 */
+	public CustomImageDescriptor(String path) {
+		this(new FileHandler(path).asInputStream(), true);
+	}
+
+	/**
+	 * Creates and returns a new {@link ImageDescriptor}
+	 * stored by the specified {@link InputStream}.
+	 */
+	public CustomImageDescriptor(InputStream stream, boolean close) {
+		this(stream);
+		if (close) try{
+			stream.close();
+		}catch(IOException e){}
+	}
+
+	/**
+	 * Creates and returns a new {@link ImageDescriptor}
+	 * stored by the specified {@link InputStream}.
+	 */
+	public CustomImageDescriptor(InputStream stream) {
+		this(new ImageData(stream));
+	}
 
 	/**
 	 * Creates and returns a new {@link ImageDescriptor}
@@ -100,12 +67,22 @@ public class SWTImageUtils {
 	 * <p>
 	 * The AWT BufferedImage is converted to an SWT ImageData.
 	 */
-	public static ImageDescriptor getImageDescriptor(BufferedImage bufferedImage) {
-		try{
-			return ImageDescriptor.createFromImageData(convertToSWT(bufferedImage));
+	public CustomImageDescriptor(BufferedImage bufferedImage) {
+		this(convertToSWT(bufferedImage));
+	}
 
-		}catch(Exception e){}
-		return null;
+	public CustomImageDescriptor(ImageData data) {
+		this.data=data;
+	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.resource.ImageDescriptor
+	 */
+	@Override
+	public ImageData getImageData() {
+		return data;
 	}
 
 
@@ -115,8 +92,7 @@ public class SWTImageUtils {
 	 * For a list of all SWT example snippets see
 	 * http://www.eclipse.org/swt/snippets/
 	 */
-	@Deprecated
-	public static BufferedImage convertToAWT(ImageData data) {
+	public static BufferedImage toAWT(ImageData data) {
 		PaletteData palette = data.palette;
 		if (palette.isDirect) {
 			ColorModel colorModel = new DirectColorModel(data.depth, palette.redMask, palette.greenMask, palette.blueMask);

@@ -8,41 +8,11 @@
 package org.dma.eclipse.swt.graphics;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 
-public class SWTFontUtils {
-
-	/**
-	 * Creates a new font with the specified height.
-	 * The font is automatically disposed when
-	 * the associated control is disposed
-	 */
-	public static Font createFont(Control control, int height){
-
-		FontData[] fontData=control.getFont().getFontData();
-
-		for(int i=0; i<fontData.length; ++i)
-			fontData[i].setHeight(height);
-
-		final Font font=new Font(Display.getDefault(), fontData);
-
-		// Since you created the font, you must dispose it
-		control.addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				font.dispose();
-			}
-		});
-
-		return font;
-
-	}
-
+public class FontUtils {
 
 	/**
 	 * Create a <code>FontData</code> object which encapsulate

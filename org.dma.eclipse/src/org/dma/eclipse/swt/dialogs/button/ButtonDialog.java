@@ -1,12 +1,12 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.swt.dialogs.button;
 
+import org.dma.eclipse.swt.custom.CustomButton;
 import org.dma.eclipse.swt.custom.CustomShell;
-import org.dma.eclipse.swt.graphics.SWTFontUtils;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
@@ -14,7 +14,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -70,9 +69,9 @@ public abstract class ButtonDialog extends CustomShell {
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		for(int i=0; i<LABELS.length; i++){
-			Button button=new Button(composite, SWT.PUSH);
+			CustomButton button=new CustomButton(composite, SWT.PUSH);
 			button.setLayoutData(new GridData(height*2, height));
-			button.setFont(SWTFontUtils.createFont(button, 15));
+			button.setFontSize(15);
 			button.setText(LABELS[i]);
 			button.setData(LABELS[i]);
 

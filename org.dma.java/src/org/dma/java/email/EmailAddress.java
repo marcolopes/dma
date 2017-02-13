@@ -55,19 +55,19 @@ public class EmailAddress {
 		return email==null ? 0 : email.hashCode();
 	}
 
-	public boolean equals(String email) {
-		return this.email.equals(email);
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof EmailAddress)
+			return equals((EmailAddress)obj);
+		return equals(obj.toString());
 	}
 
 	public boolean equals(EmailAddress other) {
 		return equals(other.email);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof EmailAddress)
-			return equals((EmailAddress)obj);
-		return equals(obj.toString());
+	public boolean equals(String email) {
+		return this.email.equals(email);
 	}
 
 

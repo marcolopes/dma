@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,9 +7,10 @@ package org.dma.eclipse.swt.dialogs.button;
 
 import java.math.BigDecimal;
 
+import org.dma.eclipse.swt.custom.CustomButton;
 import org.dma.eclipse.swt.custom.CustomShell;
-import org.dma.eclipse.swt.graphics.SWTColorUtils;
-import org.dma.eclipse.swt.graphics.SWTFontUtils;
+import org.dma.eclipse.swt.custom.CustomText;
+import org.dma.eclipse.swt.graphics.ColorUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,11 +19,9 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 public abstract class ButtonKeypad extends CustomShell {
 
@@ -41,7 +40,7 @@ public abstract class ButtonKeypad extends CustomShell {
 		"1", "2", "3", FORWARD,
 		"0", POINT, CLEAR, RETURN };
 
-	private Text text;
+	private CustomText text;
 	private String value = "";
 
 	private final int height;
@@ -105,10 +104,10 @@ public abstract class ButtonKeypad extends CustomShell {
 		composite.setLayout(gridLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
-		text=new Text(composite, SWT.BORDER | SWT.RIGHT);
+		text=new CustomText(composite, SWT.BORDER | SWT.RIGHT);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		text.setForeground(SWTColorUtils.getColor(SWT.COLOR_RED));
-		text.setFont(SWTFontUtils.createFont(text, 20));
+		text.setForeground(ColorUtils.getColor(SWT.COLOR_RED));
+		text.setFontSize(20);
 		//text.setEditable(false);
 		text.setText(value);
 		text.addVerifyListener(new VerifyListener(){
@@ -147,9 +146,9 @@ public abstract class ButtonKeypad extends CustomShell {
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		for(String label: LABELS){
-			Button button=new Button(composite, SWT.PUSH);
+			CustomButton button=new CustomButton(composite, SWT.PUSH);
 			button.setLayoutData(new GridData(height,height));
-			button.setFont(SWTFontUtils.createFont(button, 20));
+			button.setFontSize(20);
 			button.setText(label);
 			button.setData(label);
 

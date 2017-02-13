@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -7,7 +7,6 @@ package org.dma.eclipse.swt.custom;
 
 import java.awt.image.BufferedImage;
 
-import org.dma.eclipse.swt.graphics.SWTImageUtils;
 import org.dma.java.awt.ImageUtils;
 import org.dma.java.util.Debug;
 
@@ -27,7 +26,7 @@ public abstract class CustomAction extends Action {
 	}
 
 	public void setImageDescriptor(BufferedImage bufferedImage) {
-		setImageDescriptor(SWTImageUtils.getImageDescriptor(bufferedImage));
+		setImageDescriptor(new CustomImageDescriptor(bufferedImage));
 	}
 
 }
