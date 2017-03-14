@@ -15,7 +15,7 @@ public class EmailAddress {
 	private InternetAddress address;
 
 	public EmailAddress(String email) {
-		this(email,"");
+		this(email, "");
 	}
 
 	public EmailAddress(String email, String name) {

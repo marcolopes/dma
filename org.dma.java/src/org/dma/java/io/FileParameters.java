@@ -19,6 +19,7 @@ public class FileParameters {
 		this(prefix, suffix, ".");
 	}
 
+	/** suffix CAN be null, or may or may not start with DOT (.) */
 	public FileParameters(String prefix, String suffix, String foldername){
 		this(prefix, suffix, new File(foldername));
 	}

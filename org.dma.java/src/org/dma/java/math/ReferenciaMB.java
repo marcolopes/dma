@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -72,7 +72,7 @@ public class ReferenciaMB {
 	}
 
 
-	public static String right(String string, int lenght) {
+	private static String right(String string, int lenght) {
 
 		return string.substring(string.length()-lenght);
 

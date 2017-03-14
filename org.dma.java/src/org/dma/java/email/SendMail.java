@@ -29,7 +29,10 @@ public class SendMail extends MultiPartEmail {
 
 	public String send(EmailAddress from, EmailAddress to, String subject, String message, EmailAttachment attachment) throws EmailException {
 
-		Debug.out(server);
+		Debug.out("from", from);
+		Debug.out("to", to);
+		Debug.out("subject", subject);
+		Debug.out("server", server);
 
 		if (!from.isValid()) throw new EmailException("Invalid email address (from): "+from);
 		if (!to.isValid()) throw new EmailException("Invalid email address (to): "+to);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -268,14 +268,14 @@ public class StringUtils {
 	}
 
 
-	public static boolean contains(String string, String searchFor) {
+	public static boolean contains(String string, char...searchFor) {
 
 		return ocurrences(string, searchFor)>0;
 
 	}
 
 
-	public static boolean contains(String string, char...searchFor) {
+	public static boolean contains(String string, String searchFor) {
 
 		return ocurrences(string, searchFor)>0;
 
@@ -284,8 +284,7 @@ public class StringUtils {
 
 	public static boolean isQuoted(String string, char...quotes) {
 
-		return quotes.length>=2 &&
-				string.length()>=2 &&
+		return string.length()>=2 &&
 				string.charAt(0)==quotes[0] &&
 				string.charAt(string.length()-1)==quotes[1];
 
@@ -517,9 +516,9 @@ public class StringUtils {
 
 
 	/** Remove surrounded QUOTE chars */
-	public static String unquote(String string, char...quote) {
+	public static String unquote(String string, char...quotes) {
 
-		return !isQuoted(string, quote) ?
+		return !isQuoted(string, quotes) ?
 				string : string.substring(1, string.length()-1);
 
 	}

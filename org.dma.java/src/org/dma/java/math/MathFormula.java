@@ -36,27 +36,27 @@ public class MathFormula {
 	}
 
 	private final String formula;
-	private final boolean lowercase;
+	private final boolean ignoreCase;
 
 	private final ScriptEngine interpreter=new ScriptEngineManager().getEngineByName("JavaScript");
 
-	public MathFormula(String formula, boolean lowercase){
-		this.formula=lowercase ? formula.toLowerCase() : formula;
-		this.lowercase=lowercase;
+	public MathFormula(String formula, boolean ignoreCase){
+		this.formula=ignoreCase ? formula.toLowerCase() : formula;
+		this.ignoreCase=ignoreCase;
 	}
 
 
 	public BigDecimal eval(FormulaSymbol...symbols) {
 
-		try{
-			Debug.out("formula",formula);
+		Debug.out("formula", formula);
 
+		try{
 			int i=0;
 			String enumeration=formula;
 			for(FormulaSymbol symbol: symbols){
 
 				if(symbol!=null && !symbol.isEmpty()){
-					String name=lowercase ? symbol.name.toLowerCase() : symbol.name;
+					String name=ignoreCase ? symbol.name.toLowerCase() : symbol.name;
 					enumeration=enumeration.replace(name, String.valueOf(symbol.value));
 					Debug.out("symbol #"+i, symbol);
 					Debug.out("enumeration #"+i, enumeration);

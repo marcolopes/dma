@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -735,7 +735,7 @@ public class TimeDateUtils {
 
 
 	public static Time getTime(Calendar calendar) {
-		return new Time(calendar.getTime().getTime());
+		return new Time(calendar.getTimeInMillis());
 	}
 
 
