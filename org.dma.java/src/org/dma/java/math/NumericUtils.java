@@ -56,7 +56,7 @@ public class NumericUtils {
 	 */
 	public static Integer random(int length) {
 
-		return new Integer(StringUtils.randomNumbers(length));
+		return Integer.valueOf(StringUtils.randomNumbers(length));
 
 	}
 

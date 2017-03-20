@@ -28,7 +28,7 @@ public final class VersionNumber {
 	}
 
 	public VersionNumber(String version) {
-		String[] array=ArrayUtils.numbers(version.split("\\."));
+		String[] array=ArrayUtils.numbers(StringUtils.split(version, "."));
 		major=array.length>0 ? Integer.valueOf(array[0]) : 0;
 		minor=array.length>1 ? Integer.valueOf(array[1]) : 0;
 		macro=array.length>2 ? Integer.valueOf(array[2]) : 0;

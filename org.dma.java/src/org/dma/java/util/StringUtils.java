@@ -581,7 +581,7 @@ public class StringUtils {
 
 		int index=string.indexOf(separator);
 
-		return index==-1 ? new String[]{} :
+		return index==-1 ? new String[]{string} :
 			new String[]{string.substring(0, index), string.substring(index+1)};
 
 	}
@@ -591,7 +591,7 @@ public class StringUtils {
 
 		int index=string.lastIndexOf(separator);
 
-		return index==-1 ? new String[0] :
+		return index==-1 ? new String[]{string} :
 			new String[]{string.substring(0, index), string.substring(index+1)};
 
 	}

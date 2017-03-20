@@ -18,8 +18,9 @@ public class ArrayUtils {
 
 		byte[] result=new byte[array.length];
 
-		for(int i=0; i<array.length; i++){
-			result[i]=(byte)array[i];
+		int index=0;
+		for(int i: array){
+			result[index++]=(byte)i;
 		}
 
 		return result;
@@ -31,8 +32,9 @@ public class ArrayUtils {
 
 		char[] result=new char[array.length];
 
-		for(int i=0; i<array.length; i++){
-			result[i]=(char)array[i];
+		int index=0;
+		for(int i: array){
+			result[index++]=(char)i;
 		}
 
 		return result;
@@ -44,8 +46,9 @@ public class ArrayUtils {
 
 		int[] result=new int[array.length];
 
-		for(int i=0; i<array.length; i++){
-			result[i]=StringUtils.val(array[i]);
+		int index=0;
+		for(String s: array){
+			result[index++]=StringUtils.val(s);
 		}
 
 		return result;
@@ -57,8 +60,9 @@ public class ArrayUtils {
 
 		String[] result=new String[array.length];
 
-		for(int i=0; i<array.length; i++){
-			result[i]=String.valueOf(array[i]);
+		int index=0;
+		for(int i: array){
+			result[index++]=String.valueOf(i);
 		}
 
 		return result;
@@ -70,8 +74,9 @@ public class ArrayUtils {
 
 		String[] result=new String[array.length];
 
-		for(int i=0; i<array.length; i++){
-			result[i]=String.valueOf(array[i]);
+		int index=0;
+		for(char c: array){
+			result[index++]=String.valueOf(c);
 		}
 
 		return result;
@@ -83,8 +88,9 @@ public class ArrayUtils {
 
 		String[] result=new String[array.length];
 
-		for(int i=0; i<array.length; i++){
-			result[i]=array[i].toString();
+		int index=0;
+		for(T e: array){
+			result[index++]=e.toString();
 		}
 
 		return result;
@@ -142,8 +148,8 @@ public class ArrayUtils {
 
 		int lenght=0;
 
-		for(T[] a: array){
-			if (a!=null) lenght+=a.length;
+		for(T[] e: array){
+			if (e!=null) lenght+=e.length;
 		}
 
 		return lenght;

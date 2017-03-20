@@ -6,6 +6,7 @@
 package org.dma.java.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class MatchList extends UniqueArrayList<String> {
@@ -23,6 +24,10 @@ public class MatchList extends UniqueArrayList<String> {
 
 	public MatchList() {
 		super();
+	}
+
+	public MatchList(String[] array) {
+		this(Arrays.asList(array));
 	}
 
 	public MatchList(Collection<? extends String> col) {
