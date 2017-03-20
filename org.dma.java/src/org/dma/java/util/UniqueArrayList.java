@@ -6,6 +6,7 @@
 package org.dma.java.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +37,10 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 
 	public UniqueArrayList() {
 		super();
+	}
+
+	public UniqueArrayList(T[] array) {
+		this(Arrays.asList(array));
 	}
 
 	public UniqueArrayList(Collection<? extends T> col) {
