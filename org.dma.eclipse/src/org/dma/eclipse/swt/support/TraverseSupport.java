@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -127,6 +127,7 @@ public class TraverseSupport extends ArrayList<Control> {
 	}
 
 	public void selectFirst() {
+		if (isEmpty()) return;
 		Control control=get(0);
 		if (control.isEnabled()){
 			select(control);
