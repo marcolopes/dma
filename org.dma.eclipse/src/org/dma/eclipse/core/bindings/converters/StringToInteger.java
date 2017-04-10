@@ -1,6 +1,7 @@
 /*******************************************************************************
- * 2008-2013 Projecto Colibri
- * Marco Lopes (marcolopes@projectocolibri.com)
+ * 2008-2017 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.core.bindings.converters;
 

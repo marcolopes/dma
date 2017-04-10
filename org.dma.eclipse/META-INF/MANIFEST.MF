@@ -3,8 +3,9 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Utils
 Bundle-SymbolicName: org.dma.eclipse;singleton:=true
-Bundle-Version: 5.7.2.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-Vendor: marcolopes@netc.pt
+Bundle-Activator: org.dma.eclipse.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .
@@ -19,11 +20,13 @@ Export-Package: org.dma.eclipse.core,
  org.dma.eclipse.core.bindings.converters,
  org.dma.eclipse.core.jobs,
  org.dma.eclipse.core.jobs.tasks,
+ org.dma.eclipse.jface.dialogs.input,
+ org.dma.eclipse.jface.dialogs.progress,
+ org.dma.eclipse.jface.preference,
  org.dma.eclipse.swt.copypaste,
  org.dma.eclipse.swt.custom,
  org.dma.eclipse.swt.dialogs.button,
  org.dma.eclipse.swt.dialogs.file,
- org.dma.eclipse.swt.dialogs.input,
  org.dma.eclipse.swt.dialogs.message,
  org.dma.eclipse.swt.dragndrop,
  org.dma.eclipse.swt.execution,
@@ -31,6 +34,8 @@ Export-Package: org.dma.eclipse.core,
  org.dma.eclipse.swt.lists,
  org.dma.eclipse.swt.snippets,
  org.dma.eclipse.swt.support,
+ org.dma.eclipse.swt.validation,
+ org.dma.eclipse.swt.validation.field,
+ org.dma.eclipse.swt.validation.table,
  org.dma.eclipse.swt.viewers,
- org.dma.eclipse.ui,
- org.dma.eclipse.ui.progress
+ org.dma.eclipse.ui

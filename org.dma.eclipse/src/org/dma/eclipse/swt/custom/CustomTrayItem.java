@@ -39,7 +39,7 @@ public class CustomTrayItem {
 	public CustomTrayItem(Shell parent, String name, String imagePath, String toolTipText, boolean minimized) {
 		this.parent=parent;
 		this.name=name;
-		this.image=ImageManager.createImage(imagePath);
+		this.image=ImageManager.getImage(imagePath);
 		this.sysTray=parent.getDisplay().getSystemTray();
 		this.toolTip=new CustomToolTip(parent, toolTipText);
 		create(minimized);

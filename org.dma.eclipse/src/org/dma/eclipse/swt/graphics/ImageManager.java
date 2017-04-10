@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -11,7 +11,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.dma.eclipse.swt.custom.CustomImageDescriptor;
 import org.dma.java.awt.ImageUtils;
@@ -24,7 +23,53 @@ import org.eclipse.swt.widgets.Display;
 
 public class ImageManager {
 
-	private static final Map<String, Image> CACHE=new HashMap();
+	public static final ImageCache CACHE = new ImageCache();
+
+	public static class ImageCache extends HashMap<String, Image> {
+
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * Returns the CACHED {@link Image}
+		 * or null if not CACHED or is DISPOSED
+		 */
+		public Image get(String key) {
+			Image image=super.get(key);
+			return image==null || image.isDisposed() ? null : image;
+		}
+
+		/**
+		 * Puts {@link Image} into the CACHE
+		 * and disposes previous CACHED image
+		 */
+		@Override
+		public Image put(String key, Image image) {
+			image=super.put(key, image);
+			if (image!=null) image.dispose();
+			return image;
+		}
+
+		/**
+		 * Dispose all of the CACHED images
+		 */
+		@Override
+		public void clear() {
+			debug();
+			for(Image image: values()){
+				if (image!=null) image.dispose();
+			}
+			super.clear();
+		}
+
+		/** Debug */
+		public void debug() {
+			System.out.println("IMAGE CACHE: " + size());
+			for(String key: keySet()){
+				System.out.println(key+": "+get(key));
+			}
+		}
+
+	}
 
 	/** Returns the {@link Image} key based on image-size hash */
 	public static String getKey(Integer size) {
@@ -48,35 +93,15 @@ public class ImageManager {
 
 
 	/**
-	 * Returns the CACHED {@link Image}
-	 * or null if not CACHED or is DISPOSED
-	 */
-	public static Image getImage(String key) {
-		Image image=CACHE.get(key);
-		return image==null || image.isDisposed() ? null : image;
-	}
-
-	/**
-	 * Puts {@link Image} into the CACHE
-	 * and disposes previous CACHED image
-	 */
-	public static void putImage(Image image, String key) {
-		image=CACHE.put(key, image);
-		if (image!=null) image.dispose();
-	}
-
-
-	/**
 	 * Returns an {@link Image}
 	 * encoded by the specified {@link InputStream}
 	 */
 	private static Image createImage(InputStream stream) {
 		try{
-			Display display=Display.getDefault();
 			ImageData data=new ImageData(stream);
 			return data.transparentPixel > 0 ?
-				new Image(display, data, data.getTransparencyMask()) :
-				new Image(display, data);
+				new Image(Display.getDefault(), data, data.getTransparencyMask()) :
+				new Image(Display.getDefault(), data);
 
 		}catch(Exception e){
 			System.out.println(e);
@@ -91,16 +116,16 @@ public class ImageManager {
 	 * or a new one if not CACHED or is DISPOSED.
 	 * It can be used as placeholder for missing image.
 	 */
-	public static Image createImage(Integer size) {
+	public static Image getImage(Integer size) {
 		String key=getKey(size);
-		Image image=getImage(key);
+		Image image=CACHE.get(key);
 		if (image==null) try{
 			image=new Image(Display.getDefault(), size, size);
+			CACHE.put(key, image);
 			GC gc=new GC(image);
 			gc.setBackground(Display.getDefault().getSystemColor(SWT.TRANSPARENT));
 			gc.fillRectangle(0, 0, size, size);
 			gc.dispose();
-			putImage(image, key);
 
 		}catch(Exception e){
 			System.out.println(e);
@@ -113,14 +138,14 @@ public class ImageManager {
 	 * Returns the CACHED {@link Image}
 	 * or a new one if not CACHED or is DISPOSED
 	 */
-	public static Image createImage(String path) {
+	public static Image getImage(String path) {
 		String key=getKey(path);
-		Image image=getImage(key);
+		Image image=CACHE.get(key);
 		if (image==null) try{
 			FileInputStream stream=new FileInputStream(path);
 			image=createImage(stream);
+			CACHE.put(key, image);
 			stream.close();
-			putImage(image, key);
 
 		}catch(Exception e){
 			System.out.println(e);
@@ -133,14 +158,14 @@ public class ImageManager {
 	 * Returns the CACHED {@link Image}
 	 * or a new one if not CACHED or is DISPOSED
 	 */
-	public static Image createImage(byte[] bytes) {
+	public static Image getImage(byte[] bytes) {
 		String key=getKey(bytes);
-		Image image=getImage(key);
+		Image image=CACHE.get(key);
 		if (image==null) try{
 			ByteArrayInputStream stream=new ByteArrayInputStream(bytes);
 			image=createImage(stream);
+			CACHE.put(key, image);
 			stream.close();
-			putImage(image, key);
 
 		}catch(Exception e){
 			System.out.println(e);
@@ -153,36 +178,17 @@ public class ImageManager {
 	 * Returns the CACHED {@link Image}
 	 * or a new one if not CACHED or is DISPOSED
 	 */
-	public static Image createImage(BufferedImage bufferedImage) {
+	public static Image getImage(BufferedImage bufferedImage) {
 		String key=getKey(bufferedImage);
-		Image image=getImage(key);
+		Image image=CACHE.get(key);
 		if (image==null) try{
 			image=new Image(Display.getDefault(), CustomImageDescriptor.convertToSWT(bufferedImage));
-			putImage(image, key);
+			CACHE.put(key, image);
 
 		}catch(Exception e){
 			System.out.println(e);
 		}
 		return image;
-	}
-
-
-	/** Dispose all of the CACHED images */
-	public static void disposeImages() {
-		debug();
-		for(Image image: CACHE.values()){
-			if (image!=null) image.dispose();
-		}
-		CACHE.clear();
-	}
-
-
-	/** Debug */
-	public static void debug() {
-		System.out.println("IMAGE CACHE: " + CACHE.size());
-		for(String key: CACHE.keySet()){
-			System.out.println(key+": "+CACHE.get(key));
-		}
 	}
 
 

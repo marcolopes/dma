@@ -36,7 +36,7 @@ public class CustomShell extends Shell {
 
 
 	public void setImage(String imagePath) {
-		setImage(ImageManager.createImage(imagePath));
+		setImage(ImageManager.getImage(imagePath));
 	}
 
 
