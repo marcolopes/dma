@@ -41,7 +41,7 @@ public interface IValidationRules {
 	public static final int NOTZERO = 1 << 3;
 
 	/**
-	 * TEXT length must match regex
+	 * TEXT length must match limit
 	 */
 	public static final int LIMITMATCH = 1 << 4;
 

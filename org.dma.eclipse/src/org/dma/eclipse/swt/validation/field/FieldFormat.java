@@ -154,6 +154,11 @@ public class FieldFormat extends FieldProperties {
 		return regex;
 	}
 
+
+
+	/*
+	 * Format
+	 */
 	/** Time / Date / Number */
 	public String format(Object value) {
 		switch(type){
@@ -171,6 +176,11 @@ public class FieldFormat extends FieldProperties {
 		return TimeDateUtils.getDateFormatted(date, pattern);
 	}
 
+
+
+	/*
+	 * Validation
+	 */
 	public boolean isValid(Integer number) {
 		return isNumericType() && number!=null &&
 				!(isPositive() && number<0) &&

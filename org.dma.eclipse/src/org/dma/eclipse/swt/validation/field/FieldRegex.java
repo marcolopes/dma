@@ -81,15 +81,6 @@ public class FieldRegex {
 	}
 
 
-	public boolean isLimitMatch() {
-		if(control instanceof Text){
-			Text text=(Text)control;
-			return text.getText().length()==fieldFormat.getSize().size;
-		}
-		return false;
-	}
-
-
 
 	/*
 	 * Listeners

@@ -27,6 +27,7 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 	public abstract String getErrorMessage(int error);
 
 	private final Control control;
+	private final FieldFormat fieldFormat;
 	private final FieldRegex regex;
 	private int rules;
 
@@ -38,6 +39,7 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 	public FieldValidationBinding(Label label, Control control, FieldFormat fieldFormat, int rules) {
 		super(label);
 		this.control=control;
+		this.fieldFormat=fieldFormat;
 		this.regex=new FieldRegex(control, fieldFormat);
 		this.rules=rules;
 	}
@@ -46,6 +48,7 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 	public FieldValidationBinding(Label label, Control control, int rules) {
 		super(label);
 		this.control=control;
+		this.fieldFormat=null;
 		this.regex=null;
 		this.rules=rules;
 	}
@@ -54,6 +57,7 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 	public FieldValidationBinding(Control control, int rules) {
 		super(null);
 		this.control=control;
+		this.fieldFormat=null;
 		this.regex=null;
 		this.rules=rules;
 	}
@@ -140,10 +144,9 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 			(control instanceof List && getList().getSelectionCount()==0)))
 			setError(getErrorMessage(NOTZERO));
 
-		//field length must match regex
+		//field length must match LIMIT
 		if (NumericUtils.bit(rules, LIMITMATCH) &&
-			(control instanceof Text &&
-			regex!=null && !regex.isLimitMatch()))
+			(control instanceof Text && getText().length()!=fieldFormat.getSize().size))
 			setError(getErrorMessage(LIMITMATCH));
 
 	}
@@ -182,8 +185,8 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 		}
 		else if (control instanceof DateTime){
 			DateTime dt=getDatetime();
-			return TimeDateUtils.getDateFormatted(
-					TimeDateUtils.getCalendar(dt.getYear(), dt.getMonth(), dt.getDay()).getTime());
+			return fieldFormat.format(TimeDateUtils.getCalendar(
+					dt.getYear(), dt.getMonth(), dt.getDay()).getTime());
 		}
 		return ((Text)control).getText();
 	}
