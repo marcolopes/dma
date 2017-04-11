@@ -79,7 +79,7 @@ public class TimeDateUtils {
 	 * Validation
 	 */
 	public static boolean isDateValid(String date, String pattern) {
-		return getDateParsed(date, pattern)!=null;
+		return getDate(date, pattern)!=null;
 	}
 
 
@@ -89,7 +89,7 @@ public class TimeDateUtils {
 
 
 	public static boolean isTimeValid(String time, String pattern) {
-		return getTimeParsed(time, pattern)!=null;
+		return getTime(time, pattern)!=null;
 	}
 
 
@@ -169,6 +169,12 @@ public class TimeDateUtils {
 	}
 
 
+	/** Time formatted with DEFAULT PATTERN */
+	public static String getTimeFormatted(Date time) {
+		return getTimeFormatted(getTime(time));
+	}
+
+
 	public static String getTimeFormatted(String pattern) {
 		return getTimeFormatted(getCurrentTime(), pattern);
 	}
@@ -180,43 +186,6 @@ public class TimeDateUtils {
 
 		}catch(Exception e){}
 		return null;
-	}
-
-
-
-
-	/*
-	 * Conversion
-	 */
-	public static Date getDateParsed(String date, String pattern) {
-		try{
-			return getSimpleDateFormat(pattern).parse(date);
-
-		}catch(ParseException e){
-			System.out.println(e);
-		}catch(Exception e){}
-		return null;
-	}
-
-
-	public static Date getDateParsed(String date) {
-		return getDateParsed(date, DEFAULT_DATE_PATTERN);
-	}
-
-
-	public static Time getTimeParsed(String time, String pattern) {
-		try{
-			return new Time(getSimpleDateFormat(pattern).parse(time).getTime());
-
-		}catch(ParseException e){
-			System.out.println(e);
-		}catch(Exception e){}
-		return null;
-	}
-
-
-	public static Time getTimeParsed(String time) {
-		return getTimeParsed(time, DEFAULT_TIME_PATTERN);
 	}
 
 
@@ -301,12 +270,12 @@ public class TimeDateUtils {
 	public static Calendar getCalendar(String date, String pattern) {
 		Calendar calendar=getCalendar();
 		try{
-			calendar.setTime(getDateParsed(date, pattern));
+			calendar.setTime(getDate(date, pattern));
 		}catch(Exception e){}
 		return calendar;
 	}
 
-	/** Calendar formatted with DEFAULT PATTERN */
+
 	public static Calendar getCalendar(String date) {
 		return getCalendar(date, DEFAULT_DATE_PATTERN);
 	}
@@ -593,9 +562,20 @@ public class TimeDateUtils {
 	}
 
 
+	public static Date getDate(String date, String pattern) {
+		try{
+			return getSimpleDateFormat(pattern).parse(date);
+
+		}catch(ParseException e){
+			System.out.println(e);
+		}catch(Exception e){}
+		return null;
+	}
+
+
 	/** Date formatted with DEFAULT PATTERN */
 	public static Date getDate(String date) {
-		return getDateParsed(date, DEFAULT_DATE_PATTERN);
+		return getDate(date, DEFAULT_DATE_PATTERN);
 	}
 
 
@@ -708,6 +688,23 @@ public class TimeDateUtils {
 	}
 
 
+	public static Time getTime(String time, String pattern) {
+		try{
+			return new Time(getSimpleDateFormat(pattern).parse(time).getTime());
+
+		}catch(ParseException e){
+			System.out.println(e);
+		}catch(Exception e){}
+		return null;
+	}
+
+
+	/** Time formatted with DEFAULT PATTERN */
+	public static Time getTime(String time) {
+		return getTime(time, DEFAULT_TIME_PATTERN);
+	}
+
+
 	public static Time getTime(int hour, int minute, int second) {
 		Calendar calendar=getCalendar();
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
@@ -720,12 +717,6 @@ public class TimeDateUtils {
 
 	public static Time getTime(int hour, int minute) {
 		return getTime(hour, minute, 0);
-	}
-
-
-	/** Time formatted with DEFAULT PATTERN */
-	public static Time getTime(String time) {
-		return getTimeParsed(time, DEFAULT_TIME_PATTERN);
 	}
 
 
@@ -765,7 +756,7 @@ public class TimeDateUtils {
 
 	public static Timestamp getTimestamp(String data, String pattern) {
 		try{
-			return new Timestamp(getDateParsed(data, pattern).getTime());
+			return new Timestamp(getDate(data, pattern).getTime());
 		}catch(Exception e){}
 		return null;
 	}

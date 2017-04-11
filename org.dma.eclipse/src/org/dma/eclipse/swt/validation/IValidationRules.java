@@ -8,8 +8,7 @@ package org.dma.eclipse.swt.validation;
 public interface IValidationRules {
 
 	/**
-	 * Field with no automatic validation<br>
-	 * Processes Information Contol
+	 * Field with no automatic validation
 	 */
 	public static final int DEFAULT = 0;
 

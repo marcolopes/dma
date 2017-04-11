@@ -29,20 +29,16 @@ public class FieldFormat extends FieldProperties {
 
 	public enum TYPES {
 
-		TIME ("Time", "java.sql.Time"),
-		DATE ("Date", "java.util.Date"),
-		DECIMAL ("BigDecimal", "java.math.BigDecimal"),
-		INTEGER ("Integer", "java.lang.Integer"),
-		BOOLEAN ("Boolean", "java.lang.Boolean"),
-		STRING ("String", "java.lang.String"),
-		LONGSTRING (STRING.java, STRING.klass);
+		TIME ("Time"),
+		DATE ("Date"),
+		DECIMAL ("BigDecimal"),
+		INTEGER ("Integer"),
+		STRING ("String");
 
 		public final String java;
-		public final String klass;
 
-		TYPES(String java, String klass) {
+		TYPES(String java) {
 			this.java=java;
-			this.klass=klass;
 		}
 
 	}
@@ -90,7 +86,6 @@ public class FieldFormat extends FieldProperties {
 		case TIME:
 		case DATE:
 		case STRING:
-		case LONGSTRING:
 			String range="";
 			//digits only
 			if(isDigits()) range+="0-9 ";
@@ -124,8 +119,6 @@ public class FieldFormat extends FieldProperties {
 				regex+=group;
 			}
 			break;
-
-		case BOOLEAN: break;
 		}
 		//expression end
 		regex+="$";
@@ -157,9 +150,7 @@ public class FieldFormat extends FieldProperties {
 			if(size.scale>0) pattern+="."+StringUtils.replicate("0", size.scale);
 			return pattern;
 
-		case BOOLEAN: break;
 		case STRING: break;
-		case LONGSTRING: break;
 		}
 		return pattern;
 	}
@@ -179,9 +170,7 @@ public class FieldFormat extends FieldProperties {
 		case DATE: break;
 		case DECIMAL:
 		case INTEGER: return isPositive() ? pattern : "-"+pattern;
-		case BOOLEAN: break;
 		case STRING: break;
-		case LONGSTRING: break;
 		}
 		return pattern;
 	}
@@ -193,9 +182,7 @@ public class FieldFormat extends FieldProperties {
 		case DATE: return format((Date)value);
 		case DECIMAL:
 		case INTEGER: return getDecimalFormat(pattern).format(value);
-		case BOOLEAN: break;
 		case STRING: break;
-		case LONGSTRING: break;
 		}
 		return value.toString();
 	}
