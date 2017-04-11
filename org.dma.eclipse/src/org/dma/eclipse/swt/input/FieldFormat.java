@@ -51,9 +51,7 @@ public class FieldFormat extends FieldProperties {
 	private final FieldSize size;
 	private final String pattern;
 	private final char[] exclude;
-
 	private final String regex;
-	private final DecimalFormat df;
 
 	public FieldFormat(TYPES type, int size, char...exclude) {
 		this(type, size, NONE, exclude);
@@ -77,44 +75,38 @@ public class FieldFormat extends FieldProperties {
 
 	public FieldFormat(TYPES type, FieldSize size, String pattern, int properties, char...exclude) {
 		super(properties);
-		this.type = type;
-		this.size = size;
-		this.pattern = isNumericType() ? buildPattern() : pattern;
-		this.exclude = exclude;
-		regex = buildRegex(String.valueOf(exclude));
-		df=isNumericType() ? getDecimalFormat(this.pattern) : null;
-
-	}
-
-
-	/**
-	 * <b>Examples</b><br>
-	 * SIZE 9,0: ###,###,##0<br>
-	 * SIZE 9,3: ###,##0.000<br>
-	 * SIZE 4,3: #,##0.000
-	 */
-	private String buildPattern() {
-		String pattern="";
-		//#,###,##
-		for(int i=size.size; i>1; i--){
-			pattern+="#";
-			if(i%3==1) pattern+=",";
-		}
-		//#,###,##0
-		pattern+="0";
-		//#,###,##0.000
-		if(size.scale>0) pattern+="."+StringUtils.replicate("0", size.scale);
-		return pattern;
+		this.type=type;
+		this.size=size;
+		this.pattern=pattern==null ? buildPattern() : pattern;
+		this.exclude=exclude;
+		this.regex=buildRegex(String.valueOf(exclude));
 	}
 
 
 	private String buildRegex(String exclude) {
 		//expression start
 		String regex="^";
-		/*
-		 * Numeric
-		 */
-		if(isNumericType()){
+		switch(type){
+		case TIME:
+		case DATE:
+		case STRING:
+		case LONGSTRING:
+			String range="";
+			//digits only
+			if(isDigits()) range+="0-9 ";
+			//letters only
+			if(isLetters()) range+="a-zA-Z ";
+			//digits and letters
+			if (range.isEmpty()) range+=(char)0+"-"+(char)65535;
+			//Character set
+			regex+="[" + range + (exclude.isEmpty() ?
+					"" : "&&[^"+exclude+"]") + "]";
+			//alfanumeric limit
+			regex+="{0," + size.size + "}";
+			break;
+
+		case DECIMAL:
+		case INTEGER:
 			//negative signal?
 			if(!isPositive()) regex+="-{0,1}";
 			//digits only
@@ -131,23 +123,9 @@ public class FieldFormat extends FieldProperties {
 				group+=")?";
 				regex+=group;
 			}
-		}
-		/*
-		 * Alfanumeric
-		 */
-		if(isStringType() || isTimeDateType()){
-			String range="";
-			//digits only
-			if(isDigits()) range+="0-9 ";
-			//letters only
-			if(isLetters()) range+="a-zA-Z ";
-			//digits and letters
-			if (range.isEmpty()) range+=(char)0+"-"+(char)65535;
-			//Character set
-			regex+="[" + range + (exclude.isEmpty() ?
-					"" : "&&[^"+exclude+"]") + "]";
-			//alfanumeric limit
-			regex+="{0," + size.size + "}";
+			break;
+
+		case BOOLEAN: break;
 		}
 		//expression end
 		regex+="$";
@@ -155,17 +133,71 @@ public class FieldFormat extends FieldProperties {
 	}
 
 
+	/**
+	 * <b>Examples</b><br>
+	 * SIZE 9,0: ###,###,##0<br>
+	 * SIZE 9,3: ###,##0.000<br>
+	 * SIZE 4,3: #,##0.000
+	 */
+	private String buildPattern() {
+		switch(type){
+		case TIME: return TimeDateUtils.DEFAULT_TIME_PATTERN;
+		case DATE: return TimeDateUtils.DEFAULT_DATE_PATTERN;
+		case DECIMAL:
+		case INTEGER:
+			String pattern="";
+			//#,###,##
+			for(int i=size.size; i>1; i--){
+				pattern+="#";
+				if(i%3==1) pattern+=",";
+			}
+			//#,###,##0
+			pattern+="0";
+			//#,###,##0.000
+			if(size.scale>0) pattern+="."+StringUtils.replicate("0", size.scale);
+			return pattern;
+
+		case BOOLEAN: break;
+		case STRING: break;
+		case LONGSTRING: break;
+		}
+		return pattern;
+	}
+
+
 
 	/*
 	 * Format
 	 */
+	public String getDisplayPattern() {
+		return pattern;
+	}
+
+	public String getEditPattern() {
+		switch(type){
+		case TIME: break;
+		case DATE: break;
+		case DECIMAL:
+		case INTEGER: return isPositive() ? pattern : "-"+pattern;
+		case BOOLEAN: break;
+		case STRING: break;
+		case LONGSTRING: break;
+		}
+		return pattern;
+	}
+
 	/** Time / Date / Number */
 	public String format(Object value) {
 		switch(type){
-		default: return df.format(value);
 		case TIME: return format((Time)value);
 		case DATE: return format((Date)value);
+		case DECIMAL:
+		case INTEGER: return getDecimalFormat(pattern).format(value);
+		case BOOLEAN: break;
+		case STRING: break;
+		case LONGSTRING: break;
 		}
+		return value.toString();
 	}
 
 	public String format(Time time) {
@@ -182,13 +214,13 @@ public class FieldFormat extends FieldProperties {
 	 * Validation
 	 */
 	public boolean isValid(Integer number) {
-		return isNumericType() && number!=null &&
+		return number!=null &&
 				!(isPositive() && number<0) &&
 				(number.toString().length()<=size.size+(number<0 ? 1 : 0));
 	}
 
 	public boolean isValid(BigInteger number) {
-		return isNumericType() && number!=null &&
+		return number!=null &&
 				!(isPositive() && number.signum()<0) &&
 				(number.toString().length()<=size.size+(number.signum()<0 ? 1 : 0));
 	}
@@ -198,13 +230,13 @@ public class FieldFormat extends FieldProperties {
 	}
 
 	public boolean isValid(String string) {
-		return isStringType() &&
-			string.length()<=size.size &&
-			!(isUppercase() && !StringUtils.isUppercase(string)) &&
-			!(isLowercase() && !StringUtils.isLowercase(string)) &&
-			!(isDigits() && !StringUtils.isNumeric(string)) &&
-			!(isLetters() && !StringUtils.isLetters(string)) &&
-			!StringUtils.contains(string, exclude);
+		return string!=null &&
+				string.length()<=size.size &&
+				!(isUppercase() && !StringUtils.isUppercase(string)) &&
+				!(isLowercase() && !StringUtils.isLowercase(string)) &&
+				!(isDigits() && !StringUtils.isNumeric(string)) &&
+				!(isLetters() && !StringUtils.isLetters(string)) &&
+				!StringUtils.contains(string, exclude);
 	}
 
 
@@ -219,32 +251,8 @@ public class FieldFormat extends FieldProperties {
 		return size;
 	}
 
-	public String getDisplayPattern() {
-		return pattern;
-	}
-
-	public String getEditPattern() {
-		if (!isNumericType()) return pattern;
-		return isPositive() ? pattern : "-"+pattern;
-	}
-
 	public String getEditRegex() {
 		return regex;
-	}
-
-	/** TIME or DATE */
-	boolean isTimeDateType() {
-		return type==TYPES.TIME || type==TYPES.DATE;
-	}
-
-	/** DECIMAL or INTEGER */
-	boolean isNumericType() {
-		return type==TYPES.DECIMAL || type==TYPES.INTEGER;
-	}
-
-	/** STRING or LONGSTRING */
-	boolean isStringType() {
-		return type==TYPES.STRING || type==TYPES.LONGSTRING;
 	}
 
 
