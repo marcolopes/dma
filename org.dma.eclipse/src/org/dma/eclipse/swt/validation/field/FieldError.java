@@ -18,7 +18,7 @@ public abstract class FieldError  {
 		IS_ZERO,
 		BAD_LENGTH}
 
-	public abstract String processMessage(ERRORS error, String message, String label);
+	public abstract String processErrorMessage(ERRORS error, String message, String label);
 
 	private String message;
 	private ERRORS error;
@@ -40,7 +40,7 @@ public abstract class FieldError  {
 	 * Message
 	 */
 	public String getMessage() {
-		return processMessage(error, message==null ? "" : message,
+		return processErrorMessage(error, message==null ? "" : message,
 				label==null ? "" : label.getText());
 	}
 

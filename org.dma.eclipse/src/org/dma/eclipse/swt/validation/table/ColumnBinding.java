@@ -7,8 +7,8 @@ package org.dma.eclipse.swt.validation.table;
 
 import java.math.BigDecimal;
 
-import org.dma.eclipse.swt.validation.field.FieldFormat;
-import org.dma.eclipse.swt.validation.field.FieldRegex;
+import org.dma.eclipse.swt.input.FieldFormat;
+import org.dma.eclipse.swt.input.FieldRegex;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -17,20 +17,20 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-public abstract class ColumnValidationBinding extends ColumnError {
+public abstract class ColumnBinding extends ColumnError {
 
 	private final Control control;
 	private final FieldRegex regex;
 
 	/** Text / combo (with regex) */
-	public ColumnValidationBinding(Control text, FieldFormat fieldFormat, String label) {
+	public ColumnBinding(Control text, FieldFormat fieldFormat, String label) {
 		super(label);
 		this.control=text;
 		this.regex=new FieldRegex(control, fieldFormat);
 	}
 
 	/** Generic (no regex) */
-	public ColumnValidationBinding(Control text, String label) {
+	public ColumnBinding(Control text, String label) {
 		super(label);
 		this.control=text;
 		this.regex=null;

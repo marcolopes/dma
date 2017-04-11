@@ -8,10 +8,10 @@ package org.dma.eclipse.swt.validation.table;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.dma.eclipse.swt.input.FieldFormat;
 import org.dma.eclipse.swt.validation.IValidationManager;
 import org.dma.eclipse.swt.validation.IValidator;
 import org.dma.eclipse.swt.validation.ValidationManager;
-import org.dma.eclipse.swt.validation.field.FieldFormat;
 import org.dma.eclipse.swt.viewers.TableViewerContainer;
 import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
@@ -51,7 +51,7 @@ public abstract class TableValidator<T> implements IValidator {
 	};
 
 	/** Insertion-ordered KEYS */
-	private final Map<String, ColumnValidationBinding> validatorMap=new LinkedHashMap();
+	private final Map<String, ColumnBinding> validatorMap=new LinkedHashMap();
 
 	private IValidationManager validationManager=new ValidationManager(this);
 
@@ -75,11 +75,11 @@ public abstract class TableValidator<T> implements IValidator {
 	}
 
 	/** Text / combo (with regex) */
-	public ColumnValidationBinding register(String property, Control inputControl, FieldFormat fieldFormat, String fieldLabel) {
+	public ColumnBinding register(String property, Control text, FieldFormat fieldFormat, String label) {
 
-		ColumnValidationBinding binding=new ColumnValidationBinding(inputControl, fieldFormat, fieldLabel){
+		ColumnBinding binding=new ColumnBinding(text, fieldFormat, label){
 			@Override
-			public String processMessage(String message, String label) {
+			public String processErrorMessage(String message, String label) {
 				return TableValidator.this.processMessage(message, label);
 			}
 		};
@@ -89,11 +89,11 @@ public abstract class TableValidator<T> implements IValidator {
 	}
 
 	/** Generic (no regex) */
-	public ColumnValidationBinding register(String property, Control inputControl, String fieldLabel) {
+	public ColumnBinding register(String property, Control text, String label) {
 
-		ColumnValidationBinding binding=new ColumnValidationBinding(inputControl, fieldLabel){
+		ColumnBinding binding=new ColumnBinding(text, label){
 			@Override
-			public String processMessage(String message, String label) {
+			public String processErrorMessage(String message, String label) {
 				return TableValidator.this.processMessage(message, label);
 			}
 		};
@@ -103,7 +103,7 @@ public abstract class TableValidator<T> implements IValidator {
 	}
 
 
-	private void register(String property, ColumnValidationBinding binding) {
+	protected void register(String property, ColumnBinding binding) {
 
 		if(validatorMap.containsKey(property))
 			throw new Error("VALIDATOR ALREADY REGISTERED :"+property);
@@ -115,7 +115,7 @@ public abstract class TableValidator<T> implements IValidator {
 
 	public void unregister(String property) {
 
-		ColumnValidationBinding binding=validatorMap.remove(property);
+		ColumnBinding binding=validatorMap.remove(property);
 		if(binding!=null) binding.dispose();
 
 	}
@@ -171,7 +171,7 @@ public abstract class TableValidator<T> implements IValidator {
 	@Override
 	public void clearError() {
 
-		for(ColumnValidationBinding binding: validatorMap.values()){
+		for(ColumnBinding binding: validatorMap.values()){
 			binding.clearError();
 		}
 
@@ -181,7 +181,7 @@ public abstract class TableValidator<T> implements IValidator {
 	@Override
 	public boolean hasError() {
 
-		for(ColumnValidationBinding binding: validatorMap.values()){
+		for(ColumnBinding binding: validatorMap.values()){
 			if(binding.hasError()) return true;
 		}
 
@@ -195,7 +195,7 @@ public abstract class TableValidator<T> implements IValidator {
 
 		String errorMessage="";
 
-		for(ColumnValidationBinding binding: validatorMap.values()){
+		for(ColumnBinding binding: validatorMap.values()){
 			if(binding.hasError())
 				errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getMessage();
 		}
@@ -209,7 +209,7 @@ public abstract class TableValidator<T> implements IValidator {
 	/*
 	 * Getters and setters
 	 */
-	public ColumnValidationBinding getProperty(String property) {
+	public ColumnBinding getProperty(String property) {
 		return validatorMap.get(property);
 	}
 

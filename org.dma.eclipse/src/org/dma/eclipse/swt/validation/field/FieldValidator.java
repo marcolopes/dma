@@ -8,6 +8,7 @@ package org.dma.eclipse.swt.validation.field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.dma.eclipse.swt.input.FieldFormat;
 import org.dma.eclipse.swt.validation.IValidationManager;
 import org.dma.eclipse.swt.validation.IValidator;
 import org.dma.eclipse.swt.validation.ValidationManager;
@@ -26,20 +27,20 @@ public abstract class FieldValidator implements IValidator {
 
 	public abstract boolean isEdited();
 	public abstract void validateInput();
-	public abstract String processMessage(ERRORS error, String message, String label);
+	public abstract String processErrorMessage(ERRORS error, String message, String label);
 
 	/** Insertion-ordered KEYS */
-	private final Map<String, FieldValidationBinding> validatorMap=new LinkedHashMap();
+	private final Map<String, FieldBinding> validatorMap=new LinkedHashMap();
 
 	private IValidationManager validationManager=new ValidationManager(this);
 
 	/** Text / combo (with regex) */
-	public FieldValidationBinding register(String property, Label label, Control control, FieldFormat fieldFormat, int rules) {
+	public FieldBinding register(String property, Label label, Control control, FieldFormat fieldFormat, int rules) {
 
-		FieldValidationBinding binding=new FieldValidationBinding(label, control, fieldFormat, rules){
+		FieldBinding binding=new FieldBinding(label, control, fieldFormat, rules){
 			@Override
-			public String processMessage(ERRORS error, String message, String label) {
-				return FieldValidator.this.processMessage(error, message, label);
+			public String processErrorMessage(ERRORS error, String message, String label) {
+				return FieldValidator.this.processErrorMessage(error, message, label);
 			}
 		};
 		register(property, binding);
@@ -48,12 +49,12 @@ public abstract class FieldValidator implements IValidator {
 	}
 
 	/** Text / combo / list / button (no regex) */
-	public FieldValidationBinding register(String property, Label label, Control control, int rules) {
+	public FieldBinding register(String property, Label label, Control control, int rules) {
 
-		FieldValidationBinding binding=new FieldValidationBinding(label, control, rules){
+		FieldBinding binding=new FieldBinding(label, control, rules){
 			@Override
-			public String processMessage(ERRORS error, String message, String label) {
-				return FieldValidator.this.processMessage(error, message, label);
+			public String processErrorMessage(ERRORS error, String message, String label) {
+				return FieldValidator.this.processErrorMessage(error, message, label);
 			}
 		};
 		register(property, binding);
@@ -62,12 +63,12 @@ public abstract class FieldValidator implements IValidator {
 	}
 
 	/** Generic (no regex) */
-	public FieldValidationBinding register(String property, Control control, int rules) {
+	public FieldBinding register(String property, Control control, int rules) {
 
-		FieldValidationBinding binding=new FieldValidationBinding(control, rules){
+		FieldBinding binding=new FieldBinding(control, rules){
 			@Override
-			public String processMessage(ERRORS error, String message, String label) {
-				return FieldValidator.this.processMessage(error, message, label);
+			public String processErrorMessage(ERRORS error, String message, String label) {
+				return FieldValidator.this.processErrorMessage(error, message, label);
 			}
 		};
 		register(property, binding);
@@ -76,7 +77,7 @@ public abstract class FieldValidator implements IValidator {
 	}
 
 
-	protected void register(String property, FieldValidationBinding binding) {
+	protected void register(String property, FieldBinding binding) {
 
 		if(validatorMap.containsKey(property))
 			throw new Error("VALIDATOR ALREADY REGISTERED :"+property);
@@ -114,7 +115,7 @@ public abstract class FieldValidator implements IValidator {
 
 	public void unregister(String property) {
 
-		FieldValidationBinding binding=validatorMap.remove(property);
+		FieldBinding binding=validatorMap.remove(property);
 		if(binding!=null) binding.dispose();
 
 	}
@@ -126,7 +127,7 @@ public abstract class FieldValidator implements IValidator {
 	 */
 	private void resetBindings() {
 
-		for(FieldValidationBinding binding: validatorMap.values()){
+		for(FieldBinding binding: validatorMap.values()){
 			binding.reset();
 		}
 
@@ -135,7 +136,7 @@ public abstract class FieldValidator implements IValidator {
 
 	private void validateBindings() {
 
-		for(FieldValidationBinding binding: validatorMap.values()){
+		for(FieldBinding binding: validatorMap.values()){
 			binding.validate(isEdited());
 		}
 
@@ -144,7 +145,7 @@ public abstract class FieldValidator implements IValidator {
 
 	private void updateBindings() {
 
-		for(FieldValidationBinding binding: validatorMap.values()){
+		for(FieldBinding binding: validatorMap.values()){
 			binding.update();
 		}
 
@@ -189,7 +190,7 @@ public abstract class FieldValidator implements IValidator {
 	@Override
 	public void clearError() {
 
-		for(FieldValidationBinding binding: validatorMap.values()){
+		for(FieldBinding binding: validatorMap.values()){
 			binding.clearError();
 		}
 
@@ -199,7 +200,7 @@ public abstract class FieldValidator implements IValidator {
 	@Override
 	public boolean hasError() {
 
-		for(FieldValidationBinding binding: validatorMap.values()){
+		for(FieldBinding binding: validatorMap.values()){
 			if(binding.hasError()) return true;
 		}
 
@@ -213,7 +214,7 @@ public abstract class FieldValidator implements IValidator {
 
 		String errorMessage="";
 
-		for(FieldValidationBinding binding: validatorMap.values()){
+		for(FieldBinding binding: validatorMap.values()){
 			if(binding.hasError())
 				errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getMessage();
 		}
@@ -227,7 +228,7 @@ public abstract class FieldValidator implements IValidator {
 	/*
 	 * Getters and setters
 	 */
-	public FieldValidationBinding getProperty(String property) {
+	public FieldBinding getProperty(String property) {
 		return validatorMap.get(property);
 	}
 

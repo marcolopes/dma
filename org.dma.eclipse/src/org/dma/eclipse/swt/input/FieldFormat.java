@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.eclipse.swt.validation.field;
+package org.dma.eclipse.swt.input;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

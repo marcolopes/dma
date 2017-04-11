@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
-package org.dma.eclipse.swt.validation.field;
+package org.dma.eclipse.swt.input;
 
 public interface IFieldProperties {
 

@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.validation.field;
 
+import org.dma.eclipse.swt.input.FieldFormat;
+import org.dma.eclipse.swt.input.FieldRegex;
 import org.dma.eclipse.swt.validation.IValidationRules;
 import org.dma.java.math.NumericUtils;
 import org.dma.java.util.TimeDateUtils;
@@ -21,7 +23,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-public abstract class FieldValidationBinding extends FieldError implements IValidationRules {
+public abstract class FieldBinding extends FieldError implements IValidationRules {
 
 	private final Control control;
 	private final FieldFormat fieldFormat;
@@ -33,7 +35,7 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 	private FocusListener focusListener;
 
 	/** Text / combo (with regex) */
-	public FieldValidationBinding(Label label, Control control, FieldFormat fieldFormat, int rules) {
+	public FieldBinding(Label label, Control control, FieldFormat fieldFormat, int rules) {
 		super(label);
 		this.control=control;
 		this.fieldFormat=fieldFormat;
@@ -42,7 +44,7 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 	}
 
 	/** Text / combo / list / button (no regex) */
-	public FieldValidationBinding(Label label, Control control, int rules) {
+	public FieldBinding(Label label, Control control, int rules) {
 		super(label);
 		this.control=control;
 		this.fieldFormat=null;
@@ -51,7 +53,7 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 	}
 
 	/** Generic (no regex) */
-	public FieldValidationBinding(Control control, int rules) {
+	public FieldBinding(Control control, int rules) {
 		super(null);
 		this.control=control;
 		this.fieldFormat=null;

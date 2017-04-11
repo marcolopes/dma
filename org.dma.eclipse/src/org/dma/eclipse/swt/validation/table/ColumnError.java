@@ -7,7 +7,7 @@ package org.dma.eclipse.swt.validation.table;
 
 public abstract class ColumnError {
 
-	public abstract String processMessage(String message, String label);
+	public abstract String processErrorMessage(String message, String label);
 
 	private String message;
 	private boolean error;
@@ -24,12 +24,12 @@ public abstract class ColumnError {
 	 * Message
 	 */
 	public String getMessage() {
-		return message;
+		return processErrorMessage(message==null ? "" : message,
+				label==null ? "" : label);
 	}
 
 	public void setError(String message) {
-		this.message=processMessage(message==null ? "" : message,
-				label==null ? "" : label);
+		this.message=message;
 		setError(this.message!=null && !this.message.isEmpty());
 	}
 
