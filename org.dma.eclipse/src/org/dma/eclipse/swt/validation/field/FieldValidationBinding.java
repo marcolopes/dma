@@ -23,9 +23,6 @@ import org.eclipse.swt.widgets.Text;
 
 public abstract class FieldValidationBinding extends FieldError implements IValidationRules {
 
-	/** @see org.dma.eclipse.swt.validation#IValidationRules */
-	public abstract String getErrorMessage(int error);
-
 	private final Control control;
 	private final FieldFormat fieldFormat;
 	private final FieldRegex regex;
@@ -132,7 +129,7 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 			//COMBO/LIST has no elements?
 			(control instanceof Combo && getCombo().getItemCount()==0) ||
 			(control instanceof List && getList().getItemCount()==0)))
-			setError(getErrorMessage(NOTEMPTY));
+			setError(ERRORS.IS_EMPTY);
 
 		//field cannot be ZERO
 		if (NumericUtils.bit(rules, NOTZERO) &&
@@ -142,12 +139,12 @@ public abstract class FieldValidationBinding extends FieldError implements IVali
 			//COMBO/LIST has no selected elements?
 			(control instanceof Combo && getCombo().getSelectionIndex()==-1) ||
 			(control instanceof List && getList().getSelectionCount()==0)))
-			setError(getErrorMessage(NOTZERO));
+			setError(ERRORS.IS_ZERO);
 
-		//field length must match LIMIT
+		//field length must be exact
 		if (NumericUtils.bit(rules, LIMITMATCH) &&
 			(control instanceof Text && getText().length()!=fieldFormat.getSize().size))
-			setError(getErrorMessage(LIMITMATCH));
+			setError(ERRORS.BAD_LENGTH);
 
 	}
 

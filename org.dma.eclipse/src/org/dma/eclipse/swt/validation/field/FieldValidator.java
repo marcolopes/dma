@@ -11,6 +11,7 @@ import java.util.Map;
 import org.dma.eclipse.swt.validation.IValidationManager;
 import org.dma.eclipse.swt.validation.IValidator;
 import org.dma.eclipse.swt.validation.ValidationManager;
+import org.dma.eclipse.swt.validation.field.FieldError.ERRORS;
 import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 
@@ -25,8 +26,7 @@ public abstract class FieldValidator implements IValidator {
 
 	public abstract boolean isEdited();
 	public abstract void validateInput();
-	public abstract String getErrorMessage(int error);
-	public abstract String processMessage(String message, String label);
+	public abstract String processMessage(ERRORS error, String message, String label);
 
 	/** Insertion-ordered KEYS */
 	private final Map<String, FieldValidationBinding> validatorMap=new LinkedHashMap();
@@ -38,12 +38,8 @@ public abstract class FieldValidator implements IValidator {
 
 		FieldValidationBinding binding=new FieldValidationBinding(label, control, fieldFormat, rules){
 			@Override
-			public String getErrorMessage(int error) {
-				return FieldValidator.this.getErrorMessage(error);
-			}
-			@Override
-			public String processMessage(String message, String label) {
-				return FieldValidator.this.processMessage(message, label);
+			public String processMessage(ERRORS error, String message, String label) {
+				return FieldValidator.this.processMessage(error, message, label);
 			}
 		};
 		register(property, binding);
@@ -56,12 +52,8 @@ public abstract class FieldValidator implements IValidator {
 
 		FieldValidationBinding binding=new FieldValidationBinding(label, control, rules){
 			@Override
-			public String getErrorMessage(int error) {
-				return FieldValidator.this.getErrorMessage(error);
-			}
-			@Override
-			public String processMessage(String message, String label) {
-				return FieldValidator.this.processMessage(message, label);
+			public String processMessage(ERRORS error, String message, String label) {
+				return FieldValidator.this.processMessage(error, message, label);
 			}
 		};
 		register(property, binding);
@@ -74,12 +66,8 @@ public abstract class FieldValidator implements IValidator {
 
 		FieldValidationBinding binding=new FieldValidationBinding(control, rules){
 			@Override
-			public String getErrorMessage(int error) {
-				return FieldValidator.this.getErrorMessage(error);
-			}
-			@Override
-			public String processMessage(String message, String label) {
-				return FieldValidator.this.processMessage(message, label);
+			public String processMessage(ERRORS error, String message, String label) {
+				return FieldValidator.this.processMessage(error, message, label);
 			}
 		};
 		register(property, binding);

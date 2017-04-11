@@ -9,12 +9,19 @@ import org.dma.eclipse.swt.graphics.ColorManager;
 
 import org.eclipse.swt.widgets.Label;
 
-public abstract class FieldError {
+public abstract class FieldError  {
 
-	public abstract String processMessage(String message, String label);
+	public enum ERRORS {
+		NONE,
+		USER_DEFINED,
+		IS_EMPTY,
+		IS_ZERO,
+		BAD_LENGTH}
+
+	public abstract String processMessage(ERRORS error, String message, String label);
 
 	private String message;
-	private boolean error;
+	private ERRORS error;
 
 	protected final Label label;
 
@@ -33,17 +40,17 @@ public abstract class FieldError {
 	 * Message
 	 */
 	public String getMessage() {
-		return message;
+		return processMessage(error, message==null ? "" : message,
+				label==null ? "" : label.getText());
 	}
 
 	public void setError(String message) {
-		this.message=processMessage(message==null ? "" : message,
-				label==null ? "" : label.getText());
-		setError(this.message!=null && !this.message.isEmpty());
+		this.message=message;
+		setError(message==null || message.isEmpty() ? ERRORS.NONE : ERRORS.USER_DEFINED);
 	}
 
 	public void clearError() {
-		setError(null);
+		setError(ERRORS.NONE);
 	}
 
 
@@ -52,10 +59,10 @@ public abstract class FieldError {
 	 * Getters and setters
 	 */
 	public boolean hasError() {
-		return error;
+		return error!=ERRORS.NONE;
 	}
 
-	public void setError(boolean error) {
+	public void setError(ERRORS error) {
 		this.error=error;
 	}
 
