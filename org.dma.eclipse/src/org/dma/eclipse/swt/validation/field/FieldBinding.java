@@ -26,7 +26,8 @@ public abstract class FieldBinding extends FieldError implements IFieldRules {
 	private final Control control;
 	private final FieldFormat fieldFormat;
 	private final FieldRegex regex;
-	private FieldRules rules;
+
+	protected FieldRules rules;
 
 	private boolean enabled=true;
 	private Listener selectionListener;
