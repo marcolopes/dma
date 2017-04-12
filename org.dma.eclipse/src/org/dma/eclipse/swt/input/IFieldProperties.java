@@ -24,5 +24,8 @@ public interface IFieldProperties {
 	/** Allows only POSITIVE numbers */
 	public static final int POSITIVE = 1 << 4;
 
+	/** Does not allow any spaces */
+	public static final int NOSPACES = 1 << 5;
+
 
 }

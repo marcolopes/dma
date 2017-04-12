@@ -429,11 +429,7 @@ public class StringUtils {
 
 	public static String removeChars(String string, String searchFor) {
 
-		for(int i=0; i<searchFor.length(); i++){
-			string=removeChars(string, searchFor.charAt(i));
-		}
-
-		return string;
+		return removeChars(string, searchFor.toCharArray());
 
 	}
 

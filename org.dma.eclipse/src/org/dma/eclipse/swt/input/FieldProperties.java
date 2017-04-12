@@ -39,4 +39,8 @@ public class FieldProperties implements IFieldProperties {
 		return is(POSITIVE);
 	}
 
+	public boolean isNoSpaces() {
+		return is(NOSPACES);
+	}
+
 }

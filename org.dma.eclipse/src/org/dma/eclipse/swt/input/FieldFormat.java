@@ -74,8 +74,8 @@ public class FieldFormat extends FieldProperties {
 		this.type=type;
 		this.size=size;
 		this.pattern=pattern==null ? buildPattern() : pattern;
-		this.exclude=exclude;
-		this.regex=buildRegex(String.valueOf(exclude));
+		this.exclude=isNoSpaces() ? String.valueOf(exclude).concat(" ").toCharArray() : exclude;
+		this.regex=buildRegex(String.valueOf(this.exclude));
 	}
 
 
@@ -94,8 +94,9 @@ public class FieldFormat extends FieldProperties {
 			//digits and letters
 			if (range.isEmpty()) range+=(char)0+"-"+(char)65535;
 			//Character set
-			regex+="[" + range + (exclude.isEmpty() ?
-					"" : "&&[^"+exclude+"]") + "]";
+			regex+=exclude.isEmpty() ?
+				"[" + range + "]" :
+				"[" + range + "&&[^" + exclude + "]]";
 			//alfanumeric limit
 			regex+="{0," + size.size + "}";
 			break;
@@ -109,7 +110,7 @@ public class FieldFormat extends FieldProperties {
 			//integer limit
 			regex+="{0," + size.size + "}";
 			//decimals
-			if(type==TYPES.DECIMAL && size.scale>0){
+			if(size.scale>0){
 				//decimal sparator
 				String group="(\\.\\d";
 				//fraction limit
