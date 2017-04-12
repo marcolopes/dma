@@ -7,8 +7,6 @@ package org.dma.eclipse.swt.validation.field;
 
 import org.dma.eclipse.swt.input.FieldFormat;
 import org.dma.eclipse.swt.input.FieldRegex;
-import org.dma.eclipse.swt.validation.IValidationRules;
-import org.dma.java.math.NumericUtils;
 import org.dma.java.util.TimeDateUtils;
 
 import org.eclipse.swt.SWT;
@@ -23,12 +21,12 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-public abstract class FieldBinding extends FieldError implements IValidationRules {
+public abstract class FieldBinding extends FieldError implements IFieldRules {
 
 	private final Control control;
 	private final FieldFormat fieldFormat;
 	private final FieldRegex regex;
-	private int rules;
+	private FieldRules rules;
 
 	private boolean enabled=true;
 	private Listener selectionListener;
@@ -40,7 +38,7 @@ public abstract class FieldBinding extends FieldError implements IValidationRule
 		this.control=control;
 		this.fieldFormat=fieldFormat;
 		this.regex=new FieldRegex(control, fieldFormat);
-		this.rules=rules;
+		this.rules=new FieldRules(rules);
 	}
 
 	/** Text / combo / list / button (no regex) */
@@ -49,7 +47,7 @@ public abstract class FieldBinding extends FieldError implements IValidationRule
 		this.control=control;
 		this.fieldFormat=null;
 		this.regex=null;
-		this.rules=rules;
+		this.rules=new FieldRules(rules);
 	}
 
 	/** Generic (no regex) */
@@ -58,7 +56,7 @@ public abstract class FieldBinding extends FieldError implements IValidationRule
 		this.control=control;
 		this.fieldFormat=null;
 		this.regex=null;
-		this.rules=rules;
+		this.rules=new FieldRules(rules);
 	}
 
 
@@ -116,37 +114,47 @@ public abstract class FieldBinding extends FieldError implements IValidationRule
 
 	public void validate(boolean edited) {
 
-		//field can be edited
-		enabled=!(NumericUtils.bit(rules, NOTEDITABLE) && edited) &&
-				//field is not READ-ONLY
-				!NumericUtils.bit(rules, READONLY);
+		//can be edited AND is not readonly?
+		enabled=!rules.isNotEditable(edited) && !rules.isReadOnly();
 
 		//rules applied only if ENABLED
 		if (!enabled) return;
 
-		//field cannot be EMPTY
-		if (NumericUtils.bit(rules, NOTEMPTY) &&
-			//TEXT has no chars?
-			((control instanceof Text && getText().trim().isEmpty()) ||
-			//COMBO/LIST has no elements?
-			(control instanceof Combo && getCombo().getItemCount()==0) ||
-			(control instanceof List && getList().getItemCount()==0)))
-			setError(ERRORS.IS_EMPTY);
-
-		//field cannot be ZERO
-		if (NumericUtils.bit(rules, NOTZERO) &&
-			//TEXT/SPINNER is zero?
-			((control instanceof Text && getText().trim().equals("0")) ||
-			(control instanceof Spinner && getText().trim().equals("0")) ||
-			//COMBO/LIST has no selected elements?
-			(control instanceof Combo && getCombo().getSelectionIndex()==-1) ||
-			(control instanceof List && getList().getSelectionCount()==0)))
-			setError(ERRORS.IS_ZERO);
-
-		//field length must be exact
-		if (NumericUtils.bit(rules, LIMITMATCH) &&
-			(control instanceof Text && getText().length()!=fieldFormat.getSize().size))
-			setError(ERRORS.BAD_LENGTH);
+		//SPINNER
+		if (control instanceof Spinner){
+			//is zero?
+			if (rules.isNotZero() && getText().trim().equals("0")) setError(ERRORS.IS_ZERO);
+		}
+		//COMBO
+		else if (control instanceof Combo){
+			//has no elements?
+			if (rules.isNotEmpty() && getCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
+			//has no selected elements?
+			if (rules.isNotZero() && getCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
+		}
+		//LIST
+		else if (control instanceof List){
+			//has no elements?
+			if (rules.isNotEmpty() && getList().getItemCount()==0) setError(ERRORS.IS_EMPTY);
+			//has no selected elements?
+			if (rules.isNotZero() && getList().getSelectionCount()==0) setError(ERRORS.IS_ZERO);
+		}
+		//BUTTON
+		else if (control instanceof Button){
+		}
+		//DATETIME
+		else if (control instanceof DateTime){
+		}
+		//TEXT
+		else if (control instanceof Text){
+			String text=getText().trim();
+			//has no chars?
+			if (rules.isNotEmpty() && text.isEmpty()) setError(ERRORS.IS_EMPTY);
+			//is zero?
+			if (rules.isNotZero() && text.equals("0")) setError(ERRORS.IS_ZERO);
+			//length not exact?
+			if (rules.isLimitMatch() && text.length()!=fieldFormat.getSize().size) setError(ERRORS.BAD_LENGTH);
+		}
 
 	}
 
@@ -211,7 +219,7 @@ public abstract class FieldBinding extends FieldError implements IValidationRule
 	}
 
 	public void setRules(int rules) {
-		this.rules=rules;
+		this.rules=new FieldRules(rules);
 	}
 
 	public boolean isEnabled() {
