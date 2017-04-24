@@ -25,8 +25,8 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 	/** Used by addAll methods */
 	private Collection<T> addUnique(Collection<? extends T> col) {
 		Collection<T> unique=new ArrayList();
-		for(T e: col){
-			if (set.add(e)) unique.add(e);
+		for(T element: col){
+			if (set.add(element)) unique.add(element);
 		}
 		return unique;
 	}

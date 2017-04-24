@@ -16,8 +16,8 @@ public class MatchList extends UniqueArrayList<String> {
 	/** Used by addAll methods */
 	private Collection<String> trim(Collection<? extends String> col) {
 		Collection<String> result=new ArrayList();
-		for(String e: col){
-			result.add(e.trim());
+		for(String element: col){
+			result.add(element.trim());
 		}
 		return result;
 	}
@@ -63,8 +63,8 @@ public class MatchList extends UniqueArrayList<String> {
 
 	/** Checks if any element matches the given regex */
 	public boolean matches(String regex) {
-		for(String e: this){
-			if (e.matches(regex)) return true;
+		for(String element: this){
+			if (element.matches(regex)) return true;
 		}
 		return false;
 	}

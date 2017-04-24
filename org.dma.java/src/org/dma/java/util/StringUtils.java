@@ -487,7 +487,7 @@ public class StringUtils {
 	}
 
 
-	/** Ensure the ESCAPE (\) char is escaped! */
+	/** Ensure the ESCAPE char is escaped! */
 	public static String escape(String string) {
 
 		return string.replace("\\", "\\\\");
@@ -498,15 +498,16 @@ public class StringUtils {
 	/** Escape and surround with QUOTE chars */
 	public static String quote(String string, char quote) {
 
+		//string may contain DOUBLE QUOTES!
 		return quote + escape(string).replace("\"", "\\\"") + quote;
 
 	}
 
 
-	/** Escape and surround with COMMA (") chars */
+	/** Escape and surround with DOUBLE QUOTE chars */
 	public static String quote(String string) {
 
-		return quote(string, '\"');
+		return quote(string, '"');
 
 	}
 

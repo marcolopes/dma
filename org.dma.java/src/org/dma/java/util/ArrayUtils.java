@@ -89,8 +89,8 @@ public class ArrayUtils {
 		String[] result=new String[array.length];
 
 		int index=0;
-		for(T e: array){
-			result[index++]=e.toString();
+		for(T element: array){
+			result[index++]=element.toString();
 		}
 
 		return result;
@@ -148,8 +148,8 @@ public class ArrayUtils {
 
 		int lenght=0;
 
-		for(T[] e: array){
-			if (e!=null) lenght+=e.length;
+		for(T[] element: array){
+			if (element!=null) lenght+=element.length;
 		}
 
 		return lenght;

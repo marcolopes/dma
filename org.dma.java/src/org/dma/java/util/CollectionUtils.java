@@ -18,18 +18,18 @@ public class CollectionUtils {
 	 */
 	/** USE NATIVE c.toArray(a) */
 	@Deprecated
-	public static <T> T[] toArray(Collection<T> c, T[] a) {
-		return c.toArray(a);
+	public static <T> T[] toArray(Collection<T> col, T[] array) {
+		return col.toArray(array);
 	}
 
 	/** Returns a new array even if collection is empty */
-	public static <T> T[] toArray(Collection<T> c, Class klass) {
-		return toArray(c, (T[])Array.newInstance(klass, c.size()));
+	public static <T> T[] toArray(Collection<T> col, Class klass) {
+		return toArray(col, (T[])Array.newInstance(klass, col.size()));
 	}
 
 	/** Returns a new array or null if collection is empty */
-	public static <T> T[] toArray(Collection<T> c) {
-		return c.isEmpty() ? null : toArray(c, c.iterator().next().getClass());
+	public static <T> T[] toArray(Collection<T> col) {
+		return col.isEmpty() ? null : toArray(col, col.iterator().next().getClass());
 	}
 
 	public static <T> String[] toStringArray(Collection<T> col) {
@@ -37,8 +37,8 @@ public class CollectionUtils {
 		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: col){
-			result[index++]=e.toString();
+		for(T element: col){
+			result[index++]=element.toString();
 		}
 
 		return result;
@@ -56,8 +56,8 @@ public class CollectionUtils {
 
 		int count=0;
 
-		for(T e: col){
-			if(e.toString().contains(searchFor)) count++;
+		for(T element: col){
+			if(element.toString().contains(searchFor)) count++;
 		}
 
 		return count;
@@ -68,8 +68,8 @@ public class CollectionUtils {
 
 		int index=new Random().nextInt(col.size());
 
-		for(T e: col){
-			if (--index < 0) return e;
+		for(T element: col){
+			if (--index < 0) return element;
 		}
 
 		return null;
@@ -86,8 +86,8 @@ public class CollectionUtils {
 		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: col){
-			result[index++]=StringUtils.numbers(e.toString());
+		for(T element: col){
+			result[index++]=StringUtils.numbers(element.toString());
 		}
 
 		return result;
@@ -100,8 +100,8 @@ public class CollectionUtils {
 		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: col){
-			result[index++]=StringUtils.capitalize(e.toString());
+		for(T element: col){
+			result[index++]=StringUtils.capitalize(element.toString());
 		}
 
 		return result;
@@ -114,8 +114,8 @@ public class CollectionUtils {
 		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: col){
-			result[index++]=StringUtils.uncapitalize(e.toString());
+		for(T element: col){
+			result[index++]=StringUtils.uncapitalize(element.toString());
 		}
 
 		return result;
@@ -128,8 +128,8 @@ public class CollectionUtils {
 		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: col){
-			result[index++]=prefix+e.toString();
+		for(T element: col){
+			result[index++]=prefix+element.toString();
 		}
 
 		return result;
@@ -142,8 +142,8 @@ public class CollectionUtils {
 		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: col){
-			result[index++]=e.toString()+suffix;
+		for(T element: col){
+			result[index++]=element.toString()+suffix;
 		}
 
 		return result;
@@ -156,8 +156,8 @@ public class CollectionUtils {
 		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: col){
-			result[index++]=StringUtils.removeAll(e.toString(), searchFor);
+		for(T element: col){
+			result[index++]=StringUtils.removeAll(element.toString(), searchFor);
 		}
 
 		return result;
@@ -170,8 +170,8 @@ public class CollectionUtils {
 		String[] result=new String[col.size()];
 
 		int index=0;
-		for(T e: col){
-			result[index++]=e.toString().trim();
+		for(T element: col){
+			result[index++]=element.toString().trim();
 		}
 
 		return result;
@@ -183,9 +183,9 @@ public class CollectionUtils {
 
 		Collection<String> result=new ArrayList();
 
-		for(T e: col){
-			String str=e.toString();
-			if(!str.trim().isEmpty()) result.add(str);
+		for(T element: col){
+			String s=element.toString();
+			if(!s.trim().isEmpty()) result.add(s);
 		}
 
 		return result.toArray(new String[result.size()]);
@@ -197,8 +197,8 @@ public class CollectionUtils {
 
 		StringBuilder result=new StringBuilder();
 
-		for(T e: col){
-			String s=e.toString();
+		for(T element: col){
+			String s=element.toString();
 			if(!s.isEmpty()){
 				if(result.length()>0) result.append(separator);
 				result.append(s);
@@ -280,8 +280,8 @@ public class CollectionUtils {
 
 		Collection<T> remove=new ArrayList();
 
-		for(T e: col){
-			if(e.toString().contains(searchFor)) remove.add(e);
+		for(T element: col){
+			if(element.toString().contains(searchFor)) remove.add(element);
 		}
 
 		col.removeAll(remove);

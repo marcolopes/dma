@@ -22,10 +22,10 @@ public final class MethodUtils {
 
 	public static Object invoke(String className, String methodName, Object...args) throws Exception {
 
-		int i=0;
+		int index=0;
 		Class[] parameterTypes=new Class[args.length];
 		for(Object obj: args){
-			parameterTypes[i++]=obj.getClass();
+			parameterTypes[index++]=obj.getClass();
 		}
 
 		return invoke(className, methodName, parameterTypes, args);
