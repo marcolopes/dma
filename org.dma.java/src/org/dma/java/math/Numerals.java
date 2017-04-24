@@ -326,10 +326,10 @@ public class Numerals {
 			{1010010000,1010010002,1},
 			{1234567890,1234567891,1}};
 
-		int i=0;
+		int index=0;
 		for(double[] interval: INTERVALS){
 			System.out.println();
-			System.out.println("===INTERVALO #"+(i++)+"===");
+			System.out.println("===INTERVALO #"+(index++)+"===");
 			for(BigDecimal j=BigDecimal.valueOf(interval[0]);
 					j.doubleValue()<=interval[1]; j=j.add(BigDecimal.valueOf(interval[2]))){
 				System.out.println(String.format(

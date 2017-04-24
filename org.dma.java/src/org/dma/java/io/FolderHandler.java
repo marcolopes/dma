@@ -161,10 +161,10 @@ public class FolderHandler {
 		File[] files=listFiles(wildcards);
 		if (files==null) return null;
 
-		int i=0;
+		int index=0;
 		String[] names=new String[files.length];
 		for(File file: files){
-			names[i++]=file.getName();
+			names[index++]=file.getName();
 		}
 
 		return names;

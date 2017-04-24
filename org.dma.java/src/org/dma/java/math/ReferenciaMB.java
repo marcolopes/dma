@@ -94,14 +94,14 @@ public class ReferenciaMB {
 		System.out.println("control: "+control);
 
 		/*
-		int i=0;
+		int index=0;
 		int checksum=0;
 		final int[] multiplier={
 			51, 73, 17, 89, 38, 62, 45, 53, 15, 50,
 			 5, 49, 34, 81, 76, 27, 90,  9, 30,  3};
 		for(char c: control.toCharArray()){
-			checksum+=Character.getNumericValue(c) * multiplier[i];
-			i++;
+			checksum+=Character.getNumericValue(c) * multiplier[index];
+			index++;
 		}
 		checksum=98-(checksum % 97);
 		*/

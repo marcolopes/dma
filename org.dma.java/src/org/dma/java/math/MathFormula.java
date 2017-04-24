@@ -50,35 +50,32 @@ public class MathFormula {
 
 		Debug.out("formula", formula);
 
-		try{
-			int i=0;
-			String enumeration=formula;
-			for(FormulaSymbol symbol: symbols){
+		int index=0;
+		String enumeration=formula;
+		for(FormulaSymbol symbol: symbols){
 
-				if(symbol!=null && !symbol.isEmpty()){
-					String name=ignoreCase ? symbol.name.toLowerCase() : symbol.name;
-					enumeration=enumeration.replace(name, String.valueOf(symbol.value));
-					Debug.out("symbol #"+i, symbol);
-					Debug.out("enumeration #"+i, enumeration);
-					i++;
-				}
-
+			if(symbol!=null && !symbol.isEmpty()){
+				String name=ignoreCase ? symbol.name.toLowerCase() : symbol.name;
+				enumeration=enumeration.replace(name, String.valueOf(symbol.value));
+				Debug.out("symbol #"+index, symbol);
+				Debug.out("enumeration #"+index, enumeration);
+				index++;
 			}
 
-			Debug.out("formula", formula);
-			Debug.out("enumeration", enumeration);
+		}
 
-			if(!enumeration.equals(formula)){
+		Debug.out("formula", formula);
+		Debug.out("enumeration", enumeration);
 
-				Object value=interpreter.eval("result="+enumeration);
-				Debug.out("value",interpreter.get("result"));
+		if(!enumeration.equals(formula)) try{
 
-				BigDecimal result=new BigDecimal(value.toString());
-				Debug.out("result",result);
+			Object value=interpreter.eval("result="+enumeration);
+			Debug.out("value",interpreter.get("result"));
 
-				return result;
+			BigDecimal result=new BigDecimal(value.toString());
+			Debug.out("result",result);
 
-			}
+			return result;
 
 		}catch(ScriptException e){
 			System.out.println(e);
