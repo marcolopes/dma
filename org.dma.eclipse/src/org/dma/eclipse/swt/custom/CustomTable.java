@@ -59,12 +59,8 @@ public class CustomTable extends Table {
 				}
 				else if (columns.size()>0){
 					int width=(clientWidth * remainingPercentage) / (columns.size() * 100);
-					if (width==0){
-						System.err.println("Columns NOT visible: "+columns.size());
-					}
-					else for(TableColumn column: columns){
-						column.setWidth(width);
-					}
+					if (width==0) System.err.println("Columns NOT visible: "+columns.size());
+					else for(TableColumn column: columns) column.setWidth(width);
 				}
 				setRedraw(true);
 				busy=false;
