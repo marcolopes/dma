@@ -90,10 +90,10 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 		if (!Debug.STATUS) return;
 
 		System.out.println("BATCH: " + this);
-		int i=0;
+		int index=0;
 		for(CustomJob job: this){
-			System.out.println("JOB #"+i+": " + job.getStateName());
-			i++;
+			System.out.println("JOB #"+index+": " + job.getStateName());
+			index++;
 		}
 
 	}

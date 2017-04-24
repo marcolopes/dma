@@ -22,10 +22,10 @@ public class TraverseSupport extends ArrayList<Control> {
 
 	private final TraverseListener traverseListener = new TraverseListener() {
 
-		public void keyTraversed(TraverseEvent e) {
+		public void keyTraversed(TraverseEvent event) {
 			try{
 				//current control
-				Control control=(Control)e.getSource();
+				Control control=(Control)event.getSource();
 
 				//multi-line TEXT?
 				if (control instanceof Text &&
@@ -33,31 +33,28 @@ public class TraverseSupport extends ArrayList<Control> {
 
 					Debug.out("SWT.MULTI");
 
-					if (keypadReturn){
+					if (keypadReturn) switch(event.keyCode){
+					case SWT.KEYPAD_CR:
+						event.doit=false; // do not traverse
+						break;
 
-						//numeric keypad ENTER pressed?
-						if (e.keyCode==SWT.KEYPAD_CR){
-							e.doit = false; // do not traverse
-						}
-						//main ENTER pressed?
-						else if (e.keyCode==SWT.CR){
-							e.detail = SWT.TRAVERSE_NONE; // avoid NEW line
-							e.doit = true; // traverse
-						}
-
+					case SWT.CR:
+						event.detail=SWT.TRAVERSE_NONE; // avoid NEW line
+						event.doit=true; // traverse
+						break;
 					}
 					//TAB key pressed?
-					else if (e.keyCode==SWT.TAB){
-						e.doit = true; // traverse
+					else if (event.keyCode==SWT.TAB){
+						event.doit=true; // traverse
 					}
 
 				}
 
 				//next control
-				if (e.doit) selectNext(control);
+				if (event.doit) selectNext(control);
 
-			}catch(Exception e1) {
-				e1.printStackTrace();
+			}catch(Exception e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -77,8 +74,8 @@ public class TraverseSupport extends ArrayList<Control> {
 	}
 
 	public void add(Control...control) {
-		for(Control e: control){
-			add(e);
+		for(Control element: control){
+			add(element);
 		}
 	}
 
@@ -89,14 +86,14 @@ public class TraverseSupport extends ArrayList<Control> {
 	}
 
 	public void remove(Control...control) {
-		for(Control e: control){
-			remove(e);
+		for(Control element: control){
+			remove(element);
 		}
 	}
 
 	public void removeAll() {
-		for(Control e: this){
-			remove(e);
+		for(Control element: this){
+			remove(element);
 		}
 	}
 

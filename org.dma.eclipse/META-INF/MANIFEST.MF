@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Utils
 Bundle-SymbolicName: org.dma.eclipse;singleton:=true
-Bundle-Version: 6.0.0.qualifier
+Bundle-Version: 6.1.0.qualifier
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-Activator: org.dma.eclipse.Activator
 Bundle-ActivationPolicy: lazy
@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
  org.eclipse.core.databinding;bundle-version="1.4.1",
  org.eclipse.ui.console;bundle-version="3.5.100",
  org.eclipse.ui;bundle-version="3.8.2",
- org.dma.java;bundle-version="5.8.0"
+ org.dma.java;bundle-version="6.2.4"
 Export-Package: org.dma.eclipse.core,
  org.dma.eclipse.core.bindings,
  org.dma.eclipse.core.bindings.converters,

@@ -96,7 +96,7 @@ public class FieldFormat extends FieldProperties {
 			//Character set
 			regex+=exclude.isEmpty() ?
 				"[" + range + "]" :
-				"[" + range + "&&[^" + exclude + "]]";
+				"[" + range + "&&[^" + StringUtils.escape(exclude) + "]]";
 			//alfanumeric limit
 			regex+="{0," + size.size + "}";
 			break;

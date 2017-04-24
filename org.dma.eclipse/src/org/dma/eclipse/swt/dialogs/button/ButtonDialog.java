@@ -10,6 +10,8 @@ import org.dma.eclipse.swt.custom.CustomShell;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -21,7 +23,6 @@ import org.eclipse.swt.widgets.Shell;
 public abstract class ButtonDialog extends CustomShell {
 
 	public abstract void ok();
-	public abstract void cancel();
 
 	private static final String OK = IDialogConstants.OK_LABEL;
 	private static final String CANCEL = IDialogConstants.CANCEL_LABEL;
@@ -42,7 +43,7 @@ public abstract class ButtonDialog extends CustomShell {
 	}
 
 	public ButtonDialog(Shell parent, int height) {
-		super(parent, STYLE_FIXED);
+		super(parent, STYLE_RESIZABLE);
 
 		this.height=height;
 
@@ -60,34 +61,56 @@ public abstract class ButtonDialog extends CustomShell {
 	private void createContents() {
 
 		Composite composite=new Composite(this, SWT.NONE);
-		GridLayout gridLayout=new GridLayout(2, false);
+		GridLayout gridLayout=new GridLayout(2, true);
 		gridLayout.marginWidth=0;
 		gridLayout.marginHeight=0;
 		gridLayout.horizontalSpacing=0;
 		gridLayout.verticalSpacing=0;
 		composite.setLayout(gridLayout);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		for(int i=0; i<LABELS.length; i++){
-			CustomButton button=new CustomButton(composite, SWT.PUSH);
-			button.setLayoutData(new GridData(height*2, height));
+		for(String label: LABELS){
+			final CustomButton button=new CustomButton(composite, SWT.PUSH);
+			GridData gridData=new GridData(SWT.FILL, SWT.FILL, true, true);
+			gridData.minimumWidth=height*2;
+			gridData.minimumHeight=height;
+			button.setLayoutData(gridData);
 			button.setFontSize(15);
-			button.setText(LABELS[i]);
-			button.setData(LABELS[i]);
+			button.setText(label);
+			button.setData(label);
+
+			button.addKeyListener(new KeyAdapter(){
+				@Override
+				public void keyPressed(KeyEvent e) {
+					switch(e.keyCode){
+					case SWT.CR:
+					case SWT.KEYPAD_CR: close(); ok(); break;
+					case SWT.ESC: close(); break;
+					}
+				}
+			});
 
 			button.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					String label=(String)e.widget.getData();
 					close();
-					if (label.equals(OK)){
-						ok();
-					}else{
-						cancel();
-					}
+					if (label.equals(OK)) ok();
 				}
 			});
 		}
+
+	}
+
+
+	public static void main(String[] argvs) {
+
+		new ButtonDialog() {
+			@Override
+			public void ok() {
+				System.out.println(OK);
+			}
+		}.openAndSleep();
 
 	}
 

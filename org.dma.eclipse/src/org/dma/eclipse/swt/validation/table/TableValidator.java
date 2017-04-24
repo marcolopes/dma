@@ -42,9 +42,9 @@ public abstract class TableValidator<T> implements IValidator {
 
 	private final FocusListener focusListener=new FocusListener(){
 		@Override
-		public void focusGained(FocusEvent event) {}
+		public void focusGained(FocusEvent e) {}
 		@Override
-		public void focusLost(FocusEvent event) {
+		public void focusLost(FocusEvent e) {
 			Debug.out("TABLE");
 			if(!viewer.isCellEditorActive()) validateTable();
 		}

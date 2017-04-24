@@ -152,6 +152,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 		tabFolder.setSimple(false);
 
 		tabFolder.addCTabFolder2Listener(new CTabFolder2Adapter() {
+			@Override
 			public void close(CTabFolderEvent event) {
 				CTabItem tabItem=(CTabItem)event.item;
 				Debug.out("CLOSE", tabItem);
@@ -166,6 +167,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 				updateToolBar();
 				setFocus();
 			}
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				Debug.out("DEFAULT SELECTED");
 			}
@@ -190,14 +192,16 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 			//listeners are not created if browser throws exception
 			browser.addOpenWindowListener(new OpenWindowListener(){
-				//avoid external browser creation
+				@Override
 				public void open(WindowEvent event) {
+					//avoid external browser creation
 					event.browser=createBrowser();
 					Debug.out("OPEN", event.browser);
 					updateToolBar();
 				}
 			});
 			browser.addTitleListener(new TitleListener(){
+				@Override
 				public void changed(TitleEvent event) {
 					CTabItem tabItem=tabFolder.getSelection();
 					Debug.out("CHANGED", tabItem);

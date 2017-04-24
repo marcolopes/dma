@@ -20,8 +20,8 @@ public class CustomTrayItem {
 
 	private final Listener maximizeListener=new Listener() {
 		@Override
-		public void handleEvent(final Event event) {
-			if(!parent.isVisible()){
+		public void handleEvent(Event event) {
+			if (!parent.isVisible()){
 				parent.setMinimized(false);
 				parent.setVisible(true);
 			}

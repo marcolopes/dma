@@ -111,8 +111,8 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 
 	public void debug() {
-		for(String e: values()){
-			System.out.println(e);
+		for(String element: values()){
+			System.out.println(element);
 		}
 	}
 

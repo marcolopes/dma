@@ -43,8 +43,8 @@ public class FocusSupport {
 	}
 
 	public void add(Control...control) {
-		for(Control e: control){
-			add(e);
+		for(Control element: control){
+			add(element);
 		}
 	}
 
@@ -53,8 +53,8 @@ public class FocusSupport {
 	}
 
 	public void remove(Control...control) {
-		for(Control e: control){
-			remove(e);
+		for(Control element: control){
+			remove(element);
 		}
 	}
 

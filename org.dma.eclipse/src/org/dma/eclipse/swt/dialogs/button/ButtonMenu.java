@@ -9,6 +9,8 @@ import org.dma.eclipse.swt.custom.CustomButton;
 import org.dma.eclipse.swt.custom.CustomShell;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -19,26 +21,25 @@ import org.eclipse.swt.widgets.Shell;
 
 public abstract class ButtonMenu extends CustomShell {
 
-	public abstract String label(int index);
 	public abstract void done(int index);
 
-	private final int labels;
+	private final String[] labels;
 	private final int height;
 
-	public ButtonMenu(int labels) {
+	public ButtonMenu(String...labels) {
 		this(Display.getDefault().getActiveShell(), labels);
 	}
 
-	public ButtonMenu(int labels, int height) {
-		this(Display.getDefault().getActiveShell(), labels, height);
+	public ButtonMenu(int height, String...labels) {
+		this(Display.getDefault().getActiveShell(), height, labels);
 	}
 
-	public ButtonMenu(Shell parent, int labels) {
-		this(parent, labels, Display.getDefault().getClientArea().height / 10);
+	public ButtonMenu(Shell parent, String...labels) {
+		this(parent, Display.getDefault().getClientArea().height / 10, labels);
 	}
 
-	public ButtonMenu(Shell parent, int labels, int height) {
-		super(parent, STYLE_FIXED);
+	public ButtonMenu(Shell parent, int height, String...labels) {
+		super(parent, STYLE_RESIZABLE);
 
 		this.labels=labels;
 		this.height=height;
@@ -57,20 +58,34 @@ public abstract class ButtonMenu extends CustomShell {
 	private void createContents() {
 
 		Composite composite=new Composite(this, SWT.NONE);
-		GridLayout gridLayout=new GridLayout(1, false);
+		GridLayout gridLayout=new GridLayout(1, true);
 		gridLayout.marginWidth=0;
 		gridLayout.marginHeight=0;
 		gridLayout.horizontalSpacing=0;
 		gridLayout.verticalSpacing=0;
 		composite.setLayout(gridLayout);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		for(int i=0; i<labels; i++){
+		int index=0;
+		for(String label: labels){
 			CustomButton button=new CustomButton(composite, SWT.PUSH);
-			button.setLayoutData(new GridData(height*4, height));
+			GridData gridData=new GridData(SWT.FILL, SWT.FILL, true, true);
+			gridData.minimumWidth=height*4;
+			gridData.minimumHeight=height;
+			button.setLayoutData(gridData);
 			button.setFontSize(15);
-			button.setText(label(i));
-			button.setData(i);
+			button.setText(label);
+			button.setData(index);
+			index++;
+
+			button.addKeyListener(new KeyAdapter(){
+				@Override
+				public void keyPressed(KeyEvent e) {
+					switch(e.keyCode){
+					case SWT.ESC: close(); break;
+					}
+				}
+			});
 
 			button.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -81,6 +96,18 @@ public abstract class ButtonMenu extends CustomShell {
 				}
 			});
 		}
+
+	}
+
+
+	public static void main(String[] argvs) {
+
+		new ButtonMenu("Zero", "One", "Two") {
+			@Override
+			public void done(int index) {
+				System.out.println(index);
+			}
+		}.openAndSleep();
 
 	}
 

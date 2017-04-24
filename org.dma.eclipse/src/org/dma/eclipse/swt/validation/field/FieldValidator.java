@@ -102,7 +102,7 @@ public abstract class FieldValidator implements IValidator {
 
 		binding.addSelectionListener(new Listener() {
 			@Override
-			public void handleEvent(Event event) {
+			public void handleEvent(Event e) {
 				Debug.out();
 				validationManager.processValidators();
 			}

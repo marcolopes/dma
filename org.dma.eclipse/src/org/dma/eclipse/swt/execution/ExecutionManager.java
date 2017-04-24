@@ -56,12 +56,12 @@ public class ExecutionManager {
 
 		execDefinition.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent event) {
+			public void keyPressed(KeyEvent e) {
 				for(int keyCode: execEvent.getKeycode()){
-					if(keyCode==event.keyCode) {
+					if(keyCode==e.keyCode) {
 						Debug.out("EXECUTION");
 						execEvent.execute();
-						event.doit=false;
+						e.doit=false;
 					}
 				}
 			}
@@ -70,7 +70,7 @@ public class ExecutionManager {
 		if(execDefinition.getControl() instanceof Combo) {
 			execDefinition.addSelectionListener(new Listener() {
 				@Override
-				public void handleEvent(Event event) {
+				public void handleEvent(Event e) {
 					Debug.out("EXECUTION");
 					execEvent.execute();
 				}

@@ -49,8 +49,9 @@ public abstract class TableViewerContainer<T> {
 	private final KeyListener tableEnterKeyListener=new KeyAdapter() {
 		@Override
 		public void keyPressed(KeyEvent e) {
-			if(e.keyCode==SWT.CR || e.keyCode==SWT.KEYPAD_CR){
-				if(getSelectionElement()!=null) editObject();
+			switch(e.keyCode){
+			case SWT.CR:
+			case SWT.KEYPAD_CR: if (getSelectionElement()!=null) editObject(); break;
 			}
 		}
 	};
