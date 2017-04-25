@@ -26,48 +26,12 @@ public class CustomTable extends Table {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
+	private boolean busy=false;
+
 	public CustomTable(Composite parent, int style) {
 		super(parent, style);
 		setLinesVisible(true);
 		setHeaderVisible(true);
-	}
-
-
-	public void addResizeListener(final int minimumWidth) {
-		addControlListener(new ControlAdapter(){
-			private boolean busy=false;
-			@Override
-			public void controlResized(ControlEvent e){
-				if(busy) return;
-				busy=true;
-				setRedraw(false);
-				int remainingPercentage=100;
-				int clientWidth=Math.max(getClientArea().width, minimumWidth);
-				Collection <TableColumn> columns=new ArrayList();
-				for(TableColumn column: getColumns()){
-					int width=0;
-					if (column instanceof CustomTableColumn){
-						CustomTableColumn customColumn=(CustomTableColumn)column;
-						width=(int)(clientWidth * customColumn.getWidthPercentage() / 100);
-						remainingPercentage-=customColumn.getWidthPercentage();
-					}
-					if (width>0) column.setWidth(width);
-					else columns.add(column);
-				}
-				if (remainingPercentage<0){
-					System.err.println("Wrong total percentage: "+(100-remainingPercentage));
-				}
-				else if (columns.size()>0){
-					int width=(clientWidth * remainingPercentage) / (columns.size() * 100);
-					if (width==0) System.err.println("Columns NOT visible: "+columns.size());
-					else for(TableColumn column: columns){
-						column.setWidth(width);
-					}
-				}
-				setRedraw(true);
-				busy=false;
-			}
-		});
 	}
 
 
@@ -81,12 +45,63 @@ public class CustomTable extends Table {
 		return column;
 	}
 
-
 	/** Afects already defined columns */
 	public void setResizable(boolean resizable) {
 		for(TableColumn column: getColumns()){
 			column.setResizable(resizable);
 		}
+	}
+
+
+	public void addResizeListener(final int minWidth) {
+		addControlListener(new ControlAdapter(){
+			private int width=0;
+			@Override
+			public void controlResized(ControlEvent e){
+				//table width changed?
+				if (width!=getSize().x){
+					//width = x coordinate
+					width=getSize().x;
+					packColumns(minWidth);
+				}
+			}
+		});
+	}
+
+	public void packColumns(int minWidth) {
+		if (busy) return;
+		busy=true;
+		setRedraw(false);
+		int remainingPercentage=100;
+		int tableWidth=Math.max(getClientArea().width, minWidth);
+		Collection <TableColumn> columns=new ArrayList();
+		for(TableColumn column: getColumns()){
+			int width=0;
+			if (column instanceof CustomTableColumn){
+				CustomTableColumn customColumn=(CustomTableColumn)column;
+				remainingPercentage-=customColumn.getWidthPercentage();
+				width=(int)(tableWidth * customColumn.getWidthPercentage() / 100);
+			}
+			if (width>0){
+				column.setWidth(width);
+			}else{
+				columns.add(column);
+			}
+		}
+		if (remainingPercentage<0){
+			System.err.println("Wrong total percentage: "+(100-remainingPercentage));
+		}
+		else if (columns.size()>0){
+			int width=(tableWidth * remainingPercentage) / (columns.size() * 100);
+			if (width==0){
+				System.err.println("Columns NOT visible: "+columns.size());
+			}
+			else for(TableColumn column: columns){
+				column.setWidth(width);
+			}
+		}
+		setRedraw(true);
+		busy=false;
 	}
 
 
