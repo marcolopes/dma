@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Utils
 Bundle-SymbolicName: org.dma.eclipse;singleton:=true
-Bundle-Version: 6.1.0.qualifier
+Bundle-Version: 6.1.1.qualifier
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-Activator: org.dma.eclipse.Activator
 Bundle-ActivationPolicy: lazy
@@ -33,7 +33,6 @@ Export-Package: org.dma.eclipse.core,
  org.dma.eclipse.swt.graphics,
  org.dma.eclipse.swt.input,
  org.dma.eclipse.swt.lists,
- org.dma.eclipse.swt.snippets,
  org.dma.eclipse.swt.support,
  org.dma.eclipse.swt.validation,
  org.dma.eclipse.swt.validation.field,
