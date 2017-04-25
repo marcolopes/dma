@@ -31,18 +31,10 @@ public class FontUtils {
 	public static FontData toSWTFontData(Device device, java.awt.Font font,	boolean ensureSameHeight) {
 		int style=SWT.NORMAL;
 		switch (font.getStyle()) {
-			case java.awt.Font.PLAIN:
-				style |= SWT.NORMAL;
-				break;
-			case java.awt.Font.BOLD:
-				style |= SWT.BOLD;
-				break;
-			case java.awt.Font.ITALIC:
-				style |= SWT.ITALIC;
-				break;
-			case (java.awt.Font.ITALIC + java.awt.Font.BOLD):
-				style |= SWT.ITALIC | SWT.BOLD;
-				break;
+			case java.awt.Font.PLAIN: style |= SWT.NORMAL; break;
+			case java.awt.Font.BOLD: style |= SWT.BOLD; break;
+			case java.awt.Font.ITALIC: style |= SWT.ITALIC; break;
+			case java.awt.Font.ITALIC + java.awt.Font.BOLD: style |= SWT.ITALIC | SWT.BOLD; break;
 		}
 		// convert the font size (in pt for awt) to height in pixels for swt
 		int height=(int) Math.round(font.getSize() * 72.0 / device.getDPI().y);
@@ -63,18 +55,10 @@ public class FontUtils {
 		FontData fontData=font.getFontData()[0];
 		int style;
 		switch (fontData.getStyle()) {
-			case SWT.NORMAL:
-				style=java.awt.Font.PLAIN;
-				break;
-			case SWT.ITALIC:
-				style=java.awt.Font.ITALIC;
-				break;
-			case SWT.BOLD:
-				style=java.awt.Font.BOLD;
-				break;
-			default:
-				style=java.awt.Font.PLAIN;
-				break;
+			default: style=java.awt.Font.PLAIN; break;
+			case SWT.NORMAL: style=java.awt.Font.PLAIN; break;
+			case SWT.ITALIC: style=java.awt.Font.ITALIC; break;
+			case SWT.BOLD: style=java.awt.Font.BOLD; break;
 		}
 		int height=(int) Math.round(fontData.height * device.getDPI().y / 72.0);
 		return new java.awt.Font(fontData.getName(), style, height);

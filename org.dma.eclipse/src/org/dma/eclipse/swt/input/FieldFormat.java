@@ -152,8 +152,7 @@ public class FieldFormat extends FieldProperties {
 			return pattern;
 
 		case STRING: break;
-		}
-		return pattern;
+		}return null;
 	}
 
 
@@ -172,8 +171,7 @@ public class FieldFormat extends FieldProperties {
 		case DECIMAL:
 		case INTEGER: return isPositive() ? pattern : "-"+pattern;
 		case STRING: break;
-		}
-		return pattern;
+		}return pattern;
 	}
 
 	/** Time / Date / Number */
@@ -184,8 +182,7 @@ public class FieldFormat extends FieldProperties {
 		case DECIMAL:
 		case INTEGER: return getDecimalFormat(pattern).format(value);
 		case STRING: break;
-		}
-		return value.toString();
+		}return value.toString();
 	}
 
 	public String format(Time time) {

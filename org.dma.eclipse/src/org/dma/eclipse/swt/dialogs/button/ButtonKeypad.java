@@ -133,9 +133,7 @@ public abstract class ButtonKeypad extends CustomShell {
 			text.insert("");
 			break;
 		case RETURN: if (done(value)) close(); break;
-		}
-
-		return true;
+		}return true;
 
 	}
 
