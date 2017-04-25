@@ -134,10 +134,10 @@ public class NumericUtils {
 		int result = value.compareTo(compareTo);
 
 		switch(result){
-		default: return null;
 		case -1: return compareTo;
 		case 1: return value;
-		}
+		}return null;
+
 
 	}
 
@@ -147,10 +147,9 @@ public class NumericUtils {
 		int result=value.compareTo(compareTo);
 
 		switch(result){
-		default: return null;
 		case -1: return value;
 		case 1: return compareTo;
-		}
+		}return null;
 
 	}
 
