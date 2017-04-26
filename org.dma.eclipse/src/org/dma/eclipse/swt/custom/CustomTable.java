@@ -45,7 +45,7 @@ public class CustomTable extends Table {
 		return column;
 	}
 
-	/** Afects already defined columns */
+	/** @see TableColumn#setResizable */
 	public void setResizable(boolean resizable) {
 		for(TableColumn column: getColumns()){
 			column.setResizable(resizable);
@@ -62,13 +62,14 @@ public class CustomTable extends Table {
 				if (width!=getSize().x){
 					//width = x coordinate
 					width=getSize().x;
-					packColumns(minWidth);
+					resizeColumns(minWidth);
 				}
 			}
 		});
 	}
 
-	public void packColumns(int minWidth) {
+
+	public void resizeColumns(int minWidth) {
 		if (busy) return;
 		busy=true;
 		setRedraw(false);
@@ -94,7 +95,7 @@ public class CustomTable extends Table {
 		else if (columns.size()>0){
 			int width=(tableWidth * remainingPercentage) / (columns.size() * 100);
 			if (width==0){
-				System.err.println("Columns NOT visible: "+columns.size());
+				System.err.println("Zero width columns: "+columns.size());
 			}
 			else for(TableColumn column: columns){
 				column.setWidth(width);
