@@ -83,11 +83,8 @@ public class CustomTable extends Table {
 				remainingPercentage-=customColumn.getWidthPercentage();
 				width=(int)(tableWidth * customColumn.getWidthPercentage() / 100);
 			}
-			if (width>0){
-				column.setWidth(width);
-			}else{
-				columns.add(column);
-			}
+			if (width>0) column.setWidth(width);
+			else columns.add(column);
 		}
 		if (remainingPercentage<0){
 			System.err.println("Wrong total percentage: "+(100-remainingPercentage));
@@ -96,9 +93,8 @@ public class CustomTable extends Table {
 			int width=(tableWidth * remainingPercentage) / (columns.size() * 100);
 			if (width==0){
 				System.err.println("Zero width columns: "+columns.size());
-			}
-			else for(TableColumn column: columns){
-				column.setWidth(width);
+			}else{
+				for(TableColumn column: columns) column.setWidth(width);
 			}
 		}
 		setRedraw(true);
