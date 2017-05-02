@@ -73,7 +73,6 @@ public class UIHelper {
 			WorkbenchWindow workbenchWindow=(WorkbenchWindow)getWorkbenchWindow();
 			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
 			return manager.getControl();
-
 		}catch(Exception e){
 			System.out.println(e);
 		}
@@ -85,10 +84,11 @@ public class UIHelper {
 	//ECLIPSE BUG: https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
 	public static void disablePerspectiveToolBarMenu() {
 		ToolBar toolBar=getPerspectiveToolBar();
-		for (Listener listener: toolBar.getListeners(SWT.MenuDetect)) try{
-			toolBar.removeListener(SWT.MenuDetect, listener);
-			Debug.out("REMOVED", listener.toString());
-
+		if (toolBar!=null) try{
+			for (Listener listener: toolBar.getListeners(SWT.MenuDetect)){
+				toolBar.removeListener(SWT.MenuDetect, listener);
+				Debug.out("REMOVED", listener.toString());
+			}
 		}catch(Exception e){
 			System.out.println(e);
 		}
@@ -99,7 +99,6 @@ public class UIHelper {
 		try{
 			ToolBar toolBar=getPerspectiveToolBar();
 			toolBar.setEnabled(enabled);
-
 		}catch(Exception e){
 			System.out.println(e);
 		}
@@ -127,10 +126,11 @@ public class UIHelper {
 
 	public static void removePreferenceManagerNodes() {
 		PreferenceManager manager=getWorkbench().getPreferenceManager();
-		for (IPreferenceNode node: manager.getRootSubNodes()) try{
-			manager.remove(node);
-			Debug.out("REMOVED", node.getId());
-
+		if (manager!=null) try{
+			for (IPreferenceNode node: manager.getRootSubNodes()){
+				manager.remove(node);
+				Debug.out("REMOVED", node.getId());
+			}
 		}catch(Exception e){
 			System.out.println(e);
 		}
@@ -140,7 +140,6 @@ public class UIHelper {
 	public static void saveWorkspaceState(boolean full) {
 		try{
 			ResourcesPlugin.getWorkspace().save(full, null);
-
 		}catch(Exception e){
 			System.out.println(e);
 		}
