@@ -20,8 +20,7 @@ public final class ClassUtils {
 			e.printStackTrace();
 		}catch(IllegalAccessException e){
 			e.printStackTrace();
-		}
-		return null;
+		}return null;
 	}
 
 
@@ -31,8 +30,7 @@ public final class ClassUtils {
 		}
 		catch(ClassNotFoundException e){
 			e.printStackTrace();
-		}
-		return null;
+		}return null;
 	}
 
 
