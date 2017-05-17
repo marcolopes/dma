@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -19,8 +19,8 @@ public abstract class JobBatch extends LinkedHashSet<CustomJob> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Executed before first job is started */
-	public abstract void start();
+	/** Executed when first job is about to run */
+	public abstract void aboutToRun();
 	/** Executed when last job is done */
 	public abstract void done();
 

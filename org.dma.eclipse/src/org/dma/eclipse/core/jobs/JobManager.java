@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -28,7 +28,7 @@ public class JobManager {
 		//listeners
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
-			public void scheduled(IJobChangeEvent event) {
+			public void aboutToRun(IJobChangeEvent event) {
 				synchronized(QUEUE){
 					try{
 						CustomJob job=(CustomJob)event.getJob();
@@ -40,7 +40,7 @@ public class JobManager {
 							batch.running=true;
 							Display.getDefault().asyncExec(new Runnable() {
 								public void run() {
-									batch.start();
+									batch.aboutToRun();
 								}
 							});
 						}
@@ -98,7 +98,7 @@ public class JobManager {
 		Debug.out("QUEUE", QUEUE);
 		for(CustomJob job: batch){
 			//avoid successive calls
-			if(!job.isBusy()) schedule(job,rule);
+			if(!job.isBusy()) schedule(job, rule);
 		}
 	}
 
