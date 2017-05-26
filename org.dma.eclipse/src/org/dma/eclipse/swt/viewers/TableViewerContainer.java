@@ -111,8 +111,7 @@ public abstract class TableViewerContainer<T> {
 					//avoids if unselected
 					if (table.getSortColumn().getText().equals(column.getText())){
 						//inverts sort direction
-						table.setSortDirection(table.getSortDirection()==SWT.UP ?
-							SWT.DOWN : SWT.UP);
+						table.setSortDirection(table.getSortDirection()==SWT.UP ? SWT.DOWN : SWT.UP);
 					}
 					table.setSortColumn(column);
 					updateTable();
