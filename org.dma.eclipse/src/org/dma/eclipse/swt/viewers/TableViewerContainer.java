@@ -109,7 +109,7 @@ public abstract class TableViewerContainer<T> {
 				public void widgetSelected(SelectionEvent e) {
 					TableColumn column=(TableColumn)e.widget;
 					//avoids if unselected
-					if(table.getSortColumn().getText().equals(column.getText())){
+					if (table.getSortColumn().getText().equals(column.getText())){
 						//inverts sort direction
 						table.setSortDirection(table.getSortDirection()==SWT.UP ?
 							SWT.DOWN : SWT.UP);
