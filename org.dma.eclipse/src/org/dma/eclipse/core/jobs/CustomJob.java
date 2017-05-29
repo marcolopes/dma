@@ -122,14 +122,14 @@ public class CustomJob extends Job {
 	 */
 	/** Execute jobs with rule (null=immediately) */
 	public void schedule(ISchedulingRule rule) {
-		Debug.err("SCHEDULING JOB", this);
+		Debug.err("SCHEDULING "+this+" JOB");
 		setRule(rule);
 		schedule();
 	}
 
 
 	public boolean isBusy() {
-		Debug.err("JOB STATE", getStateName());
+		Debug.err("JOB "+this+" STATE is "+getStateName());
 		int state=getState();
 		return state==Job.RUNNING || state==Job.WAITING || state==Job.SLEEPING;
 	}
@@ -141,7 +141,7 @@ public class CustomJob extends Job {
 
 	@Override
 	public void canceling() {
-		Debug.err("CANCELING JOB", this);
+		Debug.err("CANCELING "+this+" JOB");
 		canceled=true;
 	}
 
@@ -160,7 +160,7 @@ public class CustomJob extends Job {
 			time.start();
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
-			Debug.err("STARTED JOB", this);
+			Debug.err("STARTED "+this+" JOB" );
 
 			for(int i=0; i<tasks.size() && !canceled; i++){
 
@@ -202,7 +202,7 @@ public class CustomJob extends Job {
 			time.stop();
 			lock.release();
 			monitor.done();
-			Debug.err("FINISHED JOB", this);
+			Debug.err("FINISHED "+this+" JOB in "+time.toString());
 		}
 
 		return Status.CANCEL_STATUS;
