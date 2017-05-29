@@ -14,7 +14,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.dma.eclipse";
+	public static final String PLUGIN_ID = Activator.class.getPackage().getName();
 
 	// The shared instance
 	private static Activator plugin;

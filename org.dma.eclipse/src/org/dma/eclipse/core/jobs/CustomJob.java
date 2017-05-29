@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,7 +10,9 @@ import java.util.List;
 
 import org.dma.eclipse.core.jobs.tasks.JobTask;
 import org.dma.eclipse.core.jobs.tasks.JobUITask;
+import org.dma.java.util.Chronograph;
 import org.dma.java.util.Debug;
+import org.dma.java.util.ErrorList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -29,7 +31,17 @@ public class CustomJob extends Job {
 	/** Global rule to avoid simultaneous executions */
 	public static final ISchedulingRule MUTEX_RULE = new MutexRule();
 
+	/** Global family to identify {@link CustomJob} */
+	public static final Object FAMILY = MUTEX_RULE;
+
+	/** Convenient access to error list */
+	public final ErrorList error=new ErrorList();
+
+	/** Used to chronograph execution time */
+	public final Chronograph time=new Chronograph();
+
 	private final List<JobTask> tasks=new ArrayList();
+	//private IAction doneAction;
 
 	private boolean canceled=false;
 
@@ -39,7 +51,7 @@ public class CustomJob extends Job {
 
 	/** @see CustomJob#CustomJob(String, int) */
 	public CustomJob(String name) {
-		this(name,Job.LONG);
+		this(name, Job.LONG);
 	}
 
 	/**
@@ -66,7 +78,14 @@ public class CustomJob extends Job {
 		setRule(MUTEX_RULE);
 	}
 
+	@Override
+	public boolean belongsTo(Object family) {
+		return family.equals(FAMILY);
+	}
+
 	public void reset() {
+		time.reset();
+		error.clear();
 		canceled=false;
 	}
 
@@ -75,17 +94,26 @@ public class CustomJob extends Job {
 	/*
 	 * Tasks
 	 */
-	public void addTask(JobTask action) {
+	public CustomJob addTask(JobTask action) {
 		tasks.add(action);
+		return this;
 	}
 
-	public void removeTask(JobTask action) {
+	public CustomJob removeTask(JobTask action) {
 		tasks.remove(action);
+		return this;
 	}
 
 	public boolean hasTasks() {
 		return !tasks.isEmpty();
 	}
+
+	/*
+	public CustomJob setDoneAction(IAction doneAction) {
+		this.doneAction=doneAction;
+		return this;
+	}
+	*/
 
 
 
@@ -128,17 +156,18 @@ public class CustomJob extends Job {
 		ILock lock = getJobManager().newLock();
 
 		try{
-			Debug.out("STARTED", this);
-
+			reset();
+			time.start();
 			lock.acquire();
 			monitor.beginTask("",IProgressMonitor.UNKNOWN);
+			Debug.out("STARTED", this);
 
 			for(int i=0; i<tasks.size() && !canceled; i++){
 
 				final JobTask jtask=tasks.get(i);
+				Debug.out("TASK", jtask.getName());
 
 				monitor.subTask(jtask.getName());
-				Debug.out("JOB TASK", jtask.getName());
 
 				if(jtask instanceof JobUITask){
 					//UI task
@@ -161,6 +190,18 @@ public class CustomJob extends Job {
 			e.printStackTrace();
 		}
 		finally{
+			/*
+			if (doneAction!=null){
+				Display.getDefault().syncExec(new Runnable() {
+					@Override
+					public void run() {
+						doneAction.run();
+					}
+				});
+			}
+			*/
+
+			time.stop();
 			lock.release();
 			monitor.done();
 			Debug.out("FINISHED", this);

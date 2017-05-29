@@ -149,19 +149,22 @@ public class UIHelper {
 	/*
 	 * IWorkbench
 	 */
-	/** @see PlatformUI#getWorkbench() */
+	/** @see PlatformUI#getWorkbench */
 	public static IWorkbench getWorkbench() {
 		return Workbench.getInstance();
 	}
 
+	/** @see Workbench#getDisplay */
 	public static Display getDisplay() {
 		return getWorkbench().getDisplay();
 	}
 
+	/** @see Workbench#getHelpSystem */
 	public static IWorkbenchHelpSystem getHelpSystem() {
 		return getWorkbench().getHelpSystem();
 	}
 
+	/** @see Workbench#isClosing */
 	public static boolean isWorkbenchClosing() {
 		return getWorkbench().isClosing();
 	}
