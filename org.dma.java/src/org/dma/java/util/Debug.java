@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2012 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -8,16 +8,11 @@ package org.dma.java.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Date;
 import java.util.Map;
 
 public class Debug {
 
 	public static boolean STATUS = true;
-
-	public static final int LEVEL_BASIC = 0;
-	public static final int LEVEL_COMPLETE = 1;
-	public static int LEVEL = LEVEL_BASIC;
 
 	public static void size(Map map) {
 		try{
@@ -34,63 +29,64 @@ public class Debug {
 	}
 
 
+	public static void err() {
+		err(null, null, new Throwable().getStackTrace()[1]);
+	}
+
+	public static void err(String message) {
+		err(message, null, new Throwable().getStackTrace()[1]);
+	}
+
+	public static void err(Object obj) {
+		err(null, obj==null ? "<NULL>" : obj, new Throwable().getStackTrace()[1]);
+	}
+
+	public static void err(String message, Object obj) {
+		err(message, obj==null ? "<NULL>" : obj, new Throwable().getStackTrace()[1]);
+	}
+
+	public static void err(String message, Object obj, StackTraceElement caller) {
+		if (STATUS) System.err.println(log(message, obj, caller));
+	}
+
+
 	public static void out() {
-		if (STATUS){
-			StackTraceElement caller=new Throwable().getStackTrace()[1];
-			log(null, null, caller);
-		}
+		out(null, null, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void out(String message) {
-		if (STATUS){
-			StackTraceElement caller=new Throwable().getStackTrace()[1];
-			log(message, null, caller);
-		}
+		out(message, null, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void out(Object obj) {
-		if (STATUS){
-			StackTraceElement caller=new Throwable().getStackTrace()[1];
-			log(null, obj==null?"<NULL>":obj, caller);
-		}
+		out(null, obj==null ? "<NULL>" : obj, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void out(String message, Object obj) {
-		if (STATUS){
-			StackTraceElement caller=new Throwable().getStackTrace()[1];
-			log(message, obj==null?"<NULL>":obj, caller);
-		}
+		out(message, obj==null ? "<NULL>" : obj, new Throwable().getStackTrace()[1]);
 	}
 
+	public static void out(String message, Object obj, StackTraceElement caller) {
+		if (STATUS) System.out.println(log(message, obj, caller));
+	}
 
-	private static void log(String message, Object obj, StackTraceElement caller) {
+	private static String log(String message, Object obj, StackTraceElement caller) {
 
-		String message2="";
+		StringBuilder sb=new StringBuilder();
 
 		try{
-			switch(LEVEL){
-			case LEVEL_BASIC:
-				message2=caller.getFileName()+
-				"; "+ caller.getMethodName();
-				if (message!=null) message2+="; "+ message;
-				if (obj!=null) message2+=": "+obj.toString();
-				break;
-
-			case LEVEL_COMPLETE:
-				message2=new Date()+
-				"; CLASS: " + caller.getClassName()+
-				"; METHOD: " + caller.getMethodName()+
-				"; LINE: " + caller.getLineNumber();
-				if (message!=null) message2+="; MENSAGEM: " + message;
-				if (obj!=null) message2+=", Valor: "+obj.toString();
-				break;
-			}
+			sb.append(caller.getFileName());
+			sb.append("(");
+			sb.append(caller.getMethodName());
+			sb.append(")");
+			if (message!=null) sb.append(" "+message);
+			if (obj!=null) sb.append(": "+obj.toString());
 
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 
-		System.out.println(message2);
+		return sb.toString();
 
 	}
 

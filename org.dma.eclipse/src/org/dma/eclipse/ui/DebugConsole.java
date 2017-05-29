@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -22,7 +22,6 @@ public class DebugConsole {
 	private final PrintStream stream;
 	private final PrintStream systemOut=System.out; // standard output stream
 	private final PrintStream systemErr=System.err; // error output stream
-	private final int level=Debug.LEVEL;
 
 	public DebugConsole(String name) {
 		Debug.out();
@@ -33,7 +32,6 @@ public class DebugConsole {
 
 
 	public void start() {
-		Debug.LEVEL=Debug.LEVEL_BASIC;
 		System.setOut(stream);
 		System.setErr(stream);
 	}
@@ -42,7 +40,6 @@ public class DebugConsole {
 	public void stop() {
 		System.setOut(systemOut);
 		System.setErr(systemErr);
-		Debug.LEVEL=level;
 	}
 
 
