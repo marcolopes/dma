@@ -27,9 +27,10 @@ public class Chronograph {
 	}
 
 
-	public void reset() {
+	public Chronograph reset() {
 		startTime=System.nanoTime();
 		elapsedTime=0;
+		return this;
 	}
 
 
