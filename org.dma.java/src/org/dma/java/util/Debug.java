@@ -36,28 +36,28 @@ public class Debug {
 
 	public static void out() {
 		if (STATUS){
-			StackTraceElement caller = new Throwable().getStackTrace()[1];
+			StackTraceElement caller=new Throwable().getStackTrace()[1];
 			log(null, null, caller);
 		}
 	}
 
 	public static void out(String message) {
 		if (STATUS){
-			StackTraceElement caller = new Throwable().getStackTrace()[1];
+			StackTraceElement caller=new Throwable().getStackTrace()[1];
 			log(message, null, caller);
 		}
 	}
 
 	public static void out(Object obj) {
 		if (STATUS){
-			StackTraceElement caller = new Throwable().getStackTrace()[1];
+			StackTraceElement caller=new Throwable().getStackTrace()[1];
 			log(null, obj==null?"<NULL>":obj, caller);
 		}
 	}
 
 	public static void out(String message, Object obj) {
 		if (STATUS){
-			StackTraceElement caller = new Throwable().getStackTrace()[1];
+			StackTraceElement caller=new Throwable().getStackTrace()[1];
 			log(message, obj==null?"<NULL>":obj, caller);
 		}
 	}
