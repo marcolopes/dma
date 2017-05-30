@@ -39,11 +39,11 @@ public class CustomTable extends Table {
 
 
 	public CustomTableColumn createColumn(int style) {
-		return createColumn(SWT.NONE, 0);
+		return createColumn(style, 0);
 	}
 
 	public CustomTableColumn createColumn(int style, int widthPercentage) {
-		CustomTableColumn column=new CustomTableColumn(this, SWT.NONE);
+		CustomTableColumn column=new CustomTableColumn(this, style);
 		column.setWidthPercentage(widthPercentage);
 		return column;
 	}
