@@ -25,7 +25,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public Activator() {
-		System.out.println(PLUGIN_ID+" ACTIVATOR");
+		System.err.println(PLUGIN_ID+"(ACTIVATOR)");
 	}
 
 	/*

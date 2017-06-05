@@ -14,7 +14,10 @@ import org.eclipse.jface.action.Action;
 
 public abstract class CustomAction extends Action {
 
-	public final String ID=getClass().getName();
+	public final String ID=getClass().getCanonicalName();
+
+	@Override
+	public abstract void run();
 
 	public CustomAction() {
 		Debug.out("ID", ID);
