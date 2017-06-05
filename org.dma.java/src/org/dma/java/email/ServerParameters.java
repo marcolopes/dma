@@ -69,8 +69,8 @@ public class ServerParameters {
 	@Override
 	public String toString() {
 		return "Host Name: "+hostName+
-				"\nSMTP Port:"+smtpPort+
-				"\nSecurity:" +security;
+				"\nSMTP Port: "+smtpPort+
+				"\nSecurity: "+security;
 	}
 
 
