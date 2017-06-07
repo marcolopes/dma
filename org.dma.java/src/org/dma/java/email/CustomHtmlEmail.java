@@ -12,11 +12,13 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.MultiPartEmail;
 import org.dma.java.email.ServerParameters.SECURITY;
 import org.dma.java.util.Debug;
 
 public class CustomHtmlEmail extends HtmlEmail {
 
+	/** Charset UTF-8 */
 	public CustomHtmlEmail(ServerParameters server) {
 		Debug.err(server);
 
@@ -37,12 +39,14 @@ public class CustomHtmlEmail extends HtmlEmail {
 	}
 
 
+	/** see {@link Email#setFrom} */
 	public Email setFrom(EmailAddress address) throws EmailException {
 		if (!address.isValid()) throw new EmailException("Invalid email address (from): "+address);
 		return setFrom(address.getEmail(), address.getName());
 	}
 
 
+	/** see {@link Email#addTo} */
 	public Email addTo(Collection<EmailAddress> address) throws EmailException {
 		for (EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (to): "+address);
@@ -51,11 +55,13 @@ public class CustomHtmlEmail extends HtmlEmail {
 		return this;
 	}
 
+	/** see {@link Email#addTo} */
 	public Email addTo(EmailAddress...address) throws EmailException {
 		return addTo(Arrays.asList(address));
 	}
 
 
+	/** see {@link Email#addCc} */
 	public Email addCc(Collection<EmailAddress> address) throws EmailException {
 		for (EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (cc): "+address);
@@ -64,11 +70,13 @@ public class CustomHtmlEmail extends HtmlEmail {
 		return this;
 	}
 
+	/** see {@link Email#addCc} */
 	public Email addCc(EmailAddress...address) throws EmailException {
 		return addCc(Arrays.asList(address));
 	}
 
 
+	/** see {@link Email#addBcc} */
 	public Email addBcc(Collection<EmailAddress> address) throws EmailException {
 		for (EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (bcc): "+address);
@@ -77,11 +85,13 @@ public class CustomHtmlEmail extends HtmlEmail {
 		return this;
 	}
 
+	/** see {@link Email#addBcc} */
 	public Email addBcc(EmailAddress...address) throws EmailException {
 		return addBcc(Arrays.asList(address));
 	}
 
 
+	/** see {@link MultiPartEmail#attach} */
 	public void attach(Collection<EmailAttachment> attachment) throws EmailException {
 		for (EmailAttachment element: attachment){
 			Debug.err(element);
