@@ -51,9 +51,21 @@ public class CustomHtmlEmail extends HtmlEmail {
 		return this;
 	}
 
-
 	public Email addTo(EmailAddress...address) throws EmailException {
 		return addTo(Arrays.asList(address));
+	}
+
+
+	public Email addCc(Collection<EmailAddress> address) throws EmailException {
+		for (EmailAddress element: address){
+			if (!element.isValid()) throw new EmailException("Invalid email address (cc): "+address);
+			addCc(element.getEmail(), element.getName());
+		}
+		return this;
+	}
+
+	public Email addCc(EmailAddress...address) throws EmailException {
+		return addCc(Arrays.asList(address));
 	}
 
 
@@ -64,7 +76,6 @@ public class CustomHtmlEmail extends HtmlEmail {
 		}
 		return this;
 	}
-
 
 	public Email addBcc(EmailAddress...address) throws EmailException {
 		return addBcc(Arrays.asList(address));
