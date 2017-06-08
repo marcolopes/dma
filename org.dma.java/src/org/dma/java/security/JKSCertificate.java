@@ -80,7 +80,7 @@ public class JKSCertificate {
 			this.X509Cert=(X509Certificate)keyStore.getCertificate(this.alias);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 			keyStore=null;
 		}
 
@@ -109,7 +109,7 @@ public class JKSCertificate {
 					password==null ? null : password.toCharArray());
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;

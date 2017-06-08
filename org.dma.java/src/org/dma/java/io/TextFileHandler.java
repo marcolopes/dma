@@ -78,7 +78,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();
@@ -108,7 +108,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();
@@ -155,7 +155,7 @@ public class TextFileHandler extends FileHandler {
 			return true;
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return false;
@@ -204,7 +204,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();
@@ -234,7 +234,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();
@@ -284,7 +284,7 @@ public class TextFileHandler extends FileHandler {
 			return true;
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return false;

@@ -53,7 +53,7 @@ public class ByteFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -79,7 +79,7 @@ public class ByteFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return bytes;
@@ -119,7 +119,7 @@ public class ByteFileHandler extends FileHandler {
 			return bytes.length;
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return 0;

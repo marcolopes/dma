@@ -34,7 +34,7 @@ public class RSACipher {
 			return keyGen.genKeyPair();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}
@@ -116,7 +116,7 @@ public class RSACipher {
 			System.out.println("Are both public keys equal? " + keyPair.getPublic().equals(publicKey));
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 	}
@@ -130,7 +130,7 @@ public class RSACipher {
 			System.out.println();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		String message="The quick brown fox jumps over the lazy dog.";

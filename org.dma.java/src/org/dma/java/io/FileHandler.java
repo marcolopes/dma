@@ -73,7 +73,7 @@ public class FileHandler {
 			return file.delete();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return false;
 	}
@@ -84,7 +84,7 @@ public class FileHandler {
 			return file.renameTo(new File(filename));
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return false;
 	}
@@ -95,7 +95,7 @@ public class FileHandler {
 			return new FileInputStream(file);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -107,7 +107,7 @@ public class FileHandler {
 			return new FileOutputStream(file);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -119,7 +119,7 @@ public class FileHandler {
 			return file.toURI().toURL();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -132,7 +132,7 @@ public class FileHandler {
 					equals(file.getCanonicalFile());
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return false;

@@ -46,7 +46,7 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 			return output.renameTo(new File(dst));
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return false;
@@ -82,7 +82,7 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 			return true;
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return false;

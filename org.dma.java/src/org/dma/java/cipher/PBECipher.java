@@ -24,7 +24,7 @@ public class PBECipher extends CryptoCipher {
 			return factory.generateSecret(spec);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}

@@ -31,7 +31,7 @@ public class MessageDigest {
 			return java.security.MessageDigest.getInstance(algorithm);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 
@@ -56,7 +56,7 @@ public class MessageDigest {
 			return md.digest(message);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -81,7 +81,7 @@ public class MessageDigest {
 			return digest(messageBytes);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -108,7 +108,7 @@ public class MessageDigest {
 			return new String(base64Bytes, "UTF8");
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;

@@ -74,7 +74,7 @@ public class UIHelper {
 			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
 			return manager.getControl();
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -90,7 +90,7 @@ public class UIHelper {
 				Debug.out("REMOVED", listener.toString());
 			}
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class UIHelper {
 			ToolBar toolBar=getPerspectiveToolBar();
 			toolBar.setEnabled(enabled);
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class UIHelper {
 			}
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 	}
 
@@ -132,7 +132,7 @@ public class UIHelper {
 				Debug.out("REMOVED", node.getId());
 			}
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 	}
 
@@ -141,7 +141,7 @@ public class UIHelper {
 		try{
 			ResourcesPlugin.getWorkspace().save(full, null);
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 	}
 

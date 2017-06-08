@@ -104,7 +104,7 @@ public class ImageManager {
 				new Image(Display.getDefault(), data);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -128,7 +128,7 @@ public class ImageManager {
 			gc.dispose();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return image;
 	}
@@ -148,7 +148,7 @@ public class ImageManager {
 			stream.close();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return image;
 	}
@@ -168,7 +168,7 @@ public class ImageManager {
 			stream.close();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return image;
 	}
@@ -186,7 +186,7 @@ public class ImageManager {
 			CACHE.put(key, image);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return image;
 	}

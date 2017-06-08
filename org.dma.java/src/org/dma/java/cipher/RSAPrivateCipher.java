@@ -35,7 +35,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 			return kf.generatePrivate(spec);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}

@@ -90,7 +90,7 @@ public class CertificateFactory {
 			return cert;
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;

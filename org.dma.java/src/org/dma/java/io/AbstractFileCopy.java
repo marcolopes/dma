@@ -53,7 +53,7 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 			return true;
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return false;

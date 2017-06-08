@@ -19,7 +19,7 @@ public class FileURL {
 		try{
 			return new URL(ftpurl+"/"+filename);
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}

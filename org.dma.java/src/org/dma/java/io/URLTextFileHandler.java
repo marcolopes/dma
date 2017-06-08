@@ -65,7 +65,7 @@ public class URLTextFileHandler extends TextFileHandler {
 			}
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();

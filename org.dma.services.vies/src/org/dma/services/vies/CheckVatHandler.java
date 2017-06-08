@@ -170,7 +170,7 @@ public class CheckVatHandler {
 				return new CheckVatAddress(street, zipcode, city);
 
 			}catch(Exception e){
-				System.out.println(e);
+				System.err.println(e);
 			}
 
 			return new CheckVatAddress(address);

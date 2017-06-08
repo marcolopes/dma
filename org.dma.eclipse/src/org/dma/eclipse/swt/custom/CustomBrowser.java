@@ -32,9 +32,9 @@ public final class CustomBrowser extends Browser {
 				return style;
 
 			}catch(SWTError e){
-				System.out.println(e);
+				System.err.println(e);
 			}catch(SWTException e){
-				System.out.println(e);
+				System.err.println(e);
 			}catch(Exception e){
 				e.printStackTrace();
 			}

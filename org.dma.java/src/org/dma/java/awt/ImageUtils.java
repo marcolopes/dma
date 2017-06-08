@@ -40,7 +40,7 @@ public class ImageUtils {
 			return result;
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}
@@ -61,7 +61,7 @@ public class ImageUtils {
 			return drawImage(ImageIO.read(new ByteArrayInputStream(bytes)));
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}
@@ -76,7 +76,7 @@ public class ImageUtils {
 			return drawImage(ImageIO.read(new File(path)));
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}
@@ -94,7 +94,7 @@ public class ImageUtils {
 					location.getClassLoader().getResourceAsStream(resource)));
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}
@@ -105,7 +105,7 @@ public class ImageUtils {
 			return size==0 ? bufferedImage : Scalr.resize(bufferedImage, size);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}

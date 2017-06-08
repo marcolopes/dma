@@ -66,7 +66,7 @@ public class CryptoCipher {
 				return generator.generateKey();
 
 			}catch(Exception e){
-				System.out.println(e);
+				System.err.println(e);
 			}
 			return null;
 		}
@@ -120,7 +120,7 @@ public class CryptoCipher {
 			decipher.init(Cipher.DECRYPT_MODE, key);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 	}
 
@@ -133,7 +133,7 @@ public class CryptoCipher {
 			return cipher.doFinal(messageBytes);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -162,7 +162,7 @@ public class CryptoCipher {
 			return new String(base64Bytes, "UTF8");
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -190,7 +190,7 @@ public class CryptoCipher {
 			return BASE64encrypt(messageBytes, lineLength);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -206,7 +206,7 @@ public class CryptoCipher {
 			return decipher.doFinal(messageBytes);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -234,7 +234,7 @@ public class CryptoCipher {
 			return new String(decrypted, "UTF8");
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -261,7 +261,7 @@ public class CryptoCipher {
 			return BASE64decrypt(messageBytes);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;

@@ -33,7 +33,7 @@ public class RSAPublicCipher extends CryptoCipher {
 			return kf.generatePublic(spec);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}
@@ -65,7 +65,7 @@ public class RSAPublicCipher extends CryptoCipher {
 			return signature.verify(signatureBytes);
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return false;

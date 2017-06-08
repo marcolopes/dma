@@ -16,7 +16,7 @@ public class FolderHandler {
 			return new File(".").getCanonicalPath();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 		return null;
 	}
@@ -55,7 +55,7 @@ public class FolderHandler {
 			return folder.exists() ? true : folder.mkdir();
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return false;
@@ -77,7 +77,7 @@ public class FolderHandler {
 			});
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;
@@ -108,7 +108,7 @@ public class FolderHandler {
 				if(file.delete()) count++;
 
 			}catch(Exception e){
-				System.out.println(e);
+				System.err.println(e);
 			}
 
 			System.out.println(count+"/"+files.length+" files deleted in "+
@@ -141,7 +141,7 @@ public class FolderHandler {
 			});
 
 		}catch(Exception e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		return null;

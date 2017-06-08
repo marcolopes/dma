@@ -37,7 +37,7 @@ public class MessageList extends LinkedHashSet<String> {
 		if (!isEmpty()) try{
 			out.write(toString().getBytes());
 		}catch(IOException e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 	}
 
