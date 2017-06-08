@@ -24,7 +24,7 @@ public class DebugConsole {
 
 	private final PrintStream systemOut=System.out; // standard output stream
 	private final PrintStream systemErr=System.err; // error output stream
-	private PrintStream systemStream;
+	private final PrintStream systemStream;
 
 	public DebugConsole(String name) {
 		this(name, null);
@@ -33,27 +33,31 @@ public class DebugConsole {
 	public DebugConsole(String name, ImageDescriptor imageDescriptor) {
 		console=new MessageConsole(name, imageDescriptor);
 		messageStream=console.newMessageStream();
-		messageStream.setActivateOnWrite(true);
+		systemStream=new PrintStream(messageStream);
 		manager.addConsoles(new IConsole[]{console});
 	}
 
 
+	/** Shows console and redirects System messages */
 	public void showConsole() {
 		manager.showConsoleView(console);
+		showSystemOut();
 	}
 
+	/** Closes console and restores System messages */
 	public void closeConsole() {
+		restoreSystemOut();
 		manager.removeConsoles(new IConsole[]{console});
 	}
 
 
-	public void writeSystemOut() {
-		systemStream=new PrintStream(messageStream);
+	/** Redirects System messages */
+	public void showSystemOut() {
 		System.setOut(systemStream);
 		System.setErr(systemStream);
-		showConsole();
 	}
 
+	/** Restores System messages */
 	public void restoreSystemOut() {
 		System.setOut(systemOut);
 		System.setErr(systemErr);
@@ -63,6 +67,7 @@ public class DebugConsole {
 
 	public void write(String message) {
 		try{
+			messageStream.setActivateOnWrite(true);
 			messageStream.write(message);
 		}catch(IOException e){
 			System.err.println(e);
