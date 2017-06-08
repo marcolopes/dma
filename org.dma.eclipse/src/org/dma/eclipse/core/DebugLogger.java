@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -46,24 +46,24 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 		file(severity, message, null);
 	}
 
-	public void file(int severity, Throwable e) {
-		file(severity, "", e);
+	public void file(int severity, Throwable exception) {
+		file(severity, "", exception);
 	}
 
-	public void file(int severity, String message, Throwable e) {
-		file(severity, STYLE_FILE, message, e);
+	public void file(int severity, String message, Throwable exception) {
+		file(severity, STYLE_FILE, message, exception);
 	}
 
 	public void file(int severity, int style, String message) {
 		file(severity, style, message, null);
 	}
 
-	private void file(int severity, int style, String message, Throwable e) {
+	private void file(int severity, int style, String message, Throwable exception) {
 		//log entry
-		Status status=new Status(severity, pluginId, message, e);
+		Status status=new Status(severity, pluginId, message, exception);
 		StatusManager.getManager().handle(status, style);
 		//add to exceptions
-		if (e!=null && severity!=SEVERITY_OK){
+		if (exception!=null && severity!=SEVERITY_OK){
 			Integer n=get(severity);
 			put(severity, n==null ? 1 : n+1);
 		}
@@ -84,7 +84,7 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 
 
 	private void debug() {
-		System.out.println("### DEBUG BY SEVERITY ###");
+		System.err.println("DEBUG BY SEVERITY");
 		for(Integer key: keySet()){
 			System.out.print("Type "+key+" (");
 			switch(key){
