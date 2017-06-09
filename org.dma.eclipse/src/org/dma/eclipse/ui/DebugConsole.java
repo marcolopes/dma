@@ -21,10 +21,10 @@ public class DebugConsole {
 
 	private final MessageConsole console;
 	private final MessageConsoleStream messageStream;
+	private final PrintStream printStream;
 
-	private PrintStream systemOut=System.out; // standard output stream
-	private PrintStream systemErr=System.err; // error output stream
-	private PrintStream systemStream;
+	private PrintStream systemOut; // standard output stream
+	private PrintStream systemErr; // error output stream
 
 	public DebugConsole(String name) {
 		this(name, null);
@@ -33,12 +33,13 @@ public class DebugConsole {
 	public DebugConsole(String name, ImageDescriptor imageDescriptor) {
 		console=new MessageConsole(name, imageDescriptor);
 		messageStream=console.newMessageStream();
+		printStream=new PrintStream(messageStream);
+		manager.addConsoles(new IConsole[]{console});
 	}
 
 
 	private void disposeConsoleStream() {
 		if (!messageStream.isClosed()) try{
-			messageStream.flush();
 			messageStream.close();
 		}catch(IOException e){
 			System.out.println(e);
@@ -48,27 +49,30 @@ public class DebugConsole {
 
 	/** Redirects System messages */
 	public void captureSystemOut() {
-		if (systemStream!=null) return;
-		systemStream=new PrintStream(messageStream);
-		systemOut=System.out;
-		systemErr=System.err;
-		System.setOut(systemStream);
-		System.setErr(systemStream);
+		if (systemOut==null) try{
+			systemOut=System.out;
+			systemErr=System.err;
+			System.setOut(printStream);
+			System.setErr(printStream);
+		}catch(Exception e){
+			System.out.println(e);
+		}
 	}
 
 	/** Restores System messages */
 	public void restoreSystemOut() {
-		if (systemStream==null) return;
-		System.setOut(systemOut);
-		System.setErr(systemErr);
-		systemStream.close();
-		systemStream=null;
+		if (systemOut!=null) try{
+			System.setOut(systemOut);
+			System.setErr(systemErr);
+			systemOut=null;
+		}catch(Exception e){
+			System.out.println(e);
+		}
 	}
 
 
 	/** Shows console */
 	public void showConsole() {
-		manager.addConsoles(new IConsole[]{console});
 		manager.showConsoleView(console);
 	}
 
@@ -87,7 +91,7 @@ public class DebugConsole {
 	public void closeConsole() {
 		restoreSystemOut();
 		UIHelper.hideView("org.eclipse.ui.console.ConsoleView");
-		disposeConsoleStream();
+		//disposeConsoleStream();
 	}
 
 
