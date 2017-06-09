@@ -51,8 +51,8 @@ public class DebugConsole {
 		if (systemStream!=null) return;
 		systemStream=new PrintStream(messageStream);
 		systemOut=System.out;
-		System.setOut(systemStream);
 		systemErr=System.err;
+		System.setOut(systemStream);
 		System.setErr(systemStream);
 	}
 
@@ -68,6 +68,7 @@ public class DebugConsole {
 
 	/** Shows console */
 	public void showConsole() {
+		manager.addConsoles(new IConsole[]{console});
 		manager.showConsoleView(console);
 	}
 
@@ -78,22 +79,15 @@ public class DebugConsole {
 
 	/** Opens console AND redirects System messages */
 	public void openConsole() {
-		manager.addConsoles(new IConsole[]{console});
 		showConsole();
 		captureSystemOut();
 	}
 
-	/** Closes console */
+	/** Closes console AND restores System messages */
 	public void closeConsole() {
-		manager.removeConsoles(new IConsole[]{console});
-		UIHelper.hideView(UIHelper.findViewReference("org.eclipse.ui.console.ConsoleView"));
-	}
-
-	/** Disposes console AND restores System messages */
-	public void disposeConsole() {
 		restoreSystemOut();
+		UIHelper.hideView("org.eclipse.ui.console.ConsoleView");
 		disposeConsoleStream();
-		closeConsole();
 	}
 
 

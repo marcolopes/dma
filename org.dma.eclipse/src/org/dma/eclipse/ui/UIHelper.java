@@ -254,6 +254,14 @@ public class UIHelper {
 		getActivePage().hideView(view);
 	}
 
+	public static void hideView(String viewId, String secondaryId) {
+		hideView(findViewReference(viewId, secondaryId));
+	}
+
+	public static void hideView(String viewId) {
+		hideView(findViewReference(viewId));
+	}
+
 
 
 	/*
