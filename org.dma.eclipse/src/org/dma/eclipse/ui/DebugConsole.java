@@ -38,13 +38,18 @@ public class DebugConsole {
 	}
 
 
-	/** Shows console and redirects System messages */
+	/** Shows console */
 	public void showConsole() {
 		manager.showConsoleView(console);
+	}
+
+	/** Opens console AND redirects System messages */
+	public void openConsole() {
+		showConsole();
 		showSystemOut();
 	}
 
-	/** Closes console and restores System messages */
+	/** Closes console AND restores System messages */
 	public void closeConsole() {
 		restoreSystemOut();
 		manager.removeConsoles(new IConsole[]{console});
