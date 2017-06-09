@@ -20,11 +20,12 @@ public class DebugConsole {
 	private final static IConsoleManager manager=ConsolePlugin.getDefault().getConsoleManager();
 
 	private final MessageConsole console;
-	private final MessageConsoleStream messageStream;
 
-	private final PrintStream systemOut=System.out; // standard output stream
-	private final PrintStream systemErr=System.err; // error output stream
-	private final PrintStream systemStream;
+	private PrintStream systemOut=System.out; // standard output stream
+	private PrintStream systemErr=System.err; // error output stream
+
+	private MessageConsoleStream messageStream;
+	private PrintStream systemStream;
 
 	public DebugConsole(String name) {
 		this(name, null);
@@ -32,9 +33,45 @@ public class DebugConsole {
 
 	public DebugConsole(String name, ImageDescriptor imageDescriptor) {
 		console=new MessageConsole(name, imageDescriptor);
-		messageStream=console.newMessageStream();
-		systemStream=new PrintStream(messageStream);
 		manager.addConsoles(new IConsole[]{console});
+	}
+
+	private MessageConsoleStream getMessageStream() {
+		if (messageStream==null || messageStream.isClosed()){
+			messageStream=console.newMessageStream();
+			messageStream.setActivateOnWrite(true);
+		}
+		return messageStream;
+	}
+
+	private void disposeConsoleStream() {
+		if (messageStream!=null && !messageStream.isClosed()) try{
+			messageStream.flush();
+			messageStream.close();
+			messageStream=null;
+		}catch(IOException e){
+			System.out.println(e);
+		}
+	}
+
+
+	/** Redirects System messages */
+	public void captureSystemOut() {
+		if (systemStream!=null) return;
+		systemStream=new PrintStream(getMessageStream());
+		systemOut=System.out;
+		System.setOut(systemStream);
+		systemErr=System.err;
+		System.setErr(systemStream);
+	}
+
+	/** Restores System messages */
+	public void restoreSystemOut() {
+		if (systemStream==null) return;
+		System.setOut(systemOut);
+		System.setErr(systemErr);
+		systemStream.close();
+		systemStream=null;
 	}
 
 
@@ -46,37 +83,25 @@ public class DebugConsole {
 	/** Opens console AND redirects System messages */
 	public void openConsole() {
 		showConsole();
-		showSystemOut();
+		captureSystemOut();
+	}
+
+	/** Clears the console text */
+	public void clearConsole() {
+		console.clearConsole();
 	}
 
 	/** Closes console AND restores System messages */
 	public void closeConsole() {
 		restoreSystemOut();
+		disposeConsoleStream();
 		manager.removeConsoles(new IConsole[]{console});
 	}
 
 
-	/** Redirects System messages */
-	public void showSystemOut() {
-		System.setOut(systemStream);
-		System.setErr(systemStream);
-	}
-
-	/** Restores System messages */
-	public void restoreSystemOut() {
-		System.setOut(systemOut);
-		System.setErr(systemErr);
-		closeConsole();
-	}
-
-
+	/** Activates the console and writes to it */
 	public void write(String message) {
-		try{
-			messageStream.setActivateOnWrite(true);
-			messageStream.write(message);
-		}catch(IOException e){
-			System.err.println(e);
-		}
+		getMessageStream().print(message);
 	}
 
 
