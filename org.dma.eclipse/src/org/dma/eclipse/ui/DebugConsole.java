@@ -20,11 +20,10 @@ public class DebugConsole {
 	private final static IConsoleManager manager=ConsolePlugin.getDefault().getConsoleManager();
 
 	private final MessageConsole console;
+	private final MessageConsoleStream messageStream;
 
 	private PrintStream systemOut=System.out; // standard output stream
 	private PrintStream systemErr=System.err; // error output stream
-
-	private MessageConsoleStream messageStream;
 	private PrintStream systemStream;
 
 	public DebugConsole(String name) {
@@ -33,22 +32,14 @@ public class DebugConsole {
 
 	public DebugConsole(String name, ImageDescriptor imageDescriptor) {
 		console=new MessageConsole(name, imageDescriptor);
-		manager.addConsoles(new IConsole[]{console});
+		messageStream=console.newMessageStream();
 	}
 
-	private MessageConsoleStream getMessageStream() {
-		if (messageStream==null || messageStream.isClosed()){
-			messageStream=console.newMessageStream();
-			messageStream.setActivateOnWrite(true);
-		}
-		return messageStream;
-	}
 
 	private void disposeConsoleStream() {
-		if (messageStream!=null && !messageStream.isClosed()) try{
+		if (!messageStream.isClosed()) try{
 			messageStream.flush();
 			messageStream.close();
-			messageStream=null;
 		}catch(IOException e){
 			System.out.println(e);
 		}
@@ -58,7 +49,7 @@ public class DebugConsole {
 	/** Redirects System messages */
 	public void captureSystemOut() {
 		if (systemStream!=null) return;
-		systemStream=new PrintStream(getMessageStream());
+		systemStream=new PrintStream(messageStream);
 		systemOut=System.out;
 		System.setOut(systemStream);
 		systemErr=System.err;
@@ -80,28 +71,37 @@ public class DebugConsole {
 		manager.showConsoleView(console);
 	}
 
-	/** Opens console AND redirects System messages */
-	public void openConsole() {
-		showConsole();
-		captureSystemOut();
-	}
-
 	/** Clears the console text */
 	public void clearConsole() {
 		console.clearConsole();
 	}
 
-	/** Closes console AND restores System messages */
+	/** Opens console AND redirects System messages */
+	public void openConsole() {
+		manager.addConsoles(new IConsole[]{console});
+		showConsole();
+		captureSystemOut();
+	}
+
+	/** Closes console */
 	public void closeConsole() {
+		manager.removeConsoles(new IConsole[]{console});
+		UIHelper.hideView(UIHelper.findViewReference("org.eclipse.ui.console.ConsoleView"));
+	}
+
+	/** Disposes console AND restores System messages */
+	public void disposeConsole() {
 		restoreSystemOut();
 		disposeConsoleStream();
-		manager.removeConsoles(new IConsole[]{console});
+		closeConsole();
 	}
 
 
 	/** Activates the console and writes to it */
-	public void write(String message) {
-		getMessageStream().print(message);
+	public void println(String message) {
+		messageStream.setActivateOnWrite(true);
+		messageStream.println(message);
+		messageStream.setActivateOnWrite(false);
 	}
 
 
