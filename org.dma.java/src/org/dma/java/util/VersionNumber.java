@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -29,10 +29,10 @@ public final class VersionNumber {
 
 	public VersionNumber(String version) {
 		String[] array=ArrayUtils.numbers(StringUtils.split(version, "."));
-		major=array.length>0 ? Integer.valueOf(array[0]) : 0;
-		minor=array.length>1 ? Integer.valueOf(array[1]) : 0;
-		macro=array.length>2 ? Integer.valueOf(array[2]) : 0;
-		build=array.length>3 ? Integer.valueOf(array[3]) : 0;
+		major=array.length>0 ? StringUtils.val(array[0]) : 0;
+		minor=array.length>1 ? StringUtils.val(array[1]) : 0;
+		macro=array.length>2 ? StringUtils.val(array[2]) : 0;
+		build=array.length>3 ? StringUtils.val(array[3]) : 0;
 	}
 
 
