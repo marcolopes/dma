@@ -496,18 +496,18 @@ public class StringUtils {
 
 
 	/** Escape and surround with QUOTE chars */
-	public static String quote(String string, char quote) {
+	public static String quote(String string, char...quote) {
 
-		//string may contain DOUBLE QUOTES!
-		return quote + escape(string).replace("\"", "\\\"") + quote;
+		StringBuilder sb=new StringBuilder();
 
-	}
+		//start quote
+		sb.append(quote.length==0 ? '"' : quote[0]);
+		//remove DOUBLE QUOTES!
+		sb.append(escape(string).replace("\"", "\\\""));
+		//end quote
+		sb.append(quote.length==0 ? '"' : quote[quote.length-1]);
 
-
-	/** Escape and surround with DOUBLE QUOTE chars */
-	public static String quote(String string) {
-
-		return quote(string, '"');
+		return sb.toString();
 
 	}
 
