@@ -55,7 +55,7 @@ public final class VersionNumber {
 	}
 
 
-	public int[] toArray(){
+	public int[] toArray() {
 		return new int[]{major, minor, macro, build};
 	}
 
