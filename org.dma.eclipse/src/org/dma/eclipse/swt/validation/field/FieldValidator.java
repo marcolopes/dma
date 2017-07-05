@@ -97,6 +97,7 @@ public abstract class FieldValidator implements IValidator {
 			@Override
 			public void focusLost(FocusEvent e) {
 				Debug.out();
+				//validationManager.processValidators();
 			}
 		});
 

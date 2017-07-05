@@ -151,7 +151,11 @@ public class UIHelper {
 	 */
 	/** @see PlatformUI#getWorkbench */
 	public static IWorkbench getWorkbench() {
-		return Workbench.getInstance();
+		try{
+			return PlatformUI.getWorkbench();
+		}catch(Exception e){
+			System.err.println(e);
+		}return null;
 	}
 
 	/** @see Workbench#getDisplay */
