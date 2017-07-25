@@ -739,6 +739,11 @@ public class TimeDateUtils {
 	}
 
 
+	public static Time getTimeWithoutSeconds(Date date) {
+		return getTimeWithoutSeconds(getTime(date));
+	}
+
+
 	public static Time getTimeWithoutSeconds() {
 		return getTimeWithoutSeconds(getCurrentTime());
 	}
