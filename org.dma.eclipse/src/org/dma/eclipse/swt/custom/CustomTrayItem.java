@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -9,14 +9,15 @@ import org.apache.commons.lang.SystemUtils;
 import org.dma.eclipse.swt.graphics.ImageManager;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
 
-public class CustomTrayItem {
+public class CustomTrayItem extends TrayItem {
+
+	@Override //subclassing
+	protected void checkSubclass() {}
 
 	private final Listener maximizeListener=new Listener() {
 		@Override
@@ -28,71 +29,54 @@ public class CustomTrayItem {
 		}
 	};
 
-	private TrayItem trayItem;
+	private CustomToolTip toolTip;
 
 	private final Shell parent;
-	private final String name;
-	private final Image image;
-	private final Tray sysTray;
-	private final CustomToolTip toolTip;
 
-	public CustomTrayItem(Shell parent, String name, String imagePath, String toolTipText, boolean minimized) {
+	public CustomTrayItem(Shell parent, String name, String imagePath, boolean minimized) {
+		super(parent.getDisplay().getSystemTray(), SWT.NONE);
 		this.parent=parent;
-		this.name=name;
-		this.image=ImageManager.getImage(imagePath);
-		this.sysTray=parent.getDisplay().getSystemTray();
-		this.toolTip=new CustomToolTip(parent, toolTipText);
-		create(minimized);
+		setToolTipText(name);
+		setImage(ImageManager.getImage(imagePath));
+		addListener(SWT.Selection, maximizeListener);
+		update(minimized);
 	}
 
-
-	private void create(boolean minimized) {
-		//check if tray exists
-		if (sysTray==null || !minimized) return;
-		//item
-		trayItem=new TrayItem(sysTray, SWT.NONE);
-		trayItem.setImage(image);
-		trayItem.setToolTipText(name);
-		//BUG: Tip does not show in windows 7
-		if (!SystemUtils.IS_OS_WINDOWS_7) trayItem.setToolTip(toolTip);
-		//listeners
-		trayItem.addListener(SWT.Selection, maximizeListener);
-	}
-
-
+	@Override
 	public void dispose() {
-		if (trayItem==null) return;
-		//listeners
-		trayItem.removeListener(SWT.Selection, maximizeListener);
-		//item
-		trayItem.setToolTip(null);
-		trayItem.dispose();
-		trayItem=null;
+		removeListener(SWT.Selection, maximizeListener);
+		setToolTip(null);
+		super.dispose();
 	}
 
-
-	public void update(boolean minimized) {
-		//destroy current
-		dispose();
-		//create new
-		create(minimized);
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		if (toolTip!=null) toolTip.dispose();
+		toolTip=new CustomToolTip(parent);
+		//BUG: Tip does not show in windows 7 tray
+		setToolTip(visible && !SystemUtils.IS_OS_WINDOWS_7 ? toolTip : null);
 	}
 
-
-	public void showTip(String message) {
-		toolTip.show(message);
-	}
-
-	public void showTip(String prefix, String message) {
-		showTip(prefix+": "+message);
-	}
-
+	/** @see TrayItem#getVisible */
 	public boolean isVisible() {
-		return trayItem!=null;
+		return getVisible();
 	}
 
-	public boolean isValid() {
-		return sysTray!=null;
+	/** @see TrayItem#setVisible */
+	@Deprecated
+	public void update(boolean minimized) {
+		setVisible(minimized);
+	}
+
+	/** @see CustomTrayItem#isVisible */
+	@Deprecated
+	public boolean isMinimized() {
+		return isVisible();
+	}
+
+	public void showTip(String text, String message) {
+		toolTip.show(text, message);
 	}
 
 

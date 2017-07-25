@@ -61,6 +61,7 @@ public class FieldFormat extends FieldProperties {
 		this(type, size, null, properties, exclude);
 	}
 
+	/*
 	public FieldFormat(TYPES type, String pattern) {
 		this(type, pattern, NONE);
 	}
@@ -68,6 +69,7 @@ public class FieldFormat extends FieldProperties {
 	public FieldFormat(TYPES type, String pattern, int properties) {
 		this(type, new FieldSize(pattern.length()), pattern, properties);
 	}
+	*/
 
 	public FieldFormat(TYPES type, FieldSize size, String pattern, int properties, char...exclude) {
 		super(properties);
@@ -127,10 +129,10 @@ public class FieldFormat extends FieldProperties {
 	}
 
 
-	/**
-	 * <b>Examples</b><br>
-	 * SIZE 9,0: ###,###,##0<br>
-	 * SIZE 9,3: ###,##0.000<br>
+	/*
+	 * Examples
+	 * SIZE 9,0: ###,###,##0
+	 * SIZE 9,3: ###,##0.000
 	 * SIZE 4,3: #,##0.000
 	 */
 	private String buildPattern() {

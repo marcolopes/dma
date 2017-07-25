@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -26,30 +26,27 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 		this.title=title;
 	}
 
-
 	@Override
 	public String put(IProgressAction action, String taskName) {
-
 		String value=super.put(action, taskName);
 		work=100/size();
 		return value;
-
 	}
 
+	public String put(IProgressAction action) {
+		return put(action, null);
+	}
 
 	public void put(Class klass) {
-
-		if (!IProgressAction.class.isAssignableFrom(klass))
-			throw new UnsupportedOperationException();
-
-		try{
-			IProgressAction action=((Class<IProgressAction>)klass).newInstance();
+		if (IProgressAction.class.isAssignableFrom(klass)) try{
+			IProgressAction action=(IProgressAction)klass.newInstance();
 			put(action, action.getClass().getName());
 
 		}catch(Exception e){
 			e.printStackTrace();
+		}else{
+			throw new UnsupportedOperationException();
 		}
-
 	}
 
 
@@ -98,10 +95,10 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			});
 
 		}catch(InvocationTargetException e){
-			Debug.out("InvocationTargetException");
+			Debug.err("InvocationTargetException");
 			throw new Exception(e.getCause().getMessage(), e.getCause());
 		}catch(InterruptedException e){
-			Debug.out("InterruptedException");
+			Debug.err("InterruptedException");
 			return false;
 		}
 

@@ -33,7 +33,11 @@ public class TraverseSupport extends ArrayList<Control> {
 
 					Debug.out("SWT.MULTI");
 
-					if (keypadReturn) switch(event.keyCode){
+					//TAB key pressed?
+					if (event.keyCode==SWT.TAB){
+						event.doit=true; // traverse
+					}
+					else if (keypadReturn) switch(event.keyCode){
 					case SWT.KEYPAD_CR:
 						event.doit=false; // do not traverse
 						break;
@@ -42,10 +46,6 @@ public class TraverseSupport extends ArrayList<Control> {
 						event.detail=SWT.TRAVERSE_NONE; // avoid NEW line
 						event.doit=true; // traverse
 						break;
-					}
-					//TAB key pressed?
-					else if (event.keyCode==SWT.TAB){
-						event.doit=true; // traverse
 					}
 
 				}
