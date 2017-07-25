@@ -159,7 +159,7 @@ public class CustomJob extends Job {
 			reset();
 			time.start();
 			lock.acquire();
-			monitor.beginTask("",IProgressMonitor.UNKNOWN);
+			monitor.beginTask("", IProgressMonitor.UNKNOWN);
 			Debug.err("STARTED "+this+" JOB" );
 
 			for(int i=0; i<tasks.size() && !canceled; i++){
