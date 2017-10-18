@@ -37,6 +37,7 @@ public class FolderHandler {
 	}
 
 
+	/** Returns folder path relative to current folder */
 	public String getRelativePath() {
 		String current=currentFolder();
 		String THIS=folder.getAbsolutePath();

@@ -30,7 +30,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 */
 	public static PrivateKey decode(byte[] encodedKey) {
 		try{
-			KeyFactory kf=KeyFactory.getInstance("RSA");
+			KeyFactory kf=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
 			PKCS8EncodedKeySpec spec=new PKCS8EncodedKeySpec(encodedKey);
 			return kf.generatePrivate(spec);
 

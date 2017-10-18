@@ -30,7 +30,7 @@ public class RSAPublicCipher extends CryptoCipher {
 	 */
 	public static PublicKey decode(byte[] encodedKey) {
 		try{
-			KeyFactory kf=KeyFactory.getInstance("RSA");
+			KeyFactory kf=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
 			X509EncodedKeySpec spec=new X509EncodedKeySpec(encodedKey);
 			return kf.generatePublic(spec);
 
