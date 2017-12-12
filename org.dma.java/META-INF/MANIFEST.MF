@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Utils
 Bundle-SymbolicName: org.dma.java;singleton:=true
-Bundle-Version: 6.3.3.qualifier
+Bundle-Version: 6.3.4.qualifier
 Bundle-Vendor: marcolopes@netc.pt
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

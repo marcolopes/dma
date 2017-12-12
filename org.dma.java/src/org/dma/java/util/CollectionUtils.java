@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -69,7 +69,7 @@ public class CollectionUtils {
 		int index=new Random().nextInt(col.size());
 
 		for(T element: col){
-			if (--index < 0) return element;
+			if(--index < 0) return element;
 		}
 
 		return null;
@@ -210,6 +210,13 @@ public class CollectionUtils {
 	}
 
 
+	public static <T> String concat(Collection<T> col) {
+
+		return concat(col, "");
+
+	}
+
+
 	public static <T> String concat(List<T> col, int fromIndex, int toIndex, String separator) {
 
 		if(fromIndex<0 || toIndex>col.size() || fromIndex>toIndex) return "";
@@ -239,7 +246,7 @@ public class CollectionUtils {
 		Collection<T> result=new ArrayList(col.length);
 
 		for(Collection<T> c: col){
-			if (c!=null) result.addAll(c);
+			if(c!=null) result.addAll(c);
 		}
 
 		return result;

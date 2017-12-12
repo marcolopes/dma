@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -319,6 +319,13 @@ public class ArrayUtils {
 	public static <T> String concat(T[] array, String separator) {
 
 		return CollectionUtils.concat(Arrays.asList(array), separator);
+
+	}
+
+
+	public static <T> String concat(T[] array) {
+
+		return concat(array, "");
 
 	}
 

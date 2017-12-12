@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2017 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -273,6 +273,33 @@ public class TextFileHandler extends FileHandler {
 					new BufferedWriter(
 							new OutputStreamWriter(
 									new FileOutputStream(file), charset));
+
+			try{
+				bw.write(text);
+
+			}finally{
+				bw.close();
+			}
+
+			return true;
+
+		}catch(Exception e){
+			System.err.println(e);
+		}
+
+		return false;
+
+	}
+
+
+	/** Appends text to file */
+	public boolean append(String text) {
+
+		try{
+			BufferedWriter bw=
+					new BufferedWriter(
+							new OutputStreamWriter(
+									new FileOutputStream(file, true), charset));
 
 			try{
 				bw.write(text);
