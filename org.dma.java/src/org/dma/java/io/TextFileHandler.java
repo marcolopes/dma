@@ -266,13 +266,13 @@ public class TextFileHandler extends FileHandler {
 	 *
 	 */
 	/** Writes text to file */
-	public boolean write(String text) {
+	public boolean write(String text, boolean append) {
 
 		try{
 			BufferedWriter bw=
 					new BufferedWriter(
 							new OutputStreamWriter(
-									new FileOutputStream(file), charset));
+									new FileOutputStream(file, append), charset));
 
 			try{
 				bw.write(text);
@@ -292,29 +292,18 @@ public class TextFileHandler extends FileHandler {
 	}
 
 
+	/** Writes text to file */
+	public boolean write(String text) {
+
+		return write(text, false);
+
+	}
+
+
 	/** Appends text to file */
 	public boolean append(String text) {
 
-		try{
-			BufferedWriter bw=
-					new BufferedWriter(
-							new OutputStreamWriter(
-									new FileOutputStream(file, true), charset));
-
-			try{
-				bw.write(text);
-
-			}finally{
-				bw.close();
-			}
-
-			return true;
-
-		}catch(Exception e){
-			System.err.println(e);
-		}
-
-		return false;
+		return write(text, true);
 
 	}
 
