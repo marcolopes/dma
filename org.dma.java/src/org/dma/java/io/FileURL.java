@@ -46,25 +46,25 @@ public class FileURL {
 
 	public InputStream asInputStream() throws IOException {
 
-		URLConnection conn=url.openConnection();
+		URLConnection connection=url.openConnection();
 
-		conn.setDoInput(true); //input connection
-		conn.setDoOutput(false); //output connection
-		conn.setUseCaches(false); //avoid a cached file
+		connection.setDoInput(true); //input connection
+		connection.setDoOutput(false); //output connection
+		connection.setUseCaches(false); //avoid a cached file
 
-		return conn.getInputStream();
+		return connection.getInputStream();
 
 	}
 
 	public OutputStream asOutputStream() throws IOException {
 
-		URLConnection conn=url.openConnection();
+		URLConnection connection=url.openConnection();
 
-		conn.setDoInput(false); //input connection
-		conn.setDoOutput(true); //output connection
-		conn.setUseCaches(false); //avoid a cached file
+		connection.setDoInput(false); //input connection
+		connection.setDoOutput(true); //output connection
+		connection.setUseCaches(false); //avoid a cached file
 
-		return conn.getOutputStream();
+		return connection.getOutputStream();
 
 	}
 
