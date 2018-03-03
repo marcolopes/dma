@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-Name: org.apache.log4j
+Bundle-SymbolicName: org.dma.log4j;singleton:=true
+Bundle-Version: 1.2.16.qualifier
+Bundle-Vendor: marcolopes@netc.pt
+Bundle-Activator: org.dma.log4j.Activator
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ libraries/log4j-1.2.16.jar
+Export-Package: org.apache.log4j
+Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2"
