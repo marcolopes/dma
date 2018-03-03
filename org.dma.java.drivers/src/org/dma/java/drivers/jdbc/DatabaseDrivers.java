@@ -9,6 +9,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,13 +51,13 @@ public class DatabaseDrivers {
 		/** http://www.jolbox.com */
 		BONECP;
 
-		public IPoolManager get(final String url, final String user, final String password) {
+		public IPoolManager create(final String url, final String user, final String password) {
 			switch(this){
 			case NONE: return new IPoolManager() {
 				@Override
 				public void shutdown() {}
 				@Override
-				public Connection getConnection() throws Exception {
+				public Connection getConnection() throws SQLException {
 					return DriverManager.getConnection(url, user, password);
 				}
 			};
@@ -125,7 +126,7 @@ public class DatabaseDrivers {
 			return null;
 		}
 
-		public String getConnectionUrl(String host, String database, String properties, POOLMANAGERS pooling) {
+		public String getConnectionUrl(String host, String database, String properties, POOLMANAGERS pool) {
 			StringBuilder url=new StringBuilder(getDatabaseUrl(host, database));
 			switch(this){
 			case H2:
@@ -141,8 +142,8 @@ public class DatabaseDrivers {
 					//The connection only succeeds when the database already exists
 					url.append(";IFEXISTS=TRUE");
 				}
-				//needed when there is NO POOLING
-				url.append(pooling==POOLMANAGERS.NONE ? ";DB_CLOSE_DELAY=10" : ""); break;
+				//needed when there is NO POOL
+				url.append(pool==POOLMANAGERS.NONE ? ";DB_CLOSE_DELAY=10" : ""); break;
 
 			case MySQL:
 				//URL?property=value&property=value...
@@ -272,7 +273,7 @@ public class DatabaseDrivers {
 			}return null;
 		}
 
-		public Collection<String> getForeignKeyNames(Connection connection, String tableName, String columnName) throws Exception {
+		public Collection<String> getForeignKeyNames(Connection connection, String tableName, String columnName) throws SQLException {
 			Collection<String> col=new ArrayList();
 			switch(this){
 			case H2: break;
@@ -287,7 +288,7 @@ public class DatabaseDrivers {
 			}return col;
 		}
 
-		public Collection<String> getIndexKeyNames(Connection connection, String tableName, String columnName) throws Exception {
+		public Collection<String> getIndexKeyNames(Connection connection, String tableName, String columnName) throws SQLException {
 			Collection<String> col=new ArrayList();
 			switch(this){
 			case H2: break;
@@ -302,21 +303,18 @@ public class DatabaseDrivers {
 			}return col;
 		}
 
-		public void executeSQLUpdate(Connection connection, String sql) throws Exception {
+		public void executeSQLUpdate(Connection connection, String sql) throws SQLException {
 			try{
 				Statement stmt=connection.createStatement();
 				stmt.executeUpdate(sql);
 				stmt.close();
 				connection.commit();
-
-			}catch(Exception e){
-				System.err.println(e);
 			}finally{
 				connection.rollback();
 			}
 		}
 
-		public void executeDropColumn(Connection connection, String tableName, String columnName) throws Exception {
+		public void executeDropColumn(Connection connection, String tableName, String columnName) throws SQLException {
 			for(String foreignKeyName: getForeignKeyNames(connection, tableName, columnName)){
 				Debug.out("DROPPING <"+tableName+":"+foreignKeyName+">");
 				executeSQLUpdate(connection, getDropForeignKeySQL(tableName, foreignKeyName));
@@ -329,7 +327,7 @@ public class DatabaseDrivers {
 			executeSQLUpdate(connection, getDropColumnSQL(tableName, columnName));
 		}
 
-		public void executeDropTable(Connection connection, String tableName) throws Exception {
+		public void executeDropTable(Connection connection, String tableName) throws SQLException {
 			Debug.out("DROPPING <"+tableName+">");
 			executeSQLUpdate(connection, getDropTableSQL(tableName));
 		}
@@ -338,16 +336,16 @@ public class DatabaseDrivers {
 
 	private IPoolManager poolManager;
 
-	public Connection getConnection(String url, String user, String password, POOLMANAGERS pooling) throws Exception {
-		if (poolManager==null) poolManager=pooling.get(url, user, password);
+	public Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
+		if (poolManager==null) poolManager=pool.create(url, user, password);
 		return poolManager.getConnection();
 	}
 
-	public Connection getConnection(String url, String user, String password) throws Exception {
+	public Connection getConnection(String url, String user, String password) throws SQLException {
 		return getConnection(url, user, password, POOLMANAGERS.NONE);
 	}
 
-	public void checkConnection(String url, String user, String password) throws Exception {
+	public void checkConnection(String url, String user, String password) throws SQLException {
 		Debug.err("URL", url);
 		Debug.err("USER", user);
 		Debug.err("PASSWORD", password);

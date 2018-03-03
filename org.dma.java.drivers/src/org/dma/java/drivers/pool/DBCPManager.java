@@ -6,6 +6,7 @@
 package org.dma.java.drivers.pool;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
@@ -22,7 +23,7 @@ public class DBCPManager implements IPoolManager {
 	}
 
 	@Override
-	public Connection getConnection() throws Exception {
+	public Connection getConnection() throws SQLException {
 		return pool.getConnection();
 	}
 

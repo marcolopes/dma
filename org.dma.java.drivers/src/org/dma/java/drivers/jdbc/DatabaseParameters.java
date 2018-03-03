@@ -19,21 +19,21 @@ public class DatabaseParameters extends DatabaseDrivers {
 	public final String properties;
 	public final String user;
 	public final String password;
-	public final POOLMANAGERS pooling;
+	public final POOLMANAGERS pool;
 	public final BackupParameters backup;
 
 	public DatabaseParameters(DRIVERS driver, String host, String database,
-			String user, String password, POOLMANAGERS pooling) {
-		this(driver, host, database, null, user, password, pooling);
+			String user, String password, POOLMANAGERS pool) {
+		this(driver, host, database, null, user, password, pool);
 	}
 
 	public DatabaseParameters(DRIVERS driver, String host, String database,
-			String properties, String user, String password, POOLMANAGERS pooling) {
-		this(driver, host, database, properties, user, password, pooling, null);
+			String properties, String user, String password, POOLMANAGERS pool) {
+		this(driver, host, database, properties, user, password, pool, null);
 	}
 
 	public DatabaseParameters(DRIVERS driver, String host, String database,
-			String properties, String user, String password, POOLMANAGERS pooling,
+			String properties, String user, String password, POOLMANAGERS pool,
 			BackupParameters backup) {
 		this.driver=driver;
 		this.host=host==null ? "" : host;
@@ -41,7 +41,7 @@ public class DatabaseParameters extends DatabaseDrivers {
 		this.properties=properties==null ? "" : properties;
 		this.user=user==null ? "" : user;
 		this.password=password==null ? "" : password;
-		this.pooling=pooling;
+		this.pool=pool;
 		this.backup=backup==null ? new BackupParameters() : backup;
 	}
 
@@ -62,11 +62,11 @@ public class DatabaseParameters extends DatabaseDrivers {
 	}
 
 	public String getConnectionUrl() {
-		return driver.getConnectionUrl(host, database, properties, pooling);
+		return driver.getConnectionUrl(host, database, properties, pool);
 	}
 
 	public Connection getConnection() throws Exception {
-		return getConnection(getConnectionUrl(), user, password, pooling);
+		return getConnection(getConnectionUrl(), user, password, pool);
 	}
 
 	public void checkConnection() throws Exception {
