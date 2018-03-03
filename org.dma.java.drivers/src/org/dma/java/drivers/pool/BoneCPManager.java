@@ -6,6 +6,7 @@
 package org.dma.java.drivers.pool;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
@@ -33,7 +34,7 @@ public class BoneCPManager implements IPoolManager {
 	}
 
 	@Override
-	public Connection getConnection() throws Exception {
+	public Connection getConnection() throws SQLException {
 		return pool.getConnection();
 	}
 

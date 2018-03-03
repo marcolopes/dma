@@ -6,6 +6,7 @@
 package org.dma.java.drivers.pool;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -22,7 +23,7 @@ public class C3P0Manager implements IPoolManager {
 	}
 
 	@Override
-	public Connection getConnection() throws Exception {
+	public Connection getConnection() throws SQLException {
 		return pool.getConnection();
 	}
 
