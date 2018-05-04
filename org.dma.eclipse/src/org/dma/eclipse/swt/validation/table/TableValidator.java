@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -33,7 +33,7 @@ public abstract class TableValidator<T> implements IValidator {
 	private final SelectionListener selectionListener=new SelectionListener() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			Debug.out("TABLE");
+			Debug.err("TABLE");
 			if(!viewer.isCellEditorActive()) validateTable();
 		}
 		@Override
@@ -45,7 +45,7 @@ public abstract class TableValidator<T> implements IValidator {
 		public void focusGained(FocusEvent e) {}
 		@Override
 		public void focusLost(FocusEvent e) {
-			Debug.out("TABLE");
+			Debug.err("TABLE");
 			if(!viewer.isCellEditorActive()) validateTable();
 		}
 	};
@@ -69,8 +69,8 @@ public abstract class TableValidator<T> implements IValidator {
 
 
 	public void dispose() {
-		table.removeSelectionListener(selectionListener);
 		table.removeFocusListener(focusListener);
+		table.removeSelectionListener(selectionListener);
 		unregisterAll();
 	}
 
