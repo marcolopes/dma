@@ -11,14 +11,14 @@ import org.eclipse.swt.widgets.Label;
 
 public abstract class FieldError  {
 
+	public abstract String processErrorMessage(ERRORS error, String message, String label);
+
 	public enum ERRORS {
 		NONE,
 		USER_DEFINED,
 		IS_EMPTY,
 		IS_ZERO,
 		BAD_LENGTH}
-
-	public abstract String processErrorMessage(ERRORS error, String message, String label);
 
 	private String message;
 	private ERRORS error;
