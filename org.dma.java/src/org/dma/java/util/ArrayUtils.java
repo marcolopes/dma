@@ -482,7 +482,7 @@ public class ArrayUtils {
 		System.out.println("merge: " + Arrays.asList(merge(array1, array2)));
 		System.out.println("merge: " + Arrays.asList(merge(array1, null)));
 		System.out.println("merge: " + Arrays.asList(merge(null, array2)));
-		System.out.println("merge: " + merge(new String[]{}));
+		System.out.println("merge: " + merge(new String[0]));
 
 		int repeat=10000;
 		Chronograph time=new Chronograph();
