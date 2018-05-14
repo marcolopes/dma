@@ -123,9 +123,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 
 	@Override
-	public void close(MessageContext messageContext) {
-		// nothing to clean up
-	}
+	public void close(MessageContext messageContext) {}
 
 
 	@Override
