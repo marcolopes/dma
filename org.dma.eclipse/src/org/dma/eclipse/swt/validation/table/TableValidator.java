@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.TableItem;
 public abstract class TableValidator<T> implements IValidator {
 
 	public abstract void validateLine(T element);
-	public abstract String processMessage(String message, String label);
+	public abstract String processErrorMessage(String message, String label);
 
 	private final SelectionListener selectionListener=new SelectionListener() {
 		@Override
@@ -80,7 +80,7 @@ public abstract class TableValidator<T> implements IValidator {
 		ColumnBinding binding=new ColumnBinding(text, fieldFormat, label){
 			@Override
 			public String processErrorMessage(String message, String label) {
-				return TableValidator.this.processMessage(message, label);
+				return TableValidator.this.processErrorMessage(message, label);
 			}
 		};
 		register(property, binding);
@@ -94,7 +94,7 @@ public abstract class TableValidator<T> implements IValidator {
 		ColumnBinding binding=new ColumnBinding(text, label){
 			@Override
 			public String processErrorMessage(String message, String label) {
-				return TableValidator.this.processMessage(message, label);
+				return TableValidator.this.processErrorMessage(message, label);
 			}
 		};
 		register(property, binding);
@@ -196,8 +196,7 @@ public abstract class TableValidator<T> implements IValidator {
 		String errorMessage="";
 
 		for(ColumnBinding binding: validatorMap.values()){
-			if(binding.hasError())
-				errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getMessage();
+			if(binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getErrorMessage();
 		}
 
 		return errorMessage;

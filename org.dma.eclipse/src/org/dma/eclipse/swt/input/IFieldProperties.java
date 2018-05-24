@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -15,17 +15,20 @@ public interface IFieldProperties {
 	/** Converts to lowercase */
 	public static final int LOWERCASE = 1 << 1;
 
-	/** Allows only DIGITS and SPACES */
+	/** Allows DIGITS and SPACES */
 	public static final int DIGITS = 1 << 2;
 
-	/** Allows only LETTERS and SPACES */
+	/** Allows LETTERS and SPACES */
 	public static final int LETTERS = 1 << 3;
 
-	/** Allows only POSITIVE numbers */
-	public static final int POSITIVE = 1 << 4;
+	/** Allows SEPARATOR CHARS */
+	public static final int SEPARATORS = 1 << 4;
 
-	/** Does not allow any spaces */
-	public static final int NOSPACES = 1 << 5;
+	/** Allows POSITIVE numbers */
+	public static final int POSITIVE = 1 << 5;
+
+	/** Does not allow SPACES */
+	public static final int NOSPACES = 1 << 6;
 
 
 }

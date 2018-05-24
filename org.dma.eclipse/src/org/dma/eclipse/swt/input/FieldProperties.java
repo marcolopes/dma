@@ -35,6 +35,10 @@ public class FieldProperties implements IFieldProperties {
 		return is(LETTERS);
 	}
 
+	public boolean isSeparators() {
+		return is(SEPARATORS);
+	}
+
 	public boolean isPositive() {
 		return is(POSITIVE);
 	}

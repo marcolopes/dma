@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -12,11 +12,21 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
 
 public class FieldFormat extends FieldProperties {
+
+	/** Regex Pattern CACHE */
+	private static final Map<String, Pattern> RP_CACHE=new HashMap();
+
+	public static Pattern getRegexPattern(String regex) {
+		Pattern pattern=RP_CACHE.get(regex);
+		if (pattern==null) RP_CACHE.put(regex, pattern=Pattern.compile(regex));
+		return pattern;
+	}
 
 	/** Decimal Format CACHE */
 	private static final Map<String, DecimalFormat> DF_CACHE=new HashMap();
@@ -46,7 +56,6 @@ public class FieldFormat extends FieldProperties {
 	private final TYPES type;
 	private final FieldSize size;
 	private final String pattern;
-	private final char[] exclude;
 	private final String regex;
 
 	public FieldFormat(TYPES type, int size, char...exclude) {
@@ -76,8 +85,8 @@ public class FieldFormat extends FieldProperties {
 		this.type=type;
 		this.size=size;
 		this.pattern=pattern==null ? buildPattern() : pattern;
-		this.exclude=isNoSpaces() ? String.valueOf(exclude).concat(" ").toCharArray() : exclude;
-		this.regex=buildRegex(String.valueOf(this.exclude));
+		this.regex=buildRegex(String.valueOf(isNoSpaces() ?
+				String.valueOf(exclude).concat(" ").toCharArray() : exclude));
 	}
 
 
@@ -89,16 +98,18 @@ public class FieldFormat extends FieldProperties {
 		case DATE:
 		case STRING:
 			String range="";
-			//digits only
+			//allows digits
 			if(isDigits()) range+="0-9 ";
-			//letters only
+			//allows letters
 			if(isLetters()) range+="a-zA-Z ";
-			//digits and letters
+			//allows separators
+			if(isSeparators()) range+="\\-/";
+			//default (digits and letters)
 			if (range.isEmpty()) range+=(char)0+"-"+(char)65535;
-			//Character set
-			regex+=exclude.isEmpty() ?
-				"[" + range + "]" :
-				"[" + range + "&&[^" + StringUtils.escape(exclude) + "]]";
+			//character set
+			regex+="[" + range;
+			if (!exclude.isEmpty()) regex+="&&[^" + StringUtils.escape(exclude) + "]";
+			regex+="]";
 			//alfanumeric limit
 			regex+="{0," + size.size + "}";
 			break;
@@ -179,20 +190,16 @@ public class FieldFormat extends FieldProperties {
 	/** Time / Date / Number */
 	public String format(Object value) {
 		switch(type){
-		case TIME: return format((Time)value);
-		case DATE: return format((Date)value);
+		case TIME: return TimeDateUtils.getTimeFormatted((Time)value, pattern);
+		case DATE: return TimeDateUtils.getDateFormatted((Date)value, pattern);
 		case DECIMAL:
 		case INTEGER: return getDecimalFormat(pattern).format(value);
 		case STRING: break;
 		}return value.toString();
 	}
 
-	public String format(Time time) {
-		return TimeDateUtils.getTimeFormatted(time, pattern);
-	}
-
-	public String format(Date date) {
-		return TimeDateUtils.getDateFormatted(date, pattern);
+	public Pattern getRegexPattern() {
+		return getRegexPattern(regex);
 	}
 
 
@@ -221,9 +228,7 @@ public class FieldFormat extends FieldProperties {
 				string.length()<=size.size &&
 				!(isUppercase() && !StringUtils.isUppercase(string)) &&
 				!(isLowercase() && !StringUtils.isLowercase(string)) &&
-				!(isDigits() && !StringUtils.isNumeric(string)) &&
-				!(isLetters() && !StringUtils.isLetters(string)) &&
-				!StringUtils.contains(string, exclude);
+				getRegexPattern().matcher(string).matches();
 	}
 
 
@@ -237,10 +242,5 @@ public class FieldFormat extends FieldProperties {
 	public FieldSize getSize() {
 		return size;
 	}
-
-	public String getEditRegex() {
-		return regex;
-	}
-
 
 }
