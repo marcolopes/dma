@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,44 +10,32 @@ public abstract class ColumnError {
 	public abstract String processErrorMessage(String message, String label);
 
 	private String message;
-	private boolean error;
 
 	protected final String label;
 
 	public ColumnError(String label) {
 		this.label=label;
-		clearError();
 	}
 
 
 	/*
 	 * Message
 	 */
-	public String getMessage() {
+	public String getErrorMessage() {
 		return processErrorMessage(message==null ? "" : message,
 				label==null ? "" : label);
 	}
 
-	public void setError(String message) {
+	public void setErrorMessage(String message) {
 		this.message=message;
-		setError(this.message!=null && !this.message.isEmpty());
 	}
 
 	public void clearError() {
-		setError(null);
+		setErrorMessage(null);
 	}
 
-
-
-	/*
-	 * Getters and setters
-	 */
 	public boolean hasError() {
-		return error;
-	}
-
-	public void setError(boolean error) {
-		this.error=error;
+		return this.message!=null && !this.message.isEmpty();
 	}
 
 

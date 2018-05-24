@@ -1,12 +1,10 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
 package org.dma.eclipse.swt.input;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.eclipse.swt.custom.CCombo;
@@ -16,14 +14,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 public class FieldRegex {
-
-	private static final Map<String, Pattern> RP_CACHE=new HashMap();
-
-	public static Pattern getPattern(String regex) {
-		Pattern pattern=RP_CACHE.get(regex);
-		if (pattern==null) RP_CACHE.put(regex, pattern=Pattern.compile(regex));
-		return pattern;
-	}
 
 	private final Control control;
 	private final FieldFormat fieldFormat;
@@ -71,7 +61,7 @@ public class FieldRegex {
 	public FieldRegex(Control control, FieldFormat fieldFormat) {
 		this.control=control;
 		this.fieldFormat=fieldFormat;
-		this.pattern=getPattern(fieldFormat.getEditRegex());
+		this.pattern=fieldFormat.getRegexPattern();
 		addListeners();
 	}
 
