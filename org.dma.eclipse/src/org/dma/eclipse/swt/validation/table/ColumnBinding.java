@@ -37,7 +37,7 @@ public abstract class ColumnBinding extends ColumnError {
 	}
 
 
-	public void dispose(){
+	public void dispose() {
 		if (regex!=null) regex.detach();
 	}
 

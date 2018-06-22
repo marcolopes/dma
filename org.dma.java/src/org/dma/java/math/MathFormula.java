@@ -25,11 +25,11 @@ public class MathFormula {
 			this.value=value;
 		}
 
-		public boolean isEmpty(){
+		public boolean isEmpty() {
 			return name==null || name.trim().isEmpty() || value==null;
 		}
 
-		public String toString(){
+		public String toString() {
 			return name+"="+value;
 		}
 

@@ -40,7 +40,7 @@ public class CheckVatAddress {
 	 * @see java.lang.Object
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		return street + (zipcode.isEmpty() ?
 				"" : "\n" + zipcode+" "+city);
 	}

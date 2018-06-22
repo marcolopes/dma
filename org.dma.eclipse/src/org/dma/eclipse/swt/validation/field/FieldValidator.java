@@ -234,7 +234,7 @@ public abstract class FieldValidator implements IValidator {
 	}
 
 
-	public IValidationManager getValidationManager(){
+	public IValidationManager getValidationManager() {
 		return validationManager;
 	}
 
