@@ -36,7 +36,7 @@ public class FaturasProxy extends SOAPMessageHandler {
 			this.url = url;
 		}
 
-		public boolean isSecure(){
+		public boolean isSecure() {
 			return url.startsWith("https");
 		}
 

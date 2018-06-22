@@ -55,7 +55,7 @@ public class ImageOverlay {
 	}
 
 
-	public void dispose(){
+	public void dispose() {
 		g2d.dispose();
 	}
 

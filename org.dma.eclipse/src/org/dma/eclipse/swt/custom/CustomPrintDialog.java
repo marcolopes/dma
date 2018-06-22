@@ -15,7 +15,7 @@ public class CustomPrintDialog extends PrintDialog {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	public CustomPrintDialog(){
+	public CustomPrintDialog() {
 		this(Display.getDefault().getActiveShell());
 	}
 

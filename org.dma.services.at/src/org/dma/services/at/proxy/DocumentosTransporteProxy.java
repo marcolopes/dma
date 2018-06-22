@@ -36,7 +36,7 @@ public class DocumentosTransporteProxy extends SOAPMessageHandler {
 			this.url = url;
 		}
 
-		public boolean isSecure(){
+		public boolean isSecure() {
 			return url.startsWith("https");
 		}
 

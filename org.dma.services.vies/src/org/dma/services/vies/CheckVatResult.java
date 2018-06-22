@@ -36,7 +36,7 @@ public class CheckVatResult {
 	 * @see java.lang.Object
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		return name + "\n" + address;
 
 	}
