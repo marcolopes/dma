@@ -47,6 +47,8 @@ public final class CustomBrowser extends Browser {
 	 * <p>
 	 * A new shell is created with style SWT.NONE and
 	 * bounds are set to 0 to make it invisible.
+	 *
+	 * @see CustomBrowser#CustomBrowser(Display)
 	 */
 	public CustomBrowser(Display display) {
 		this(new Shell(display,SWT.NONE));
@@ -55,6 +57,8 @@ public final class CustomBrowser extends Browser {
 
 	/**
 	 * Creates a platform dependant browser
+	 *
+	 * @see CustomBrowser#CustomBrowser(Composite)
 	 */
 	public CustomBrowser(Composite parent) {
 		this(parent, detectStyle(parent));
@@ -67,6 +71,8 @@ public final class CustomBrowser extends Browser {
 	 * one of these should be present in VM parameters:<br>
 	 * -Dorg.eclipse.swt.browser.DefaultType=mozilla<br>
 	 * -Dorg.eclipse.swt.browser.DefaultType=webkit
+	 *
+	 * @see CustomBrowser#CustomBrowser(Composite, int)
 	 */
 	public CustomBrowser(Composite parent, int style) {
 		super(parent, style);

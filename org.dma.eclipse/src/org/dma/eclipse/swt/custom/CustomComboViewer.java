@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Combo;
 
 public class CustomComboViewer extends ComboViewer {
 
+	/** @see ComboViewer#ComboViewer(Combo) */
 	public CustomComboViewer(Combo combo) {
 		super(combo);
 		setContentProvider(ArrayContentProvider.getInstance());

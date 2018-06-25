@@ -22,6 +22,7 @@ public class CustomTabItem extends TabItem {
 		this(parent, SWT.NONE);
 	}
 
+	/** @see TabItem#TabItem(TabFolder, int) */
 	public CustomTabItem(TabFolder parent, int style) {
 		super(parent, style);
 	}

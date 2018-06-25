@@ -19,6 +19,7 @@ public class CustomPrintDialog extends PrintDialog {
 		this(Display.getDefault().getActiveShell());
 	}
 
+	/** @see PrintDialog#PrintDialog(Shell) */
 	public CustomPrintDialog(Shell parent){
 		super(parent);
 	}

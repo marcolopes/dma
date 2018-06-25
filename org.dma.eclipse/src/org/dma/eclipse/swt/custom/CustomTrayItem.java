@@ -33,6 +33,7 @@ public class CustomTrayItem extends TrayItem {
 
 	private final Shell parent;
 
+	/** @see TrayItem#TrayItem(org.eclipse.swt.widgets.Tray, int) */
 	public CustomTrayItem(Shell parent, String name, String imagePath, boolean minimized) {
 		super(parent.getDisplay().getSystemTray(), SWT.NONE);
 		this.parent=parent;

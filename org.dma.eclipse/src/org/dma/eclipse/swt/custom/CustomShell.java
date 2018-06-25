@@ -30,6 +30,7 @@ public class CustomShell extends Shell {
 		this(Display.getDefault().getActiveShell(), style);
 	}
 
+	/** @see Shell#Shell(Display, int) */
 	public CustomShell(Shell parent, int style) {
 		super(parent, style);
 	}

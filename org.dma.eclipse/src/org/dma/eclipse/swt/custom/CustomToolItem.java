@@ -20,6 +20,7 @@ public class CustomToolItem extends ToolItem {
 
 	private CustomAction selectionAction;
 
+	/** @see ToolItem#ToolItem(ToolBar, int) */
 	public CustomToolItem(ToolBar parent, int style) {
 		super(parent, style);
 	}

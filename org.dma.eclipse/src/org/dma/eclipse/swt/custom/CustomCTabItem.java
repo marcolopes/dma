@@ -21,6 +21,7 @@ public class CustomCTabItem extends CTabItem {
 		this(parent, SWT.NONE);
 	}
 
+	/** @see CTabItem#CTabItem(CTabFolder, int) */
 	public CustomCTabItem(CTabFolder parent, int style) {
 		super(parent, style);
 	}
