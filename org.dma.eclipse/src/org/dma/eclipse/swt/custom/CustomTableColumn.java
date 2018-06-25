@@ -15,6 +15,7 @@ public class CustomTableColumn extends TableColumn {
 
 	private float widthPercentage=0;
 
+	/** @see TableColumn#TableColumn(Table, int) */
 	public CustomTableColumn(Table parent, int style) {
 		super(parent, style);
 	}

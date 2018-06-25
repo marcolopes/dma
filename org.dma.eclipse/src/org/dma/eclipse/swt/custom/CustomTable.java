@@ -31,6 +31,7 @@ public class CustomTable extends Table {
 
 	private boolean busy=false;
 
+	/** @see Table#Table(Composite, int) */
 	public CustomTable(Composite parent, int style) {
 		super(parent, style);
 		setLinesVisible(true);

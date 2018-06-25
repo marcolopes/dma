@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -14,11 +14,9 @@ public class CustomToolTip extends ToolTip {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	private final Shell parent;
-
+	/** @see ToolTip#ToolTip(Shell, int) */
 	public CustomToolTip(Shell parent) {
 		super(parent, SWT.BALLOON | SWT.ICON_INFORMATION);
-		this.parent=parent;
 		setAutoHide(false);
 	}
 
@@ -27,7 +25,7 @@ public class CustomToolTip extends ToolTip {
 		setVisible(false); //clear
 		setText(text);
 		setMessage(message);
-		setLocation(parent.getLocation());
+		setLocation(getParent().getLocation());
 		setVisible(true);
 	}
 

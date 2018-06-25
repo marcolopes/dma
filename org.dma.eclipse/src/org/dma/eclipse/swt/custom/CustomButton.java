@@ -24,6 +24,7 @@ public class CustomButton extends Button {
 
 	private CustomAction selectionAction;
 
+	/** @see CustomButton#CustomButton(Composite, int) */
 	public CustomButton(Composite parent, int style) {
 		super(parent, style);
 	}

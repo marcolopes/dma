@@ -16,9 +16,7 @@ public abstract class CustomAction extends Action {
 
 	public final String ID=getClass().getCanonicalName();
 
-	@Override
-	public abstract void run();
-
+	/** @see Action */
 	public CustomAction() {
 		Debug.out("ID", ID);
 		setId(ID);

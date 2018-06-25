@@ -17,6 +17,7 @@ public class CustomText extends Text {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
+	/** @see Text#Text(Composite, int) */
 	public CustomText(Composite parent, int style) {
 		super(parent, style);
 	}
