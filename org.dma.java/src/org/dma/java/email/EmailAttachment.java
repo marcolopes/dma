@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopes@netc.pt)
  *******************************************************************************/
@@ -10,7 +10,7 @@ import java.io.File;
 public class EmailAttachment extends org.apache.commons.mail.EmailAttachment {
 
 	public EmailAttachment(File file) {
-		this(file, "");
+		this(file, file.getName());
 	}
 
 	public EmailAttachment(File file, String description) {
