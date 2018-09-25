@@ -11,7 +11,7 @@ import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
-import pt.gov.portaldasfinancas.servicos.faturas.Faturas_Service;
+import pt.gov.portaldasfinancas.servicos.faturas.FaturasService;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceResponseType;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
 /**
@@ -64,7 +64,7 @@ public class FaturasProxy extends SOAPMessageHandler {
 		*/
 
 		// cria um novo servico
-		Faturas_Service service = new Faturas_Service();
+		FaturasService service = new FaturasService();
 		// wsdlLocation esta' definido no servico
 		System.out.println(service.getWSDLDocumentLocation());
 		Faturas soapService = service.getFaturasSOAP();
