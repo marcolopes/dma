@@ -1,22 +1,20 @@
+
 package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+
 /**
  * Resposta da AT ao envio do Documento de Transporte
  * 
- * <p>
- * Java class for StockMovementResponse complex type.
+ * <p>Java class for StockMovementResponse complex type.
  * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="StockMovementResponse">
@@ -35,92 +33,95 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="StockMovementResponse", propOrder={
-	"responseStatus",
-	"documentNumber",
-	"atDocCodeID"
+@XmlType(name = "StockMovementResponse", propOrder = {
+    "responseStatus",
+    "documentNumber",
+    "atDocCodeID"
 })
 public class StockMovementResponse {
 
-	@XmlElement(name="ResponseStatus", required=true)
-	protected List<ResponseStatus> responseStatus;
-	@XmlElement(name="DocumentNumber")
-	protected String documentNumber;
-	@XmlElement(name="ATDocCodeID")
-	protected String atDocCodeID;
+    @XmlElement(name = "ResponseStatus", required = true)
+    protected List<ResponseStatus> responseStatus;
+    @XmlElement(name = "DocumentNumber")
+    protected String documentNumber;
+    @XmlElement(name = "ATDocCodeID")
+    protected String atDocCodeID;
 
-	/**
-	 * Gets the value of the responseStatus property.
-	 * 
-	 * <p>
-	 * This accessor method returns a reference to the live list, not a
-	 * snapshot. Therefore any modification you make to the returned list will
-	 * be present inside the JAXB object. This is why there is not a
-	 * <CODE>set</CODE> method for the responseStatus property.
-	 * 
-	 * <p>
-	 * For example, to add a new item, do as follows:
-	 * 
-	 * <pre>
-	 * getResponseStatus().add(newItem);
-	 * </pre>
-	 * 
-	 * 
-	 * <p>
-	 * Objects of the following type(s) are allowed in the list
-	 * {@link ResponseStatus }
-	 * 
-	 * 
-	 */
-	public List<ResponseStatus> getResponseStatus() {
-		if(responseStatus == null){
-			responseStatus=new ArrayList<ResponseStatus>();
-		}
-		return this.responseStatus;
-	}
+    /**
+     * Gets the value of the responseStatus property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the responseStatus property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getResponseStatus().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link ResponseStatus }
+     * 
+     * 
+     */
+    public List<ResponseStatus> getResponseStatus() {
+        if (responseStatus == null) {
+            responseStatus = new ArrayList<ResponseStatus>();
+        }
+        return this.responseStatus;
+    }
 
-	/**
-	 * Gets the value of the documentNumber property.
-	 * 
-	 * @return
-	 *         possible object is {@link String }
-	 * 
-	 */
-	public String getDocumentNumber() {
-		return documentNumber;
-	}
+    /**
+     * Gets the value of the documentNumber property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDocumentNumber() {
+        return documentNumber;
+    }
 
-	/**
-	 * Sets the value of the documentNumber property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setDocumentNumber(String value) {
-		this.documentNumber=value;
-	}
+    /**
+     * Sets the value of the documentNumber property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDocumentNumber(String value) {
+        this.documentNumber = value;
+    }
 
-	/**
-	 * Gets the value of the atDocCodeID property.
-	 * 
-	 * @return
-	 *         possible object is {@link String }
-	 * 
-	 */
-	public String getATDocCodeID() {
-		return atDocCodeID;
-	}
+    /**
+     * Gets the value of the atDocCodeID property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getATDocCodeID() {
+        return atDocCodeID;
+    }
 
-	/**
-	 * Sets the value of the atDocCodeID property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setATDocCodeID(String value) {
-		this.atDocCodeID=value;
-	}
+    /**
+     * Sets the value of the atDocCodeID property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setATDocCodeID(String value) {
+        this.atDocCodeID = value;
+    }
 
 }

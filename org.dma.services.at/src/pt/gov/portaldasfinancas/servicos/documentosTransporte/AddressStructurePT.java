@@ -1,3 +1,4 @@
+
 package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -5,13 +6,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+
 /**
- * <p>
- * Java class for AddressStructurePT complex type.
+ * <p>Java class for AddressStructurePT complex type.
  * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="AddressStructurePT">
@@ -31,109 +30,117 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="AddressStructurePT", propOrder={
-	"addressdetail",
-	"city",
-	"postalCode",
-	"country"
+@XmlType(name = "AddressStructurePT", propOrder = {
+    "addressdetail",
+    "city",
+    "postalCode",
+    "country"
 })
 public class AddressStructurePT {
 
-	@XmlElement(name="Addressdetail")
-	protected String addressdetail;
-	@XmlElement(name="City")
-	protected String city;
-	@XmlElement(name="PostalCode")
-	protected String postalCode;
-	@XmlElement(name="Country")
-	protected String country;
+    @XmlElement(name = "Addressdetail")
+    protected String addressdetail;
+    @XmlElement(name = "City")
+    protected String city;
+    @XmlElement(name = "PostalCode")
+    protected String postalCode;
+    @XmlElement(name = "Country")
+    protected String country;
 
-	/**
-	 * Gets the value of the addressdetail property.
-	 * 
-	 * @return
-	 *         possible object is {@link String }
-	 * 
-	 */
-	public String getAddressdetail() {
-		return addressdetail;
-	}
+    /**
+     * Gets the value of the addressdetail property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAddressdetail() {
+        return addressdetail;
+    }
 
-	/**
-	 * Sets the value of the addressdetail property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setAddressdetail(String value) {
-		this.addressdetail=value;
-	}
+    /**
+     * Sets the value of the addressdetail property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAddressdetail(String value) {
+        this.addressdetail = value;
+    }
 
-	/**
-	 * Gets the value of the city property.
-	 * 
-	 * @return
-	 *         possible object is {@link String }
-	 * 
-	 */
-	public String getCity() {
-		return city;
-	}
+    /**
+     * Gets the value of the city property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCity() {
+        return city;
+    }
 
-	/**
-	 * Sets the value of the city property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setCity(String value) {
-		this.city=value;
-	}
+    /**
+     * Sets the value of the city property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCity(String value) {
+        this.city = value;
+    }
 
-	/**
-	 * Gets the value of the postalCode property.
-	 * 
-	 * @return
-	 *         possible object is {@link String }
-	 * 
-	 */
-	public String getPostalCode() {
-		return postalCode;
-	}
+    /**
+     * Gets the value of the postalCode property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPostalCode() {
+        return postalCode;
+    }
 
-	/**
-	 * Sets the value of the postalCode property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setPostalCode(String value) {
-		this.postalCode=value;
-	}
+    /**
+     * Sets the value of the postalCode property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPostalCode(String value) {
+        this.postalCode = value;
+    }
 
-	/**
-	 * Gets the value of the country property.
-	 * 
-	 * @return
-	 *         possible object is {@link String }
-	 * 
-	 */
-	public String getCountry() {
-		return country;
-	}
+    /**
+     * Gets the value of the country property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCountry() {
+        return country;
+    }
 
-	/**
-	 * Sets the value of the country property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setCountry(String value) {
-		this.country=value;
-	}
+    /**
+     * Sets the value of the country property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCountry(String value) {
+        this.country = value;
+    }
 
 }

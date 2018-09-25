@@ -1,3 +1,4 @@
+
 package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -5,13 +6,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+
 /**
- * <p>
- * Java class for OrderReferences complex type.
+ * <p>Java class for OrderReferences complex type.
  * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="OrderReferences">
@@ -28,34 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="OrderReferences", propOrder={
-	"originatingON"
+@XmlType(name = "OrderReferences", propOrder = {
+    "originatingON"
 })
 public class OrderReferences {
 
-	@XmlElement(name="OriginatingON")
-	protected String originatingON;
+    @XmlElement(name = "OriginatingON")
+    protected String originatingON;
 
-	/**
-	 * Gets the value of the originatingON property.
-	 * 
-	 * @return
-	 *         possible object is {@link String }
-	 * 
-	 */
-	public String getOriginatingON() {
-		return originatingON;
-	}
+    /**
+     * Gets the value of the originatingON property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getOriginatingON() {
+        return originatingON;
+    }
 
-	/**
-	 * Sets the value of the originatingON property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setOriginatingON(String value) {
-		this.originatingON=value;
-	}
+    /**
+     * Sets the value of the originatingON property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setOriginatingON(String value) {
+        this.originatingON = value;
+    }
 
 }
