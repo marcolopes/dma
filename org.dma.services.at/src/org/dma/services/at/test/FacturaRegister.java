@@ -1,12 +1,11 @@
 package org.dma.services.at.test;
 
 import java.math.BigDecimal;
-import java.util.Random;
-
-import javax.xml.datatype.DatatypeFactory;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
+import org.dma.java.util.StringUtils;
+import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.FaturasProxy;
 import org.dma.services.at.proxy.FaturasProxy.A10_ENDPOINTS;
 
@@ -18,18 +17,20 @@ import pt.gov.portaldasfinancas.servicos.faturas.Tax;
 /**
  * Teste de envio de FACTURAS
  *
- * @author marcolopes@netc.pt
+ * @author marcolopespt@gmail.com
  *
  */
 public class FacturaRegister {
+
+	public static final Integer RequesterTaxID = 599999993;
 
 	public static RegisterInvoiceType buildRequest() throws Exception {
 
 		RegisterInvoiceType request = new RegisterInvoiceType();
 
-		request.setTaxRegistrationNumber(599999993);
-		request.setInvoiceNo("CFA 2013/"+new Random().nextInt(999999));
-		request.setInvoiceDate(DatatypeFactory.newInstance().newXMLGregorianCalendar("2012-05-05"));
+		request.setTaxRegistrationNumber(RequesterTaxID);
+		request.setInvoiceNo("CFA 2013/"+StringUtils.randomNumbers(6));
+		request.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2012-05-05"));
 		request.setInvoiceType("FT");
 		request.setInvoiceStatus("N");
 		request.setCustomerTaxID(999999990);
@@ -62,11 +63,11 @@ public class FacturaRegister {
 			//ambiente de testes
 			FaturasProxy proxy=new FaturasProxy(
 				//Service Username / Password
-				"599999993/0037", "testes1234",
+				RequesterTaxID+"/0037", "testes1234",
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "TesteWebServices.pfx", "TESTEwebservice", null),
+				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "TesteWebServices.pfx", "TESTEwebservice"),
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 

@@ -1,3 +1,4 @@
+
 package pt.gov.portaldasfinancas.servicos.faturas;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -5,13 +6,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+
 /**
- * <p>
- * Java class for RegisterInvoiceResponseType complex type.
+ * <p>Java class for RegisterInvoiceResponseType complex type.
  * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="RegisterInvoiceResponseType">
@@ -35,53 +34,55 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="RegisterInvoiceResponseType", propOrder={
-	"returnCode",
-	"returnMessage"
+@XmlType(name = "RegisterInvoiceResponseType", propOrder = {
+    "returnCode",
+    "returnMessage"
 })
 public class RegisterInvoiceResponseType {
 
-	@XmlElement(name="ReturnCode", namespace="")
-	protected int returnCode;
-	@XmlElement(name="ReturnMessage", namespace="", required=true)
-	protected String returnMessage;
+    @XmlElement(name = "ReturnCode", namespace = "")
+    protected int returnCode;
+    @XmlElement(name = "ReturnMessage", namespace = "", required = true)
+    protected String returnMessage;
 
-	/**
-	 * Gets the value of the returnCode property.
-	 * 
-	 */
-	public int getReturnCode() {
-		return returnCode;
-	}
+    /**
+     * Gets the value of the returnCode property.
+     * 
+     */
+    public int getReturnCode() {
+        return returnCode;
+    }
 
-	/**
-	 * Sets the value of the returnCode property.
-	 * 
-	 */
-	public void setReturnCode(int value) {
-		this.returnCode=value;
-	}
+    /**
+     * Sets the value of the returnCode property.
+     * 
+     */
+    public void setReturnCode(int value) {
+        this.returnCode = value;
+    }
 
-	/**
-	 * Gets the value of the returnMessage property.
-	 * 
-	 * @return
-	 *         possible object is {@link String }
-	 * 
-	 */
-	public String getReturnMessage() {
-		return returnMessage;
-	}
+    /**
+     * Gets the value of the returnMessage property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getReturnMessage() {
+        return returnMessage;
+    }
 
-	/**
-	 * Sets the value of the returnMessage property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setReturnMessage(String value) {
-		this.returnMessage=value;
-	}
+    /**
+     * Sets the value of the returnMessage property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setReturnMessage(String value) {
+        this.returnMessage = value;
+    }
 
 }

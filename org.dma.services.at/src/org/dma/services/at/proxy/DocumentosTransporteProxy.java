@@ -1,6 +1,5 @@
 package org.dma.services.at.proxy;
 
-import java.net.URL;
 import java.util.List;
 
 import javax.xml.ws.Binding;
@@ -19,7 +18,7 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementRespo
  * PROXY para ligacao ao endpoint do webservice
  *
  * @author ricardo (AT)
- * @author marcolopes@netc.pt
+ * @author marcolopespt@gmail.com
  *
  */
 public class DocumentosTransporteProxy extends SOAPMessageHandler {
@@ -57,12 +56,17 @@ public class DocumentosTransporteProxy extends SOAPMessageHandler {
 	 */
 	public StockMovementResponse register(StockMovement request) throws Exception {
 
+		/*
 		// obtem o wsdl (wsdlLocation predefinido esta' definido no servico)
 		URL wsdlLocation = this.getClass().getClassLoader().getResource("documentosTransporte.wsdl");
 		System.out.println(wsdlLocation);
+		DocumentosTransporte_Service service = new DocumentosTransporte_Service(wsdlLocation);
+		*/
 
 		// cria um novo servico
-		DocumentosTransporte_Service service = new DocumentosTransporte_Service(wsdlLocation);
+		DocumentosTransporte_Service service = new DocumentosTransporte_Service();
+		// wsdlLocation esta' definido no servico
+		System.out.println(service.getWSDLDocumentLocation());
 		DocumentosTransporte soapService = service.getDocumentosTransporteSOAP();
 
 		// inicializa bindings

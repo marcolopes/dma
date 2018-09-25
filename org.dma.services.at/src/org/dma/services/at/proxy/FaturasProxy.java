@@ -1,6 +1,5 @@
 package org.dma.services.at.proxy;
 
-import java.net.URL;
 import java.util.List;
 
 import javax.xml.ws.Binding;
@@ -19,7 +18,7 @@ import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
  * PROXY para ligacao ao endpoint do webservice
  *
  * @author ricardo (AT)
- * @author marcolopes@netc.pt
+ * @author marcolopespt@gmail.com
  *
  */
 public class FaturasProxy extends SOAPMessageHandler {
@@ -57,12 +56,17 @@ public class FaturasProxy extends SOAPMessageHandler {
 	 */
 	public RegisterInvoiceResponseType register(RegisterInvoiceType request) throws Exception {
 
+		/*
 		// obtem o wsdl (wsdlLocation predefinido esta' definido no servico)
 		URL wsdlLocation = this.getClass().getClassLoader().getResource("faturas.wsdl");
 		System.out.println(wsdlLocation);
+		Faturas_Service service = new Faturas_Service(wsdlLocation);
+		*/
 
 		// cria um novo servico
-		Faturas_Service service = new Faturas_Service(wsdlLocation);
+		Faturas_Service service = new Faturas_Service();
+		// wsdlLocation esta' definido no servico
+		System.out.println(service.getWSDLDocumentLocation());
 		Faturas soapService = service.getFaturasSOAP();
 
 		// inicializa bindings
