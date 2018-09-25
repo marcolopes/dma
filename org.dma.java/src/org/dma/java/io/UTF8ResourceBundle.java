@@ -9,7 +9,7 @@
  * ResourceBundle bundle=new UTF8ResourceBundle("baseName");
  *
  * @author Tomas Varaneckas <tomas.varaneckas@gmail.com>
- * @author Marco Lopes <marcolopes@netc.pt>
+ * @author Marco Lopes <marcolopespt@gmail.com>
  */
 package org.dma.java.io;
 

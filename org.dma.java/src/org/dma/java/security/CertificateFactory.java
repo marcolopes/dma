@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2008-2010 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  * Others
  *******************************************************************************/
 package org.dma.java.security;
