@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2008-2012 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.awt;
 

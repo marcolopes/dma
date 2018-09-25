@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2008-2013 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.util;
 
@@ -16,9 +16,7 @@ public class ClassAccess {
 
 	public static Object get(Class klass, String field) {
 		try{
-
 			return klass.getField(field).get(klass);
-
 		}
 		catch (NoClassDefFoundError e){
 			error.addError(CLASS_NOT_FOUND+" "+klass.getCanonicalName()+"."+field);

@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2008-2013 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  *
  * Writing of numerals in Portuguese Language
  * Implemented according to the Portuguese grammar

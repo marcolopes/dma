@@ -1,7 +1,7 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.io;
 
@@ -13,48 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-
-public class XMLFileHandler extends FileHandler {
-
-	/**
-	 * Marshalling
-	 *<p>
-	 * The Marshaller class provides the client application the ability
-	 * to convert a Java content tree back into XML data.
-	 * There is no difference between marshalling a content tree that is
-	 * created manually using the factory methods and marshalling a content
-	 * tree that is the result an unmarshal operation.
-	 *<p>
-	 * Clients can marshal a java content tree back to XML data to a
-	 * java.io.OutputStream or a java.io.Writer. The marshalling process can
-	 * alternatively produce SAX2 event streams to a registered ContentHandler
-	 * or produce a DOM Node object.
-	 *<p>
-	 * Client applications have control over the output encoding as well as whether
-	 * or not to marshal the XML data as a complete document or as a fragment.
-	 */
-	public static boolean marshal(Object obj) {
-
-		try{
-			JAXBContext context=JAXBContext.newInstance(obj.getClass());
-			Marshaller m=context.createMarshaller();
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			System.out.println("### XML BEGIN ###");
-			m.marshal(obj, System.out);
-			System.out.println("### XML END ###");
-
-			return true;
-
-		}catch(Exception e){
-			System.err.println(e);
-		}
-
-		return false;
-
-	}
-
+public class XMLFileHandler<T> extends FileHandler {
 
 	public XMLFileHandler(String filename) {
 		super(filename);
@@ -74,7 +33,7 @@ public class XMLFileHandler extends FileHandler {
 	 * FileInputStream is meant for reading streams of raw bytes such as image data.
 	 * For reading streams of characters, consider using FileReader.
 	 */
-	public Object read() {
+	public T read() {
 
 		try{
 			BufferedInputStream bis=
@@ -84,7 +43,7 @@ public class XMLFileHandler extends FileHandler {
 			XMLDecoder decoder=new XMLDecoder(bis);
 
 			try{
-				return decoder.readObject();
+				return (T)decoder.readObject();
 
 			}finally{
 				decoder.close();
@@ -115,7 +74,7 @@ public class XMLFileHandler extends FileHandler {
 	 * For writing streams of characters, consider using FileWriter.
 	 *
 	 */
-	public boolean write(Object obj) {
+	public boolean write(T obj) {
 
 		try{
 			BufferedOutputStream bos=
