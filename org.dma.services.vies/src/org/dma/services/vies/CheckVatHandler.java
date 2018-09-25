@@ -1,15 +1,13 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.vies;
 
-import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.ws.Holder;
 
@@ -145,13 +143,13 @@ public class CheckVatHandler {
 				servicePort.checkVat(
 						new Holder(name()),
 						new Holder(vatNumber),
-						new Holder(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar())),
+						new Holder(DatatypeFactory.newInstance().newXMLGregorianCalendar()),
 						valid, name, address);
 
 				return new CheckVatResult(valid.value, name.value, parse(address.value));
 
-			}catch(DatatypeConfigurationException e){
-				e.printStackTrace();
+			}catch(Exception e){
+				System.err.println(e);
 			}
 
 			return null;
