@@ -1,0 +1,1284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:tns="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService" targetNamespace="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="TaxFreeSubmissionRequest" type="tns:TaxFreeSubmissionRequestType" />
+  <xsd:element name="TaxFreeSubmissionResponse" type="tns:TaxFreeSubmissionResponseType" />
+  <xsd:element name="TaxFreeAnnulmentRequest" type="tns:TaxFreeAnnulmentRequestType" />
+  <xsd:element name="TaxFreeAnnulmentResponse" type="tns:TaxFreeAnnulmentResponseType" />
+  <xsd:element name="ContingencySubmissionRequest" type="tns:ContingencySubmissionRequestType" />
+  <xsd:element name="ContingencySubmissionResponse" type="tns:ContingencySubmissionResponseType" />
+  <xsd:element name="ForeignCertificationSubmissionRequest" type="tns:ForeignCertificationSubmissionRequestType" />
+  <xsd:element name="ForeignCertificationSubmissionResponse" type="tns:CertificationSubmissionResponseType" />
+  <xsd:element name="DomesticCertificationSubmissionRequest" type="tns:DomesticCertificationSubmissionRequestType" />
+  <xsd:element name="DomesticCertificationSubmissionResponse" type="tns:CertificationSubmissionResponseType" />
+  <xsd:element name="TaxFreeCommQueryRequest" type="tns:TaxFreeCommQueryRequestType" />
+  <xsd:element name="TaxFreeCommQueryResponse" type="tns:TaxFreeCommQueryResponseType" />
+  <xsd:element name="TaxFreeSearchRequest" type="tns:TaxFreeSearchRequestType" />
+  <xsd:element name="TaxFreeSearchResponse" type="tns:TaxFreeSearchResponseType" />
+  <xsd:element name="RefundQueryByRefundCompanyRequest" type="tns:RefundQueryByRefundCompanyRequestType" />
+  <xsd:element name="RefundQueryByRefundCompanyResponse" type="tns:RefundQueryByRefundCompanyResponseType" />
+  <xsd:complexType name="TaxFreeSubmissionResponseType">
+    <xsd:sequence>
+      <xsd:element name="ReturnInfo" type="tns:ReturnInfoType">
+        <xsd:annotation>
+          <xsd:documentation>Informação de Controlo do Resultado da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="TaxFreeCommRegistration" type="tns:TaxFreeCommRegistrationType">
+        <xsd:annotation>
+          <xsd:documentation>Registo da Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeSubmissionRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequestHeader" type="tns:RequestHeaderType">
+        <xsd:annotation>
+          <xsd:documentation>Cabeçalho da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TaxFreeComm" type="tns:TaxFreeCommType">
+        <xsd:annotation>
+          <xsd:documentation>Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SoftwareProviderType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="ProductCompanyTaxID" type="tns:TextMandatoryMax20">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal [corresponde ao campo 1.14. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="SoftwareCertificateNumber">
+        <xsd:annotation>
+          <xsd:documentation>Número de Certificado [corresponde ao campo 1.15. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1" />
+            <xsd:maxInclusive value="999999999" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CompanyType">
+    <xsd:sequence>
+      <xsd:element name="TaxRegistrationNumber" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal [corresponde ao campo 1.3. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="BusinessName" type="tns:TextMandatoryMax60">
+        <xsd:annotation>
+          <xsd:documentation>Designação Comercial [corresponde ao campo 1.6. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="Email" type="tns:EmailType">
+        <xsd:annotation>
+          <xsd:documentation>Endereço E-mail a utilizar pelo Viajante para contactar a entidade</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RefundType">
+    <xsd:sequence>
+      <xsd:element name="GuaranteeTotal" type="tns:MonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante Total da Caução paga pelo Viajante (deve ser preenchido com um valor diferente de zero, se tiver sido paga uma Caução)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="CalculatedTaxTotal" type="tns:MonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante Total de IVA Liquidado (deve ser preenchido com um valor diferente de zero, se tiver sido liquidado IVA nas faturas)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="RefundableTotal" type="tns:MonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante Total a Restituir ao Viajante (deve ser preenchido com o valor diferente de zero, se for definido que o Viajante será restituído posteriormente)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="RefundCompanyTaxRegistrationNumber" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Intermediário Financeiro (deverá ser preenchido com os dados de um Intermediário Financeiro, se for definido que a restituição ao Viajante não será feita diretamente pelo Lojista)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="RefundCompanyAutorization">
+        <xsd:annotation>
+          <xsd:documentation>Autorização para Disponibilização, ao Intermediário Financeiro, do Montante Exato a Restituir ao Viajante (deverá ser preenchido apenas quando o Lojista autoriza explicitamente a Autoridade Tributária e Aduaneira a disponibilizar, ao Intermediário Financeiro, o valor do montante exato que deverá ser restituído ao Viajante)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Declaro que autorizo a Autoridade Tributária e Aduaneira a disponibilizar ao Intermediário Financeiro identificado na presente comunicação, o montante exato a restituir ao Viajante" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoiceType">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="ATCUD" type="tns:TextMandatoryMax100">
+          <xsd:annotation>
+            <xsd:documentation>Código Único de Documento [corresponde ao campo 4.1.4.2. do SAF-T] (código ATCUD, que deve ser preenchido sempre que for exigível a sua impressão na fatura)</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="InvoiceIdentifiers" type="tns:InvoiceIdentifiersType">
+          <xsd:annotation>
+            <xsd:documentation>Identificadores da Fatura</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="InvoiceType">
+        <xsd:annotation>
+          <xsd:documentation>Código de Tipo de Documento [corresponde ao campo 4.1.4.8. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="2" />
+            <xsd:pattern value="[A-Z][A-Z]" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="InvoiceDate" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Data da Fatura [corresponde ao campo 4.1.4.7. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Buyer" type="tns:SimpleBuyerType">
+        <xsd:annotation>
+          <xsd:documentation>Adquirente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="GrossTotal" type="tns:PositiveMonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante da Fatura [corresponde ao campo 4.1.4.20.3. do SAF-T] (incluindo imposto, se tiver sido liquidado IVA)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="CalculatedTaxes" type="tns:CalculatedTaxesType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Taxas, com a discriminação por taxa do Montante correspondente ao IVA na fatura, ou ao que seria o valor do IVA caso não tivesse sido aplicada a isenção</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="RefundableAmount" type="tns:MonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante a Restituir ao Viajante (deve ser preenchido com o valor diferente de zero, se for definido que o Viajante será restituído posteriormente)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="InvoiceLinesList" type="tns:InvoiceLinesListType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Linhas de Fatura</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoiceDetailType">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="ATCUD" type="tns:TextMandatoryMax100">
+          <xsd:annotation>
+            <xsd:documentation>Código Único de Documento [corresponde ao campo 4.1.4.2. do SAF-T] (código ATCUD, que deve ser preenchido sempre que for exigível a sua impressão na fatura)</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="InvoiceIdentifiers" type="tns:InvoiceIdentifiersType">
+          <xsd:annotation>
+            <xsd:documentation>Identificadores da Fatura</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="InvoiceType">
+        <xsd:annotation>
+          <xsd:documentation>Código de Tipo de Documento [corresponde ao campo 4.1.4.8. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="2" />
+            <xsd:pattern value="[A-Z][A-Z]" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="InvoiceDate" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Data da Fatura [corresponde ao campo 4.1.4.7. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="Buyer" type="tns:SimpleBuyerType">
+        <xsd:annotation>
+          <xsd:documentation>Adquirente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="GrossTotal" type="tns:PositiveMonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante da Fatura [corresponde ao campo 4.1.4.20.3. do SAF-T] (incluindo imposto, se tiver sido liquidado IVA)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="CalculatedTaxes" type="tns:CalculatedTaxesType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Taxas, com a discriminação por taxa do Montante correspondente ao IVA na fatura, ou ao que seria o valor do IVA caso não tivesse sido aplicada a isenção</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="RefundableAmount" type="tns:MonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante a Restituir ao Viajante (deve ser preenchido com o valor diferente de zero, se for definido que o Viajante será restituído posteriormente)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="InvoiceLinesList" type="tns:InvoiceLinesListDetailType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Linhas de Fatura</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoiceLineType">
+    <xsd:sequence>
+      <xsd:element name="ProductClass">
+        <xsd:annotation>
+          <xsd:documentation>Código de Classe do Bem (de acordo com tabela de códigos definida pela AT)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="3" />
+            <xsd:pattern value="[A-Z][A-Z][A-Z]" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ProductDescription" type="tns:TextMandatoryMax200">
+        <xsd:annotation>
+          <xsd:documentation>Descrição do Bem [corresponde ao campo 4.1.4.19.4. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Quantity">
+        <xsd:annotation>
+          <xsd:documentation>Quantidade [corresponde ao campo 4.1.4.19.5. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:fractionDigits value="4" />
+            <xsd:totalDigits value="15" />
+            <xsd:minInclusive value="0.0001" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="TaxBaseTotal" type="tns:PositiveMonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Valor total da Base Tributável</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="SerialNumbersList" type="tns:SerialNumbersListType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Identificadores dos Bens</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoiceLineDetailType">
+    <xsd:sequence>
+      <xsd:element name="ProductClass">
+        <xsd:annotation>
+          <xsd:documentation>Código de Classe do Bem (de acordo com tabela de códigos definida pela AT)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="3" />
+            <xsd:pattern value="[A-Z][A-Z][A-Z]" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ProductDescription" type="tns:TextMandatoryMax200">
+        <xsd:annotation>
+          <xsd:documentation>Descrição do Bem [corresponde ao campo 4.1.4.19.4. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Quantity">
+        <xsd:annotation>
+          <xsd:documentation>Quantidade [corresponde ao campo 4.1.4.19.5. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:fractionDigits value="4" />
+            <xsd:minInclusive value="0.0001" />
+            <xsd:totalDigits value="15" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="TaxBaseTotal" type="tns:PositiveMonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Valor total da Base Tributável</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="TaxPercentage">
+        <xsd:annotation>
+          <xsd:documentation>Taxa de IVA (apenas preenchida para Comunicações e-TaxFree submetidas via Portal)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:totalDigits value="4" />
+            <xsd:fractionDigits value="2" />
+            <xsd:minInclusive value="0.01" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="SerialNumbersList" type="tns:SerialNumbersListType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Identificadores dos Bens</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BuyerType">
+    <xsd:sequence>
+      <xsd:element name="Name" type="tns:TextMandatoryMax100">
+        <xsd:annotation>
+          <xsd:documentation>Nome Completo</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="IdentityDoc" type="tns:IdentityDocType">
+        <xsd:annotation>
+          <xsd:documentation>Documento de Identificação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ResidenceCountryCode" type="tns:CountryCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código de País de Domicílio ou Residência Habitual (formato ISO 3166-1 alpha-2)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="TaxRegistrationNumber" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal (se o Viajante tem um NIF português atribuído, deve ser obrigatoriamente preenchido com esse NIF português, aplicando o formato do campo 1.3. do SAF-T, senão, não deve ser preenchido)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="BirthDate" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Data de Nascimento</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="IdentityDocType">
+    <xsd:sequence>
+      <xsd:element name="Type">
+        <xsd:annotation>
+          <xsd:documentation>Tipo (Passaporte ou Outro)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PASSAPORTE" />
+            <xsd:enumeration value="OUTRO" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Number" type="tns:TextMandatoryMax20">
+        <xsd:annotation>
+          <xsd:documentation>Número</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="CountryCode" type="tns:CountryCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código de País Emissor (formato ISO 3166-1 alpha-2)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="PtVatNumberType">
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="100000000" />
+      <xsd:maxInclusive value="999999999" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EmailType">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="60" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="InvoicesType">
+    <xsd:sequence>
+      <xsd:element name="NumberOfEntries">
+        <xsd:annotation>
+          <xsd:documentation>Quantidade de Faturas [corresponde ao campo 4.1.1. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1" />
+            <xsd:maxInclusive value="999" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="InvoicesGrossTotal" type="tns:PositiveMonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante Total das Faturas (soma dos montantes de todas as faturas, incluindo imposto, se tiver sido liquidado IVA)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="CalculatedTaxes" type="tns:CalculatedTaxesType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Taxas, com a discriminação por taxa do Montante Total (considerando o conjunto de todas as faturas) correspondente ao IVA, ou ao que seria o valor do IVA caso não tivesse sido aplicada a isenção</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="InvoicesList" type="tns:InvoicesListType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Faturas</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoicesDetailType">
+    <xsd:sequence>
+      <xsd:element name="NumberOfEntries">
+        <xsd:annotation>
+          <xsd:documentation>Quantidade de Faturas [corresponde ao campo 4.1.1. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1" />
+            <xsd:maxInclusive value="999" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="InvoicesGrossTotal" type="tns:PositiveMonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante Total das Faturas (soma dos montantes de todas as faturas, incluindo imposto, se tiver sido liquidado IVA)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="CalculatedTaxes" type="tns:CalculatedTaxesType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Taxas, com a discriminação por taxa do Montante Total (considerando o conjunto de todas as faturas) correspondente ao IVA, ou ao que seria o valor do IVA caso não tivesse sido aplicada a isenção</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="InvoicesList" type="tns:InvoicesListDetailType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Faturas</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SerialNumbersListType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="SerialNumber" type="tns:TextMandatoryMax100">
+        <xsd:annotation>
+          <xsd:documentation>Identificador do Bem [corresponde ao campo 4.1.4.19.12.1. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoicesListType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="Invoice" type="tns:InvoiceType">
+        <xsd:annotation>
+          <xsd:documentation>Fatura</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoicesListDetailType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="Invoice" type="tns:InvoiceDetailType">
+        <xsd:annotation>
+          <xsd:documentation>Fatura</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoiceLinesListType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="InvoiceLine" type="tns:InvoiceLineType">
+        <xsd:annotation>
+          <xsd:documentation>Linha de Fatura</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoiceLinesListDetailType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="InvoiceLine" type="tns:InvoiceLineDetailType">
+        <xsd:annotation>
+          <xsd:documentation>Linha de Fatura</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SimpleBuyerType">
+    <xsd:sequence>
+      <xsd:element name="CompanyName" type="tns:TextMandatoryMax100">
+        <xsd:annotation>
+          <xsd:documentation>Nome Completo [corresponde ao campo 2.2.4. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="VatNumberInfo" type="tns:VatNumberInfoType">
+        <xsd:annotation>
+          <xsd:documentation>Identificação Fiscal</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ReturnInfoType">
+    <xsd:sequence>
+      <xsd:element name="ReturnCode" type="xsd:integer">
+        <xsd:annotation>
+          <xsd:documentation>Código de Resultado da invocação (código de sucesso ou de erro)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ReturnMessage" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Descrição do Código de Resultado da invocação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeCommRegistrationType">
+    <xsd:sequence>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código da Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="RegistrationDateTime" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Data Hora de Registo da Comunicação e-TaxFree (na AT)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="QRCodeContent" type="tns:QRCodeContentType">
+        <xsd:annotation>
+          <xsd:documentation>Texto para Impressão no QR Code e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RequestHeaderType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="SoftwareProvider" type="tns:SoftwareProviderType">
+        <xsd:annotation>
+          <xsd:documentation>Fornecedor de Software</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="RequesterTaxID" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Remetente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeCommType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="Identifier" type="tns:TextMandatoryMax30">
+        <xsd:annotation>
+          <xsd:documentation>Identificador Interno da Comunicação e-TaxFree (identificador atribuído internamente no software do Lojista)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Seller" type="tns:CompanyType">
+        <xsd:annotation>
+          <xsd:documentation>Lojista</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:choice>
+        <xsd:element name="PreviousTaxFreeComm" type="tns:PreviousTaxFreeCommType">
+          <xsd:annotation>
+            <xsd:documentation>Comunicação e-TaxFree Anterior do mesmo Viajante</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="Buyer" type="tns:BuyerType">
+          <xsd:annotation>
+            <xsd:documentation>Viajante</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="Refund" type="tns:RefundType">
+        <xsd:annotation>
+          <xsd:documentation>Dados relativos à Restituição</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Invoices" type="tns:InvoicesType">
+        <xsd:annotation>
+          <xsd:documentation>Faturas Associadas</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeCommDetailType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="Identifier" type="tns:TextMandatoryMax30">
+        <xsd:annotation>
+          <xsd:documentation>Identificador Interno da Comunicação e-TaxFree (identificador atribuído internamente no software do Lojista)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Seller" type="tns:CompanyType">
+        <xsd:annotation>
+          <xsd:documentation>Lojista</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:choice>
+        <xsd:element name="PreviousTaxFreeComm" type="tns:PreviousTaxFreeCommType">
+          <xsd:annotation>
+            <xsd:documentation>Comunicação e-TaxFree Anterior do mesmo Viajante</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="Buyer" type="tns:BuyerType">
+          <xsd:annotation>
+            <xsd:documentation>Viajante</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="Refund" type="tns:RefundType">
+        <xsd:annotation>
+          <xsd:documentation>Dados relativos à Restituição</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Invoices" type="tns:InvoicesDetailType">
+        <xsd:annotation>
+          <xsd:documentation>Faturas Associadas</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeAnnulmentRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequesterTaxID" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Remetente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código da Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeAnnulmentResponseType">
+    <xsd:sequence>
+      <xsd:element name="ReturnInfo" type="tns:ReturnInfoType">
+        <xsd:annotation>
+          <xsd:documentation>Informação de Controlo do Resultado da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="AnnulmentDateTime" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Data Hora de Anulação da Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContingencySubmissionRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequestHeader" type="tns:RequestHeaderType">
+        <xsd:annotation>
+          <xsd:documentation>Cabeçalho da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ContingencySubmission" type="tns:ContingencySubmissionType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContingencySubmissionResponseType">
+    <xsd:sequence>
+      <xsd:element name="ReturnInfo" type="tns:ReturnInfoType">
+        <xsd:annotation>
+          <xsd:documentation>Informação de Controlo do Resultado da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="RegistrationDateTime" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Data Hora de Registo da Comunicação e-TaxFree (na AT)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ContingencySubmissionType">
+    <xsd:sequence>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeContingencyCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código da Comunicação e-TaxFree (gerado pelo software do Lojista, de acordo com regras estabelecidas pela AT)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="QRCodeContent" type="tns:ContingencyQRCodeContentType">
+        <xsd:annotation>
+          <xsd:documentation>Texto para Impressão no QR Code e-TaxFree (gerado pelo software do Lojista, de acordo com regras estabelecidas pela AT)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TaxFreeComm" type="tns:TaxFreeCommType">
+        <xsd:annotation>
+          <xsd:documentation>Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ForeignCertificationSubmissionRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequesterTaxID" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Remetente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código da Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="CertifiedInvoices" type="tns:CertifiedInvoicesType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Faturas Certificadas</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Certification" type="tns:ForeignExportCertificateType">
+        <xsd:annotation>
+          <xsd:documentation>Certificação de Exportação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CertificationSubmissionResponseType">
+    <xsd:sequence>
+      <xsd:element name="ReturnInfo" type="tns:ReturnInfoType">
+        <xsd:annotation>
+          <xsd:documentation>Informação de Controlo do Resultado da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="CertificationRegistrationDateTime" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Data Hora de Registo da Certificação da Comunicação e-TaxFree (na AT).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeCommQueryRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequesterTaxID" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Remetente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código de Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeCommQueryResponseType">
+    <xsd:sequence>
+      <xsd:element name="ReturnInfo" type="tns:ReturnInfoType">
+        <xsd:annotation>
+          <xsd:documentation>Informação de Controlo do Resultado da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="RegistrationDateTime" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Data Hora de Registo da Comunicação e-TaxFree (na AT)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="QRCodeContent" type="tns:QRCodeContentType">
+        <xsd:annotation>
+          <xsd:documentation>Texto para Impressão no QR Code e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="TaxFreeComm" type="tns:TaxFreeCommDetailType">
+        <xsd:annotation>
+          <xsd:documentation>Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ForeignExportCertificateType">
+    <xsd:sequence>
+      <xsd:element name="CountryCode" type="tns:CountryCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código de País (formato ISO 3166-1 alpha-2)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="CustomsOffice" type="tns:TextMandatoryMax50">
+        <xsd:annotation>
+          <xsd:documentation>Estância Aduaneira</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Date" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Data</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DomesticExportCertificateType">
+    <xsd:sequence>
+      <xsd:element name="CustomsOffice" type="tns:TextMandatoryMax50">
+        <xsd:annotation>
+          <xsd:documentation>Estância Aduaneira</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Date" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Data</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeSearchResultType">
+    <xsd:sequence>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código de Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="RegistrationDateTime" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Data Hora de Registo</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="Identifier" type="tns:TextMandatoryMax30">
+        <xsd:annotation>
+          <xsd:documentation>Identificador Interno da Comunicação e-TaxFree (identificador atribuído internamente no software do Lojista)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:choice>
+        <xsd:element name="ATCUD" type="tns:TextMandatoryMax100">
+          <xsd:annotation>
+            <xsd:documentation>Código Único de Documento [corresponde ao campo 4.1.4.2. do SAF-T] (código ATCUD, que deve ser preenchido sempre que for exigível a sua impressão na fatura)</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="InvoiceNo" type="tns:InvoiceNumberType">
+          <xsd:annotation>
+            <xsd:documentation>Número de Fatura [corresponde ao campo 4.1.4.1. do SAF-T]</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="CurrentStatus" type="tns:CurrentStatusType">
+        <xsd:annotation>
+          <xsd:documentation>Estado Atual da Fatura associada à Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="BuyerIdentityDoc" type="tns:IdentityDocType">
+        <xsd:annotation>
+          <xsd:documentation>Documento de Identificação do Viajante</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="RefundableAmount" type="tns:MonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante a Restituir ao Viajante</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="RefundCompanyTaxRegistrationNumber" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Intermediário Financeiro</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeSearchRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequesterTaxID" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Remetente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TaxFreeSearchCriteria" type="tns:TaxFreeSearchCriteriaType">
+        <xsd:annotation>
+          <xsd:documentation>Critérios de Pesquisa</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ResultListStartIndex">
+        <xsd:annotation>
+          <xsd:documentation>Número de Índice de Início da Lista de Resultados (0, 300, 600, 900, etc.)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeSearchResponseType">
+    <xsd:sequence>
+      <xsd:element name="ReturnInfo" type="tns:ReturnInfoType">
+        <xsd:annotation>
+          <xsd:documentation>Informação de Controlo do Resultado da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="TaxFreeSearchResults" type="tns:TaxFreeSearchResultsType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Comunicações/Faturas e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DateIntervalType">
+    <xsd:sequence>
+      <xsd:element name="StartDate" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Data de Início de pesquisa</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="EndDate" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Data de Fim de pesquisa</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CurrentStatusCriteriaType">
+    <xsd:sequence>
+      <xsd:element name="CurrentStatus">
+        <xsd:annotation>
+          <xsd:documentation>Estado Atual</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="tns:InvoiceStatusType" />
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="StatusDateInterval" type="tns:DateIntervalType">
+        <xsd:annotation>
+          <xsd:documentation>Intervalo de Datas do Estado a pesquisar</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="VatNumberInfoType">
+    <xsd:sequence>
+      <xsd:element name="CountryCode">
+        <xsd:annotation>
+          <xsd:documentation>Código de País [corresponde ao campo 2.2.6.7. do SAF-T] </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="12" />
+            <xsd:minLength value="2" />
+            <xsd:pattern value="[A-Z][A-Z]|Desconhecido" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="CustomerTaxID" type="tns:TextMandatoryMax30">
+        <xsd:annotation>
+          <xsd:documentation>Número [corresponde ao campo 2.2.3. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaxFreeSearchResultsType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="TaxFreeComm" type="tns:TaxFreeSearchResultType">
+        <xsd:annotation>
+          <xsd:documentation>Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="MonetaryType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="0.00" />
+      <xsd:fractionDigits value="2" />
+      <xsd:totalDigits value="15" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PositiveMonetaryType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:fractionDigits value="2" />
+      <xsd:totalDigits value="15" />
+      <xsd:minInclusive value="0.01" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="TaxFreeSearchCriteriaType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código de Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="RefundCompanyTaxRegistrationNumber" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Intermediário Financeiro</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="RegistrationDateInterval" type="tns:DateIntervalType">
+        <xsd:annotation>
+          <xsd:documentation>Intervalo de Datas de Registo das Comunicações e-TaxFree a pesquisar</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="CurrentStatusCriteria" type="tns:CurrentStatusCriteriaType">
+        <xsd:annotation>
+          <xsd:documentation>Dados para Pesquisa por Estado Atual das Faturas associadas às Comunicações e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="BuyerIdentityDoc" type="tns:IdentityDocType">
+        <xsd:annotation>
+          <xsd:documentation>Documento de Identificação do Viajante</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CalculatedTaxType">
+    <xsd:sequence>
+      <xsd:element name="TaxPercentage">
+        <xsd:annotation>
+          <xsd:documentation>Taxa de IVA</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:totalDigits value="4" />
+            <xsd:fractionDigits value="2" />
+            <xsd:minInclusive value="0.01" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="TaxAmount" type="tns:PositiveMonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante correspondente ao valor do imposto</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CalculatedTaxesType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="CalculatedTax" type="tns:CalculatedTaxType">
+        <xsd:annotation>
+          <xsd:documentation>Montante correspondente ao IVA, ou ao que seria o valor do IVA caso não tivesse sido aplicada a isenção, considerando uma taxa concreta</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="TaxFreeCommCodeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="23" />
+      <xsd:maxLength value="28" />
+      <xsd:pattern value="PT\.\d{3}\.\d{3}\.\d{3}\.[A-Z]{3}\.[1-9]\d{0,5}\.[A-Z\d]{2}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TaxFreeContingencyCommCodeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="23" />
+      <xsd:maxLength value="28" />
+      <xsd:pattern value="PT\.\d{3}\.\d{3}\.\d{3}\.[A-Y][A-Z]{2}\.[1-9]\d{0,5}\.[A-Z\d]{2}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="QRCodeContentType">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="400" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ContingencyQRCodeContentType">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="400" />
+      <xsd:pattern value="PT\.\d{3}\.\d{3}\.\d{3}\.[A-Y][A-Z]{2}\.[1-9]\d{0,5}\.[A-Z\d]{2}\*[^\*\t\n\r]{1,100}\*(0|1)\*[^\*\t\n\r]{1,20}\*[A-Z]{2}\*[A-Z]{2}\*\d{8}\*(\d{9}|0)\*(0\*[^\*\t\n\r]{1,100}|1\*[^ /\t\n\r]+ [^ /\t\n\r]+\/\d+)\*([^\*\t\n\r]{4}|0)\*\d{8}\*[A-Z]{2}\*\d{1,13}\,\d{2}\*\d{1,13}\,\d{2}\*\d{1,13}\,\d{2}\*(\d{9}|0)\*[0-2]" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="InvoiceStatusType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="COMUNICACAO_REGISTADA" />
+      <xsd:enumeration value="COMUNICACAO_ANULADA" />
+      <xsd:enumeration value="COMUNICACAO_SELECIONADA_PARA_CONTROLO" />
+      <xsd:enumeration value="FATURA_INVALIDADA" />
+      <xsd:enumeration value="FATURA_CERTIFICADA" />
+      <xsd:enumeration value="EXPIRADO_PRAZO_PARA_CERTIFICACAO_DA_FATURA" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="CurrentStatusType">
+    <xsd:sequence>
+      <xsd:element name="Status" type="tns:InvoiceStatusType">
+        <xsd:annotation>
+          <xsd:documentation>Estado da Fatura associada à Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="StatusDateTime" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Data Hora de Estado</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CertifiedInvoiceType">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="ATCUD" type="tns:TextMandatoryMax100">
+          <xsd:annotation>
+            <xsd:documentation>Código Único de Documento [corresponde ao campo 4.1.4.2. do SAF-T] (código ATCUD, que deve ser preenchido sempre que for exigível a sua impressão na fatura)</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="InvoiceNo" type="tns:InvoiceNumberType">
+          <xsd:annotation>
+            <xsd:documentation>Número de Fatura [corresponde ao campo 4.1.4.1. do SAF-T]</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="InvoiceDate" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Data da Fatura [corresponde ao campo 4.1.4.7. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CertifiedInvoicesType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="CertifiedInvoice" type="tns:CertifiedInvoiceType">
+        <xsd:annotation>
+          <xsd:documentation>Fatura Certificada</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PreviousTaxFreeCommType">
+    <xsd:sequence>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código da Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="IdentityDocNumber" type="tns:TextMandatoryMax20">
+        <xsd:annotation>
+          <xsd:documentation>Número do Documento de Identificação do Viajante</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InvoiceIdentifiersType">
+    <xsd:sequence>
+      <xsd:element name="InvoiceNo" type="tns:InvoiceNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Fatura [corresponde ao campo 4.1.4.1. do SAF-T]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="HashTermination">
+        <xsd:annotation>
+          <xsd:documentation>Chave de Documento (corresponde aos 1.º, 11.º, 21.º e 31.º caracteres da chave Hash no campo 4.1.4.4. do SAF-T)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:length value="4" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DomesticCertificationSubmissionRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequesterTaxID" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Remetente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código da Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="CertifiedInvoices" type="tns:CertifiedInvoicesType">
+        <xsd:annotation>
+          <xsd:documentation>Lista de Faturas Certificadas</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Certification" type="tns:DomesticExportCertificateType">
+        <xsd:annotation>
+          <xsd:documentation>Certificação de Exportação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RefundQueryByRefundCompanyRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequesterTaxID" type="tns:PtVatNumberType">
+        <xsd:annotation>
+          <xsd:documentation>Número de Identificação Fiscal do Remetente</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TaxFreeCommCode" type="tns:TaxFreeCommCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Código da Comunicação e-TaxFree</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RefundQueryByRefundCompanyResponseType">
+    <xsd:sequence>
+      <xsd:element name="ReturnInfo" type="tns:ReturnInfoType">
+        <xsd:annotation>
+          <xsd:documentation>Informação de Controlo do Resultado da Operação</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="RefundQueryResults" type="tns:RefundQueryResultsType">
+        <xsd:annotation>
+          <xsd:documentation>Informação Resultante da Consulta</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="CountryCodeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="2" />
+      <xsd:pattern value="[A-Z][A-Z]" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="InvoiceNumberType">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="60" />
+      <xsd:pattern value="[^ /\t\n\r]+ [^ /\t\n\r]+\/\d+" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TextMandatoryMax20">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="20" />
+      <xsd:pattern value="\S(.*\S)?" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TextMandatoryMax60">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="60" />
+      <xsd:pattern value="\S(.*\S)?" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TextMandatoryMax100">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="100" />
+      <xsd:pattern value="\S(.*\S)?" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TextMandatoryMax200">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="200" />
+      <xsd:pattern value="\S(.*\S)?" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TextMandatoryMax50">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="50" />
+      <xsd:pattern value="\S(.*\S)?" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TextMandatoryMax30">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="30" />
+      <xsd:pattern value="\S(.*\S)?" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TextMandatoryMax12">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:pattern value="\S(.*\S)?" />
+      <xsd:maxLength value="12" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="RefundQueryResultsType">
+    <xsd:choice>
+      <xsd:element name="RefundableAmountNotDefined">
+        <xsd:annotation>
+          <xsd:documentation>Montante Exato a Restituir Não Definido (pelo menos, uma das Faturas associadas à Comunicação e-TaxFree ainda se encontra no estado Comunicação Registada ou Comunicação Selecionada para Controlo)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Montante Exato a Restituir Não Definido" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="RefundableAmount" type="tns:MonetaryType">
+        <xsd:annotation>
+          <xsd:documentation>Montante Exato a Restituir ao Viajante (correspondente à soma dos montantes a restituir, considerando apenas as Faturas associadas à Comunicação e-TaxFree que se encontrem no estado Fatura Certificada)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:complexType>
+</xsd:schema>

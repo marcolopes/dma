@@ -3,10 +3,9 @@ package org.dma.services.at.test;
 import java.math.BigDecimal;
 import java.util.Random;
 
-import javax.xml.datatype.DatatypeFactory;
-
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
+import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.DocumentosTransporteProxy;
 import org.dma.services.at.proxy.DocumentosTransporteProxy.A10_ENDPOINTS;
 
@@ -20,29 +19,31 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementRespo
 /**
  * Teste de envio de DOCUMENTOS TRANSPORTE
  *
- * @author marcolopes@netc.pt
+ * @author marcolopespt@gmail.com
  *
  */
 public class DocumentoTransporteRegister {
+
+	public static final Integer RequesterTaxID = 599999993;
 
 	public static StockMovement buildRequest() throws Exception {
 
 		StockMovement request=new StockMovement();
 
-		request.setTaxRegistrationNumber(599999993);
+		request.setTaxRegistrationNumber(RequesterTaxID);
 		request.setCompanyName("Empresa");
 		request.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		request.setDocumentNumber("CGT 2013/"+new Random().nextInt(999999));
 		request.setMovementStatus(MovementStatus.N);
-		request.setMovementDate(DatatypeFactory.newInstance().newXMLGregorianCalendar("2013-07-01"));
+		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar("2013-07-01"));
 		request.setMovementType(MovementType.GT);
 		request.setCustomerTaxID("999999990");
 		request.setCustomerName("Cliente");
 		request.setCustomerAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		request.setAddressTo(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		request.setAddressFrom(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		request.setMovementEndTime(DatatypeFactory.newInstance().newXMLGregorianCalendar("2013-07-01T23:59:59"));
-		request.setMovementStartTime(DatatypeFactory.newInstance().newXMLGregorianCalendar("2013-07-01T23:00:00"));
+		request.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar("2013-07-01T23:59:59"));
+		request.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar("2013-07-01T23:00:00"));
 		request.setVehicleID("XX-YY-ZZ");
 
 		Line line = new Line();
@@ -76,17 +77,18 @@ public class DocumentoTransporteRegister {
 			//ambiente de testes
 			DocumentosTransporteProxy proxy=new DocumentosTransporteProxy(
 				//Service Username / Password
-				"599999993/0037", "testes1234",
+				RequesterTaxID+"/0037", "testes1234",
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "TesteWebServices.pfx", "TESTEwebservice", null),
+				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "TesteWebServices.pfx", "TESTEwebservice"),
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 
 			StockMovementResponse response=proxy.register(buildRequest());
 
 			System.out.println(response.getATDocCodeID());
+			System.out.println(response.getDocumentNumber());
 			for(ResponseStatus status: response.getResponseStatus()){
 				System.out.println(status.getReturnCode());
 				System.out.println(status.getReturnMessage());

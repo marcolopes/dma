@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+									xmlns:tns="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService"
+									xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+									xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+									targetNamespace="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService"
+									name="TaxFreeServiceImplService">
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService"
+									schemaLocation="eTaxFreeSoapWebServices.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="TaxFreeSubmissionRequest">
+		<wsdl:part name="parameters" element="tns:TaxFreeSubmissionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="TaxFreeSubmissionResponse">
+		<wsdl:part name="parameters" element="tns:TaxFreeSubmissionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="TaxFreeAnnulmentRequest">
+		<wsdl:part name="parameters" element="tns:TaxFreeAnnulmentRequest"/>
+	</wsdl:message>
+	<wsdl:message name="TaxFreeAnnulmentResponse">
+		<wsdl:part name="parameters" element="tns:TaxFreeAnnulmentResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ContingencySubmissionRequest">
+		<wsdl:part name="parameters" element="tns:ContingencySubmissionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="ContingencySubmissionResponse">
+		<wsdl:part name="parameters" element="tns:ContingencySubmissionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ForeignCertificationSubmissionRequest">
+		<wsdl:part name="parameters" element="tns:ForeignCertificationSubmissionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="ForeignCertificationSubmissionResponse">
+		<wsdl:part name="parameters" element="tns:ForeignCertificationSubmissionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="TaxFreeCommQueryRequest">
+		<wsdl:part name="parameters" element="tns:TaxFreeCommQueryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="TaxFreeCommQueryResponse">
+		<wsdl:part name="parameters" element="tns:TaxFreeCommQueryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="TaxFreeSearchRequest">
+		<wsdl:part name="parameters" element="tns:TaxFreeSearchRequest"/>
+	</wsdl:message>
+	<wsdl:message name="TaxFreeSearchResponse">
+		<wsdl:part name="parameters" element="tns:TaxFreeSearchResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DomesticCertificationSubmissionRequest">
+		<wsdl:part name="parameters" element="tns:DomesticCertificationSubmissionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DomesticCertificationSubmissionResponse">
+		<wsdl:part name="parameters" element="tns:DomesticCertificationSubmissionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RefundQueryByRefundCompanyRequest">
+		<wsdl:part name="parameters" element="tns:RefundQueryByRefundCompanyRequest"/>
+	</wsdl:message>
+	<wsdl:message name="RefundQueryByRefundCompanyResponse">
+		<wsdl:part name="parameters" element="tns:RefundQueryByRefundCompanyResponse"/>
+	</wsdl:message>	
+	<wsdl:portType name="TaxFreeService">
+		<wsdl:operation name="TaxFreeSubmission">
+			<wsdl:input message="tns:TaxFreeSubmissionRequest"/>
+			<wsdl:output message="tns:TaxFreeSubmissionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="TaxFreeAnnulment">
+			<wsdl:input message="tns:TaxFreeAnnulmentRequest"/>
+			<wsdl:output message="tns:TaxFreeAnnulmentResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ContingencySubmission">
+			<wsdl:input message="tns:ContingencySubmissionRequest"/>
+			<wsdl:output message="tns:ContingencySubmissionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ForeignCertificationSubmission">
+			<wsdl:input message="tns:ForeignCertificationSubmissionRequest"/>
+			<wsdl:output message="tns:ForeignCertificationSubmissionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DomesticCertificationSubmission">
+			<wsdl:input message="tns:DomesticCertificationSubmissionRequest"/>
+			<wsdl:output message="tns:DomesticCertificationSubmissionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="TaxFreeCommQuery">
+			<wsdl:input message="tns:TaxFreeCommQueryRequest"/>
+			<wsdl:output message="tns:TaxFreeCommQueryResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="TaxFreeSearch">
+			<wsdl:input message="tns:TaxFreeSearchRequest"/>
+			<wsdl:output message="tns:TaxFreeSearchResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="RefundQueryByRefundCompany">
+			<wsdl:input message="tns:RefundQueryByRefundCompanyRequest"/>
+			<wsdl:output message="tns:RefundQueryByRefundCompanyResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="TaxFreeServicePortBinding" type="tns:TaxFreeService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="TaxFreeSubmission">
+			<soap:operation soapAction="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService/TaxFreeSubmission"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="TaxFreeAnnulment">
+			<soap:operation
+					soapAction="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService/TaxFreeAnnulment"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ContingencySubmission">
+			<soap:operation
+					soapAction="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService/ContingencySubmission"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ForeignCertificationSubmission">
+			<soap:operation
+					soapAction="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService/ForeignCertificationSubmission"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DomesticCertificationSubmission">
+			<soap:operation
+					soapAction="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService/DomesticCertificationSubmission"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="TaxFreeCommQuery">
+			<soap:operation
+					soapAction="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService/TaxFreeCommQuery"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="TaxFreeSearch">
+			<soap:operation
+					soapAction="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService/TaxFreeSearch"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RefundQueryByRefundCompany">
+			<soap:operation
+					soapAction="http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService/RefundQueryByRefundCompany"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="TaxFreeServiceImplService">
+		<wsdl:port name="TaxFreeServicePort" binding="tns:TaxFreeServicePortBinding">
+			<soap:address location="http://localhost:7001/eTaxFree-webServices/TaxFreeServiceImplService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

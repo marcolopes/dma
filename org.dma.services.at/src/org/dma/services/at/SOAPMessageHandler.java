@@ -45,7 +45,7 @@ import org.dma.java.security.JKSCertificate;
  * SOAP Message Handler
  *
  * @author ricardo (AT)
- * @author marcolopes@netc.pt
+ * @author marcolopespt@gmail.com
  *
  */
 public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
