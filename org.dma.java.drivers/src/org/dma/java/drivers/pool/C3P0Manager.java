@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2008-2018 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.drivers.pool;
 
