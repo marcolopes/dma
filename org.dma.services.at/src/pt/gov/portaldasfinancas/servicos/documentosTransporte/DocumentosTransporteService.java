@@ -19,7 +19,7 @@ import javax.xml.ws.WebServiceFeature;
  *
  */
 @WebServiceClient(name = "documentosTransporte", targetNamespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", wsdlLocation = "file:/C:/workspace/dev/org.dma.services.at/documentosTransporte.wsdl")
-public class DocumentosTransporte_Service
+public class DocumentosTransporteService
     extends Service
 {
 
@@ -31,7 +31,7 @@ public class DocumentosTransporte_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:documentosTransporte.wsdl");
+            url = new URL("file:DocumentosTransporte.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -39,27 +39,27 @@ public class DocumentosTransporte_Service
         DOCUMENTOSTRANSPORTE_EXCEPTION = e;
     }
 
-    public DocumentosTransporte_Service() {
+    public DocumentosTransporteService() {
         super(__getWsdlLocation(), DOCUMENTOSTRANSPORTE_QNAME);
     }
 
-    public DocumentosTransporte_Service(WebServiceFeature... features) {
+    public DocumentosTransporteService(WebServiceFeature... features) {
         super(__getWsdlLocation(), DOCUMENTOSTRANSPORTE_QNAME, features);
     }
 
-    public DocumentosTransporte_Service(URL wsdlLocation) {
+    public DocumentosTransporteService(URL wsdlLocation) {
         super(wsdlLocation, DOCUMENTOSTRANSPORTE_QNAME);
     }
 
-    public DocumentosTransporte_Service(URL wsdlLocation, WebServiceFeature... features) {
+    public DocumentosTransporteService(URL wsdlLocation, WebServiceFeature... features) {
         super(wsdlLocation, DOCUMENTOSTRANSPORTE_QNAME, features);
     }
 
-    public DocumentosTransporte_Service(URL wsdlLocation, QName serviceName) {
+    public DocumentosTransporteService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public DocumentosTransporte_Service(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+    public DocumentosTransporteService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
         super(wsdlLocation, serviceName, features);
     }
 
