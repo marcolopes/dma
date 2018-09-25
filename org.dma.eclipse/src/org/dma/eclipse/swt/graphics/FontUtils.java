@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2008-2012 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  * Henry Proudhon and Contributors (henry.proudhon AT insa-lyon.fr)
  * Object Refinery Limited and Contributors.
  *******************************************************************************/
