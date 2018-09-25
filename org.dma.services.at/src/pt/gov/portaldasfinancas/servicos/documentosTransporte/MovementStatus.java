@@ -1,17 +1,15 @@
+
 package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
+
 /**
- * <p>
- * Java class for MovementStatus.
+ * <p>Java class for MovementStatus.
  * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
- * <p>
- * 
  * <pre>
  * &lt;simpleType name="MovementStatus">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -23,20 +21,20 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name="MovementStatus")
+@XmlType(name = "MovementStatus")
 @XmlEnum
 public enum MovementStatus {
 
-	N,
-	T,
-	A;
+    N,
+    T,
+    A;
 
-	public String value() {
-		return name();
-	}
+    public String value() {
+        return name();
+    }
 
-	public static MovementStatus fromValue(String v) {
-		return valueOf(v);
-	}
+    public static MovementStatus fromValue(String v) {
+        return valueOf(v);
+    }
 
 }
