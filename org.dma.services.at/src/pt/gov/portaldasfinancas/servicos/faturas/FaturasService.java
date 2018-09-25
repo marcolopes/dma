@@ -19,7 +19,7 @@ import javax.xml.ws.WebServiceFeature;
  *
  */
 @WebServiceClient(name = "faturas", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/faturas/", wsdlLocation = "file:/C:/workspace/dev/org.dma.services.at/faturas.wsdl")
-public class Faturas_Service
+public class FaturasService
     extends Service
 {
 
@@ -31,7 +31,7 @@ public class Faturas_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:faturas.wsdl");
+            url = new URL("file:Faturas.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -39,27 +39,27 @@ public class Faturas_Service
         FATURAS_EXCEPTION = e;
     }
 
-    public Faturas_Service() {
+    public FaturasService() {
         super(__getWsdlLocation(), FATURAS_QNAME);
     }
 
-    public Faturas_Service(WebServiceFeature... features) {
+    public FaturasService(WebServiceFeature... features) {
         super(__getWsdlLocation(), FATURAS_QNAME, features);
     }
 
-    public Faturas_Service(URL wsdlLocation) {
+    public FaturasService(URL wsdlLocation) {
         super(wsdlLocation, FATURAS_QNAME);
     }
 
-    public Faturas_Service(URL wsdlLocation, WebServiceFeature... features) {
+    public FaturasService(URL wsdlLocation, WebServiceFeature... features) {
         super(wsdlLocation, FATURAS_QNAME, features);
     }
 
-    public Faturas_Service(URL wsdlLocation, QName serviceName) {
+    public FaturasService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public Faturas_Service(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+    public FaturasService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
         super(wsdlLocation, serviceName, features);
     }
 
