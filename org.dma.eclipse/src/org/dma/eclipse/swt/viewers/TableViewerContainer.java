@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2010-2016 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.viewers;
 

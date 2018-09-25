@@ -1,7 +1,7 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.execution;
@@ -116,7 +116,9 @@ public class ExecutionManager {
 	 */
 	public static void notifyPendingExecutions(String id, String secondaryId) {
 
-		for(ExecutionDefinition execDefinition: EVENTS.keySet()) {
+		for(Iterator<ExecutionDefinition> iterator=EVENTS.keySet().iterator(); iterator.hasNext();) {
+
+			ExecutionDefinition execDefinition=iterator.next();
 
 			if(ObjectUtils.equals(id, execDefinition.getId()) &&
 				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
@@ -140,7 +142,9 @@ public class ExecutionManager {
 
 	public static boolean hasPendingExecutions(String id, String secondaryId) {
 
-		for(ExecutionDefinition execDefinition: EVENTS.keySet()) {
+		for(Iterator<ExecutionDefinition> iterator=EVENTS.keySet().iterator(); iterator.hasNext();) {
+
+			ExecutionDefinition execDefinition=iterator.next();
 
 			if(ObjectUtils.equals(id, execDefinition.getId()) &&
 				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())){

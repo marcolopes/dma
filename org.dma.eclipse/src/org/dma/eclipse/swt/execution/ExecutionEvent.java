@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2008-2016 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.execution;

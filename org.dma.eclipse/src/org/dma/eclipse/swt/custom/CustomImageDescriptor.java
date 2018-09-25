@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2008-2017 Public Domain
  * Contributors
- * Marco Lopes (marcolopes@netc.pt)
+ * Marco Lopes (marcolopespt@gmail.com)
  * IBM Corporation and others
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
