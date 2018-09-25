@@ -11,7 +11,7 @@ import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporte;
-import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporte_Service;
+import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporteService;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovement;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementResponse;
 /**
@@ -64,7 +64,7 @@ public class DocumentosTransporteProxy extends SOAPMessageHandler {
 		*/
 
 		// cria um novo servico
-		DocumentosTransporte_Service service = new DocumentosTransporte_Service();
+		DocumentosTransporteService service = new DocumentosTransporteService();
 		// wsdlLocation esta' definido no servico
 		System.out.println(service.getWSDLDocumentLocation());
 		DocumentosTransporte soapService = service.getDocumentosTransporteSOAP();

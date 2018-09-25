@@ -10,10 +10,10 @@ import com.sun.xml.ws.developer.WSBindingProvider;
 import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
 
-import pt.gov.portaldasfinancas.servicos.etaxfree.TaxFreeService;
-import pt.gov.portaldasfinancas.servicos.etaxfree.TaxFreeServiceImplService;
-import pt.gov.portaldasfinancas.servicos.etaxfree.TaxFreeSubmissionRequestType;
-import pt.gov.portaldasfinancas.servicos.etaxfree.TaxFreeSubmissionResponseType;
+import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeService;
+import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeServiceImplService;
+import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionRequestType;
+import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
 /**
  * PROXY para ligacao ao endpoint do webservice
  *
