@@ -92,7 +92,7 @@ public class TaxFreeRegister {
 
 		InvoiceType invoice = new InvoiceType();
 		invoice.setInvoiceLinesList(new InvoiceLinesListType());
-		//invoice.setATCUD(StringUtils.randomNumbers(12));
+		//invoice.setATCUD(StringUtils.randomNumbers(100));
 		invoice.setInvoiceIdentifiers(invoiceIdentifiers);
 		invoice.setInvoiceType("FT");
 		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2018-01-01"));
