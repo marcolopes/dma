@@ -62,8 +62,8 @@ public class TaxFreeRegister {
 
 		//--- REFUND ---
 		RefundType refund = new RefundType();
-		refund.setGuaranteeTotal(new BigDecimal("46.00"));
-		refund.setCalculatedTaxTotal(new BigDecimal("0.00"));
+		refund.setGuaranteeTotal(new BigDecimal("0.00"));
+		refund.setCalculatedTaxTotal(new BigDecimal("46.00"));
 
 		//--- INVOICES ---
 		InvoicesType invoices = new InvoicesType();

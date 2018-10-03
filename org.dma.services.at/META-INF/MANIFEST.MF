@@ -15,6 +15,7 @@ Bundle-ClassPath: .,
 Export-Package: org.dma.services.at,
  org.dma.services.at.proxy,
  pt.gov.portaldasfinancas.servicos.documentosTransporte,
- pt.gov.portaldasfinancas.servicos.faturas
+ pt.gov.portaldasfinancas.servicos.faturas,
+ pt.gov.portaldasfinancas.servicos.taxfree
 Require-Bundle: org.dma.java;bundle-version="5.10.0"
 
