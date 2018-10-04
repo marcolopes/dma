@@ -70,7 +70,6 @@ public class TaxFreeRegister {
 		invoices.setNumberOfEntries(1);
 		//invoices.setInvoicesGrossTotal(new BigDecimal("200.00"));
 		//invoices.setCalculatedTaxes(taxes);
-		invoices.setInvoicesList(new InvoicesListType());
 
 		InvoiceIdentifiersType invoiceIdentifiers = new InvoiceIdentifiersType();
 		invoiceIdentifiers.setInvoiceNo("CFA 2018/"+StringUtils.randomNumbers(6));
@@ -84,6 +83,7 @@ public class TaxFreeRegister {
 		vatNumberInfo.setCountryCode("BR");
 		simpleBuyer.setVatNumberInfo(vatNumberInfo);
 		*/
+
 		CalculatedTaxesType taxes = new CalculatedTaxesType();
 		CalculatedTaxType tax = new CalculatedTaxType();
 		tax.setTaxPercentage(new BigDecimal("23.00"));
@@ -91,7 +91,6 @@ public class TaxFreeRegister {
 		taxes.getCalculatedTax().add(tax);
 
 		InvoiceType invoice = new InvoiceType();
-		invoice.setInvoiceLinesList(new InvoiceLinesListType());
 		//invoice.setATCUD(StringUtils.randomNumbers(100));
 		invoice.setInvoiceIdentifiers(invoiceIdentifiers);
 		invoice.setInvoiceType("FT");
@@ -101,15 +100,21 @@ public class TaxFreeRegister {
 		invoice.setRefundableAmount(new BigDecimal("46.00"));
 		invoice.setCalculatedTaxes(taxes);
 
+		//--- INVOICE LINES ---
 		InvoiceLineType invoiceLine = new InvoiceLineType();
 		invoiceLine.setProductClass("ALI");
 		invoiceLine.setProductDescription("Vinho do Porto");
 		invoiceLine.setQuantity(new BigDecimal("1.00"));
 		invoiceLine.setTaxBaseTotal(new BigDecimal("200.00"));
 
-		invoice.getInvoiceLinesList().getInvoiceLine().add(invoiceLine);
+		InvoiceLinesListType invoiceLinesList = new InvoiceLinesListType();
+		invoiceLinesList.getInvoiceLine().add(invoiceLine);
+		invoice.setInvoiceLinesList(invoiceLinesList);
 
-		invoices.getInvoicesList().getInvoice().add(invoice);
+		//--- INVOICES LIST ---
+		InvoicesListType invoicesList = new InvoicesListType();
+		invoicesList.getInvoice().add(invoice);
+		invoices.setInvoicesList(invoicesList);
 
 		//--- TAX FREE ---
 		TaxFreeCommType taxFree = new TaxFreeCommType();
