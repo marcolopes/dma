@@ -6,8 +6,8 @@ import java.util.Random;
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.TimeDateUtils;
-import org.dma.services.at.proxy.DocumentosTransporteProxy;
-import org.dma.services.at.proxy.DocumentosTransporteProxy.A10_ENDPOINTS;
+import org.dma.services.at.proxy.StockMovementServiceHandler;
+import org.dma.services.at.proxy.StockMovementServiceHandler.A10_ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.AddressStructurePT;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.Line;
@@ -22,7 +22,7 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementRespo
  * @author marcolopespt@gmail.com
  *
  */
-public class DocumentoTransporteRegister {
+public class StockMovementServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
 
@@ -75,7 +75,7 @@ public class DocumentoTransporteRegister {
 
 		try{
 			//ambiente de testes
-			DocumentosTransporteProxy proxy=new DocumentosTransporteProxy(
+			StockMovementServiceHandler handler=new StockMovementServiceHandler(
 				//Service Username / Password
 				RequesterTaxID+"/0037", "testes1234",
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
@@ -85,7 +85,7 @@ public class DocumentoTransporteRegister {
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 
-			StockMovementResponse response=proxy.register(buildRequest());
+			StockMovementResponse response=handler.register(buildRequest());
 
 			System.out.println(response.getATDocCodeID());
 			System.out.println(response.getDocumentNumber());

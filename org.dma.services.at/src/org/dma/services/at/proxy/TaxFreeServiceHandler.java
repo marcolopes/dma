@@ -11,7 +11,7 @@ import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeService;
-import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeServiceImplService;
+import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeServiceImpl;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionRequestType;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
 /**
@@ -21,7 +21,7 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
  * @author marcolopespt@gmail.com
  *
  */
-public class TaxFreeProxy extends SOAPMessageHandler {
+public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
 	public enum A10_ENDPOINTS {
 
@@ -43,7 +43,7 @@ public class TaxFreeProxy extends SOAPMessageHandler {
 
 	private final A10_ENDPOINTS endpoint;
 
-	public TaxFreeProxy(String username, String password,
+	public TaxFreeServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
 		super(username, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
@@ -56,15 +56,8 @@ public class TaxFreeProxy extends SOAPMessageHandler {
 	 */
 	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType request) throws Exception {
 
-		/*
-		// obtem o wsdl (wsdlLocation predefinido esta' definido no servico)
-		URL wsdlLocation = this.getClass().getClassLoader().getResource("eTaxFreeSoapWebServices.wsdl");
-		System.out.println(wsdlLocation);
-		//TaxFreeServiceImplService service = new TaxFreeServiceImplService(wsdlLocation);
-		*/
-
 		// cria um novo servico
-		TaxFreeServiceImplService service = new TaxFreeServiceImplService();
+		TaxFreeServiceImpl service = new TaxFreeServiceImpl();
 		// wsdlLocation esta' definido no servico
 		System.out.println(service.getWSDLDocumentLocation());
 		TaxFreeService soapService = service.getTaxFreeServicePort();

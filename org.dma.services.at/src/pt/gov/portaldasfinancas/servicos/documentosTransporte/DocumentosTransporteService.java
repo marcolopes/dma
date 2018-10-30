@@ -1,7 +1,6 @@
 
 package pt.gov.portaldasfinancas.servicos.documentosTransporte;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -18,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  *
  */
-@WebServiceClient(name = "documentosTransporte", targetNamespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", wsdlLocation = "file:/C:/workspace/dev/org.dma.services.at/documentosTransporte.wsdl")
+@WebServiceClient(name = "documentosTransporte", targetNamespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", wsdlLocation = "file:DocumentosTransporte.wsdl")
 public class DocumentosTransporteService
     extends Service
 {
@@ -31,8 +30,8 @@ public class DocumentosTransporteService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:DocumentosTransporte.wsdl");
-        } catch (MalformedURLException ex) {
+            url = DocumentosTransporteService.class.getClassLoader().getResource("DocumentosTransporte.wsdl");
+        } catch (Exception ex) {
             e = new WebServiceException(ex);
         }
         DOCUMENTOSTRANSPORTE_WSDL_LOCATION = url;

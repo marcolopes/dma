@@ -1,7 +1,6 @@
 
 package pt.gov.portaldasfinancas.servicos.taxfree;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -18,8 +17,8 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  *
  */
-@WebServiceClient(name = "TaxFreeServiceImplService", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", wsdlLocation = "file:/C:/workspace/dev/org.dma.services.at/eTaxFreeSoapWebServices.wsdl")
-public class TaxFreeServiceImplService
+@WebServiceClient(name = "TaxFreeServiceImpl", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", wsdlLocation = "file:TaxFreeServices.wsdl")
+public class TaxFreeServiceImpl
     extends Service
 {
 
@@ -31,35 +30,35 @@ public class TaxFreeServiceImplService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:TaxFreeServices.wsdl");
-        } catch (MalformedURLException ex) {
+            url = TaxFreeServiceImpl.class.getClassLoader().getResource("TaxFreeServices.wsdl");
+        } catch (Exception ex) {
             e = new WebServiceException(ex);
         }
         TAXFREESERVICEIMPLSERVICE_WSDL_LOCATION = url;
         TAXFREESERVICEIMPLSERVICE_EXCEPTION = e;
     }
 
-    public TaxFreeServiceImplService() {
+    public TaxFreeServiceImpl() {
         super(__getWsdlLocation(), TAXFREESERVICEIMPLSERVICE_QNAME);
     }
 
-    public TaxFreeServiceImplService(WebServiceFeature... features) {
+    public TaxFreeServiceImpl(WebServiceFeature... features) {
         super(__getWsdlLocation(), TAXFREESERVICEIMPLSERVICE_QNAME, features);
     }
 
-    public TaxFreeServiceImplService(URL wsdlLocation) {
+    public TaxFreeServiceImpl(URL wsdlLocation) {
         super(wsdlLocation, TAXFREESERVICEIMPLSERVICE_QNAME);
     }
 
-    public TaxFreeServiceImplService(URL wsdlLocation, WebServiceFeature... features) {
+    public TaxFreeServiceImpl(URL wsdlLocation, WebServiceFeature... features) {
         super(wsdlLocation, TAXFREESERVICEIMPLSERVICE_QNAME, features);
     }
 
-    public TaxFreeServiceImplService(URL wsdlLocation, QName serviceName) {
+    public TaxFreeServiceImpl(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public TaxFreeServiceImplService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+    public TaxFreeServiceImpl(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
         super(wsdlLocation, serviceName, features);
     }
 

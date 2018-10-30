@@ -10,10 +10,10 @@ import com.sun.xml.ws.developer.WSBindingProvider;
 import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
 
-import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
-import pt.gov.portaldasfinancas.servicos.faturas.FaturasService;
-import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceResponseType;
-import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
+import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporte;
+import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporteService;
+import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovement;
+import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementResponse;
 /**
  * PROXY para ligacao ao endpoint do webservice
  *
@@ -21,13 +21,13 @@ import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
  * @author marcolopespt@gmail.com
  *
  */
-public class FaturasProxy extends SOAPMessageHandler {
+public class StockMovementServiceHandler extends SOAPMessageHandler {
 
 	public enum A10_ENDPOINTS {
 
-		//fews = Facturas Envio WebService?
-		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:400/fews/faturas"),
-		TESTES ("https://servicos.portaldasfinancas.gov.pt:700/fews/faturas");
+		//sgdtws = Servico de Gestao de Documentos de Transporte WebService?
+		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:401/sgdtws/documentosTransporte"),
+		TESTES ("https://servicos.portaldasfinancas.gov.pt:701/sgdtws/documentosTransporte");
 
 		public final String url;
 
@@ -43,7 +43,7 @@ public class FaturasProxy extends SOAPMessageHandler {
 
 	private final A10_ENDPOINTS endpoint;
 
-	public FaturasProxy(String username, String password,
+	public StockMovementServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
 		super(username, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
@@ -54,20 +54,13 @@ public class FaturasProxy extends SOAPMessageHandler {
 	 * Recebe o Bean e realiza um pedido ao webservice.
 	 * Instancia a conexao, coloca o Handler e invoca o webservice
 	 */
-	public RegisterInvoiceResponseType register(RegisterInvoiceType request) throws Exception {
-
-		/*
-		// obtem o wsdl (wsdlLocation predefinido esta' definido no servico)
-		URL wsdlLocation = this.getClass().getClassLoader().getResource("faturas.wsdl");
-		System.out.println(wsdlLocation);
-		Faturas_Service service = new Faturas_Service(wsdlLocation);
-		*/
+	public StockMovementResponse register(StockMovement request) throws Exception {
 
 		// cria um novo servico
-		FaturasService service = new FaturasService();
+		DocumentosTransporteService service = new DocumentosTransporteService();
 		// wsdlLocation esta' definido no servico
 		System.out.println(service.getWSDLDocumentLocation());
-		Faturas soapService = service.getFaturasSOAP();
+		DocumentosTransporte soapService = service.getDocumentosTransporteSOAP();
 
 		// inicializa bindings
 		Binding binding = initializeBindings((WSBindingProvider)soapService,
@@ -78,7 +71,7 @@ public class FaturasProxy extends SOAPMessageHandler {
 		chain.add(this);
 		binding.setHandlerChain(chain);
 
-		return soapService.registerInvoice(request);
+		return soapService.envioDocumentoTransporte(request);
 
 	}
 
