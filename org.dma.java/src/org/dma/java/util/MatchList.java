@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * Extends <tt>UniqueArrayList</tt> and guarantees no duplicate elements
+ */
 public class MatchList extends UniqueArrayList<String> {
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +34,7 @@ public class MatchList extends UniqueArrayList<String> {
 	}
 
 	public MatchList(Collection<? extends String> col) {
-		super.addAll(trim(col)); // avoid addAll OVERRIDE!
+		addAll(col);
 	}
 
 
