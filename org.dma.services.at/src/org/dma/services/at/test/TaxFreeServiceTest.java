@@ -6,8 +6,8 @@ import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
-import org.dma.services.at.proxy.TaxFreeProxy;
-import org.dma.services.at.proxy.TaxFreeProxy.A10_ENDPOINTS;
+import org.dma.services.at.proxy.TaxFreeServiceHandler;
+import org.dma.services.at.proxy.TaxFreeServiceHandler.A10_ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.taxfree.BuyerType;
 import pt.gov.portaldasfinancas.servicos.taxfree.CalculatedTaxType;
@@ -31,7 +31,7 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
  * @author marcolopespt@gmail.com
  *
  */
-public class TaxFreeRegister {
+public class TaxFreeServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
 
@@ -138,7 +138,7 @@ public class TaxFreeRegister {
 
 		try{
 			//ambiente de testes
-			TaxFreeProxy proxy=new TaxFreeProxy(
+			TaxFreeServiceHandler handler=new TaxFreeServiceHandler(
 				//Service Username / Password
 				RequesterTaxID+"/0037", "testes1234",
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
@@ -148,7 +148,7 @@ public class TaxFreeRegister {
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 
-			TaxFreeSubmissionResponseType response=proxy.register(buildRequest());
+			TaxFreeSubmissionResponseType response=handler.register(buildRequest());
 
 			System.out.println(response.getReturnInfo().getReturnCode());
 			System.out.println(response.getReturnInfo().getReturnMessage());

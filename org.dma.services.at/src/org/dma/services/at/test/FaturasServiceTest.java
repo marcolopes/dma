@@ -6,8 +6,8 @@ import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
-import org.dma.services.at.proxy.FaturasProxy;
-import org.dma.services.at.proxy.FaturasProxy.A10_ENDPOINTS;
+import org.dma.services.at.proxy.FaturasServiceHandler;
+import org.dma.services.at.proxy.FaturasServiceHandler.A10_ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceResponseType;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
@@ -20,7 +20,7 @@ import pt.gov.portaldasfinancas.servicos.faturas.Tax;
  * @author marcolopespt@gmail.com
  *
  */
-public class FacturaRegister {
+public class FaturasServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
 
@@ -61,7 +61,7 @@ public class FacturaRegister {
 
 		try{
 			//ambiente de testes
-			FaturasProxy proxy=new FaturasProxy(
+			FaturasServiceHandler handler=new FaturasServiceHandler(
 				//Service Username / Password
 				RequesterTaxID+"/0037", "testes1234",
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
@@ -71,7 +71,7 @@ public class FacturaRegister {
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 
-			RegisterInvoiceResponseType response=proxy.register(buildRequest());
+			RegisterInvoiceResponseType response=handler.register(buildRequest());
 
 			System.out.println(response.getReturnCode());
 			System.out.println(response.getReturnMessage());
