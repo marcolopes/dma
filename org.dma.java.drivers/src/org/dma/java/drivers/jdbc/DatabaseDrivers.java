@@ -35,7 +35,6 @@ import org.h2.tools.DeleteDbFiles;
 import org.h2.tools.RunScript;
 import org.h2.tools.Script;
 
-
 public class DatabaseDrivers {
 
 	public static final VersionNumber H2_VERSION = new VersionNumber(
