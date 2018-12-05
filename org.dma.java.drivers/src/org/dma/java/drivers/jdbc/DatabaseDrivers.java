@@ -348,8 +348,7 @@ public class DatabaseDrivers {
 		Debug.err("URL", url);
 		Debug.err("USER", user);
 		Debug.err("PASSWORD", password);
-		Connection connection=getConnection(url, user, password);
-		connection.close();
+		getConnection(url, user, password).close();
 	}
 
 	public static boolean isLocalhost(String host) {
