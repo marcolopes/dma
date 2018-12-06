@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -56,6 +56,11 @@ public class MessageList extends LinkedHashSet<String> {
 	@Override
 	public String toString() {
 		return ArrayUtils.concat(toArray(), "\n");
+	}
+
+
+	public String toString(String separator) {
+		return ArrayUtils.concat(toArray(), separator);
 	}
 
 
