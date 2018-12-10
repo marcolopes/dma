@@ -61,4 +61,13 @@ public class VatNumber {
 		return country.query(number);
 	}
 
+
+	public static void main(String[] args) {
+
+		VatNumber number=new VatNumber(COUNTRIES.PT, "501591109");
+		System.out.println("VALID: " + number.checkDigit());
+		System.out.println(number.query());
+
+	}
+
 }
