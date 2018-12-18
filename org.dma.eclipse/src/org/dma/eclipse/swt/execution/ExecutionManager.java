@@ -52,7 +52,7 @@ public class ExecutionManager {
 
 	private static void register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
-		if(EVENTS.containsKey(execDefinition)) throw new Error("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
+		if(EVENTS.containsKey(execDefinition)) throw new RuntimeException("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
 
 		execDefinition.addKeyListener(new KeyAdapter() {
 			@Override
@@ -124,6 +124,7 @@ public class ExecutionManager {
 				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
 
 				ExecutionEvent execEvent=EVENTS.get(execDefinition);
+
 				if(execEvent.isExecuted()) execEvent.executeResponse();
 
 			}

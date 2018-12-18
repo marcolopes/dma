@@ -26,7 +26,7 @@ public class ValidationManager implements IValidationManager {
 	public void register(String property, IValidator validator) {
 
 		if(validatorMap.containsKey(property))
-			throw new Error("VALIDATOR ALREADY REGISTERED :"+property);
+			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
 
 		validator.setValidationManager(this);
 		validatorMap.put(property, validator);

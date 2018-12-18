@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2018 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Paulo Silva (wickay@hotmail.com)
@@ -51,7 +51,6 @@ public class ExecutionDefinition {
 	/*
 	 * Getters and setters
 	 */
-
 	public Control getControl() {
 		return control;
 	}
@@ -62,6 +61,24 @@ public class ExecutionDefinition {
 
 	public String getSecondaryId() {
 		return secondaryId;
+	}
+
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object
+	 */
+	@Override
+	public int hashCode() {
+		return control.hashCode() +
+				(id==null ? 0 : id.hashCode()) +
+				(secondaryId==null ? 0 : secondaryId.hashCode());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return hashCode()==obj.hashCode();
 	}
 
 

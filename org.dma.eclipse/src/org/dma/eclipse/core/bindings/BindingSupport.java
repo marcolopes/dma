@@ -18,9 +18,9 @@ public class BindingSupport extends LinkedHashMap<String, Binding> {
 	private static final long serialVersionUID=1L;
 
 	@Override
-	public Binding put(String key, Binding binding) {
-		if (containsKey(key)) throw new Error("BINDING ALREADY REGISTERED: "+key);
-		return super.put(key, binding);
+	public Binding put(String id, Binding binding) {
+		if (containsKey(id)) throw new RuntimeException("BINDING ALREADY REGISTERED: "+id);
+		return super.put(id, binding);
 	}
 
 	private final DataBindingContext bindingContext;

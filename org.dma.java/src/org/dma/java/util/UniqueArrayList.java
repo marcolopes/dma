@@ -62,8 +62,10 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 	/** Ensures element.equals(o) */
 	@Override
 	public int indexOf(Object o) {
-		for (int i=0; i<size(); i++){
-			if (get(i).equals(o)) return i;
+		int index=0;
+		for(T element: this){
+			if (element.equals(o)) return index;
+			index++;
 		}
 		return -1;
 	}
