@@ -80,7 +80,7 @@ public abstract class FieldValidator implements IValidator {
 	protected void register(String property, FieldBinding binding) {
 
 		if(validatorMap.containsKey(property))
-			throw new Error("VALIDATOR ALREADY REGISTERED :"+property);
+			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
 
 		//needed in MAC
 		binding.reset();
