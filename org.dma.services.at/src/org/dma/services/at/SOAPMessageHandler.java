@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.logging.Logger;
@@ -26,6 +27,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
@@ -78,7 +80,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	public Binding initializeBindings(WSBindingProvider bp, String endpoint, boolean secure) throws Exception {
+	public void initializeRequest(WSBindingProvider bp, String endpoint, boolean secure) throws Exception {
 
 		//javax.xml.ws.service.endpoint.address
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
@@ -111,7 +113,11 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 		}
 
-		return bp.getBinding();
+		// adiciona handler
+		Binding binding = bp.getBinding();
+		List<Handler> chain = binding.getHandlerChain();
+		chain.add(this);
+		binding.setHandlerChain(chain);
 
 	}
 

@@ -29,8 +29,8 @@ public class FaturasServiceTest {
 		RegisterInvoiceType request = new RegisterInvoiceType();
 
 		request.setTaxRegistrationNumber(RequesterTaxID);
-		request.setInvoiceNo("CFA 2013/"+StringUtils.randomNumbers(6));
-		request.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2012-05-05"));
+		request.setInvoiceNo("CFA 2018/"+StringUtils.randomNumbers(6));
+		request.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2018-12-18"));
 		request.setInvoiceType("FT");
 		request.setInvoiceStatus("N");
 		request.setCustomerTaxID(999999990);

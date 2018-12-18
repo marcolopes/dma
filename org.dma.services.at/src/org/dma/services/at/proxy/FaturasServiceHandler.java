@@ -1,10 +1,5 @@
 package org.dma.services.at.proxy;
 
-import java.util.List;
-
-import javax.xml.ws.Binding;
-import javax.xml.ws.handler.Handler;
-
 import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.security.JKSCertificate;
@@ -62,14 +57,8 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 		System.out.println(service.getWSDLDocumentLocation());
 		Faturas soapService = service.getFaturasSOAP();
 
-		// inicializa bindings
-		Binding binding = initializeBindings((WSBindingProvider)soapService,
-				endpoint.url, endpoint.isSecure());
-
-		// adiciona handler
-		List<Handler> chain = binding.getHandlerChain();
-		chain.add(this);
-		binding.setHandlerChain(chain);
+		// inicializa request
+		initializeRequest((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
 
 		return soapService.registerInvoice(request);
 
