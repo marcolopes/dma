@@ -35,15 +35,15 @@ public class StockMovementServiceTest {
 		request.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		request.setDocumentNumber("CGT 2013/"+new Random().nextInt(999999));
 		request.setMovementStatus(MovementStatus.N);
-		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar("2013-07-01"));
 		request.setMovementType(MovementType.GT);
+		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar("2018-12-18"));
 		request.setCustomerTaxID("999999990");
 		request.setCustomerName("Cliente");
 		request.setCustomerAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		request.setAddressTo(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		request.setAddressFrom(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		request.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar("2013-07-01T23:59:59"));
-		request.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar("2013-07-01T23:00:00"));
+		request.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar("2018-12-18T07:20:59"));
+		request.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar("2018-12-18T07:20:00"));
 		request.setVehicleID("XX-YY-ZZ");
 
 		Line line = new Line();
