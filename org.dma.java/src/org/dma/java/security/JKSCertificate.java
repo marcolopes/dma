@@ -204,7 +204,7 @@ public class JKSCertificate {
 		return alias.equals(other.alias) &&
 				X509Cert==null ? other.X509Cert==null : X509Cert.equals(other.X509Cert);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof JKSCertificate)
