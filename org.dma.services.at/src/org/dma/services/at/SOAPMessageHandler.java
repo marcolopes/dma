@@ -80,14 +80,20 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	public void initializeRequest(WSBindingProvider bp, String endpoint, boolean secure) throws Exception {
+	public void initializeHandler(WSBindingProvider provider, String endpoint, boolean secure) throws Exception {
+
+		// adiciona handler
+		Binding binding = provider.getBinding();
+		List<Handler> chain = binding.getHandlerChain();
+		chain.add(this);
+		binding.setHandlerChain(chain);
 
 		//javax.xml.ws.service.endpoint.address
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+		provider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
 		//com.sun.xml.internal.ws.connect.timeout
-		bp.getRequestContext().put(JAXWSProperties.CONNECT_TIMEOUT, DEFAULT_CONNECT_TIMEOUT);
+		provider.getRequestContext().put(JAXWSProperties.CONNECT_TIMEOUT, DEFAULT_CONNECT_TIMEOUT);
 		//com.sun.xml.internal.ws.request.timeout
-		bp.getRequestContext().put(JAXWSProperties.REQUEST_TIMEOUT, DEFAULT_REQUEST_TIMEOUT);
+		provider.getRequestContext().put(JAXWSProperties.REQUEST_TIMEOUT, DEFAULT_REQUEST_TIMEOUT);
 
 		if(secure){
 
@@ -109,15 +115,9 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 			*/
 
-			bp.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
+			provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
 
 		}
-
-		// adiciona handler
-		Binding binding = bp.getBinding();
-		List<Handler> chain = binding.getHandlerChain();
-		chain.add(this);
-		binding.setHandlerChain(chain);
 
 	}
 

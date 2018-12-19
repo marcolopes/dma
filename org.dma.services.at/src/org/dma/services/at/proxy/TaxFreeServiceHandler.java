@@ -45,10 +45,7 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/**
-	 * Recebe o Bean e realiza um pedido ao webservice.
-	 * Instancia a conexao, coloca o Handler e invoca o webservice
-	 */
+	/** Instancia a conexao, adiciona o handler e invoca o webservice */
 	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType request) throws Exception {
 
 		// cria um novo servico
@@ -57,8 +54,8 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 		System.out.println(service.getWSDLDocumentLocation());
 		TaxFreeService soapService = service.getTaxFreeServicePort();
 
-		// inicializa request
-		initializeRequest((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
+		// inicializa handler
+		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
 
 		return soapService.taxFreeSubmission(request);
 
