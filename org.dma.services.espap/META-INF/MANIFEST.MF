@@ -11,7 +11,12 @@ Bundle-ClassPath: .,
  libraries/streambuffer-0.8.jar,
  libraries/jaxb-impl-2.1.4.jar,
  libraries/jaxws-rt-2.1.4.jar,
- libraries/stax-ex-1.2.jar
+ libraries/stax-ex-1.2.jar,
+ xbean-3.0.1/xbean.jar,
+ UBL-2.1/output/UBL-eSPap-CreditNote-2.1.jar,
+ UBL-2.1/output/UBL-eSPap-DebitNote-2.1.jar,
+ UBL-2.1/output/UBL-eSPap-DocumentStatus-2.1.jar,
+ UBL-2.1/output/UBL-eSPap-Invoice-2.1.jar
 Export-Package: org.dma.services.espap,
  org.dma.services.espap.proxy
 Require-Bundle: org.dma.java;bundle-version="6.4.2"
