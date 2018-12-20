@@ -81,9 +81,9 @@ public class StockMovementServiceTest {
 				//Service Username / Password
 				RequesterTaxID+"/0037", "testes1234",
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
-				new JKSCertificate(CERTIFICATE_TYPE.JKS, "saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
+				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "TesteWebServices.pfx", "TESTEwebservice"),
+				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebServices.pfx", "TESTEwebservice"),
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 

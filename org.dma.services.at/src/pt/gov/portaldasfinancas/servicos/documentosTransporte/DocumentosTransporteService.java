@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  *
  */
-@WebServiceClient(name = "documentosTransporte", targetNamespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", wsdlLocation = "file:DocumentosTransporte.wsdl")
+@WebServiceClient(name = "documentosTransporte", targetNamespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", wsdlLocation = "file:wsdl/DocumentosTransporte.wsdl")
 public class DocumentosTransporteService
     extends Service
 {
@@ -30,7 +30,7 @@ public class DocumentosTransporteService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = DocumentosTransporteService.class.getClassLoader().getResource("DocumentosTransporte.wsdl");
+            url = DocumentosTransporteService.class.getClassLoader().getResource("wsdl/DocumentosTransporte.wsdl");
         } catch (Exception ex) {
             e = new WebServiceException(ex);
         }

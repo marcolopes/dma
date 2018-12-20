@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  *
  */
-@WebServiceClient(name = "TaxFreeServiceImpl", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", wsdlLocation = "file:TaxFreeServices.wsdl")
+@WebServiceClient(name = "TaxFreeServiceImpl", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", wsdlLocation = "file:wsdl/TaxFreeServices.wsdl")
 public class TaxFreeServiceImpl
     extends Service
 {
@@ -30,7 +30,7 @@ public class TaxFreeServiceImpl
         URL url = null;
         WebServiceException e = null;
         try {
-            url = TaxFreeServiceImpl.class.getClassLoader().getResource("TaxFreeServices.wsdl");
+            url = TaxFreeServiceImpl.class.getClassLoader().getResource("wsdl/TaxFreeServices.wsdl");
         } catch (Exception ex) {
             e = new WebServiceException(ex);
         }
