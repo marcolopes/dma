@@ -8,17 +8,17 @@ setlocal
 
 set SCHEMA_FOLDER=.
 if not "%2"=="" set SCHEMA_FOLDER=%2%
-set XSD_CONFIG=%SCHEMA_FOLDER%\%1.xsdconfig
-
-set OUTPUT_FOLDER=output
+set SOURCE_FOLDER=..\src
+set OUTPUT_FOLDER=%SCHEMA_FOLDER%\output
+set CONFIG_XSD=%SCHEMA_FOLDER%\%1.xsdconfig
+set OUTPUT_JAR=%OUTPUT_FOLDER%\%1.jar
 md %OUTPUT_FOLDER%
-set DESTINATION=%OUTPUT_FOLDER%\%1.jar
 
-set SOURCE=%SCHEMA_FOLDER%\%1.xsd
-if exist "%SOURCE%" goto JAVA
+set SOURCE_XSD=%SCHEMA_FOLDER%\%1.xsd
+if exist "%SOURCE_XSD%" goto JAVA
 echo %1.xsd not found in %SCHEMA_FOLDER%!
-set SOURCE=%SCHEMA_FOLDER%\%1.wsdl
-if exist "%SOURCE%" goto JAVA
+set SOURCE_XSD=%SCHEMA_FOLDER%\%1.wsdl
+if exist "%SOURCE_XSD%" goto JAVA
 
 echo %1.wsdl not found in %SCHEMA_FOLDER%!
 echo USAGE: COMP SCHEMA_FILE [SCHEMA_FOLDER]
@@ -27,12 +27,11 @@ goto END
 :JAVA
 set JAVA_HOME=C:\Program Files\Java\jdk1.7.0
 if exist "%JAVA_HOME%\bin\javac.exe" goto XMLBEANS
-echo JAVA 64bits SDK NOT FOUND!
+echo JAVA 64bits SDK NOT FOUND! PLEASE install JAVA
 goto END
 
 :XMLBEANS
 set BEANS_HOME=..
-set BEANS_SRC=%BEANS_HOME%\src
 set BEANS_LIB=%BEANS_HOME%\xbean-3.0.1
 set BEANS_CP=%BEANS_LIB%\xbean.jar
 rem set BEANS_CP=%BEANS_CP%;%BEANS_LIB%\jsr173_1.0_api.jar
@@ -47,7 +46,8 @@ goto END
 :COMPILE
 set JAVA=%JAVA_HOME%\bin\java.exe
 set JAVAC=%JAVA_HOME%\bin\javac.exe
-echo COMPILING: %SOURCE%
-"%JAVA%" -Xmx2048m -classpath %BEANS_CP% org.apache.xmlbeans.impl.tool.SchemaCompiler -out %DESTINATION% %SOURCE% -compiler "%JAVAC%" -javasource "1.5"
+echo COMPILING: %SOURCE_XSD%
+
+"%JAVA%" -Xmx2048m -classpath %BEANS_CP% org.apache.xmlbeans.impl.tool.SchemaCompiler -out %OUTPUT_JAR% %SOURCE_XSD% -compiler "%JAVAC%" -javasource "1.5"
 
 :END
