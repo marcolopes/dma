@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * 2008-2018 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopespt@gmail.com)
+ *******************************************************************************/
 package org.dma.services.at.proxy;
 
 import com.sun.xml.ws.developer.WSBindingProvider;
@@ -11,10 +16,6 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionRequestType;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
 /**
  * PROXY para ligacao ao endpoint do webservice
- *
- * @author ricardo (AT)
- * @author marcolopespt@gmail.com
- *
  */
 public class TaxFreeServiceHandler extends SOAPMessageHandler {
 

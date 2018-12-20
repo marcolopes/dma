@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * 2008-2018 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopespt@gmail.com)
+ * Ricardo (AT)
+ *******************************************************************************/
 package org.dma.services.at.proxy;
 
 import com.sun.xml.ws.developer.WSBindingProvider;
@@ -11,10 +17,6 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovement;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementResponse;
 /**
  * PROXY para ligacao ao endpoint do webservice
- *
- * @author ricardo (AT)
- * @author marcolopespt@gmail.com
- *
  */
 public class StockMovementServiceHandler extends SOAPMessageHandler {
 

@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * 2008-2018 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopespt@gmail.com)
+ * Ricardo (AT)
+ *******************************************************************************/
 package org.dma.services.at;
 
 import java.io.ByteArrayOutputStream;
@@ -45,10 +51,6 @@ import org.dma.java.io.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.security.JKSCertificate;
 /**
  * SOAP Message Handler
- *
- * @author ricardo (AT)
- * @author marcolopespt@gmail.com
- *
  */
 public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 

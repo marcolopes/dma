@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * 2008-2018 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopespt@gmail.com)
+ * Ricardo (AT)
+ *******************************************************************************/
 package org.dma.services.at;
 
 import java.security.cert.X509Certificate;

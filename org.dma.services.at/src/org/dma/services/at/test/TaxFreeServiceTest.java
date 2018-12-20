@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * 2008-2018 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopespt@gmail.com)
+ *******************************************************************************/
 package org.dma.services.at.test;
 
 import java.math.BigDecimal;
@@ -27,9 +32,6 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionRequestType;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
 /**
  * Teste de eTaxFree
- *
- * @author marcolopespt@gmail.com
- *
  */
 public class TaxFreeServiceTest {
 
