@@ -1,7 +1,6 @@
 @echo off
 echo *******************************************************************************
 echo * 2008-2018 Public Domain
-echo * Contributors
 echo * Marco Lopes (marcolopespt@gmail.com)
 echo * https://xmlbeans.apache.org/docs/2.0.0/guide/tools.html
 echo *******************************************************************************
@@ -10,12 +9,13 @@ setlocal
 set SCHEMA_FOLDER=.
 if not "%2"=="" set SCHEMA_FOLDER=%2%
 set XSD_CONFIG=%SCHEMA_FOLDER%\%1.xsdconfig
-set SOURCE=%SCHEMA_FOLDER%\%1.xsd
+
 set OUTPUT_FOLDER=output
 md %OUTPUT_FOLDER%
 set DESTINATION=%OUTPUT_FOLDER%\%1.jar
-if exist "%SOURCE%" goto JAVA
 
+set SOURCE=%SCHEMA_FOLDER%\%1.xsd
+if exist "%SOURCE%" goto JAVA
 echo %1.xsd not found in %SCHEMA_FOLDER%!
 set SOURCE=%SCHEMA_FOLDER%\%1.wsdl
 if exist "%SOURCE%" goto JAVA
