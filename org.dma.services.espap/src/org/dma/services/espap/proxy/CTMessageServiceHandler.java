@@ -14,6 +14,7 @@ import org.dma.java.security.JKSCertificate;
 import org.dma.services.espap.SOAPMessageHandler;
 /**
  * PROXY para ligacao ao endpoint do webservice
+ *
  * https://www.espap.gov.pt/spfin/Paginas/spfin.aspx#maintab5
  */
 public class CTMessageServiceHandler extends SOAPMessageHandler {
