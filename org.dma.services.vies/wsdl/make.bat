@@ -6,5 +6,5 @@ echo * https://javaee.github.io/metro-jax-ws/
 echo * https://docs.oracle.com/javase/7/docs/technotes/tools/share/wsimport.html
 echo *******************************************************************************
 
-wsimport http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl -verbose -Xnocompile -s src
+wsimport http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl -verbose -Xnocompile -s ..\src
 pause
