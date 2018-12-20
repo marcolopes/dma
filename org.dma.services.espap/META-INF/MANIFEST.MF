@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-Name: Servicos Partilhados de Financas
+Bundle-SymbolicName: org.dma.services.espap;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: marcolopespt@gmail.com
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ libraries/streambuffer-0.8.jar,
+ libraries/jaxb-impl-2.1.4.jar,
+ libraries/jaxws-rt-2.1.4.jar,
+ libraries/stax-ex-1.2.jar
+Export-Package: org.dma.services.espap,
+ org.dma.services.espap.proxy
+Require-Bundle: org.dma.java;bundle-version="6.4.2"
+
