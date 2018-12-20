@@ -1,7 +1,6 @@
 
 package pt.gov.portaldasfinancas.servicos.faturas;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -18,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  *
  */
-@WebServiceClient(name = "faturas", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/faturas/", wsdlLocation = "file:Faturas.wsdl")
+@WebServiceClient(name = "faturas", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/faturas/", wsdlLocation = "file:wsdl/Faturas.wsdl")
 public class FaturasService
     extends Service
 {
@@ -31,7 +30,7 @@ public class FaturasService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = FaturasService.class.getClassLoader().getResource("faturas.wsdl");
+            url = FaturasService.class.getClassLoader().getResource("wsdl/Faturas.wsdl");
         } catch (Exception ex) {
             e = new WebServiceException(ex);
         }
