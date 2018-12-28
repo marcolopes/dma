@@ -85,8 +85,7 @@ public class FieldFormat extends FieldProperties {
 		this.type=type;
 		this.size=size;
 		this.pattern=pattern==null ? buildPattern() : pattern;
-		this.regex=buildRegex(String.valueOf(isNoSpaces() ?
-				String.valueOf(exclude).concat(" ").toCharArray() : exclude));
+		this.regex=buildRegex(String.valueOf(exclude).concat(isNoSpaces() ? " " : ""));
 	}
 
 
