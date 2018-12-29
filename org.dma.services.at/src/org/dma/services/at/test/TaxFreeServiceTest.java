@@ -45,7 +45,7 @@ public class TaxFreeServiceTest {
 
 		//--- COMPANY ---
 		CompanyType company = new CompanyType();
-		company.setTaxRegistrationNumber(123456789);
+		company.setTaxRegistrationNumber(RequesterTaxID);
 		company.setBusinessName("Empresa");
 		company.setEmail("tax@empresa.com");
 
@@ -96,9 +96,9 @@ public class TaxFreeServiceTest {
 		//invoice.setATCUD(StringUtils.randomNumbers(100));
 		invoice.setInvoiceIdentifiers(invoiceIdentifiers);
 		invoice.setInvoiceType("FT");
-		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2018-01-01"));
+		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2018-12-28"));
 		//invoice.setBuyer(simpleBuyer);
-		invoice.setGrossTotal(new BigDecimal("200.00"));
+		invoice.setGrossTotal(new BigDecimal("246.00"));
 		invoice.setRefundableAmount(new BigDecimal("46.00"));
 		invoice.setCalculatedTaxes(taxes);
 
