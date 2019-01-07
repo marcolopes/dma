@@ -261,6 +261,18 @@ public class TimeDateUtils {
 	}
 
 
+	/** @see GregorianCalendar#GregorianCalendar() */
+	public static Calendar getCalendarFirstDay(int year) {
+		return getCalendar(year, 0, 1);
+	}
+
+
+	/** @see GregorianCalendar#GregorianCalendar() */
+	public static Calendar getCalendarLastDay(int year) {
+		return getCalendar(year, 11, 31);
+	}
+
+
 	/** @see GregorianCalendar#GregorianCalendar(int, int, int) */
 	public static Calendar getCalendar(int year, int month, int day) {
 		return new GregorianCalendar(year, month, day);
