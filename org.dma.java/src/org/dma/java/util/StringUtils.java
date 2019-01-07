@@ -502,7 +502,7 @@ public class StringUtils {
 
 		//start quote
 		sb.append(quote.length==0 ? '"' : quote[0]);
-		//remove DOUBLE QUOTES!
+		//escape DOUBLE QUOTES!
 		sb.append(escape(string).replace("\"", "\\\""));
 		//end quote
 		sb.append(quote.length==0 ? '"' : quote[quote.length-1]);
