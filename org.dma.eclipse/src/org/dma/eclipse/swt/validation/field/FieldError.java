@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -15,10 +15,10 @@ public abstract class FieldError  {
 
 	public enum ERRORS {
 		NONE,
-		USER_DEFINED,
-		IS_EMPTY,
 		IS_ZERO,
-		BAD_LENGTH}
+		IS_EMPTY,
+		WRONG_LENGTH,
+		USER_DEFINED}
 
 	private String message;
 	private ERRORS error;

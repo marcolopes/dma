@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -37,47 +37,41 @@ public abstract class FieldValidator implements IValidator {
 	/** Text / combo (with regex) */
 	public FieldBinding register(String property, Label label, Control control, FieldFormat fieldFormat, int rules) {
 
-		FieldBinding binding=new FieldBinding(label, control, fieldFormat, rules){
+		return register(property, new FieldBinding(label, control, fieldFormat, rules){
 			@Override
 			public String processErrorMessage(ERRORS error, String message, String label) {
 				return FieldValidator.this.processErrorMessage(error, message, label);
 			}
-		};
-		register(property, binding);
-		return binding;
+		});
 
 	}
 
 	/** Text / combo / list / button (no regex) */
 	public FieldBinding register(String property, Label label, Control control, int rules) {
 
-		FieldBinding binding=new FieldBinding(label, control, rules){
+		return register(property, new FieldBinding(label, control, rules){
 			@Override
 			public String processErrorMessage(ERRORS error, String message, String label) {
 				return FieldValidator.this.processErrorMessage(error, message, label);
 			}
-		};
-		register(property, binding);
-		return binding;
+		});
 
 	}
 
 	/** Generic (no regex) */
 	public FieldBinding register(String property, Control control, int rules) {
 
-		FieldBinding binding=new FieldBinding(control, rules){
+		return register(property, new FieldBinding(control, rules){
 			@Override
 			public String processErrorMessage(ERRORS error, String message, String label) {
 				return FieldValidator.this.processErrorMessage(error, message, label);
 			}
-		};
-		register(property, binding);
-		return binding;
+		});
 
 	}
 
 
-	protected void register(String property, FieldBinding binding) {
+	protected FieldBinding register(String property, FieldBinding binding) {
 
 		if(validatorMap.containsKey(property))
 			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
@@ -110,6 +104,8 @@ public abstract class FieldValidator implements IValidator {
 		});
 
 		validatorMap.put(property, binding);
+
+		return binding;
 
 	}
 
