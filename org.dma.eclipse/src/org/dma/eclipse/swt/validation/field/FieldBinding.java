@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -149,12 +149,12 @@ public abstract class FieldBinding extends FieldError implements IFieldRules {
 		//TEXT
 		else if (control instanceof Text){
 			String text=getText().trim();
-			//has no chars?
-			if (rules.isNotEmpty() && text.isEmpty()) setError(ERRORS.IS_EMPTY);
 			//is zero?
 			if (rules.isNotZero() && text.equals("0")) setError(ERRORS.IS_ZERO);
+			//has no chars?
+			if (rules.isNotEmpty() && text.isEmpty()) setError(ERRORS.IS_EMPTY);
 			//length not exact?
-			if (rules.isLimitMatch() && text.length()!=fieldFormat.getSize().size) setError(ERRORS.BAD_LENGTH);
+			if (rules.isLimitMatch() && text.length()!=fieldFormat.getSize().size) setError(ERRORS.WRONG_LENGTH);
 		}
 
 	}
