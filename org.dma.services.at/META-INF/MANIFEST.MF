@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Autoridade Tributaria Services
 Bundle-SymbolicName: org.dma.services.at;singleton:=true
-Bundle-Version: 3.1.2.qualifier
+Bundle-Version: 3.1.3.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
