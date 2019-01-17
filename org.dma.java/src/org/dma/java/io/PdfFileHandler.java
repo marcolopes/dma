@@ -40,7 +40,8 @@ public class PdfFileHandler extends FileHandler {
 
 	/**
 	 * <a href=http://itextpdf.sourceforge.net/howtosign.html>
-	 * How to sign a PDF using iText</a> */
+	 * How to sign a PDF using iText</a>
+	 */
 	public void sign(PrivateKey privateKey, Certificate[] certChain,
 			String reason, String location, String contact) throws DocumentException, IOException {
 
