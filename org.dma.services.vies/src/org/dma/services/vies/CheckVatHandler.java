@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -20,7 +20,6 @@ import eu.europa.ec.taxud.vies.services.checkvat.CheckVatService;
  * http://ec.europa.eu/taxation_customs/vies
  */
 public class CheckVatHandler {
-
 
 	/**
 	 * http://ec.europa.eu/taxation_customs/vies/faq.html<br>
@@ -101,7 +100,8 @@ public class CheckVatHandler {
 			this.zipcode=regex==null ? null : Pattern.compile(regex);
 		}
 
-		public CheckVatResult query(String vatNumber) {
+		/** Queries VIES service */
+		public CheckVatResult queryVatNumber(String vatNumber) {
 
 			try{
 				CheckVatService service=new CheckVatService();
@@ -132,14 +132,18 @@ public class CheckVatHandler {
 			return null;
 		}
 
+		/** Parses VIES address */
 		public CheckVatAddress parse(String address) {
 
 			try{
 				Matcher matcher=zipcode.matcher(address);
 				matcher.find();
 
+				/* STREET (before ZIPCODE) */
 				String street=address.substring(0, matcher.start());
+				/* ZIPCODE */
 				String zipcode=address.substring(matcher.start(), matcher.end());
+				/* CITY (after ZIPCODE) */
 				String city=address.substring(matcher.end());
 
 				return new CheckVatAddress(street, zipcode, city);
@@ -165,17 +169,20 @@ public class CheckVatHandler {
 		this(COUNTRIES.get(countryCode));
 	}
 
+	/** @see VatNumber Want to work with a specific VAT NUMBER? */
 	public CheckVatHandler(COUNTRIES country) {
 		if (country==null) throw new IllegalArgumentException("Invalid Country");
 		this.country=country;
 	}
 
 	public CheckVatResult query(String vatNumber) {
-		return country.query(vatNumber);
+		return country.queryVatNumber(vatNumber);
 	}
 
 
 	public static void main(String[] args) {
+
+		COUNTRIES.PT.queryVatNumber("199415250");
 
 		CheckVatHandler handler=new CheckVatHandler(COUNTRIES.ES);
 		System.out.println(handler.query("A28250777"));
@@ -217,7 +224,7 @@ public class CheckVatHandler {
 		System.out.println(handler.query("47458714"));
 
 		System.out.println(new CheckVatHandler("GR").query("064806395"));
-		System.out.println(COUNTRIES.EL.query("094543092"));
+		System.out.println(COUNTRIES.EL.queryVatNumber("094543092"));
 
 		System.out.println(new CheckVatHandler("XX").query("1234567890"));
 

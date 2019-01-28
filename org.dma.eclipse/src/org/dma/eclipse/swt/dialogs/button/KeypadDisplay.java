@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -7,10 +7,13 @@ package org.dma.eclipse.swt.dialogs.button;
 
 import java.math.BigDecimal;
 
+import org.dma.eclipse.swt.custom.CustomShell;
 import org.dma.eclipse.swt.custom.CustomText;
 import org.dma.eclipse.swt.graphics.ColorUtils;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
@@ -91,6 +94,30 @@ public class KeypadDisplay extends CustomText {
 
 	public String getValue() {
 		return value;
+	}
+
+
+
+	public static void main(String[] argvs) {
+
+		CustomShell shell=new CustomShell(CustomShell.STYLE_RESIZABLE);
+		shell.setGridLayout();
+		final KeypadDisplay display=new KeypadDisplay(shell, 20);
+		display.setValue("100.001");
+		display.addKeyListener(new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch(e.keyCode){
+				case 'c':
+				case 'C': display.function(FUNCTIONS.CLEAR); break;
+				case SWT.CR:
+				case SWT.KEYPAD_CR: display.selectAll(); break;
+				case SWT.ESC: display.copy(); break;
+				}
+			}
+		});
+		shell.openAndSleep();
+
 	}
 
 
