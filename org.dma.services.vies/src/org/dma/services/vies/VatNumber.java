@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -41,6 +41,7 @@ public class VatNumber {
 	public final COUNTRIES country;
 	public final String number;
 
+	/** Country can be VIES or ISO */
 	public VatNumber(String countryCode, String vatNumber) {
 		this(COUNTRIES.get(countryCode), vatNumber);
 	}
@@ -50,7 +51,7 @@ public class VatNumber {
 		this.number=parse(country, vatNumber);
 	}
 
-	public boolean checkDigit() {
+	public boolean isValid() {
 		switch(country){
 		default: return true;
 		case PT: return CheckDigit.PT(number);
@@ -58,14 +59,18 @@ public class VatNumber {
 	}
 
 	public CheckVatResult query() {
-		return country.query(number);
+		return country.queryVatNumber(number);
 	}
 
 
 	public static void main(String[] args) {
 
-		VatNumber number=new VatNumber(COUNTRIES.PT, "501591109");
-		System.out.println("VALID: " + number.checkDigit());
+		VatNumber number=new VatNumber(COUNTRIES.PT, "509922716");
+		System.out.println("VALID: " + number.isValid());
+		System.out.println(number.query());
+
+		number=new VatNumber(COUNTRIES.PT, "PT 501591109");
+		System.out.println("VALID: " + number.isValid());
 		System.out.println(number.query());
 
 	}
