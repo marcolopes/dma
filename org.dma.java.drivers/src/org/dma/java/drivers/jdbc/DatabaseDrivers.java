@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -86,6 +86,41 @@ public class DatabaseDrivers {
 		private static class SystemProperty {
 			public SystemProperty(String key, String value) {
 				System.setProperty(key, value);
+			}
+		}
+
+		private static IPoolManager poolManager;
+
+		public static Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
+			if (poolManager==null) poolManager=pool.create(url, user, password);
+			return poolManager.getConnection();
+		}
+
+		public static Connection getConnection(String url, String user, String password) throws SQLException {
+			return getConnection(url, user, password, POOLMANAGERS.NONE);
+		}
+
+		public static void checkConnection(String url, String user, String password) throws SQLException {
+			Debug.err("URL", url);
+			Debug.err("USER", user);
+			Debug.err("PASSWORD", password);
+			getConnection(url, user, password).close();
+		}
+
+		public static boolean isLocalhost(String host) {
+			return host.equals("localhost") || host.equals("127.0.0.1");
+		}
+
+		public static void checkH2Lock(String database) throws Exception {
+			String filename=database+Constants.SUFFIX_LOCK_FILE;
+			System.out.println("DATABASE LOCK: "+filename);
+			try{
+				FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
+				lock.lock(FileLock.LOCK_FILE);
+				lock.unlock();
+
+			}catch(Exception e){
+				throw new Exception(e);
 			}
 		}
 
@@ -331,41 +366,6 @@ public class DatabaseDrivers {
 			executeSQLUpdate(connection, getDropTableSQL(tableName));
 		}
 
-	}
-
-	private IPoolManager poolManager;
-
-	public Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
-		if (poolManager==null) poolManager=pool.create(url, user, password);
-		return poolManager.getConnection();
-	}
-
-	public Connection getConnection(String url, String user, String password) throws SQLException {
-		return getConnection(url, user, password, POOLMANAGERS.NONE);
-	}
-
-	public void checkConnection(String url, String user, String password) throws SQLException {
-		Debug.err("URL", url);
-		Debug.err("USER", user);
-		Debug.err("PASSWORD", password);
-		getConnection(url, user, password).close();
-	}
-
-	public static boolean isLocalhost(String host) {
-		return host.equals("localhost") || host.equals("127.0.0.1");
-	}
-
-	public static void checkH2Lock(String database) throws Exception {
-		String filename=database+Constants.SUFFIX_LOCK_FILE;
-		System.out.println("DATABASE LOCK: "+filename);
-		try{
-			FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
-			lock.lock(FileLock.LOCK_FILE);
-			lock.unlock();
-
-		}catch(Exception e){
-			throw new Exception(e);
-		}
 	}
 
 }
