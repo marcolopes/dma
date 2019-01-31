@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -8,10 +8,12 @@ package org.dma.java.drivers.jdbc;
 import java.sql.Connection;
 import java.util.Arrays;
 
+import org.dma.java.drivers.jdbc.DatabaseDrivers.DRIVERS;
+import org.dma.java.drivers.jdbc.DatabaseDrivers.POOLMANAGERS;
 import org.dma.java.util.CollectionUtils;
 import org.dma.java.util.StringUtils;
 
-public class DatabaseParameters extends DatabaseDrivers {
+public class DatabaseParameters {
 
 	public final DRIVERS driver;
 	public final String host;
@@ -50,11 +52,11 @@ public class DatabaseParameters extends DatabaseDrivers {
 	}
 
 	public boolean isLocalhost() {
-		return isLocalhost(host);
+		return DRIVERS.isLocalhost(host);
 	}
 
 	public void checkH2Lock() throws Exception {
-		checkH2Lock(database);
+		DRIVERS.checkH2Lock(database);
 	}
 
 	public void executeBackup() throws Exception {
@@ -66,11 +68,11 @@ public class DatabaseParameters extends DatabaseDrivers {
 	}
 
 	public Connection getConnection() throws Exception {
-		return getConnection(getConnectionUrl(), user, password, pool);
+		return DRIVERS.getConnection(getConnectionUrl(), user, password, pool);
 	}
 
 	public void checkConnection() throws Exception {
-		checkConnection(getConnectionUrl(), user, password);
+		DRIVERS.checkConnection(getConnectionUrl(), user, password);
 	}
 
 
