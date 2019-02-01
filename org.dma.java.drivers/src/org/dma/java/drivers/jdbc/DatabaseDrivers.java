@@ -89,24 +89,6 @@ public class DatabaseDrivers {
 			}
 		}
 
-		private static IPoolManager poolManager;
-
-		public static Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
-			if (poolManager==null) poolManager=pool.create(url, user, password);
-			return poolManager.getConnection();
-		}
-
-		public static Connection getConnection(String url, String user, String password) throws SQLException {
-			return getConnection(url, user, password, POOLMANAGERS.NONE);
-		}
-
-		public static void checkConnection(String url, String user, String password) throws SQLException {
-			Debug.err("URL", url);
-			Debug.err("USER", user);
-			Debug.err("PASSWORD", password);
-			getConnection(url, user, password).close();
-		}
-
 		public static boolean isLocalhost(String host) {
 			return host.equals("localhost") || host.equals("127.0.0.1");
 		}
@@ -124,6 +106,8 @@ public class DatabaseDrivers {
 			}
 		}
 
+		private IPoolManager poolManager;
+
 		public final String name;
 		public final Class klass;
 
@@ -138,6 +122,22 @@ public class DatabaseDrivers {
 
 		public boolean isH2Embedded(String host) {
 			return this==H2 && (host.isEmpty() || isLocalhost(host));
+		}
+
+		public Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
+			if (poolManager==null) poolManager=pool.create(url, user, password);
+			return poolManager.getConnection();
+		}
+
+		public Connection getConnection(String url, String user, String password) throws SQLException {
+			return getConnection(url, user, password, POOLMANAGERS.NONE);
+		}
+
+		public void checkConnection(String url, String user, String password) throws SQLException {
+			Debug.err("URL", url);
+			Debug.err("USER", user);
+			Debug.err("PASSWORD", password);
+			getConnection(url, user, password).close();
 		}
 
 		private String getDatabaseUrl(String host, String database) {

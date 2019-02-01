@@ -6,12 +6,9 @@
 package org.dma.java.drivers.jdbc;
 
 import java.sql.Connection;
-import java.util.Arrays;
 
 import org.dma.java.drivers.jdbc.DatabaseDrivers.DRIVERS;
 import org.dma.java.drivers.jdbc.DatabaseDrivers.POOLMANAGERS;
-import org.dma.java.util.CollectionUtils;
-import org.dma.java.util.StringUtils;
 
 public class DatabaseParameters {
 
@@ -47,10 +44,6 @@ public class DatabaseParameters {
 		this.backup=backup==null ? new BackupParameters() : backup;
 	}
 
-	public boolean isH2Embedded() {
-		return driver.isH2Embedded(host);
-	}
-
 	public boolean isLocalhost() {
 		return DRIVERS.isLocalhost(host);
 	}
@@ -59,8 +52,8 @@ public class DatabaseParameters {
 		DRIVERS.checkH2Lock(database);
 	}
 
-	public void executeBackup() throws Exception {
-		driver.executeBackup(host, database, user, password, backup);
+	public boolean isH2Embedded() {
+		return driver.isH2Embedded(host);
 	}
 
 	public String getConnectionUrl() {
@@ -68,23 +61,15 @@ public class DatabaseParameters {
 	}
 
 	public Connection getConnection() throws Exception {
-		return DRIVERS.getConnection(getConnectionUrl(), user, password, pool);
+		return driver.getConnection(getConnectionUrl(), user, password, pool);
 	}
 
 	public void checkConnection() throws Exception {
-		DRIVERS.checkConnection(getConnectionUrl(), user, password);
+		driver.checkConnection(getConnectionUrl(), user, password);
 	}
 
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	/** Returns DRIVER_HOST_DATABASE */
-	@Override
-	public String toString() {
-		return CollectionUtils.concat(Arrays.asList(driver, host,
-				StringUtils.normalize(database)), "_");
+	public void executeBackup() throws Exception {
+		driver.executeBackup(host, database, user, password, backup);
 	}
 
 
