@@ -19,5 +19,5 @@ Bundle-ClassPath: .,
  UBL-2.1/output/UBL-eSPap-Invoice-2.1.jar
 Export-Package: org.dma.services.espap,
  org.dma.services.espap.proxy
-Require-Bundle: org.dma.java;bundle-version="6.4.2"
+Require-Bundle: org.dma.java;bundle-version="6.4.3"
 
