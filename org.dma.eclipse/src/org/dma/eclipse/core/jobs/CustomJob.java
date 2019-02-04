@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -33,6 +33,16 @@ public class CustomJob extends Job {
 
 	/** Global family to identify {@link CustomJob} */
 	public static final Object FAMILY = MUTEX_RULE;
+
+	/** Tries to cancel all jobs from this {@link CustomJob#FAMILY}
+	 * and executes {@link Thread#sleep(long)} repeatedly
+	 * to allow non-cancelable RUNNING jobs to terminate */
+	public static void cancelAll(long sleep) {
+		Job.getJobManager().cancel(FAMILY);
+		while(!getJobManager().isIdle()) try{
+			Thread.sleep(sleep);
+		}catch(Exception e){}
+	}
 
 	/** Convenient access to error list */
 	public final ErrorList error=new ErrorList();
