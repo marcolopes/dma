@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -63,7 +63,7 @@ public final class VersionNumber {
 	public String toString(int length) {
 		StringBuilder result=new StringBuilder();
 		int[] values=toArray();
-		for(int i=0; i<length; i++){
+		for(int i=0; i<length && i<values.length; i++){
 			if (result.length()>0) result.append('.');
 			result.append(values[i]);
 		}
