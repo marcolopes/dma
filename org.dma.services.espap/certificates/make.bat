@@ -17,7 +17,8 @@ REM  START
 REM =======
 :START
 openssl pkcs7 -in saphetydoc.p7b -inform DER -print_certs -outform PEM -out saphetydoc.pem
-keytool -import -trustcacerts -alias root -file saphetydoc.pem -keystore saphetydoc.jks
+del saphetydoc.jks
+keytool -importcert -trustcacerts -alias root -file saphetydoc.pem -keystore saphetydoc.jks -storepass 123456
 
 :END
 pause
