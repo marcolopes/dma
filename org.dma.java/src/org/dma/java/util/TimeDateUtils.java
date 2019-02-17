@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -74,22 +74,19 @@ public class TimeDateUtils {
 
 	public static final char DEFAULT_TIME_SEPARATOR = ':';
 	public static final String DEFAULT_TIME_PATTERN = TIME_HOUR_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_MINUTE_PATTERN;
+	public static final String DEFAULT_TIMESTAMP_PATTERN = DATE_YEAR_PATTERN+DEFAULT_DATE_SEPARATOR+DATE_MONTH_PATTERN+DEFAULT_DATE_SEPARATOR+DATE_DAY_PATTERN+";"+
+			TIME_HOUR_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_MINUTE_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_SECOND_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_MILISECOND_PATTERN;
 
 	/*
 	 * Validation
 	 */
-	public static boolean isDateValid(String date, String pattern) {
-		return getDate(date, pattern)!=null;
-	}
-
-
 	public static boolean isDateValid(String date) {
 		return isDateValid(date, DEFAULT_DATE_PATTERN);
 	}
 
 
-	public static boolean isTimeValid(String time, String pattern) {
-		return getTime(time, pattern)!=null;
+	public static boolean isDateValid(String date, String pattern) {
+		return getDate(date, pattern)!=null;
 	}
 
 
@@ -98,10 +95,13 @@ public class TimeDateUtils {
 	}
 
 
-	public static boolean isTodayAfter(Calendar calendar, int daysToAdd) {
-		Calendar when=(Calendar)calendar.clone();
-		when.add(Calendar.DAY_OF_MONTH, daysToAdd);
-		return getCalendarWithoutTime().after(when);
+	public static boolean isTimeValid(String time, String pattern) {
+		return getTime(time, pattern)!=null;
+	}
+
+
+	public static boolean isTodayAfter(Date date) {
+		return isTodayAfter(date, 0);
 	}
 
 
@@ -115,8 +115,10 @@ public class TimeDateUtils {
 	}
 
 
-	public static boolean isTodayAfter(Date date) {
-		return isTodayAfter(date, 0);
+	public static boolean isTodayAfter(Calendar calendar, int daysToAdd) {
+		Calendar when=(Calendar)calendar.clone();
+		when.add(Calendar.DAY_OF_MONTH, daysToAdd);
+		return getCalendarWithoutTime().after(when);
 	}
 
 
@@ -134,6 +136,18 @@ public class TimeDateUtils {
 		return sdf;
 	}
 
+
+	/** Date formatted with {@link #DEFAULT_DATE_PATTERN} */
+	public static String getDateFormatted(Date date) {
+		return getDateFormatted(date, DEFAULT_DATE_PATTERN);
+	}
+
+
+	public static String getDateFormatted(String pattern) {
+		return getDateFormatted(getCurrentDate(), pattern);
+	}
+
+
 	public static String getDateFormatted(Date date, String pattern) {
 		try{
 			return getSimpleDateFormat(pattern).format(date);
@@ -143,23 +157,9 @@ public class TimeDateUtils {
 	}
 
 
-	public static String getDateFormatted(String pattern) {
-		return getDateFormatted(getCurrentDate(), pattern);
-	}
-
-
-	/** Date formatted with {@link #DEFAULT_DATE_PATTERN} */
-	public static String getDateFormatted(Date date) {
-		return getDateFormatted(date, DEFAULT_DATE_PATTERN);
-	}
-
-
-	public static String getTimeFormatted(Time time, String pattern) {
-		try{
-			return getSimpleDateFormat(pattern).format(time);
-
-		}catch(Exception e){}
-		return null;
+	/** Time formatted with {@link #DEFAULT_TIME_PATTERN} */
+	public static String getTimeFormatted(Date time) {
+		return getTimeFormatted(getTime(time));
 	}
 
 
@@ -169,20 +169,14 @@ public class TimeDateUtils {
 	}
 
 
-	/** Time formatted with {@link #DEFAULT_TIME_PATTERN} */
-	public static String getTimeFormatted(Date time) {
-		return getTimeFormatted(getTime(time));
-	}
-
-
 	public static String getTimeFormatted(String pattern) {
 		return getTimeFormatted(getCurrentTime(), pattern);
 	}
 
 
-	public static String getTimestampFormatted(Timestamp timestamp, String pattern) {
+	public static String getTimeFormatted(Time time, String pattern) {
 		try{
-			return getSimpleDateFormat(pattern).format(timestamp);
+			return getSimpleDateFormat(pattern).format(time);
 
 		}catch(Exception e){}
 		return null;
@@ -198,6 +192,9 @@ public class TimeDateUtils {
 		return getXMLGregorianCalendar(getCalendar());
 	}
 
+	public static XMLGregorianCalendar getXMLGregorianCalendar(Date date) {
+		return getXMLGregorianCalendar(getCalendar(date));
+	}
 
 	public static XMLGregorianCalendar getXMLGregorianCalendar(Calendar calendar) {
 		try{
@@ -207,12 +204,6 @@ public class TimeDateUtils {
 		}catch(DatatypeConfigurationException e){}
 		return null;
 	}
-
-
-	public static XMLGregorianCalendar getXMLGregorianCalendar(Date date) {
-		return getXMLGregorianCalendar(getCalendar(date));
-	}
-
 
 	public static XMLGregorianCalendar getXMLGregorianCalendar(String date) {
 		try{
@@ -234,6 +225,11 @@ public class TimeDateUtils {
 	}
 
 
+	public static GregorianCalendar getGregorianCalendar(Date date) {
+		return getGregorianCalendar(getCalendar(date));
+	}
+
+
 	public static GregorianCalendar getGregorianCalendar(Calendar calendar) {
 		GregorianCalendar clone=new GregorianCalendar(calendar.getTimeZone());
 		clone.set(calendar.get(Calendar.YEAR),
@@ -243,11 +239,6 @@ public class TimeDateUtils {
 				calendar.get(Calendar.MINUTE),
 				calendar.get(Calendar.SECOND));
 		return clone;
-	}
-
-
-	public static GregorianCalendar getGregorianCalendar(Date date) {
-		return getGregorianCalendar(getCalendar(date));
 	}
 
 
@@ -279,17 +270,17 @@ public class TimeDateUtils {
 	}
 
 
+	public static Calendar getCalendar(String date) {
+		return getCalendar(date, DEFAULT_DATE_PATTERN);
+	}
+
+
 	public static Calendar getCalendar(String date, String pattern) {
 		Calendar calendar=getCalendar();
 		try{
 			calendar.setTime(getDate(date, pattern));
 		}catch(Exception e){}
 		return calendar;
-	}
-
-
-	public static Calendar getCalendar(String date) {
-		return getCalendar(date, DEFAULT_DATE_PATTERN);
 	}
 
 
@@ -317,15 +308,15 @@ public class TimeDateUtils {
 	}
 
 
+	public static Calendar getCalendarWithDayOfMonthMax(Calendar calendar) {
+		return getCalendarWithDay(calendar, getDayOfMonthMax(calendar));
+	}
+
+
 	public static Calendar getCalendarWithDay(Calendar calendar, int day) {
 		Calendar clone=(Calendar)calendar.clone();
 		clone.set(Calendar.DAY_OF_MONTH, day);
 		return clone;
-	}
-
-
-	public static Calendar getCalendarWithDayOfMonthMax(Calendar calendar) {
-		return getCalendarWithDay(calendar, getDayOfMonthMax(calendar));
 	}
 
 
@@ -343,6 +334,16 @@ public class TimeDateUtils {
 	}
 
 
+	public static Calendar getCalendarWithoutTime() {
+		return getCalendarWithoutTime(getCalendar());
+	}
+
+
+	public static Calendar getCalendarWithoutTime(Date date) {
+		return getCalendarWithoutTime(getCalendar(date));
+	}
+
+
 	public static Calendar getCalendarWithoutTime(Calendar calendar) {
 		Calendar clone=(Calendar)calendar.clone();
 		clone.set(Calendar.HOUR_OF_DAY, 0);
@@ -353,13 +354,13 @@ public class TimeDateUtils {
 	}
 
 
-	public static Calendar getCalendarWithoutTime(Date date) {
-		return getCalendarWithoutTime(getCalendar(date));
+	public static Calendar getCalendarWithoutTimezone() {
+		return getCalendarWithoutTimezone(getCalendar());
 	}
 
 
-	public static Calendar getCalendarWithoutTime() {
-		return getCalendarWithoutTime(getCalendar());
+	public static Calendar getCalendarWithoutTimezone(Date date) {
+		return getCalendarWithoutTimezone(getCalendar(date));
 	}
 
 
@@ -374,16 +375,6 @@ public class TimeDateUtils {
 			calendar.get(Calendar.MINUTE),
 			calendar.get(Calendar.SECOND));
 		return clone;
-	}
-
-
-	public static Calendar getCalendarWithoutTimezone(Date date) {
-		return getCalendarWithoutTimezone(getCalendar(date));
-	}
-
-
-	public static Calendar getCalendarWithoutTimezone() {
-		return getCalendarWithoutTimezone(getCalendar());
 	}
 
 
@@ -574,6 +565,12 @@ public class TimeDateUtils {
 	}
 
 
+	/** Date formatted with {@link #DEFAULT_DATE_PATTERN} */
+	public static Date getDate(String date) {
+		return getDate(date, DEFAULT_DATE_PATTERN);
+	}
+
+
 	public static Date getDate(String date, String pattern) {
 		try{
 			return getSimpleDateFormat(pattern).parse(date);
@@ -582,12 +579,6 @@ public class TimeDateUtils {
 			System.err.println(e);
 		}catch(Exception e){}
 		return null;
-	}
-
-
-	/** Date formatted with {@link #DEFAULT_DATE_PATTERN} */
-	public static Date getDate(String date) {
-		return getDate(date, DEFAULT_DATE_PATTERN);
 	}
 
 
@@ -700,6 +691,12 @@ public class TimeDateUtils {
 	}
 
 
+	/** Time formatted with {@link #DEFAULT_TIME_PATTERN} */
+	public static Time getTime(String time) {
+		return getTime(time, DEFAULT_TIME_PATTERN);
+	}
+
+
 	public static Time getTime(String time, String pattern) {
 		try{
 			return new Time(getSimpleDateFormat(pattern).parse(time).getTime());
@@ -711,9 +708,8 @@ public class TimeDateUtils {
 	}
 
 
-	/** Time formatted with {@link #DEFAULT_TIME_PATTERN} */
-	public static Time getTime(String time) {
-		return getTime(time, DEFAULT_TIME_PATTERN);
+	public static Time getTime(int hour, int minute) {
+		return getTime(hour, minute, 0);
 	}
 
 
@@ -727,11 +723,6 @@ public class TimeDateUtils {
 	}
 
 
-	public static Time getTime(int hour, int minute) {
-		return getTime(hour, minute, 0);
-	}
-
-
 	public static Time getTime(Date date) {
 		return new Time(date.getTime());
 	}
@@ -742,12 +733,8 @@ public class TimeDateUtils {
 	}
 
 
-	public static Time getTimeWithoutSeconds(Time time) {
-		Calendar calendar=getCalendar(time);
-		//MINUTE precision ONLY
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		return getTime(calendar);
+	public static Time getTimeWithoutSeconds() {
+		return getTimeWithoutSeconds(getCurrentTime());
 	}
 
 
@@ -756,8 +743,12 @@ public class TimeDateUtils {
 	}
 
 
-	public static Time getTimeWithoutSeconds() {
-		return getTimeWithoutSeconds(getCurrentTime());
+	public static Time getTimeWithoutSeconds(Time time) {
+		Calendar calendar=getCalendar(time);
+		//MINUTE precision ONLY
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return getTime(calendar);
 	}
 
 
@@ -774,6 +765,21 @@ public class TimeDateUtils {
 	public static Timestamp getTimestamp(String data, String pattern) {
 		try{
 			return new Timestamp(getDate(data, pattern).getTime());
+		}catch(Exception e){}
+		return null;
+	}
+
+
+	/** Time formatted with {@link #DEFAULT_TIMESTAMP_PATTERN} */
+	public static String getTimestampFormatted(Timestamp timestamp) {
+		return getTimestampFormatted(timestamp, DEFAULT_TIMESTAMP_PATTERN);
+	}
+
+
+	public static String getTimestampFormatted(Timestamp timestamp, String pattern) {
+		try{
+			return getSimpleDateFormat(pattern).format(timestamp);
+
 		}catch(Exception e){}
 		return null;
 	}
