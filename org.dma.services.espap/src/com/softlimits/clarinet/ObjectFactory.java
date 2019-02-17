@@ -8,18 +8,18 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the com.softlimits.clarinet package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
+ * This object contains factory methods for each
+ * Java content interface and Java element interface
+ * generated in the com.softlimits.clarinet package.
+ * <p>An ObjectFactory allows you to programatically
+ * construct new instances of the Java representation
+ * for XML content. The Java representation of XML
+ * content can consist of schema derived interfaces
+ * and classes representing the binding of schema
+ * type definitions, element declarations and model
+ * groups.  Factory methods for each of these are
  * provided in this class.
- * 
+ *
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -39,14 +39,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.softlimits.clarinet
-     * 
+     *
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link ArrayOfMessageOutputData }
-     * 
+     *
      */
     public ArrayOfMessageOutputData createArrayOfMessageOutputData() {
         return new ArrayOfMessageOutputData();
@@ -54,7 +54,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ArrayOfMessageOutputIdentification }
-     * 
+     *
      */
     public ArrayOfMessageOutputIdentification createArrayOfMessageOutputIdentification() {
         return new ArrayOfMessageOutputIdentification();
@@ -62,7 +62,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MessageOutputIdentification }
-     * 
+     *
      */
     public MessageOutputIdentification createMessageOutputIdentification() {
         return new MessageOutputIdentification();
@@ -70,7 +70,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MessageOutputData }
-     * 
+     *
      */
     public MessageOutputData createMessageOutputData() {
         return new MessageOutputData();
@@ -78,7 +78,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "Sender")
     public JAXBElement<String> createSender(String value) {
@@ -87,7 +87,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ArrayOfMessageOutputIdentification }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "MessageIdList")
     public JAXBElement<ArrayOfMessageOutputIdentification> createMessageIdList(ArrayOfMessageOutputIdentification value) {
@@ -96,7 +96,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ArrayOfMessageOutputData }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "MessageDataList")
     public JAXBElement<ArrayOfMessageOutputData> createMessageDataList(ArrayOfMessageOutputData value) {
@@ -105,7 +105,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "MessageId")
     public JAXBElement<String> createMessageId(String value) {
@@ -114,7 +114,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ArrayOfMessageOutputData }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "ArrayOfMessageOutputData")
     public JAXBElement<ArrayOfMessageOutputData> createArrayOfMessageOutputData(ArrayOfMessageOutputData value) {
@@ -123,7 +123,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "Filename")
     public JAXBElement<String> createFilename(String value) {
@@ -132,7 +132,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "Receiver")
     public JAXBElement<String> createReceiver(String value) {
@@ -141,7 +141,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link MessageOutputData }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "MessageOutputData")
     public JAXBElement<MessageOutputData> createMessageOutputData(MessageOutputData value) {
@@ -150,7 +150,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "ContentType")
     public JAXBElement<String> createContentType(String value) {
@@ -159,7 +159,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ArrayOfMessageOutputIdentification }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "ArrayOfMessageOutputIdentification")
     public JAXBElement<ArrayOfMessageOutputIdentification> createArrayOfMessageOutputIdentification(ArrayOfMessageOutputIdentification value) {
@@ -167,17 +167,17 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link byte[]}{@code >}}
-     * 
+     * Create an instance of {@link JAXBElement }{@code <}{@link Byte}{@code >}}
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "Message")
     public JAXBElement<byte[]> createMessage(byte[] value) {
-        return new JAXBElement<byte[]>(_Message_QNAME, byte[].class, null, ((byte[]) value));
+        return new JAXBElement<byte[]>(_Message_QNAME, byte[].class, null, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link MessageOutputIdentification }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "MessageOutputIdentification")
     public JAXBElement<MessageOutputIdentification> createMessageOutputIdentification(MessageOutputIdentification value) {
@@ -186,7 +186,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "MessageId", scope = MessageOutputData.class)
     public JAXBElement<String> createMessageOutputDataMessageId(String value) {
@@ -195,7 +195,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
+     *
      */
     @XmlElementDecl(namespace = "http://www.softlimits.com/Clarinet.Trade", name = "Filename", scope = MessageOutputData.class)
     public JAXBElement<String> createMessageOutputDataFilename(String value) {
