@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -46,12 +46,19 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 
 	@Override
 	public boolean addAll(Collection<? extends T> col) {
-		return super.addAll(new LinkedHashSet(col));
+		Collection set=new LinkedHashSet(this);
+		set.addAll(col);
+		clear();
+		return super.addAll(set);
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> col) {
-		return super.addAll(index, new LinkedHashSet(col));
+		Collection set=new LinkedHashSet(subList(0, index));
+		set.addAll(col);
+		set.addAll(subList(index, size()));
+		clear();
+		return super.addAll(set);
 	}
 
 	@Override
