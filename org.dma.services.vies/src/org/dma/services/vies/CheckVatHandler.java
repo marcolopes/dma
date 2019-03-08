@@ -28,35 +28,43 @@ public class CheckVatHandler {
 	 */
 	public enum COUNTRIES {
 
-		AT ("Austria", "AT-\\d{4}"),
+		/* 01/01/1958 */
 		BE ("Belgium", "\\d{4}"),
-		BG ("Bulgaria", "\\d{4}"),
-		CY ("Cyprus", "\\d{4}"),
-		CZ ("Czech Republic", "\\d{3} ?\\d{2}"),
+		FR ("France", "\\d{2} ?\\d{3}"),
 		DE ("Germany", "\\d{5}"),
+		IT ("Italy", "\\d{5}"),
+		LU ("Luxembourg", "\\d{4}"),
+		NL ("Netherlands", "\\d{4} ?[A-Z]{2}"),
+		/* 01/01/1973 */
 		DK ("Denmark", "\\d{4}"),
-		EE ("Estonia", "\\d{5}"),
+		IE ("Ireland", "[\\dA-Z]{3} ?[\\dA-Z]{4}"),
+		GB ("United Kingdom", "GIR ?0AA|((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\\d[\\dA-Z]? ?\\d[ABD-HJLN-UW-Z]{2}))|BFPO ?\\d{1,4}"),
+		/* 01/01/1981 */
 		/** NOT ISO 3166 */
 		EL ("Greece", "\\d{3} ?\\d{2}"),
-		ES ("Spain", "\\d{5}"),
-		FI ("Finland", "\\d{5}"),
-		FR ("France", "\\d{2} ?\\d{3}"),
-		HR ("Croatia", "\\d{5}"),
-		HU ("Hungary", "\\d{4}"),
-		IE ("Ireland", "[\\dA-Z]{3} ?[\\dA-Z]{4}"),
-		IT ("Italy", "\\d{5}"),
-		LT ("Lithuania", "\\d{5}"),
-		LU ("Luxembourg", "\\d{4}"),
-		LV ("Latvia", "LV-\\d{4}"),
-		MT ("Malta", "[A-Z]{3} ?\\d{2,4}"),
-		NL ("Netherlands", "\\d{4} ?[A-Z]{2}"),
-		PL ("Poland", "\\d{2}-\\d{3}"),
+		/* 01/01/1986 */
 		PT ("Portugal", "\\d{4}-\\d{3}"),
-		RO ("Romania", "\\d{6}"),
+		ES ("Spain", "\\d{5}"),
+		/* 01/01/1995 */
+		AT ("Austria", "AT-\\d{4}"),
+		FI ("Finland", "\\d{5}"),
 		SE ("Sweden", "\\d{3} ?\\d{2}"),
-		SI ("Slovenia", "\\d{4}"),
+		/* 01/05/2004 */
+		CY ("Cyprus", "\\d{4}"),
+		CZ ("Czech Republic", "\\d{3} ?\\d{2}"),
+		EE ("Estonia", "\\d{5}"),
+		HU ("Hungary", "\\d{4}"),
+		LV ("Latvia", "LV-\\d{4}"),
+		LT ("Lithuania", "\\d{5}"),
+		MT ("Malta", "[A-Z]{3} ?\\d{2,4}"),
+		PL ("Poland", "\\d{2}-\\d{3}"),
 		SK ("Slovakia", "\\d{3} ?\\d{2}"),
-		GB ("United Kingdom", "GIR ?0AA|((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\\d[\\dA-Z]? ?\\d[ABD-HJLN-UW-Z]{2}))|BFPO ?\\d{1,4}");
+		SI ("Slovenia", "\\d{4}"),
+		/* 01/01/2007 */
+		BG ("Bulgaria", "\\d{4}"),
+		RO ("Romania", "\\d{6}"),
+		/* 01/07/2013 */
+		HR ("Croatia", "\\d{5}");
 
 		/**
 		 * https://joinup.ec.europa.eu/asset/core_location/issue/european-use-uk-and-el-cf-iso-3166-codes-gb-and-gr
