@@ -26,7 +26,7 @@ public class FileURL {
 
 	public final String ftpurl;
 	public final String filename;
-	/** EXTENDS URL Workaround */
+	/** Workaround for EXTENDS URL */
 	public final URL url;
 
 	/** Example: https//www.ftp.com/file.txt */

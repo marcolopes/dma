@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 public class StringUtils {
@@ -102,50 +101,6 @@ public class StringUtils {
 		}
 
 		return result.toString();
-
-	}
-
-
-	public static String random(String chars, int length, Random random) {
-
-		char[] result=new char[length];
-
-		for (int i=0; i<result.length; i++){
-			result[i]=chars.charAt(random.nextInt(chars.length()));
-		}
-
-		return new String(result);
-
-	}
-
-
-	public static String random(String chars, int length) {
-
-		return random(chars, length, new Random());
-
-	}
-
-
-	/** Lowercase letters + Decimal numbers */
-	public static String random(int length) {
-
-		return random(LOWERCASE_LETTERS+DECIMAL_NUMBERS, length);
-
-	}
-
-
-	/** Lowercase letters */
-	public static String randomLetters(int length) {
-
-		return random(LOWERCASE_LETTERS, length);
-
-	}
-
-
-	/** Decimal numbers */
-	public static String randomNumbers(int length) {
-
-		return random(DECIMAL_NUMBERS, length);
 
 	}
 

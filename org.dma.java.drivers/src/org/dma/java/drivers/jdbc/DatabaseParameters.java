@@ -7,9 +7,6 @@ package org.dma.java.drivers.jdbc;
 
 import java.sql.Connection;
 
-import org.dma.java.drivers.jdbc.DatabaseDrivers.DRIVERS;
-import org.dma.java.drivers.jdbc.DatabaseDrivers.POOLMANAGERS;
-
 public class DatabaseParameters {
 
 	public final DRIVERS driver;

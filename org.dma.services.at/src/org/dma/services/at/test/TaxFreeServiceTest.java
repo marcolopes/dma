@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
-import org.dma.java.util.StringUtils;
+import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.TaxFreeServiceHandler;
 import org.dma.services.at.proxy.TaxFreeServiceHandler.A10_ENDPOINTS;
@@ -58,7 +58,7 @@ public class TaxFreeServiceTest {
 
 		IdentityDocType identity = new IdentityDocType();
 		identity.setType("PASSAPORTE");
-		identity.setNumber(StringUtils.randomNumbers(9));
+		identity.setNumber(new RandomValue().numbers(9));
 		identity.setCountryCode("BR");
 		buyer.setIdentityDoc(identity);
 
@@ -74,8 +74,8 @@ public class TaxFreeServiceTest {
 		//invoices.setCalculatedTaxes(taxes);
 
 		InvoiceIdentifiersType invoiceIdentifiers = new InvoiceIdentifiersType();
-		invoiceIdentifiers.setInvoiceNo("CFA 2018/"+StringUtils.randomNumbers(6));
-		invoiceIdentifiers.setHashTermination(StringUtils.randomLetters(4));
+		invoiceIdentifiers.setInvoiceNo("CFA 2018/"+new RandomValue().numbers(6));
+		invoiceIdentifiers.setHashTermination(new RandomValue().letters(4));
 
 		/*
 		SimpleBuyerType simpleBuyer = new SimpleBuyerType();
@@ -93,7 +93,7 @@ public class TaxFreeServiceTest {
 		taxes.getCalculatedTax().add(tax);
 
 		InvoiceType invoice = new InvoiceType();
-		//invoice.setATCUD(StringUtils.randomNumbers(100));
+		//invoice.setATCUD(StringUtils.numbers(100));
 		invoice.setInvoiceIdentifiers(invoiceIdentifiers);
 		invoice.setInvoiceType("FT");
 		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2018-12-28"));
@@ -120,7 +120,7 @@ public class TaxFreeServiceTest {
 
 		//--- TAX FREE ---
 		TaxFreeCommType taxFree = new TaxFreeCommType();
-		taxFree.setIdentifier(StringUtils.randomNumbers(9));
+		taxFree.setIdentifier(new RandomValue().numbers(9));
 		taxFree.setSeller(company);
 		taxFree.setBuyer(buyer);
 		taxFree.setRefund(refund);

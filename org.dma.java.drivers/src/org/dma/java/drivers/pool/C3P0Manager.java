@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -29,7 +29,7 @@ public class C3P0Manager implements IPoolManager {
 
 	@Override
 	public void shutdown() {
-		pool.close();
+		if (pool!=null) pool.close();
 	}
 
 
