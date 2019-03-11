@@ -1,10 +1,11 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.drivers;
 
+import org.dma.java.drivers.jdbc.POOLMANAGERS;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -25,7 +26,9 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {}
+	public void stop(BundleContext context) throws Exception {
+		POOLMANAGERS.shutdown();
+	}
 
 	public static Class<?> classForName(String className) {
 		try{

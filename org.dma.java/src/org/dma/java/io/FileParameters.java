@@ -13,6 +13,7 @@ public class FileParameters {
 	public final String suffix;
 	public final File folder;
 	public final String filename;
+	public final String wildcards;
 
 	/** folder = "." (always reflects current system folder)*/
 	public FileParameters(String prefix, String suffix) {
@@ -30,6 +31,7 @@ public class FileParameters {
 		this.suffix=suffix==null || suffix.startsWith(".") ? suffix : "."+suffix;
 		this.folder=folder;
 		this.filename=prefix + (suffix==null ? "" : this.suffix);
+		this.wildcards="*" + (suffix==null ? "" : this.suffix);
 	}
 
 

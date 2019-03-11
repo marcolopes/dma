@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
-import org.dma.java.util.StringUtils;
+import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.FaturasServiceHandler;
 import org.dma.services.at.proxy.FaturasServiceHandler.A10_ENDPOINTS;
@@ -31,7 +31,7 @@ public class FaturasServiceTest {
 		RegisterInvoiceType request = new RegisterInvoiceType();
 
 		request.setTaxRegistrationNumber(RequesterTaxID);
-		request.setInvoiceNo("CFA 2018/"+StringUtils.randomNumbers(6));
+		request.setInvoiceNo("CFA 2018/"+new RandomValue().numbers(6));
 		request.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2018-12-18"));
 		request.setInvoiceType("FT");
 		request.setInvoiceStatus("N");

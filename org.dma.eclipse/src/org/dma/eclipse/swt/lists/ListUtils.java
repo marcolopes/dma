@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.lists;
 
+import org.dma.java.util.RandomValue;
 import org.dma.java.util.StringUtils;
 
 import org.eclipse.swt.widgets.List;
@@ -16,7 +17,7 @@ public class ListUtils {
 		String line=StringUtils.replicate('-',20);
 		list.add(line+" DUMMY ITEMS "+line);
 		for (int i=0; i<=size-list.getItemCount(); i++){
-			list.add(i+": "+StringUtils.randomLetters(50));
+			list.add(i+": "+new RandomValue().letters(50));
 		}
 
 	}

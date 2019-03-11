@@ -1,14 +1,11 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.math;
 
 import java.math.BigDecimal;
-import java.util.Random;
-
-import org.dma.java.util.StringUtils;
 
 public class NumericUtils {
 
@@ -44,26 +41,6 @@ public class NumericUtils {
 		}catch(NumberFormatException e){}
 
 		return BigDecimal.ZERO;
-
-	}
-
-
-
-
-
-	/*
-	 * Creation
-	 */
-	public static Integer random(int length) {
-
-		return Integer.valueOf(StringUtils.randomNumbers(length));
-
-	}
-
-
-	public static Integer random() {
-
-		return new Random().nextInt(Integer.MAX_VALUE);
 
 	}
 

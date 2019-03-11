@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -40,7 +40,7 @@ public class BoneCPManager implements IPoolManager {
 
 	@Override
 	public void shutdown() {
-		pool.shutdown();
+		if (pool!=null) pool.shutdown();
 	}
 
 

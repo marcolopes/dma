@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -36,6 +36,7 @@ public class MessageList extends LinkedHashSet<String> {
 	public void print(OutputStream out) {
 		if (!isEmpty()) try{
 			out.write(toString().getBytes());
+			out.write("\n".getBytes());
 		}catch(IOException e){
 			System.err.println(e);
 		}

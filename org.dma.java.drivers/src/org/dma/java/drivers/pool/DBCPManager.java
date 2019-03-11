@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -29,7 +29,7 @@ public class DBCPManager implements IPoolManager {
 
 	@Override
 	public void shutdown() {
-		try{
+		if (pool!=null) try{
 			pool.close();
 
 		}catch(Exception e){

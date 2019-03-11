@@ -9,21 +9,25 @@ public final class VersionNumber {
 
 	public final int major;
 	public final int minor;
-	public final int macro;
+	public final int micro;
 	public final int build;
+
+	public VersionNumber(int major) {
+		this(major, 0);
+	}
 
 	public VersionNumber(int major, int minor) {
 		this(major, minor, 0);
 	}
 
-	public VersionNumber(int major, int minor, int macro) {
-		this(major, minor, macro, 0);
+	public VersionNumber(int major, int minor, int micro) {
+		this(major, minor, micro, 0);
 	}
 
-	public VersionNumber(int major, int minor, int macro, int build) {
+	public VersionNumber(int major, int minor, int micro, int build) {
 		this.major=major;
 		this.minor=minor;
-		this.macro=macro;
+		this.micro=micro;
 		this.build=build;
 	}
 
@@ -31,7 +35,7 @@ public final class VersionNumber {
 		String[] array=ArrayUtils.numbers(StringUtils.split(version, "."));
 		major=array.length>0 ? StringUtils.val(array[0]) : 0;
 		minor=array.length>1 ? StringUtils.val(array[1]) : 0;
-		macro=array.length>2 ? StringUtils.val(array[2]) : 0;
+		micro=array.length>2 ? StringUtils.val(array[2]) : 0;
 		build=array.length>3 ? StringUtils.val(array[3]) : 0;
 	}
 
@@ -56,7 +60,7 @@ public final class VersionNumber {
 
 
 	public int[] toArray() {
-		return new int[]{major, minor, macro, build};
+		return new int[]{major, minor, micro, build};
 	}
 
 
@@ -82,7 +86,7 @@ public final class VersionNumber {
 
 	@Override
 	public int hashCode() {
-		return toString().hashCode();
+		return major + minor + micro + build;
 	}
 
 	@Override
@@ -99,7 +103,7 @@ public final class VersionNumber {
 	public boolean equals(VersionNumber version) {
 		return major==version.major &&
 				minor==version.minor &&
-				macro==version.macro &&
+				micro==version.micro &&
 				build==version.build;
 	}
 
