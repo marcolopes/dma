@@ -55,7 +55,7 @@ public enum DRIVERS {
 	}
 
 	public static boolean isLocalhost(String host) {
-		return host.equals("localhost") || host.equals("127.0.0.1");
+		return host.startsWith("localhost") || host.startsWith("127.0.0.1");
 	}
 
 	public static void checkH2Lock(String database) throws Exception {
