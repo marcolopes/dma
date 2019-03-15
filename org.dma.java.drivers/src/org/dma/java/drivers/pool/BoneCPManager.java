@@ -16,7 +16,7 @@ public class BoneCPManager implements IPoolManager {
 	private final BoneCP pool;
 
 	public BoneCPManager(String url, String user, String password) {
-		//Class.forName("org.h2.Driver");
+		//Activator.classForName("org.h2.Driver");
 		BoneCPConfig config=new BoneCPConfig();
 		config.setJdbcUrl(url);
 		config.setUsername(user);

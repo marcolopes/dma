@@ -32,4 +32,5 @@ Export-Package: com.jolbox.bonecp,
  org.apache.commons.pool,
  org.apache.commons.pool.impl,
  org.dma.java.drivers.jdbc,
- org.dma.java.drivers.pool
+ org.dma.java.drivers.pool,
+ org.h2.tools
