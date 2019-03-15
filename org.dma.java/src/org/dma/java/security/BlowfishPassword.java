@@ -13,13 +13,19 @@ public class BlowfishPassword extends BlowfishCipher {
 		super(key);
 	}
 
-	/** @see BlowfishCipher#BASE64encrypt(String, int) */
+	/**
+	 * BASE64encrypt with NO line break!
+	 * @see BlowfishCipher#BASE64encrypt(String, int)
+	 */
 	public String encode(String password) {
 		return BASE64encrypt(password, 0);
 	}
 
 
-	/** @see BlowfishCipher#BASE64decrypt(String) */
+	/**
+	 * BASE64decrypt alias! (pair with encode)
+	 * @see BlowfishCipher#BASE64decrypt(String)
+	 */
 	public String decode(String password) {
 		return BASE64decrypt(password);
 	}

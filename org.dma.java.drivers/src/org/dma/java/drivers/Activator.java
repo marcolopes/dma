@@ -14,23 +14,30 @@ public class Activator implements BundleActivator {
 	// The plug-in ID
 	public static final String PLUGIN_ID = Activator.class.getPackage().getName();
 
+	// The shared instance
+	private static Activator plugin;
+
+	/** Returns the shared instance */
+	public static Activator getDefault() {
+		return plugin;
+	}
+
 	public Activator() {
 		System.err.println(PLUGIN_ID+"(ACTIVATOR)");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator
-	 */
 	@Override
-	public void start(BundleContext context) throws Exception {}
+	public void start(BundleContext context) throws Exception {
+		plugin = this;
+	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		POOLMANAGERS.shutdown();
+		plugin = null;
 	}
 
-	public static Class<?> classForName(String className) {
+	public static Class classForName(String className) {
 		try{
 			return Class.forName(className);
 		}catch(ClassNotFoundException e){
