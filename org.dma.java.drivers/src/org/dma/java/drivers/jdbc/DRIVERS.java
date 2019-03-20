@@ -270,10 +270,10 @@ public enum DRIVERS {
 		switch(this){
 		case H2: break;
 		case MySQL:
-			Statement stmt=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs=stmt.executeQuery("select CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where CONSTRAINT_SCHEMA = SCHEMA() and TABLE_NAME = '"+tableName.toUpperCase()+"' and COLUMN_NAME = '"+columnName.toUpperCase()+"'");
+			Statement st=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs=st.executeQuery("select CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where CONSTRAINT_SCHEMA = SCHEMA() and TABLE_NAME = '"+tableName.toUpperCase()+"' and COLUMN_NAME = '"+columnName.toUpperCase()+"'");
 			while(rs.next()) col.add(rs.getString("CONSTRAINT_NAME"));
-			stmt.close();
+			st.close();
 			break;
 		case PostgreSQL: break;
 		case SQLServer: break;
@@ -285,10 +285,10 @@ public enum DRIVERS {
 		switch(this){
 		case H2: break;
 		case MySQL:
-			Statement stmt=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs=stmt.executeQuery("SHOW INDEX FROM `" + tableName.toUpperCase() + "` where column_name = '" + columnName.toUpperCase() + "'");
+			Statement st=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs=st.executeQuery("SHOW INDEX FROM `" + tableName.toUpperCase() + "` where column_name = '" + columnName.toUpperCase() + "'");
 			while(rs.next()) col.add(rs.getString("Key_name"));
-			stmt.close();
+			st.close();
 			break;
 		case PostgreSQL: break;
 		case SQLServer: break;
