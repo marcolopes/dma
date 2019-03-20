@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -75,6 +75,7 @@ public class FileParameters {
 	}
 
 
+	/** AbsolutePath */
 	@Override
 	public String toString() {
 		return folder.getAbsolutePath() + File.separator + filename;
