@@ -39,8 +39,7 @@ public class ImageUtils {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return null;
+		}return null;
 	}
 
 
@@ -60,8 +59,7 @@ public class ImageUtils {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return null;
+		}return null;
 	}
 
 
@@ -75,8 +73,7 @@ public class ImageUtils {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return null;
+		}return null;
 	}
 
 
@@ -93,8 +90,7 @@ public class ImageUtils {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return null;
+		}return null;
 	}
 
 
@@ -104,8 +100,7 @@ public class ImageUtils {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return null;
+		}return null;
 	}
 
 
