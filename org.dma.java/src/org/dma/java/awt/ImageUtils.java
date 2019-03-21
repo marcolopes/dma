@@ -85,8 +85,7 @@ public class ImageUtils {
 	 */
 	public static BufferedImage createImage(Class location, String resource) {
 		try{
-			return drawImage(ImageIO.read(
-					location.getClassLoader().getResourceAsStream(resource)));
+			return drawImage(ImageIO.read(location.getClassLoader().getResourceAsStream(resource)));
 
 		}catch(Exception e){
 			System.err.println(e);
