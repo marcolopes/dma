@@ -105,9 +105,7 @@ public class ImageManager {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-
-		return null;
+		}return null;
 	}
 
 
@@ -129,8 +127,7 @@ public class ImageManager {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return image;
+		}return image;
 	}
 
 
@@ -149,8 +146,7 @@ public class ImageManager {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return image;
+		}return image;
 	}
 
 
@@ -169,8 +165,7 @@ public class ImageManager {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return image;
+		}return image;
 	}
 
 
@@ -187,8 +182,7 @@ public class ImageManager {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-		return image;
+		}return image;
 	}
 
 
