@@ -53,16 +53,12 @@ public class ColorUtils {
 		java.awt.Color color;
 		if (paint instanceof java.awt.Color) {
 			color = (java.awt.Color) paint;
-		}
-		else {
-			try {
-				throw new Exception("only color is supported at present... "
-						+ "setting paint to uniform black color");
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				color = new java.awt.Color(0, 0, 0);
-			}
+		}else try{
+			throw new Exception("only color is supported at present... "
+					+ "setting paint to uniform black color");
+		}catch (Exception e) {
+			e.printStackTrace();
+			color = new java.awt.Color(0, 0, 0);
 		}
 		return new org.eclipse.swt.graphics.Color(device,
 				color.getRed(), color.getGreen(), color.getBlue());
