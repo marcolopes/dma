@@ -15,7 +15,7 @@ public class BigDecimalToString extends CustomConverter {
 
 
 	@Override
-	public Object convert(Object fromObject) {
+	public String convert(Object fromObject) {
 		return fromObject.toString();
 	}
 

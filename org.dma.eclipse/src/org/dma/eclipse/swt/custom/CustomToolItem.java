@@ -27,8 +27,7 @@ public class CustomToolItem extends ToolItem {
 
 
 	public void setImage(String imagePath, int imageSize) {
-		setImage(ImageManager.getImage(
-				ImageUtils.resizeImage(imagePath, imageSize)));
+		setImage(ImageManager.getImage(ImageUtils.resizeImage(imagePath, imageSize)));
 	}
 
 	public void setImage(String imagePath) {
