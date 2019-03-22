@@ -9,9 +9,9 @@ import org.eclipse.core.databinding.conversion.IConverter;
 
 public abstract class CustomConverter implements IConverter {
 
-	private final Class<?> fromType, toType;
+	private final Class fromType, toType;
 
-	public CustomConverter(Class<?> fromType, Class<?> toType) {
+	public CustomConverter(Class fromType, Class toType) {
 		this.fromType=fromType;
 		this.toType=toType;
 	}

@@ -16,7 +16,7 @@ public class IntegerToCombo extends CustomConverter {
 
 
 	@Override
-	public Object convert(Object fromObject) {
+	public String convert(Object fromObject) {
 		return elements.length==0 ? null : elements[(Integer)fromObject];
 	}
 
