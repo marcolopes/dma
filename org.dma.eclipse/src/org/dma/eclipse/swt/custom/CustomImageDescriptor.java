@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * IBM Corporation and others
@@ -31,7 +31,7 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	 * stored by the resource at the specified location.
 	 */
 	public CustomImageDescriptor(Class location, String resource) {
-		this(location.getClassLoader().getResourceAsStream(resource), true);
+		this(location.getClassLoader().getResourceAsStream(resource));
 	}
 
 	/**
@@ -39,26 +39,14 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	 * stored by the the file at the specified path.
 	 */
 	public CustomImageDescriptor(String path) {
-		this(new FileHandler(path).asInputStream(), true);
+		this(new FileHandler(path).asInputStream());
 	}
 
-	/**
-	 * Creates and returns a new {@link ImageDescriptor}
-	 * stored by the specified {@link InputStream}.
-	 */
-	public CustomImageDescriptor(InputStream stream, boolean close) {
-		this(stream);
-		if (close) try{
+	private CustomImageDescriptor(InputStream stream) {
+		this(new ImageData(stream));
+		try{
 			stream.close();
 		}catch(IOException e){}
-	}
-
-	/**
-	 * Creates and returns a new {@link ImageDescriptor}
-	 * stored by the specified {@link InputStream}.
-	 */
-	public CustomImageDescriptor(InputStream stream) {
-		this(new ImageData(stream));
 	}
 
 	/**

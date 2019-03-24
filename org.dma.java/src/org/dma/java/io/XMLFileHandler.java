@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -10,13 +10,11 @@ import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 public class XMLFileHandler<T> extends FileHandler {
 
-	public XMLFileHandler(String filename) {
-		super(filename);
+	public XMLFileHandler(String pathname) {
+		super(pathname);
 	}
 
 	public XMLFileHandler(File file) {
@@ -36,9 +34,7 @@ public class XMLFileHandler<T> extends FileHandler {
 	public T read() {
 
 		try{
-			BufferedInputStream bis=
-					new BufferedInputStream(
-							new FileInputStream(file));
+			BufferedInputStream bis=new BufferedInputStream(asInputStream());
 
 			XMLDecoder decoder=new XMLDecoder(bis);
 
@@ -77,9 +73,7 @@ public class XMLFileHandler<T> extends FileHandler {
 	public boolean write(T obj) {
 
 		try{
-			BufferedOutputStream bos=
-					new BufferedOutputStream(
-							new FileOutputStream(file));
+			BufferedOutputStream bos=new BufferedOutputStream(asOutputStream());
 
 			XMLEncoder encoder=new XMLEncoder(bos);
 

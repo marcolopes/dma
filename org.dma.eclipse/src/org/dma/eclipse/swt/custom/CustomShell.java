@@ -1,9 +1,11 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
+
+import java.awt.image.BufferedImage;
 
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.math.NumericUtils;
@@ -35,6 +37,10 @@ public class CustomShell extends Shell {
 		super(parent, style);
 	}
 
+
+	public void setImage(BufferedImage bufferedImage) {
+		setImage(ImageManager.getImage(bufferedImage));
+	}
 
 	public void setImage(String imagePath) {
 		setImage(ImageManager.getImage(imagePath));

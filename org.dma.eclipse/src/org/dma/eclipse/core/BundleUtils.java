@@ -31,9 +31,9 @@ public class BundleUtils {
 		URL url=urlResolver(bundle, fullPath);
 		if (url!=null){
 			try{
-				String path=FileLocator.resolve(url).getFile();
+				String pathname=FileLocator.resolve(url).getFile();
 				//normalize path
-				return new File(path).getCanonicalPath();
+				return new File(pathname).getCanonicalPath();
 			}catch(IOException e){}
 		}
 

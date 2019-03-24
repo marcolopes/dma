@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -14,7 +14,8 @@ public class URLTextFileHandler extends TextFileHandler {
 
 	/** Uses JAVA DEFAULT charset */
 	public URLTextFileHandler(FileURL fileurl) {
-		this(fileurl, null);
+		super(fileurl.toString());
+		this.fileurl=fileurl;
 	}
 
 	/** charsetName=null uses JAVA DEFAULT charset */

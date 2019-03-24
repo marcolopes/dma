@@ -1,12 +1,15 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse;
 
+import java.awt.image.BufferedImage;
+
 import org.dma.eclipse.swt.graphics.ColorManager;
 import org.dma.eclipse.swt.graphics.ImageManager;
+import org.dma.java.awt.ImageUtils;
 import org.osgi.framework.BundleContext;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -44,6 +47,14 @@ public class Activator extends AbstractUIPlugin {
 		ColorManager.CACHE.clear();
 		plugin = null;
 		super.stop(context);
+	}
+
+	public static BufferedImage getBufferedImage(String imagePath, int iconSize) {
+		return ImageUtils.resizeImage(Activator.class, imagePath, iconSize);
+	}
+
+	public static BufferedImage getBufferedImage(String imagePath) {
+		return ImageUtils.createImage(Activator.class, imagePath);
 	}
 
 }

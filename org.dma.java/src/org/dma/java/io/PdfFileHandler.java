@@ -29,8 +29,8 @@ import org.dma.java.security.JKSCertificate;
 
 public class PdfFileHandler extends FileHandler {
 
-	public PdfFileHandler(String filename) {
-		super(filename);
+	public PdfFileHandler(String pathname) {
+		super(pathname);
 	}
 
 	public PdfFileHandler(File file) {

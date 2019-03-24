@@ -1,9 +1,11 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
+
+import java.awt.image.BufferedImage;
 
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
@@ -26,12 +28,16 @@ public class CustomToolItem extends ToolItem {
 	}
 
 
-	public void setImage(String imagePath, int imageSize) {
-		setImage(ImageManager.getImage(ImageUtils.resizeImage(imagePath, imageSize)));
-	}
-
 	public void setImage(String imagePath) {
 		setImage(ImageManager.getImage(imagePath));
+	}
+
+	public void setImage(String imagePath, int imageSize) {
+		setImage(ImageUtils.resizeImage(imagePath, imageSize));
+	}
+
+	public void setImage(BufferedImage bufferedImage) {
+		setImage(ImageManager.getImage(bufferedImage));
 	}
 
 

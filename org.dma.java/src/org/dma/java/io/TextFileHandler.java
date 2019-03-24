@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -8,7 +8,6 @@ package org.dma.java.io;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,25 +20,26 @@ public class TextFileHandler extends FileHandler {
 	public final Charset charset;
 
 	/** Uses JAVA DEFAULT charset */
-	public TextFileHandler(String filename) {
-		this(new File(filename));
+	public TextFileHandler(String pathname) {
+		this(new File(pathname));
 	}
 
 	/** Uses JAVA DEFAULT charset */
 	public TextFileHandler(File file) {
-		this(file, null);
+		this(file, Charset.defaultCharset());
 	}
 
-	/** charsetName=null uses JAVA DEFAULT charset */
-	public TextFileHandler(String filename, String charsetName) {
-		this(new File(filename), charsetName);
+	public TextFileHandler(String pathname, String charsetName) {
+		this(new File(pathname), charsetName);
 	}
 
-	/** charsetName=null uses JAVA DEFAULT charset */
 	public TextFileHandler(File file, String charsetName) {
+		this(file, Charset.forName(charsetName));
+	}
+
+	public TextFileHandler(File file, Charset charset) {
 		super(file);
-		this.charset=charsetName==null ?
-				Charset.defaultCharset() : Charset.forName(charsetName);
+		this.charset=charset;
 	}
 
 
@@ -191,7 +191,7 @@ public class TextFileHandler extends FileHandler {
 			BufferedReader br=
 					new BufferedReader(
 							new InputStreamReader(
-									new FileInputStream(file), charset));
+									asInputStream(), charset));
 
 			try{
 				String line;
@@ -212,6 +212,35 @@ public class TextFileHandler extends FileHandler {
 	}
 
 
+	/** Reads text from file */
+	public String read(Class location) {
+
+		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
+
+		try{
+			BufferedReader br=
+					new BufferedReader(
+							new InputStreamReader(
+									asInputStream(location), charset));
+
+			try{
+				String line;
+				while((line=br.readLine()) != null){
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
+				}
+
+			}finally{
+				br.close();
+			}
+
+		}catch(Exception e){
+			System.err.println(e);
+		}
+
+		return buffer.toString();
+
+	}
+
 	/** Reads text lines from file */
 	public String read(int lines) {
 
@@ -221,7 +250,7 @@ public class TextFileHandler extends FileHandler {
 			BufferedReader br=
 					new BufferedReader(
 							new InputStreamReader(
-									new FileInputStream(file), charset));
+									asInputStream(), charset));
 
 			try{
 				String line;
