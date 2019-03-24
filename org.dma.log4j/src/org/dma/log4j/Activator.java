@@ -8,6 +8,9 @@ package org.dma.log4j;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+/**
+ * The activator class controls the plug-in life cycle
+ */
 public class Activator implements BundleActivator {
 
 	// The plug-in ID
