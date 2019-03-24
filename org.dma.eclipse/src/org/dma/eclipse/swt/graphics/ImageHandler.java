@@ -22,11 +22,11 @@ public class ImageHandler {
 	 * Saves an {@link Image}
 	 * to file in the specified {@link SWT} format.
 	 */
-	public boolean saveImage(String filename, int format) {
+	public boolean saveImage(String pathname, int format) {
 		try{
 			ImageLoader saver=new ImageLoader();
 			saver.data=new ImageData[]{image.getImageData()};
-			saver.save(filename, SWT.IMAGE_PNG);
+			saver.save(pathname, SWT.IMAGE_PNG);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -35,13 +35,13 @@ public class ImageHandler {
 	}
 
 
-	public boolean savePNG(String filename) {
-		return saveImage(filename, SWT.IMAGE_PNG);
+	public boolean savePNG(String pathname) {
+		return saveImage(pathname, SWT.IMAGE_PNG);
 	}
 
 
-	public boolean saveJPEG(String filename) {
-		return saveImage(filename, SWT.IMAGE_JPEG);
+	public boolean saveJPEG(String pathname) {
+		return saveImage(pathname, SWT.IMAGE_JPEG);
 	}
 
 

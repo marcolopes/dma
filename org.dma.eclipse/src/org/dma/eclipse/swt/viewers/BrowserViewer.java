@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -7,13 +7,12 @@ package org.dma.eclipse.swt.viewers;
 
 import java.util.LinkedHashMap;
 
+import org.dma.eclipse.Activator;
+import org.dma.eclipse.swt.custom.CustomAction;
 import org.dma.eclipse.swt.custom.CustomBrowser;
 import org.dma.eclipse.swt.custom.CustomCTabItem;
-import org.dma.eclipse.swt.custom.CustomImageDescriptor;
-import org.dma.java.awt.ImageUtils;
 import org.dma.java.util.Debug;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -36,22 +35,27 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 	public abstract IToolBarManager getToolBarManager();
 
+	private class BrowserAction extends CustomAction {
+
+		public BrowserAction(String text, String iconPath, int iconSize) {
+			setText(text);
+			setImageDescriptor(Activator.getBufferedImage(iconPath, iconSize));
+		}
+
+	}
+
 	private String homeUrl;
 	private CTabFolder tabFolder;
 
-	private Action button_home;
-	private Action button_stop;
-	private Action button_back;
-	private Action button_forward;
-
-	private final int iconSize;
+	private CustomAction button_home;
+	private CustomAction button_stop;
+	private CustomAction button_back;
+	private CustomAction button_forward;
 
 	public BrowserViewer(Composite parent, int iconSize) {
 
-		this.iconSize=iconSize;
-
 		try{
-			createToolBar();
+			createToolBar(iconSize);
 			createTabFolder(parent);
 			createBrowser();
 
@@ -83,41 +87,31 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 	}
 
+	private void createToolBar(int iconSize) {
 
-	private void createToolBar() {
-
-		button_home=new Action("Home"){
+		button_home=new BrowserAction("Home", "icons/browser_home.png", iconSize){
 			public final void run(){
 				goHome();
 			}
 		};
 
-		button_stop=new Action("Stop"){
+		button_stop=new BrowserAction("Stop", "icons/browser_stop.png", iconSize){
 			public final void run(){
 				getBrowser().stop();
 			}
 		};
 
-		button_back=new Action("Back"){
+		button_back=new BrowserAction("Back", "icons/browser_back.png", iconSize){
 			public final void run(){
 				getBrowser().back();
 			}
 		};
 
-		button_forward=new Action("Forward"){
+		button_forward=new BrowserAction("Forward", "icons/browser_forward.png", iconSize){
 			public final void run(){
 				getBrowser().forward();
 			}
 		};
-
-		button_home.setImageDescriptor(new CustomImageDescriptor(
-				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_home.png", iconSize)));
-		button_stop.setImageDescriptor(new CustomImageDescriptor(
-				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_stop.png", iconSize)));
-		button_back.setImageDescriptor(new CustomImageDescriptor(
-				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_back.png", iconSize)));
-		button_forward.setImageDescriptor(new CustomImageDescriptor(
-				ImageUtils.resizeImage(BrowserViewer.class, "icons/browser_forward.png", iconSize)));
 
 		//toolbar
 		IToolBarManager toolBar=getToolBarManager();

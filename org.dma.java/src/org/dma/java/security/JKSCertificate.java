@@ -38,7 +38,7 @@ public class JKSCertificate {
 
 	/**
 	 * @param type - the certificate type
-	 * @param keystore - the keystore filename
+	 * @param keystore - the keystore pathname
 	 * @param password - the keystore password (null=no integrity checking)
 	 */
 	public JKSCertificate(CERTIFICATE_TYPE type, String keystore, String password) {
@@ -47,7 +47,7 @@ public class JKSCertificate {
 
 	/**
 	 * @param type - the certificate type
-	 * @param keystore - the keystore filename
+	 * @param keystore - the keystore pathname
 	 * @param password - the keystore password (null=no integrity checking)
 	 * @param alias - the alias to load (null=use first alias found)
 	 */

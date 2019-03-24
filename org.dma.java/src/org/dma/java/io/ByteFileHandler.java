@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -9,18 +9,16 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ByteFileHandler extends FileHandler {
 
-	public ByteFileHandler(String filename) {
-		super(filename);
+	public ByteFileHandler(String pathname) {
+		super(pathname);
 	}
 
-	public ByteFileHandler(File file) {
-		super(file);
+	public ByteFileHandler(File pathname) {
+		super(pathname);
 	}
 
 
@@ -37,9 +35,7 @@ public class ByteFileHandler extends FileHandler {
 	public byte[] read() {
 
 		try{
-			final BufferedInputStream bis=
-					new BufferedInputStream(
-							new FileInputStream(file));
+			final BufferedInputStream bis=new BufferedInputStream(asInputStream());
 
 			try{
 				return new AbstractByteReader(){
@@ -66,10 +62,8 @@ public class ByteFileHandler extends FileHandler {
 		byte[] bytes=new byte[(int)file.length()];
 
 		try{
-			DataInputStream dis=
-					new DataInputStream(
-							new BufferedInputStream(
-									new FileInputStream(file)));
+			DataInputStream dis=new DataInputStream(
+							new BufferedInputStream(asInputStream()));
 
 			try{
 				dis.readFully(bytes);
@@ -105,9 +99,7 @@ public class ByteFileHandler extends FileHandler {
 	public int write(byte[] bytes) {
 
 		try{
-			BufferedOutputStream bos=
-					new BufferedOutputStream(
-							new FileOutputStream(file));
+			BufferedOutputStream bos=new BufferedOutputStream(asOutputStream());
 
 			try{
 				bos.write(bytes);

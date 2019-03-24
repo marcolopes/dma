@@ -67,9 +67,9 @@ public class ImageUtils {
 	 * Returns an {@link BufferedImage}
 	 * encoded by the specified file at the specified path.
 	 */
-	public static BufferedImage createImage(String path) {
+	public static BufferedImage createImage(String pathname) {
 		try{
-			return drawImage(ImageIO.read(new File(path)));
+			return drawImage(ImageIO.read(new File(pathname)));
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -80,8 +80,6 @@ public class ImageUtils {
 	/**
 	 * Returns an {@link BufferedImage}
 	 * encoded by the specified resource at the specified location.
-	 * <p>
-	 * Resource is loaded with {@link ClassLoader#getResourceAsStream(String)}.
 	 */
 	public static BufferedImage createImage(Class location, String resource) {
 		try{

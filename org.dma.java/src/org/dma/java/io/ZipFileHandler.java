@@ -17,8 +17,8 @@ import net.lingala.zip4j.util.Zip4jConstants;
 
 public class ZipFileHandler extends FileHandler {
 
-	public ZipFileHandler(String filename) {
-		super(filename);
+	public ZipFileHandler(String path) {
+		super(path);
 	}
 
 	public ZipFileHandler(File file) {

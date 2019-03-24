@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -34,8 +34,8 @@ public class FileHandler {
 
 	public final File file;
 
-	public FileHandler(String filename) {
-		this(new File(filename));
+	public FileHandler(String pathname) {
+		this(new File(pathname));
 	}
 
 	public FileHandler(File file) {
@@ -47,8 +47,8 @@ public class FileHandler {
 	 * Removes accents and illegal characters<br>
 	 * Replaces SPACES with UNDERLINES
 	 */
-	public static String normalize(String filename) {
-		return StringUtils.normalize(filename).
+	public static String normalize(String pathname) {
+		return StringUtils.normalize(pathname).
 				replace("- ","-").
 				replace(" -","-").
 				replace(" ","_");
@@ -79,9 +79,9 @@ public class FileHandler {
 	}
 
 
-	public boolean renameTo(String filename) {
+	public boolean renameTo(String pathname) {
 		try{
-			return file.renameTo(new File(filename));
+			return file.renameTo(new File(pathname));
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -93,6 +93,18 @@ public class FileHandler {
 	public InputStream asInputStream() {
 		try{
 			return new FileInputStream(file);
+
+		}catch(Exception e){
+			System.err.println(e);
+		}
+
+		return null;
+	}
+
+
+	public InputStream asInputStream(Class location) {
+		try{
+			return location.getResourceAsStream(file.getPath().replace('\\','/'));
 
 		}catch(Exception e){
 			System.err.println(e);
