@@ -21,6 +21,10 @@ public class Activator implements BundleActivator {
 		System.err.println(PLUGIN_ID+"(ACTIVATOR)");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator
+	 */
 	@Override
 	public void start(BundleContext context) throws Exception {}
 
