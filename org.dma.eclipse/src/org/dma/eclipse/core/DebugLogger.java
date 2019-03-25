@@ -1,15 +1,15 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.eclipse.ui;
+package org.dma.eclipse.core;
 
 import java.util.LinkedHashMap;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 
@@ -22,46 +22,30 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 	public static final int SEVERITY_ERROR = IStatus.ERROR;
 	public static final int SEVERITY_CANCEL = IStatus.CANCEL;
 
-	// Style
-	public static final int STYLE_FILE = StatusManager.LOG;
-	public static final int STYLE_SCREEN = StatusManager.SHOW;
-	public static final int STYLE_BLOCK = StatusManager.BLOCK;
+	private final Plugin plugin;
 
-	private final String pluginId;
-
-	public DebugLogger(String pluginId) {
-		System.out.println("LOGGER: "+pluginId);
-		this.pluginId=pluginId;
+	public DebugLogger(Plugin plugin) {
+		System.out.println("plugin: "+plugin);
+		this.plugin=plugin;
 	}
 
 
-	/*
-	 * File log
-	 */
-	public void file(String message) {
-		file(SEVERITY_INFO, message, null);
+	public void log(String message) {
+		log(SEVERITY_INFO, message, null);
 	}
 
-	public void file(int severity, String message) {
-		file(severity, message, null);
+	public void log(int severity, String message) {
+		log(severity, message, null);
 	}
 
-	public void file(int severity, Throwable exception) {
-		file(severity, "", exception);
+	public void log(int severity, Throwable exception) {
+		log(severity, "", exception);
 	}
 
-	public void file(int severity, String message, Throwable exception) {
-		file(severity, STYLE_FILE, message, exception);
-	}
-
-	public void file(int severity, int style, String message) {
-		file(severity, style, message, null);
-	}
-
-	private void file(int severity, int style, String message, Throwable exception) {
+	public void log(int severity, String message, Throwable exception) {
 		//log entry
-		Status status=new Status(severity, pluginId, message, exception);
-		StatusManager.getManager().handle(status, style);
+		Status status=new Status(severity, plugin.getClass().getPackage().getName(), message, exception);
+		plugin.getLog().log(status);
 		//add to exceptions
 		if (exception!=null && severity!=SEVERITY_OK){
 			Integer n=get(severity);
