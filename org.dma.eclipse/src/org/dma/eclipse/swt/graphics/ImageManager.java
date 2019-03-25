@@ -177,7 +177,7 @@ public class ImageManager {
 		String key=getKey(bufferedImage);
 		Image image=CACHE.get(key);
 		if (image==null) try{
-			image=new Image(Display.getDefault(), CustomImageDescriptor.convertToSWT(bufferedImage));
+			image=new CustomImageDescriptor(bufferedImage).createImage();
 			CACHE.put(key, image);
 
 		}catch(Exception e){
