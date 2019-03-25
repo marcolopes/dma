@@ -22,8 +22,12 @@ public abstract class CustomAction extends Action {
 		setId(ID);
 	}
 
+	public void setImageDescriptor(String imagePath) {
+		setImageDescriptor(ImageUtils.createImage(imagePath));
+	}
+
 	public void setImageDescriptor(String imagePath, int imageSize) {
-		setImageDescriptor(ImageUtils.resizeImage(imagePath, imageSize));
+		setImageDescriptor(ImageUtils.createImage(imagePath, imageSize));
 	}
 
 	public void setImageDescriptor(BufferedImage bufferedImage) {

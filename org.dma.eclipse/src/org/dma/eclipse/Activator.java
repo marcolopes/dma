@@ -12,6 +12,8 @@ import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
 import org.osgi.framework.BundleContext;
 
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
@@ -52,12 +54,29 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
-	public static BufferedImage getBufferedImage(String imagePath, int iconSize) {
-		return ImageUtils.resizeImage(Activator.class, imagePath, iconSize);
+	/** plug-in relative path */
+	public static ImageDescriptor getImageDescriptor(String imagePath) {
+		return ImageDescriptor.createFromFile(Activator.class, imagePath);
 	}
 
+	/** plug-in relative path */
+	public static BufferedImage getBufferedImage(String imagePath, int iconSize) {
+		return ImageUtils.createImage(Activator.class, imagePath, iconSize);
+	}
+
+	/** plug-in relative path */
 	public static BufferedImage getBufferedImage(String imagePath) {
 		return ImageUtils.createImage(Activator.class, imagePath);
+	}
+
+	/** plug-in relative path */
+	public static Image getImage(String imagePath, int iconSize) {
+		return ImageManager.getImage(getBufferedImage(imagePath, iconSize));
+	}
+
+	/** plug-in relative path */
+	public static Image getImage(String imagePath) {
+		return ImageManager.getImage(getBufferedImage(imagePath));
 	}
 
 }

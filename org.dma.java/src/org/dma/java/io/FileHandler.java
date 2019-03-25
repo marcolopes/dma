@@ -104,7 +104,8 @@ public class FileHandler {
 
 	public InputStream asInputStream(Class location) {
 		try{
-			return location.getResourceAsStream(file.getPath().replace('\\','/'));
+			return location.getClassLoader().
+					getResourceAsStream(file.getPath().replace('\\','/'));
 
 		}catch(Exception e){
 			System.err.println(e);

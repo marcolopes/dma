@@ -33,7 +33,7 @@ public class CustomMenuItem extends MenuItem {
 	}
 
 	public void setImage(String imagePath, int imageSize) {
-		setImage(ImageUtils.resizeImage(imagePath, imageSize));
+		setImage(ImageUtils.createImage(imagePath, imageSize));
 	}
 
 	public void setImage(BufferedImage bufferedImage) {
