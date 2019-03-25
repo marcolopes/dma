@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -10,6 +10,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -83,7 +84,10 @@ public class ImageUtils {
 	 */
 	public static BufferedImage createImage(Class location, String resource) {
 		try{
-			return drawImage(ImageIO.read(location.getClassLoader().getResourceAsStream(resource)));
+			InputStream stream=location.getClassLoader().getResourceAsStream(resource);
+			BufferedImage bufferedImage=ImageIO.read(stream);
+			stream.close();
+			return drawImage(bufferedImage);
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -102,21 +106,21 @@ public class ImageUtils {
 
 
 	/** @see ImageUtils#resizeImage(BufferedImage, int) */
-	public static BufferedImage resizeImage(byte[] bytes, int size) {
+	public static BufferedImage createImage(byte[] bytes, int size) {
 		BufferedImage bufferedImage=createImage(bytes);
 		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
 	}
 
 
 	/** @see ImageUtils#resizeImage(BufferedImage, int) */
-	public static BufferedImage resizeImage(String path, int size) {
+	public static BufferedImage createImage(String path, int size) {
 		BufferedImage bufferedImage=createImage(path);
 		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
 	}
 
 
 	/** @see ImageUtils#resizeImage(BufferedImage, int) */
-	public static BufferedImage resizeImage(Class location, String resource, int size) {
+	public static BufferedImage createImage(Class location, String resource, int size) {
 		BufferedImage bufferedImage=createImage(location, resource);
 		return size==0 ? bufferedImage : resizeImage(bufferedImage, size);
 	}

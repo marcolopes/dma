@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.eclipse.core;
+package org.dma.eclipse.ui;
 
 import java.util.LinkedHashMap;
 
