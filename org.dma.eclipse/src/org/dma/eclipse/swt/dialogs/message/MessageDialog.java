@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -20,26 +20,22 @@ public class MessageDialog extends org.eclipse.jface.dialogs.MessageDialog {
 		QUESTION ("Question", true);
 
 		private String title;
-		private final boolean result;
+		private final boolean defaultResult;
 
-		TYPE(String title, boolean result) {
+		TYPE(String title, boolean defaultResult) {
 			this.title=title;
-			this.result=result;
+			this.defaultResult=defaultResult;
 		}
 
 		public void setTitle(String title){
 			this.title=title;
 		}
 
-		private boolean result2;
+		private boolean result=true;
 
 		public boolean open(final String header, final String message) {
 
-			result2=result;
-
 			if (message!=null && !message.isEmpty()) try{
-
-				result2=true;
 
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
@@ -49,17 +45,19 @@ public class MessageDialog extends org.eclipse.jface.dialogs.MessageDialog {
 						switch(MessageDialog.TYPE.this) {
 						case ERROR: openError(shell, title, message2); break;
 						case INFORMATION: openInformation(shell, title, message2); break;
-						case CONFIRMATION: result2=openConfirm(shell, title, message2); break;
-						case QUESTION: result2=openQuestion(shell, title, message2); break;
+						case CONFIRMATION: result=openConfirm(shell, title, message2); break;
+						case QUESTION: result=openQuestion(shell, title, message2); break;
 						}
 					}
 				});
+
+				return result;
 
 			}catch(Exception e){
 				e.printStackTrace();
 			}
 
-			return result2;
+			return defaultResult;
 
 		}
 
