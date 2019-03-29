@@ -21,12 +21,12 @@ public class FileParameters {
 	}
 
 	/** suffix CAN be null, or may or may not start with DOT (.) */
-	public FileParameters(String prefix, String suffix, String foldername){
+	public FileParameters(String prefix, String suffix, String foldername) {
 		this(prefix, suffix, new File(foldername));
 	}
 
 	/** suffix CAN be null, or may or may not start with DOT (.) */
-	public FileParameters(String prefix, String suffix, File folder){
+	public FileParameters(String prefix, String suffix, File folder) {
 		this.prefix=prefix;
 		this.suffix=suffix==null || suffix.startsWith(".") ? suffix : "."+suffix;
 		this.folder=folder;
