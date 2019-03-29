@@ -31,8 +31,7 @@ public abstract class FieldError  {
 	}
 
 	public void update() {
-		if (label!=null) label.setForeground(hasError() ?
-				ColorManager.COLOR_RED : null);
+		if (label!=null) label.setForeground(hasError() ? ColorManager.COLOR_RED : null);
 	}
 
 
