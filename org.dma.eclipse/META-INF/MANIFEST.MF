@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Utils
 Bundle-SymbolicName: org.dma.eclipse;singleton:=true
-Bundle-Version: 6.7.0.qualifier
+Bundle-Version: 6.8.0.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.eclipse.Activator
 Bundle-ActivationPolicy: lazy
@@ -20,6 +20,7 @@ Export-Package: org.dma.eclipse.core,
  org.dma.eclipse.core.bindings.converters,
  org.dma.eclipse.core.jobs,
  org.dma.eclipse.core.jobs.tasks,
+ org.dma.eclipse.core.preferences,
  org.dma.eclipse.jface.dialogs.input,
  org.dma.eclipse.jface.dialogs.progress,
  org.dma.eclipse.swt.copypaste,
