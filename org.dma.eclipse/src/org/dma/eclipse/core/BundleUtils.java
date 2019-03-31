@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -18,17 +18,17 @@ import org.eclipse.core.runtime.Platform;
 
 public class BundleUtils {
 
-	public static URL urlResolver(Bundle bundle, String fullPath) {
+	public static URL urlResolver(Bundle bundle, String relativePath) {
 
-		return FileLocator.find(bundle, new Path(fullPath), null);
+		return FileLocator.find(bundle, new Path(relativePath), null);
 
 	}
 
 
 	/** PATH resolver for FOLDER plugin */
-	public static String pathResolver(Bundle bundle, String fullPath) {
+	public static String pathResolver(Bundle bundle, String relativePath) {
 
-		URL url=urlResolver(bundle, fullPath);
+		URL url=urlResolver(bundle, relativePath);
 		if (url!=null) try{
 			String pathname=FileLocator.resolve(url).getFile();
 			//normalize path
@@ -40,25 +40,25 @@ public class BundleUtils {
 
 
 	/** @see BundleUtils#pathResolver(Bundle, String) */
-	public static String pathResolver(String bundleName, String fullPath) {
+	public static String pathResolver(String bundleName, String relativePath) {
 
-		return pathResolver(Platform.getBundle(bundleName), fullPath);
+		return pathResolver(Platform.getBundle(bundleName), relativePath);
 
 	}
 
 
 	/** @see BundleUtils#pathResolver(Bundle, String) */
-	public static String pathResolver(Class klass, String fullPath) {
+	public static String pathResolver(Class klass, String relativePath) {
 
-		return pathResolver(FrameworkUtil.getBundle(klass), fullPath);
+		return pathResolver(FrameworkUtil.getBundle(klass), relativePath);
 
 	}
 
 
 	/** PATH resolver for JAR plugin */
-	public static String jarPathResolver(Bundle bundle, String fullPath) {
+	public static String jarPathResolver(Bundle bundle, String relativePath) {
 
-		URL url=urlResolver(bundle, fullPath);
+		URL url=urlResolver(bundle, relativePath);
 		if (url!=null) try{
 			String pathname=FileLocator.toFileURL(url).getFile();
 			//normalize path
@@ -70,17 +70,17 @@ public class BundleUtils {
 
 
 	/** @see BundleUtils#jarPathResolver(Bundle, String) */
-	public static String jarPathResolver(String bundleName, String fullPath) {
+	public static String jarPathResolver(String bundleName, String relativePath) {
 
-		return jarPathResolver(Platform.getBundle(bundleName), fullPath);
+		return jarPathResolver(Platform.getBundle(bundleName), relativePath);
 
 	}
 
 
 	/** @see BundleUtils#jarPathResolver(Bundle, String) */
-	public static String jarPathResolver(Class klass, String fullPath) {
+	public static String jarPathResolver(Class klass, String relativePath) {
 
-		return jarPathResolver(FrameworkUtil.getBundle(klass), fullPath);
+		return jarPathResolver(FrameworkUtil.getBundle(klass), relativePath);
 
 	}
 
