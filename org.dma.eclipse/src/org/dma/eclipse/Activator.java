@@ -10,7 +10,9 @@ import java.awt.image.BufferedImage;
 import org.dma.eclipse.swt.graphics.ColorManager;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -21,37 +23,12 @@ import org.eclipse.swt.graphics.Image;
  */
 public class Activator extends Plugin {
 
-	// The plug-in ID
-	public static final String PLUGIN_ID = Activator.class.getPackage().getName();
+	public static final Bundle PLUGIN_BUNDLE = FrameworkUtil.getBundle(Activator.class);
 
-	// The shared instance
-	private static Activator plugin;
-
-	/** Returns the shared instance */
-	public static Activator getDefault() {
-		return plugin;
-	}
+	public static final String PLUGIN_ID = PLUGIN_BUNDLE.getSymbolicName();
 
 	public Activator() {
 		System.err.println(PLUGIN_ID+"(ACTIVATOR)");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator
-	 */
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
-
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		ImageManager.CACHE.clear();
-		ColorManager.CACHE.clear();
-		plugin = null;
-		super.stop(context);
 	}
 
 	/** plug-in relative path */
@@ -77,6 +54,23 @@ public class Activator extends Plugin {
 	/** plug-in relative path */
 	public static Image getImage(String imagePath) {
 		return ImageManager.getImage(getBufferedImage(imagePath));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator
+	 */
+	@Override
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
+		ColorManager.getColor(0); //initialize
+	}
+
+	@Override
+	public void stop(BundleContext context) throws Exception {
+		ImageManager.CACHE.clear();
+		ColorManager.CACHE.clear();
+		super.stop(context);
 	}
 
 }

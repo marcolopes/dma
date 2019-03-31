@@ -18,7 +18,7 @@ public class PreferenceValue {
 		setDefault();
 	}
 
-	public void setDefault() {
+	private void setDefault() {
 		if(defaultValue instanceof Integer){
 			store.setDefault(name, (Integer)defaultValue);
 		}else if(defaultValue instanceof Long){
@@ -32,6 +32,16 @@ public class PreferenceValue {
 		}else if(defaultValue instanceof String){
 			store.setDefault(name, (String)defaultValue);
 		}else throw new UnsupportedOperationException();
+	}
+
+	public Object getValue() {
+		if(defaultValue instanceof Integer) return getInt();
+		if(defaultValue instanceof Long) return getLong();
+		if(defaultValue instanceof Float) return getFloat();
+		if(defaultValue instanceof Double) return getDouble();
+		if(defaultValue instanceof Boolean) return getBoolean();
+		if(defaultValue instanceof String) return getString();
+		throw new UnsupportedOperationException();
 	}
 
 	public int getInt() {return store.getInt(name);}

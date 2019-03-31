@@ -25,7 +25,6 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 	private final Plugin plugin;
 
 	public DebugLogger(Plugin plugin) {
-		System.out.println("plugin: "+plugin);
 		this.plugin=plugin;
 	}
 
@@ -44,7 +43,7 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 
 	public void log(int severity, String message, Throwable exception) {
 		//log entry
-		Status status=new Status(severity, plugin.getClass().getPackage().getName(), message, exception);
+		Status status=new Status(severity, plugin.getBundle().getSymbolicName(), message, exception);
 		plugin.getLog().log(status);
 		//add to exceptions
 		if (exception!=null && severity!=SEVERITY_OK){
