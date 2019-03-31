@@ -29,15 +29,12 @@ public class BundleUtils {
 	public static String pathResolver(Bundle bundle, String fullPath) {
 
 		URL url=urlResolver(bundle, fullPath);
-		if (url!=null){
-			try{
-				String pathname=FileLocator.resolve(url).getFile();
-				//normalize path
-				return new File(pathname).getCanonicalPath();
-			}catch(IOException e){}
-		}
-
-		return null;
+		if (url!=null) try{
+			String pathname=FileLocator.resolve(url).getFile();
+			//normalize path
+			return new File(pathname).getCanonicalPath();
+		}catch(IOException e){
+		}return null;
 
 	}
 
@@ -62,15 +59,12 @@ public class BundleUtils {
 	public static String jarPathResolver(Bundle bundle, String fullPath) {
 
 		URL url=urlResolver(bundle, fullPath);
-		if (url!=null){
-			try{
-				String path=FileLocator.toFileURL(url).getFile();
-				//normalize path
-				return new File(path).getCanonicalPath();
-			}catch(IOException e){}
-		}
-
-		return null;
+		if (url!=null) try{
+			String pathname=FileLocator.toFileURL(url).getFile();
+			//normalize path
+			return new File(pathname).getCanonicalPath();
+		}catch(IOException e){
+		}return null;
 
 	}
 

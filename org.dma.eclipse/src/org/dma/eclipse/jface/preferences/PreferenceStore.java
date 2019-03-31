@@ -14,12 +14,21 @@ public class PreferenceStore extends org.eclipse.jface.preference.PreferenceStor
 
 	public PreferenceStore(String pathname) {
 		super(pathname);
+		load();
 	}
 
 	public PreferenceValue getValue(String key, Object defaultValue) {
 		PreferenceValue value=VALUE_CACHE.get(key);
 		if (value==null) VALUE_CACHE.put(key, value=new PreferenceValue(this, key, defaultValue));
 		return value;
+	}
+
+	public void load() {
+		try{
+			super.load();
+		}catch(IOException e){
+			System.err.println(e);
+		}
 	}
 
 	public void save() {
