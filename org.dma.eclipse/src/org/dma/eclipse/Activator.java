@@ -63,7 +63,6 @@ public class Activator extends Plugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		ColorManager.getColor(0); //initialize
 	}
 
 	@Override
