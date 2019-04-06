@@ -20,11 +20,10 @@ public class FontManager {
 
 	public static final FontRegistry REGISTRY = new FontRegistry(DISPLAY);
 
-	public static final String SYSTEM_FONT_NAME = FontManager.SYSTEM_FONT.getFontData()[0].getName();
-
 	public static final Font SYSTEM_FONT = DISPLAY.getSystemFont();
-	public static final Font SYSTEM_BOLD_FONT = REGISTRY.getBold(SYSTEM_FONT_NAME);
-	public static final Font SYSTEM_ITALIC_FONT = REGISTRY.getItalic(SYSTEM_FONT_NAME);
+	public static final String SYSTEM_FONT_NAME = SYSTEM_FONT.getFontData()[0].getName();
+	public static final Font SYSTEM_FONT_BOLD = REGISTRY.getBold(SYSTEM_FONT_NAME);
+	public static final Font SYSTEM_FONT_ITALIC = REGISTRY.getItalic(SYSTEM_FONT_NAME);
 
 	/**
 	 * Create a <code>FontData</code> object which encapsulate
