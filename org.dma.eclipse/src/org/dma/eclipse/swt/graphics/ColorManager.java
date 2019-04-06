@@ -1,20 +1,22 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.graphics;
 
-import java.util.HashMap;
-
+import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
 public class ColorManager {
 
-	public static final ColorCache CACHE = new ColorCache();
+	public static final Display DISPLAY = Display.getDefault();
+
+	public static final ColorRegistry REGISTRY = new ColorRegistry(DISPLAY);
 
 	/*
 	 * Colors
@@ -35,60 +37,12 @@ public class ColorManager {
 	public static final Color COLOR_DARK_CYAN = getColor(SWT.COLOR_DARK_CYAN);
 	public static final Color COLOR_GRAY = getColor(SWT.COLOR_GRAY);
 	public static final Color COLOR_DARK_GRAY = getColor(SWT.COLOR_DARK_GRAY);
-	public static final Color COLOR_LIGHT_GRAY = getColor(245,245,245);
-	public static final Color COLOR_ORANGE = getColor(255,127,0);
+	public static final Color COLOR_LIGHT_GRAY = getColor(245, 245, 245);
+	public static final Color COLOR_ORANGE = getColor(255, 127, 0);
 
-	public static class ColorCache extends HashMap<RGB, Color> {
-
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * Returns the CACHED {@link Color}
-		 * or null if not CACHED or is DISPOSED
-		 */
-		public Color get(RGB key) {
-			Color color=super.get(key);
-			return color==null || color.isDisposed() ? null : color;
-		}
-
-		/**
-		 * Puts {@link Color} into the CACHE
-		 * and disposes previous CACHED color
-		 */
-		@Override
-		public Color put(RGB key, Color color) {
-			color=super.put(key, color);
-			if (color!=null) color.dispose();
-			return color;
-		}
-
-		/**
-		 * Dispose of all the CACHED colors
-		 */
-		@Override
-		public void clear() {
-			debug();
-			for (Color color: values()) {
-				color.dispose();
-			}
-			super.clear();
-		}
-
-		/** Debug */
-		public void debug() {
-			System.out.println("COLOR CACHE: " + size());
-			for(RGB key: keySet()){
-				System.out.println(key+": "+get(key));
-			}
-		}
-
-	}
-
-	/**
-	 * Returns the system {@link Color} matching the specific ID.
-	 */
-	public static Color getColor(int systemColorID) {
-		return Display.getDefault().getSystemColor(systemColorID);
+	/** Returns the {@link Color} key based on color-RGB hash */
+	public static String getKey(RGB rgb) {
+		return "RGB:"+String.valueOf(rgb.hashCode());
 	}
 
 
@@ -97,10 +51,11 @@ public class ColorManager {
 	 * or a new one if not CACHED or is DISPOSED.
 	 */
 	public static Color getColor(RGB rgb) {
-		Color color=CACHE.get(rgb);
+		String key=getKey(rgb);
+		Color color=REGISTRY.get(key);
 		if (color==null) {
-			color=new Color(Display.getDefault(), rgb);
-			CACHE.put(rgb, color);
+			color=new Color(DISPLAY, rgb);
+			REGISTRY.put(key, rgb);
 		}
 		return color;
 	}
@@ -112,6 +67,69 @@ public class ColorManager {
 	 */
 	public static Color getColor(int r, int g, int b) {
 		return getColor(new RGB(r, g, b));
+	}
+
+
+	/**
+	 * Returns the system {@link Color} matching the specific ID.
+	 */
+	public static Color getColor(int systemColorID) {
+		return DISPLAY.getSystemColor(systemColorID);
+	}
+
+
+	/**
+	 * Creates an awt color instance to match the rgb values
+	 * of the specified swt color.
+	 *
+	 * @param color The swt color to match.
+	 * @return an awt color abject.
+	 */
+	public static java.awt.Color toAWTColor(Color color) {
+		return new java.awt.Color(color.getRed(), color.getGreen(),
+				color.getBlue());
+	}
+
+
+	/**
+	 * Creates a swt color instance to match the rgb values
+	 * of the specified awt paint. For now, this method test
+	 * if the paint is a color and then return the adequate
+	 * swt color. Otherwise plain black is assumed.
+	 *
+	 * @param device The swt device to draw on (display or gc device).
+	 * @param paint The awt color to match.
+	 * @return a swt color object.
+	 */
+	public static Color toSWTColor(Device device, java.awt.Paint paint) {
+		java.awt.Color color;
+		if (paint instanceof java.awt.Color) {
+			color = (java.awt.Color) paint;
+		}else try{
+			throw new Exception("only color is supported at present... "
+					+ "setting paint to uniform black color");
+		}catch (Exception e) {
+			e.printStackTrace();
+			color = new java.awt.Color(0, 0, 0);
+		}
+		return new org.eclipse.swt.graphics.Color(device,
+				color.getRed(), color.getGreen(), color.getBlue());
+	}
+
+
+	/**
+	 * Creates a swt color instance to match the rgb values
+	 * of the specified awt color. alpha channel is not supported.
+	 * Note that the dispose method will need to be called on the
+	 * returned object.
+	 *
+	 * @param device The swt device to draw on (display or gc device).
+	 * @param color The awt color to match.
+	 * @return a swt color object.
+	 */
+	public static Color toSWTColor(Device device, java.awt.Color color) {
+		return new org.eclipse.swt.graphics.Color(device,
+				color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 
