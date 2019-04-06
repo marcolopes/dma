@@ -6,13 +6,16 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
 
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
-import java.awt.image.ComponentColorModel;
+import java.awt.image.DataBufferByte;
 import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
+import java.awt.image.Raster;
+import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.dma.java.io.FileHandler;
@@ -24,92 +27,62 @@ import org.eclipse.swt.graphics.RGB;
 
 public class CustomImageDescriptor extends ImageDescriptor {
 
-	/**
-	 * snippet 156: convert between SWT Image and AWT BufferedImage.
-	 * <p>
-	 * For a list of all SWT example snippets see
-	 * http://www.eclipse.org/swt/snippets/
-	 */
-	public static ImageData convertToSWT(BufferedImage bufferedImage) {
-		ImageData data = null;
-		if (bufferedImage.getColorModel() instanceof DirectColorModel) {
-			/*
-			DirectColorModel colorModel = (DirectColorModel)bufferedImage.getColorModel();
-			PaletteData palette = new PaletteData(colorModel.getRedMask(), colorModel.getGreenMask(), colorModel.getBlueMask());
-			data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
-			WritableRaster raster = bufferedImage.getRaster();
-			int[] pixelArray = new int[3];
-			for (int y = 0; y < data.height; y++) {
-				for (int x = 0; x < data.width; x++) {
-					raster.getPixel(x, y, pixelArray);
-					int pixel = palette.getPixel(new RGB(pixelArray[0], pixelArray[1], pixelArray[2]));
-					data.setPixel(x, y, pixel);
-				}
-			}
-			*/
-			DirectColorModel colorModel = (DirectColorModel)bufferedImage.getColorModel();
-			PaletteData palette = new PaletteData(colorModel.getRedMask(), colorModel.getGreenMask(), colorModel.getBlueMask());
-			data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
-			for (int y = 0; y < data.height; y++) {
-				for (int x = 0; x < data.width; x++) {
-					int rgb = bufferedImage.getRGB(x, y);
-					int pixel = palette.getPixel(new RGB((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF));
-					data.setPixel(x, y, pixel);
-					if (colorModel.hasAlpha()) {
-						data.setAlpha(x, y, (rgb >> 24) & 0xFF);
-					}
-				}
-			}
-		}else if (bufferedImage.getColorModel() instanceof IndexColorModel) {
-			IndexColorModel colorModel = (IndexColorModel)bufferedImage.getColorModel();
-			int size = colorModel.getMapSize();
-			byte[] reds = new byte[size];
-			byte[] greens = new byte[size];
-			byte[] blues = new byte[size];
-			colorModel.getReds(reds);
-			colorModel.getGreens(greens);
-			colorModel.getBlues(blues);
-			RGB[] rgbs = new RGB[size];
-			for (int i = 0; i < rgbs.length; i++) {
-				rgbs[i] = new RGB(reds[i] & 0xFF, greens[i] & 0xFF, blues[i] & 0xFF);
-			}
-			PaletteData palette = new PaletteData(rgbs);
-			data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
-			data.transparentPixel = colorModel.getTransparentPixel();
-			WritableRaster raster = bufferedImage.getRaster();
-			int[] pixelArray = new int[1];
-			for (int y = 0; y < data.height; y++) {
-				for (int x = 0; x < data.width; x++) {
-					raster.getPixel(x, y, pixelArray);
-					data.setPixel(x, y, pixelArray[0]);
-				}
-			}
-		}else if (bufferedImage.getColorModel() instanceof ComponentColorModel) {
-			ComponentColorModel colorModel = (ComponentColorModel)bufferedImage.getColorModel();
-			//ASSUMES: 3 BYTE BGR IMAGE TYPE
-			PaletteData palette = new PaletteData(0x0000FF, 0x00FF00,0xFF0000);
-			data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
-			//This is valid because we are using a 3-byte Data model with no transparent pixels
-			data.transparentPixel = -1;
-			WritableRaster raster = bufferedImage.getRaster();
-			int[] pixelArray = new int[3];
-			for (int y = 0; y < data.height; y++) {
-				for (int x = 0; x < data.width; x++) {
-					raster.getPixel(x, y, pixelArray);
-					int pixel = palette.getPixel(new RGB(pixelArray[0], pixelArray[1], pixelArray[2]));
-					data.setPixel(x, y, pixel);
+	public static ImageData createImageData(RenderedImage image, boolean transparent) {
+		int width=image.getWidth();
+		int height=image.getHeight();
+		int depth=24;
+		PaletteData palette=new PaletteData(0xFF, 0xFF00, 0xFF0000);
+		ImageData swtdata=new ImageData(width, height, depth, palette);
+		swtdata.transparentPixel=-1;
+		int step=swtdata.depth / 8;
+		byte[] data=swtdata.data;
+		Raster raster=image.getData();
+		int numbands=raster.getNumBands();
+		int[] awtdata=raster.getPixels(0, 0, width, height, new int[width * height * numbands]);
+		int baseindex=0;
+		for(int y=0; y < height; y++){
+			int index=((0 + y) * swtdata.bytesPerLine) + (0 * step);
+			for(int x=0; x < width; x++){
+				int pixel=(x + (y * width));
+				baseindex=pixel * numbands;
+				data[index++]=(byte)awtdata[baseindex + 2];
+				data[index++]=(byte)awtdata[baseindex + 1];
+				data[index++]=(byte)awtdata[baseindex];
+				if (numbands == 4 && transparent){
+					swtdata.setAlpha(x, y, awtdata[baseindex + 3]);
 				}
 			}
 		}
-		return data;
+		return swtdata;
+	}
+
+	public static ImageData createImageData(BufferedImage image) {
+		if(image.getType()!=BufferedImage.TYPE_3BYTE_BGR){
+			return createImageData(image, image.getTransparency()!=Transparency.OPAQUE);
+		}
+		int width=image.getWidth();
+		int height=image.getHeight();
+		int bands=image.getColorModel().getColorSpace().getNumComponents();
+		int depth=24;
+		byte[] pixels=((DataBufferByte)image.getRaster().getDataBuffer()).getData();
+		return new ImageData(width, height, depth, new PaletteData(
+				0x0000ff, 0x00ff00, 0xff0000), width * bands, pixels);
+	}
+
+	private static void close(InputStream stream) {
+		try{
+			stream.close();
+		}catch(Exception e){}
 	}
 
 	private static ImageData getImageData(InputStream stream) {
-		ImageData data=new ImageData(stream);
 		try{
-			stream.close();
-		}catch(IOException e){}
-		return data;
+			return new ImageData(stream);
+		}catch(Exception e){
+			return null;
+		}finally{
+			close(stream);
+		}
 	}
 
 	private final ImageData data;
@@ -126,16 +99,24 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the the file at the specified path.
 	 */
-	public CustomImageDescriptor(String pathname) {
-		this(getImageData(new FileHandler(pathname).asInputStream()));
+	public CustomImageDescriptor(String path) {
+		this(getImageData(new FileHandler(path).asInputStream()));
+	}
+
+	/**
+	 * Creates and returns a new {@link ImageDescriptor}
+	 * stored by the specified bytes.
+	 */
+	public CustomImageDescriptor(byte[] bytes) {
+		this(getImageData(new ByteArrayInputStream(bytes)));
 	}
 
 	/**
 	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the specified {@link BufferedImage}.
 	 */
-	public CustomImageDescriptor(BufferedImage bufferedImage) {
-		this(convertToSWT(bufferedImage));
+	public CustomImageDescriptor(BufferedImage image) {
+		this(createImageData(image));
 	}
 
 	public CustomImageDescriptor(ImageData data) {
@@ -160,44 +141,41 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	 * http://www.eclipse.org/swt/snippets/
 	 */
 	public BufferedImage convertToAWT() {
-		BufferedImage bufferedImage = null;
-		PaletteData palette = data.palette;
-		if (palette.isDirect) {
-			ColorModel colorModel = new DirectColorModel(data.depth, palette.redMask, palette.greenMask, palette.blueMask);
-			bufferedImage = new BufferedImage(colorModel, colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
-			for (int y = 0; y < data.height; y++) {
-				for (int x = 0; x < data.width; x++) {
-					int pixel = data.getPixel(x, y);
-					RGB rgb = palette.getRGB(pixel);
-					bufferedImage.setRGB(x, y,  rgb.red << 16 | rgb.green << 8 | rgb.blue);
+		PaletteData palette=data.palette;
+		if (palette.isDirect){
+			ColorModel colorModel=new DirectColorModel(data.depth, palette.redMask, palette.greenMask, palette.blueMask);
+			BufferedImage image=new BufferedImage(colorModel, colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
+			for (int y=0; y < data.height; y++){
+				for (int x=0; x < data.width; x++){
+					int pixel=data.getPixel(x, y);
+					RGB rgb=palette.getRGB(pixel);
+					image.setRGB(x, y,  rgb.red << 16 | rgb.green << 8 | rgb.blue);
 				}
-			}
-		}else{
-			RGB[] rgbs = palette.getRGBs();
-			byte[] red = new byte[rgbs.length];
-			byte[] green = new byte[rgbs.length];
-			byte[] blue = new byte[rgbs.length];
-			for (int i = 0; i < rgbs.length; i++) {
-				RGB rgb = rgbs[i];
-				red[i] = (byte)rgb.red;
-				green[i] = (byte)rgb.green;
-				blue[i] = (byte)rgb.blue;
-			}
-			ColorModel colorModel = data.transparentPixel == -1 ?
-					new IndexColorModel(data.depth, rgbs.length, red, green, blue) :
-					new IndexColorModel(data.depth, rgbs.length, red, green, blue, data.transparentPixel);
-			bufferedImage = new BufferedImage(colorModel, colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
-			WritableRaster raster = bufferedImage.getRaster();
-			int[] pixelArray = new int[1];
-			for (int y = 0; y < data.height; y++) {
-				for (int x = 0; x < data.width; x++) {
-					int pixel = data.getPixel(x, y);
-					pixelArray[0] = pixel;
-					raster.setPixel(x, y, pixelArray);
-				}
-			}
+			}return image;
 		}
-		return bufferedImage;
+		RGB[] rgbs=palette.getRGBs();
+		byte[] red=new byte[rgbs.length];
+		byte[] green=new byte[rgbs.length];
+		byte[] blue=new byte[rgbs.length];
+		for (int i=0; i < rgbs.length; i++) {
+			RGB rgb=rgbs[i];
+			red[i]=(byte)rgb.red;
+			green[i]=(byte)rgb.green;
+			blue[i]=(byte)rgb.blue;
+		}
+		ColorModel colorModel=data.transparentPixel==-1 ?
+				new IndexColorModel(data.depth, rgbs.length, red, green, blue) :
+				new IndexColorModel(data.depth, rgbs.length, red, green, blue, data.transparentPixel);
+		BufferedImage image=new BufferedImage(colorModel, colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
+		WritableRaster raster=image.getRaster();
+		int[] pixelArray=new int[1];
+		for (int y=0; y < data.height; y++){
+			for (int x=0; x < data.width; x++){
+				int pixel=data.getPixel(x, y);
+				pixelArray[0]=pixel;
+				raster.setPixel(x, y, pixelArray);
+			}
+		}return image;
 	}
 
 

@@ -1,14 +1,11 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.graphics;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -18,7 +15,6 @@ import org.dma.java.awt.ImageUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
 
 public class ImageManager {
@@ -93,23 +89,6 @@ public class ImageManager {
 
 
 	/**
-	 * Returns an {@link Image}
-	 * encoded by the specified {@link InputStream}
-	 */
-	private static Image createImage(InputStream stream) {
-		try{
-			ImageData data=new ImageData(stream);
-			return data.transparentPixel > 0 ?
-				new Image(Display.getDefault(), data, data.getTransparencyMask()) :
-				new Image(Display.getDefault(), data);
-
-		}catch(Exception e){
-			System.err.println(e);
-		}return null;
-	}
-
-
-	/**
 	 * Returns the CACHED {@link Image}
 	 * or a new one if not CACHED or is DISPOSED.
 	 * It can be used as placeholder for missing image.
@@ -138,14 +117,9 @@ public class ImageManager {
 	public static Image getImage(String path) {
 		String key=getKey(path);
 		Image image=CACHE.get(key);
-		if (image==null) try{
-			FileInputStream stream=new FileInputStream(path);
-			image=createImage(stream);
+		if (image==null){
+			image=new CustomImageDescriptor(path).createImage();
 			CACHE.put(key, image);
-			stream.close();
-
-		}catch(Exception e){
-			System.err.println(e);
 		}return image;
 	}
 
@@ -157,14 +131,9 @@ public class ImageManager {
 	public static Image getImage(byte[] bytes) {
 		String key=getKey(bytes);
 		Image image=CACHE.get(key);
-		if (image==null) try{
-			ByteArrayInputStream stream=new ByteArrayInputStream(bytes);
-			image=createImage(stream);
+		if (image==null){
+			image=new CustomImageDescriptor(bytes).createImage();
 			CACHE.put(key, image);
-			stream.close();
-
-		}catch(Exception e){
-			System.err.println(e);
 		}return image;
 	}
 
@@ -176,12 +145,9 @@ public class ImageManager {
 	public static Image getImage(BufferedImage bufferedImage) {
 		String key=getKey(bufferedImage);
 		Image image=CACHE.get(key);
-		if (image==null) try{
+		if (image==null){
 			image=new CustomImageDescriptor(bufferedImage).createImage();
 			CACHE.put(key, image);
-
-		}catch(Exception e){
-			System.err.println(e);
 		}return image;
 	}
 
