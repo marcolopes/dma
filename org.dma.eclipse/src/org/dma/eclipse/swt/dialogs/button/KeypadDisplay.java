@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 import org.dma.eclipse.swt.custom.CustomShell;
 import org.dma.eclipse.swt.custom.CustomText;
-import org.dma.eclipse.swt.graphics.ColorUtils;
+import org.dma.eclipse.swt.graphics.ColorManager;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -38,7 +38,7 @@ public class KeypadDisplay extends CustomText {
 		super(parent, SWT.BORDER | SWT.RIGHT);
 
 		setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		setForeground(ColorUtils.getColor(SWT.COLOR_RED));
+		setForeground(ColorManager.getColor(SWT.COLOR_RED));
 		setFontSize(fontSize);
 		//setEditable(false);
 		setText(value);
