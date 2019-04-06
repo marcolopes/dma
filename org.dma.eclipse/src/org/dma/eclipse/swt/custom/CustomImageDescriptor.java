@@ -27,6 +27,9 @@ import org.eclipse.swt.graphics.RGB;
 
 public class CustomImageDescriptor extends ImageDescriptor {
 
+	/*
+	 * Adapted from https://github.com/moovida/uDig/blob/master/plugins/net.refractions.udig.ui/src/net/refractions/udig/ui/graphics/AWTSWTImageUtils.java
+	 */
 	public static ImageData createImageData(RenderedImage image, boolean transparent) {
 		int width=image.getWidth();
 		int height=image.getHeight();
