@@ -25,12 +25,14 @@ public class BundleUtils {
 	}
 
 
-	/** PATH resolver for FOLDER plugin */
+	/** PATH resolver for JAR plugin */
 	public static String pathResolver(Bundle bundle, String relativePath) {
 
 		URL url=urlResolver(bundle, relativePath);
 		if (url!=null) try{
-			String pathname=FileLocator.resolve(url).getFile();
+			//does not work on exported JAR
+			//FileLocator.resolve(url).getFile();
+			String pathname=FileLocator.toFileURL(url).getFile();
 			//normalize path
 			return new File(pathname).getCanonicalPath();
 		}catch(IOException e){
@@ -51,36 +53,6 @@ public class BundleUtils {
 	public static String pathResolver(Class klass, String relativePath) {
 
 		return pathResolver(FrameworkUtil.getBundle(klass), relativePath);
-
-	}
-
-
-	/** PATH resolver for JAR plugin */
-	public static String jarPathResolver(Bundle bundle, String relativePath) {
-
-		URL url=urlResolver(bundle, relativePath);
-		if (url!=null) try{
-			String pathname=FileLocator.toFileURL(url).getFile();
-			//normalize path
-			return new File(pathname).getCanonicalPath();
-		}catch(IOException e){
-		}return null;
-
-	}
-
-
-	/** @see BundleUtils#jarPathResolver(Bundle, String) */
-	public static String jarPathResolver(String bundleName, String relativePath) {
-
-		return jarPathResolver(Platform.getBundle(bundleName), relativePath);
-
-	}
-
-
-	/** @see BundleUtils#jarPathResolver(Bundle, String) */
-	public static String jarPathResolver(Class klass, String relativePath) {
-
-		return jarPathResolver(FrameworkUtil.getBundle(klass), relativePath);
 
 	}
 
