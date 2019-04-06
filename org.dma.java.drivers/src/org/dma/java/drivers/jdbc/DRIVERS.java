@@ -123,11 +123,8 @@ public enum DRIVERS {
 		switch(this){
 		case H2:
 			if (isH2Embedded(host)){
-				//nothing!
-				if (isLocalhost(host)){
-					//Multiple processes can access the same database
-					url.append(";AUTO_SERVER=TRUE");
-				}
+				//Multiple processes can access the same database
+				if (isLocalhost(host)) url.append(";AUTO_SERVER=TRUE");
 			}else{
 				//URL;property=value;property=value...
 				url.append(properties.isEmpty() ? "" : ";"+properties);
