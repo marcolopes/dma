@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -26,7 +26,7 @@ public class ImageHandler {
 		try{
 			ImageLoader saver=new ImageLoader();
 			saver.data=new ImageData[]{image.getImageData()};
-			saver.save(pathname, SWT.IMAGE_PNG);
+			saver.save(pathname, format);
 
 		}catch(Exception e){
 			e.printStackTrace();
