@@ -15,16 +15,16 @@ import org.dma.java.util.StringUtils;
 
 public class FileURL {
 
-	public static URL getURL(String ftpurl, String filename) {
+	public static URL getURL(String urlname, String filename) {
 		try{
-			return new URL(ftpurl+"/"+filename);
+			return new URL(urlname+"/"+filename);
 		}catch(Exception e){
 			System.err.println(e);
 		}
 		return null;
 	}
 
-	public final String ftpurl;
+	public final String urlname;
 	public final String filename;
 	/** Workaround for EXTENDS URL */
 	public final URL url;
@@ -32,15 +32,15 @@ public class FileURL {
 	/** Example: https//www.ftp.com/file.txt */
 	public FileURL(String fileurl) {
 		String array[]=StringUtils.splitLastIndex(fileurl, "/");
-		this.ftpurl=array[0];
+		this.urlname=array[0];
 		this.filename=array[1];
-		this.url=getURL(ftpurl, filename);
+		this.url=getURL(urlname, filename);
 	}
 
-	public FileURL(String ftpurl, String filename) {
-		this.ftpurl=ftpurl;
+	public FileURL(String urlname, String filename) {
+		this.urlname=urlname;
 		this.filename=filename;
-		this.url=getURL(ftpurl, filename);
+		this.url=getURL(urlname, filename);
 	}
 
 
