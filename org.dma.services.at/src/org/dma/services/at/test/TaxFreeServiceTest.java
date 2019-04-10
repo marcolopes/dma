@@ -96,7 +96,7 @@ public class TaxFreeServiceTest {
 		//invoice.setATCUD(StringUtils.numbers(100));
 		invoice.setInvoiceIdentifiers(invoiceIdentifiers);
 		invoice.setInvoiceType("FT");
-		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2018-12-28"));
+		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(/*"2018-12-31"*/));
 		//invoice.setBuyer(simpleBuyer);
 		invoice.setGrossTotal(new BigDecimal("246.00"));
 		invoice.setRefundableAmount(new BigDecimal("46.00"));
