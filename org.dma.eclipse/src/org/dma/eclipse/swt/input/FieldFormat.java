@@ -22,7 +22,7 @@ public class FieldFormat extends FieldProperties {
 	/** Regex Pattern CACHE */
 	private static final Map<String, Pattern> RP_CACHE=new HashMap();
 
-	public static Pattern getRegexPattern(String regex) {
+	public static synchronized Pattern getRegexPattern(String regex) {
 		Pattern pattern=RP_CACHE.get(regex);
 		if (pattern==null) RP_CACHE.put(regex, pattern=Pattern.compile(regex));
 		return pattern;
@@ -31,7 +31,7 @@ public class FieldFormat extends FieldProperties {
 	/** Decimal Format CACHE */
 	private static final Map<String, DecimalFormat> DF_CACHE=new HashMap();
 
-	public static DecimalFormat getDecimalFormat(String pattern) {
+	public static synchronized DecimalFormat getDecimalFormat(String pattern) {
 		DecimalFormat df=DF_CACHE.get(pattern);
 		if (df==null) DF_CACHE.put(pattern, df=new DecimalFormat(pattern));
 		return df;

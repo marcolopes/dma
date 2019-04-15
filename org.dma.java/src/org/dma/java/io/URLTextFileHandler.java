@@ -7,21 +7,25 @@ package org.dma.java.io;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
-public class URLTextFileHandler extends TextFileHandler {
+public class URLTextFileHandler {
 
 	public final FileURL fileurl;
+	public final Charset charset;
 
 	/** Uses JAVA DEFAULT charset */
 	public URLTextFileHandler(FileURL fileurl) {
-		super(fileurl.toString());
-		this.fileurl=fileurl;
+		this(fileurl, Charset.defaultCharset());
 	}
 
-	/** charsetName=null uses JAVA DEFAULT charset */
 	public URLTextFileHandler(FileURL fileurl, String charsetName) {
-		super(fileurl.toString(), charsetName);
+		this(fileurl, Charset.forName(charsetName));
+	}
+
+	public URLTextFileHandler(FileURL fileurl, Charset charset) {
 		this.fileurl=fileurl;
+		this.charset=charset;
 	}
 
 
@@ -44,10 +48,9 @@ public class URLTextFileHandler extends TextFileHandler {
 	 *
 	 */
 	/** Reads text from URL */
-	@Override
 	public String read() {
 
-		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
+		StringBuffer buffer=new StringBuffer(FileHandler.STRING_BUFFER_LENGTH);
 
 		try{
 			BufferedReader br=
