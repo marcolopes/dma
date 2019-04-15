@@ -17,7 +17,7 @@ public class PreferenceStore extends org.eclipse.jface.preference.PreferenceStor
 		load();
 	}
 
-	public PreferenceValue getValue(String key, Object defaultValue) {
+	public synchronized PreferenceValue getValue(String key, Object defaultValue) {
 		PreferenceValue value=VALUE_CACHE.get(key);
 		if (value==null) VALUE_CACHE.put(key, value=new PreferenceValue(this, key, defaultValue));
 		return value;

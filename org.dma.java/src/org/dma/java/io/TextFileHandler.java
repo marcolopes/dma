@@ -182,38 +182,8 @@ public class TextFileHandler extends FileHandler {
 	 * BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
 	 *
 	 */
-	/** Reads text from file */
-	public String read() {
-
-		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
-
-		try{
-			BufferedReader br=
-					new BufferedReader(
-							new InputStreamReader(
-									asInputStream(), charset));
-
-			try{
-				String line;
-				while((line=br.readLine()) != null){
-					buffer.append(buffer.length()==0 ? line : "\n"+line);
-				}
-
-			}finally{
-				br.close();
-			}
-
-		}catch(Exception e){
-			System.err.println(e);
-		}
-
-		return buffer.toString();
-
-	}
-
-
-	/** Reads text from file */
-	public String read(Class location) {
+	/** Reads text lines from file */
+	public String read(int lines, Class...location) {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
@@ -222,35 +192,6 @@ public class TextFileHandler extends FileHandler {
 					new BufferedReader(
 							new InputStreamReader(
 									asInputStream(location), charset));
-
-			try{
-				String line;
-				while((line=br.readLine()) != null){
-					buffer.append(buffer.length()==0 ? line : "\n"+line);
-				}
-
-			}finally{
-				br.close();
-			}
-
-		}catch(Exception e){
-			System.err.println(e);
-		}
-
-		return buffer.toString();
-
-	}
-
-	/** Reads text lines from file */
-	public String read(int lines) {
-
-		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
-
-		try{
-			BufferedReader br=
-					new BufferedReader(
-							new InputStreamReader(
-									asInputStream(), charset));
 
 			try{
 				String line;
@@ -267,6 +208,14 @@ public class TextFileHandler extends FileHandler {
 		}
 
 		return buffer.toString();
+
+	}
+
+
+	/** Reads text from file */
+	public String read(Class...location) {
+
+		return read(-1, location);
 
 	}
 

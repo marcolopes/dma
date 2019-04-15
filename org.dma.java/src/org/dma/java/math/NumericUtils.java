@@ -21,7 +21,7 @@ public class NumericUtils {
 
 	public static String toString(BigDecimal value) {
 
-		return value==null ? "" : value.toString();
+		return value == null ? "" : value.toString();
 
 	}
 
@@ -47,19 +47,76 @@ public class NumericUtils {
 
 
 
+	/*
+	 * Operations
+	 */
+	public static final int safeAdd(int left, int right) throws ArithmeticException {
+
+		if (right > 0 ? left > Integer.MAX_VALUE - right : left < Integer.MIN_VALUE - right)
+			throw new ArithmeticException("Integer overflow");
+
+		return left + right;
+
+	}
+
+	public static final int safeSubtract(int left, int right) throws ArithmeticException {
+
+		if (right > 0 ? left < Integer.MIN_VALUE + right : left > Integer.MAX_VALUE + right)
+			throw new ArithmeticException("Integer overflow");
+
+		return left - right;
+
+	}
+
+	public static final int safeMultiply(int left, int right) throws ArithmeticException {
+
+		if (right > 0 ? left > Integer.MAX_VALUE/right || left < Integer.MIN_VALUE/right :
+			(right < -1 ? left > Integer.MIN_VALUE/right || left < Integer.MAX_VALUE/right :
+				right == -1 && left == Integer.MIN_VALUE)) throw new ArithmeticException("Integer overflow");
+
+		return left * right;
+
+	}
+
+	public static final int safeDivide(int left, int right) throws ArithmeticException {
+
+		if (left == Integer.MIN_VALUE && right == -1) throw new ArithmeticException("Integer overflow");
+
+		return left / right;
+
+	}
+
+	public static final int safeNegate(int a) throws ArithmeticException {
+
+		if (a == Integer.MIN_VALUE) throw new ArithmeticException("Integer overflow");
+
+		return -a;
+
+	}
+
+	public static final int safeAbs(int a) throws ArithmeticException {
+
+		if (a == Integer.MIN_VALUE) throw new ArithmeticException("Integer overflow");
+
+		return Math.abs(a);
+
+	}
+
+
+
 
 	/*
 	 * Analysis
 	 */
 	public static boolean bit(int value, int bit) {
 
-		return (value & bit)!=0;
+		return (value & bit) != 0;
 	}
 
 
 	public static boolean isZero(BigDecimal value) {
 
-		return value.signum()==0;
+		return value.signum() == 0;
 
 	}
 

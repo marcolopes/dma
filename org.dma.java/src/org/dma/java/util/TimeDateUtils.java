@@ -130,7 +130,7 @@ public class TimeDateUtils {
 	/** Simple Date Format CACHE */
 	private static final Map<String, SimpleDateFormat> SDF_CACHE=new HashMap();
 
-	public static SimpleDateFormat getSimpleDateFormat(String pattern) {
+	public static synchronized SimpleDateFormat getSimpleDateFormat(String pattern) {
 		SimpleDateFormat sdf=SDF_CACHE.get(pattern);
 		if (sdf==null) SDF_CACHE.put(pattern, sdf=new SimpleDateFormat(pattern));
 		return sdf;

@@ -25,15 +25,15 @@ public enum POOLMANAGERS {
 	/** http://www.jolbox.com */
 	BONECP;
 
-	private static HashMap<String, IPoolManager> cache=new HashMap();
+	private static HashMap<String, IPoolManager> CACHE=new HashMap();
 
 	public static void shutdown() {
-		for(IPoolManager manager: cache.values()) manager.shutdown();
+		for(IPoolManager manager: CACHE.values()) manager.shutdown();
 	}
 
-	public IPoolManager get(String url, String user, String password) {
-		IPoolManager manager=cache.get(url);
-		if (manager==null) cache.put(url, manager=create(url, user, password));
+	public synchronized IPoolManager get(String url, String user, String password) {
+		IPoolManager manager=CACHE.get(url);
+		if (manager==null) CACHE.put(url, manager=create(url, user, password));
 		return manager;
 	}
 
