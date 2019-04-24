@@ -21,6 +21,6 @@ public interface IValidator {
 
 	public String getErrorMessage();
 
-	public void postErrorMessage(String message);
+	public void postError(String message);
 
 }
