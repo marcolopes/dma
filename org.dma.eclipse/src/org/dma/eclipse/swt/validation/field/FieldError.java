@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Label;
 
 public abstract class FieldError  {
 
-	public abstract String processErrorMessage(ERRORS error, String message, String label);
+	public abstract String processError(ERRORS error, String message, String label);
 
 	public enum ERRORS {
 		NONE,
@@ -39,7 +39,7 @@ public abstract class FieldError  {
 	 * Message
 	 */
 	public String getMessage() {
-		return processErrorMessage(error, message==null ? "" : message,
+		return processError(error, message==null ? "" : message,
 				label==null ? "" : label.getText());
 	}
 

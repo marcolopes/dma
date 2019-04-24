@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.TableItem;
 public abstract class TableValidator<T> implements IValidator {
 
 	public abstract void validateLine(T element);
-	public abstract String processErrorMessage(String message, String label);
+	public abstract String processError(String message, String label);
 
 	private final SelectionListener selectionListener=new SelectionListener() {
 		@Override
@@ -80,7 +80,7 @@ public abstract class TableValidator<T> implements IValidator {
 		ColumnBinding binding=new ColumnBinding(text, fieldFormat, label){
 			@Override
 			public String processErrorMessage(String message, String label) {
-				return TableValidator.this.processErrorMessage(message, label);
+				return TableValidator.this.processError(message, label);
 			}
 		};
 		register(property, binding);
@@ -94,7 +94,7 @@ public abstract class TableValidator<T> implements IValidator {
 		ColumnBinding binding=new ColumnBinding(text, label){
 			@Override
 			public String processErrorMessage(String message, String label) {
-				return TableValidator.this.processErrorMessage(message, label);
+				return TableValidator.this.processError(message, label);
 			}
 		};
 		register(property, binding);

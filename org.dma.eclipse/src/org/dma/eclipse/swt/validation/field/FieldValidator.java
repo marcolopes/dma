@@ -27,7 +27,7 @@ public abstract class FieldValidator implements IValidator {
 
 	public abstract boolean isEdited();
 	public abstract void validateInput();
-	public abstract String processErrorMessage(ERRORS error, String message, String label);
+	public abstract String processError(ERRORS error, String message, String label);
 
 	/** Insertion-ordered KEYS */
 	private final Map<String, FieldBinding> validatorMap=new LinkedHashMap();
@@ -39,8 +39,8 @@ public abstract class FieldValidator implements IValidator {
 
 		return register(property, new FieldBinding(label, control, fieldFormat, rules){
 			@Override
-			public String processErrorMessage(ERRORS error, String message, String label) {
-				return FieldValidator.this.processErrorMessage(error, message, label);
+			public String processError(ERRORS error, String message, String label) {
+				return FieldValidator.this.processError(error, message, label);
 			}
 		});
 
@@ -51,8 +51,8 @@ public abstract class FieldValidator implements IValidator {
 
 		return register(property, new FieldBinding(label, control, rules){
 			@Override
-			public String processErrorMessage(ERRORS error, String message, String label) {
-				return FieldValidator.this.processErrorMessage(error, message, label);
+			public String processError(ERRORS error, String message, String label) {
+				return FieldValidator.this.processError(error, message, label);
 			}
 		});
 
@@ -63,8 +63,8 @@ public abstract class FieldValidator implements IValidator {
 
 		return register(property, new FieldBinding(control, rules){
 			@Override
-			public String processErrorMessage(ERRORS error, String message, String label) {
-				return FieldValidator.this.processErrorMessage(error, message, label);
+			public String processError(ERRORS error, String message, String label) {
+				return FieldValidator.this.processError(error, message, label);
 			}
 		});
 
