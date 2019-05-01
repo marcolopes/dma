@@ -145,21 +145,26 @@ public abstract class TableViewerContainer<T> {
 	}
 
 
+	public void refreshTable(boolean updateLabels) {
+		viewer.refresh(updateLabels);
+	}
+
+
+	public void refreshTable() {
+		refreshTable(true);
+	}
+
+
 	public void clearTable() {
 		objectCollection.clear();
-		viewer.refresh();
+		refreshTable();
 	}
 
 
 	public void updateTable() {
-		updateTable(false);
-	}
-
-
-	public void updateTable(boolean updateLabels) {
 		objectCollection.clear();
 		objectCollection.addAll(retrieveObjects());
-		viewer.refresh(updateLabels);
+		refreshTable();
 	}
 
 
