@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -163,6 +163,17 @@ public class StringUtils {
 	public static boolean isLowercase(String string) {
 
 		return LOWERCASE_PATTERN.matcher(string).matches();
+
+	}
+
+
+	public static int equals(String string, String...searchFor) {
+
+		for(int i=0; i<searchFor.length; i++){
+			if (string.equals(searchFor[i])) return i;
+		}
+
+		return -1;
 
 	}
 
