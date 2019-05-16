@@ -58,6 +58,6 @@ public class PreferenceValue {
 	public void setValue(double value) {store.setValue(name, value); store.save();}
 	public void setValue(boolean value) {store.setValue(name, value); store.save();}
 	public void setValue(String value) {store.setValue(name, value); store.save();}
-	public void setToDefault() {store.setToDefault(name);}
+	public void setToDefault() {store.setToDefault(name); store.save();}
 
 }
