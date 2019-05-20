@@ -17,8 +17,8 @@ public class ByteFileHandler extends FileHandler {
 		super(pathname);
 	}
 
-	public ByteFileHandler(File pathname) {
-		super(pathname);
+	public ByteFileHandler(File file) {
+		super(file);
 	}
 
 
