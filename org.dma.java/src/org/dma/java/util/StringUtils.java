@@ -456,6 +456,7 @@ public class StringUtils {
 	/** Ensure the ESCAPE char is escaped! */
 	public static String escape(String string) {
 
+		//ensure double backslash
 		return string.replace("\\", "\\\\");
 
 	}
