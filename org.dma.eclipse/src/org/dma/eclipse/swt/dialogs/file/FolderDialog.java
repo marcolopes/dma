@@ -28,6 +28,7 @@ public class FolderDialog extends DirectoryDialog {
 	}
 
 
+	/** @see DirectoryDialog#setFilterPath(String) */
 	public File folderPicker(String defaultPath) {
 
 		try{
@@ -36,7 +37,6 @@ public class FolderDialog extends DirectoryDialog {
 			// OSX 10.9 workaround
 			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
 			setFilterPath(defaultPath==null ? "." : defaultPath);
-			setFilterPath(defaultPath);
 
 			return new File(open());
 

@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-public abstract class FieldBinding extends FieldError implements IFieldRules {
+public abstract class FieldBinding extends FieldError {
 
 	private final Control control;
 	private final FieldFormat fieldFormat;
