@@ -26,6 +26,7 @@ public class FileImport extends FileDialog {
 		this(Display.getDefault().getActiveShell(), extensions);
 	}
 
+	/** @see FileDialog#setFilterExtensions(String[]) */
 	public FileImport(Shell parent, String...extensions) {
 		super(parent, SWT.OPEN);
 		setFilterExtensions(extensions);
@@ -33,6 +34,7 @@ public class FileImport extends FileDialog {
 	}
 
 
+	/** @see FileDialog#setFilterPath(String) */
 	public File filePicker(String defaultPath, String filename) {
 
 		try{

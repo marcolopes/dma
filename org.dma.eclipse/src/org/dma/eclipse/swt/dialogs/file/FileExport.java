@@ -25,6 +25,7 @@ public class FileExport extends FileDialog {
 		this(Display.getDefault().getActiveShell(), extensions);
 	}
 
+	/** @see FileDialog#setFilterExtensions(String[]) */
 	public FileExport(Shell parent, String...extensions) {
 		super(parent, SWT.SAVE);
 		setFilterExtensions(extensions);
@@ -32,6 +33,7 @@ public class FileExport extends FileDialog {
 	}
 
 
+	/** @see FileDialog#setFilterPath(String) */
 	public File filePicker(String defaultPath, String filename) {
 
 		try{
