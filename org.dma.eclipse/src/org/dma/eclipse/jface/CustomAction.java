@@ -3,10 +3,11 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.eclipse.swt.custom;
+package org.dma.eclipse.jface;
 
 import java.awt.image.BufferedImage;
 
+import org.dma.eclipse.swt.custom.CustomImageDescriptor;
 import org.dma.java.awt.ImageUtils;
 import org.dma.java.util.Debug;
 

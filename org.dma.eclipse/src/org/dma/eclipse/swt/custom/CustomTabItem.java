@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.custom;
 
+import org.dma.eclipse.jface.CustomAction;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
