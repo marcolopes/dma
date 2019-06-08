@@ -7,9 +7,9 @@ package org.dma.eclipse.swt.input.widgets;
 
 import java.math.BigDecimal;
 
-import org.dma.eclipse.swt.custom.CustomButton;
-import org.dma.eclipse.swt.custom.CustomShell;
 import org.dma.eclipse.swt.input.widgets.KeypadDisplay.FUNCTIONS;
+import org.dma.eclipse.swt.widgets.CustomButton;
+import org.dma.eclipse.swt.widgets.CustomShell;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;

@@ -12,6 +12,8 @@ import java.util.List;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.CollectionUtils;
 import org.dma.java.util.MovableList;
+import org.dma.java.util.RandomValue;
+import org.dma.java.util.StringUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -87,5 +89,14 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 		return ArrayUtils.greater(getSelectionIndices())+1<getItemCount();
 	}
 
+
+	/** DEBUG */
+	public void fill(int size) {
+		String line=StringUtils.replicate('-',20);
+		add(line+" DUMMY ITEMS "+line);
+		for (int i=0; i<=size-getItemCount(); i++){
+			add(i+": "+new RandomValue().letters(50));
+		}
+	}
 
 }

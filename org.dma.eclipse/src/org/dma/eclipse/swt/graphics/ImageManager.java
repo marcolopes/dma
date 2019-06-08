@@ -8,7 +8,7 @@ package org.dma.eclipse.swt.graphics;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
-import org.dma.eclipse.swt.custom.CustomImageDescriptor;
+import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
 import org.dma.java.awt.ImageUtils;
 
 import org.eclipse.jface.resource.ImageRegistry;

@@ -9,8 +9,8 @@ import java.util.LinkedHashMap;
 
 import org.dma.eclipse.Activator;
 import org.dma.eclipse.jface.CustomAction;
-import org.dma.eclipse.swt.custom.CustomBrowser;
-import org.dma.eclipse.swt.custom.CustomCTabItem;
+import org.dma.eclipse.swt.widgets.CustomBrowser;
+import org.dma.eclipse.swt.widgets.CustomCTabItem;
 import org.dma.java.util.Debug;
 
 import org.eclipse.jface.action.IToolBarManager;
