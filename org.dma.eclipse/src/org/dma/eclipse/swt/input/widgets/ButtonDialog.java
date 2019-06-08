@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.eclipse.swt.input;
+package org.dma.eclipse.swt.input.widgets;
 
 import org.dma.eclipse.swt.custom.CustomButton;
 import org.dma.eclipse.swt.custom.CustomShell;
