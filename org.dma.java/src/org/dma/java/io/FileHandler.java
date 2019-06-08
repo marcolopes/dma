@@ -90,15 +90,10 @@ public class FileHandler {
 	}
 
 
-	public InputStream asInputStream(Class...location) {
+	public InputStream asInputStream() {
 
 		try{
-			if(location.length==0) return new FileInputStream(file);
-
-			String resource=file.getPath().replace('\\','/');
-			for(Class klass: location){
-				return klass.getClassLoader().getResourceAsStream(resource);
-			}
+			return new FileInputStream(file);
 
 		}catch(Exception e){
 			System.err.println(e);
