@@ -3,12 +3,11 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.eclipse.swt.dialogs.button;
+package org.dma.eclipse.swt.input;
 
 import org.dma.eclipse.swt.custom.CustomButton;
 import org.dma.eclipse.swt.custom.CustomShell;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -20,31 +19,29 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-public abstract class ButtonDialog extends CustomShell {
+public abstract class ButtonMenu extends CustomShell {
 
-	public abstract void ok();
+	public abstract void done(int index);
 
-	private static final String OK = IDialogConstants.OK_LABEL;
-	private static final String CANCEL = IDialogConstants.CANCEL_LABEL;
-	private static final String[] LABELS = new String[]{OK, CANCEL};
-
+	private final String[] labels;
 	private final int height;
 
-	public ButtonDialog() {
-		this(Display.getDefault().getActiveShell());
+	public ButtonMenu(String...labels) {
+		this(Display.getDefault().getActiveShell(), labels);
 	}
 
-	public ButtonDialog(int height) {
-		this(Display.getDefault().getActiveShell(), height);
+	public ButtonMenu(int height, String...labels) {
+		this(Display.getDefault().getActiveShell(), height, labels);
 	}
 
-	public ButtonDialog(Shell parent) {
-		this(parent, Display.getDefault().getClientArea().height / 10);
+	public ButtonMenu(Shell parent, String...labels) {
+		this(parent, Display.getDefault().getClientArea().height / 10, labels);
 	}
 
-	public ButtonDialog(Shell parent, int height) {
+	public ButtonMenu(Shell parent, int height, String...labels) {
 		super(parent, STYLE_RESIZABLE);
 
+		this.labels=labels;
 		this.height=height;
 
 		createContents();
@@ -61,7 +58,7 @@ public abstract class ButtonDialog extends CustomShell {
 	private void createContents() {
 
 		Composite composite=new Composite(this, SWT.NONE);
-		GridLayout gridLayout=new GridLayout(2, true);
+		GridLayout gridLayout=new GridLayout(1, true);
 		gridLayout.marginWidth=0;
 		gridLayout.marginHeight=0;
 		gridLayout.horizontalSpacing=0;
@@ -69,22 +66,22 @@ public abstract class ButtonDialog extends CustomShell {
 		composite.setLayout(gridLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		for(String label: LABELS){
-			final CustomButton button=new CustomButton(composite, SWT.PUSH);
+		int index=0;
+		for(String label: labels){
+			CustomButton button=new CustomButton(composite, SWT.PUSH);
 			GridData gridData=new GridData(SWT.FILL, SWT.FILL, true, true);
-			gridData.minimumWidth=height*2;
+			gridData.minimumWidth=height*4;
 			gridData.minimumHeight=height;
 			button.setLayoutData(gridData);
 			button.setFontSize(15);
 			button.setText(label);
-			button.setData(label);
+			button.setData(index);
+			index++;
 
 			button.addKeyListener(new KeyAdapter(){
 				@Override
 				public void keyPressed(KeyEvent e) {
 					switch(e.keyCode){
-					case SWT.CR:
-					case SWT.KEYPAD_CR: close(); ok(); break;
 					case SWT.ESC: close(); break;
 					}
 				}
@@ -93,9 +90,9 @@ public abstract class ButtonDialog extends CustomShell {
 			button.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					String label=(String)e.widget.getData();
+					int index=(Integer)e.widget.getData();
 					close();
-					if (label.equals(OK)) ok();
+					done(index);
 				}
 			});
 		}
@@ -105,10 +102,10 @@ public abstract class ButtonDialog extends CustomShell {
 
 	public static void main(String[] argvs) {
 
-		new ButtonDialog() {
+		new ButtonMenu("Zero", "One", "Two") {
 			@Override
-			public void ok() {
-				System.out.println(OK);
+			public void done(int index) {
+				System.out.println(index);
 			}
 		}.openAndSleep();
 
