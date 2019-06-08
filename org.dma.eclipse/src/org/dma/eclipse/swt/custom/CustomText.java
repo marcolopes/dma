@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -16,6 +16,17 @@ public class CustomText extends Text {
 
 	@Override //subclassing
 	protected void checkSubclass() {}
+
+	public enum FUNCTIONS {
+		/** Move cursor 1 position back */
+		BACK,
+		/** Move cursor 1 position forward */
+		FORWARD,
+		/** Delete selected / before cursor chars */
+		DELETE,
+		/** Clear all chars */
+		CLEAR;
+	}
 
 	/** @see Text#Text(Composite, int) */
 	public CustomText(Composite parent, int style) {
@@ -41,6 +52,25 @@ public class CustomText extends Text {
 			}
 		});
 		setFont(font);
+	}
+
+
+	public void function(FUNCTIONS function) {
+
+		switch(function){
+		case BACK: setSelection(getCaretPosition()-1); break;
+		case FORWARD: setSelection(getCaretPosition()+1); break;
+		case DELETE:
+			//select 1 char before cursor
+			if (getSelectionCount()==0) setSelection(getCaretPosition()-1, getCaretPosition());
+			insert("");
+			break;
+		case CLEAR:
+			selectAll();
+			function(FUNCTIONS.DELETE);
+			break;
+		}
+
 	}
 
 

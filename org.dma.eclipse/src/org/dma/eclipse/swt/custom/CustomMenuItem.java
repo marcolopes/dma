@@ -7,6 +7,7 @@ package org.dma.eclipse.swt.custom;
 
 import java.awt.image.BufferedImage;
 
+import org.dma.eclipse.jface.CustomAction;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
 
