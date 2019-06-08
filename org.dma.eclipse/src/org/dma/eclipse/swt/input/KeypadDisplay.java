@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.eclipse.swt.dialogs.button;
+package org.dma.eclipse.swt.input;
 
 import java.math.BigDecimal;
 
