@@ -112,8 +112,7 @@ public class TraverseSupport {
 		if (control instanceof Text){
 			Text text=(Text)control;
 			//avoid MULTI
-			if (!NumericUtils.bit(text.getStyle(), SWT.MULTI))
-				text.selectAll();
+			if (!NumericUtils.bit(text.getStyle(), SWT.MULTI)) text.selectAll();
 		}
 	}
 

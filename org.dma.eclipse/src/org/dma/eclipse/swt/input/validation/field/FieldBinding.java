@@ -5,11 +5,12 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.input.validation.field;
 
-import org.dma.eclipse.swt.input.RegexMatcher;
+import org.dma.eclipse.swt.input.support.RegexMatcher;
 import org.dma.java.input.FieldFormat;
 import org.dma.java.util.TimeDateUtils;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -63,7 +64,7 @@ public abstract class FieldBinding extends FieldError {
 
 	public void dispose() {
 		control.removeFocusListener(focusListener);
-		control.removeListener(SWT.Selection,selectionListener);
+		control.removeListener(SWT.Selection, selectionListener);
 		if (regexMatcher!=null) regexMatcher.detach();
 	}
 
@@ -87,10 +88,11 @@ public abstract class FieldBinding extends FieldError {
 
 		if (control instanceof Spinner ||
 				control instanceof Combo ||
+				control instanceof CCombo ||
 				control instanceof List ||
 				control instanceof Button){
 
-			control.addListener(SWT.Selection,selectionListener);
+			control.addListener(SWT.Selection, selectionListener);
 
 		}
 
@@ -133,6 +135,13 @@ public abstract class FieldBinding extends FieldError {
 			//has no selected elements?
 			if (rules.isNotZero() && getCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
 		}
+		//CCOMBO
+		else if (control instanceof CCombo){
+			//has no elements?
+			if (rules.isNotEmpty() && getCCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
+			//has no selected elements?
+			if (rules.isNotZero() && getCCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
+		}
 		//LIST
 		else if (control instanceof List){
 			//has no elements?
@@ -162,15 +171,12 @@ public abstract class FieldBinding extends FieldError {
 
 	@Override
 	public void update() {
-
 		super.update();
-
 		if (control instanceof Text){
 			((Text)control).setEditable(enabled);
 		}else{
 			control.setEnabled(enabled);
 		}
-
 	}
 
 
@@ -184,6 +190,9 @@ public abstract class FieldBinding extends FieldError {
 		}
 		else if (control instanceof Combo){
 			return getCombo().getText();
+		}
+		else if (control instanceof CCombo){
+			return getCCombo().getText();
 		}
 		else if (control instanceof List){
 			return getList().getSelection()[0];
@@ -205,6 +214,10 @@ public abstract class FieldBinding extends FieldError {
 
 	public Combo getCombo() {
 		return (Combo)control;
+	}
+
+	public CCombo getCCombo() {
+		return (CCombo)control;
 	}
 
 	public List getList() {

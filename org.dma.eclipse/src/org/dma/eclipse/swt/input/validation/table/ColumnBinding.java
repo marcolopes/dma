@@ -7,7 +7,7 @@ package org.dma.eclipse.swt.input.validation.table;
 
 import java.math.BigDecimal;
 
-import org.dma.eclipse.swt.input.RegexMatcher;
+import org.dma.eclipse.swt.input.support.RegexMatcher;
 import org.dma.java.input.FieldFormat;
 
 import org.eclipse.swt.widgets.Button;
@@ -23,16 +23,16 @@ public abstract class ColumnBinding extends ColumnError {
 	private final RegexMatcher regexMatcher;
 
 	/** Text / combo (with regex) */
-	public ColumnBinding(Control text, FieldFormat fieldFormat, String label) {
+	public ColumnBinding(Control control, FieldFormat fieldFormat, String label) {
 		super(label);
-		this.control=text;
+		this.control=control;
 		this.regexMatcher=new RegexMatcher(control, fieldFormat);
 	}
 
 	/** Generic (no regex) */
-	public ColumnBinding(Control text, String label) {
+	public ColumnBinding(Control control, String label) {
 		super(label);
-		this.control=text;
+		this.control=control;
 		this.regexMatcher=null;
 	}
 
