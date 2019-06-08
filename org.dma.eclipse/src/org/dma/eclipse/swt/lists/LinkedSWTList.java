@@ -28,33 +28,33 @@ public class LinkedSWTList<T> extends MovableList<T> {
 
 
 	/**
-	 * Move SELECTED elements into list TOP
-	 * @param into - the destination list
+	 * Move SELECTED elements to TOP
+	 * @param target - the destination list
 	 */
-	public void moveToTop(LinkedSWTList into) {
+	public void moveToTop(LinkedSWTList target) {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
-		//into.insert(this, 0, selectionIndices);
+		//target.insert(this, 0, selectionIndices);
 		//remove(selectionIndices);
-		removeAll(into.insert(this, 0, selectionIndices));
-		into.getSWTList().insert(SWTList.getSelection(), 0);
+		removeAll(target.insert(this, 0, selectionIndices));
+		target.getSWTList().insert(SWTList.getSelection(), 0);
 		SWTList.remove(selectionIndices);
 
 	}
 
 
 	/**
-	 * Move SELECTED elements into list BOTTOM
-	 * @param into - the destination list
+	 * Move SELECTED elements to BOTTOM
+	 * @param target - the destination list
 	 */
-	public void moveToBottom(LinkedSWTList into) {
+	public void moveToBottom(LinkedSWTList target) {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
-		int itemCount = into.getSWTList().getItemCount();
-		//into.insert(this, itemCount, selectionIndices);
+		int itemCount = target.getSWTList().getItemCount();
+		//target.insert(this, itemCount, selectionIndices);
 		//remove(selectionIndices);
-		removeAll(into.insert(this, itemCount, selectionIndices));
-		into.getSWTList().insert(SWTList.getSelection(), itemCount);
+		removeAll(target.insert(this, itemCount, selectionIndices));
+		target.getSWTList().insert(SWTList.getSelection(), itemCount);
 		SWTList.remove(selectionIndices);
 
 	}

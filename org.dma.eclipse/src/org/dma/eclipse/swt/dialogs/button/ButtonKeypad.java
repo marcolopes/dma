@@ -7,11 +7,11 @@ package org.dma.eclipse.swt.dialogs.button;
 
 import java.math.BigDecimal;
 
-import org.dma.eclipse.swt.custom.CustomButton;
-import org.dma.eclipse.swt.custom.CustomShell;
-import org.dma.eclipse.swt.custom.CustomText.FUNCTIONS;
-import org.dma.eclipse.swt.custom.CustomDecimalText;
 import org.dma.eclipse.swt.graphics.ColorManager;
+import org.dma.eclipse.swt.widgets.CustomButton;
+import org.dma.eclipse.swt.widgets.CustomDecimalText;
+import org.dma.eclipse.swt.widgets.CustomShell;
+import org.dma.eclipse.swt.widgets.CustomText.FUNCTIONS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
