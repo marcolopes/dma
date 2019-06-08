@@ -11,7 +11,6 @@ import org.dma.java.input.FieldRegex;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -58,10 +57,6 @@ public class RegexMatcher {
 		}
 		else if(control instanceof Combo){
 			Combo control=(Combo)this.control;
-			text=control.getText();
-		}
-		else if(control instanceof StyledText){
-			StyledText control=(StyledText)this.control;
 			text=control.getText();
 		}
 		else if(control instanceof Text){
