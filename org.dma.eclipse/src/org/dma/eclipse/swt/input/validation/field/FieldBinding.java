@@ -87,8 +87,8 @@ public abstract class FieldBinding extends FieldError {
 		this.selectionListener=selectionListener;
 
 		if (control instanceof Spinner ||
-				control instanceof Combo ||
 				control instanceof CCombo ||
+				control instanceof Combo ||
 				control instanceof List ||
 				control instanceof Button){
 
@@ -103,18 +103,6 @@ public abstract class FieldBinding extends FieldError {
 	/*
 	 * Validation
 	 */
-	public void disable() {
-		clearError();
-		enabled=false;
-	}
-
-
-	public void reset() {
-		clearError();
-		enabled=true;
-	}
-
-
 	public void validate(boolean edited) {
 
 		//can be edited AND is not readonly?
@@ -128,19 +116,19 @@ public abstract class FieldBinding extends FieldError {
 			//is zero?
 			if (rules.isNotZero() && getText().trim().equals("0")) setError(ERRORS.IS_ZERO);
 		}
-		//COMBO
-		else if (control instanceof Combo){
-			//has no elements?
-			if (rules.isNotEmpty() && getCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
-			//has no selected elements?
-			if (rules.isNotZero() && getCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
-		}
 		//CCOMBO
 		else if (control instanceof CCombo){
 			//has no elements?
 			if (rules.isNotEmpty() && getCCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
 			//has no selected elements?
 			if (rules.isNotZero() && getCCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
+		}
+		//COMBO
+		else if (control instanceof Combo){
+			//has no elements?
+			if (rules.isNotEmpty() && getCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
+			//has no selected elements?
+			if (rules.isNotZero() && getCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
 		}
 		//LIST
 		else if (control instanceof List){
@@ -168,7 +156,6 @@ public abstract class FieldBinding extends FieldError {
 
 	}
 
-
 	@Override
 	public void update() {
 		super.update();
@@ -179,45 +166,39 @@ public abstract class FieldBinding extends FieldError {
 		}
 	}
 
+	public void reset() {
+		clearError();
+		enabled=true;
+	}
+
+	public void disable() {
+		clearError();
+		enabled=false;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setRules(int rules) {
+		this.rules=new FieldRules(rules);
+	}
+
 
 
 	/*
-	 * Getters and setters
+	 * Widgets
 	 */
-	public String getText() {
-		if (control instanceof Spinner){
-			return getSpinner().getText();
-		}
-		else if (control instanceof Combo){
-			return getCombo().getText();
-		}
-		else if (control instanceof CCombo){
-			return getCCombo().getText();
-		}
-		else if (control instanceof List){
-			return getList().getSelection()[0];
-		}
-		else if (control instanceof Button){
-			return getButton().getText();
-		}
-		else if (control instanceof DateTime){
-			DateTime dt=getDatetime();
-			return fieldFormat.format(TimeDateUtils.getCalendar(
-					dt.getYear(), dt.getMonth(), dt.getDay()).getTime());
-		}
-		return ((Text)control).getText();
-	}
-
 	public Spinner getSpinner() {
 		return (Spinner)control;
 	}
 
-	public Combo getCombo() {
-		return (Combo)control;
-	}
-
 	public CCombo getCCombo() {
 		return (CCombo)control;
+	}
+
+	public Combo getCombo() {
+		return (Combo)control;
 	}
 
 	public List getList() {
@@ -232,12 +213,32 @@ public abstract class FieldBinding extends FieldError {
 		return (DateTime)control;
 	}
 
-	public void setRules(int rules) {
-		this.rules=new FieldRules(rules);
-	}
-
-	public boolean isEnabled() {
-		return enabled;
+	public String getText() {
+		if (control instanceof Spinner){
+			return getSpinner().getText();
+		}
+		else if (control instanceof CCombo){
+			return getCCombo().getText();
+		}
+		else if (control instanceof Combo){
+			return getCombo().getText();
+		}
+		else if (control instanceof List){
+			return getList().getSelection()[0];
+		}
+		else if (control instanceof Button){
+			return getButton().getText();
+		}
+		else if (control instanceof DateTime){
+			DateTime dt=getDatetime();
+			return fieldFormat.format(TimeDateUtils.getCalendar(
+					dt.getYear(), dt.getMonth(), dt.getDay()).getTime());
+		}
+		else if (control instanceof Text){
+			Text control=(Text)this.control;
+			return control.getText();
+		}
+		return "";
 	}
 
 
