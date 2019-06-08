@@ -7,61 +7,37 @@ package org.dma.eclipse.swt.input;
 
 import java.util.regex.Pattern;
 
+import org.dma.java.input.FieldRegex;
+
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-public class FieldRegex {
+public class RegexMatcher {
 
-	private final Control control;
-	private final FieldFormat fieldFormat;
-	private final Pattern pattern;
-
-	private final VerifyListener verifyListener=new VerifyListener(){
+	private final VerifyListener verifyListener = new VerifyListener(){
 		@Override
 		public void verifyText(VerifyEvent e){
-			if(fieldFormat.isUppercase()){
+			if(regex.isUppercase()){
 				e.text=e.text.toUpperCase();
 			}
-			else if(fieldFormat.isLowercase()){
+			else if(regex.isLowercase()){
 				e.text=e.text.toLowerCase();
 			}
 			e.doit=patternMatcher(e);
 		}
-
-		private boolean patternMatcher(VerifyEvent e) {
-			String str="";
-			if(control instanceof Text){
-				Text text=(Text)control;
-				str=text.getText();
-			}
-			else if(control instanceof CCombo){
-				CCombo ccombo=(CCombo)control;
-				str=ccombo.getText();
-			}
-
-			StringBuffer newText=new StringBuffer(str).
-				replace(e.start, e.end, "").
-				insert(e.start, e.text);
-
-			/*
-			Debug.out("text", e.text);
-			Debug.out("start", e.start);
-			Debug.out("end", e.end);
-			Debug.out("newText", newText);
-			*/
-
-			return pattern.matcher(newText.toString()).matches();
-		}
 	};
 
+	private final Control control;
+	private final FieldRegex regex;
+	private final Pattern pattern;
 
-	public FieldRegex(Control control, FieldFormat fieldFormat) {
+	public RegexMatcher(Control control, FieldRegex regex) {
 		this.control=control;
-		this.fieldFormat=fieldFormat;
-		this.pattern=fieldFormat.getRegexPattern();
+		this.regex=regex;
+		this.pattern=regex.getRegexPattern();
 		addListeners();
 	}
 
@@ -70,6 +46,34 @@ public class FieldRegex {
 		removeListeners();
 	}
 
+
+	private boolean patternMatcher(VerifyEvent e) {
+
+		String str="";
+
+		if(control instanceof Text){
+			Text text=(Text)control;
+			str=text.getText();
+		}
+		else if(control instanceof CCombo){
+			CCombo ccombo=(CCombo)control;
+			str=ccombo.getText();
+		}
+
+		StringBuffer newText=new StringBuffer(str).
+			replace(e.start, e.end, "").
+			insert(e.start, e.text);
+
+		/*
+		Debug.out("text", e.text);
+		Debug.out("start", e.start);
+		Debug.out("end", e.end);
+		Debug.out("newText", newText);
+		*/
+
+		return pattern.matcher(newText.toString()).matches();
+
+	}
 
 
 	/*

@@ -25,14 +25,14 @@ public class BundleUtils {
 	}
 
 
-	/** PATH resolver for JAR plugin */
+	/** Bundle PATH resolver */
 	public static String pathResolver(Bundle bundle, String relativePath) {
 
 		URL url=urlResolver(bundle, relativePath);
 		if (url!=null) try{
 			//does not work on exported JAR
-			//FileLocator.resolve(url).getFile();
-			String pathname=FileLocator.toFileURL(url).getFile();
+			//FileLocator.resolve(url).getPath();
+			String pathname=FileLocator.toFileURL(url).getPath();
 			//normalize path
 			return new File(pathname).getCanonicalPath();
 		}catch(IOException e){
