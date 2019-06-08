@@ -183,15 +183,14 @@ public class TextFileHandler extends FileHandler {
 	 *
 	 */
 	/** Reads text lines from file */
-	public String read(int lines, Class...location) {
+	public String read(int lines) {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
 			BufferedReader br=
 					new BufferedReader(
-							new InputStreamReader(
-									asInputStream(location), charset));
+							new InputStreamReader(asInputStream(), charset));
 
 			try{
 				String line;
@@ -213,9 +212,9 @@ public class TextFileHandler extends FileHandler {
 
 
 	/** Reads text from file */
-	public String read(Class...location) {
+	public String read() {
 
-		return read(-1, location);
+		return read(-1);
 
 	}
 
