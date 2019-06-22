@@ -24,7 +24,7 @@ public class DatabaseParameters {
 
 	public DatabaseParameters(DRIVERS driver, String host, String database,
 			String user, String password, POOLMANAGERS pool) {
-		this(driver, host, database, null, user, password, pool);
+		this(driver, host, database, "", user, password, pool);
 	}
 
 	public DatabaseParameters(DRIVERS driver, String host, String database,
