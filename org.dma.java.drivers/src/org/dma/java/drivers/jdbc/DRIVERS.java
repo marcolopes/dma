@@ -80,7 +80,12 @@ public enum DRIVERS {
 	}
 
 	public boolean isH2Embedded(String host) {
-		return this==H2 && (host.isEmpty() || isLocalhost(host));
+		switch(this){
+		case H2: return host.isEmpty() || isLocalhost(host);
+		case MySQL:
+		case PostgreSQL:
+		case SQLServer: break;
+		}return false;
 	}
 
 	public Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
@@ -98,13 +103,13 @@ public enum DRIVERS {
 		getConnection(url, user, password).close();
 	}
 
-	private String getDatabaseUrl(String host, String database) {
+	private String getDatabaseUrl(String host, String database, String folder) {
 		switch(this){
 		case H2: return isH2Embedded(host) ?
 				// jdbc:h2:[file:][<path>]<database>
-				"jdbc:h2:file:" + database :
+				"jdbc:h2:file:" + folder + database :
 				// jdbc:h2:tcp://<server>[:<port>]/[<path>]<database>
-				"jdbc:h2:tcp://" + host + "/" + database;
+				"jdbc:h2:tcp://" + host + "/" + folder + database;
 
 		// jdbc:mysql://<host>:<port>/<database>
 		case MySQL: return "jdbc:mysql://" + host + "/" + database;
@@ -118,8 +123,8 @@ public enum DRIVERS {
 		return null;
 	}
 
-	public String getConnectionUrl(String host, String database, String properties, POOLMANAGERS pool) {
-		StringBuilder url=new StringBuilder(getDatabaseUrl(host, database));
+	public String getConnectionUrl(String host, String database, String folder, String properties, POOLMANAGERS pool) {
+		StringBuilder url=new StringBuilder(getDatabaseUrl(host, database, folder));
 		switch(this){
 		case H2:
 			if (isH2Embedded(host)){
@@ -163,7 +168,7 @@ public enum DRIVERS {
 		if (cmd.startAndWait()!=0) throw new Exception(cmd.toString());
 	}
 
-	public void executeBackup(String host, String database, String user, String password,
+	public void executeBackup(String host, String database, String folder, String user, String password,
 			BackupParameters backup) throws Exception {
 		//colibri9_H2_2014-12-31_125959
 		String prefix=new File(database).getName()+"_"+name()+"_"+
@@ -173,14 +178,16 @@ public enum DRIVERS {
 		System.out.println("BACKUP FILE: "+zip);
 
 		if (isH2Embedded(host)){
-			File db=new File(database+Constants.SUFFIX_PAGE_FILE).getAbsoluteFile();
-			System.out.println("BACKUP DATABASE: "+db);
+			String pathname=folder + database;
+			System.out.println("DATABASE PATH: "+pathname);
+			File file=new File(pathname + Constants.SUFFIX_PAGE_FILE).getAbsoluteFile();
+			System.out.println("DATABASE FILE: "+file);
 			//empty database?
-			if (db.length()==0) return;
+			if (file.length()==0) return;
 			//check lock
-			checkH2Lock(database);
+			checkH2Lock(pathname);
 			//ZIP dump
-			new ZipFileHandler(zip.toFile()).normalDeflate(Arrays.asList(db));
+			new ZipFileHandler(zip.toFile()).normalDeflate(Arrays.asList(file));
 			//Driver H2 v1.3.169
 			//Backup.execute does not work with eclipse exported product on MAC!
 			//https://groups.google.com/forum/#!topic/h2-database/AT7OpOkQfZ4
@@ -194,7 +201,7 @@ public enum DRIVERS {
 			System.out.println("BACKUP DUMP: "+dump);
 			switch(this){
 			case H2: executeBackup(backup.buildCommand(
-					getDatabaseUrl(host, database), user, password, dump), password); break;
+					getDatabaseUrl(host, database, folder), user, password, dump), password); break;
 			case MySQL:
 			case PostgreSQL:
 			case SQLServer: executeBackup(backup.buildCommand(
@@ -208,8 +215,8 @@ public enum DRIVERS {
 	}
 
 	/** Only for H2 database */
-	public void compact(String host, String database, String user, String password) throws Exception {
-		String url=getDatabaseUrl(host, database);
+	public void compact(String host, String database, String folder, String user, String password) throws Exception {
+		String url=getDatabaseUrl(host, database, folder);
 		String file = database+".sql";
 		Script.execute(url, user, password, file);
 		DeleteDbFiles.execute(System.getProperty("java.io.tmpdir"), database, true);

@@ -5,13 +5,17 @@
  *******************************************************************************/
 package org.dma.java.drivers.jdbc;
 
+import java.io.File;
 import java.sql.Connection;
+
+import org.dma.java.util.Debug;
 
 public class DatabaseParameters {
 
 	public final DRIVERS driver;
 	public final String host;
 	public final String database;
+	public final String folder;
 	public final String properties;
 	public final String user;
 	public final String password;
@@ -25,20 +29,39 @@ public class DatabaseParameters {
 
 	public DatabaseParameters(DRIVERS driver, String host, String database,
 			String properties, String user, String password, POOLMANAGERS pool) {
-		this(driver, host, database, properties, user, password, pool, null);
+		this(driver, host, database, null, properties, user, password, pool);
 	}
 
-	public DatabaseParameters(DRIVERS driver, String host, String database,
+	public DatabaseParameters(DRIVERS driver, String host, String database, File folder,
+			String properties, String user, String password, POOLMANAGERS pool) {
+		this(driver, host, database, folder, properties, user, password, pool, new BackupParameters());
+	}
+
+	/**
+	 * @param driver - database driver {@link DRIVERS}
+	 * @param host - connetion host; EMPTY=H2 Embedded mode
+	 * @param database - database name
+	 * @param folder - folder for H2 databases; NULL=no folder
+	 * @param properties - connection properties; USUALLY property=value&property=value...
+	 * @param user - database username
+	 * @param password - database password
+	 * @param pool - poolmanager {@link POOLMANAGERS}
+	 * @param backup - backup parameters
+	 */
+	public DatabaseParameters(DRIVERS driver, String host, String database, File folder,
 			String properties, String user, String password, POOLMANAGERS pool,
 			BackupParameters backup) {
 		this.driver=driver;
-		this.host=host==null ? "" : host;
-		this.database=database==null ? "" : database;
-		this.properties=properties==null ? "" : properties;
-		this.user=user==null ? "" : user;
-		this.password=password==null ? "" : password;
+		this.host=host;
+		this.database=database;
+		Debug.err("database", this.database);
+		this.folder=folder==null ? "" : folder.getAbsolutePath()+File.separator;
+		Debug.err("folder", this.folder);
+		this.properties=properties;
+		this.user=user;
+		this.password=password;
 		this.pool=pool;
-		this.backup=backup==null ? new BackupParameters() : backup;
+		this.backup=backup;
 	}
 
 	public boolean isLocalhost() {
@@ -54,7 +77,7 @@ public class DatabaseParameters {
 	}
 
 	public String getConnectionUrl() {
-		return driver.getConnectionUrl(host, database, properties, pool);
+		return driver.getConnectionUrl(host, database, folder, properties, pool);
 	}
 
 	public Connection getConnection() throws Exception {
@@ -66,7 +89,7 @@ public class DatabaseParameters {
 	}
 
 	public void executeBackup() throws Exception {
-		driver.executeBackup(host, database, user, password, backup);
+		driver.executeBackup(host, database, folder, user, password, backup);
 	}
 
 
