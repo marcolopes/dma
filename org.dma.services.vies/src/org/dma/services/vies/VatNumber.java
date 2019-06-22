@@ -13,6 +13,16 @@ public class VatNumber {
 	 */
 	public static class CheckDigit {
 
+		/*
+		 * Portugal
+		 * - All numbers are weighted from right to the left, beginning with the next to last number
+		 * (thus before the place of the check digit), with their position in the number sequence,
+		 * i.e. the next to last number is multiplied by 2, the next by 3, etc..
+		 * - The products are summed up.
+		 * - The full remainder to the next lower multiples of 11 (modulo 11) is calculated.
+		 * - The check digit is the difference of the remainder to 11.
+		 * - If the difference is larger nine, p = 0 applies
+		 */
 		public static boolean PT(String number) {
 			final int max=9;
 			//check if is numeric and has 9 numbers
@@ -23,8 +33,8 @@ public class VatNumber {
 				checkSum+=(number.charAt(i)-'0')*(max-i);
 			}
 			int checkDigit=11-(checkSum % 11);
-			//if checkDigit is higher than TEN set it to zero
-			if (checkDigit>=10) checkDigit=0;
+			//if checkDigit is higher than 9 set it to zero
+			if (checkDigit>9) checkDigit=0;
 			//compare checkDigit with the last number of NIF
 			return checkDigit==number.charAt(max-1)-'0';
 		}
