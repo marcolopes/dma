@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 
 public class FolderHandler {
 
-	public static String currentFolder() {
+	public static File currentFolder() {
 		try{
-			return new File(".").getCanonicalPath();
+			return new File(".").getCanonicalFile();
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -39,7 +39,7 @@ public class FolderHandler {
 
 	/** Returns folder path relative to current folder */
 	public String getRelativePath() {
-		String current=currentFolder();
+		String current=currentFolder().getAbsolutePath();
 		String THIS=folder.getAbsolutePath();
 		return THIS.toLowerCase().startsWith(current.toLowerCase()) &&
 				THIS.length()>current.length() ?
