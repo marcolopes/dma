@@ -75,7 +75,7 @@ public class FileParameters {
 	}
 
 
-	/** AbsolutePath */
+	/** path + filename */
 	@Override
 	public String toString() {
 		return folder.getAbsolutePath() + File.separator + filename;
