@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -16,16 +16,12 @@ public class BackupParameters {
 
 	public static class Arguments extends ArrayList<String> {
 
-		private static final long serialVersionUID=1L;
+		private static final long serialVersionUID = 1L;
 
 		public static final String USER = "[user]";
 		public static final String PASSWORD = "[password]";
 		public static final String DATABASE = "[database]";
 		public static final String DUMP = "[dump]";
-
-		public Arguments() {
-			super();
-		}
 
 		/** Arguments separated by comma */
 		public Arguments(String arguments) {
@@ -33,7 +29,12 @@ public class BackupParameters {
 		}
 
 		public Arguments(String...arguments) {
+			this();
 			for(String element: arguments) add(element);
+		}
+
+		public Arguments() {
+			super();
 		}
 
 		@Override
@@ -53,12 +54,12 @@ public class BackupParameters {
 	public final Arguments arguments;
 
 	public BackupParameters() {
-		this(null, null, null);
+		this("", "", null);
 	}
 
 	public BackupParameters(String folder, String command, Arguments arguments) {
-		this.folder=folder==null ? "" : folder;
-		this.command=command==null ? "" : command;
+		this.folder=folder;
+		this.command=command;
 		this.arguments=arguments==null ? new Arguments() : arguments;
 	}
 
