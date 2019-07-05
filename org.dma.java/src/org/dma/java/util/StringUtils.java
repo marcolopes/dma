@@ -9,6 +9,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -180,8 +181,11 @@ public class StringUtils {
 
 	public static int startsWith(String string, String...searchFor) {
 
-		for(int i=0; i<searchFor.length; i++){
-			if (string.startsWith(searchFor[i])) return i;
+		String[] array=Arrays.copyOf(searchFor, searchFor.length);
+		Arrays.sort(array, Collections.reverseOrder());
+
+		for(int i=0; i<array.length; i++){
+			if (string.startsWith(array[i])) return ArrayUtils.indexOf(searchFor, array[i]);
 		}
 
 		return -1;
@@ -221,15 +225,7 @@ public class StringUtils {
 
 	public static int ocurrences(String string, String searchFor) {
 
-		int count=0;
-
-		int index=0;
-		while((index=string.indexOf(searchFor, index))!=-1){
-			index+=searchFor.length();
-			count++;
-		}
-
-		return count;
+		return indexOf(string, searchFor).size();
 
 	}
 
