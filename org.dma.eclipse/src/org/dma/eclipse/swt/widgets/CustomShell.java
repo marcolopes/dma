@@ -24,12 +24,15 @@ public class CustomShell extends Shell {
 	/*
 	 * Styles
 	 */
-	public static final int STYLE_FIXED = SWT.TITLE | SWT.PRIMARY_MODAL | SWT.CLOSE;
-	public static final int STYLE_RESIZABLE = SWT.TITLE | SWT.PRIMARY_MODAL | SWT.CLOSE | SWT.RESIZE;
-	public static final int STYLE_MESSAGE = SWT.TITLE | SWT.PRIMARY_MODAL;
+	/** MODAL (block) + TITLE */
+	public static final int STYLE_MESSAGE = SWT.PRIMARY_MODAL | SWT.TITLE;
+	/** MODAL (block) + TITLE + CLOSE */
+	public static final int STYLE_DEFAULT = STYLE_MESSAGE | SWT.CLOSE;
+	/** MODAL (block) + TITLE + CLOSE + RESIZE + MIN + MAX */
+	public static final int STYLE_RESIZABLE = STYLE_DEFAULT | SWT.RESIZE | SWT.MIN | SWT.MAX;
 
 	public CustomShell(int style) {
-		this(Display.getDefault().getActiveShell(), style);
+		this(null, style);
 	}
 
 	/** @see Shell#Shell(Display, int) */
