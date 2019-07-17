@@ -6,6 +6,7 @@
 package org.dma.java.drivers;
 
 import org.dma.java.drivers.jdbc.POOLMANAGERS;
+import org.dma.java.util.Debug;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -40,7 +41,7 @@ public class Activator implements BundleActivator {
 		try{
 			return Class.forName(className);
 		}catch(ClassNotFoundException e){
-			e.printStackTrace();
+			Debug.err(e);
 		}return null;
 	}
 

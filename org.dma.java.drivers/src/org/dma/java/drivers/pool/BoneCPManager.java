@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
+import org.dma.java.util.Debug;
+
 public class BoneCPManager implements IPoolManager {
 
 	private final BoneCP pool;
@@ -29,7 +31,7 @@ public class BoneCPManager implements IPoolManager {
 			return new BoneCP(config);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}return null;
 	}
 
