@@ -13,7 +13,7 @@ public final class ClassUtils {
 		try{
 			return Class.forName(className);
 		}catch(ClassNotFoundException e){
-			e.printStackTrace();
+			Debug.err(e);
 		}return null;
 	}
 
@@ -26,9 +26,9 @@ public final class ClassUtils {
 			return targetClass.newInstance();
 		}
 		catch(InstantiationException e){
-			e.printStackTrace();
+			Debug.err(e);
 		}catch(IllegalAccessException e){
-			e.printStackTrace();
+			Debug.err(e);
 		}return null;
 
 	}

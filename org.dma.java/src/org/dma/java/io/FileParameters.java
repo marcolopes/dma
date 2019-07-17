@@ -7,6 +7,8 @@ package org.dma.java.io;
 
 import java.io.File;
 
+import org.dma.java.util.Debug;
+
 public class FileParameters {
 
 	public final String prefix;
@@ -45,7 +47,7 @@ public class FileParameters {
 			return file;
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;

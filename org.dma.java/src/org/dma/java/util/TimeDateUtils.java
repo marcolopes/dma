@@ -576,8 +576,9 @@ public class TimeDateUtils {
 			return getSimpleDateFormat(pattern).parse(date);
 
 		}catch(ParseException e){
-			System.err.println(e);
-		}catch(Exception e){}
+		}catch(Exception e){
+			Debug.err(e);
+		}
 		return null;
 	}
 
@@ -702,8 +703,9 @@ public class TimeDateUtils {
 			return new Time(getSimpleDateFormat(pattern).parse(time).getTime());
 
 		}catch(ParseException e){
-			System.err.println(e);
-		}catch(Exception e){}
+		}catch(Exception e){
+			Debug.err(e);
+		}
 		return null;
 	}
 

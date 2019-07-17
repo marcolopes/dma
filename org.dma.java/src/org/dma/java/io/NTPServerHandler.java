@@ -11,6 +11,7 @@ import java.util.Date;
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.NtpV3Packet;
 import org.apache.commons.net.ntp.TimeInfo;
+import org.dma.java.util.Debug;
 
 /** Network Time Protocol */
 public class NTPServerHandler {
@@ -96,7 +97,7 @@ public class NTPServerHandler {
 			return new NTPTimeInfo(time.getMessage(), time.getReturnTime());
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;

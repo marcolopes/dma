@@ -14,6 +14,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import org.dma.java.util.Debug;
 import org.imgscalr.Scalr;
 
 public class ImageUtils {
@@ -39,7 +40,7 @@ public class ImageUtils {
 			return result;
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}return null;
 	}
 
@@ -59,7 +60,7 @@ public class ImageUtils {
 			return drawImage(ImageIO.read(new ByteArrayInputStream(bytes)));
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}return null;
 	}
 
@@ -73,7 +74,7 @@ public class ImageUtils {
 			return drawImage(ImageIO.read(new File(pathname)));
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}return null;
 	}
 
@@ -90,7 +91,7 @@ public class ImageUtils {
 			return drawImage(bufferedImage);
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}return null;
 	}
 
@@ -100,7 +101,7 @@ public class ImageUtils {
 			return size==0 ? bufferedImage : Scalr.resize(bufferedImage, size);
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}return null;
 	}
 

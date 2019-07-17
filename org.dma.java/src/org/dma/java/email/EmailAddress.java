@@ -8,6 +8,8 @@ package org.dma.java.email;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import org.dma.java.util.Debug;
+
 public class EmailAddress {
 
 	private final String email;
@@ -33,8 +35,9 @@ public class EmailAddress {
 			return true;
 
 		}catch(AddressException e){
-			System.err.println(e);
-		}catch(Exception e){}
+		}catch(Exception e){
+			Debug.err(e);
+		}
 
 		return false;
 	}

@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
+import org.dma.java.util.Debug;
+
 public class TextFileHandler extends FileHandler {
 
 	public final Charset charset;
@@ -78,7 +80,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return buffer.toString();
@@ -108,7 +110,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return buffer.toString();
@@ -155,7 +157,7 @@ public class TextFileHandler extends FileHandler {
 			return true;
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return false;
@@ -203,7 +205,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return buffer.toString();
@@ -261,7 +263,7 @@ public class TextFileHandler extends FileHandler {
 			return true;
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return false;

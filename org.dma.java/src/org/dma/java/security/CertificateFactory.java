@@ -15,6 +15,7 @@ import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.x509.X509V1CertificateGenerator;
 import org.dma.java.cipher.RSACipher;
+import org.dma.java.util.Debug;
 
 public class CertificateFactory {
 
@@ -90,7 +91,7 @@ public class CertificateFactory {
 			return cert;
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;

@@ -114,7 +114,7 @@ public class SendMail {
 					new EmailAttachment(file, "Attachment Description"));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 
 	}

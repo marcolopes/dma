@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 
 public class FileURL {
@@ -19,7 +20,7 @@ public class FileURL {
 		try{
 			return new URL(urlname+"/"+filename);
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 		return null;
 	}
