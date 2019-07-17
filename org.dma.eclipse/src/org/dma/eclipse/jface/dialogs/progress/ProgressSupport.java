@@ -43,7 +43,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			put(action, action.getClass().getName());
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}else{
 			throw new UnsupportedOperationException();
 		}

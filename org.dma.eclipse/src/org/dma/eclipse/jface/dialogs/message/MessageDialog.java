@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.dma.eclipse.jface.dialogs.message;
 
+import org.dma.java.util.Debug;
+
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -33,14 +35,13 @@ public class MessageDialog extends org.eclipse.jface.dialogs.MessageDialog {
 
 		private boolean result=true;
 
-		public boolean open(final String header, final String message) {
+		public boolean open(final String header, String message) {
 
 			if (message!=null && !message.isEmpty()) try{
+				final String message2=header==null || header.isEmpty() ? message : header+"\n"+message;
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
 						Shell shell=Display.getDefault().getActiveShell();
-						final String message2=header==null || header.isEmpty() ?
-								message : header+"\n"+message;
 						switch(MessageDialog.TYPE.this) {
 						case ERROR: openError(shell, title, message2); break;
 						case INFORMATION: openInformation(shell, title, message2); break;
@@ -52,7 +53,7 @@ public class MessageDialog extends org.eclipse.jface.dialogs.MessageDialog {
 				return result;
 
 			}catch(Exception e){
-				e.printStackTrace();
+				Debug.err(e);
 			}
 
 			return defaultResult;

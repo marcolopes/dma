@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.graphics;
 
+import org.dma.java.util.Debug;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -29,7 +31,7 @@ public class ImageHandler {
 			saver.save(pathname, format);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 		return false;
 	}

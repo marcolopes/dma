@@ -8,6 +8,7 @@ package org.dma.eclipse.ui;
 import java.io.PrintStream;
 
 import org.dma.eclipse.swt.graphics.ColorManager;
+import org.dma.java.util.Debug;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IPartListener;
@@ -134,7 +135,7 @@ public class ConsoleView extends MessageConsole {
 			System.setOut(newSystemStream.out);
 			System.setErr(newSystemStream.err);
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 	}
 
@@ -145,7 +146,7 @@ public class ConsoleView extends MessageConsole {
 			System.setErr(systemStream.err);
 			systemStream=null;
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 	}
 
