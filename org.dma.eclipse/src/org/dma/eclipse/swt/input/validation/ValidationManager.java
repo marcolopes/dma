@@ -72,7 +72,7 @@ public class ValidationManager implements IValidationManager {
 
 		for(IValidator validator: validatorMap.values()){
 			validator.validateFields();
-			validator.validateToolBar();
+			validator.validateButtons();
 			validator.postError(getErrorMessage());
 		}
 
