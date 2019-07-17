@@ -11,6 +11,7 @@ import java.util.Date;
 
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
+import org.dma.java.util.Debug;
 
 public final class PublicServerTime {
 
@@ -34,7 +35,7 @@ public final class PublicServerTime {
                 return date;
 
 			}catch(IOException e) {
-				e.printStackTrace();
+				Debug.err(e);
 			}
 		}
 

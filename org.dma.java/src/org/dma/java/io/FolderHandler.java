@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.regex.Pattern;
 
+import org.dma.java.util.Debug;
+
 public class FolderHandler {
 
 	public static File currentFolder() {
@@ -16,7 +18,7 @@ public class FolderHandler {
 			return new File(".").getCanonicalFile();
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}return null;
 	}
 
@@ -55,7 +57,7 @@ public class FolderHandler {
 			return folder.exists() ? true : folder.mkdir();
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return false;
@@ -77,7 +79,7 @@ public class FolderHandler {
 			});
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;
@@ -108,7 +110,7 @@ public class FolderHandler {
 				if(file.delete()) count++;
 
 			}catch(Exception e){
-				System.err.println(e);
+				Debug.err(e);
 			}
 
 			System.out.println(count+"/"+files.length+" files deleted in "+
@@ -141,7 +143,7 @@ public class FolderHandler {
 			});
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;

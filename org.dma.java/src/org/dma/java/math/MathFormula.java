@@ -78,9 +78,8 @@ public class MathFormula {
 			return result;
 
 		}catch(ScriptException e){
-			System.err.println(e);
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 
 		return null;

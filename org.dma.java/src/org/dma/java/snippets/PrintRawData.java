@@ -12,6 +12,8 @@ import javax.print.PrintException;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
+import org.dma.java.util.Debug;
+
 public class PrintRawData {
 
 	public enum ESCAPE {
@@ -40,7 +42,7 @@ public class PrintRawData {
 			job.print(doc, null);
 
 		}catch(PrintException e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 
 	}

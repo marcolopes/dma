@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
+import org.dma.java.util.Debug;
+
 public class URLTextFileHandler {
 
 	public final FileURL fileurl;
@@ -69,7 +71,7 @@ public class URLTextFileHandler {
 			}
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return buffer.toString();

@@ -12,6 +12,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import org.dma.java.util.Debug;
+
 public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
 	/**
@@ -46,7 +48,7 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 			return output.renameTo(new File(dst));
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return false;
@@ -82,7 +84,7 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 			return true;
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return false;

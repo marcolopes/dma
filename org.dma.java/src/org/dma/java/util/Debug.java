@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -24,7 +24,7 @@ public class Debug {
 			System.out.println("Data Size: " + baos.size());
 
 		}catch(IOException e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 	}
 
@@ -75,12 +75,9 @@ public class Debug {
 		StringBuilder sb=new StringBuilder();
 
 		try{
-			sb.append(caller.getFileName());
-			sb.append("(");
-			sb.append(caller.getMethodName());
-			sb.append(")");
+			sb.append(caller);
 			if (message!=null) sb.append(" "+message);
-			if (obj!=null) sb.append(": "+obj.toString());
+			if (obj!=null) sb.append(" "+obj.toString());
 
 		}catch(Exception e){
 			e.printStackTrace();

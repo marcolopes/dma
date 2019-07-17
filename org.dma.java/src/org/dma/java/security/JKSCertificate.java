@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import org.dma.java.io.ByteFileHandler;
+import org.dma.java.util.Debug;
 import org.dma.java.util.TimeDateUtils;
 
 public class JKSCertificate {
@@ -80,7 +81,7 @@ public class JKSCertificate {
 			this.X509Cert=(X509Certificate)keyStore.getCertificate(this.alias);
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 			keyStore=null;
 		}
 
@@ -109,7 +110,7 @@ public class JKSCertificate {
 					password==null ? null : password.toCharArray());
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;

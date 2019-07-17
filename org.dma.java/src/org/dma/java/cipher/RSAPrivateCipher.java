@@ -14,6 +14,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 import org.dma.java.io.ByteFileHandler;
+import org.dma.java.util.Debug;
 
 public class RSAPrivateCipher extends CryptoCipher {
 
@@ -35,7 +36,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 			return kf.generatePrivate(spec);
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 		return null;
 	}

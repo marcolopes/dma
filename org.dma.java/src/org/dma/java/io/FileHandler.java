@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 
 public class FileHandler {
@@ -73,7 +74,7 @@ public class FileHandler {
 			return file.delete();
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 		return false;
 	}
@@ -84,7 +85,7 @@ public class FileHandler {
 			return file.renameTo(new File(pathname));
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 		return false;
 	}
@@ -96,7 +97,7 @@ public class FileHandler {
 			return new FileInputStream(file);
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;
@@ -108,7 +109,7 @@ public class FileHandler {
 			return new FileOutputStream(file);
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;
@@ -120,7 +121,7 @@ public class FileHandler {
 			return file.toURI().toURL();
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;
@@ -133,7 +134,7 @@ public class FileHandler {
 					equals(file.getCanonicalFile());
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return false;

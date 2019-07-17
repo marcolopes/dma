@@ -11,6 +11,8 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 
+import org.dma.java.util.Debug;
+
 public class XMLFileHandler<T> extends FileHandler {
 
 	public XMLFileHandler(String pathname) {
@@ -47,7 +49,7 @@ public class XMLFileHandler<T> extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;
@@ -88,7 +90,7 @@ public class XMLFileHandler<T> extends FileHandler {
 			return true;
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return false;

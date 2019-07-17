@@ -11,6 +11,8 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 
+import org.dma.java.util.Debug;
+
 public class ByteFileHandler extends FileHandler {
 
 	public ByteFileHandler(String pathname) {
@@ -49,7 +51,7 @@ public class ByteFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return null;
@@ -73,7 +75,7 @@ public class ByteFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return bytes;
@@ -111,7 +113,7 @@ public class ByteFileHandler extends FileHandler {
 			return bytes.length;
 
 		}catch(Exception e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 
 		return 0;

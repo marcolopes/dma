@@ -32,6 +32,8 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dma.java.util.Debug;
+
 public class Numerals {
 
 	public static class NumeralsUnit {
@@ -252,7 +254,7 @@ public class Numerals {
 				s+=unit[1];
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 
 		return s;
