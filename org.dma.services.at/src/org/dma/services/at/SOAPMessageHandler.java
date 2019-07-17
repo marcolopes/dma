@@ -49,6 +49,7 @@ import org.dma.java.cipher.RSAPublicCipher;
 import org.dma.java.io.NTPServerHandler.NTPTimeInfo;
 import org.dma.java.io.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.security.JKSCertificate;
+import org.dma.java.util.Debug;
 /**
  * SOAP Message Handler
  */
@@ -235,7 +236,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			interceptAndRecordSoapMessage(smc);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 
 		return true;
