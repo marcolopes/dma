@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
+import org.dma.java.util.Debug;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.FaturasServiceHandler;
@@ -79,7 +80,7 @@ public class FaturasServiceTest {
 			System.out.println(response.getReturnMessage());
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 
 	}

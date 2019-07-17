@@ -10,6 +10,7 @@ import java.util.Random;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
+import org.dma.java.util.Debug;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.StockMovementServiceHandler;
 import org.dma.services.at.proxy.StockMovementServiceHandler.A10_ENDPOINTS;
@@ -97,7 +98,7 @@ public class StockMovementServiceTest {
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 
 	}
