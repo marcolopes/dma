@@ -59,26 +59,22 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 
 
 	public void report() {
+
 		if (hasExceptions()){
-			System.out.println(size()+" Exception(s)");
-			debug();
-		}
-	}
-
-
-	private void debug() {
-		System.err.println("DEBUG BY SEVERITY");
-		for(Integer key: keySet()){
-			System.out.print("Type "+key+" (");
-			switch(key){
-			case SEVERITY_OK: System.out.print("OK"); break;
-			case SEVERITY_INFO: System.out.print("INFO"); break;
-			case SEVERITY_WARNING: System.out.print("WARNING"); break;
-			case SEVERITY_ERROR: System.out.print("ERROR"); break;
-			case SEVERITY_CANCEL: System.out.print("CANCEL"); break;
+			System.out.println(size()+" Exception(s) BY SEVERITY");
+			for(Integer key: keySet()){
+				System.out.print("Type "+key+" (");
+				switch(key){
+				case SEVERITY_OK: System.out.print("OK"); break;
+				case SEVERITY_INFO: System.out.print("INFO"); break;
+				case SEVERITY_WARNING: System.out.print("WARNING"); break;
+				case SEVERITY_ERROR: System.out.print("ERROR"); break;
+				case SEVERITY_CANCEL: System.out.print("CANCEL"); break;
+				}
+				System.out.println(") = "+get(key));
 			}
-			System.out.println(") = "+get(key));
 		}
+
 	}
 
 

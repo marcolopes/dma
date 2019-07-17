@@ -212,8 +212,7 @@ public abstract class FieldValidator implements IValidator {
 		String errorMessage="";
 
 		for(FieldBinding binding: validatorMap.values()){
-			if(binding.hasError())
-				errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getMessage();
+			if(binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getMessage();
 		}
 
 		return errorMessage;

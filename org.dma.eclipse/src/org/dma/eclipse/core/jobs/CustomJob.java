@@ -170,7 +170,7 @@ public class CustomJob extends Job {
 			time.start();
 			lock.acquire();
 			monitor.beginTask("", IProgressMonitor.UNKNOWN);
-			Debug.err("STARTED "+this+" JOB" );
+			Debug.out("STARTED "+this+" JOB" );
 
 			for(int i=0; i<tasks.size() && !canceled; i++){
 
@@ -195,7 +195,7 @@ public class CustomJob extends Job {
 			return Status.OK_STATUS;
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 		finally{
 			/*
@@ -212,7 +212,7 @@ public class CustomJob extends Job {
 			time.stop();
 			lock.release();
 			monitor.done();
-			Debug.err("FINISHED "+this+" JOB in "+time.toString());
+			Debug.out("FINISHED "+this+" JOB in "+time.toString());
 		}
 
 		return Status.CANCEL_STATUS;

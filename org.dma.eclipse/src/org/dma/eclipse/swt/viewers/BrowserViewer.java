@@ -60,7 +60,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 			createBrowser();
 
 		}catch(Exception e){
-			e.printStackTrace();
+			Debug.err(e);
 		}
 	}
 

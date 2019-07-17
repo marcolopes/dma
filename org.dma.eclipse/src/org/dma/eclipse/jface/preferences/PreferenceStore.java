@@ -8,6 +8,8 @@ package org.dma.eclipse.jface.preferences;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.dma.java.util.Debug;
+
 public class PreferenceStore extends org.eclipse.jface.preference.PreferenceStore {
 
 	private static HashMap<String, PreferenceValue> VALUE_CACHE=new HashMap();
@@ -27,7 +29,7 @@ public class PreferenceStore extends org.eclipse.jface.preference.PreferenceStor
 		try{
 			super.load();
 		}catch(IOException e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 	}
 
@@ -35,7 +37,7 @@ public class PreferenceStore extends org.eclipse.jface.preference.PreferenceStor
 		try{
 			super.save();
 		}catch(IOException e){
-			System.err.println(e);
+			Debug.err(e);
 		}
 	}
 

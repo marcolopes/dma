@@ -47,7 +47,7 @@ public class TraverseSupport {
 				if (event.doit) selectNext(control);
 
 			}catch(Exception e) {
-				e.printStackTrace();
+				Debug.err(e);
 			}
 		}
 	};

@@ -6,6 +6,7 @@
 package org.dma.eclipse.swt.widgets;
 
 import org.apache.commons.lang.SystemUtils;
+import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
@@ -32,11 +33,11 @@ public final class CustomBrowser extends Browser {
 				return style;
 
 			}catch(SWTError e){
-				System.err.println(e);
+				Debug.err(e);
 			}catch(SWTException e){
-				System.err.println(e);
+				Debug.err(e);
 			}catch(Exception e){
-				e.printStackTrace();
+				Debug.err(e);
 			}
 		}
 		return null;
