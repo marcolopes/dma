@@ -13,7 +13,7 @@ public interface IValidator {
 
 	public void validateFields();
 
-	public void validateToolBar();
+	public void validateButtons();
 
 	public void clearError();
 
