@@ -14,6 +14,8 @@ public class Debug {
 
 	public static boolean STATUS = true;
 
+	public static String NULL = "<NULL>";
+
 	public static void size(Map map) {
 		try{
 			System.out.println("Index Size: " + map.size());
@@ -30,43 +32,43 @@ public class Debug {
 
 
 	public static void err() {
-		err(null, null, new Throwable().getStackTrace()[1]);
+		err(null, NULL);
 	}
 
 	public static void err(String message) {
-		err(message, null, new Throwable().getStackTrace()[1]);
+		err(message, NULL);
 	}
 
 	public static void err(Object obj) {
-		err(null, obj==null ? "<NULL>" : obj, new Throwable().getStackTrace()[1]);
+		err(null, obj);
 	}
 
 	public static void err(String message, Object obj) {
-		err(message, obj==null ? "<NULL>" : obj, new Throwable().getStackTrace()[1]);
+		err(message, obj, new Throwable().getStackTrace()[1]);
 	}
 
-	public static void err(String message, Object obj, StackTraceElement caller) {
+	private static void err(String message, Object obj, StackTraceElement caller) {
 		if (STATUS) System.err.println(log(message, obj, caller));
 	}
 
 
 	public static void out() {
-		out(null, null, new Throwable().getStackTrace()[1]);
+		out(null, NULL);
 	}
 
 	public static void out(String message) {
-		out(message, null, new Throwable().getStackTrace()[1]);
+		out(message, NULL);
 	}
 
 	public static void out(Object obj) {
-		out(null, obj==null ? "<NULL>" : obj, new Throwable().getStackTrace()[1]);
+		out(null, obj);
 	}
 
 	public static void out(String message, Object obj) {
-		out(message, obj==null ? "<NULL>" : obj, new Throwable().getStackTrace()[1]);
+		out(message, obj, new Throwable().getStackTrace()[2]);
 	}
 
-	public static void out(String message, Object obj, StackTraceElement caller) {
+	private static void out(String message, Object obj, StackTraceElement caller) {
 		if (STATUS) System.out.println(log(message, obj, caller));
 	}
 
@@ -75,9 +77,11 @@ public class Debug {
 		StringBuilder sb=new StringBuilder();
 
 		try{
-			sb.append(caller);
-			if (message!=null) sb.append(" "+message);
-			if (obj!=null) sb.append(" "+obj.toString());
+			sb.insert(0, obj==null ? NULL :
+				obj.equals(NULL) ? "" : obj.toString());
+			sb.insert(0, message==null || message.isEmpty() ? "" :
+				sb.length()==0 ? message : message+":");
+			sb.insert(0, caller+" ");
 
 		}catch(Exception e){
 			e.printStackTrace();

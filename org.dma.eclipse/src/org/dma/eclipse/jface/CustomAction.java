@@ -15,7 +15,7 @@ import org.eclipse.jface.action.Action;
 
 public abstract class CustomAction extends Action {
 
-	public final String ID=getClass().getCanonicalName();
+	public final String ID=getClass().getName();
 
 	/** @see Action */
 	public CustomAction() {
