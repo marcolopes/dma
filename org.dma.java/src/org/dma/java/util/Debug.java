@@ -32,15 +32,15 @@ public class Debug {
 
 
 	public static void err() {
-		err(null, NULL);
+		err(null, NULL, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void err(String message) {
-		err(message, NULL);
+		err(message, NULL, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void err(Object obj) {
-		err(null, obj);
+		err(null, obj, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void err(String message, Object obj) {
@@ -53,19 +53,19 @@ public class Debug {
 
 
 	public static void out() {
-		out(null, NULL);
+		out(null, NULL, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void out(String message) {
-		out(message, NULL);
+		out(message, NULL, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void out(Object obj) {
-		out(null, obj);
+		out(null, obj, new Throwable().getStackTrace()[1]);
 	}
 
 	public static void out(String message, Object obj) {
-		out(message, obj, new Throwable().getStackTrace()[2]);
+		out(message, obj, new Throwable().getStackTrace()[1]);
 	}
 
 	private static void out(String message, Object obj, StackTraceElement caller) {
