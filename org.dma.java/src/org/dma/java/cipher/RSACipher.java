@@ -117,7 +117,7 @@ public class RSACipher {
 			System.out.println("Are both public keys equal? " + keyPair.getPublic().equals(publicKey));
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 	}
@@ -131,7 +131,7 @@ public class RSACipher {
 			System.out.println();
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 		String message="The quick brown fox jumps over the lazy dog.";

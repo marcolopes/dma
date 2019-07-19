@@ -18,7 +18,6 @@ import oasisNamesSpecificationUblSchemaXsdInvoice2.InvoiceType;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
-import org.dma.java.util.Debug;
 import org.dma.services.espap.proxy.CTMessageServiceHandler;
 import org.dma.services.espap.proxy.CTMessageServiceHandler.A10_ENDPOINTS;
 
@@ -127,7 +126,7 @@ public class CTMessageServiceTest {
 			System.out.println(response.getMessageOutputData());
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 	}

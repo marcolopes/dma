@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import org.dma.java.io.TextFileHandler;
 import org.dma.java.io.XMLFileHandler;
+import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -29,7 +30,7 @@ public class FileExport extends FileDialog {
 	public FileExport(Shell parent, String...extensions) {
 		super(parent, SWT.SAVE);
 		setFilterExtensions(extensions);
-		System.out.println("extensions: "+Arrays.asList(extensions));
+		Debug.out("extensions: "+Arrays.asList(extensions));
 	}
 
 

@@ -9,6 +9,7 @@ package org.dma.services.at.proxy;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.security.JKSCertificate;
+import org.dma.java.util.Debug;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
@@ -53,7 +54,7 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 		// cria um novo servico
 		FaturasService service = new FaturasService();
 		// wsdlLocation esta' definido no servico
-		System.out.println(service.getWSDLDocumentLocation());
+		Debug.out(service.getWSDLDocumentLocation());
 		Faturas soapService = service.getFaturasSOAP();
 
 		// inicializa handler

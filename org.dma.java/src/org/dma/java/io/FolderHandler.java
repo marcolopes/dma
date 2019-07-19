@@ -113,7 +113,7 @@ public class FolderHandler {
 				Debug.err(e);
 			}
 
-			System.out.println(count+"/"+files.length+" files deleted in "+
+			Debug.out(count+"/"+files.length+" files deleted in "+
 					folder.getAbsolutePath()+File.separator+wildcards);
 		}
 
@@ -183,10 +183,10 @@ public class FolderHandler {
 
 	public static final void main(String[] args) {
 
-		System.out.println(currentFolder());
+		Debug.out(currentFolder());
 		FolderHandler handler=new FolderHandler(currentFolder()+"/tmp/");
-		System.out.println(handler.folder.getAbsolutePath());
-		System.out.println(handler.getRelativePath());
+		Debug.out(handler.folder.getAbsolutePath());
+		Debug.out(handler.getRelativePath());
 
 	}
 

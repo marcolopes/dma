@@ -789,7 +789,6 @@ public class TimeDateUtils {
 
 	public static void main(String[] argvs) {
 
-
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 		System.out.println("SimpleDateFormat: "+sdf.format(new Date()));

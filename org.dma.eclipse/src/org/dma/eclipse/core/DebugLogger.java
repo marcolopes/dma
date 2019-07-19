@@ -61,7 +61,9 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 	public void report() {
 
 		if (hasExceptions()){
+
 			System.out.println(size()+" Exception(s) BY SEVERITY");
+
 			for(Integer key: keySet()){
 				System.out.print("Type "+key+" (");
 				switch(key){
@@ -73,6 +75,7 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 				}
 				System.out.println(") = "+get(key));
 			}
+
 		}
 
 	}

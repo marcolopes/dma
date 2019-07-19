@@ -8,6 +8,8 @@ package org.dma.eclipse.swt.dialogs.file;
 import java.io.File;
 import java.util.Arrays;
 
+import org.dma.java.util.Debug;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
@@ -24,7 +26,7 @@ public class FolderDialog extends DirectoryDialog {
 
 	public FolderDialog(Shell parent, String...extensions) {
 		super(parent, SWT.SAVE);
-		System.out.println("extensions: "+Arrays.asList(extensions));
+		Debug.out("extensions: "+Arrays.asList(extensions));
 	}
 
 

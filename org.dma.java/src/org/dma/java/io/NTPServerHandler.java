@@ -91,7 +91,7 @@ public class NTPServerHandler {
 		for(String host: hosts) try{
 
 			InetAddress hostAddr=InetAddress.getByName(host);
-			System.out.println(hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
+			Debug.out(hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
 			TimeInfo time=client.getTime(hostAddr);
 			client.close();
 			return new NTPTimeInfo(time.getMessage(), time.getReturnTime());
