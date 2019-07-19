@@ -162,7 +162,7 @@ public class TaxFreeServiceTest {
 			}
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 	}

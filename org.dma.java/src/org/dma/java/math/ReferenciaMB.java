@@ -7,6 +7,8 @@ package org.dma.java.math;
 
 import java.math.BigDecimal;
 
+import org.dma.java.util.Debug;
+
 public class ReferenciaMB {
 
 	/** Maximo VALOR a pagar = 999999.99 */
@@ -90,8 +92,8 @@ public class ReferenciaMB {
 		String valor8=right("00000000"+valor.movePointRight(2).intValueExact(), 8);
 		String control=entidade + id7 + valor8;
 
-		System.out.println("valor8: "+valor8);
-		System.out.println("control: "+control);
+		Debug.out("valor8: "+valor8);
+		Debug.out("control: "+control);
 
 		return CheckDigits.ISO7064Mod97_10(control);
 
@@ -132,8 +134,8 @@ public class ReferenciaMB {
 	 */
 	public boolean isValid(String ref, BigDecimal valor) {
 
-		System.out.println("entidade: "+entidade);
-		System.out.println("valor: "+valor);
+		Debug.out("entidade: "+entidade);
+		Debug.out("valor: "+valor);
 
 		if (entidade.length()!=5) throw new IllegalArgumentException("Entidade "+entidade+" invalida");
 		if (!isValid(valor)) throw new IllegalArgumentException("Valor "+valor+" invalido");
@@ -142,9 +144,9 @@ public class ReferenciaMB {
 		String id7=ref9.substring(0, 7);
 		String checkDigits=ref9.substring(7, 9);
 
-		System.out.println("ref9: "+ref9);
-		System.out.println("id7: "+id7);
-		System.out.println("checkDigits: "+checkDigits);
+		Debug.out("ref9: "+ref9);
+		Debug.out("id7: "+id7);
+		Debug.out("checkDigits: "+checkDigits);
 
 		return checkDigits(id7, valor).equals(checkDigits);
 
@@ -165,8 +167,8 @@ public class ReferenciaMB {
 	 */
 	public String generate(String id, BigDecimal valor) {
 
-		System.out.println("entidade: "+entidade);
-		System.out.println("valor: "+valor);
+		Debug.out("entidade: "+entidade);
+		Debug.out("valor: "+valor);
 
 		if (entidade.length()!=5) throw new IllegalArgumentException("Entidade "+entidade+" invalida");
 		if (!isValid(valor)) throw new IllegalArgumentException("Valor "+valor+" invalido");
@@ -175,9 +177,9 @@ public class ReferenciaMB {
 		String checkDigits=checkDigits(id7, valor);
 		String ref9=id7 + checkDigits;
 
-		System.out.println("id: "+id);
-		System.out.println("id7: "+id7);
-		System.out.println("checkDigits: "+checkDigits);
+		Debug.out("id: "+id);
+		Debug.out("id7: "+id7);
+		Debug.out("checkDigits: "+checkDigits);
 
 		return ref9.substring(0,3)+" "+
 				ref9.substring(3,6)+" "+

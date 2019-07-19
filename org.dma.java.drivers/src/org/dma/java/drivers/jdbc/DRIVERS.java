@@ -60,7 +60,7 @@ public enum DRIVERS {
 
 	public static void checkH2Lock(String database) throws Exception {
 		String filename=database+Constants.SUFFIX_LOCK_FILE;
-		System.out.println("DATABASE LOCK: "+filename);
+		Debug.out("DATABASE LOCK: "+filename);
 		try{
 			FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
 			lock.lock(FileLock.LOCK_FILE);
@@ -163,7 +163,7 @@ public enum DRIVERS {
 		//http://www.postgresql.org/docs/8.1/static/libpq-envars.html
 		case PostgreSQL: cmd.setVariable("PGPASSWORD", password); break;
 		}
-		System.out.println("BACKUP COMMAND: "+cmd);
+		Debug.out("BACKUP COMMAND: "+cmd);
 		//executes command
 		if (cmd.startAndWait()!=0) throw new Exception(cmd.toString());
 	}
@@ -175,13 +175,13 @@ public enum DRIVERS {
 				TimeDateUtils.getDateFormatted(new Date(),"yyyy-MM-dd_HHmmss");
 
 		FileParameters zip=new FileParameters(prefix, "zip", backup.folder);
-		System.out.println("BACKUP FILE: "+zip);
+		Debug.out("BACKUP FILE: "+zip);
 
 		if (isH2Embedded(host)){
 			String pathname=folder + database;
-			System.out.println("DATABASE PATH: "+pathname);
+			Debug.out("DATABASE PATH: "+pathname);
 			File file=new File(pathname + Constants.SUFFIX_PAGE_FILE).getAbsoluteFile();
-			System.out.println("DATABASE FILE: "+file);
+			Debug.out("DATABASE FILE: "+file);
 			//empty database?
 			if (file.length()==0) return;
 			//check lock
@@ -198,7 +198,7 @@ public enum DRIVERS {
 		}else{
 			//H2, MySQL, PostgreSQL
 			FileParameters dump=new FileParameters(prefix, "sql", backup.folder);
-			System.out.println("BACKUP DUMP: "+dump);
+			Debug.out("BACKUP DUMP: "+dump);
 			switch(this){
 			case H2: executeBackup(backup.buildCommand(
 					getDatabaseUrl(host, database, folder), user, password, dump), password); break;

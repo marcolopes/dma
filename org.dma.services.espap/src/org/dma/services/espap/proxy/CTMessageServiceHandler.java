@@ -11,6 +11,7 @@ import com.softlimits.clarinet.MessageService;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.security.JKSCertificate;
+import org.dma.java.util.Debug;
 import org.dma.services.espap.SOAPMessageHandler;
 /**
  * PROXY para ligacao ao endpoint do webservice
@@ -50,7 +51,7 @@ public class CTMessageServiceHandler extends SOAPMessageHandler {
 		// cria um novo servico
 		MessageService service = new MessageService();
 		// wsdlLocation esta' definido no servico
-		System.out.println(service.getWSDLDocumentLocation());
+		Debug.out(service.getWSDLDocumentLocation());
 		IMessageService soapService = service.getCustomBindingIMessageService();
 
 		// inicializa handler

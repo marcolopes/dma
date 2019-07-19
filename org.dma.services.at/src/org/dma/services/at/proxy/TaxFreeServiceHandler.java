@@ -8,6 +8,7 @@ package org.dma.services.at.proxy;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.security.JKSCertificate;
+import org.dma.java.util.Debug;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeService;
@@ -52,7 +53,7 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 		// cria um novo servico
 		TaxFreeServiceImpl service = new TaxFreeServiceImpl();
 		// wsdlLocation esta' definido no servico
-		System.out.println(service.getWSDLDocumentLocation());
+		Debug.out(service.getWSDLDocumentLocation());
 		TaxFreeService soapService = service.getTaxFreeServicePort();
 
 		// inicializa handler

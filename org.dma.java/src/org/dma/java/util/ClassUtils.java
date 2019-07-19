@@ -75,7 +75,6 @@ public final class ClassUtils {
 	public static void main(String[] args) throws Exception {
 
 		System.out.println(newInstance(ErrorList.class));
-
 		System.out.println(invoke("java.lang.Integer", "valueOf", "10"));
 
 	}

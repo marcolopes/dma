@@ -80,7 +80,7 @@ public class FaturasServiceTest {
 			System.out.println(response.getReturnMessage());
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 	}

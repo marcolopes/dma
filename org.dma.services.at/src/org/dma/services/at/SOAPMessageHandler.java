@@ -166,7 +166,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 				NTPTimeInfo time = NTP_SERVERS.queryAll(500, NTP_SERVERS.OAL, NTP_SERVERS.XS2ALL, NTP_SERVERS.WINDOWS);
 				final String timestamp = sdf.format(time==null ? new Date() : time.getServerDate());
-				System.out.println("DATE: "+timestamp);
+				Debug.out("DATE: "+timestamp);
 				/*
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));

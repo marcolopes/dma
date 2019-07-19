@@ -29,7 +29,7 @@ public final class PublicServerTime {
 
 			try{
                 InetAddress hostAddr = InetAddress.getByName(host);
-                System.out.println("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
+                Debug.out("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
                 TimeInfo info = client.getTime(hostAddr);
                 Date date = new Date(info.getReturnTime());
                 return date;

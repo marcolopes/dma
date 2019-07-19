@@ -8,11 +8,8 @@ package org.dma.java.snippets;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
-import javax.print.PrintException;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
-
-import org.dma.java.util.Debug;
 
 public class PrintRawData {
 
@@ -41,8 +38,8 @@ public class PrintRawData {
 			Doc doc=new SimpleDoc(ESCAPE.EPSON.sequence, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
 			job.print(doc, null);
 
-		}catch(PrintException e){
-			Debug.err(e);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 	}
