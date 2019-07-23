@@ -80,7 +80,7 @@ public class Debug {
 			sb.insert(0, obj==null ? NULL :
 				obj.equals(NULL) ? "" : obj.toString());
 			sb.insert(0, message==null || message.isEmpty() ? "" :
-				sb.length()==0 ? message : message+":");
+				sb.length()==0 ? message : message+": ");
 			sb.insert(0, caller+" ");
 
 		}catch(Exception e){
