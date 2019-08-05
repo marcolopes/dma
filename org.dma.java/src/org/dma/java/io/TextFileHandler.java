@@ -158,9 +158,7 @@ public class TextFileHandler extends FileHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return false;
+		}return false;
 
 	}
 
@@ -264,9 +262,7 @@ public class TextFileHandler extends FileHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return false;
+		}return false;
 
 	}
 

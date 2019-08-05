@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
@@ -60,8 +62,10 @@ public class FileHandler {
 	 * Generic File Copy<br>
 	 * Does not cancel the operation
 	 */
+	@Deprecated
 	public AbstractFileCopy copy() {
 		return new AbstractFileCopy(file){
+			@Override
 			public boolean cancel() {
 				return false;
 			}
@@ -69,14 +73,39 @@ public class FileHandler {
 	}
 
 
-	public boolean delete() {
+	/**
+	 * Copies the file to DESTINATION
+	 * @param dst can be file or directory
+	 */
+	public boolean copyTo(File dst) {
 		try{
-			return file.delete();
+			//destination can be a directory!
+			Files.copy(file.toPath(), dst.isDirectory() ?
+					new File(dst.getPath()+File.separator+file.getName()).toPath() : dst.toPath(),
+					StandardCopyOption.REPLACE_EXISTING);
+			return true;
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-		return false;
+		}return false;
+	}
+
+
+	/**
+	 * Moves the file to DESTINATION
+	 * @param dst can be file or directory
+	 */
+	public boolean moveTo(File dst) {
+		try{
+			//destination can be a directory!
+			Files.move(file.toPath(), dst.isDirectory() ?
+					new File(dst.getPath()+File.separator+file.getName()).toPath() : dst.toPath(),
+					StandardCopyOption.REPLACE_EXISTING);
+			return true;
+
+		}catch(Exception e){
+			Debug.err(e);
+		}return false;
 	}
 
 
@@ -86,21 +115,27 @@ public class FileHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-		return false;
+		}return false;
+	}
+
+
+	public boolean delete() {
+		try{
+			return file.delete();
+
+		}catch(Exception e){
+			Debug.err(e);
+		}return false;
 	}
 
 
 	public InputStream asInputStream() {
-
 		try{
 			return new FileInputStream(file);
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 	}
 
 
@@ -110,9 +145,7 @@ public class FileHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 	}
 
 
@@ -122,9 +155,7 @@ public class FileHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 	}
 
 
@@ -135,9 +166,7 @@ public class FileHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return false;
+		}return false;
 	}
 
 
