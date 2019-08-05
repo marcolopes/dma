@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -22,36 +22,40 @@ public class CryptoCipher {
 	 */
 	public enum CIPHERS {
 
-		AES_CBC ("AES", "CBC", 128),
+		BLOWFISH ("Blowfish"),
+		AES_CBC ("AES", "CBC", "NoPadding", 128),
 		AES_CBC_PKCS5 ("AES", "CBC", "PKCS5Padding", 128),
-		AES_ECB ("AES", "ECB", 128),
+		AES_ECB ("AES", "ECB", "NoPadding", 128),
 		AES_ECB_PKCS5 ("AES", "ECB", "PKCS5Padding", 128),
-		DES_CBC ("DES", "CBC", 56),
+		DES_CBC ("DES", "CBC", "NoPadding", 56),
 		DES_CBC_PKCS5 ("DES", "CBC", "PKCS5Padding", 56),
-		DES_ECB ("DES", "ECB", 56),
+		DES_ECB ("DES", "ECB", "NoPadding", 56),
 		DES_ECB_PKCS5 ("DES", "ECB", "PKCS5Padding", 56),
-		DESede_CBC ("DESede", "CBC", 168),
+		DESede_CBC ("DESede", "CBC", "NoPadding", 168),
 		DESede_CBC_PKCS5 ("DESede", "CBC", "PKCS5Padding", 168),
-		DESede_ECB ("DESede", "ECB", 168),
+		DESede_ECB ("DESede", "ECB", "NoPadding", 168),
 		DESede_ECB_PKCS5 ("DESede", "ECB", "PKCS5Padding", 168),
 		RSA_ECB_PKCS1 ("RSA", "ECB", "PKCS1Padding", 1024, 2048),
 		RSA_ECB_OAEPWithSHA_1AndMGF1 ("RSA", "ECB", "OAEPWithSHA-1AndMGF1Padding", 1024, 2048),
 		RSA_ECB_OAEPWithSHA_256AndMGF1 ("RSA", "ECB", "OAEPWithSHA-256AndMGF1Padding", 1024, 2048);
 
-		public final String algorithm, mode, padding;
-		/** algorithm/mode/padding */
+		public final String algorithm;
 		public final String transformation;
 		public final int[] keysize;
 
-		private CIPHERS(String algorithm, String mode, int...keysize) {
-			this(algorithm, mode, "NoPadding", keysize);
+		/** transformation = algorithm */
+		private CIPHERS(String algorithm) {
+			this(algorithm, algorithm);
 		}
 
+		/** transformation = algorithm/mode/padding */
 		private CIPHERS(String algorithm, String mode, String padding, int...keysize) {
+			this(algorithm, algorithm+"/"+mode+"/"+padding, keysize);
+		}
+
+		private CIPHERS(String algorithm, String transformation, int...keysize) {
 			this.algorithm=algorithm;
-			this.mode=mode;
-			this.padding=padding;
-			this.transformation=algorithm+"/"+mode+"/"+padding;
+			this.transformation=transformation;
 			this.keysize=keysize;
 		}
 
@@ -79,6 +83,12 @@ public class CryptoCipher {
 	private Cipher cipher;
 	private Cipher decipher;
 
+	/** Uses algorithm as transformation */
+	public CryptoCipher(byte[] key, String algorithm) {
+		this(key, algorithm, algorithm);
+	}
+
+	/** Uses {@link CIPHERS#transformation} */
 	public CryptoCipher(byte[] key, CIPHERS cipher) {
 		this(key, cipher.algorithm, cipher.transformation);
 	}
@@ -88,28 +98,25 @@ public class CryptoCipher {
 	}
 
 	/** Uses algorithm as transformation */
-	public CryptoCipher(byte[] key, String algorithm) {
-		this(new SecretKeySpec(key, algorithm));
-	}
-
-	/** Uses algorithm as transformation */
 	public CryptoCipher(Key key) {
 		this(key, key.getAlgorithm());
 	}
 
-	public CryptoCipher(CIPHERS cipher) {
-		this(cipher, cipher.keySize());
-	}
-
-	public CryptoCipher(CIPHERS cipher, int keySize) {
-		this(cipher.generateKey(keySize), cipher.transformation);
-	}
-
+	/** Uses {@link CIPHERS#transformation} */
 	public CryptoCipher(Key key, CIPHERS cipher) {
 		this(key, cipher.transformation);
 	}
 
-	/** @see CIPHERS#transformation */
+	/** Uses {@link CIPHERS#transformation} */
+	public CryptoCipher(CIPHERS cipher) {
+		this(cipher, cipher.keySize());
+	}
+
+	/** Uses {@link CIPHERS#transformation} */
+	public CryptoCipher(CIPHERS cipher, int keySize) {
+		this(cipher.generateKey(keySize), cipher.transformation);
+	}
+
 	public CryptoCipher(Key key, String transformation) {
 		this.key=key;
 
@@ -135,9 +142,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -164,9 +169,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -192,9 +195,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -208,9 +209,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -236,9 +235,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -263,9 +260,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 

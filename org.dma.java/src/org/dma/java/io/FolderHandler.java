@@ -58,9 +58,7 @@ public class FolderHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return false;
+		}return false;
 
 	}
 
@@ -80,9 +78,7 @@ public class FolderHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -144,9 +140,7 @@ public class FolderHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -165,10 +159,7 @@ public class FolderHandler {
 
 		int index=0;
 		String[] names=new String[files.length];
-		for(File file: files){
-			names[index++]=file.getName();
-		}
-
+		for(File file: files) names[index++]=file.getName();
 		return names;
 
 	}

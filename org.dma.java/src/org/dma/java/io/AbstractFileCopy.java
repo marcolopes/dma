@@ -25,7 +25,7 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 
 
 	/**
-	 * Copies a file from SOURCE to DESTINATION
+	 * Copies SOURCE file to DESTINATION file
 	 * @return
 	 * TRUE if copy was completed;
 	 * FALSE if canceled or error
@@ -56,9 +56,7 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return false;
+		}return false;
 
 	}
 

@@ -39,19 +39,14 @@ public class FileParameters {
 
 	/** @see File#createTempFile(String, String, File) */
 	public File createTempFile() {
-
 		try{
 			File file=File.createTempFile(prefix+"-", suffix, folder);
 			file.deleteOnExit();
-
 			return file;
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
-
+		}return null;
 	}
 
 
