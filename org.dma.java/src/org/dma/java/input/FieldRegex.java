@@ -43,11 +43,11 @@ public class FieldRegex extends FieldProperties {
 		case STRING:
 			String range="";
 			//allows digits
-			if(isDigits()) range+="0-9 ";
+			if (isDigits()) range+="0-9 ";
 			//allows letters
-			if(isLetters()) range+="a-zA-Z ";
+			if (isLetters()) range+="a-zA-Z ";
 			//allows separators
-			if(isSeparators()) range+="\\-/";
+			if (isSeparators()) range+="\\-/";
 			//default (digits and letters)
 			if (range.isEmpty()) range+=(char)0+"-"+(char)65535;
 			//character set
@@ -61,21 +61,16 @@ public class FieldRegex extends FieldProperties {
 		case DECIMAL:
 		case INTEGER:
 			//negative signal?
-			if(!isPositive()) regex+="-{0,1}";
+			if (!isPositive()) regex+="-{0,1}";
+		//$FALL-THROUGH$
+		case BOOLEAN:
 			//digits only
 			regex+="\\d";
 			//integer limit
 			regex+="{0," + size.size + "}";
-			//decimals
-			if(size.scale>0){
-				//decimal sparator
-				String group="(\\.\\d";
-				//fraction limit
-				group+="{0," + size.scale + "}";
-				//optional group
-				group+=")?";
-				regex+=group;
-			}break;
+			//decimal group (decimal sparator + fraction limit + optional group)
+			if (size.scale>0) regex+="(\\.\\d{0," + size.scale + "})?";
+			break;
 		}
 		//expression end
 		regex+="$";
