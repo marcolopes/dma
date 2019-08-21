@@ -29,16 +29,17 @@ public class FieldFormat extends FieldRegex {
 
 	public enum TYPES {
 
-		TIME ("Time"),
-		DATE ("Date"),
-		DECIMAL ("BigDecimal"),
-		INTEGER ("Integer"),
-		STRING ("String");
+		TIME (java.sql.Time.class),
+		DATE (java.util.Date.class),
+		DECIMAL (java.math.BigDecimal.class),
+		INTEGER (java.lang.Integer.class),
+		BOOLEAN (java.lang.Boolean.class),
+		STRING (java.lang.String.class);
 
-		public final String java;
+		public final Class klass;
 
-		TYPES(String java) {
-			this.java=java;
+		TYPES(Class klass) {
+			this.klass=klass;
 		}
 
 	}
@@ -89,6 +90,7 @@ public class FieldFormat extends FieldRegex {
 		case DATE: return TimeDateUtils.DEFAULT_DATE_PATTERN;
 		case DECIMAL:
 		case INTEGER:
+		case BOOLEAN:
 			String pattern="";
 			//#,###,##
 			for(int i=size.size; i>1; i--){
@@ -116,10 +118,11 @@ public class FieldFormat extends FieldRegex {
 
 	public String getEditPattern() {
 		switch(type){
-		case TIME: break;
+		case TIME:
 		case DATE: break;
 		case DECIMAL:
 		case INTEGER: return isPositive() ? pattern : "-"+pattern;
+		case BOOLEAN:
 		case STRING: break;
 		}return pattern;
 	}
@@ -131,6 +134,7 @@ public class FieldFormat extends FieldRegex {
 		case DATE: return TimeDateUtils.getDateFormatted((Date)value, pattern);
 		case DECIMAL:
 		case INTEGER: return getDecimalFormat(pattern).format(value);
+		case BOOLEAN:
 		case STRING: break;
 		}return value.toString();
 	}
