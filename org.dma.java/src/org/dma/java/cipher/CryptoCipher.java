@@ -128,7 +128,7 @@ public class CryptoCipher {
 			decipher.init(Cipher.DECRYPT_MODE, key);
 
 		}catch(Exception e){
-			Debug.err(e);
+			throw new RuntimeException(e);
 		}
 	}
 

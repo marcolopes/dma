@@ -298,6 +298,14 @@ public class TimeDateUtils {
 	}
 
 
+	/** @see Calendar#setTimeInMillis(long) */
+	public static Calendar getCalendar(long millis) {
+		Calendar calendar=getCalendar();
+		calendar.setTimeInMillis(millis);
+		return calendar;
+	}
+
+
 	public static Calendar getCalendarWithTime(Calendar calendar, Time time) {
 		Calendar clone=(Calendar)calendar.clone();
 		Calendar calendar2=getCalendar(time);
@@ -578,18 +586,23 @@ public class TimeDateUtils {
 		}catch(ParseException e){
 		}catch(Exception e){
 			Debug.err(e);
-		}
-		return null;
+		}return null;
+	}
+
+
+	public static Date getDate(Time time) {
+		return getDate(time.getTime());
+	}
+
+
+	/** @see Date#Date(long) */
+	public static Date getDate(long date) {
+		return new Date(date);
 	}
 
 
 	public static Date getDate(Calendar calendar) {
 		return calendar.getTime();
-	}
-
-
-	public static Date getDate(Time time) {
-		return new Date(time.getTime());
 	}
 
 
@@ -624,7 +637,6 @@ public class TimeDateUtils {
 
 
 	public static Date addTime(Date date, Time time) {
-		//return new Date(date.getTime()+time.getTime()-Time.valueOf("00:00:00").getTime());
 		return addTime(getCalendar(date), time).getTime();
 	}
 
@@ -705,8 +717,7 @@ public class TimeDateUtils {
 		}catch(ParseException e){
 		}catch(Exception e){
 			Debug.err(e);
-		}
-		return null;
+		}return null;
 	}
 
 
