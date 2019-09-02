@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.eclipse.jface.preferences;
 
-public class PreferenceValue {
+public class PreferenceValue implements IPreferenceValue {
 
 	private final PreferenceStore store;
 	private final String name;
@@ -13,7 +13,7 @@ public class PreferenceValue {
 
 	public PreferenceValue(PreferenceStore store, String name, Object defaultValue) {
 		this.store=store;
-		this.name=name;
+		this.name=name.toUpperCase();
 		this.defaultValue=defaultValue;
 		setDefault();
 	}
@@ -34,6 +34,20 @@ public class PreferenceValue {
 		}else throw new UnsupportedOperationException();
 	}
 
+	/** get */
+	@Override
+	public int getInt() {return store.getInt(name);}
+	@Override
+	public long getLong() {return store.getLong(name);}
+	@Override
+	public float getFloat() {return store.getFloat(name);}
+	@Override
+	public double getDouble() {return store.getDouble(name);}
+	@Override
+	public boolean getBoolean() {return store.getBoolean(name);}
+	@Override
+	public String getString() {return store.getString(name);}
+
 	public Object getValue() {
 		if(defaultValue instanceof Integer) return getInt();
 		if(defaultValue instanceof Long) return getLong();
@@ -44,20 +58,34 @@ public class PreferenceValue {
 		throw new UnsupportedOperationException();
 	}
 
-	public int getInt() {return store.getInt(name);}
-	public long getLong() {return store.getLong(name);}
-	public float getFloat() {return store.getFloat(name);}
-	public double getDouble() {return store.getDouble(name);}
-	public boolean getBoolean() {return store.getBoolean(name);}
-	public String getString() {return store.getString(name);}
+	/** load & get */
+	@Override
+	public int loadInt() {store.load(); return store.getInt(name);}
+	@Override
+	public long loadLong() {store.load(); return store.getLong(name);}
+	@Override
+	public float loadFloat() {store.load(); return store.getFloat(name);}
+	@Override
+	public double loadDouble() {store.load(); return store.getDouble(name);}
+	@Override
+	public boolean loadBoolean() {store.load(); return store.getBoolean(name);}
+	@Override
+	public String loadString() {store.load(); return store.getString(name);}
 
 	/** set & save */
-	public void setValue(int value) {store.setValue(name, value); store.save();}
-	public void setValue(long value) {store.setValue(name, value); store.save();}
-	public void setValue(float value) {store.setValue(name, value); store.save();}
-	public void setValue(double value) {store.setValue(name, value); store.save();}
-	public void setValue(boolean value) {store.setValue(name, value); store.save();}
-	public void setValue(String value) {store.setValue(name, value); store.save();}
+	@Override
 	public void setToDefault() {store.setToDefault(name); store.save();}
+	@Override
+	public void setValue(int value) {store.setValue(name, value); store.save();}
+	@Override
+	public void setValue(long value) {store.setValue(name, value); store.save();}
+	@Override
+	public void setValue(float value) {store.setValue(name, value); store.save();}
+	@Override
+	public void setValue(double value) {store.setValue(name, value); store.save();}
+	@Override
+	public void setValue(boolean value) {store.setValue(name, value); store.save();}
+	@Override
+	public void setValue(String value) {store.setValue(name, value); store.save();}
 
 }

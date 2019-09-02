@@ -12,15 +12,15 @@ import org.dma.java.util.Debug;
 
 public class PreferenceStore extends org.eclipse.jface.preference.PreferenceStore {
 
-	private static HashMap<String, PreferenceValue> VALUE_CACHE=new HashMap();
+	private static HashMap<String, IPreferenceValue> VALUE_CACHE=new HashMap();
 
 	public PreferenceStore(String pathname) {
 		super(pathname);
 		load();
 	}
 
-	public synchronized PreferenceValue getValue(String key, Object defaultValue) {
-		PreferenceValue value=VALUE_CACHE.get(key);
+	public synchronized IPreferenceValue getValue(String key, Object defaultValue) {
+		IPreferenceValue value=VALUE_CACHE.get(key);
 		if (value==null) VALUE_CACHE.put(key, value=new PreferenceValue(this, key, defaultValue));
 		return value;
 	}
