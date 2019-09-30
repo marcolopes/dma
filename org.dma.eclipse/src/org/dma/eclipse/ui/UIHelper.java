@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -28,10 +28,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
-import org.eclipse.ui.internal.PerspectiveBarManager;
-import org.eclipse.ui.internal.Workbench;
-import org.eclipse.ui.internal.WorkbenchPage;
-import org.eclipse.ui.internal.WorkbenchWindow;
 
 /**
  * The term used to represent the entire UI is workbench.
@@ -65,43 +61,33 @@ import org.eclipse.ui.internal.WorkbenchWindow;
  *
  * http://www.eclipse.org/articles/Article-UI-Workbench/workbench.html
  */
-@SuppressWarnings("restriction")
 public class UIHelper {
 
+	@SuppressWarnings("restriction")
 	public static ToolBar getPerspectiveToolBar() {
 		try{
-			WorkbenchWindow workbenchWindow=(WorkbenchWindow)getWorkbenchWindow();
-			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
+			org.eclipse.ui.internal.WorkbenchWindow workbenchWindow=(org.eclipse.ui.internal.WorkbenchWindow)getWorkbenchWindow();
+			org.eclipse.ui.internal.PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
 			return manager.getControl();
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 	}
 
 
 	//ECLIPSE BUG: https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
 	public static void disablePerspectiveToolBarMenu() {
 		ToolBar toolBar=getPerspectiveToolBar();
-		if (toolBar!=null) try{
-			for (Listener listener: toolBar.getListeners(SWT.MenuDetect)){
-				toolBar.removeListener(SWT.MenuDetect, listener);
-				Debug.out("REMOVED", listener.toString());
-			}
-		}catch(Exception e){
-			Debug.err(e);
+		if (toolBar!=null) for (Listener listener: toolBar.getListeners(SWT.MenuDetect)){
+			toolBar.removeListener(SWT.MenuDetect, listener);
+			Debug.out("REMOVED", listener.toString());
 		}
 	}
 
 
 	public static void setPerspectiveToolBarEnabled(boolean enabled) {
-		try{
-			ToolBar toolBar=getPerspectiveToolBar();
-			toolBar.setEnabled(enabled);
-		}catch(Exception e){
-			Debug.err(e);
-		}
+		ToolBar toolBar=getPerspectiveToolBar();
+		if (toolBar!=null) toolBar.setEnabled(enabled);
 	}
 
 
@@ -117,7 +103,6 @@ public class UIHelper {
 				layout.addPerspectiveShortcut(id);
 				Debug.out("ADDED", id);
 			}
-
 		}catch(Exception e){
 			Debug.err(e);
 		}
@@ -126,11 +111,9 @@ public class UIHelper {
 
 	public static void removePreferenceManagerNodes() {
 		PreferenceManager manager=getWorkbench().getPreferenceManager();
-		if (manager!=null) try{
-			for (IPreferenceNode node: manager.getRootSubNodes()){
-				manager.remove(node);
-				Debug.out("REMOVED", node.getId());
-			}
+		if (manager!=null) for (IPreferenceNode node: manager.getRootSubNodes()) try{
+			manager.remove(node);
+			Debug.out("REMOVED", node.getId());
 		}catch(Exception e){
 			Debug.err(e);
 		}
@@ -158,17 +141,17 @@ public class UIHelper {
 		}return null;
 	}
 
-	/** @see Workbench#getDisplay */
+	/** @see IWorkbench#getDisplay */
 	public static Display getDisplay() {
 		return getWorkbench().getDisplay();
 	}
 
-	/** @see Workbench#getHelpSystem */
+	/** @see IWorkbench#getHelpSystem */
 	public static IWorkbenchHelpSystem getHelpSystem() {
 		return getWorkbench().getHelpSystem();
 	}
 
-	/** @see Workbench#isClosing */
+	/** @see IWorkbench#isClosing */
 	public static boolean isWorkbenchClosing() {
 		return getWorkbench().isClosing();
 	}
@@ -299,8 +282,9 @@ public class UIHelper {
 		getActivePage().hideView(view);
 	}
 
+	@SuppressWarnings("restriction")
 	public static void detachView(IViewPart view) {
-		WorkbenchPage page=(WorkbenchPage)view.getViewSite().getPage();
+		org.eclipse.ui.internal.WorkbenchPage page=(org.eclipse.ui.internal.WorkbenchPage)view.getViewSite().getPage();
 		page.detachView(findViewReference(view.getViewSite().getId(), view.getViewSite().getSecondaryId()));
 	}
 
