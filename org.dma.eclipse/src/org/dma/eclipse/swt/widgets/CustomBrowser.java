@@ -39,8 +39,7 @@ public final class CustomBrowser extends Browser {
 			}catch(Exception e){
 				Debug.err(e);
 			}
-		}
-		return null;
+		}return null;
 	}
 
 	/**

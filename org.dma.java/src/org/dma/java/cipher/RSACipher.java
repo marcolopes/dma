@@ -36,8 +36,7 @@ public class RSACipher {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-		return null;
+		}return null;
 	}
 
 	private final KeyPair keyPair;

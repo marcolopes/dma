@@ -27,8 +27,7 @@ public class PBECipher extends CryptoCipher {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-		return null;
+		}return null;
 	}
 
 

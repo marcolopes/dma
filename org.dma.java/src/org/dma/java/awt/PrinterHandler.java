@@ -39,8 +39,7 @@ public class PrinterHandler {
 		PrintService[] ps=PrinterJob.lookupPrintServices();
 		for(int i=0; i<ps.length; i++) {
 			if(ps[i].getName().indexOf(printerName)>=0) return ps[i];
-		}
-		return null;
+		}return null;
 	}
 
 	/** Returns default printer if invalid */

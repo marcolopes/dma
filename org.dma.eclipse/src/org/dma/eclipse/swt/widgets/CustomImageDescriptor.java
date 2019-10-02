@@ -55,8 +55,7 @@ public class CustomImageDescriptor extends ImageDescriptor {
 					swtdata.setAlpha(x, y, awtdata[baseindex + 3]);
 				}
 			}
-		}
-		return swtdata;
+		}return swtdata;
 	}
 
 	public static ImageData createImageData(BufferedImage image) {

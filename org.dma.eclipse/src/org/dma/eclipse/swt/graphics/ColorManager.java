@@ -58,8 +58,7 @@ public class ColorManager {
 		if (color==null) {
 			color=new Color(DISPLAY, rgb);
 			REGISTRY.put(key, rgb);
-		}
-		return color;
+		}return color;
 	}
 
 
@@ -113,8 +112,7 @@ public class ColorManager {
 		}catch (Exception e) {
 			Debug.err(e);
 			color = new java.awt.Color(0, 0, 0);
-		}
-		return new org.eclipse.swt.graphics.Color(device,
+		}return new org.eclipse.swt.graphics.Color(device,
 				color.getRed(), color.getGreen(), color.getBlue());
 	}
 

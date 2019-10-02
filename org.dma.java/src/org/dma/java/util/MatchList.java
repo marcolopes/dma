@@ -21,8 +21,7 @@ public class MatchList extends UniqueArrayList<String> {
 		Collection<String> result=new ArrayList();
 		for(String element: col){
 			result.add(element.trim());
-		}
-		return result;
+		}return result;
 	}
 
 	public MatchList() {
@@ -68,8 +67,7 @@ public class MatchList extends UniqueArrayList<String> {
 	public boolean matches(String regex) {
 		for(String element: this){
 			if (element.matches(regex)) return true;
-		}
-		return false;
+		}return false;
 	}
 
 
@@ -77,8 +75,7 @@ public class MatchList extends UniqueArrayList<String> {
 	public boolean matchesAny(Collection<String> col) {
 		for(String regex: col){
 			if (matches(regex)) return true;
-		}
-		return false;
+		}return false;
 	}
 
 }

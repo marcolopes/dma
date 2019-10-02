@@ -190,8 +190,7 @@ public class UIHelper {
 	public static boolean isPerspectiveOpen(String perspectiveId) {
 		for (IPerspectiveDescriptor perspective: getActivePage().getOpenPerspectives()) {
 			if (perspective.getId().equals(perspectiveId)) return true;
-		}
-		return false;
+		}return false;
 	}
 
 	public static void setPerspective(IPerspectiveDescriptor perspective) {

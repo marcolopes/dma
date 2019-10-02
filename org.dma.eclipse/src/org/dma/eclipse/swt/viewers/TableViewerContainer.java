@@ -231,8 +231,7 @@ public abstract class TableViewerContainer<T> {
 			Object element=viewer.getElementAt(index);
 			viewer.setSelection(new StructuredSelection(element));
 			//viewer.refresh(element);
-		}
-		return index;
+		}return index;
 	}
 
 
@@ -310,8 +309,7 @@ public abstract class TableViewerContainer<T> {
 			for(int i: indices) col.add(list.get(i));
 			list.removeAll(col);
 			index=insertElements(col, index);
-		}
-		return index;
+		}return index;
 	}
 
 
@@ -328,8 +326,7 @@ public abstract class TableViewerContainer<T> {
 			for(int i: indices) col.add(list.get(i));
 			list.removeAll(col);
 			index=insertElements(col, index-indices.length+1);
-		}
-		return index;
+		}return index;
 	}
 
 

@@ -73,16 +73,14 @@ public class UniqueArrayList<T> extends ArrayList<T> {
 		for(T element: this){
 			if (element.equals(o)) return index;
 			index++;
-		}
-		return -1;
+		}return -1;
 	}
 
 
 	public boolean containsAny(Collection<?> col) {
 		for(Object o: col){
 			if (contains(o)) return true;
-		}
-		return false;
+		}return false;
 	}
 
 

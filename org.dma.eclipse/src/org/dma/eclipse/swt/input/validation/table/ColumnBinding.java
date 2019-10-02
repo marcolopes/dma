@@ -98,8 +98,7 @@ public abstract class ColumnBinding extends ColumnError {
 		else if (control instanceof Text){
 			Text control=(Text)this.control;
 			return control.getText();
-		}
-		return "";
+		}return "";
 	}
 
 

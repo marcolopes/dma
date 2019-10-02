@@ -32,8 +32,7 @@ public class ImageHandler {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-		return false;
+		}return false;
 	}
 
 

@@ -45,8 +45,7 @@ public class UTF8ResourceBundle extends ResourceBundle {
 
 		}catch(UnsupportedEncodingException e) {
 			throw new UnsupportedOperationException("Encoding not supported", e);
-		}
-		return null;
+		}return null;
 	}
 
 	@Override

@@ -119,8 +119,7 @@ public enum DRIVERS {
 
 		// jdbc:sqlserver://[serverName[\instanceName][:portNumber]]
 		case SQLServer: return "jdbc:sqlserver://" + host + ";databaseName="+database;
-		}
-		return null;
+		}return null;
 	}
 
 	public String getConnectionUrl(String host, String database, String folder, String properties, POOLMANAGERS pool) {
@@ -151,8 +150,7 @@ public enum DRIVERS {
 			//URL;property=value;property=value...
 			url.append(properties.isEmpty() ? "" : ";"+properties);
 			url.append(";SelectMethod=cursor"); break;
-		}
-		return url.toString();
+		}return url.toString();
 	}
 
 	private void executeBackup(Command cmd, String password) throws Exception {
