@@ -237,8 +237,7 @@ public abstract class FieldBinding extends FieldError {
 		else if (control instanceof Text){
 			Text control=(Text)this.control;
 			return control.getText();
-		}
-		return "";
+		}return "";
 	}
 
 

@@ -54,8 +54,7 @@ public final class VersionNumber {
 		for (int i=0; i<THIS.length; i++){
 			if (THIS[i]>OTHER[i]) return false;
 			if (THIS[i]<OTHER[i]) return true;
-		}
-		return false; //equal!
+		}return false; //equal!
 	}
 
 
@@ -70,8 +69,7 @@ public final class VersionNumber {
 		for(int i=0; i<length && i<values.length; i++){
 			if (result.length()>0) result.append('.');
 			result.append(values[i]);
-		}
-		return result.toString();
+		}return result.toString();
 	}
 
 

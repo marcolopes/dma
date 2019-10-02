@@ -171,8 +171,7 @@ public class JKSCertificate {
 		boolean[] usage=X509Cert.getKeyUsage();
 		for(int i=0; i<usage.length && i<purposes.length; i++){
 			if (usage[i]) col.add(purposes[i]);
-		}
-		return Collections.unmodifiableCollection(col);
+		}return Collections.unmodifiableCollection(col);
 	}
 
 

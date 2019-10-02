@@ -21,8 +21,7 @@ public class FileURL {
 			return new URL(urlname+"/"+filename);
 		}catch(Exception e){
 			Debug.err(e);
-		}
-		return null;
+		}return null;
 	}
 
 	public final String urlname;

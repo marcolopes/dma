@@ -51,8 +51,7 @@ public class CustomHtmlEmail extends HtmlEmail {
 		for (EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (to): "+address);
 			addTo(element.getEmail(), element.getName());
-		}
-		return this;
+		}return this;
 	}
 
 	/** see {@link Email#addTo} */
@@ -66,8 +65,7 @@ public class CustomHtmlEmail extends HtmlEmail {
 		for (EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (cc): "+address);
 			addCc(element.getEmail(), element.getName());
-		}
-		return this;
+		}return this;
 	}
 
 	/** see {@link Email#addCc} */
@@ -81,8 +79,7 @@ public class CustomHtmlEmail extends HtmlEmail {
 		for (EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (bcc): "+address);
 			addBcc(element.getEmail(), element.getName());
-		}
-		return this;
+		}return this;
 	}
 
 	/** see {@link Email#addBcc} */
