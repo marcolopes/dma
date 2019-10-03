@@ -15,7 +15,7 @@ import org.eclipse.jface.action.Action;
 
 public abstract class CustomJobList extends ArrayList<CustomJob> {
 
-	private static final long serialVersionUID=1L;
+	private static final long serialVersionUID = 1L;
 
 	public abstract void done();
 
