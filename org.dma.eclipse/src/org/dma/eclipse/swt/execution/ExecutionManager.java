@@ -1,21 +1,22 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.execution;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.dma.java.util.Debug;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -23,34 +24,42 @@ import org.eclipse.swt.widgets.Listener;
 
 public class ExecutionManager {
 
-	private static final Map<ExecutionDefinition, ExecutionEvent> EVENTS=new HashMap();
+	private static final Map<ExecutionDefinition, ExecutionEvent> EVENTS=new LinkedHashMap();
+
+	private static boolean equals(String id, String secondaryId) {
+		return id==null ? true : id.equals(secondaryId);
+	}
 
 	/*
 	 * Register
 	 */
-	public static void register(Control control, IAction action) {
-		register(control, new int[]{-1}, action);
+	public static ExecutionEvent register(Control control, IAction action) {
+		return register(control, new int[0], action);
 	}
 
-	public static void register(Control control, int keycode[], IAction action) {
-		register(control, null, keycode, action);
+	public static ExecutionEvent register(Control control, int keycode[], IAction action) {
+		return register(control, null, keycode, action);
 	}
 
-	public static void register(Control control, String id, int keycode[], IAction action) {
-		register(control, id, null, keycode, action);
+	public static ExecutionEvent register(Control control, String id, IAction action) {
+		return register(control, id, new int[0], action);
 	}
 
-	public static void register(Control control, String id, int keycode[], IAction action, IAction...responseAction) {
-		register(control, id, null, keycode, action, responseAction);
+	public static ExecutionEvent register(Control control, String id, int keycode[], IAction action) {
+		return register(control, id, null, keycode, action);
 	}
 
-	public static void register(Control control, String id, String secondaryId, int keycode[], IAction action, IAction...responseAction) {
+	public static ExecutionEvent register(Control control, String id, String secondaryId, IAction action) {
+		return register(control, id, secondaryId, new int[0], action);
+	}
+
+	public static ExecutionEvent register(Control control, String id, String secondaryId, int keycode[], IAction action) {
 		ExecutionDefinition execDefinition=new ExecutionDefinition(control, id, secondaryId);
-		ExecutionEvent execEvent=new ExecutionEvent(keycode, action, responseAction);
-		register(execDefinition, execEvent);
+		ExecutionEvent execEvent=new ExecutionEvent(keycode, action);
+		return register(execDefinition, execEvent);
 	}
 
-	private static void register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
+	private static ExecutionEvent register(ExecutionDefinition execDefinition, final ExecutionEvent execEvent) {
 
 		if(EVENTS.containsKey(execDefinition)) throw new RuntimeException("EXECUTION ALREADY REGISTERED: "+execDefinition.getId());
 
@@ -67,7 +76,8 @@ public class ExecutionManager {
 			}
 		});
 
-		if(execDefinition.getControl() instanceof Combo) {
+		if(execDefinition.getControl() instanceof Button ||
+			execDefinition.getControl() instanceof Combo) {
 			execDefinition.addSelectionListener(new Listener() {
 				@Override
 				public void handleEvent(Event e) {
@@ -80,6 +90,8 @@ public class ExecutionManager {
 		EVENTS.put(execDefinition, execEvent);
 
 		Debug.out(execEvent.toString(), EVENTS.size());
+
+		return execEvent;
 
 	}
 
@@ -114,45 +126,50 @@ public class ExecutionManager {
 	/*
 	 * Executions
 	 */
-	public static void notifyPendingExecutions(String id, String secondaryId) {
+	public static boolean notifyPendingExecutions(String id, String secondaryId) {
 
-		for(Iterator<ExecutionDefinition> iterator=EVENTS.keySet().iterator(); iterator.hasNext();) {
+		for(Iterator<ExecutionDefinition> iterator=new LinkedList(EVENTS.keySet()).descendingIterator(); iterator.hasNext();) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
-			if(ObjectUtils.equals(id, execDefinition.getId()) &&
-				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())) {
+			if(equals(id, execDefinition.getId()) &&
+				equals(secondaryId, execDefinition.getSecondaryId())) {
 
 				ExecutionEvent execEvent=EVENTS.get(execDefinition);
 
-				if(execEvent.isExecuted()) execEvent.executeResponse();
+				if(execEvent.isExecuted()){
+					execEvent.executeResponse();
+					return true;
+				}
 
 			}
 
 		}
 
+		return false;
+
 	}
 
 
-	public static void notifyPendingExecutions(String id) {
+	public static boolean notifyPendingExecutions(String id) {
 
-		notifyPendingExecutions(id, null);
+		return notifyPendingExecutions(id, null);
 
 	}
 
 
 	public static boolean hasPendingExecutions(String id, String secondaryId) {
 
-		for(Iterator<ExecutionDefinition> iterator=EVENTS.keySet().iterator(); iterator.hasNext();) {
+		for(Iterator<ExecutionDefinition> iterator=new LinkedList(EVENTS.keySet()).descendingIterator(); iterator.hasNext();) {
 
 			ExecutionDefinition execDefinition=iterator.next();
 
-			if(ObjectUtils.equals(id, execDefinition.getId()) &&
-				ObjectUtils.equals(secondaryId, execDefinition.getSecondaryId())){
+			if(equals(id, execDefinition.getId()) &&
+				equals(secondaryId, execDefinition.getSecondaryId())){
 
 				ExecutionEvent execEvent=EVENTS.get(execDefinition);
 
-				if(execEvent.hasResponseAction()) return true;
+				if(execEvent.isExecuted() && !execEvent.isEmpty()) return true;
 
 			}
 

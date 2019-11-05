@@ -75,8 +75,7 @@ public abstract class ButtonMenu extends CustomShell {
 			button.setLayoutData(gridData);
 			button.setFontSize(15);
 			button.setText(label);
-			button.setData(index);
-			index++;
+			button.setData(index++);
 
 			button.addKeyListener(new KeyAdapter(){
 				@Override
