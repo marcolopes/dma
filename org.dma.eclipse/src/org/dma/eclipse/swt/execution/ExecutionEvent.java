@@ -1,42 +1,44 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Paulo Silva (wickay@hotmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.execution;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.action.IAction;
 
-public class ExecutionEvent {
+public class ExecutionEvent extends ArrayList<IAction> {
+
+	private static final long serialVersionUID = 1L;
+
+	public ExecutionEvent addResponse(IAction action) {
+		super.add(action);
+		return this;
+	}
 
 	private final int[] keycode;
-	private final IAction executionAction;
-	private final IAction[] responseAction;
+	private final IAction action;
 
 	private boolean executed=false;
 
-	public ExecutionEvent(int[] keycode, IAction executionAction, IAction...responseAction) {
+	public ExecutionEvent(int[] keycode, IAction action) {
 		this.keycode=keycode;
-		this.executionAction=executionAction;
-		this.responseAction=responseAction;
+		this.action=action;
 	}
 
 
 	public void execute() {
-		executionAction.run();
+		action.run();
 		executed=true;
 	}
 
 
 	public void executeResponse() {
-		for(IAction action: responseAction) action.run();
+		for(IAction action: this) action.run();
 		executed=false;
-	}
-
-
-	public boolean hasResponseAction() {
-		return responseAction.length>0;
 	}
 
 
@@ -46,7 +48,7 @@ public class ExecutionEvent {
 	 */
 	@Override
 	public String toString() {
-		return executionAction.getId();
+		return action.getId();
 	}
 
 
@@ -58,12 +60,8 @@ public class ExecutionEvent {
 		return keycode;
 	}
 
-	public IAction getExecutionAction() {
-		return executionAction;
-	}
-
-	public IAction[] getResponseAction() {
-		return responseAction;
+	public IAction getAction() {
+		return action;
 	}
 
 	public boolean isExecuted() {

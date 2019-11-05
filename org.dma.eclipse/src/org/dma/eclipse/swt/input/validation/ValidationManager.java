@@ -99,10 +99,8 @@ public class ValidationManager implements IValidationManager {
 	public String getErrorMessage(String property) {
 
 		IValidator validator=validatorMap.get(property);
-		if(validator!=null && validator.hasError())
-			return validator.getErrorMessage();
 
-		return "";
+		return validator==null || !validator.hasError() ? "" : validator.getErrorMessage();
 
 	}
 
