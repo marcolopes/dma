@@ -181,7 +181,8 @@ public class Numerals {
 
 	}
 
-	/** Concatenates all the orders */
+
+	/** Concatenates all the orders */
 	private String ordersToString(List<Integer> orders, String[] unit) {
 
 		String s="";
