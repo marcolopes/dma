@@ -237,7 +237,7 @@ public class WordNumerals {
 	/** Concatenates all the orders */
 	private String ordersToString(List<Integer> orders, String[] unit) {
 
-		String numeral="";
+		String str="";
 
 		//hundreds order value
 		int value999=orders.get(0);
@@ -255,10 +255,11 @@ public class WordNumerals {
 				String qualifier=QUALIFIERS.get(value).toString(index, previous, value999);
 
 				//evita "UM MIL"
-				String str=index==1 && value==1 ? "" : NUMERALS.toString(value);
+				String numeral=index==1 && value==1 ? "" : NUMERALS.toString(value);
 
-				if (qualifier.isEmpty()) numeral=str+" "+numeral;
-				else numeral=str+" "+qualifier+" "+numeral;
+				if (!qualifier.isEmpty()) qualifier=qualifier+" ";
+				if (!numeral.isEmpty()) numeral=numeral+" ";
+				str=numeral+qualifier+str;
 
 				previous=index;
 
@@ -269,9 +270,9 @@ public class WordNumerals {
 		}
 
 		//evita "UM" + PLURAL da unidade
-		numeral+=unit[orders.size()==1 && value999==1 ? 0 : 1];
+		str+=unit[orders.size()==1 && value999==1 ? 0 : 1];
 
-		return numeral;
+		return str;
 
 	}
 
@@ -281,12 +282,13 @@ public class WordNumerals {
 
 		WordNumerals numerals=new WordNumerals(2);
 
-		//TESTE de "overflow"
+		//teste de "overflow"
 		BigDecimal overflow=new BigDecimal("123456789000000000000000000000000000");
+		System.out.println("===overflow===");
 		System.out.println(String.format(
 				"%-14s", overflow.toPlainString())+": "+numerals.toString(overflow));
 
-		//TESTE dos EXEMPLOS "Nova Gramatica do Portugues Contemporaneo"
+		//teste "Nova Gramatica do Portugues Contemporaneo"
 		final BigDecimal[] VALUES={
 			new BigDecimal("999"),
 			new BigDecimal("1230"),
@@ -294,6 +296,8 @@ public class WordNumerals {
 			new BigDecimal("293572"),
 			new BigDecimal("332415741211")};
 
+		System.out.println();
+		System.out.println("===Nova Gramatica do Portugues Contemporaneo===");
 		for(BigDecimal value: VALUES){
 			System.out.println(String.format(
 					"%-14s", value.toPlainString())+": "+numerals.toString(value));
