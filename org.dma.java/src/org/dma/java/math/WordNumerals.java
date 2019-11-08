@@ -125,15 +125,13 @@ public class WordNumerals {
 
 	public enum NUMERALS {
 
-		GROUP0 (1, new String[]{"zero"}),
-
-		GROUP1_19 (1, new String[]{
+		GROUP0_19 (1, new String[]{"zero",
 			"um", "dois", "três", "quatro", "cinco",
 			"seis", "sete", "oito", "nove", "dez",
 			"onze", "doze", "treze", "catorze", "quinze",
 			"dezasseis", "dezassete", "dezoito", "dezanove"}),
 
-		GROUP20_90 (10, new String[]{null,
+		GROUP20_90 (10, new String[]{
 			"vinte", "trinta", "quarenta", "cinquenta",
 			"sessenta",	"setenta", "oitenta", "noventa"}),
 
@@ -152,16 +150,20 @@ public class WordNumerals {
 		}
 
 		public String name(int value) {
-			return value==0 ? names[value] : names[value/divisor-1];
+			switch(this){
+			case GROUP0_19: return names[value];
+			case GROUP20_90: return names[value/divisor-2];
+			case GROUP100:
+			case GROUP101_900: return names[value/divisor-1];
+			}return null;
 		}
 
 		public static NUMERALS get(int value) {
-			if (value==0) return GROUP0;
-			if (value<20) return GROUP1_19;
+			if (value<20) return GROUP0_19;
 			if (value<100) return GROUP20_90;
 			if (value==100) return GROUP100;
 			if (value<1000) return GROUP101_900;
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(String.valueOf(value));
 		}
 
 		/** Creates order string */
