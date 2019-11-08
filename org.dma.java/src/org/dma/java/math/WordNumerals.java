@@ -151,11 +151,11 @@ public class WordNumerals {
 			this.names=names;
 		}
 
-		private String name(int value) {
+		public String name(int value) {
 			return value==0 ? names[value] : names[value/divisor-1];
 		}
 
-		private static NUMERALS get(int value) {
+		public static NUMERALS get(int value) {
 			if (value==0) return GROUP0;
 			if (value<20) return GROUP1_19;
 			if (value<100) return GROUP20_90;
