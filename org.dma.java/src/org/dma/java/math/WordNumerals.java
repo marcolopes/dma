@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2013 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *
@@ -34,7 +34,7 @@ import java.util.List;
 
 import org.dma.java.util.Debug;
 
-public class Numerals {
+public class WordNumerals {
 
 	public static class NumeralsUnit {
 
@@ -53,12 +53,25 @@ public class Numerals {
 	}
 
 	public static final NumeralsUnit UNIT_EURO = new NumeralsUnit(
-		new String[]{"Euro","Euros"}, new String[]{"Cêntimo","Cêntimos"});
+		new String[]{"Euro", "Euros"}, new String[]{"Cêntimo", "Cêntimos"});
 
 	public static final NumeralsUnit UNIT_METER = new NumeralsUnit(
-		new String[]{"Metro","Metros"}, new String[]{"Centímetro","Centímetros"});
+		new String[]{"Metro", "Metros"}, new String[]{"Centímetro", "Centímetros"});
 
-	private enum QUALIFIERS {
+	public enum CONJUNCTION {
+
+		AND ("e"),
+		OF ("de");
+
+		public String name;
+
+		CONJUNCTION(String name) {
+			this.name=name;
+		}
+
+	}
+
+	public enum QUALIFIERS {
 
 		SINGULAR (new String[]{
 			"mil", "milhão", "bilião", "trilião", "quatrilião",
@@ -70,13 +83,52 @@ public class Numerals {
 
 		public String[] names;
 
-		QUALIFIERS(String[] names){
+		QUALIFIERS(String[] names) {
 			this.names=names;
+		}
+
+		public static QUALIFIERS get(int value) {
+			return value==1 ? SINGULAR : PLURAL;
+		}
+
+		/** Creates qualifier string */
+		public String toString(int index, int previous, int value999) {
+
+			//NO qualifier below 999
+			if (index==0) return "";
+
+			//avoids overflow
+			String qualifier=index>names.length ? "???" : names[index-1];
+
+			/*
+			 * ordem actual >= MILHOES
+			 * ordem anterior = CENTENAS
+			 * nao existem centenas
+			 * (MILHOES DE; BILIOES DE; etc)
+			 */
+			if (index>=2 && previous==0 && value999==0)
+				qualifier+=" "+CONJUNCTION.OF.name;
+			/*
+			 * ordem anterior = CENTENAS
+			 * existem centenas (EVITA MIL E ?)
+			 * centenas inferiores a 100 (E UM; E DOIS; etc)
+			 * centenas multiplas de 100 (E CEM; E DUZENTOS; etc)
+			 */
+			else if (previous==0 && value999>0 && (value999<100 || value999%100==0))
+				qualifier+=" "+CONJUNCTION.AND.name;
+			/*
+			 * ordem actual >= MILHOES
+			 * (SEPARA MILHOES, BILIOES, etc)
+			 */
+			else if (index>=2) qualifier+=",";
+
+			return qualifier;
+
 		}
 
 	}
 
-	private enum NUMERALS {
+	public enum NUMERALS {
 
 		GROUP0_19 (new String[]{"zero",
 			"um", "dois", "três", "quatro", "cinco",
@@ -96,21 +148,28 @@ public class Numerals {
 
 		public String[] names;
 
-		NUMERALS(String[] names){
+		NUMERALS(String[] names) {
 			this.names=names;
 		}
 
-	}
+		/** Creates order string */
+		public static String toString(int value) {
 
-	private enum CONJUNCTION {
+			if (value<20){
+				return GROUP0_19.names[value];
+			}
+			else if (value<100){
+				String str=GROUP20_90.names[value/10-2];
+				return value%10==0 ? str : str+" "+CONJUNCTION.AND.name+" "+toString(value%10);
+			}
+			else if (value==100){
+				return GROUP100.names[0];
+			}
+			else if (value<1000){
+				String str=GROUP101_900.names[value/100-1];
+				return value%100==0 ? str : str+" "+CONJUNCTION.AND.name+" "+toString(value%100);
+			}return null;
 
-		AND ("e"),
-		OF ("de");
-
-		public String name;
-
-		CONJUNCTION(String name){
-			this.name=name;
 		}
 
 	}
@@ -121,11 +180,11 @@ public class Numerals {
 	private final NumeralsUnit unit;
 
 	/** EURO by default */
-	public Numerals(int scale) {
-		this(scale,UNIT_EURO);
+	public WordNumerals(int scale) {
+		this(scale, UNIT_EURO);
 	}
 
-	public Numerals(int scale, NumeralsUnit unit) {
+	public WordNumerals(int scale, NumeralsUnit unit) {
 		this.scale=scale;
 		this.unit=unit;
 	}
@@ -133,35 +192,28 @@ public class Numerals {
 
 	public String toString(BigDecimal value) {
 
-		String s="";
+		String str="";
 
-		value=value.abs().setScale(scale, RoundingMode.HALF_EVEN);
-
-		//retrieves integer and decimal
-		BigInteger integer=value.abs().toBigInteger();
-		/*
-		BigInteger decimal=value.remainder(BigDecimal.ONE).
-			multiply(BigDecimal.valueOf(100)).toBigInteger();
-		*/
-		BigInteger decimal=(value.subtract(new BigDecimal(integer))).
-				multiply(new BigDecimal(100)).toBigInteger();
+		BigDecimal scaled=value.abs().setScale(scale, RoundingMode.HALF_EVEN);
 
 		//processes ZERO
-		if (value.signum()==0){
-			s+=orderToString(0)+unit.integer[1];
-		}
-		//processes integer
-		else if (integer.signum()>0){
-			s+=ordersToString(getOrders(integer), unit.integer);
-		}
-		//processes decimal
-		if (decimal.signum()>0){
-			s+=s.isEmpty() ? "" : " "+CONJUNCTION.AND.name+" ";
-			s+=ordersToString(getOrders(decimal), unit.decimal);
+		if (scaled.signum()==0) str+=NUMERALS.toString(0)+" "+unit.integer[1];
+		else{
+			//processes INTEGER
+			BigInteger integer=scaled.abs().toBigInteger();
+			if (integer.signum()>0) str+=ordersToString(getOrders(integer), unit.integer);
+
+			//processes DECIMAL
+			//BigInteger decimal=(scaled.subtract(new BigDecimal(integer))).multiply(new BigDecimal(100)).toBigInteger();
+			BigInteger decimal=scaled.remainder(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).toBigInteger();
+			if (decimal.signum()>0){
+				if (integer.signum()>0) str+=" "+CONJUNCTION.AND.name+" ";
+				str+=ordersToString(getOrders(decimal), unit.decimal);
+			}
 		}
 
 		//capitalize
-		return s.substring(0,1).toUpperCase() + s.substring(1);
+		return str.substring(0,1).toUpperCase() + str.substring(1);
 
 	}
 
@@ -171,11 +223,11 @@ public class Numerals {
 
 		List<Integer> orders=new ArrayList();
 
-		while(value.compareTo(BigInteger.valueOf(1000))>=0) {
+		//from low to high order
+		while(value.compareTo(BigInteger.valueOf(1000))>=0){
 			orders.add(value.remainder(BigInteger.valueOf(1000)).intValue());
 			value=value.divide(BigInteger.valueOf(1000));
-		}
-		orders.add(value.intValue());
+		}orders.add(value.intValue());
 
 		return orders;
 
@@ -185,105 +237,41 @@ public class Numerals {
 	/** Concatenates all the orders */
 	private String ordersToString(List<Integer> orders, String[] unit) {
 
-		String s="";
+		String numeral="";
 
-		try{
-			//last order index
-			int last=0;
-			//first order value
-			Integer order0=orders.get(0);
-			//processes below 999
-			s+=order0>0 ? orderToString(order0) : "";
-			//processes above 999
-			for (int i=1; i<orders.size(); i++){
+		//hundreds order value
+		int value999=orders.get(0);
 
-				Integer value=orders.get(i);
+		//previous order index
+		int previous=0;
 
-				if (value!=0){
+		for (int index=0; index<orders.size(); index++) try{
 
-					String q=value==1 ?
-						QUALIFIERS.SINGULAR.names[i-1] :
-						QUALIFIERS.PLURAL.names[i-1];
-					/*
-					 * ordem actual >= MILHOES
-					 * ordem anterior = CENTENAS
-					 * nao existem centenas
-					 * (MILHOES DE; BILIOES DE; etc)
-					 */
-					if (i>=2 && last==0 && order0==0){
-						q+=" "+CONJUNCTION.OF.name+" ";
-					}
-					/*
-					 * ordem anterior = CENTENAS
-					 * existem centenas (EVITA MIL E ?)
-					 * centenas inferiores a 100 (E UM; E DOIS; etc)
-					 * centenas multiplas de 100 (E CEM; E DUZENTOS; etc)
-					 */
-					else if (last==0 && order0>0 && (order0<100 || order0%100==0)){
-						q+=" "+CONJUNCTION.AND.name+" ";
-					}
-					/*
-					 * ordem actual >= MILHOES
-					 * (SEPARA MILHOES, BILIOES, etc)
-					 */
-					else if (i>=2){
-						q+=", ";
-					}
-					else q+=" ";
+			int value=orders.get(index);
 
-					/*
-					 * ordem actual = MILHARES
-					 * milhares = 1
-					 * (EVITA "UM MIL")
-					 */
-					if (i==1 && value==1){
-						s=q+s;
-					}else{
-						s=orderToString(value)+q+s;
-					}
+			//NOT ZERO?
+			if (value>0){
 
-					last=i;
+				String qualifier=QUALIFIERS.get(value).toString(index, previous, value999);
 
-				}
+				//evita "UM MIL"
+				String str=index==1 && value==1 ? "" : NUMERALS.toString(value);
+
+				if (qualifier.isEmpty()) numeral=str+" "+numeral;
+				else numeral=str+" "+qualifier+" "+numeral;
+
+				previous=index;
 
 			}
-
-			//para evitar "UM" + PLURAL da moeda
-			if (orders.size()==1 && order0==1)
-				s+=unit[0];
-			else
-				s+=unit[1];
 
 		}catch(Exception e){
 			Debug.err(e);
 		}
 
-		return s;
+		//evita "UM" + PLURAL da unidade
+		numeral+=unit[orders.size()==1 && value999==1 ? 0 : 1];
 
-	}
-
-
-	/** Creates order string */
-	private String orderToString(Integer value) {
-
-		String s="";
-
-		if (value<20){
-			s+=NUMERALS.GROUP0_19.names[value]+" ";
-		}
-		else if (value<100){
-			s+=NUMERALS.GROUP20_90.names[value/10-2]+" ";
-			s+=value%10!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%10) : "";
-		}
-		else if (value==100){
-			s+=NUMERALS.GROUP100.names[0]+" ";
-		}
-		else if (value<1000){
-			s+=NUMERALS.GROUP101_900.names[value/100-1]+" ";
-			s+=value%100!=0 ? CONJUNCTION.AND.name+" "+orderToString(value%100) : "";
-		}
-
-		return s;
+		return numeral;
 
 	}
 
@@ -291,9 +279,14 @@ public class Numerals {
 	/** Test Case */
 	public static void main(String[] argvs) {
 
-		Numerals numerals=new Numerals(2);
+		WordNumerals numerals=new WordNumerals(2);
 
-		//TESTE dos EXEMPLOS apresentados em "Nova Gramatica do Portugues Contemporaneo"
+		//TESTE de "overflow"
+		BigDecimal overflow=new BigDecimal("123456789000000000000000000000000000");
+		System.out.println(String.format(
+				"%-14s", overflow.toPlainString())+": "+numerals.toString(overflow));
+
+		//TESTE dos EXEMPLOS "Nova Gramatica do Portugues Contemporaneo"
 		final BigDecimal[] VALUES={
 			new BigDecimal("999"),
 			new BigDecimal("1230"),
@@ -333,10 +326,10 @@ public class Numerals {
 		for(double[] interval: INTERVALS){
 			System.out.println();
 			System.out.println("===INTERVALO #"+(index++)+"===");
-			for(BigDecimal j=BigDecimal.valueOf(interval[0]);
-					j.doubleValue()<=interval[1]; j=j.add(BigDecimal.valueOf(interval[2]))){
+			for(BigDecimal value=BigDecimal.valueOf(interval[0]);
+					value.doubleValue()<=interval[1]; value=value.add(BigDecimal.valueOf(interval[2]))){
 				System.out.println(String.format(
-						"%-14s", j.toPlainString())+": "+numerals.toString(j));
+						"%-14s", value.toPlainString())+": "+numerals.toString(value));
 			}
 		}
 
