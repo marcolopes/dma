@@ -57,9 +57,7 @@ public class MessageDigest {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -82,9 +80,7 @@ public class MessageDigest {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 
@@ -109,9 +105,7 @@ public class MessageDigest {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 

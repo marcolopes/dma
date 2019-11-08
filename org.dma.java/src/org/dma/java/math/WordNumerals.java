@@ -87,19 +87,12 @@ public class WordNumerals {
 			this.names=names;
 		}
 
-		public static QUALIFIERS get(int value) {
-			return value==1 ? SINGULAR : PLURAL;
-		}
-
 		/** Creates qualifier string */
 		public String toString(int index, int previous, int value999) {
-
 			//NO qualifier below 999
 			if (index==0) return "";
-
 			//avoids overflow
 			String qualifier=index>names.length ? "???" : names[index-1];
-
 			/*
 			 * ordem actual >= MILHOES?
 			 * ordem anterior = CENTENAS?
@@ -121,51 +114,62 @@ public class WordNumerals {
 			 * (SEPARA MILHOES, BILIOES, etc)
 			 */
 			if (index>=2) return qualifier+",";
-
 			return qualifier;
+		}
 
+		public static QUALIFIERS get(int value) {
+			return value==1 ? SINGULAR : PLURAL;
 		}
 
 	}
 
 	public enum NUMERALS {
 
-		GROUP0_19 (new String[]{"zero",
+		GROUP0 (1, new String[]{"zero"}),
+
+		GROUP1_19 (1, new String[]{
 			"um", "dois", "três", "quatro", "cinco",
 			"seis", "sete", "oito", "nove", "dez",
 			"onze", "doze", "treze", "catorze", "quinze",
 			"dezasseis", "dezassete", "dezoito", "dezanove"}),
 
-		GROUP20_90 (new String[]{
+		GROUP20_90 (10, new String[]{null,
 			"vinte", "trinta", "quarenta", "cinquenta",
 			"sessenta",	"setenta", "oitenta", "noventa"}),
 
-		GROUP100 (new String[]{"cem"}),
+		GROUP100 (100, new String[]{"cem"}),
 
-		GROUP101_900 (new String[]{
+		GROUP101_900 (100, new String[]{
 			"cento", "duzentos", "trezentos", "quatrocentos", "quinhentos",
 			"seiscentos", "setecentos", "oitocentos", "novecentos"});
 
 		public String[] names;
+		public int divisor;
 
-		NUMERALS(String[] names) {
+		NUMERALS(int divisor, String[] names) {
+			this.divisor=divisor;
 			this.names=names;
+		}
+
+		private String name(int value) {
+			return value==0 ? names[value] : names[value/divisor-1];
+		}
+
+		private static NUMERALS get(int value) {
+			if (value==0) return GROUP0;
+			if (value<20) return GROUP1_19;
+			if (value<100) return GROUP20_90;
+			if (value==100) return GROUP100;
+			if (value<1000) return GROUP101_900;
+			throw new UnsupportedOperationException();
 		}
 
 		/** Creates order string */
 		public static String toString(int value) {
-
-			if (value<20) return GROUP0_19.names[value];
-			if (value<100){
-				String str=GROUP20_90.names[value/10-2];
-				return value%10==0 ? str : str+" "+CONJUNCTIONS.AND.name+" "+toString(value%10);
-			}
-			if (value==100) return GROUP100.names[0];
-			if (value<1000){
-				String str=GROUP101_900.names[value/100-1];
-				return value%100==0 ? str : str+" "+CONJUNCTIONS.AND.name+" "+toString(value%100);
-			}return null;
-
+			NUMERALS numeral=get(value);
+			int remainder=value%numeral.divisor;
+			return remainder==0 ? numeral.name(value) :
+				numeral.name(value)+" "+CONJUNCTIONS.AND.name+" "+toString(remainder);
 		}
 
 	}
@@ -283,24 +287,9 @@ public class WordNumerals {
 
 		//teste de "overflow"
 		BigDecimal overflow=new BigDecimal("123456789000000000000000000000000000");
-		System.out.println("===overflow===");
+		System.out.println("===OVERFLOW===");
 		System.out.println(String.format(
 				"%-14s", overflow.toPlainString())+": "+numerals.toString(overflow));
-
-		//teste "Nova Gramatica do Portugues Contemporaneo"
-		final BigDecimal[] VALUES={
-			new BigDecimal("999"),
-			new BigDecimal("1230"),
-			new BigDecimal("1200"),
-			new BigDecimal("293572"),
-			new BigDecimal("332415741211")};
-
-		System.out.println();
-		System.out.println("===Nova Gramatica do Portugues Contemporaneo===");
-		for(BigDecimal value: VALUES){
-			System.out.println(String.format(
-					"%-14s", value.toPlainString())+": "+numerals.toString(value));
-		}
 
 		//teste de intervalos
 		final double[][] INTERVALS=new double[][]{
@@ -334,6 +323,21 @@ public class WordNumerals {
 				System.out.println(String.format(
 						"%-14s", value.toPlainString())+": "+numerals.toString(value));
 			}
+		}
+
+		//teste "Nova Gramatica do Portugues Contemporaneo"
+		final BigDecimal[] VALUES={
+			new BigDecimal("999"),
+			new BigDecimal("1230"),
+			new BigDecimal("1200"),
+			new BigDecimal("293572"),
+			new BigDecimal("332415741211")};
+
+		System.out.println();
+		System.out.println("===Nova Gramatica do Portugues Contemporaneo===");
+		for(BigDecimal value: VALUES){
+			System.out.println(String.format(
+					"%-14s", value.toPlainString())+": "+numerals.toString(value));
 		}
 
 	}
