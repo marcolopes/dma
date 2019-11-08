@@ -257,11 +257,9 @@ public class WordNumerals {
 				String qualifier=QUALIFIERS.get(value).toString(index, previous, value999);
 				//evita "UM MIL"
 				String numeral=index==1 && value==1 ? "" : NUMERALS.toString(value);
-
 				//inserts qualifier
 				if (!qualifier.isEmpty()) sb.insert(0, " ");
 				sb.insert(0, qualifier);
-
 				//inserts numeral
 				if (!numeral.isEmpty()) sb.insert(0, " ");
 				sb.insert(0, numeral);
