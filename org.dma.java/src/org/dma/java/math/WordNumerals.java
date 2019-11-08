@@ -58,14 +58,14 @@ public class WordNumerals {
 	public static final NumeralsUnit UNIT_METER = new NumeralsUnit(
 		new String[]{"Metro", "Metros"}, new String[]{"Centímetro", "Centímetros"});
 
-	public enum CONJUNCTION {
+	public enum CONJUNCTIONS {
 
 		AND ("e"),
 		OF ("de");
 
 		public String name;
 
-		CONJUNCTION(String name) {
+		CONJUNCTIONS(String name) {
 			this.name=name;
 		}
 
@@ -101,26 +101,26 @@ public class WordNumerals {
 			String qualifier=index>names.length ? "???" : names[index-1];
 
 			/*
-			 * ordem actual >= MILHOES
-			 * ordem anterior = CENTENAS
-			 * nao existem centenas
+			 * ordem actual >= MILHOES?
+			 * ordem anterior = CENTENAS?
+			 * nao existem centenas?
 			 * (MILHOES DE; BILIOES DE; etc)
 			 */
 			if (index>=2 && previous==0 && value999==0)
-				qualifier+=" "+CONJUNCTION.OF.name;
+				return qualifier+" "+CONJUNCTIONS.OF.name;
 			/*
-			 * ordem anterior = CENTENAS
-			 * existem centenas (EVITA MIL E ?)
-			 * centenas inferiores a 100 (E UM; E DOIS; etc)
-			 * centenas multiplas de 100 (E CEM; E DUZENTOS; etc)
+			 * ordem anterior = CENTENAS?
+			 * existem centenas? (EVITA MIL E ?)
+			 * centenas inferiores a 100? (E UM; E DOIS; etc)
+			 * centenas multiplas de 100? (E CEM; E DUZENTOS; etc)
 			 */
-			else if (previous==0 && value999>0 && (value999<100 || value999%100==0))
-				qualifier+=" "+CONJUNCTION.AND.name;
+			if (previous==0 && value999>0 && (value999<100 || value999%100==0))
+				return qualifier+" "+CONJUNCTIONS.AND.name;
 			/*
-			 * ordem actual >= MILHOES
+			 * ordem actual >= MILHOES?
 			 * (SEPARA MILHOES, BILIOES, etc)
 			 */
-			else if (index>=2) qualifier+=",";
+			if (index>=2) return qualifier+",";
 
 			return qualifier;
 
@@ -155,19 +155,15 @@ public class WordNumerals {
 		/** Creates order string */
 		public static String toString(int value) {
 
-			if (value<20){
-				return GROUP0_19.names[value];
-			}
-			else if (value<100){
+			if (value<20) return GROUP0_19.names[value];
+			if (value<100){
 				String str=GROUP20_90.names[value/10-2];
-				return value%10==0 ? str : str+" "+CONJUNCTION.AND.name+" "+toString(value%10);
+				return value%10==0 ? str : str+" "+CONJUNCTIONS.AND.name+" "+toString(value%10);
 			}
-			else if (value==100){
-				return GROUP100.names[0];
-			}
-			else if (value<1000){
+			if (value==100) return GROUP100.names[0];
+			if (value<1000){
 				String str=GROUP101_900.names[value/100-1];
-				return value%100==0 ? str : str+" "+CONJUNCTION.AND.name+" "+toString(value%100);
+				return value%100==0 ? str : str+" "+CONJUNCTIONS.AND.name+" "+toString(value%100);
 			}return null;
 
 		}
@@ -207,7 +203,7 @@ public class WordNumerals {
 			//BigInteger decimal=(scaled.subtract(new BigDecimal(integer))).multiply(new BigDecimal(100)).toBigInteger();
 			BigInteger decimal=scaled.remainder(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).toBigInteger();
 			if (decimal.signum()>0){
-				if (integer.signum()>0) str+=" "+CONJUNCTION.AND.name+" ";
+				if (integer.signum()>0) str+=" "+CONJUNCTIONS.AND.name+" ";
 				str+=ordersToString(getOrders(decimal), unit.decimal);
 			}
 		}
@@ -237,7 +233,7 @@ public class WordNumerals {
 	/** Concatenates all the orders */
 	private String ordersToString(List<Integer> orders, String[] unit) {
 
-		String str="";
+		StringBuilder sb=new StringBuilder();
 
 		//hundreds order value
 		int value999=orders.get(0);
@@ -253,13 +249,16 @@ public class WordNumerals {
 			if (value>0){
 
 				String qualifier=QUALIFIERS.get(value).toString(index, previous, value999);
-
 				//evita "UM MIL"
 				String numeral=index==1 && value==1 ? "" : NUMERALS.toString(value);
 
-				if (!qualifier.isEmpty()) qualifier=qualifier+" ";
-				if (!numeral.isEmpty()) numeral=numeral+" ";
-				str=numeral+qualifier+str;
+				//inserts qualifier
+				if (!qualifier.isEmpty()) sb.insert(0, " ");
+				sb.insert(0, qualifier);
+
+				//inserts numeral
+				if (!numeral.isEmpty()) sb.insert(0, " ");
+				sb.insert(0, numeral);
 
 				previous=index;
 
@@ -270,9 +269,9 @@ public class WordNumerals {
 		}
 
 		//evita "UM" + PLURAL da unidade
-		str+=unit[orders.size()==1 && value999==1 ? 0 : 1];
+		sb.append(unit[orders.size()==1 && value999==1 ? 0 : 1]);
 
-		return str;
+		return sb.toString();
 
 	}
 
