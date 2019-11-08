@@ -111,9 +111,7 @@ public class JKSCertificate {
 
 		}catch(Exception e){
 			Debug.err(e);
-		}
-
-		return null;
+		}return null;
 	}
 
 
