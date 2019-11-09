@@ -87,9 +87,10 @@ public class WordNumerals {
 			this.names=names;
 		}
 
+		/** ZERO based index */
 		public String name(int index) {
 			//avoids overflow
-			return index>names.length ? "???" : names[index-1];
+			return index>=names.length ? "???" : names[index];
 		}
 
 		public static QUALIFIERS get(int value) {
@@ -100,53 +101,42 @@ public class WordNumerals {
 
 	public enum NUMERALS {
 
-		GROUP0_19 (1, new String[]{"zero",
+		GROUP0 (new String[]{"zero"}),
+
+		GROUP1_19 (new String[]{
 			"um", "dois", "três", "quatro", "cinco",
 			"seis", "sete", "oito", "nove", "dez",
 			"onze", "doze", "treze", "catorze", "quinze",
 			"dezasseis", "dezassete", "dezoito", "dezanove"}),
 
-		GROUP20_90 (10, new String[]{
+		GROUP20_90 (new String[]{
 			"vinte", "trinta", "quarenta", "cinquenta",
 			"sessenta",	"setenta", "oitenta", "noventa"}),
 
-		GROUP100 (100, new String[]{"cem"}),
+		GROUP100 (new String[]{"cem"}),
 
-		GROUP101_900 (100, new String[]{
+		GROUP101_900 (new String[]{
 			"cento", "duzentos", "trezentos", "quatrocentos", "quinhentos",
 			"seiscentos", "setecentos", "oitocentos", "novecentos"});
 
-		public int divisor;
 		public String[] names;
 
-		NUMERALS(int divisor, String[] names) {
-			this.divisor=divisor;
+		NUMERALS(String[] names) {
 			this.names=names;
 		}
 
-		public String name(int value) {
-			switch(this){
-			case GROUP0_19: return names[value];
-			case GROUP20_90: return names[value/divisor-2];
-			case GROUP100:
-			case GROUP101_900: return names[value/divisor-1];
-			}return null;
-		}
-
-		public static NUMERALS get(int value) {
-			if (value<20) return GROUP0_19;
-			if (value<100) return GROUP20_90;
-			if (value==100) return GROUP100;
-			if (value<1000) return GROUP101_900;
-			throw new IllegalArgumentException(String.valueOf(value));
+		private static String toString(int value, String str) {
+			if (value==0) return str;
+			if (!str.isEmpty()) str+=" "+CONJUNCTIONS.AND.name+" ";
+			if (value<20) return str+GROUP1_19.names[value-1];
+			if (value<100) return str+toString(value%10, GROUP20_90.names[value/10-2]);
+			if (value==100) return str+GROUP100.names[0];
+			return toString(value%100, GROUP101_900.names[value/100-1]);
 		}
 
 		/** Creates order string */
 		public static String toString(int value) {
-			NUMERALS numeral=get(value);
-			int remainder=value%numeral.divisor;
-			return remainder==0 ? numeral.name(value) :
-				numeral.name(value)+" "+CONJUNCTIONS.AND.name+" "+toString(remainder);
+			return value==0 ? GROUP0.names[0] : toString(value, "");
 		}
 
 	}
@@ -181,8 +171,8 @@ public class WordNumerals {
 			if (integer.signum()>0) str+=ordersToString(getOrders(integer), unit.integer);
 
 			//processes DECIMAL
-			//BigInteger decimal=(scaled.subtract(new BigDecimal(integer))).multiply(new BigDecimal(100)).toBigInteger();
-			BigInteger decimal=scaled.remainder(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).toBigInteger();
+			BigInteger decimal=(scaled.subtract(new BigDecimal(integer))).multiply(new BigDecimal(100)).toBigInteger();
+			//BigInteger decimal=scaled.remainder(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).toBigInteger();
 			if (decimal.signum()>0){
 				if (integer.signum()>0) str+=" "+CONJUNCTIONS.AND.name+" ";
 				str+=ordersToString(getOrders(decimal), unit.decimal);
@@ -216,9 +206,6 @@ public class WordNumerals {
 
 		StringBuilder sb=new StringBuilder();
 
-		//hundreds order value
-		int value100=orders.get(0);
-
 		//previous order index
 		int previous=0;
 
@@ -230,7 +217,7 @@ public class WordNumerals {
 			if (value>0){
 
 				//inserts qualifier (NO qualifier for hundreds)
-				String qualifier=index==0 ? "" : QUALIFIERS.get(value).name(index);
+				String qualifier=index==0 ? "" : QUALIFIERS.get(value).name(index-1);
 				if (!qualifier.isEmpty()){
 					/*
 					 * ordem actual >= MILHOES?
@@ -238,22 +225,23 @@ public class WordNumerals {
 					 * nao existem centenas?
 					 * (MILHOES DE; BILIOES DE; etc)
 					 */
-					if (index>=2 && previous==0 && value100==0)
-						qualifier+=" "+CONJUNCTIONS.OF.name;
+					if (index>=2 && previous==0 && orders.get(0)==0)
+						sb.insert(0, qualifier+" "+CONJUNCTIONS.OF.name+" ");
 					/*
 					 * ordem anterior = CENTENAS?
 					 * existem centenas? (EVITA MIL E ?)
 					 * centenas inferiores a 100? (E UM; E DOIS; etc)
 					 * centenas multiplas de 100? (E CEM; E DUZENTOS; etc)
 					 */
-					else if (previous==0 && value100>0 && (value100<100 || value100%100==0))
-						qualifier+=" "+CONJUNCTIONS.AND.name;
+					else if (previous==0 && orders.get(0)>0 &&
+							(orders.get(0)<100 || orders.get(0)%100==0))
+						sb.insert(0, qualifier+" "+CONJUNCTIONS.AND.name+" ");
 					/*
 					 * ordem actual >= MILHOES?
 					 * (SEPARA MILHOES, BILIOES, etc)
 					 */
-					else if (index>=2) qualifier+=",";
-					sb.insert(0, qualifier+" ");
+					else if (index>=2) sb.insert(0, qualifier+", ");
+					else sb.insert(0, qualifier+" ");
 				}
 
 				//inserts numeral (evita "UM MIL")
@@ -269,7 +257,7 @@ public class WordNumerals {
 		}
 
 		//evita "UM" + PLURAL da unidade
-		sb.append(unit[orders.size()==1 && value100==1 ? 0 : 1]);
+		sb.append(unit[orders.size()==1 && orders.get(0)==1 ? 0 : 1]);
 
 		return sb.toString();
 
