@@ -116,8 +116,8 @@ public class WordNumerals {
 			"cento", "duzentos", "trezentos", "quatrocentos", "quinhentos",
 			"seiscentos", "setecentos", "oitocentos", "novecentos"});
 
-		public String[] names;
 		public int divisor;
+		public String[] names;
 
 		NUMERALS(int divisor, String[] names) {
 			this.divisor=divisor;
