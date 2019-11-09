@@ -87,34 +87,9 @@ public class WordNumerals {
 			this.names=names;
 		}
 
-		/** Creates qualifier string */
-		public String toString(int index, int previous, int value999) {
-			//NO qualifier below 999
-			if (index==0) return "";
+		public String name(int index) {
 			//avoids overflow
-			String qualifier=index>names.length ? "???" : names[index-1];
-			/*
-			 * ordem actual >= MILHOES?
-			 * ordem anterior = CENTENAS?
-			 * nao existem centenas?
-			 * (MILHOES DE; BILIOES DE; etc)
-			 */
-			if (index>=2 && previous==0 && value999==0)
-				return qualifier+" "+CONJUNCTIONS.OF.name;
-			/*
-			 * ordem anterior = CENTENAS?
-			 * existem centenas? (EVITA MIL E ?)
-			 * centenas inferiores a 100? (E UM; E DOIS; etc)
-			 * centenas multiplas de 100? (E CEM; E DUZENTOS; etc)
-			 */
-			if (previous==0 && value999>0 && (value999<100 || value999%100==0))
-				return qualifier+" "+CONJUNCTIONS.AND.name;
-			/*
-			 * ordem actual >= MILHOES?
-			 * (SEPARA MILHOES, BILIOES, etc)
-			 */
-			if (index>=2) return qualifier+",";
-			return qualifier;
+			return index>names.length ? "???" : names[index-1];
 		}
 
 		public static QUALIFIERS get(int value) {
@@ -242,7 +217,7 @@ public class WordNumerals {
 		StringBuilder sb=new StringBuilder();
 
 		//hundreds order value
-		int value999=orders.get(0);
+		int value100=orders.get(0);
 
 		//previous order index
 		int previous=0;
@@ -254,12 +229,36 @@ public class WordNumerals {
 			//NOT ZERO?
 			if (value>0){
 
-				//inserts qualifier
-				String qualifier=QUALIFIERS.get(value).toString(index, previous, value999);
-				sb.insert(0, qualifier.isEmpty() ? qualifier : qualifier+" ");
+				//inserts qualifier (NO qualifier for hundreds)
+				String qualifier=index==0 ? "" : QUALIFIERS.get(value).name(index);
+				if (!qualifier.isEmpty()){
+					/*
+					 * ordem actual >= MILHOES?
+					 * ordem anterior = CENTENAS?
+					 * nao existem centenas?
+					 * (MILHOES DE; BILIOES DE; etc)
+					 */
+					if (index>=2 && previous==0 && value100==0)
+						qualifier+=" "+CONJUNCTIONS.OF.name;
+					/*
+					 * ordem anterior = CENTENAS?
+					 * existem centenas? (EVITA MIL E ?)
+					 * centenas inferiores a 100? (E UM; E DOIS; etc)
+					 * centenas multiplas de 100? (E CEM; E DUZENTOS; etc)
+					 */
+					else if (previous==0 && value100>0 && (value100<100 || value100%100==0))
+						qualifier+=" "+CONJUNCTIONS.AND.name;
+					/*
+					 * ordem actual >= MILHOES?
+					 * (SEPARA MILHOES, BILIOES, etc)
+					 */
+					else if (index>=2) qualifier+=",";
+					sb.insert(0, qualifier+" ");
+				}
+
 				//inserts numeral (evita "UM MIL")
 				String numeral=index==1 && value==1 ? "" : NUMERALS.toString(value);
-				sb.insert(0, numeral.isEmpty() ? numeral : numeral+" ");
+				if (!numeral.isEmpty()) sb.insert(0, numeral+" ");
 
 				previous=index;
 
@@ -270,7 +269,7 @@ public class WordNumerals {
 		}
 
 		//evita "UM" + PLURAL da unidade
-		sb.append(unit[orders.size()==1 && value999==1 ? 0 : 1]);
+		sb.append(unit[orders.size()==1 && value100==1 ? 0 : 1]);
 
 		return sb.toString();
 
