@@ -254,15 +254,12 @@ public class WordNumerals {
 			//NOT ZERO?
 			if (value>0){
 
-				String qualifier=QUALIFIERS.get(value).toString(index, previous, value999);
-				//evita "UM MIL"
-				String numeral=index==1 && value==1 ? "" : NUMERALS.toString(value);
 				//inserts qualifier
-				if (!qualifier.isEmpty()) sb.insert(0, " ");
-				sb.insert(0, qualifier);
-				//inserts numeral
-				if (!numeral.isEmpty()) sb.insert(0, " ");
-				sb.insert(0, numeral);
+				String qualifier=QUALIFIERS.get(value).toString(index, previous, value999);
+				sb.insert(0, qualifier.isEmpty() ? qualifier : qualifier+" ");
+				//inserts numeral (evita "UM MIL")
+				String numeral=index==1 && value==1 ? "" : NUMERALS.toString(value);
+				sb.insert(0, numeral.isEmpty() ? numeral : numeral+" ");
 
 				previous=index;
 
