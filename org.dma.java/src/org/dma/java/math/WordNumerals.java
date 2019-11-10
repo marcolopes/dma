@@ -111,7 +111,7 @@ public class WordNumerals {
 
 		GROUP20_90 (new String[]{
 			"vinte", "trinta", "quarenta", "cinquenta",
-			"sessenta",	"setenta", "oitenta", "noventa"}),
+			"sessenta", "setenta", "oitenta", "noventa"}),
 
 		GROUP100 (new String[]{"cem"}),
 
@@ -129,9 +129,9 @@ public class WordNumerals {
 			if (value<=0 || value>999) return str;
 			if (!str.isEmpty()) str+=" "+CONJUNCTIONS.AND.name+" ";
 			if (value<20) return str+GROUP1_19.names[value-1];
-			if (value<100) return str+toString(value%10, GROUP20_90.names[value/10-2]);
+			if (value<100) return toString(value%10, str+GROUP20_90.names[value/10-2]);
 			if (value==100) return str+GROUP100.names[0];
-			return toString(value%100, GROUP101_900.names[value/100-1]);
+			return toString(value%100, str+GROUP101_900.names[value/100-1]);
 		}
 
 		/** Creates order string */
@@ -275,7 +275,7 @@ public class WordNumerals {
 	/** Test Case */
 	public static void main(String[] argvs) {
 
-		//NUMERALS.debug();
+		NUMERALS.debug();
 
 		//teste de "overflow"
 		BigDecimal overflow=new BigDecimal("123456789000000000000000000000000000");
