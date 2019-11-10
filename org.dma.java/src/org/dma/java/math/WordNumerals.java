@@ -126,7 +126,7 @@ public class WordNumerals {
 		}
 
 		private static String toString(int value, String str) {
-			if (value==0) return str;
+			if (value<=0 || value>999) return str;
 			if (!str.isEmpty()) str+=" "+CONJUNCTIONS.AND.name+" ";
 			if (value<20) return str+GROUP1_19.names[value-1];
 			if (value<100) return str+toString(value%10, GROUP20_90.names[value/10-2]);
@@ -137,6 +137,14 @@ public class WordNumerals {
 		/** Creates order string */
 		public static String toString(int value) {
 			return value==0 ? GROUP0.names[0] : toString(value, "");
+		}
+
+		public static void debug() {
+			for(int[] interval: new int[][]{{0,201,1}, {999,1001,1}}){
+				for(int value=interval[0]; value<=interval[1]; value+=interval[2]){
+					System.out.println(String.format("%-14s", value)+": "+toString(value));
+				}
+			}
 		}
 
 	}
@@ -267,16 +275,19 @@ public class WordNumerals {
 	/** Test Case */
 	public static void main(String[] argvs) {
 
-		WordNumerals numerals=new WordNumerals(2);
+		//NUMERALS.debug();
 
 		//teste de "overflow"
 		BigDecimal overflow=new BigDecimal("123456789000000000000000000000000000");
-		System.out.println("===OVERFLOW===");
-		System.out.println(String.format(
-				"%-14s", overflow.toPlainString())+": "+numerals.toString(overflow));
+		System.out.println("=== OVERFLOW ===");
+		System.out.println(overflow);
+		System.out.println(new WordNumerals(0).toString(overflow));
+
+		WordNumerals numerals=new WordNumerals(2);
 
 		//teste de intervalos
-		final double[][] INTERVALS=new double[][]{
+		int index=0;
+		for(double[] interval: new double[][]{
 			{.0,.09,.01},
 			{.90,.99,.01},
 			{1,1.99,.01},
@@ -296,32 +307,27 @@ public class WordNumerals {
 			{1000010000,1000010002,1},
 			{1001000000,1001000002,1},
 			{1010010000,1010010002,1},
-			{1234567889,1234567891,1}};
-
-		int index=0;
-		for(double[] interval: INTERVALS){
+			{1234567889,1234567891,1}}){
 			System.out.println();
-			System.out.println("===INTERVALO #"+(index++)+"===");
-			for(BigDecimal value=BigDecimal.valueOf(interval[0]);
-					value.doubleValue()<=interval[1]; value=value.add(BigDecimal.valueOf(interval[2]))){
-				System.out.println(String.format(
-						"%-14s", value.toPlainString())+": "+numerals.toString(value));
+			System.out.println("=== INTERVALO #"+(index++)+" ===");
+			for(BigDecimal value=BigDecimal.valueOf(interval[0]); value.doubleValue()<=interval[1];
+					value=value.add(BigDecimal.valueOf(interval[2]))){
+				System.out.println(String.format("%-14s",
+						value.toPlainString())+": "+numerals.toString(value));
 			}
 		}
 
 		//teste "Nova Gramatica do Portugues Contemporaneo"
-		final BigDecimal[] VALUES={
+		System.out.println();
+		System.out.println("=== Nova Gramatica do Portugues Contemporaneo ===");
+		for(BigDecimal value: new BigDecimal[]{
 			new BigDecimal("999"),
 			new BigDecimal("1230"),
 			new BigDecimal("1200"),
 			new BigDecimal("293572"),
-			new BigDecimal("332415741211")};
-
-		System.out.println();
-		System.out.println("===Nova Gramatica do Portugues Contemporaneo===");
-		for(BigDecimal value: VALUES){
-			System.out.println(String.format(
-					"%-14s", value.toPlainString())+": "+numerals.toString(value));
+			new BigDecimal("332415741211")}){
+			System.out.println(String.format("%-14s",
+					value.toPlainString())+": "+numerals.toString(value));
 		}
 
 	}
