@@ -140,7 +140,7 @@ public class WordNumerals {
 		}
 
 		public static void debug() {
-			for(int[] interval: new int[][]{{0,201,1}, {999,1001,1}}){
+			for(int[] interval: new int[][]{{-1,201,1}, {999,1000,1}}){
 				for(int value=interval[0]; value<=interval[1]; value+=interval[2]){
 					System.out.println(String.format("%-14s", value)+": "+toString(value));
 				}
