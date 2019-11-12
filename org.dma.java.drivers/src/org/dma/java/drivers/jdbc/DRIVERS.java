@@ -54,23 +54,6 @@ public enum DRIVERS {
 		}
 	}
 
-	public static boolean isLocalhost(String host) {
-		return host.startsWith("localhost") || host.startsWith("127.0.0.1");
-	}
-
-	public static void checkH2Lock(String database) throws Exception {
-		String filename=database+Constants.SUFFIX_LOCK_FILE;
-		Debug.out("DATABASE LOCK: "+filename);
-		try{
-			FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
-			lock.lock(FileLock.LOCK_FILE);
-			lock.unlock();
-
-		}catch(Exception e){
-			throw new Exception(e);
-		}
-	}
-
 	public final String name;
 	public final Class klass;
 
@@ -324,6 +307,23 @@ public enum DRIVERS {
 	public void executeDropTable(Connection connection, String tableName) throws SQLException {
 		Debug.out("DROPPING <"+tableName+">");
 		executeSQLUpdate(connection, getDropTableSQL(tableName));
+	}
+
+	public static boolean isLocalhost(String host) {
+		return host.startsWith("localhost") || host.startsWith("127.0.0.1");
+	}
+
+	public static void checkH2Lock(String database) throws Exception {
+		String filename=database+Constants.SUFFIX_LOCK_FILE;
+		Debug.out("DATABASE LOCK: "+filename);
+		try{
+			FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
+			lock.lock(FileLock.LOCK_FILE);
+			lock.unlock();
+
+		}catch(Exception e){
+			throw new Exception(e);
+		}
 	}
 
 }

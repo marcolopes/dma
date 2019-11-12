@@ -27,10 +27,6 @@ public enum POOLMANAGERS {
 
 	private static HashMap<String, IPoolManager> CACHE=new HashMap();
 
-	public static void shutdown() {
-		for(IPoolManager manager: CACHE.values()) manager.shutdown();
-	}
-
 	public synchronized IPoolManager get(String url, String user, String password) {
 		IPoolManager manager=CACHE.get(url);
 		if (manager==null) CACHE.put(url, manager=create(url, user, password));
@@ -51,6 +47,10 @@ public enum POOLMANAGERS {
 		case C3P0: return new C3P0Manager(url, user, password);
 		case BONECP: return new BoneCPManager(url, user, password);
 		}return null;
+	}
+
+	public static void shutdown() {
+		for(IPoolManager manager: CACHE.values()) manager.shutdown();
 	}
 
 }
