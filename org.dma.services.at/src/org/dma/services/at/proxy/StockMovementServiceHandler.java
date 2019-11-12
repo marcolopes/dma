@@ -43,7 +43,13 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 
 	public StockMovementServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate);
+		this(username, password, saCertificate, swCertificate, null, endpoint);
+	}
+
+	public StockMovementServiceHandler(String username, String password,
+			JKSCertificate saCertificate, JKSCertificate swCertificate,
+			JKSCertificate tsCertificate, A10_ENDPOINTS endpoint) {
+		super(username, password, saCertificate, swCertificate, tsCertificate);
 		this.endpoint = endpoint;
 	}
 

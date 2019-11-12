@@ -84,6 +84,8 @@ public class StockMovementServiceTest {
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
 				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebServices.pfx", "TESTEwebservice"),
+				//Trusted Store Certificate
+				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/TrustStoreAT.jks", "123456", "portaldasfinancas"),
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 

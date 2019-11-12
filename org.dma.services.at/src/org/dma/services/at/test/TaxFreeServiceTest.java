@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
-import org.dma.java.util.Debug;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.TaxFreeServiceHandler;
@@ -148,6 +147,8 @@ public class TaxFreeServiceTest {
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
 				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebServices.pfx", "TESTEwebservice"),
+				//Trusted Store Certificate
+				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/TrustStoreAT.jks", "123456", "portaldasfinancas"),
 				//Endpoint address
 				A10_ENDPOINTS.TESTES);
 
