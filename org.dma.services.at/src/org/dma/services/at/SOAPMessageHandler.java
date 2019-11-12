@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPEnvelope;
@@ -67,19 +68,22 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	private final String password;
 	private final JKSCertificate saCertificate;
 	private final JKSCertificate swCertificate;
+	private final JKSCertificate tsCertificate;
 
 	/**
 	 * @param username - Service Username
 	 * @param password - Service Password
 	 * @param saCertificate - Scheme Administrator Certificate
 	 * @param swCertificate - Software Developer Certificate
+	 * @param tsCertificate - Trusted Store Certificate
 	 */
 	public SOAPMessageHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate) {
+			JKSCertificate saCertificate, JKSCertificate swCertificate, JKSCertificate tsCertificate) {
 		this.username = username;
 		this.password = password;
 		this.saCertificate = saCertificate;
 		this.swCertificate = swCertificate;
+		this.tsCertificate = tsCertificate;
 	}
 
 
@@ -104,9 +108,16 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 			kmf.init(swCertificate.getKeyStore(), swCertificate.password.toCharArray());
 
-			// adiciona um Trust Store que aceita ligacao SSL sem validar o certificado
 			SSLContext sslContext = SSLContext.getInstance("TLSv1"); // JAVA8 usa TLSv2
-			sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, null);
+			if (tsCertificate==null){
+				// adiciona um Trust Store que aceita ligacao SSL sem validar o certificado
+				sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, null);
+			}else{
+				// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
+				TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+				tmf.init(tsCertificate.getKeyStore());
+				sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+			}
 
 			/*
 			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
