@@ -99,9 +99,60 @@ public class WordNumerals {
 
 	}
 
+	/*
 	public enum NUMERALS {
 
-		GROUP0 (1, new String[]{"zero"}),
+		GROUP0 (new String[]{"zero"}),
+
+		GROUP1_19 (new String[]{
+			"um", "dois", "três", "quatro", "cinco",
+			"seis", "sete", "oito", "nove", "dez",
+			"onze", "doze", "treze", "catorze", "quinze",
+			"dezasseis", "dezassete", "dezoito", "dezanove"}),
+
+		GROUP20_90 (new String[]{
+			"vinte", "trinta", "quarenta", "cinquenta",
+			"sessenta", "setenta", "oitenta", "noventa"}),
+
+		GROUP100 (new String[]{"cem"}),
+
+		GROUP101_900 (new String[]{
+			"cento", "duzentos", "trezentos", "quatrocentos", "quinhentos",
+			"seiscentos", "setecentos", "oitocentos", "novecentos"});
+
+		public final String[] names;
+
+		NUMERALS(String[] names) {
+			this.names=names;
+		}
+
+		private static String toString(int value, String str) {
+			if (value<=0 || value>999) return str;
+			if (!str.isEmpty()) str+=" "+CONJUNCTIONS.AND.name+" ";
+			if (value<20) return str+GROUP1_19.names[value-1];
+			if (value<100) return toString(value%10, str+GROUP20_90.names[value/10-2]);
+			if (value==100) return str+GROUP100.names[0];
+			return toString(value%100, str+GROUP101_900.names[value/100-1]);
+		}
+
+		public static String toString(int value) {
+			return value==0 ? GROUP0.names[0] : toString(value, "");
+		}
+
+		public static void debug() {
+			for(int[] interval: new int[][]{{-1,201,1}, {999,1000,1}}){
+				for(int value=interval[0]; value<=interval[1]; value+=interval[2]){
+					System.out.println(String.format("%-14s", value)+": "+toString(value));
+				}
+			}
+		}
+
+	}
+	*/
+
+	public enum NUMERALS {
+
+		GROUP0 (0, new String[]{"zero"}),
 
 		GROUP1_19 (1, new String[]{
 			"um", "dois", "três", "quatro", "cinco",
@@ -109,13 +160,13 @@ public class WordNumerals {
 			"onze", "doze", "treze", "catorze", "quinze",
 			"dezasseis", "dezassete", "dezoito", "dezanove"}),
 
-		GROUP20_90 (10, new String[]{null,
+		GROUP20_99 (10, new String[]{null,
 			"vinte", "trinta", "quarenta", "cinquenta",
 			"sessenta",	"setenta", "oitenta", "noventa"}),
 
 		GROUP100 (100, new String[]{"cem"}),
 
-		GROUP101_900 (100, new String[]{
+		GROUP101_999 (100, new String[]{
 			"cento", "duzentos", "trezentos", "quatrocentos", "quinhentos",
 			"seiscentos", "setecentos", "oitocentos", "novecentos"});
 
@@ -127,29 +178,41 @@ public class WordNumerals {
 			this.names=names;
 		}
 
-		private String name(int value) {
-			return value==0 ? names[value] : names[value/divisor-1];
+		/*
+		private static String toString(int value, String str) {
+			if (value<=0 || value>999) return str;
+			if (!str.isEmpty()) str+=" "+CONJUNCTIONS.AND.name+" ";
+			if (value<20) return str+GROUP1_19.names[value-1];
+			if (value<100) return toString(value%10, str+GROUP20_99.names[value/10-2]);
+			if (value==100) return str+GROUP100.names[0];
+			return toString(value%100, str+GROUP101_999.names[value/100-1]);
 		}
 
-		private static NUMERALS get(int value) {
+		public static String toString(int value) {
+			return value==0 ? GROUP0.names[0] : toString(value, "");
+		}
+		*/
+
+		public static NUMERALS get(int value) {
 			if (value==0) return GROUP0;
-			if (value<20) return GROUP1_19;
-			if (value<100) return GROUP20_90;
+			if (value>=1 && value<=19) return GROUP1_19;
+			if (value>=20 && value<=99) return GROUP20_99;
 			if (value==100) return GROUP100;
-			if (value<1000) return GROUP101_900;
-			throw new UnsupportedOperationException();
+			if (value>=101 && value<=999) return GROUP101_999;
+			return null;
 		}
 
 		/** Creates order string */
 		public static String toString(int value) {
 			NUMERALS numeral=get(value);
+			if (numeral==GROUP0) return numeral.names[0];
+			String name=numeral.names[value/numeral.divisor-1];
 			int remainder=value%numeral.divisor;
-			return remainder==0 ? numeral.name(value) :
-				numeral.name(value)+" "+CONJUNCTIONS.AND.name+" "+toString(remainder);
+			return remainder==0 ? name : name+" "+CONJUNCTIONS.AND.name+" "+toString(remainder);
 		}
 
 		public static void debug() {
-			for(int[] interval: new int[][]{{-1,201,1}, {999,1000,1}}){
+			for(int[] interval: new int[][]{{0,201,1}, {990,999,1}}){
 				for(int value=interval[0]; value<=interval[1]; value+=interval[2]){
 					System.out.println(String.format("%-14s", value)+": "+toString(value));
 				}
