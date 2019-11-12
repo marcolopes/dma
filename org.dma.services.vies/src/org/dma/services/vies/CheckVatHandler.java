@@ -66,38 +66,6 @@ public class CheckVatHandler {
 		/* 01/07/2013 */
 		HR ("Croatia", "\\d{5}");
 
-		/**
-		 * https://joinup.ec.europa.eu/asset/core_location/issue/european-use-uk-and-el-cf-iso-3166-codes-gb-and-gr
-		 */
-		private enum ISO3166 {
-
-			GR (EL);
-
-			/** Returns NULL if not found */
-			public static COUNTRIES get(String countryCode) {
-				try{
-					return valueOf(countryCode.toUpperCase()).country;
-				}catch(Exception e){}
-				return null;
-			}
-
-			public final COUNTRIES country;
-
-			private ISO3166(COUNTRIES country) {
-				this.country=country;
-			}
-
-		}
-
-		/** Returns NULL if not found */
-		public static COUNTRIES get(String countryCode) {
-			try{
-				return valueOf(countryCode.toUpperCase());
-			}catch(Exception e){}
-			/* try ISO countries */
-			return ISO3166.get(countryCode);
-		}
-
 		/** Country name */
 		public final String name;
 		/** ZIP CODE pattern */
@@ -135,9 +103,7 @@ public class CheckVatHandler {
 
 			}catch(Exception e){
 				System.err.println(e);
-			}
-
-			return null;
+			}return null;
 		}
 
 		/** Parses VIES address */
@@ -158,14 +124,44 @@ public class CheckVatHandler {
 
 			}catch(Exception e){
 				System.err.println(e);
-			}
-
-			return new CheckVatAddress(address);
+			}return new CheckVatAddress(address);
 
 		}
 
 		public boolean checkZipcode(String zipcode) {
 			return this.zipcode.matcher(zipcode).matches();
+		}
+
+		/** Returns NULL if not found */
+		public static COUNTRIES get(String countryCode) {
+			try{
+				return valueOf(countryCode.toUpperCase());
+			}catch(Exception e){}
+			/* try ISO countries */
+			return ISO3166.get(countryCode);
+		}
+
+		/**
+		 * https://joinup.ec.europa.eu/asset/core_location/issue/european-use-uk-and-el-cf-iso-3166-codes-gb-and-gr
+		 */
+		private enum ISO3166 {
+
+			GR (EL);
+
+			/** Returns NULL if not found */
+			public static COUNTRIES get(String countryCode) {
+				try{
+					return valueOf(countryCode.toUpperCase()).country;
+				}catch(Exception e){}
+				return null;
+			}
+
+			public final COUNTRIES country;
+
+			private ISO3166(COUNTRIES country) {
+				this.country=country;
+			}
+
 		}
 
 	}
