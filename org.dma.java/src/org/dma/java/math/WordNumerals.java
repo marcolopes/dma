@@ -45,7 +45,7 @@ public class WordNumerals {
 		 * @param integer singular, plural
 		 * @param decimal singular, plural
 		 */
-		public NumeralsUnit(String[] integer, String[] decimal){
+		public NumeralsUnit(String[] integer, String[] decimal) {
 			this.integer=integer;
 			this.decimal=decimal;
 		}
