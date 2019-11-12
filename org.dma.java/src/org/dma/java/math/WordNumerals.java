@@ -99,57 +99,6 @@ public class WordNumerals {
 
 	}
 
-	/*
-	public enum NUMERALS {
-
-		GROUP0 (new String[]{"zero"}),
-
-		GROUP1_19 (new String[]{
-			"um", "dois", "três", "quatro", "cinco",
-			"seis", "sete", "oito", "nove", "dez",
-			"onze", "doze", "treze", "catorze", "quinze",
-			"dezasseis", "dezassete", "dezoito", "dezanove"}),
-
-		GROUP20_90 (new String[]{
-			"vinte", "trinta", "quarenta", "cinquenta",
-			"sessenta", "setenta", "oitenta", "noventa"}),
-
-		GROUP100 (new String[]{"cem"}),
-
-		GROUP101_900 (new String[]{
-			"cento", "duzentos", "trezentos", "quatrocentos", "quinhentos",
-			"seiscentos", "setecentos", "oitocentos", "novecentos"});
-
-		public final String[] names;
-
-		NUMERALS(String[] names) {
-			this.names=names;
-		}
-
-		private static String toString(int value, String str) {
-			if (value<=0 || value>999) return str;
-			if (!str.isEmpty()) str+=" "+CONJUNCTIONS.AND.name+" ";
-			if (value<20) return str+GROUP1_19.names[value-1];
-			if (value<100) return toString(value%10, str+GROUP20_90.names[value/10-2]);
-			if (value==100) return str+GROUP100.names[0];
-			return toString(value%100, str+GROUP101_900.names[value/100-1]);
-		}
-
-		public static String toString(int value) {
-			return value==0 ? GROUP0.names[0] : toString(value, "");
-		}
-
-		public static void debug() {
-			for(int[] interval: new int[][]{{-1,201,1}, {999,1000,1}}){
-				for(int value=interval[0]; value<=interval[1]; value+=interval[2]){
-					System.out.println(String.format("%-14s", value)+": "+toString(value));
-				}
-			}
-		}
-
-	}
-	*/
-
 	public enum NUMERALS {
 
 		GROUP0 (0, new String[]{"zero"}),
