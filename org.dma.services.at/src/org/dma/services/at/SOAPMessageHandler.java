@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Ricardo (AT)
@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPEnvelope;
@@ -109,15 +108,11 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			kmf.init(swCertificate.getKeyStore(), swCertificate.password.toCharArray());
 
 			SSLContext sslContext = SSLContext.getInstance("TLSv1"); // JAVA8 usa TLSv2
-			if (tsCertificate==null){
-				// adiciona um Trust Store que aceita ligacao SSL sem validar o certificado
-				sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, null);
-			}else{
-				// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
-				TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-				tmf.init(tsCertificate.getKeyStore());
-				sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
-			}
+			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
+			sslContext.init(kmf.getKeyManagers(), tsCertificate==null ?
+					// Trust Store que aceita ligacao SSL sem validar o certificado
+					new TrustManager[]{new PermissiveTrustStore()} :
+					tsCertificate.getTrustManagers(), null);
 
 			/*
 			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
