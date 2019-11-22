@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -8,13 +8,18 @@ package org.dma.java.security;
 import java.io.ByteArrayInputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 
 import org.dma.java.io.ByteFileHandler;
 import org.dma.java.util.Debug;
@@ -88,12 +93,8 @@ public class JKSCertificate {
 	}
 
 
-	public void checkKeystore() throws KeyStoreException {
+	public KeyStore getKeyStore() throws KeyStoreException {
 		if (keyStore==null) throw new KeyStoreException("KeyStore not loaded");
-	}
-
-
-	public KeyStore getKeyStore() {
 		return keyStore;
 	}
 
@@ -103,27 +104,29 @@ public class JKSCertificate {
 	}
 
 
-	public PrivateKey getPrivateKey() throws KeyStoreException {
-		checkKeystore();
-		try{
-			return (PrivateKey)keyStore.getKey(alias,
-					password==null ? null : password.toCharArray());
-
-		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+	public PrivateKey getPrivateKey() throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException {
+		KeyStore keyStore=getKeyStore(); // check
+		return (PrivateKey)keyStore.getKey(alias,
+				password==null ? null : password.toCharArray());
 	}
 
 
 	public Certificate[] getCertificateChain() throws KeyStoreException {
-		checkKeystore();
+		KeyStore keyStore=getKeyStore(); // check
 		return keyStore.getCertificateChain(alias);
 	}
 
 
 	public Certificate getCertificate() throws KeyStoreException {
-		checkKeystore();
+		KeyStore keyStore=getKeyStore(); // check
 		return keyStore.getCertificate(alias);
+	}
+
+	public TrustManager[] getTrustManagers() throws KeyStoreException, NoSuchAlgorithmException {
+		KeyStore keyStore=getKeyStore(); // check
+		TrustManagerFactory tmf=TrustManagerFactory.getInstance("SunX509");
+		tmf.init(keyStore);
+		return tmf.getTrustManagers();
 	}
 
 

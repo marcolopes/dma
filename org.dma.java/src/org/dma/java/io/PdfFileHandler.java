@@ -81,7 +81,7 @@ public class PdfFileHandler extends FileHandler {
 
 
 	public void sign(JKSCertificate cert, String reason, String location, String contact)
-			throws KeyStoreException, DocumentException, IOException {
+			throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, DocumentException, IOException {
 
 		sign(cert.getPrivateKey(), cert.getCertificateChain(), reason, location, contact);
 
