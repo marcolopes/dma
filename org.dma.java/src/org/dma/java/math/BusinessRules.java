@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 
 public class BusinessRules {
 
-	public static final BigDecimal BD100 = BigDecimal.valueOf(100);
+	public static final BigDecimal DECIMAL_100 = BigDecimal.valueOf(100);
 
 	/**
 	 * Proportional value<br>
@@ -49,7 +49,7 @@ public class BusinessRules {
 	public static BigDecimal salePrice(BigDecimal cost, BigDecimal margin){
 
 		return cost.divide(BigDecimal.ONE.
-				subtract(margin.divide(BD100)),MathContext.DECIMAL64);
+				subtract(margin.divide(DECIMAL_100)),MathContext.DECIMAL64);
 
 	}
 
@@ -62,7 +62,7 @@ public class BusinessRules {
 	public static BigDecimal markupPercentage(BigDecimal price, BigDecimal cost){
 
 		return cost.signum()==0 ? BigDecimal.ZERO :
-			(price.subtract(cost)).divide(cost,MathContext.DECIMAL64).multiply(BD100);
+			(price.subtract(cost)).divide(cost,MathContext.DECIMAL64).multiply(DECIMAL_100);
 
 	}
 
@@ -74,7 +74,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal addedPercentages(BigDecimal perc1, BigDecimal perc2){
 
-		return perc1.add((BD100.subtract(perc1)).multiply(perc2.divide(BD100)));
+		return perc1.add((DECIMAL_100.subtract(perc1)).multiply(perc2.divide(DECIMAL_100)));
 
 	}
 
@@ -88,7 +88,7 @@ public class BusinessRules {
 
 		BigDecimal result=BigDecimal.ZERO;
 
-		BigDecimal total=BD100;
+		BigDecimal total=DECIMAL_100;
 		for(int i=0; i<perc.length; i++){
 			BigDecimal value=percentageValue(total, perc[i]);
 			result=result.add(value);
@@ -107,7 +107,7 @@ public class BusinessRules {
 	public static BigDecimal valuePercentage(BigDecimal total, BigDecimal value){
 
 		return total.signum()==0 ? BigDecimal.ZERO :
-			value.multiply(BD100).divide(total,MathContext.DECIMAL64);
+			value.multiply(DECIMAL_100).divide(total,MathContext.DECIMAL64);
 
 	}
 
@@ -119,7 +119,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal percentageValue(BigDecimal total, BigDecimal perc){
 
-		return total.multiply(perc).divide(BD100);
+		return total.multiply(perc).divide(DECIMAL_100);
 
 	}
 
@@ -131,9 +131,9 @@ public class BusinessRules {
 	 */
 	public static BigDecimal valueIncluded(BigDecimal value, BigDecimal perc){
 
-		return perc.compareTo(BD100)==0 ? BigDecimal.ZERO :
+		return perc.compareTo(DECIMAL_100)==0 ? BigDecimal.ZERO :
 			value.divide(BigDecimal.ONE.
-					subtract(perc.divide(BD100)),MathContext.DECIMAL64);
+					subtract(perc.divide(DECIMAL_100)),MathContext.DECIMAL64);
 
 	}
 
@@ -146,7 +146,7 @@ public class BusinessRules {
 	public static BigDecimal valueExcluded(BigDecimal value, BigDecimal perc){
 
 		return value.divide(BigDecimal.ONE.
-				add(perc.divide(BD100)),MathContext.DECIMAL64);
+				add(perc.divide(DECIMAL_100)),MathContext.DECIMAL64);
 
 	}
 
