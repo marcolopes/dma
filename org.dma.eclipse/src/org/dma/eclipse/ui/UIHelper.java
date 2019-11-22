@@ -5,6 +5,10 @@
  *******************************************************************************/
 package org.dma.eclipse.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.dma.java.util.Debug;
 
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -21,6 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
@@ -85,9 +90,24 @@ public class UIHelper {
 	}
 
 
-	public static void setPerspectiveToolBarEnabled(boolean enabled) {
-		ToolBar toolBar=getPerspectiveToolBar();
-		if (toolBar!=null) toolBar.setEnabled(enabled);
+	/**
+	* Removes perspectives from RCP application
+	*/
+	public static void removeUnwantedPerspectives(String[] perspectives) {
+		IPerspectiveRegistry perspectiveRegistry=PlatformUI.getWorkbench().getPerspectiveRegistry();
+		if(perspectiveRegistry instanceof IExtensionChangeHandler) try{
+			Collection<String> unwantedPerspectives=Arrays.asList(perspectives);
+			Collection<IPerspectiveDescriptor> removePerspectives=new ArrayList();
+			for (IPerspectiveDescriptor perspectiveDescriptor: perspectiveRegistry.getPerspectives()) {
+				if (unwantedPerspectives.contains(perspectiveDescriptor.getId())) removePerspectives.add(perspectiveDescriptor);
+			}
+			if (!removePerspectives.isEmpty()){
+				IExtensionChangeHandler handler=(IExtensionChangeHandler)perspectiveRegistry;
+				handler.removeExtension(null, removePerspectives.toArray());
+			}
+		}catch(Exception e){
+			Debug.err(e);
+		}
 	}
 
 
@@ -96,8 +116,7 @@ public class UIHelper {
 	 * so they can be present in the PerspectiveBarManager
 	 */
 	public static void addOtherPerspectiveShortcuts(String perspectiveId, IPageLayout layout) {
-		for (IConfigurationElement element: Platform.getExtensionRegistry().
-				getConfigurationElementsFor("org.eclipse.ui.perspectives")) try{
+		for (IConfigurationElement element: Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.ui.perspectives")) try{
 			String id=element.getAttribute("id");
 			if (!id.equals(perspectiveId)){
 				layout.addPerspectiveShortcut(id);
