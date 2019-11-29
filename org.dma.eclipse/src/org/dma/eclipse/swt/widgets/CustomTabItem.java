@@ -1,12 +1,11 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.widgets;
 
-import org.dma.eclipse.jface.CustomAction;
-
+import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -18,7 +17,7 @@ public class CustomTabItem extends TabItem {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	private CustomAction selectionAction;
+	private Action selectionAction;
 
 	public CustomTabItem(TabFolder parent) {
 		this(parent, SWT.NONE);
@@ -52,7 +51,7 @@ public class CustomTabItem extends TabItem {
 		*/
 	}
 
-	public void setSelectionAction(final CustomAction action) {
+	public void setSelectionAction(final Action action) {
 		this.selectionAction=action;
 		//add listener to TabFolder
 		getParent().addSelectionListener(new SelectionAdapter() {
@@ -63,7 +62,7 @@ public class CustomTabItem extends TabItem {
 		});
 	}
 
-	public CustomAction getSelectionAction() {
+	public Action getSelectionAction() {
 		return selectionAction;
 	}
 

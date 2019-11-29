@@ -99,7 +99,7 @@ public abstract class ButtonKeypad extends CustomShell {
 	 */
 	private CustomDecimalText createCompositeDisplay() {
 
-		Composite composite=new Composite(this, SWT.NONE);
+		final Composite composite=new Composite(this, SWT.NONE);
 		GridLayout gridLayout=new GridLayout();
 		gridLayout.marginWidth=0;
 		gridLayout.marginHeight=0;
@@ -133,7 +133,7 @@ public abstract class ButtonKeypad extends CustomShell {
 
 	private void createCompositeButtons() {
 
-		Composite composite=new Composite(this, SWT.NONE);
+		final Composite composite=new Composite(this, SWT.NONE);
 		GridLayout gridLayout=new GridLayout(4, true);
 		gridLayout.marginWidth=0;
 		gridLayout.marginHeight=0;

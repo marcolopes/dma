@@ -137,7 +137,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 	public void createTabFolder(Composite parent) {
 
-		Composite composite=new Composite(parent, SWT.NONE);
+		final Composite composite=new Composite(parent, SWT.NONE);
 		composite.setLayout(new FillLayout());
 
 		tabFolder=new CTabFolder(composite, SWT.NONE);
