@@ -57,7 +57,7 @@ public abstract class ButtonMenu extends CustomShell {
 	 */
 	private void createContents() {
 
-		Composite composite=new Composite(this, SWT.NONE);
+		final Composite composite=new Composite(this, SWT.NONE);
 		GridLayout gridLayout=new GridLayout(1, true);
 		gridLayout.marginWidth=0;
 		gridLayout.marginHeight=0;

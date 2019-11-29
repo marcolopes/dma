@@ -7,10 +7,10 @@ package org.dma.eclipse.swt.widgets;
 
 import java.awt.image.BufferedImage;
 
-import org.dma.eclipse.jface.CustomAction;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
 
+import org.eclipse.jface.action.Action;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
@@ -21,7 +21,7 @@ public class CustomMenuItem extends MenuItem {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	private CustomAction selectionAction;
+	private Action selectionAction;
 
 	/** @see MenuItem#MenuItem(Menu, int) */
 	public CustomMenuItem(Menu parent, int style) {
@@ -49,7 +49,7 @@ public class CustomMenuItem extends MenuItem {
 	}
 
 
-	public void setSelectionAction(final CustomAction action) {
+	public void setSelectionAction(final Action action) {
 		this.selectionAction=action;
 		addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -59,7 +59,7 @@ public class CustomMenuItem extends MenuItem {
 		});
 	}
 
-	public CustomAction getSelectionAction() {
+	public Action getSelectionAction() {
 		return selectionAction;
 	}
 

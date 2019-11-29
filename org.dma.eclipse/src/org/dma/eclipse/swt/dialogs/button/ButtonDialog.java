@@ -61,7 +61,7 @@ public abstract class ButtonDialog extends CustomShell {
 	 */
 	private void createContents() {
 
-		Composite composite=new Composite(this, SWT.NONE);
+		final Composite composite=new Composite(this, SWT.NONE);
 		GridLayout gridLayout=new GridLayout(2, true);
 		gridLayout.marginWidth=0;
 		gridLayout.marginHeight=0;
