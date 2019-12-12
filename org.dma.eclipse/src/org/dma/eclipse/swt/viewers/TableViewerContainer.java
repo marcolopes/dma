@@ -129,8 +129,7 @@ public abstract class TableViewerContainer<T> {
 	 */
 	public int computeSize() {
 		int visibleCount=(table.getClientArea().height-
-				table.getHeaderHeight()+table.getItemHeight()-1) /
-					table.getItemHeight();
+				table.getHeaderHeight()+table.getItemHeight()-1) / table.getItemHeight();
 		return visibleCount;
 	}
 
