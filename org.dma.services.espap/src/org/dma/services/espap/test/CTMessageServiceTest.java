@@ -99,10 +99,10 @@ public class CTMessageServiceTest {
 		IDType id=invoice.addNewID();
 		id.setStringValue("CFA 2018/1");
 
-		ByteArrayOutputStream os=new ByteArrayOutputStream();
-		document.save(os);
+		ByteArrayOutputStream out=new ByteArrayOutputStream();
+		document.save(out);
 
-		return os.toByteArray();
+		return out.toByteArray();
 
 	}
 
