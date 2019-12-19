@@ -78,11 +78,11 @@ public class PrinterHandler {
 
 
 	/** Prints STREAM DATA using java print */
-	public void print(InputStream is) throws PrinterException, PrintException {
+	public void print(InputStream in) throws PrinterException, PrintException {
 
 		checkPrinter();
 		DocPrintJob job=service.createPrintJob();
-		Doc document=new SimpleDoc(is, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+		Doc document=new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 		job.print(document, null);
 
 	}
@@ -99,13 +99,13 @@ public class PrinterHandler {
 	/** Prints FILE DATA using java print */
 	public void print(File file) throws PrinterException, PrintException, IOException {
 
-		FileInputStream fis=new FileInputStream(file);
+		FileInputStream in=new FileInputStream(file);
 
 		try{
-			print(fis);
+			print(in);
 
 		}finally{
-			fis.close();
+			in.close();
 		}
 
 	}

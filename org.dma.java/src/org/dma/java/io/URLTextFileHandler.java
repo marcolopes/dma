@@ -55,19 +55,17 @@ public class URLTextFileHandler {
 		StringBuffer buffer=new StringBuffer(FileHandler.STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader br=
-					new BufferedReader(
-							new InputStreamReader(
-									fileurl.asInputStream(), charset));
+			BufferedReader in=new BufferedReader(
+					new InputStreamReader(fileurl.asInputStream(), charset));
 
 			try{
 				String line;
-				while((line=br.readLine()) != null){
+				while((line=in.readLine()) != null){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
 			}finally{
-				br.close();
+				in.close();
 			}
 
 		}catch(Exception e){

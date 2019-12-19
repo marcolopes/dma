@@ -18,14 +18,28 @@ public final class ClassUtils {
 	}
 
 
+	public static Object getField(Class klass, String field) {
+		try{
+			return klass.getField(field).get(klass);
+		}catch (NoClassDefFoundError e){
+			System.err.print("CLASS NOT FOUND "+klass.getCanonicalName()+"."+field);
+		}catch(NoSuchFieldException e){
+			System.err.print("FIELD NOT FOUND "+klass.getCanonicalName()+"."+field);
+		}catch(IllegalAccessException e){
+			System.err.print("ILLEGAL ACCESS "+klass.getCanonicalName()+"."+field);
+		}catch(ExceptionInInitializerError e) {
+			System.err.print("INITIALIZER ERROR "+klass.getCanonicalName()+"."+field);
+		}return null;
+	}
+
+
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(Class<? extends T> klass, Class<? extends T> subclass) {
 
 		if (klass!=null) try{
 			Class<? extends T> targetClass=klass.asSubclass(subclass);
 			return targetClass.newInstance();
-		}
-		catch(InstantiationException e){
+		}catch(InstantiationException e){
 			Debug.err(e);
 		}catch(IllegalAccessException e){
 			Debug.err(e);
@@ -33,12 +47,14 @@ public final class ClassUtils {
 
 	}
 
+
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(Class<? extends T> klass) {
 
 		return newInstance(klass, klass);
 
 	}
+
 
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(String className) {
@@ -53,6 +69,7 @@ public final class ClassUtils {
 	public static Object invoke(String className, String methodName, Class[] parameterTypes, Object...args) throws Exception {
 
 		Class klass=classForName(className);
+
 		Method method=klass.getDeclaredMethod(methodName, parameterTypes);
 
 		return method.invoke(klass, args);

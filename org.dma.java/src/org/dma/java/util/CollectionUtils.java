@@ -1,10 +1,13 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +15,20 @@ import java.util.List;
 import java.util.Random;
 
 public class CollectionUtils {
+
+	/** Returns the size in BYTES */
+	public static int size(Collection col) {
+		try{
+			ByteArrayOutputStream stream=new ByteArrayOutputStream();
+			ObjectOutputStream out=new ObjectOutputStream(stream);
+			out.writeObject(col);
+			out.close();
+			return stream.size();
+
+		}catch(IOException e){
+			Debug.err(e);
+		}return 0;
+	}
 
 	/*
 	 * Conversion
