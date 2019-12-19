@@ -36,20 +36,16 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 		if (new FileHandler(src).equals(dst)) return true;
 
 		try{
-			InputStream bis=
-					new BufferedInputStream(
-							new FileInputStream(src));
+			InputStream in=new BufferedInputStream(new FileInputStream(src));
 
-			OutputStream bos=
-					new BufferedOutputStream(
-							new FileOutputStream(dst));
+			OutputStream out=new BufferedOutputStream(new FileOutputStream(dst));
 
 			try{
-				copy(bis, bos);
+				copy(in, out);
 
 			}finally{
-				bos.close();
-				bis.close();
+				out.close();
+				in.close();
 			}
 
 			return true;

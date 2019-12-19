@@ -25,27 +25,30 @@ public class XMLFileHandler<T> extends FileHandler {
 
 
 	/*
-	 * Class FileInputStream
+	 * Class BufferedInputStream
 	 *
-	 * A FileInputStream obtains input bytes from a file in a file system.
-	 * What files are available depends on the host environment.
-	 *
-	 * FileInputStream is meant for reading streams of raw bytes such as image data.
-	 * For reading streams of characters, consider using FileReader.
+	 * A BufferedInputStream adds functionality to another input stream-namely,
+	 * the ability to buffer the input and to support the mark and reset methods.
+	 * When the BufferedInputStream is created, an internal buffer array is created.
+	 * As bytes from the stream are read or skipped, the internal buffer is refilled
+	 * as necessary from the contained input stream, many bytes at a time.
+	 * The mark operation remembers a point in the input stream and the reset operation
+	 * causes all the bytes read since the most recent mark operation to be reread before
+	 * new bytes are taken from the contained input stream.
 	 */
 	public T read() {
 
 		try{
-			BufferedInputStream bis=new BufferedInputStream(asInputStream());
+			BufferedInputStream in=new BufferedInputStream(asInputStream());
 
-			XMLDecoder decoder=new XMLDecoder(bis);
+			XMLDecoder decoder=new XMLDecoder(in);
 
 			try{
 				return (T)decoder.readObject();
 
 			}finally{
 				decoder.close();
-				bis.close();
+				in.close();
 			}
 
 		}catch(Exception e){
@@ -59,32 +62,27 @@ public class XMLFileHandler<T> extends FileHandler {
 
 
 	/*
-	 * Class FileOutputStream
+	 * Class BufferedOutputStream
 	 *
-	 * A file output stream is an output stream for writing data to a File or to a
-	 * FileDescriptor. Whether or not a file is available or may be created depends upon
-	 * the underlying platform. Some platforms, in particular, allow a file to be opened
-	 * for writing by only one FileOutputStream (or other file-writing object) at a time.
-	 * In such situations the constructors in this class will fail if the file involved
-	 * is already open.
-	 *
-	 * FileOutputStream is meant for writing streams of raw bytes such as image data.
-	 * For writing streams of characters, consider using FileWriter.
+	 * The class implements a buffered output stream.
+	 * By setting up such an output stream, an application can write bytes
+	 * to the underlying output stream without necessarily causing a call to
+	 * the underlying system for each byte written.
 	 *
 	 */
 	public boolean write(T obj) {
 
 		try{
-			BufferedOutputStream bos=new BufferedOutputStream(asOutputStream());
+			BufferedOutputStream out=new BufferedOutputStream(asOutputStream());
 
-			XMLEncoder encoder=new XMLEncoder(bos);
+			XMLEncoder encoder=new XMLEncoder(out);
 
 			try{
 				encoder.writeObject(obj);
 
 			}finally{
 				encoder.close();
-				bos.close();
+				out.close();
 			}
 
 			return true;

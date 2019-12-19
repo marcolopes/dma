@@ -65,18 +65,16 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader br=
-					new BufferedReader(
-							new FileReader(file));
+			BufferedReader in=new BufferedReader(new FileReader(file));
 
 			try{
 				String line;
-				while((line=br.readLine()) != null){
+				while((line=in.readLine())!=null){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
 			}finally{
-				br.close();
+				in.close();
 			}
 
 		}catch(Exception e){
@@ -95,18 +93,16 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader br=
-					new BufferedReader(
-							new FileReader(file));
+			BufferedReader in=new BufferedReader(new FileReader(file));
 
 			try{
 				String line;
-				while((line=br.readLine()) != null && lines--!=0){
+				while((line=in.readLine())!=null && lines--!=0){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
 			}finally{
-				br.close();
+				in.close();
 			}
 
 		}catch(Exception e){
@@ -143,15 +139,13 @@ public class TextFileHandler extends FileHandler {
 	public boolean writeText(String text) {
 
 		try{
-			BufferedWriter bw=
-					new BufferedWriter(
-							new FileWriter(file));
+			BufferedWriter out=new BufferedWriter(new FileWriter(file));
 
 			try{
-				bw.write(text);
+				out.write(text);
 
 			}finally{
-				bw.close();
+				out.close();
 			}
 
 			return true;
@@ -188,18 +182,17 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader br=
-					new BufferedReader(
+			BufferedReader in=new BufferedReader(
 							new InputStreamReader(asInputStream(), charset));
 
 			try{
 				String line;
-				while((line=br.readLine()) != null && lines--!=0){
+				while((line=in.readLine())!=null && lines--!=0){
 					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 
 			}finally{
-				br.close();
+				in.close();
 			}
 
 		}catch(Exception e){
@@ -246,16 +239,14 @@ public class TextFileHandler extends FileHandler {
 	public boolean write(String text, boolean append) {
 
 		try{
-			BufferedWriter bw=
-					new BufferedWriter(
-							new OutputStreamWriter(
-									new FileOutputStream(file, append), charset));
+			BufferedWriter out=new BufferedWriter(new OutputStreamWriter(
+							new FileOutputStream(file, append), charset));
 
 			try{
-				bw.write(text);
+				out.write(text);
 
 			}finally{
-				bw.close();
+				out.close();
 			}
 
 			return true;

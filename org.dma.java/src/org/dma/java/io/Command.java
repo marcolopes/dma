@@ -24,7 +24,7 @@ public class Command {
 		return Collections.unmodifiableList(command);
 	}
 
-	private final ProcessBuilder pb;
+	private final ProcessBuilder builder;
 
 	public Command(String program, String...args) {
 		this(program, Arrays.asList(args));
@@ -35,16 +35,16 @@ public class Command {
 	}
 
 	public Command(List<String> command) {
-		pb=new ProcessBuilder(command);
+		builder=new ProcessBuilder(command);
 		//redirect errors to standard output
-		pb.redirectErrorStream(true);
+		builder.redirectErrorStream(true);
 	}
 
 
 	/** value=null to remove var */
 	public void setVariable(String var, String value) {
 
-		Map<String, String> env=pb.environment();
+		Map<String, String> env=builder.environment();
 		env.put(var, value);
 		if (value==null || value.isEmpty()) env.remove(var);
 
@@ -53,19 +53,17 @@ public class Command {
 
 	public Process start() throws IOException {
 
-		Process process=pb.start();
+		Process process=builder.start();
 
-		BufferedReader br=
-				new BufferedReader(
-						new InputStreamReader(
-								process.getInputStream()));
+		BufferedReader in=new BufferedReader(
+				new InputStreamReader(process.getInputStream()));
 		try{
 			String line;
-			while((line=br.readLine())!=null){
+			while((line=in.readLine())!=null){
 				System.out.println(line);
 			}
 		}finally{
-			br.close();
+			in.close();
 		}
 
 		return process;
@@ -83,7 +81,7 @@ public class Command {
 
 	@Override
 	public String toString() {
-		return pb.command().toString();
+		return builder.command().toString();
 	}
 
 

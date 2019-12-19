@@ -26,29 +26,49 @@ public class ByteFileHandler extends FileHandler {
 
 
 	/*
-	 * Class FileInputStream
+	 * Class BufferedInputStream
 	 *
-	 * A FileInputStream obtains input bytes from a file in a file system.
-	 * What files are available depends on the host environment.
-	 *
-	 * FileInputStream is meant for reading streams of raw bytes such as image data.
-	 * For reading streams of characters, consider using FileReader.
+	 * A BufferedInputStream adds functionality to another input stream-namely,
+	 * the ability to buffer the input and to support the mark and reset methods.
+	 * When the BufferedInputStream is created, an internal buffer array is created.
+	 * As bytes from the stream are read or skipped, the internal buffer is refilled
+	 * as necessary from the contained input stream, many bytes at a time.
+	 * The mark operation remembers a point in the input stream and the reset operation
+	 * causes all the bytes read since the most recent mark operation to be reread before
+	 * new bytes are taken from the contained input stream.
 	 */
 	public byte[] read() {
 
 		try{
-			final BufferedInputStream bis=new BufferedInputStream(asInputStream());
+			// Get the size of the file
+			long length=file.length();
+
+			// File is too large
+			if (length > Integer.MAX_VALUE)
+				throw new IOException("File is too large: "+file.getName());
+
+			byte[] buffer=new byte[(int)length];
+
+			BufferedInputStream in=new BufferedInputStream(asInputStream());
 
 			try{
-				return new AbstractByteReader(){
-					public int read(byte[] b, int off, int len) throws IOException {
-						return bis.read(b, off, len);
-					}
-				}.read(file);
+				int offset=0;
+				int numRead=0;
+				// Read in the bytes
+				while(offset < length &&
+						(numRead=in.read(buffer, offset, buffer.length-offset)) > 0){
+					offset+=numRead;
+				}
+
+				// Ensure all the bytes have been read in
+				if (offset < buffer.length)
+					throw new IOException("Could not completely read file: "+file.getName());
 
 			}finally{
-				bis.close();
+				in.close();
 			}
+
+			return buffer;
 
 		}catch(Exception e){
 			Debug.err(e);
@@ -61,53 +81,57 @@ public class ByteFileHandler extends FileHandler {
 
 	public byte[] readFully() {
 
-		byte[] bytes=new byte[(int)file.length()];
-
 		try{
-			DataInputStream dis=new DataInputStream(
-							new BufferedInputStream(asInputStream()));
+			// Get the size of the file
+			long length=file.length();
+
+			// File is too large
+			if (length > Integer.MAX_VALUE)
+				throw new IOException("File is too large: "+file.getName());
+
+			byte[] buffer=new byte[(int)length];
+
+			DataInputStream in=new DataInputStream(
+					new BufferedInputStream(asInputStream()));
 
 			try{
-				dis.readFully(bytes);
+				in.readFully(buffer);
 
 			}finally{
-				dis.close();
+				in.close();
 			}
+
+			return buffer;
 
 		}catch(Exception e){
 			Debug.err(e);
 		}
 
-		return bytes;
+		return null;
 
 	}
 
 
 
 	/*
-	 * Class FileOutputStream
+	 * Class BufferedOutputStream
 	 *
-	 * A file output stream is an output stream for writing data to a File or to a
-	 * FileDescriptor. Whether or not a file is available or may be created depends upon
-	 * the underlying platform. Some platforms, in particular, allow a file to be opened
-	 * for writing by only one FileOutputStream (or other file-writing object) at a time.
-	 * In such situations the constructors in this class will fail if the file involved
-	 * is already open.
-	 *
-	 * FileOutputStream is meant for writing streams of raw bytes such as image data.
-	 * For writing streams of characters, consider using FileWriter.
+	 * The class implements a buffered output stream.
+	 * By setting up such an output stream, an application can write bytes
+	 * to the underlying output stream without necessarily causing a call to
+	 * the underlying system for each byte written.
 	 *
 	 */
 	public int write(byte[] bytes) {
 
 		try{
-			BufferedOutputStream bos=new BufferedOutputStream(asOutputStream());
+			BufferedOutputStream out=new BufferedOutputStream(asOutputStream());
 
 			try{
-				bos.write(bytes);
+				out.write(bytes);
 
 			}finally{
-				bos.close();
+				out.close();
 			}
 
 			return bytes.length;

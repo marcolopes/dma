@@ -45,13 +45,14 @@ public class PdfFileHandler extends FileHandler {
 	public void sign(PrivateKey privateKey, Certificate[] certChain,
 			String reason, String location, String contact) throws DocumentException, IOException {
 
-		FileInputStream fis=new FileInputStream(file);
 		File output=new File(file+".tmp");
-		FileOutputStream fos=new FileOutputStream(output);
+
+		FileInputStream in=new FileInputStream(file);
+		FileOutputStream out=new FileOutputStream(output);
 
 		try{
 			PdfStamper stamper=PdfStamper.createSignature(
-					new PdfReader(fis), fos, '\0'); // keep pdf version
+					new PdfReader(in), out, '\0'); // keep pdf version
 
 			try{
 				PdfSignatureAppearance signature=stamper.getSignatureAppearance();
@@ -70,8 +71,8 @@ public class PdfFileHandler extends FileHandler {
 			}
 
 		}finally{
-			fos.close(); //PdfReader does not close stream
-			fis.close();
+			out.close(); //PdfReader does not close stream
+			in.close();
 		}
 
 		file.delete();
@@ -103,11 +104,11 @@ public class PdfFileHandler extends FileHandler {
 	public void addScript(String script) throws DocumentException, IOException {
 
 		File output=new File(file+".tmp");
-		FileInputStream fis=new FileInputStream(file);
-		FileOutputStream fos=new FileOutputStream(output);
+		FileInputStream in=new FileInputStream(file);
+		FileOutputStream out=new FileOutputStream(output);
 
 		try{
-			PdfStamper stamper=new PdfStamper(new PdfReader(fis), fos);
+			PdfStamper stamper=new PdfStamper(new PdfReader(in), out);
 
 			try{
 				stamper.addJavaScript(script);
@@ -117,8 +118,8 @@ public class PdfFileHandler extends FileHandler {
 			}
 
 		}finally{
-			fos.close(); //PdfReader does not close stream
-			fis.close();
+			out.close(); //PdfReader does not close stream
+			in.close();
 		}
 
 		file.delete();
@@ -132,10 +133,10 @@ public class PdfFileHandler extends FileHandler {
 
 		if (files.size()==0) return;
 
-		FileOutputStream fos=new FileOutputStream(file);
+		FileOutputStream out=new FileOutputStream(file);
 
 		try{
-			PdfCopyFields copy=new PdfCopyFields(fos);
+			PdfCopyFields copy=new PdfCopyFields(out);
 
 			try{
 				for(File file: files){
@@ -153,7 +154,7 @@ public class PdfFileHandler extends FileHandler {
 			}
 
 		}finally{
-			fos.close();
+			out.close();
 		}
 
 	}

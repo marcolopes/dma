@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -19,10 +19,10 @@ import org.dma.java.util.Debug;
 public class CustomHtmlEmail extends HtmlEmail {
 
 	/** Charset UTF-8 */
-	public CustomHtmlEmail(ServerParameters server) {
+	public CustomHtmlEmail(ServerParameters server, boolean debug) {
 		Debug.err(server);
 
-		setDebug(Debug.STATUS);
+		setDebug(debug);
 		setCharset(EmailConstants.UTF_8);
 
 		setHostName(server.getHostName());
