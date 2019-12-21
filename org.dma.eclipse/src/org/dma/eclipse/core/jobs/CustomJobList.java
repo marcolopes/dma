@@ -37,14 +37,14 @@ public abstract class CustomJobList extends ArrayList<CustomJob> {
 		}
 	}));
 
-	/** Schedules all the jobs */
+	/** Schedules all jobs */
 	public synchronized void schedule() {
 		if (isEmpty()) return;
 		for (CustomJob job: this) job.schedule(jobRule);
 		doneJob.schedule(jobRule);
 	}
 
-	/** Cancels all the jobs */
+	/** Cancels all jobs */
 	public synchronized void cancel() {
 		for (CustomJob job: this) job.cancel();
 	}
