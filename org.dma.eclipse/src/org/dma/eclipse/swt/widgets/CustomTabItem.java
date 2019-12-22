@@ -28,16 +28,20 @@ public class CustomTabItem extends TabItem {
 		super(parent, style);
 	}
 
+	public void setFocus() {}
+
 
 	public void update() {
 		if (isDisposed()) return;
 		getControl().update();
+		setFocus();
 	}
 
 
 	public void select() {
 		if (isDisposed()) return;
 		getParent().setSelection(this);
+		setFocus();
 	}
 
 
