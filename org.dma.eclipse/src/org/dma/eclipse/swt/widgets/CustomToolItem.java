@@ -45,7 +45,7 @@ public class CustomToolItem extends ToolItem {
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
-		if (selectionAction!=null) selectionAction.setEnabled(enabled);
+		//if (selectionAction!=null) selectionAction.setEnabled(enabled);
 	}
 
 

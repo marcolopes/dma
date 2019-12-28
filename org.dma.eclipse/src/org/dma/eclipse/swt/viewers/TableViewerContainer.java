@@ -32,13 +32,13 @@ import org.eclipse.swt.widgets.TableColumn;
 
 public abstract class TableViewerContainer<T> {
 
+	public abstract Collection<T> retrieveObjects();
 	public abstract ErrorList insertObject();
 	public abstract ErrorList removeObject();
 	public abstract void createObject();
 	public abstract void copyObject();
 	public abstract void editObject();
 	public abstract T getNewObject();
-	public abstract Collection<T> retrieveObjects();
 
 	private final List<T> objectCollection=new ArrayList();
 
@@ -340,6 +340,10 @@ public abstract class TableViewerContainer<T> {
 	 */
 	public List<T> getCollection() {
 		return objectCollection;
+	}
+
+	public int getNumberOfObjects() {
+		return objectCollection.size();
 	}
 
 	public boolean isEmpty() {
