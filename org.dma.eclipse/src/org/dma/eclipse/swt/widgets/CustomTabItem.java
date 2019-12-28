@@ -6,7 +6,6 @@
 package org.dma.eclipse.swt.widgets;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.TabFolder;
@@ -19,13 +18,14 @@ public class CustomTabItem extends TabItem {
 
 	private Action selectionAction;
 
-	public CustomTabItem(TabFolder parent) {
-		this(parent, SWT.NONE);
-	}
-
 	/** @see TabItem#TabItem(TabFolder, int) */
 	public CustomTabItem(TabFolder parent, int style) {
 		super(parent, style);
+	}
+
+	/** @see TabItem#TabItem(TabFolder, int, int) */
+	public CustomTabItem(TabFolder parent, int style, int index) {
+		super(parent, style, index);
 	}
 
 	public void setFocus() {}

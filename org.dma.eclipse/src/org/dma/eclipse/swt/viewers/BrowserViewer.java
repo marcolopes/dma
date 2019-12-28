@@ -174,7 +174,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 		CustomBrowser browser=null;
 
-		final CustomCTabItem tabItem=new CustomCTabItem(tabFolder);
+		final CustomCTabItem tabItem=new CustomCTabItem(tabFolder, SWT.NONE);
 		tabItem.setShowClose(!isEmpty());
 		tabItem.setText("Loading...");
 

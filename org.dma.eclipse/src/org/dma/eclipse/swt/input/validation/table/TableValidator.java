@@ -62,7 +62,7 @@ public abstract class TableValidator<T> implements IValidator {
 	public TableValidator(TableViewerContainer tableContainer) {
 		this.tableContainer=tableContainer;
 		this.viewer=tableContainer.getViewer();
-		this.table=viewer.getTable();
+		this.table=tableContainer.getTable();
 		table.addSelectionListener(selectionListener);
 		table.addFocusListener(focusListener);
 	}

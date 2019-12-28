@@ -1,43 +1,51 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2019 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.widgets;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.widgets.Control;
 
 public class CustomCTabItem extends CTabItem {
 
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	public CustomCTabItem(CTabFolder parent) {
-		this(parent, SWT.NONE);
-	}
-
 	/** @see CTabItem#CTabItem(CTabFolder, int) */
 	public CustomCTabItem(CTabFolder parent, int style) {
 		super(parent, style);
 	}
 
+	/** @see CTabItem#CTabItem(CTabFolder, int, int) */
+	public CustomCTabItem(CTabFolder parent, int style, int index) {
+		super(parent, style, index);
+	}
+
+	public void setFocus() {}
+
 
 	public void update() {
 		if (isDisposed()) return;
 		getControl().update();
+		setFocus();
+	}
+
+
+	public void select() {
+		if (isDisposed()) return;
+		getParent().setSelection(this);
+		setFocus();
 	}
 
 
 	public boolean isSelected() {
 		if (isDisposed()) return false;
-		Control control=getParent().getSelection().getControl();
-		//tab seleccionado?
-		return control!=null && control.equals(getControl());
+		CTabItem selection=getParent().getSelection();
+		return selection!=null && selection.equals(this);
 	}
 
 
