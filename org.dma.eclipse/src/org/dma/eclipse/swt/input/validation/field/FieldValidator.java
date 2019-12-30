@@ -155,7 +155,7 @@ public abstract class FieldValidator implements IValidator {
 	 * @see org.dma.eclipse.swt.validation.IValidator
 	 */
 	@Override
-	public void setValidationManager(ValidationManager validationManager) {
+	public void setValidationManager(IValidationManager validationManager) {
 		this.validationManager=validationManager;
 	}
 

@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -25,7 +25,7 @@ public class CustomButton extends Button {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	private Action selectionAction;
+	private IAction selectionAction;
 
 	/** @see CustomButton#CustomButton(Composite, int) */
 	public CustomButton(Composite parent, int style) {
@@ -45,16 +45,6 @@ public class CustomButton extends Button {
 		setImage(ImageManager.getImage(bufferedImage));
 	}
 
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.swt.widgets.Control
-	 */
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-		if (selectionAction!=null) selectionAction.setEnabled(enabled);
-	}
 
 	/**
 	 * Creates a new font with the specified height.
@@ -76,17 +66,27 @@ public class CustomButton extends Button {
 		setFont(font);
 	}
 
-	public void setSelectionAction(final Action action) {
+
+	/*
+	 * Selection
+	 */
+	public void setSelectionAction(IAction action) {
 		this.selectionAction=action;
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				action.run();
+				selectionAction.run();
 			}
 		});
 	}
 
-	public Action getSelectionAction() {
+	@Override
+	public void setEnabled(boolean enabled) {
+		if (selectionAction!=null) selectionAction.setEnabled(enabled);
+		super.setEnabled(enabled);
+	}
+
+	public IAction getSelectionAction() {
 		return selectionAction;
 	}
 

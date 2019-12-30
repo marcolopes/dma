@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.ToolBar;
@@ -21,7 +21,7 @@ public class CustomToolItem extends ToolItem {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	private Action selectionAction;
+	private IAction selectionAction;
 
 	/** @see ToolItem#ToolItem(ToolBar, int) */
 	public CustomToolItem(ToolBar parent, int style) {
@@ -42,24 +42,26 @@ public class CustomToolItem extends ToolItem {
 	}
 
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-		//if (selectionAction!=null) selectionAction.setEnabled(enabled);
-	}
-
-
-	public void setSelectionAction(final Action action) {
+	/*
+	 * Selection
+	 */
+	public void setSelectionAction(IAction action) {
 		this.selectionAction=action;
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				action.run();
+				selectionAction.run();
 			}
 		});
 	}
 
-	public Action getSelectionAction() {
+	@Override
+	public void setEnabled(boolean enabled) {
+		if (selectionAction!=null) selectionAction.setEnabled(enabled);
+		super.setEnabled(enabled);
+	}
+
+	public IAction getSelectionAction() {
 		return selectionAction;
 	}
 
