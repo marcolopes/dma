@@ -5,7 +5,7 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.widgets;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.TabFolder;
@@ -16,7 +16,7 @@ public class CustomTabItem extends TabItem {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	private Action selectionAction;
+	private IAction selectionAction;
 
 	/** @see TabItem#TabItem(TabFolder, int) */
 	public CustomTabItem(TabFolder parent, int style) {
@@ -30,7 +30,6 @@ public class CustomTabItem extends TabItem {
 
 	public void setFocus() {}
 
-
 	public void update() {
 		if (isDisposed()) return;
 		getControl().update();
@@ -38,35 +37,32 @@ public class CustomTabItem extends TabItem {
 	}
 
 
+	/*
+	 * Selection
+	 */
 	public void select() {
 		if (isDisposed()) return;
 		getParent().setSelection(this);
 		setFocus();
 	}
 
-
 	public boolean isSelected() {
 		if (isDisposed()) return false;
 		TabItem[] selection=getParent().getSelection();
 		return selection.length>0 && selection[0].equals(this);
-		/*
-		Control control=getParent().getSelection()[0].getControl();
-		return control!=null && control.equals(getControl());
-		*/
 	}
 
-	public void setSelectionAction(final Action action) {
+	public void setSelectionAction(IAction action) {
 		this.selectionAction=action;
-		//add listener to TabFolder
 		getParent().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (isSelected()) action.run();
+				if (isSelected()) selectionAction.run();
 			}
 		});
 	}
 
-	public Action getSelectionAction() {
+	public IAction getSelectionAction() {
 		return selectionAction;
 	}
 
