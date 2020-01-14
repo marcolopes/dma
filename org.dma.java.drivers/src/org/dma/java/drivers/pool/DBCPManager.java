@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.dma.java.util.Debug;
 
 public class DBCPManager implements IPoolManager {
 
@@ -34,7 +33,7 @@ public class DBCPManager implements IPoolManager {
 			pool.close();
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 	}
 
