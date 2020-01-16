@@ -242,7 +242,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			interceptAndRecordSoapMessage(smc);
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 		return true;
