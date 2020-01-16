@@ -11,14 +11,14 @@ public class CheckVatResult {
 	private final String name;
 	private final CheckVatAddress address;
 
-	public CheckVatResult(Boolean valid, String name, CheckVatAddress address) {
+	public CheckVatResult(boolean valid, String name, CheckVatAddress address) {
 		this.valid=valid;
 		this.name=name.trim();
 		this.address=address;
 	}
 
 
-	public Boolean isValid() {
+	public boolean isValid() {
 		return valid;
 	}
 
