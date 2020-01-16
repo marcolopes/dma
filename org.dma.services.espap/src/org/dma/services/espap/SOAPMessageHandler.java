@@ -32,7 +32,6 @@ import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.security.JKSCertificate;
-import org.dma.java.util.Debug;
 /**
  * SOAP Message Handler
  */
@@ -142,7 +141,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			interceptAndRecordSoapMessage(smc);
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 		return true;
