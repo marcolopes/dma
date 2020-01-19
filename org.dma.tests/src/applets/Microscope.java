@@ -54,9 +54,7 @@ public class Microscope extends java.applet.Applet {
 
 	Board board;        // The current board representation
 	Player player;      // current player (BLUE, GREEN)
-
 	Vector history;     // List of completed moves;
-
 	AutoMover auto;     // The move finder.
 	User user;          // Mover for user moves
 	Mover mover;        // the current Mover (always == auto or user or null)
@@ -327,7 +325,6 @@ final class Board   {
 
 	long blue_;      // bit vector; true if occupied by blue
 	long green_;     // same for green;
-
 	long mark_;      // 1 bit marker used by the finder in course of search.
 	// Doesn't really belong here, but put here anyway
 	// since it uses same bit-poking mechanics as other ops.
