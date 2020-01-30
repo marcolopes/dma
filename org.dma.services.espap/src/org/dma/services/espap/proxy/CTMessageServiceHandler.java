@@ -20,13 +20,13 @@ import org.dma.services.espap.SOAPMessageHandler;
  */
 public class CTMessageServiceHandler extends SOAPMessageHandler {
 
-	public enum A10_ENDPOINTS {
+	public enum ENDPOINTS {
 		PRODUCAO ("https://ws.netdocs.com.pt/TradeHttp/CTMessageService.svc/ssl"),
 		TESTES ("https://www-qa.netdocs.com.pt/TradeHttpQa/CTMessageService.svc/ssl");
 
 		public final String url;
 
-		private A10_ENDPOINTS(String url) {
+		private ENDPOINTS(String url) {
 			this.url = url;
 		}
 
@@ -36,10 +36,10 @@ public class CTMessageServiceHandler extends SOAPMessageHandler {
 
 	}
 
-	private final A10_ENDPOINTS endpoint;
+	private final ENDPOINTS endpoint;
 
 	public CTMessageServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
+			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
 		super(username, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
 	}
