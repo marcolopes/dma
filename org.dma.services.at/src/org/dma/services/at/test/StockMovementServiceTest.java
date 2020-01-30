@@ -12,7 +12,7 @@ import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.StockMovementServiceHandler;
-import org.dma.services.at.proxy.StockMovementServiceHandler.A10_ENDPOINTS;
+import org.dma.services.at.proxy.StockMovementServiceHandler.ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.AddressStructurePT;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.Line;
@@ -83,11 +83,11 @@ public class StockMovementServiceTest {
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebServices.pfx", "TESTEwebservice"),
+				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebservices.pfx", "TESTEwebservice"),
 				//Trusted Store Certificate
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/TrustStoreAT.jks", "123456", "portaldasfinancas"),
 				//Endpoint address
-				A10_ENDPOINTS.TESTES);
+				ENDPOINTS.TESTES);
 
 			StockMovementResponse response=handler.register(buildRequest());
 
