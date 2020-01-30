@@ -19,7 +19,7 @@ import oasisNamesSpecificationUblSchemaXsdInvoice2.InvoiceType;
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.services.espap.proxy.CTMessageServiceHandler;
-import org.dma.services.espap.proxy.CTMessageServiceHandler.A10_ENDPOINTS;
+import org.dma.services.espap.proxy.CTMessageServiceHandler.ENDPOINTS;
 
 public class CTMessageServiceTest {
 
@@ -117,9 +117,9 @@ public class CTMessageServiceTest {
 				//Scheme Administrator Certificate
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saphetydoc.jks", "123456"),
 				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebServices.pfx", "TESTEwebservice"),
+				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebservices.pfx", "TESTEwebservice"),
 				//Endpoint address
-				A10_ENDPOINTS.TESTES);
+				ENDPOINTS.TESTES);
 
 			ArrayOfMessageOutputData response=handler.register(buildMessage());
 
