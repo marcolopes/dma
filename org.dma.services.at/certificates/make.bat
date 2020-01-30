@@ -19,7 +19,7 @@ REM  START
 REM =======
 :START
 del ChavePublicaAT.cer
-ren "Chave Cifra Publica AT (Produ??o).cer" ChavePublicaAT.cer
+copy "Chave Cifra Publica AT (Produ??o).cer" ChavePublicaAT.cer
 
 echo EXTRAI A CHAVE PUBLICA DO CERTIFICADO AT (formato:PEM, encoding:BASE64)
 openssl x509 -in ChavePublicaAT.cer -pubkey -noout > ChavePublicaAT.pem
