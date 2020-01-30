@@ -15,12 +15,13 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeService;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeServiceImpl;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionRequestType;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
+
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
 public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
-	public enum A10_ENDPOINTS {
+	public enum ENDPOINTS {
 
 		//fews = Facturas Envio WebService?
 		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService"),
@@ -28,7 +29,7 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
 		public final String url;
 
-		private A10_ENDPOINTS(String url) {
+		private ENDPOINTS(String url) {
 			this.url = url;
 		}
 
@@ -38,16 +39,16 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
 	}
 
-	private final A10_ENDPOINTS endpoint;
+	private final ENDPOINTS endpoint;
 
 	public TaxFreeServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
+			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
 		this(username, password, saCertificate, swCertificate, null, endpoint);
 	}
 
 	public TaxFreeServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate,
-			JKSCertificate tsCertificate, A10_ENDPOINTS endpoint) {
+			JKSCertificate tsCertificate, ENDPOINTS endpoint) {
 		super(username, password, saCertificate, swCertificate, tsCertificate);
 		this.endpoint = endpoint;
 	}

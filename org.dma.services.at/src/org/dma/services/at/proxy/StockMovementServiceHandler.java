@@ -16,12 +16,13 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTranspor
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporteService;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovement;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementResponse;
+
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
 public class StockMovementServiceHandler extends SOAPMessageHandler {
 
-	public enum A10_ENDPOINTS {
+	public enum ENDPOINTS {
 
 		//sgdtws = Servico de Gestao de Documentos de Transporte WebService?
 		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:401/sgdtws/documentosTransporte"),
@@ -29,7 +30,7 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 
 		public final String url;
 
-		private A10_ENDPOINTS(String url) {
+		private ENDPOINTS(String url) {
 			this.url = url;
 		}
 
@@ -39,16 +40,16 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 
 	}
 
-	private final A10_ENDPOINTS endpoint;
+	private final ENDPOINTS endpoint;
 
 	public StockMovementServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
+			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
 		this(username, password, saCertificate, swCertificate, null, endpoint);
 	}
 
 	public StockMovementServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate,
-			JKSCertificate tsCertificate, A10_ENDPOINTS endpoint) {
+			JKSCertificate tsCertificate, ENDPOINTS endpoint) {
 		super(username, password, saCertificate, swCertificate, tsCertificate);
 		this.endpoint = endpoint;
 	}

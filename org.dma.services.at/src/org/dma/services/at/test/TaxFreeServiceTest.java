@@ -12,7 +12,7 @@ import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.TaxFreeServiceHandler;
-import org.dma.services.at.proxy.TaxFreeServiceHandler.A10_ENDPOINTS;
+import org.dma.services.at.proxy.TaxFreeServiceHandler.ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.taxfree.BuyerType;
 import pt.gov.portaldasfinancas.servicos.taxfree.CalculatedTaxType;
@@ -146,11 +146,11 @@ public class TaxFreeServiceTest {
 				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
 				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebServices.pfx", "TESTEwebservice"),
+				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebservices.pfx", "TESTEwebservice"),
 				//Trusted Store Certificate
 				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/TrustStoreAT.jks", "123456", "portaldasfinancas"),
 				//Endpoint address
-				A10_ENDPOINTS.TESTES);
+				ENDPOINTS.TESTES);
 
 			TaxFreeSubmissionResponseType response=handler.register(buildRequest());
 

@@ -16,12 +16,13 @@ import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
 import pt.gov.portaldasfinancas.servicos.faturas.FaturasService;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceResponseType;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
+
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
 public class FaturasServiceHandler extends SOAPMessageHandler {
 
-	public enum A10_ENDPOINTS {
+	public enum ENDPOINTS {
 
 		//fews = Facturas Envio WebService?
 		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:400/fews/faturas"),
@@ -29,7 +30,7 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 
 		public final String url;
 
-		private A10_ENDPOINTS(String url) {
+		private ENDPOINTS(String url) {
 			this.url = url;
 		}
 
@@ -39,16 +40,16 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 
 	}
 
-	private final A10_ENDPOINTS endpoint;
+	private final ENDPOINTS endpoint;
 
 	public FaturasServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, A10_ENDPOINTS endpoint) {
+			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
 		this(username, password, saCertificate, swCertificate, null, endpoint);
 	}
 
 	public FaturasServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate,
-			JKSCertificate tsCertificate, A10_ENDPOINTS endpoint) {
+			JKSCertificate tsCertificate, ENDPOINTS endpoint) {
 		super(username, password, saCertificate, swCertificate, tsCertificate);
 		this.endpoint = endpoint;
 	}
