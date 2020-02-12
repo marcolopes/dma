@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -8,7 +8,8 @@ package org.dma.java.drivers.jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.dma.java.drivers.pool.BoneCPManager;
 import org.dma.java.drivers.pool.C3P0Manager;
@@ -25,9 +26,9 @@ public enum POOLMANAGERS {
 	/** http://www.jolbox.com */
 	BONECP;
 
-	private static HashMap<String, IPoolManager> CACHE=new HashMap();
+	private static Map<String, IPoolManager> CACHE=new ConcurrentHashMap();
 
-	public synchronized IPoolManager get(String url, String user, String password) {
+	public IPoolManager get(String url, String user, String password) {
 		IPoolManager manager=CACHE.get(url);
 		if (manager==null) CACHE.put(url, manager=create(url, user, password));
 		return manager;

@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Drivers
 Bundle-SymbolicName: org.dma.java.drivers;singleton:=true
-Bundle-Version: 0.2.3.qualifier
+Bundle-Version: 0.2.4.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.java.drivers.Activator
 Bundle-ActivationPolicy: lazy
@@ -19,7 +19,7 @@ Bundle-ClassPath: .,
  libraries/dbcp/commons-pool-1.6.jar,
  libraries/jdbc/h2-1.3.169.jar,
  libraries/jdbc/mysql-connector-java-5.1.30.jar,
- libraries/jdbc/postgresql-42.2.1.jre6.jar,
+ libraries/jdbc/postgresql-42.2.9.jre6.jar,
  libraries/jdbc/sqljdbc4.jar
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
  org.dma.java;bundle-version="6.7.1",
@@ -33,4 +33,6 @@ Export-Package: com.jolbox.bonecp,
  org.apache.commons.pool.impl,
  org.dma.java.drivers.jdbc,
  org.dma.java.drivers.pool,
+ org.h2.constant,
+ org.h2.engine,
  org.h2.tools

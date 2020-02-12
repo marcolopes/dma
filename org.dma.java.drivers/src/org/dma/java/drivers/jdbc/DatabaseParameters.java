@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -52,7 +52,7 @@ public class DatabaseParameters {
 			String properties, String user, String password, POOLMANAGERS pool,
 			BackupParameters backup) {
 		this.driver=driver;
-		this.host=host;
+		this.host=host.isEmpty() ? "localhost" : host;
 		this.database=database;
 		Debug.err("database", this.database);
 		this.folder=folder==null ? "" : folder.getAbsolutePath()+File.separator;
@@ -90,6 +90,11 @@ public class DatabaseParameters {
 
 	public void executeBackup() throws Exception {
 		driver.executeBackup(host, database, folder, user, password, backup);
+	}
+
+	@Override
+	public String toString() {
+		return getConnectionUrl();
 	}
 
 
