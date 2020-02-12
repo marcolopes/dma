@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -63,12 +63,7 @@ public enum DRIVERS {
 	}
 
 	public boolean isH2Embedded(String host) {
-		switch(this){
-		case H2: return host.isEmpty() || isLocalhost(host);
-		case MySQL:
-		case PostgreSQL:
-		case SQLServer: break;
-		}return false;
+		return this==H2 && isLocalhost(host);
 	}
 
 	public Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
@@ -282,12 +277,13 @@ public enum DRIVERS {
 
 	public void executeSQLUpdate(Connection connection, String sql) throws SQLException {
 		try{
-			Statement stmt=connection.createStatement();
-			stmt.executeUpdate(sql);
-			stmt.close();
+			Statement st=connection.createStatement();
+			st.executeUpdate(sql);
+			st.close();
 			connection.commit();
-		}finally{
+		}catch(Exception e){
 			connection.rollback();
+			throw new SQLException(e);
 		}
 	}
 
