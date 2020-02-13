@@ -51,9 +51,8 @@ public class FileImport extends FileDialog {
 			// so we must check if the file really exists
 			return file.exists() ? file : null;
 
-		}catch(Exception e){}
-
-		return null;
+		}catch(Exception e){
+		}return null;
 
 	}
 
@@ -70,22 +69,19 @@ public class FileImport extends FileDialog {
 
 	public String readText(String charsetName) {
 		String filename=open();
-		return filename==null ?
-				"" : new TextFileHandler(filename, charsetName).read();
+		return filename==null ? "" : new TextFileHandler(filename, charsetName).read();
 	}
 
 
 	public byte[] readBytes() {
 		String filename=open();
-		return filename==null ?
-				null : new ByteFileHandler(filename).read();
+		return filename==null ? null : new ByteFileHandler(filename).read();
 	}
 
 
 	public Object readXML() {
 		String filename=open();
-		return filename==null ?
-				null : new XMLFileHandler(filename).read();
+		return filename==null ? null : new XMLFileHandler(filename).read();
 	}
 
 

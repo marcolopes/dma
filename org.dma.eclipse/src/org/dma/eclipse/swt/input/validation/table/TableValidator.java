@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,7 +11,6 @@ import java.util.Map;
 import org.dma.eclipse.swt.input.validation.IValidationManager;
 import org.dma.eclipse.swt.input.validation.IValidator;
 import org.dma.eclipse.swt.input.validation.ValidationManager;
-import org.dma.eclipse.swt.viewers.TableViewerContainer;
 import org.dma.java.input.FieldFormat;
 import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
@@ -55,14 +54,12 @@ public abstract class TableValidator<T> implements IValidator {
 
 	private IValidationManager validationManager=new ValidationManager(this);
 
-	protected final TableViewerContainer<T> tableContainer;
 	protected final TableViewer viewer;
 	protected final Table table;
 
-	public TableValidator(TableViewerContainer tableContainer) {
-		this.tableContainer=tableContainer;
-		this.viewer=tableContainer.getViewer();
-		this.table=tableContainer.getTable();
+	public TableValidator(TableViewer viewer) {
+		this.viewer=viewer;
+		this.table=viewer.getTable();
 		table.addSelectionListener(selectionListener);
 		table.addFocusListener(focusListener);
 	}

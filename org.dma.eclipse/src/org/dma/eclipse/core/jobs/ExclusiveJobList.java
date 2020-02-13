@@ -13,7 +13,7 @@ import org.dma.java.util.Debug;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.jface.action.Action;
 
-public abstract class CustomJobList extends ArrayList<CustomJob> {
+public abstract class ExclusiveJobList extends ArrayList<CustomJob> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,12 +26,12 @@ public abstract class CustomJobList extends ArrayList<CustomJob> {
 	private final CustomJob doneJob=new CustomJob(null){
 		@Override
 		public boolean belongsTo(Object family) {
-			return false; //avoid IJobManager cancel
+			return false; //avoid IJobManager cancel!
 		}
 	}.addTask(new JobUITask(new Action() {
 		@Override
 		public void run() {
-			Debug.err("DONE");
+			Debug.out("DONE");
 			clear();
 			done();
 		}

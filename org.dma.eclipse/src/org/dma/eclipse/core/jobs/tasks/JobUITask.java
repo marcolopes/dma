@@ -5,15 +5,15 @@
  *******************************************************************************/
 package org.dma.eclipse.core.jobs.tasks;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 
 public class JobUITask extends JobTask {
 
-	public JobUITask(Action action) {
+	public JobUITask(IAction action) {
 		super(action);
 	}
 
-	public JobUITask(String description, Action action) {
+	public JobUITask(String description, IAction action) {
 		super(description, action);
 	}
 

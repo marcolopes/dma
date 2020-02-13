@@ -5,42 +5,24 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.widgets;
 
-import java.awt.image.BufferedImage;
-
-import org.dma.eclipse.swt.graphics.ImageManager;
-import org.dma.java.awt.ImageUtils;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 
-public class CustomToolItem extends ToolItem {
+public class CustomCombo<T> extends Combo {
 
 	@Override //subclassing
 	protected void checkSubclass() {}
 
 	private IAction selectionAction;
 
-	/** @see ToolItem#ToolItem(ToolBar, int) */
-	public CustomToolItem(ToolBar parent, int style) {
+	/** @see Combo#Combo(Composite, int) */
+	public CustomCombo(Composite parent, int style) {
 		super(parent, style);
-	}
-
-
-	public void setImage(String imagePath) {
-		setImage(ImageManager.getImage(imagePath));
-	}
-
-	public void setImage(String imagePath, int imageSize) {
-		setImage(ImageUtils.createImage(imagePath, imageSize));
-	}
-
-	public void setImage(BufferedImage bufferedImage) {
-		setImage(ImageManager.getImage(bufferedImage));
 	}
 
 

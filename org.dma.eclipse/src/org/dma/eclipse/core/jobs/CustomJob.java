@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -12,7 +12,6 @@ import org.dma.eclipse.core.jobs.tasks.JobTask;
 import org.dma.eclipse.core.jobs.tasks.JobUITask;
 import org.dma.java.util.Chronograph;
 import org.dma.java.util.Debug;
-import org.dma.java.util.ErrorList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -20,6 +19,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ILock;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.widgets.Display;
 /**
  * On the Job: The Eclipse Jobs API
@@ -44,14 +44,9 @@ public class CustomJob extends Job {
 		}catch(Exception e){}
 	}
 
-	/** Convenient access to error list */
-	public final ErrorList error=new ErrorList();
-
-	/** Used to chronograph execution time */
-	public final Chronograph time=new Chronograph();
-
 	private final List<JobTask> tasks=new ArrayList();
-	//private IAction doneAction;
+	@Deprecated
+	private IAction doneAction;
 
 	private boolean canceled=false;
 
@@ -71,7 +66,7 @@ public class CustomJob extends Job {
 	 * two or more jobs with the same rule from executing at the same time
 	 * <p>
 	 * <b>setRule(MUTEX_RULE)</b> can be used to create a new rule for a new
-	 * batch of jobs that need to be mutal exclusive.
+	 * batch of jobs that need to be mutal exclusive
 	 * <p>
 	 * <b>setRule(null)</b> can be used to indicate that the job has no rule and
 	 * can be executed immediately
@@ -88,15 +83,10 @@ public class CustomJob extends Job {
 		setRule(MUTEX_RULE);
 	}
 
+
 	@Override
 	public boolean belongsTo(Object family) {
 		return family.equals(FAMILY);
-	}
-
-	public void reset() {
-		time.reset();
-		error.clear();
-		canceled=false;
 	}
 
 
@@ -118,12 +108,12 @@ public class CustomJob extends Job {
 		return !tasks.isEmpty();
 	}
 
-	/*
+	/** @see ExclusiveJobList */
+	@Deprecated
 	public CustomJob setDoneAction(IAction doneAction) {
 		this.doneAction=doneAction;
 		return this;
 	}
-	*/
 
 
 
@@ -132,11 +122,10 @@ public class CustomJob extends Job {
 	 */
 	/** Execute jobs with rule (null=immediately) */
 	public void schedule(ISchedulingRule rule) {
-		Debug.err("SCHEDULING "+this+" JOB");
+		Debug.err("SCHEDULING JOB", this);
 		setRule(rule);
 		schedule();
 	}
-
 
 	public boolean isBusy() {
 		Debug.err("JOB "+this+" STATE is "+getStateName());
@@ -148,10 +137,9 @@ public class CustomJob extends Job {
 		return canceled;
 	}
 
-
 	@Override
 	public void canceling() {
-		Debug.err("CANCELING "+this+" JOB");
+		Debug.err("CANCELING JOB", this);
 		canceled=true;
 	}
 
@@ -165,16 +153,19 @@ public class CustomJob extends Job {
 
 		ILock lock = getJobManager().newLock();
 
+		Chronograph time = new Chronograph();
+
 		try{
-			reset();
 			time.start();
 			lock.acquire();
 			monitor.beginTask("", IProgressMonitor.UNKNOWN);
-			Debug.out("STARTED "+this+" JOB" );
+			Debug.out("STARTED JOB", this);
 
+			canceled=false;
 			for(int i=0; i<tasks.size() && !canceled; i++){
 
 				final JobTask jtask=tasks.get(i);
+				Debug.out("RUNNING TASK", jtask);
 				monitor.subTask(jtask.getName());
 
 				if(jtask instanceof JobUITask){
@@ -185,20 +176,15 @@ public class CustomJob extends Job {
 							jtask.getAction().run();
 						}
 					});
-				}else{
-					//NORMAL task
+				}else{//NORMAL task
 					jtask.getAction().run();
 				}
 
-			}
-
-			return Status.OK_STATUS;
+			}return Status.OK_STATUS;
 
 		}catch(Exception e){
-			Debug.err(e);
-		}
-		finally{
-			/*
+			e.printStackTrace();
+		}finally{
 			if (doneAction!=null){
 				Display.getDefault().syncExec(new Runnable() {
 					@Override
@@ -207,15 +193,12 @@ public class CustomJob extends Job {
 					}
 				});
 			}
-			*/
-
 			time.stop();
 			lock.release();
 			monitor.done();
-			Debug.out("FINISHED "+this+" JOB in "+time.toString());
-		}
+			Debug.out("FINISHED JOB ("+time.toString()+")", this);
 
-		return Status.CANCEL_STATUS;
+		}return Status.CANCEL_STATUS;
 
 	}
 

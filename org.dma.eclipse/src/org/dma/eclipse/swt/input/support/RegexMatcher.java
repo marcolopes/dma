@@ -43,7 +43,7 @@ public class RegexMatcher {
 		control.addListener(SWT.Verify, verifyListener);
 	}
 
-	public void detach() {
+	public void dispose() {
 		control.removeListener(SWT.Verify, verifyListener);
 	}
 
