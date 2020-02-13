@@ -11,16 +11,15 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 
-public class FileURL {
+public class URLFileHandler {
 
 	public static URL getURL(String urlname, String filename) {
 		try{
 			return new URL(urlname+"/"+filename);
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
@@ -30,14 +29,14 @@ public class FileURL {
 	public final URL url;
 
 	/** Example: https//www.ftp.com/file.txt */
-	public FileURL(String fileurl) {
+	public URLFileHandler(String fileurl) {
 		String array[]=StringUtils.splitLastIndex(fileurl, "/");
 		this.urlname=array[0];
 		this.filename=array[1];
 		this.url=getURL(urlname, filename);
 	}
 
-	public FileURL(String urlname, String filename) {
+	public URLFileHandler(String urlname, String filename) {
 		this.urlname=urlname;
 		this.filename=filename;
 		this.url=getURL(urlname, filename);

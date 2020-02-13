@@ -14,7 +14,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 
 public class FileHandler {
@@ -86,7 +85,7 @@ public class FileHandler {
 			return true;
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return false;
 	}
 
@@ -104,7 +103,7 @@ public class FileHandler {
 			return true;
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return false;
 	}
 
@@ -114,7 +113,7 @@ public class FileHandler {
 			return file.renameTo(new File(pathname));
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return false;
 	}
 
@@ -124,7 +123,7 @@ public class FileHandler {
 			return file.delete();
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return false;
 	}
 
@@ -134,7 +133,7 @@ public class FileHandler {
 			return new FileInputStream(file);
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
@@ -144,7 +143,7 @@ public class FileHandler {
 			return new FileOutputStream(file);
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
@@ -154,18 +153,17 @@ public class FileHandler {
 			return file.toURI().toURL();
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
 
-	public boolean equals(File file){
+	public boolean equals(File file) {
 		try{
-			return this.file.getCanonicalFile().
-					equals(file.getCanonicalFile());
+			return this.file.getCanonicalFile().equals(file.getCanonicalFile());
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return false;
 	}
 

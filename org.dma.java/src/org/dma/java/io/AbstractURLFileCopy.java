@@ -12,8 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-import org.dma.java.util.Debug;
-
 public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
 	/**
@@ -22,7 +20,7 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 	 * TRUE if download was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean to(FileURL src, String dst) {
+	public boolean to(URLFileHandler src, String dst) {
 
 		try{
 			File output=new File(dst+".tmp");
@@ -43,11 +41,11 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
 			return output.renameTo(new File(dst));
 
+		}catch(InterruptedException e){
+			System.out.println(e);
 		}catch(Exception e){
-			Debug.err(e);
-		}
-
-		return false;
+			System.err.println(e);
+		}return false;
 
 	}
 
@@ -58,7 +56,7 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 	 * TRUE if download was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean to(String src, FileURL dst) {
+	public boolean to(String src, URLFileHandler dst) {
 
 		try{
 			BufferedInputStream in=new BufferedInputStream(new FileInputStream(src));
@@ -71,15 +69,13 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 			}finally{
 				out.close();
 				in.close();
-			}
+			}return true;
 
-			return true;
-
+		}catch(InterruptedException e){
+			System.out.println(e);
 		}catch(Exception e){
-			Debug.err(e);
-		}
-
-		return false;
+			System.err.println(e);
+		}return false;
 
 	}
 

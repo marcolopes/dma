@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.regex.Pattern;
 
-import org.dma.java.util.Debug;
-
 public class FolderHandler {
 
 	public static File currentFolder() {
@@ -18,7 +16,7 @@ public class FolderHandler {
 			return new File(".").getCanonicalFile();
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
@@ -41,35 +39,23 @@ public class FolderHandler {
 	/** Returns folder path relative to current folder */
 	public String getRelativePath() {
 		String current=currentFolder().getAbsolutePath();
-		String THIS=folder.getAbsolutePath();
-		return THIS.toLowerCase().startsWith(current.toLowerCase()) &&
-				THIS.length()>current.length() ?
-						THIS.substring(current.length()+1) : THIS;
+		String folder=this.folder.getAbsolutePath();
+		return folder.toLowerCase().startsWith(current.toLowerCase()) &&
+				folder.length()>current.length() ?
+						folder.substring(current.length()+1) : folder;
 	}
 
 
 	/*
 	 * Folders
 	 */
-	public boolean create() {
-
-		try{
-			return folder.exists() ? true : folder.mkdir();
-
-		}catch(Exception e){
-			Debug.err(e);
-		}return false;
-
-	}
-
-
 	public File[] listDirectories(final String wildcards) {
 
 		try{
 			return folder.listFiles(new FileFilter() {
-				Pattern pattern=Pattern.compile(
-						//convert to regex
-						wildcards.replace("*",".*").replace("?","."));
+				//convert to regex
+				String regex=wildcards.replace("*", ".*").replace("?", ".");
+				Pattern pattern=Pattern.compile(regex);
 				@Override
 				public boolean accept(File file) {
 					return file.isDirectory() && pattern.matcher(file.getName()).find();
@@ -77,11 +63,10 @@ public class FolderHandler {
 			});
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return new File[0];
 
 	}
-
 
 	public File[] listDirectories() {
 
@@ -90,28 +75,79 @@ public class FolderHandler {
 	}
 
 
+	public boolean create() {
+
+		try{
+			return folder.exists() ? true : folder.mkdir();
+
+		}catch(Exception e){
+			System.err.println(e);
+		}return false;
+
+	}
+
+
 
 	/*
 	 * Files
 	 */
+	public File[] listFiles(final String wildcards) {
+
+		try{
+			return folder.listFiles(new FileFilter() {
+				//convert to regex
+				String regex=wildcards.replace("*", ".*").replace("?", ".");
+				Pattern pattern=Pattern.compile(regex);
+				@Override
+				public boolean accept(File file) {
+					return file.isFile() &&	pattern.matcher(file.getName()).find();
+				}
+			});
+
+		}catch(Exception e){
+			System.err.println(e);
+		}return new File[0];
+
+	}
+
+	public File[] listFiles() {
+
+		return listFiles("*.*");
+
+	}
+
+
+	public String[] getFileNames(String wildcards) {
+
+		int index=0;
+		File[] files=listFiles(wildcards);
+		String[] names=new String[files.length];
+		for(File file: files) names[index++]=file.getName();
+		return names;
+
+	}
+
+	public String[] getFileNames() {
+
+		return getFileNames("*.*");
+
+	}
+
+
 	public int deleteFiles(String wildcards) {
 
 		int count=0;
 
 		File[] files=listFiles(wildcards);
-		if(files!=null){
+		for(File file: files) try{
+			if (file.delete()) count++;
 
-			for(File file: files) try{
-
-				if(file.delete()) count++;
-
-			}catch(Exception e){
-				Debug.err(e);
-			}
-
-			Debug.out(count+"/"+files.length+" files deleted in "+
-					folder.getAbsolutePath()+File.separator+wildcards);
+		}catch(Exception e){
+			System.err.println(e);
 		}
+
+		System.out.println(count+"/"+files.length+" files deleted in "+
+				folder.getAbsolutePath()+File.separator+wildcards);
 
 		return count;
 
@@ -125,59 +161,13 @@ public class FolderHandler {
 	}
 
 
-	public File[] listFiles(final String wildcards) {
-
-		try{
-			return folder.listFiles(new FileFilter() {
-				Pattern pattern=Pattern.compile(
-						//convert to regex
-						wildcards.replace("*",".*").replace("?","."));
-				@Override
-				public boolean accept(File file) {
-					return file.isFile() &&	pattern.matcher(file.getName()).find();
-				}
-			});
-
-		}catch(Exception e){
-			Debug.err(e);
-		}return null;
-
-	}
-
-
-	public File[] listFiles() {
-
-		return listFiles("*.*");
-
-	}
-
-
-	public String[] getFileNames(String wildcards) {
-
-		File[] files=listFiles(wildcards);
-		if (files==null) return null;
-
-		int index=0;
-		String[] names=new String[files.length];
-		for(File file: files) names[index++]=file.getName();
-		return names;
-
-	}
-
-
-	public String[] getFileNames() {
-
-		return getFileNames("*.*");
-
-	}
-
-
 	public static final void main(String[] args) {
 
-		Debug.out(currentFolder());
+		System.out.println(currentFolder());
+
 		FolderHandler handler=new FolderHandler(currentFolder()+"/tmp/");
-		Debug.out(handler.folder.getAbsolutePath());
-		Debug.out(handler.getRelativePath());
+		System.out.println(handler.folder.getAbsolutePath());
+		System.out.println(handler.getRelativePath());
 
 	}
 

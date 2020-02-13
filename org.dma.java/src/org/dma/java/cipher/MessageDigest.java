@@ -1,12 +1,11 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.cipher;
 
 import org.apache.commons.codec.binary.Base64;
-import org.dma.java.util.Debug;
 
 public class MessageDigest {
 
@@ -32,7 +31,7 @@ public class MessageDigest {
 			return java.security.MessageDigest.getInstance(algorithm);
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 
 	}
@@ -56,8 +55,8 @@ public class MessageDigest {
 			return md.digest(message);
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return new byte[0];
 
 	}
 
@@ -79,8 +78,8 @@ public class MessageDigest {
 			return digest(messageBytes);
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return new byte[0];
 
 	}
 
@@ -104,8 +103,8 @@ public class MessageDigest {
 			return new String(base64Bytes, "UTF8");
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return "";
 
 	}
 

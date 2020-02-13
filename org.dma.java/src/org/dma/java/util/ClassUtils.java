@@ -13,7 +13,7 @@ public final class ClassUtils {
 		try{
 			return Class.forName(className);
 		}catch(ClassNotFoundException e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
@@ -21,7 +21,7 @@ public final class ClassUtils {
 	public static Object getField(Class klass, String field) {
 		try{
 			return klass.getField(field).get(klass);
-		}catch (NoClassDefFoundError e){
+		}catch(NoClassDefFoundError e){
 			System.err.print("CLASS NOT FOUND "+klass.getCanonicalName()+"."+field);
 		}catch(NoSuchFieldException e){
 			System.err.print("FIELD NOT FOUND "+klass.getCanonicalName()+"."+field);
@@ -39,10 +39,8 @@ public final class ClassUtils {
 		if (klass!=null) try{
 			Class<? extends T> targetClass=klass.asSubclass(subclass);
 			return targetClass.newInstance();
-		}catch(InstantiationException e){
-			Debug.err(e);
-		}catch(IllegalAccessException e){
-			Debug.err(e);
+		}catch(Exception e){
+			System.err.println(e);
 		}return null;
 
 	}

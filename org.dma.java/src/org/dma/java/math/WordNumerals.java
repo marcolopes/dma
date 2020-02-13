@@ -32,8 +32,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dma.java.util.Debug;
-
 public class WordNumerals {
 
 	public static class NumeralsUnit {
@@ -282,7 +280,7 @@ public class WordNumerals {
 			}
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 		//evita "UM" + PLURAL da unidade

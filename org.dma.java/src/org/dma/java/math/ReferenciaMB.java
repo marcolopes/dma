@@ -1,13 +1,11 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.math;
 
 import java.math.BigDecimal;
-
-import org.dma.java.util.Debug;
 
 public class ReferenciaMB {
 
@@ -92,9 +90,6 @@ public class ReferenciaMB {
 		String valor8=right("00000000"+valor.movePointRight(2).intValueExact(), 8);
 		String control=entidade + id7 + valor8;
 
-		Debug.out("valor8: "+valor8);
-		Debug.out("control: "+control);
-
 		return CheckDigits.ISO7064Mod97_10(control);
 
 	}
@@ -116,9 +111,7 @@ public class ReferenciaMB {
 
 		}catch(Exception e){
 			return false;
-		}
-
-		return true;
+		}return true;
 
 	}
 
@@ -134,19 +127,12 @@ public class ReferenciaMB {
 	 */
 	public boolean isValid(String ref, BigDecimal valor) {
 
-		Debug.out("entidade: "+entidade);
-		Debug.out("valor: "+valor);
-
-		if (entidade.length()!=5) throw new IllegalArgumentException("Entidade "+entidade+" invalida");
 		if (!isValid(valor)) throw new IllegalArgumentException("Valor "+valor+" invalido");
+		if (entidade.length()!=5) throw new IllegalArgumentException("Entidade "+entidade+" invalida");
 
 		String ref9=ref.replaceAll(" ", "");
 		String id7=ref9.substring(0, 7);
 		String checkDigits=ref9.substring(7, 9);
-
-		Debug.out("ref9: "+ref9);
-		Debug.out("id7: "+id7);
-		Debug.out("checkDigits: "+checkDigits);
 
 		return checkDigits(id7, valor).equals(checkDigits);
 
@@ -165,25 +151,15 @@ public class ReferenciaMB {
 	 *
 	 * @see ReferenciaMB#isValid(BigDecimal)
 	 */
-	public String generate(String id, BigDecimal valor) {
-
-		Debug.out("entidade: "+entidade);
-		Debug.out("valor: "+valor);
+	public ResultadoMB generate(String id, BigDecimal valor) {
 
 		if (entidade.length()!=5) throw new IllegalArgumentException("Entidade "+entidade+" invalida");
 		if (!isValid(valor)) throw new IllegalArgumentException("Valor "+valor+" invalido");
 
 		String id7=subentidade + right("0000000"+id, 7-subentidade.length());
-		String checkDigits=checkDigits(id7, valor);
-		String ref9=id7 + checkDigits;
+		String ref9=id7 + checkDigits(id7, valor);
 
-		Debug.out("id: "+id);
-		Debug.out("id7: "+id7);
-		Debug.out("checkDigits: "+checkDigits);
-
-		return ref9.substring(0,3)+" "+
-				ref9.substring(3,6)+" "+
-				ref9.substring(6,9);
+		return new ResultadoMB(entidade, ref9, valor);
 
 	}
 

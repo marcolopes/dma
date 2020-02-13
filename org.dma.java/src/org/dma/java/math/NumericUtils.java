@@ -165,22 +165,17 @@ public class NumericUtils {
 
 	public static BigDecimal greater(BigDecimal value, BigDecimal compareTo){
 
-		int result = value.compareTo(compareTo);
-
-		switch(result){
+		switch(value.compareTo(compareTo)){
 		case -1: return compareTo;
 		case 1: return value;
 		}return null;
-
 
 	}
 
 
 	public static BigDecimal lesser(BigDecimal value, BigDecimal compareTo){
 
-		int result=value.compareTo(compareTo);
-
-		switch(result){
+		switch(value.compareTo(compareTo)){
 		case -1: return value;
 		case 1: return compareTo;
 		}return null;

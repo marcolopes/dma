@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
-import org.dma.java.util.Debug;
+import org.dma.java.input.FieldFormat.SEPARATOR;
 
 public class TextFileHandler extends FileHandler {
 
@@ -70,7 +70,8 @@ public class TextFileHandler extends FileHandler {
 			try{
 				String line;
 				while((line=in.readLine())!=null){
-					buffer.append(buffer.length()==0 ? line : "\n"+line);
+					buffer.append(buffer.length()==0 ?
+							line : SEPARATOR.LINE.value+line);
 				}
 
 			}finally{
@@ -78,7 +79,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();
@@ -98,7 +99,8 @@ public class TextFileHandler extends FileHandler {
 			try{
 				String line;
 				while((line=in.readLine())!=null && lines--!=0){
-					buffer.append(buffer.length()==0 ? line : "\n"+line);
+					buffer.append(buffer.length()==0 ?
+							line : SEPARATOR.LINE.value+line);
 				}
 
 			}finally{
@@ -106,7 +108,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();
@@ -146,12 +148,10 @@ public class TextFileHandler extends FileHandler {
 
 			}finally{
 				out.close();
-			}
-
-			return true;
+			}return true;
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return false;
 
 	}
@@ -188,7 +188,8 @@ public class TextFileHandler extends FileHandler {
 			try{
 				String line;
 				while((line=in.readLine())!=null && lines--!=0){
-					buffer.append(buffer.length()==0 ? line : "\n"+line);
+					buffer.append(buffer.length()==0 ?
+							line : SEPARATOR.LINE.value+line);
 				}
 
 			}finally{
@@ -196,7 +197,7 @@ public class TextFileHandler extends FileHandler {
 			}
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();
@@ -247,12 +248,10 @@ public class TextFileHandler extends FileHandler {
 
 			}finally{
 				out.close();
-			}
-
-			return true;
+			}return true;
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return false;
 
 	}

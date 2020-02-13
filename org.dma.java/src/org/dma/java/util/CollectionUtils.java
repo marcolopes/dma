@@ -26,7 +26,7 @@ public class CollectionUtils {
 			return stream.size();
 
 		}catch(IOException e){
-			Debug.err(e);
+			e.printStackTrace();
 		}return 0;
 	}
 
@@ -201,8 +201,8 @@ public class CollectionUtils {
 		Collection<String> result=new ArrayList();
 
 		for(T element: col){
-			String s=element.toString();
-			if(!s.trim().isEmpty()) result.add(s);
+			String string=element.toString();
+			if(!string.trim().isEmpty()) result.add(string);
 		}
 
 		return result.toArray(new String[result.size()]);
@@ -215,10 +215,10 @@ public class CollectionUtils {
 		StringBuilder result=new StringBuilder();
 
 		for(T element: col){
-			String s=element.toString();
-			if(!s.isEmpty()){
+			String string=element.toString();
+			if(!string.isEmpty()){
 				if(result.length()>0) result.append(separator);
-				result.append(s);
+				result.append(string);
 			}
 		}
 

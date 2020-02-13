@@ -35,7 +35,7 @@ public final class PublicServerTime {
                 return date;
 
 			}catch(IOException e) {
-				Debug.err(e);
+				e.printStackTrace();
 			}
 		}
 

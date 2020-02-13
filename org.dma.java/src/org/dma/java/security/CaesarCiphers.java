@@ -5,7 +5,6 @@
  *******************************************************************************/
 package org.dma.java.security;
 
-import org.dma.java.util.Debug;
 
 public class CaesarCiphers {
 
@@ -74,7 +73,7 @@ public class CaesarCiphers {
 			System.out.println("ROT47: "+new CaesarCiphers(cipher.rot47()).rot47());
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 
 	}

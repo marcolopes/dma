@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -14,6 +14,10 @@ import java.util.LinkedHashSet;
 public class MessageList extends LinkedHashSet<String> {
 
 	private static final long serialVersionUID = 1L;
+
+	public MessageList(Exception e) {
+		this(e.getMessage());
+	}
 
 	public MessageList(String...message) {
 		this(Arrays.asList(message));
@@ -38,8 +42,13 @@ public class MessageList extends LinkedHashSet<String> {
 			out.write(toString().getBytes());
 			out.write("\n".getBytes());
 		}catch(IOException e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
+	}
+
+
+	public boolean add(Collection<? extends String> col) {
+		return addAll(col);
 	}
 
 

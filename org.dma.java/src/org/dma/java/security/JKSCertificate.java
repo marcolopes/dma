@@ -22,7 +22,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
 import org.dma.java.io.ByteFileHandler;
-import org.dma.java.util.Debug;
 import org.dma.java.util.TimeDateUtils;
 
 public class JKSCertificate {
@@ -86,7 +85,7 @@ public class JKSCertificate {
 			this.X509Cert=(X509Certificate)keyStore.getCertificate(this.alias);
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 			keyStore=null;
 		}
 

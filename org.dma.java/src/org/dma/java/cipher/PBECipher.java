@@ -10,8 +10,6 @@ import java.security.spec.KeySpec;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-
-import org.dma.java.util.Debug;
 /**
  * KeyLength above 128bits requires to install the
  * Java Cryptography Extension (JCE) unlimited strength jurisdiction policy files<br>
@@ -26,7 +24,7 @@ public class PBECipher extends CryptoCipher {
 			return factory.generateSecret(spec);
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
