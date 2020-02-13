@@ -17,13 +17,13 @@ public abstract class CustomConverter implements IConverter {
 	}
 
 	@Override
-	public Object getFromType() {
+	public Class getFromType() {
 		return fromType;
 	}
 
 
 	@Override
-	public Object getToType() {
+	public Class getToType() {
 		return toType;
 	}
 

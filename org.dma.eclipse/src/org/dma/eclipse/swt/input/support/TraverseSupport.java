@@ -47,7 +47,7 @@ public class TraverseSupport {
 				if (event.doit) selectNext(control);
 
 			}catch(Exception e) {
-				Debug.err(e);
+				e.printStackTrace();
 			}
 		}
 	};
@@ -56,7 +56,7 @@ public class TraverseSupport {
 
 	private final boolean keypadReturn;
 
-	public TraverseSupport(boolean keypadReturn){
+	public TraverseSupport(boolean keypadReturn) {
 		this.keypadReturn=keypadReturn;
 	}
 

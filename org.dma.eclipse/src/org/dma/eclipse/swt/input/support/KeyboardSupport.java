@@ -1,11 +1,9 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.input.support;
-
-import org.dma.java.util.Debug;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -18,12 +16,12 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
-public class TableKeyboardSupport {
+public class KeyboardSupport {
 
 	protected final TableViewer viewer;
 	protected final Table table;
 
-	public TableKeyboardSupport(TableViewer viewer) {
+	public KeyboardSupport(TableViewer viewer) {
 		this.viewer=viewer;
 		this.table=viewer.getTable();
 	}
@@ -101,7 +99,7 @@ public class TableKeyboardSupport {
 
 	public Object getSelectedElement() {
 		IStructuredSelection selection=(IStructuredSelection)viewer.getSelection();
-		return selection==null ? selection : selection.getFirstElement();
+		return selection.getFirstElement();
 	}
 
 
@@ -118,7 +116,6 @@ public class TableKeyboardSupport {
 
 		Object selectedElement=getSelectedElement();
 		if(selectedElement==null) return;
-		Debug.err("column", column);
 
 		Integer currentColumn=column;
 		do{
@@ -142,7 +139,6 @@ public class TableKeyboardSupport {
 
 		Object selectedElement=getSelectedElement();
 		if(selectedElement==null) return;
-		Debug.err("column", column);
 
 		int currentColumn=column;
 		do{

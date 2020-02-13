@@ -10,7 +10,6 @@ import java.util.Arrays;
 
 import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
 import org.dma.java.awt.ImageUtils;
-import org.dma.java.util.Debug;
 
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
@@ -62,7 +61,7 @@ public class ImageManager {
 			gc.dispose();
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}return image;
 	}
 

@@ -7,7 +7,6 @@ package org.dma.eclipse;
 
 import java.awt.image.BufferedImage;
 
-import org.dma.eclipse.swt.graphics.ColorManager;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
 import org.osgi.framework.Bundle;
@@ -63,7 +62,8 @@ public class Activator extends Plugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		ColorManager.getColor(0,0,0);
+		//ColorManager.DISPLAY.isDisposed();
+		//FontManager.DISPLAY.isDisposed();
 	}
 
 	@Override

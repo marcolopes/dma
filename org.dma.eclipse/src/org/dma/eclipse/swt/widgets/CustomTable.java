@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -10,12 +10,9 @@ import java.util.Collection;
 
 import org.dma.java.util.Debug;
 
-import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -52,26 +49,12 @@ public class CustomTable extends Table {
 	}
 
 
-	public void addSortSupport(int direction, final IAction refreshAction) {
-		setSortColumn(getColumn(0));
-		setSortDirection(direction);
+	/** @see TableColumn#setResizable */
+	public void setResizable(boolean resizable) {
 		for(TableColumn column: getColumns()){
-			column.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					TableColumn column=(TableColumn)e.widget;
-					//avoids if unselected
-					if (getSortColumn().getText().equals(column.getText())){
-						//inverts sort direction
-						setSortDirection(getSortDirection()==SWT.UP ? SWT.DOWN : SWT.UP);
-					}
-					setSortColumn(column);
-					refreshAction.run();
-				}
-			});
+			column.setResizable(resizable);
 		}
 	}
-
 
 	public void addResizeListener(final int minWidth) {
 		addControlListener(new ControlAdapter(){
@@ -88,39 +71,32 @@ public class CustomTable extends Table {
 		});
 	}
 
-
-	/** @see TableColumn#setResizable */
-	public void setResizable(boolean resizable) {
-		for(TableColumn column: getColumns()){
-			column.setResizable(resizable);
-		}
-	}
-
 	public void resizeColumns(int minWidth) {
 		if (busy) return;
 		busy=true;
 		setRedraw(false);
-		int remainingPercentage=100;
+		int totalPercentage=0;
 		int tableWidth=Math.max(getClientArea().width, minWidth);
-		Collection <TableColumn> columns=new ArrayList();
+		//columns with undefined WIDTH
+		Collection<TableColumn> columns=new ArrayList();
 		for(TableColumn column: getColumns()){
 			int width=0;
 			if (column instanceof CustomTableColumn){
 				CustomTableColumn customColumn=(CustomTableColumn)column;
-				remainingPercentage-=customColumn.getWidthPercentage();
-				width=(int)(tableWidth * customColumn.getWidthPercentage() / 100);
-			}
+				totalPercentage+=customColumn.getWidthPercentage();
+				width=tableWidth * customColumn.getWidthPercentage() / 100;
+			}//set DEFINED WIDTH
 			if (width>0) column.setWidth(width);
 			else columns.add(column);
 		}
-		if (remainingPercentage<0){
-			Debug.err("Wrong total percentage: "+(100-remainingPercentage));
-		}
-		else if (columns.size()>0){
-			int width=(tableWidth * remainingPercentage) / (columns.size() * 100);
-			if (width==0){
-				Debug.err("Zero width columns: "+columns.size());
+		if (totalPercentage<0 || totalPercentage>100){
+			Debug.err("Wrong total percentage: "+totalPercentage);
+		}else if (columns.size()>0){
+			int remainingWidth=tableWidth * (100-totalPercentage) / 100;
+			if (remainingWidth==0){
+				Debug.err("No remaining width for "+columns.size()+" columns");
 			}else{
+				int width=remainingWidth / columns.size();
 				for(TableColumn column: columns) column.setWidth(width);
 			}
 		}

@@ -53,14 +53,13 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	private CustomAction button_forward;
 
 	public BrowserViewer(Composite parent, int iconSize) {
-
 		try{
 			createToolBar(iconSize);
 			createTabFolder(parent);
 			createBrowser();
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 	}
 

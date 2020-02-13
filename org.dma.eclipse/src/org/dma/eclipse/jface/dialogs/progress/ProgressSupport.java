@@ -43,7 +43,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			put(action, action.getClass().getName());
 
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}else{
 			throw new UnsupportedOperationException();
 		}
@@ -66,19 +66,14 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			ProgressMonitorDialog dialog=new ProgressMonitorDialog(null);
 
 			dialog.run(true, true, new IRunnableWithProgress() {
-
 				@Override
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
 					monitor.beginTask(title, 100);
-
 					//execute the tasks
 					for(IProgressAction action: keySet()) try{
-
 						//task name
 						String taskName=get(action);
 						Debug.out("TASK", taskName);
-
 						monitor.subTask(taskName);
 						action.run();
 						monitor.worked(work);
@@ -87,10 +82,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 						throw new InvocationTargetException(e);
 					}finally{
 						if (monitor.isCanceled()) throw new InterruptedException();
-					}
-
-					monitor.done();
-
+					}monitor.done();
 				}
 			});
 
@@ -100,14 +92,16 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 		}catch(InterruptedException e){
 			Debug.err("InterruptedException");
 			return false;
-		}
-
-		return true;
+		}return true;
 
 	}
 
 
-	public void debug() {
+	/**
+	 * Debug
+	 */
+	public void print() {
+		if (!Debug.STATUS) return;
 		System.out.println("---PROGRESS SUPPORT---");
 		for(String element: values()){
 			System.out.println(element);

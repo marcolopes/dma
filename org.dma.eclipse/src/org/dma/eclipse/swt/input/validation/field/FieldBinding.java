@@ -65,7 +65,7 @@ public abstract class FieldBinding extends FieldError {
 	public void dispose() {
 		control.removeFocusListener(focusListener);
 		control.removeListener(SWT.Selection, selectionListener);
-		if (regexMatcher!=null) regexMatcher.detach();
+		if (regexMatcher!=null) regexMatcher.dispose();
 	}
 
 

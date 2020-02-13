@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -13,7 +13,7 @@ public class CustomTableColumn extends TableColumn {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	private float widthPercentage=0;
+	private int widthPercentage=0;
 
 	/** @see TableColumn#TableColumn(Table, int) */
 	public CustomTableColumn(Table parent, int style) {
@@ -21,11 +21,11 @@ public class CustomTableColumn extends TableColumn {
 	}
 
 
-	public float getWidthPercentage() {
+	public int getWidthPercentage() {
 		return widthPercentage;
 	}
 
-	public void setWidthPercentage(float widthPercentage) {
+	public void setWidthPercentage(int widthPercentage) {
 		this.widthPercentage=widthPercentage;
 	}
 

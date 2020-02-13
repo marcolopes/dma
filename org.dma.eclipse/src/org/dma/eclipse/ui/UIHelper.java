@@ -75,7 +75,7 @@ public class UIHelper {
 			org.eclipse.ui.internal.PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
 			return manager.getControl();
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}return null;
 	}
 
@@ -106,7 +106,7 @@ public class UIHelper {
 				handler.removeExtension(null, removePerspectives.toArray());
 			}
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -123,7 +123,7 @@ public class UIHelper {
 				Debug.out("ADDED", id);
 			}
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -134,7 +134,7 @@ public class UIHelper {
 			manager.remove(node);
 			Debug.out("REMOVED", node.getId());
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -143,7 +143,7 @@ public class UIHelper {
 		try{
 			ResourcesPlugin.getWorkspace().save(full, null);
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -156,7 +156,7 @@ public class UIHelper {
 		try{
 			return PlatformUI.getWorkbench();
 		}catch(Exception e){
-			Debug.err(e);
+			e.printStackTrace();
 		}return null;
 	}
 

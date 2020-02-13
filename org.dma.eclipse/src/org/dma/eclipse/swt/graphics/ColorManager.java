@@ -5,8 +5,6 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.graphics;
 
-import org.dma.java.util.Debug;
-
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -109,8 +107,8 @@ public class ColorManager {
 		}else try{
 			throw new Exception("only color is supported at present... "
 					+ "setting paint to uniform black color");
-		}catch (Exception e) {
-			Debug.err(e);
+		}catch(Exception e){
+			e.printStackTrace();
 			color = new java.awt.Color(0, 0, 0);
 		}return new org.eclipse.swt.graphics.Color(device,
 				color.getRed(), color.getGreen(), color.getBlue());

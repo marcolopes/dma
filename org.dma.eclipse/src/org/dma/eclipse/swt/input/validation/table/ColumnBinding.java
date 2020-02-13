@@ -42,7 +42,7 @@ public abstract class ColumnBinding extends ColumnError {
 
 
 	public void dispose() {
-		if (regexMatcher!=null) regexMatcher.detach();
+		if (regexMatcher!=null) regexMatcher.dispose();
 	}
 
 
