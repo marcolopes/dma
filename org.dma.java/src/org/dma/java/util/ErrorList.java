@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -47,10 +47,6 @@ public class ErrorList {
 		errors.add(message);
 	}
 
-	public boolean hasErrors() {
-		return !errors.isEmpty();
-	}
-
 	public MessageList errors() {
 		return errors;
 	}
@@ -65,10 +61,6 @@ public class ErrorList {
 
 	public void addWarning(String message) {
 		warnings.add(message);
-	}
-
-	public boolean hasWarnings() {
-		return !warnings.isEmpty();
 	}
 
 	public MessageList warnings() {

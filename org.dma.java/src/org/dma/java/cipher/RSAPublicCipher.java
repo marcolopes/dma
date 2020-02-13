@@ -14,7 +14,6 @@ import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 import org.dma.java.io.ByteFileHandler;
-import org.dma.java.util.Debug;
 
 public class RSAPublicCipher extends CryptoCipher {
 
@@ -36,7 +35,7 @@ public class RSAPublicCipher extends CryptoCipher {
 			return kf.generatePublic(spec);
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
@@ -67,10 +66,8 @@ public class RSAPublicCipher extends CryptoCipher {
 			return signature.verify(signatureBytes);
 
 		}catch(Exception e){
-			Debug.err(e);
-		}
-
-		return false;
+			System.err.println(e);
+		}return false;
 
 	}
 
@@ -84,10 +81,8 @@ public class RSAPublicCipher extends CryptoCipher {
 			return verifySHA1Signature(base64Bytes, message.getBytes("UTF8"));
 
 		}catch(UnsupportedEncodingException e){
-			Debug.err(e);
-		}
-
-		return false;
+			System.err.println(e);
+		}return false;
 
 	}
 

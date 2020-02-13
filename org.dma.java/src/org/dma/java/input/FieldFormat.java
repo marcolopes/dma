@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -10,21 +10,65 @@ import java.math.BigInteger;
 import java.sql.Time;
 import java.text.DecimalFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang.SystemUtils;
 import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
 
 public class FieldFormat extends FieldRegex {
 
 	/** Decimal Format CACHE */
-	private static final Map<String, DecimalFormat> DF_CACHE=new HashMap();
+	private static final Map<String, DecimalFormat> DF_CACHE=new ConcurrentHashMap();
 
-	public static synchronized DecimalFormat getDecimalFormat(String pattern) {
+	public static DecimalFormat getDecimalFormat(String pattern) {
 		DecimalFormat df=DF_CACHE.get(pattern);
 		if (df==null) DF_CACHE.put(pattern, df=new DecimalFormat(pattern));
 		return df;
+	}
+
+	public enum SEPARATOR {
+
+		/** JAVA line separator */
+		LINE (SystemUtils.LINE_SEPARATOR),
+		COMMA (","),
+		HYPHEN ("-"),
+		SEMICOLON (";");
+
+		public final String value;
+
+		SEPARATOR(String value) {
+			this.value=value;
+		}
+
+		@Override
+		public String toString() {
+			return value;
+		}
+
+	}
+
+	public enum KEYBOARD {
+
+		TAB (0x09/*SWT.TAB*/),
+		SPACE (0x20/*SWT.SPACE*/),
+		LINE_FEED (0x0A/*SWT.LF*/),
+		CARRIAGE_RETURN (0x0D/*SWT.CR*/);
+
+		public final char code;
+		public final String value;
+
+		KEYBOARD(int code) {
+			this.code=(char)code;
+			this.value=String.valueOf(this.code);
+		}
+
+		@Override
+		public String toString() {
+			return value;
+		}
+
 	}
 
 	public enum TYPES {
@@ -127,7 +171,6 @@ public class FieldFormat extends FieldRegex {
 		}return pattern;
 	}
 
-	/** Time / Date / Number */
 	public String format(Object value) {
 		switch(type){
 		case TIME: return TimeDateUtils.getTimeFormatted((Time)value, pattern);

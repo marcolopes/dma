@@ -52,6 +52,7 @@ public class Debug {
 		if (STATUS) System.out.println(log(message, obj, caller));
 	}
 
+
 	private static String log(String message, Object obj, StackTraceElement caller) {
 
 		StringBuilder sb=new StringBuilder();

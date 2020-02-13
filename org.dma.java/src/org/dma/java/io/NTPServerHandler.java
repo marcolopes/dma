@@ -97,7 +97,7 @@ public class NTPServerHandler {
 			return new NTPTimeInfo(time.getMessage(), time.getReturnTime());
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}
 
 		return null;

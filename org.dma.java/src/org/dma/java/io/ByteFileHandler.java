@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -10,8 +10,6 @@ import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
-
-import org.dma.java.util.Debug;
 
 public class ByteFileHandler extends FileHandler {
 
@@ -66,15 +64,11 @@ public class ByteFileHandler extends FileHandler {
 
 			}finally{
 				in.close();
-			}
-
-			return buffer;
+			}return buffer;
 
 		}catch(Exception e){
-			Debug.err(e);
-		}
-
-		return null;
+			System.err.println(e);
+		}return new byte[0];
 
 	}
 
@@ -99,15 +93,11 @@ public class ByteFileHandler extends FileHandler {
 
 			}finally{
 				in.close();
-			}
-
-			return buffer;
+			}return buffer;
 
 		}catch(Exception e){
-			Debug.err(e);
-		}
-
-		return null;
+			System.err.println(e);
+		}return new byte[0];
 
 	}
 
@@ -132,15 +122,11 @@ public class ByteFileHandler extends FileHandler {
 
 			}finally{
 				out.close();
-			}
-
-			return bytes.length;
+			}return bytes.length;
 
 		}catch(Exception e){
-			Debug.err(e);
-		}
-
-		return 0;
+			System.err.println(e);
+		}return 0;
 
 	}
 

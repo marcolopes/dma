@@ -1,13 +1,11 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.io;
 
 import java.io.File;
-
-import org.dma.java.util.Debug;
 
 public class FileParameters {
 
@@ -36,6 +34,14 @@ public class FileParameters {
 		this.wildcards="*" + (suffix==null ? "" : this.suffix);
 	}
 
+	public FileParameters cloneCopy(String foldername) {
+		return cloneCopy(new File(foldername));
+	}
+
+	public FileParameters cloneCopy(File folder) {
+		return new FileParameters(prefix, suffix, folder);
+	}
+
 
 	/** @see File#createTempFile(String, String, File) */
 	public File createTempFile() {
@@ -45,7 +51,7 @@ public class FileParameters {
 			return file;
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 

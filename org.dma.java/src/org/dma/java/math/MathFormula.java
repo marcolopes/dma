@@ -79,10 +79,8 @@ public class MathFormula {
 
 		}catch(ScriptException e){
 		}catch(Exception e){
-			Debug.err(e);
-		}
-
-		return null;
+			e.printStackTrace();
+		}return null;
 
 	}
 
@@ -92,9 +90,7 @@ public class MathFormula {
 		FormulaSymbol[] symbols=new FormulaSymbol[vars.length];
 		for(int i=0; i<vars.length; i++){
 			symbols[i]=new FormulaSymbol(vars[i], BigDecimal.valueOf(i+1));
-		}
-
-		return eval(symbols)!=null;
+		}return eval(symbols)!=null;
 
 	}
 

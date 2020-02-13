@@ -42,20 +42,6 @@ public class ArrayUtils {
 	}
 
 
-	public static int[] toIntArray(String[] array) {
-
-		int[] result=new int[array.length];
-
-		int index=0;
-		for(String s: array){
-			result[index++]=StringUtils.val(s);
-		}
-
-		return result;
-
-	}
-
-
 	public static String[] toStringArray(int[] array) {
 
 		String[] result=new String[array.length];
@@ -98,7 +84,7 @@ public class ArrayUtils {
 	}
 
 
-	public static String toString(byte[] array) {
+	public static String toCharString(byte[] array) {
 
 		StringBuilder result=new StringBuilder();
 

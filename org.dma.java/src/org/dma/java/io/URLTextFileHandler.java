@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -9,24 +9,24 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-import org.dma.java.util.Debug;
+import org.dma.java.input.FieldFormat.SEPARATOR;
 
 public class URLTextFileHandler {
 
-	public final FileURL fileurl;
+	public final URLFileHandler file;
 	public final Charset charset;
 
 	/** Uses JAVA DEFAULT charset */
-	public URLTextFileHandler(FileURL fileurl) {
-		this(fileurl, Charset.defaultCharset());
+	public URLTextFileHandler(URLFileHandler file) {
+		this(file, Charset.defaultCharset());
 	}
 
-	public URLTextFileHandler(FileURL fileurl, String charsetName) {
-		this(fileurl, Charset.forName(charsetName));
+	public URLTextFileHandler(URLFileHandler file, String charsetName) {
+		this(file, Charset.forName(charsetName));
 	}
 
-	public URLTextFileHandler(FileURL fileurl, Charset charset) {
-		this.fileurl=fileurl;
+	public URLTextFileHandler(URLFileHandler file, Charset charset) {
+		this.file=file;
 		this.charset=charset;
 	}
 
@@ -56,12 +56,13 @@ public class URLTextFileHandler {
 
 		try{
 			BufferedReader in=new BufferedReader(
-					new InputStreamReader(fileurl.asInputStream(), charset));
+					new InputStreamReader(file.asInputStream(), charset));
 
 			try{
 				String line;
 				while((line=in.readLine()) != null){
-					buffer.append(buffer.length()==0 ? line : "\n"+line);
+					buffer.append(buffer.length()==0 ?
+							line : SEPARATOR.LINE.value+line);
 				}
 
 			}finally{
@@ -69,7 +70,7 @@ public class URLTextFileHandler {
 			}
 
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}
 
 		return buffer.toString();

@@ -12,9 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -128,9 +128,9 @@ public class TimeDateUtils {
 	 * Format
 	 */
 	/** Simple Date Format CACHE */
-	private static final Map<String, SimpleDateFormat> SDF_CACHE=new HashMap();
+	private static final Map<String, SimpleDateFormat> SDF_CACHE=new ConcurrentHashMap();
 
-	public static synchronized SimpleDateFormat getSimpleDateFormat(String pattern) {
+	public static SimpleDateFormat getSimpleDateFormat(String pattern) {
 		SimpleDateFormat sdf=SDF_CACHE.get(pattern);
 		if (sdf==null) SDF_CACHE.put(pattern, sdf=new SimpleDateFormat(pattern));
 		return sdf;
@@ -585,7 +585,7 @@ public class TimeDateUtils {
 
 		}catch(ParseException e){
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 
@@ -716,7 +716,7 @@ public class TimeDateUtils {
 
 		}catch(ParseException e){
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return null;
 	}
 

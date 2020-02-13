@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -62,7 +62,10 @@ public class RandomValue {
 	/** Decimal numbers */
 	public String numbers(int length) {
 
-		return string(length, StringUtils.DECIMAL_NUMBERS);
+		String prefix=string(1, "123456789");
+		String suffix=string(length, StringUtils.DECIMAL_NUMBERS);
+
+		return length==1 ? suffix : prefix + suffix.substring(1);
 
 	}
 

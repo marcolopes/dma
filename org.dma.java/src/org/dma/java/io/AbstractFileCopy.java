@@ -13,8 +13,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.dma.java.util.Debug;
-
 public abstract class AbstractFileCopy extends AbstractStreamCopy {
 
 	public final File src;
@@ -46,12 +44,12 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 			}finally{
 				out.close();
 				in.close();
-			}
+			}return true;
 
-			return true;
-
+		}catch(InterruptedException e){
+			System.out.println(e);
 		}catch(Exception e){
-			Debug.err(e);
+			System.err.println(e);
 		}return false;
 
 	}

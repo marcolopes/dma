@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -13,7 +13,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.dma.java.util.Debug;
 
 public class CryptoCipher {
 
@@ -71,7 +70,7 @@ public class CryptoCipher {
 				return generator.generateKey();
 
 			}catch(Exception e){
-				Debug.err(e);
+				System.err.println(e);
 			}return null;
 		}
 
@@ -140,8 +139,8 @@ public class CryptoCipher {
 			return cipher.doFinal(messageBytes);
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return new byte[0];
 
 	}
 
@@ -167,8 +166,8 @@ public class CryptoCipher {
 			return new String(base64Bytes, "UTF8");
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return "";
 
 	}
 
@@ -193,8 +192,8 @@ public class CryptoCipher {
 			return BASE64encrypt(messageBytes, lineLength);
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return "";
 
 	}
 
@@ -207,8 +206,8 @@ public class CryptoCipher {
 			return decipher.doFinal(messageBytes);
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return new byte[0];
 
 	}
 
@@ -233,8 +232,8 @@ public class CryptoCipher {
 			return new String(decrypted, "UTF8");
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return "";
 
 	}
 
@@ -258,8 +257,8 @@ public class CryptoCipher {
 			return BASE64decrypt(messageBytes);
 
 		}catch(Exception e){
-			Debug.err(e);
-		}return null;
+			System.err.println(e);
+		}return "";
 
 	}
 

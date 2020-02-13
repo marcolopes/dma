@@ -5,8 +5,8 @@
  *******************************************************************************/
 package org.dma.java.input;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 import org.dma.java.input.FieldFormat.TYPES;
@@ -15,9 +15,9 @@ import org.dma.java.util.StringUtils;
 public class FieldRegex extends FieldProperties {
 
 	/** Regex Pattern CACHE */
-	private static final Map<String, Pattern> RP_CACHE=new HashMap();
+	private static final Map<String, Pattern> RP_CACHE=new ConcurrentHashMap();
 
-	public static synchronized Pattern getRegexPattern(String regex) {
+	public static Pattern getRegexPattern(String regex) {
 		Pattern pattern=RP_CACHE.get(regex);
 		if (pattern==null) RP_CACHE.put(regex, pattern=Pattern.compile(regex));
 		return pattern;
