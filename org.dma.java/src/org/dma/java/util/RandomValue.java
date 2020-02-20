@@ -46,9 +46,7 @@ public class RandomValue {
 	/** Lowercase letters + Decimal numbers */
 	public String string(int length) {
 
-		return string(length,
-				StringUtils.LOWERCASE_LETTERS+
-				StringUtils.DECIMAL_NUMBERS);
+		return string(length, StringUtils.LOWERCASE_LETTERS+StringUtils.DECIMAL_NUMBERS);
 
 	}
 
@@ -59,13 +57,18 @@ public class RandomValue {
 
 	}
 
-	/** Decimal numbers */
+	/** Decimal numbers (0-9) */
 	public String numbers(int length) {
 
-		String prefix=string(1, "123456789");
-		String suffix=string(length, StringUtils.DECIMAL_NUMBERS);
+		return string(length, StringUtils.DECIMAL_NUMBERS);
 
-		return length==1 ? suffix : prefix + suffix.substring(1);
+	}
+
+	/** Integer number (1-9 + 0-9) */
+	public String integer(int length) {
+
+		return length==1 ? numbers(length) :
+			string(1, "123456789") + numbers(length).substring(1);
 
 	}
 
@@ -81,7 +84,7 @@ public class RandomValue {
 
 	public Integer Integer(int length) {
 
-		return Integer.valueOf(numbers(length));
+		return new Integer(integer(length));
 
 	}
 
@@ -97,7 +100,7 @@ public class RandomValue {
 
 	public Long Long(int length) {
 
-		return Long.valueOf(numbers(length));
+		return new Long(integer(length));
 
 	}
 
@@ -113,7 +116,7 @@ public class RandomValue {
 
 	public Float Float(int length) {
 
-		return Float.valueOf(numbers(length));
+		return new Float(integer(length));
 
 	}
 
@@ -129,7 +132,7 @@ public class RandomValue {
 
 	public Double Double(int length) {
 
-		return Double.valueOf(numbers(length));
+		return new Double(integer(length));
 
 	}
 
@@ -139,7 +142,7 @@ public class RandomValue {
 	 */
 	public BigDecimal decimal(int length) {
 
-		return new BigDecimal(numbers(length));
+		return new BigDecimal(integer(length));
 
 	}
 
