@@ -40,7 +40,7 @@ public class Activator implements BundleActivator {
 		try{
 			return Class.forName(className);
 		}catch(ClassNotFoundException e){
-			e.printStackTrace();
+			System.err.println(e);
 		}return null;
 	}
 
