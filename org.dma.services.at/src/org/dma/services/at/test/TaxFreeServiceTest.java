@@ -58,7 +58,7 @@ public class TaxFreeServiceTest {
 
 		IdentityDocType identity = new IdentityDocType();
 		identity.setType("PASSAPORTE");
-		identity.setNumber(new RandomValue().numbers(9));
+		identity.setNumber(new RandomValue().integer(9));
 		identity.setCountryCode("BR");
 		buyer.setIdentityDoc(identity);
 
@@ -74,7 +74,7 @@ public class TaxFreeServiceTest {
 		//invoices.setCalculatedTaxes(taxes);
 
 		InvoiceIdentifiersType invoiceIdentifiers = new InvoiceIdentifiersType();
-		invoiceIdentifiers.setInvoiceNo("CFA 2018/"+new RandomValue().numbers(6));
+		invoiceIdentifiers.setInvoiceNo("CFA 2018/"+new RandomValue().integer(6));
 		invoiceIdentifiers.setHashTermination(new RandomValue().letters(4));
 
 		/*
@@ -120,7 +120,7 @@ public class TaxFreeServiceTest {
 
 		//--- TAX FREE ---
 		TaxFreeCommType taxFree = new TaxFreeCommType();
-		taxFree.setIdentifier(new RandomValue().numbers(9));
+		taxFree.setIdentifier(new RandomValue().integer(9));
 		taxFree.setSeller(company);
 		taxFree.setBuyer(buyer);
 		taxFree.setRefund(refund);
