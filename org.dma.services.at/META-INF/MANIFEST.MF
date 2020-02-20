@@ -17,5 +17,5 @@ Export-Package: org.dma.services.at,
  pt.gov.portaldasfinancas.servicos.documentosTransporte,
  pt.gov.portaldasfinancas.servicos.faturas,
  pt.gov.portaldasfinancas.servicos.taxfree
-Require-Bundle: org.dma.java;bundle-version="6.7.8"
+Require-Bundle: org.dma.java;bundle-version="6.9.1"
 
