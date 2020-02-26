@@ -163,7 +163,7 @@ public enum DRIVERS {
 			//check lock
 			checkH2Lock(pathname);
 			//ZIP dump
-			new ZipFileHandler(zip.toFile()).normalDeflate(Arrays.asList(file));
+			new ZipFileHandler(zip.toFile()).deflate(Arrays.asList(file));
 			//Driver H2 v1.3.169
 			//Backup.execute does not work with eclipse exported product on MAC!
 			//https://groups.google.com/forum/#!topic/h2-database/AT7OpOkQfZ4
@@ -184,7 +184,7 @@ public enum DRIVERS {
 					database, user, password, dump), password); break;
 			}
 			//ZIP dump
-			new ZipFileHandler(zip.toFile()).normalDeflate(Arrays.asList(dump.toFile()));
+			new ZipFileHandler(zip.toFile()).deflate(Arrays.asList(dump.toFile()));
 			//delete dump
 			dump.toFile().delete();
 		}
