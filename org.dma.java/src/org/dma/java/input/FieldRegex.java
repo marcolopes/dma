@@ -61,8 +61,7 @@ public class FieldRegex extends FieldProperties {
 		case DECIMAL:
 		case INTEGER:
 			//negative signal?
-			if (!isPositive()) regex+="-{0,1}";
-		//$FALL-THROUGH$
+			if (!isPositive()) regex+="-{0,1}"; //$FALL-THROUGH$
 		case BOOLEAN:
 			//digits only
 			regex+="\\d";

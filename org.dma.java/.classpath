@@ -3,19 +3,18 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-codec-1.4.jar" sourcepath="libraries/commons/commons-codec-1.4-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-collections-3.2.1.jar" sourcepath="libraries/commons/commons-collections-3.2.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-codec-1.11.jar" sourcepath="libraries/commons/commons-codec-1.11-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-collections-3.2.2.jar" sourcepath="libraries/commons/commons-collections-3.2.2-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-configuration-1.10.jar" sourcepath="libraries/commons/commons-configuration-1.10-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-email-1.4.jar" sourcepath="libraries/commons/commons-email-1.4-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-email-1.5.jar" sourcepath="libraries/commons/commons-email-1.5-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-lang-2.6.jar" sourcepath="libraries/commons/commons-lang-2.6-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-logging-1.1.3.jar" sourcepath="libraries/commons/commons-logging-1.1.3-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-net-3.3.jar" sourcepath="libraries/commons/commons-net-3.3-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/itext/bcprov-jdk16-1.45.jar" sourcepath="libraries/itext/bcprov-jdk16-1.45-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-logging-1.2.jar" sourcepath="libraries/commons/commons-logging-1.2-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-net-3.6.jar" sourcepath="libraries/commons/commons-net-3.6-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons/javax.mail-1.5.6.jar" sourcepath="libraries/commons/javax.mail-1.5.6-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/itext/bcprov-jdk14-138.jar" sourcepath="libraries/itext/bcprov-jdk14-138-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/itext/itext-2.1.7.jar" sourcepath="libraries/itext/itext-2.1.7-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/fontbox-1.6.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/pdfbox-1.6.0.jar" sourcepath="libraries/pdfbox/pdfbox-1.6.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/fontbox-1.8.16.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/pdfbox-1.8.16.jar" sourcepath="libraries/pdfbox/pdfbox-1.8.16-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/imgscalr-lib-4.2.jar" sourcepath="libraries/imgscalr-lib-4.2-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/javax.mail-1.5.2.jar" sourcepath="libraries/javax.mail-1.5.2-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/zip4j-1.3.2.jar" sourcepath="libraries/zip4j-1.3.2-sources.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

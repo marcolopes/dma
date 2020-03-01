@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -14,6 +14,13 @@ import java.net.URLConnection;
 import org.dma.java.util.StringUtils;
 
 public class URLFileHandler {
+
+	/** Replaces accented and illegal characters */
+	public static String normalize(String string) {
+		//http://www.w3.org/Addressing/URL/uri-spec.html
+		String plain=StringUtils.unaccent(string).replaceAll(" ","+");
+		return StringUtils.removeChars(plain,"\n\r\t\f\0");
+	}
 
 	public static URL getURL(String urlname, String filename) {
 		try{

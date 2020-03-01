@@ -1,10 +1,11 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.util;
 
+import java.io.UnsupportedEncodingException;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ public class StringUtils {
 	public static final Pattern LETTERS_PATTERN = Pattern.compile("[A-Za-z]+");
 	public static final Pattern UPPERCASE_PATTERN = Pattern.compile("[^a-z]+");
 	public static final Pattern LOWERCASE_PATTERN = Pattern.compile("[^A-Z]+");
+	public static final Pattern DIACRITICS_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
 
 	public static final String DECIMAL_NUMBERS = "0123456789";
 	public static final String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
@@ -514,18 +516,15 @@ public class StringUtils {
 	}
 
 
-	/** Removes accents and illegal characters */
-	public static String normalize(String string) {
+	/** Replaces accented characters */
+	public static String unaccent(String string) {
 
-		return removeChars(
-			//decompose accented letters into LETTERS + ACCENTS
-			Normalizer.normalize(string, Normalizer.Form.NFD).
-			//remove accents
-			replaceAll("\\p{InCombiningDiacriticalMarks}+", "").
-			//replace slashes
-			replace('/',' ').replace('\\','-'),
-			//remove illegal characters
-			new char[]{'/','\\','`','?','*','<','>','|','\"',':','\n','\r','\t','\0','\f'});
+	    String normalized=Normalizer.normalize(string, Normalizer.Form.NFKD);
+	    try{
+			return new String(DIACRITICS_PATTERN.matcher(normalized).replaceAll("").getBytes("ascii"), "ascii");
+			//return new String(normalized.replaceAll("\\p{M}", "").getBytes("ascii"), "ascii");
+		}catch(UnsupportedEncodingException e){
+		}return normalized;
 
 	}
 
@@ -582,6 +581,7 @@ public class StringUtils {
 
 	public static void main(String[] argvs) {
 
+		System.out.println(unaccent("口水雞 hello ÄÀÁàáÃãÂâ"));
 		System.out.println("toHex: "+toHex((byte)255));
 		System.out.println("toHexString: "+toHexString((byte)255));
 
