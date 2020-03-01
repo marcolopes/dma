@@ -1,10 +1,11 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.ui;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,7 +32,10 @@ import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
+import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 
 /**
@@ -178,6 +182,17 @@ public class UIHelper {
 	/** @see BusyIndicator */
 	public static void showBusyWhile(Runnable runnable) {
 		BusyIndicator.showWhile(getDisplay(), runnable);
+	}
+
+	public static boolean openWorkbenchBrowser(URL url) {
+		try{
+			IWorkbenchBrowserSupport browserSupport=getWorkbench().getBrowserSupport();
+			IWebBrowser browser=browserSupport.createBrowser(url.toString());
+			browser.openURL(url);
+			return true;
+		}catch(PartInitException e){
+			e.printStackTrace();
+		}return false;
 	}
 
 

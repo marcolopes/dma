@@ -119,8 +119,7 @@ public abstract class ButtonKeypad extends CustomShell {
 				case 'c':
 				case 'C': display.function(FUNCTIONS.CLEAR); break;
 				case SWT.CR:
-				case SWT.KEYPAD_CR: if (!done(display.getValue())) break;
-				//$FALL-THROUGH$
+				case SWT.KEYPAD_CR: if (!done(display.getValue())) break; //$FALL-THROUGH$
 				case SWT.ESC: close(); break;
 				}
 			}

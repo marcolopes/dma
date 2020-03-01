@@ -49,7 +49,7 @@ public class CustomMenuItem extends MenuItem {
 	 */
 	public void setSelectionAction(final IAction action) {
 		this.selectionAction=action;
-		setEnabled(action); //synch states
+		setEnabled(action); //synchronize states
 		action.addPropertyChangeListener(new IPropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent event) {
@@ -66,8 +66,12 @@ public class CustomMenuItem extends MenuItem {
 
 	@Override
 	public void setEnabled(boolean enabled) {
-		//super.setEnabled triggered by action PropertyChangeListener
-		if (selectionAction!=null) selectionAction.setEnabled(enabled);
+		if (selectionAction!=null){
+			//super.setEnabled triggered by action
+			selectionAction.setEnabled(enabled);
+		}else{
+			super.setEnabled(enabled);
+		}
 	}
 
 	private void setEnabled(IAction action) {
