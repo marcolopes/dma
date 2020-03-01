@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -21,6 +21,8 @@ import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
 public class ConsoleView extends MessageConsole {
+
+	public static final String ID = IConsoleConstants.ID_CONSOLE_VIEW;
 
 	private class MessageConsoleErrorStream extends MessageConsoleStream {
 
@@ -91,7 +93,7 @@ public class ConsoleView extends MessageConsole {
 			public void partClosed(IWorkbenchPart part) {
 				if(part instanceof IConsoleView){
 					IConsoleView view=(IConsoleView)part;
-					if (view.getViewSite().getId().equals(IConsoleConstants.ID_CONSOLE_VIEW)){
+					if (view.getViewSite().getId().equals(ID)){
 						restoreSystemOut();
 					}
 				}
@@ -106,12 +108,12 @@ public class ConsoleView extends MessageConsole {
 	}
 
 	public boolean isOpen() {
-		return UIHelper.isViewOpen(IConsoleConstants.ID_CONSOLE_VIEW);
+		return UIHelper.isViewOpen(ID);
 	}
 
 	/** Closes console and restores system messages */
 	public void close() {
-		UIHelper.hideView(IConsoleConstants.ID_CONSOLE_VIEW);
+		UIHelper.hideView(ID);
 	}
 
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -97,14 +97,15 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 	}
 
 
+
 	/**
 	 * Debug
 	 */
 	public void print() {
 		if (!Debug.STATUS) return;
 		System.out.println("---PROGRESS SUPPORT---");
-		for(String element: values()){
-			System.out.println(element);
+		for(IProgressAction element: keySet()){
+			System.out.println(element.getClass());
 		}
 	}
 
