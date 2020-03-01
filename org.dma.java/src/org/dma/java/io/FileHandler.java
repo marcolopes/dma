@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -34,6 +34,14 @@ public class FileHandler {
 	public static final int BASE64_LINE_LENGTH = 64;
 	public static final int STRING_BUFFER_LENGTH = 4096;
 
+	/** Replaces accented and illegal characters */
+	public static String normalize(String filename) {
+		String plain=StringUtils.unaccent(filename).
+				replace('\\','-').replace('/','-').replace('|','-').
+				replace(' ','_').replace("__","_").replace("--","-");
+		return StringUtils.removeChars(plain,"<>:?*\"\n\r\t\f\0");
+	}
+
 	public final File file;
 
 	public FileHandler(String pathname) {
@@ -42,18 +50,6 @@ public class FileHandler {
 
 	public FileHandler(File file) {
 		this.file=file;
-	}
-
-
-	/**
-	 * Removes accents and illegal characters<br>
-	 * Replaces SPACES with UNDERLINES
-	 */
-	public static String normalize(String pathname) {
-		return StringUtils.normalize(pathname).
-				replace("- ","-").
-				replace(" -","-").
-				replace(" ","_");
 	}
 
 
