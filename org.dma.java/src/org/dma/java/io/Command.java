@@ -6,6 +6,7 @@
 package org.dma.java.io;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -38,6 +39,14 @@ public class Command {
 		builder=new ProcessBuilder(command);
 		//redirect errors to standard output
 		builder.redirectErrorStream(true);
+	}
+
+
+	/** @see ProcessBuilder#directory(File) */
+	public void setDirectory(File directory) {
+
+		builder.directory(directory);
+
 	}
 
 
@@ -82,6 +91,23 @@ public class Command {
 	@Override
 	public String toString() {
 		return builder.command().toString();
+	}
+
+
+	public static void main(String[] argvs) throws Exception {
+
+		FileParameters parameters=new FileParameters("new image", "jpg", "c:\\tmp");
+		//create working folder
+		new FolderHandler(parameters.folder).create();
+		//create empty image
+		new ByteFileHandler(parameters.toFile()).write(new byte[0]);
+
+		Command cmd=new Command("mspaint", parameters.filename);
+		cmd.setDirectory(parameters.folder);
+		cmd.setVariable("VAR", "value");
+		//execute command
+		if (cmd.startAndWait()!=0) throw new Exception(cmd.toString());
+
 	}
 
 
