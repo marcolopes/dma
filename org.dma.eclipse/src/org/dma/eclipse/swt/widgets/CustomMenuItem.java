@@ -48,12 +48,11 @@ public class CustomMenuItem extends MenuItem {
 	 * Selection
 	 */
 	public void setSelectionAction(final IAction action) {
-		this.selectionAction=action;
-		setEnabled(action); //synchronize states
+		action.setEnabled(isEnabled()); //synchronize states
 		action.addPropertyChangeListener(new IPropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent event) {
-				setEnabled(action);
+				setEnabled(action.isEnabled());
 			}
 		});
 		addSelectionListener(new SelectionAdapter() {
@@ -62,20 +61,13 @@ public class CustomMenuItem extends MenuItem {
 				selectionAction.run();
 			}
 		});
+		this.selectionAction=action;
 	}
 
 	@Override
 	public void setEnabled(boolean enabled) {
-		if (selectionAction!=null){
-			//super.setEnabled triggered by action
-			selectionAction.setEnabled(enabled);
-		}else{
-			super.setEnabled(enabled);
-		}
-	}
-
-	private void setEnabled(IAction action) {
-		super.setEnabled(action.isEnabled());
+		if (selectionAction!=null) selectionAction.setEnabled(enabled);
+		super.setEnabled(enabled);
 	}
 
 	public IAction getSelectionAction() {

@@ -59,7 +59,7 @@ public class CustomMessageDialog extends MessageDialog {
 
 		public boolean open(final String header, final String message, final Font messageFont) {
 
-			if (header!=null && message!=null) try{
+			if (!header.isEmpty() || !message.isEmpty()) try{
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
 						MessageDialog dialog=new CustomMessageDialog(Display.getDefault().getActiveShell(),

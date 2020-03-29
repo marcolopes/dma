@@ -10,8 +10,7 @@ import org.dma.java.util.MessageList;
 public class GenericDialog {
 
 	public static boolean open(CustomMessageDialog.TYPE type, MessageList message) {
-		//do NOT open empty messages
-		return open(type, message.isEmpty() ? null : message.toString());
+		return open(type, message.toString());
 	}
 
 	public static boolean open(CustomMessageDialog.TYPE type, String message) {
@@ -19,8 +18,7 @@ public class GenericDialog {
 	}
 
 	public static boolean open(CustomMessageDialog.TYPE type, String header, MessageList message) {
-		//do NOT open empty messages
-		return open(type, header, message.isEmpty() ? null : message.toString());
+		return open(type, header, message.toString());
 	}
 
 	public static boolean open(CustomMessageDialog.TYPE type, String header, String message) {
