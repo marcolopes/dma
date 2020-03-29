@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class Command {
 
@@ -50,12 +49,17 @@ public class Command {
 	}
 
 
-	/** value=null to remove var */
-	public void setVariable(String var, String value) {
+	public String removeVariable(String name) {
 
-		Map<String, String> env=builder.environment();
-		env.put(var, value);
-		if (value==null || value.isEmpty()) env.remove(var);
+		return builder.environment().remove(name);
+
+	}
+
+
+	/** value=null to remove var */
+	public String setVariable(String name, String value) {
+
+		return value==null ? removeVariable(name) : builder.environment().put(name, value);
 
 	}
 

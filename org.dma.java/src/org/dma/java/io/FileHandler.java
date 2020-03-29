@@ -37,8 +37,9 @@ public class FileHandler {
 	/** Replaces accented and illegal characters */
 	public static String normalize(String filename) {
 		String plain=StringUtils.unaccent(filename).
-				replace('\\','-').replace('/','-').replace('|','-').
-				replace(' ','_').replace("__","_").replace("--","-");
+				replace("  "," ").replace(" -","-").replace("- ","-").
+				replace('\\','-').replace('/','-').replace('|','-').replace("--","-").
+				replace(' ','_').replace("__","_");
 		return StringUtils.removeChars(plain,"<>:?*\"\n\r\t\f\0");
 	}
 
