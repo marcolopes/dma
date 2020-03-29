@@ -140,7 +140,7 @@ public enum DRIVERS {
 		case PostgreSQL: cmd.setVariable("PGPASSWORD", password); break;
 		}
 		Debug.out("BACKUP COMMAND: "+cmd);
-		//executes command
+		//execute command
 		if (cmd.startAndWait()!=0) throw new Exception(cmd.toString());
 	}
 
