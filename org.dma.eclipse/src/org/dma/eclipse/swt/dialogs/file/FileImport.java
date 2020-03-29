@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -29,7 +29,7 @@ public class FileImport extends FileDialog {
 
 	/** @see FileDialog#setFilterExtensions(String[]) */
 	public FileImport(Shell parent, String...extensions) {
-		super(parent, SWT.OPEN);
+		super(parent, SWT.OPEN | SWT.MULTI);
 		setFilterExtensions(extensions);
 		Debug.out("extensions: "+Arrays.asList(extensions));
 	}
