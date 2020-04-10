@@ -28,11 +28,11 @@ public final class PublicServerTime {
 		for (String host : hosts) {
 
 			try{
-                InetAddress hostAddr = InetAddress.getByName(host);
-                Debug.out("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
-                TimeInfo info = client.getTime(hostAddr);
-                Date date = new Date(info.getReturnTime());
-                return date;
+				InetAddress hostAddr = InetAddress.getByName(host);
+				Debug.out("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
+				TimeInfo info = client.getTime(hostAddr);
+				Date date = new Date(info.getReturnTime());
+				return date;
 
 			}catch(IOException e) {
 				e.printStackTrace();
