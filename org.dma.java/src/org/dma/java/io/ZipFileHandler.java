@@ -28,9 +28,9 @@ public class ZipFileHandler extends FileHandler {
 		for(File file: filesToAdd){
 			ZipEntry entry=new ZipEntry(file.getName());
 			entry.setMethod(method);
-            out.putNextEntry(entry);
-            out.write(new ByteFileHandler(file).read());
-            out.closeEntry();
+			out.putNextEntry(entry);
+			out.write(new ByteFileHandler(file).read());
+			out.closeEntry();
 		}
 
 		out.close();
