@@ -37,6 +37,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
+import org.eclipse.ui.internal.PerspectiveBarManager;
+import org.eclipse.ui.internal.WorkbenchPage;
+import org.eclipse.ui.internal.WorkbenchWindow;
 
 /**
  * The term used to represent the entire UI is workbench.
@@ -72,11 +75,10 @@ import org.eclipse.ui.help.IWorkbenchHelpSystem;
  */
 public class UIHelper {
 
-	@SuppressWarnings("restriction")
 	public static ToolBar getPerspectiveToolBar() {
 		try{
-			org.eclipse.ui.internal.WorkbenchWindow workbenchWindow=(org.eclipse.ui.internal.WorkbenchWindow)getWorkbenchWindow();
-			org.eclipse.ui.internal.PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
+			WorkbenchWindow workbenchWindow=(WorkbenchWindow)getWorkbenchWindow();
+			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
 			return manager.getControl();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -315,9 +317,8 @@ public class UIHelper {
 		getActivePage().hideView(view);
 	}
 
-	@SuppressWarnings("restriction")
 	public static void detachView(IViewPart view) {
-		org.eclipse.ui.internal.WorkbenchPage page=(org.eclipse.ui.internal.WorkbenchPage)view.getViewSite().getPage();
+		WorkbenchPage page=(WorkbenchPage)view.getViewSite().getPage();
 		page.detachView(findViewReference(view.getViewSite().getId(), view.getViewSite().getSecondaryId()));
 	}
 
