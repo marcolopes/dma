@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -19,14 +19,6 @@ public class FieldProperties implements IFieldProperties {
 		return NumericUtils.bit(this.properties, properties);
 	}
 
-	public boolean isUppercase() {
-		return is(UPPERCASE);
-	}
-
-	public boolean isLowercase() {
-		return is(LOWERCASE);
-	}
-
 	public boolean isDigits() {
 		return is(DIGITS);
 	}
@@ -35,16 +27,20 @@ public class FieldProperties implements IFieldProperties {
 		return is(LETTERS);
 	}
 
-	public boolean isSeparators() {
-		return is(SEPARATORS);
-	}
-
 	public boolean isPositive() {
 		return is(POSITIVE);
 	}
 
 	public boolean isNoSpaces() {
 		return is(NOSPACES);
+	}
+
+	public boolean isUppercase() {
+		return is(UPPERCASE);
+	}
+
+	public boolean isLowercase() {
+		return is(LOWERCASE);
 	}
 
 }
