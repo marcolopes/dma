@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -8,44 +8,6 @@ package org.dma.java.math;
 import java.math.BigDecimal;
 
 public class NumericUtils {
-
-	/*
-	 * Conversion
-	 */
-	public static String toString(int value){
-
-		return String.valueOf(value);
-
-	}
-
-
-	public static String toString(BigDecimal value) {
-
-		return value == null ? "" : value.toString();
-
-	}
-
-
-	public static char chr(int value) {
-
-		return (char)value;
-
-	}
-
-
-	public static BigDecimal value(String value) {
-
-		try{
-			return new BigDecimal(value);
-
-		}catch(NumberFormatException e){}
-
-		return BigDecimal.ZERO;
-
-	}
-
-
-
 
 	/*
 	 * Operations
@@ -117,13 +79,6 @@ public class NumericUtils {
 	public static boolean isZero(BigDecimal value) {
 
 		return value.signum() == 0;
-
-	}
-
-
-	public static boolean isZero(String value) {
-
-		return isZero(value(value));
 
 	}
 

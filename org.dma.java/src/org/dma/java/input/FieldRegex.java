@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -46,8 +46,6 @@ public class FieldRegex extends FieldProperties {
 			if (isDigits()) range+="0-9 ";
 			//allows letters
 			if (isLetters()) range+="a-zA-Z ";
-			//allows separators
-			if (isSeparators()) range+="\\-/";
 			//default (digits and letters)
 			if (range.isEmpty()) range+=(char)0+"-"+(char)65535;
 			//character set
