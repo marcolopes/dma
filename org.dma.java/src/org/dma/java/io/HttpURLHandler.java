@@ -18,18 +18,21 @@ public class HttpURLHandler extends URLHandler {
 
 	public boolean ping(int timeout) {
 
-		HttpURLConnection connection=null;
-
 		try{
-			connection=(HttpURLConnection)url.openConnection();
-			connection.setRequestMethod("HEAD");
-			connection.setConnectTimeout(timeout);
-			return connection.getResponseCode()!=HttpURLConnection.HTTP_NOT_FOUND;
+			HttpURLConnection connection=(HttpURLConnection)url.openConnection();
+			if (connection!=null) try{
+				connection.setRequestMethod("HEAD");
+				connection.setConnectTimeout(timeout);
+				return connection.getResponseCode()!=HttpURLConnection.HTTP_NOT_FOUND;
+
+			}catch(Exception e){
+				System.err.println(e);
+			}finally{
+				connection.disconnect();
+			}
 
 		}catch(Exception e){
 			System.err.println(e);
-		}finally{
-			if(connection!=null) connection.disconnect();
 		}return false;
 
 	}
@@ -39,18 +42,21 @@ public class HttpURLHandler extends URLHandler {
 	/** @see HttpURLConnection */
 	public boolean check(int status) {
 
-		HttpURLConnection connection=null;
-
 		try{
-			connection=(HttpURLConnection)url.openConnection();
-			connection.setRequestMethod("HEAD");
-			connection.setInstanceFollowRedirects(false);
-			return connection.getResponseCode()==status;
+			HttpURLConnection connection=(HttpURLConnection)url.openConnection();
+			if (connection!=null) try{
+				connection.setRequestMethod("HEAD");
+				connection.setInstanceFollowRedirects(false);
+				return connection.getResponseCode()==status;
+
+			}catch(Exception e){
+				System.err.println(e);
+			}finally{
+				connection.disconnect();
+			}
 
 		}catch(Exception e){
 			System.err.println(e);
-		}finally{
-			if(connection!=null) connection.disconnect();
 		}return false;
 
 	}
@@ -58,27 +64,30 @@ public class HttpURLHandler extends URLHandler {
 
 	public boolean isAuthValid(final String key) {
 
-		HttpURLConnection connection=null;
-
 		try{
-			connection=(HttpURLConnection)url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Content-Type", "application/xml");
-		    connection.setRequestProperty("Authorization",
-		    		"Basic "+new String(new Base64(0).encode(key.getBytes())));
-		    /* AVOID Authenticator mayhem at ALL COST!
-			Authenticator.setDefault(new Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(key, new char[0]);
-				}
-			});
-			*/
-			return connection.getResponseCode()==HttpURLConnection.HTTP_OK;
+			HttpURLConnection connection=(HttpURLConnection)url.openConnection();
+			if (connection!=null) try{
+				connection.setRequestMethod("GET");
+				connection.setRequestProperty("Content-Type", "application/xml");
+				connection.setRequestProperty("Authorization",
+						"Basic "+new String(new Base64(0).encode(key.getBytes())));
+				/* AVOID Authenticator mayhem at ALL COST!
+				Authenticator.setDefault(new Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(key, new char[0]);
+					}
+				});
+				*/
+				return connection.getResponseCode()==HttpURLConnection.HTTP_OK;
+
+			}catch(Exception e){
+				System.err.println(e);
+			}finally{
+				connection.disconnect();
+			}
 
 		}catch(Exception e){
 			System.err.println(e);
-		}finally{
-			if(connection!=null) connection.disconnect();
 		}return false;
 
 	}

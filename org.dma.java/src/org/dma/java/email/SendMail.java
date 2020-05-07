@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -33,7 +33,7 @@ public class SendMail {
 		Debug.err(recipients.getTo());
 		Debug.err(subject);
 
-		CustomHtmlEmail email=new CustomHtmlEmail(server, Debug.STATUS);
+		CustomHtmlEmail email=new CustomHtmlEmail(server, attachment.length==0);
 
 		email.setFrom(from);
 		email.addTo(recipients.getTo());
@@ -63,7 +63,7 @@ public class SendMail {
 		Debug.err(recipients.getTo());
 		Debug.err(subject);
 
-		CustomHtmlEmail email=new CustomHtmlEmail(server, Debug.STATUS);
+		CustomHtmlEmail email=new CustomHtmlEmail(server, attachment.length==0);
 
 		email.setFrom(from);
 		email.addTo(recipients.getTo());

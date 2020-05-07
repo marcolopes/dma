@@ -47,6 +47,10 @@ public class ErrorList {
 		errors.add(message);
 	}
 
+	public void addError(Exception e) {
+		errors.add(e);
+	}
+
 	public MessageList errors() {
 		return errors;
 	}
@@ -61,6 +65,10 @@ public class ErrorList {
 
 	public void addWarning(String message) {
 		warnings.add(message);
+	}
+
+	public void addWarning(Exception e) {
+		warnings.add(e);
 	}
 
 	public MessageList warnings() {
