@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -403,7 +403,7 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> T[] remove(T[] array, int...index) {
+	public static <T> T[] remove(T[] array, Integer...index) {
 
 		List<T> result=new ArrayList(Arrays.asList(array));
 
@@ -430,9 +430,9 @@ public class ArrayUtils {
 	}
 
 
-	public static <T> T[] index(T[] array, int...index) {
+	public static <T> T[] index(T[] array, Integer...index) {
 
-		List<T> result=CollectionUtils.index(Arrays.asList(array), index);
+		List<T> result=CollectionUtils.index(Arrays.asList(array), Arrays.asList(index));
 
 		return CollectionUtils.toArray(result);
 
