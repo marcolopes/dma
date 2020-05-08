@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -271,10 +271,10 @@ public class CollectionUtils {
 	}
 
 
-	public static <T> List<T> index(List<T> col, int...index) {
+	public static <T> List<T> index(List<T> col, List<Integer> index) {
 
 		//ensure exact capacity
-		List<T> result=new ArrayList(index.length);
+		List<T> result=new ArrayList(index.size());
 
 		for(int i: index){
 			result.add(col.get(i));
