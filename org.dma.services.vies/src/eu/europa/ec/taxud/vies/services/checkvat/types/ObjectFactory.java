@@ -24,10 +24,10 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CheckVatResponseName_QNAME = new QName("urn:ec.europa.eu:taxud:vies:services:checkVat:types", "name");
-    private final static QName _CheckVatResponseAddress_QNAME = new QName("urn:ec.europa.eu:taxud:vies:services:checkVat:types", "address");
     private final static QName _CheckVatApproxResponseTraderCompanyType_QNAME = new QName("urn:ec.europa.eu:taxud:vies:services:checkVat:types", "traderCompanyType");
     private final static QName _CheckVatApproxResponseTraderName_QNAME = new QName("urn:ec.europa.eu:taxud:vies:services:checkVat:types", "traderName");
+    private final static QName _CheckVatResponseName_QNAME = new QName("urn:ec.europa.eu:taxud:vies:services:checkVat:types", "name");
+    private final static QName _CheckVatResponseAddress_QNAME = new QName("urn:ec.europa.eu:taxud:vies:services:checkVat:types", "address");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: eu.europa.ec.taxud.vies.services.checkvat.types
@@ -72,24 +72,6 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", name = "name", scope = CheckVatResponse.class)
-    public JAXBElement<String> createCheckVatResponseName(String value) {
-        return new JAXBElement<String>(_CheckVatResponseName_QNAME, String.class, CheckVatResponse.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", name = "address", scope = CheckVatResponse.class)
-    public JAXBElement<String> createCheckVatResponseAddress(String value) {
-        return new JAXBElement<String>(_CheckVatResponseAddress_QNAME, String.class, CheckVatResponse.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
     @XmlElementDecl(namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", name = "traderCompanyType", scope = CheckVatApproxResponse.class)
     public JAXBElement<String> createCheckVatApproxResponseTraderCompanyType(String value) {
         return new JAXBElement<String>(_CheckVatApproxResponseTraderCompanyType_QNAME, String.class, CheckVatApproxResponse.class, value);
@@ -102,6 +84,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", name = "traderName", scope = CheckVatApproxResponse.class)
     public JAXBElement<String> createCheckVatApproxResponseTraderName(String value) {
         return new JAXBElement<String>(_CheckVatApproxResponseTraderName_QNAME, String.class, CheckVatApproxResponse.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", name = "name", scope = CheckVatResponse.class)
+    public JAXBElement<String> createCheckVatResponseName(String value) {
+        return new JAXBElement<String>(_CheckVatResponseName_QNAME, String.class, CheckVatResponse.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", name = "address", scope = CheckVatResponse.class)
+    public JAXBElement<String> createCheckVatResponseAddress(String value) {
+        return new JAXBElement<String>(_CheckVatResponseAddress_QNAME, String.class, CheckVatResponse.class, value);
     }
 
 }

@@ -76,9 +76,9 @@ public class CheckVatApproxResponse {
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar requestDate;
     protected boolean valid;
-    @XmlElementRef(name = "traderName", namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", type = JAXBElement.class)
+    @XmlElementRef(name = "traderName", namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", type = JAXBElement.class, required = false)
     protected JAXBElement<String> traderName;
-    @XmlElementRef(name = "traderCompanyType", namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", type = JAXBElement.class)
+    @XmlElementRef(name = "traderCompanyType", namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", type = JAXBElement.class, required = false)
     protected JAXBElement<String> traderCompanyType;
     protected String traderAddress;
     protected String traderStreet;
