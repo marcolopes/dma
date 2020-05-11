@@ -56,9 +56,9 @@ public class CheckVatResponse {
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar requestDate;
     protected boolean valid;
-    @XmlElementRef(name = "name", namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", type = JAXBElement.class)
+    @XmlElementRef(name = "name", namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", type = JAXBElement.class, required = false)
     protected JAXBElement<String> name;
-    @XmlElementRef(name = "address", namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", type = JAXBElement.class)
+    @XmlElementRef(name = "address", namespace = "urn:ec.europa.eu:taxud:vies:services:checkVat:types", type = JAXBElement.class, required = false)
     protected JAXBElement<String> address;
 
     /**
