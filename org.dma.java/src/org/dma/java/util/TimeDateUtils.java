@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -56,26 +56,36 @@ public class TimeDateUtils {
 	/*
 	 * Date
 	 */
-	public static final String DATE_YEAR_PATTERN = String.valueOf(new char[]{JAVA_YEAR,JAVA_YEAR,JAVA_YEAR,JAVA_YEAR});
-	public static final String DATE_MONTH_PATTERN = String.valueOf(new char[]{JAVA_MONTH,JAVA_MONTH});
-	public static final String DATE_DAY_PATTERN = String.valueOf(new char[]{JAVA_DAY_OF_MONTH,JAVA_DAY_OF_MONTH});
+	/** yyyy */
+	public static final String DATE_YEAR_PATTERN = String.valueOf(new char[]{JAVA_YEAR, JAVA_YEAR, JAVA_YEAR,JAVA_YEAR});
+	/** MM */
+	public static final String DATE_MONTH_PATTERN = String.valueOf(new char[]{JAVA_MONTH, JAVA_MONTH});
+	/** dd */
+	public static final String DATE_DAY_PATTERN = String.valueOf(new char[]{JAVA_DAY_OF_MONTH, JAVA_DAY_OF_MONTH});
 
 	public static final char DEFAULT_DATE_SEPARATOR = '-';
-	public static final String DEFAULT_DATE_PATTERN = DATE_DAY_PATTERN+DEFAULT_DATE_SEPARATOR+DATE_MONTH_PATTERN+DEFAULT_DATE_SEPARATOR+DATE_YEAR_PATTERN;
+	/** dd-MM-yyyy */
+	public static final String DEFAULT_DATE_PATTERN = DATE_DAY_PATTERN + DEFAULT_DATE_SEPARATOR + DATE_MONTH_PATTERN + DEFAULT_DATE_SEPARATOR + DATE_YEAR_PATTERN;
 
 	/*
 	 * Time
 	 */
 	public static final long MILLISECOND_PER_DAY = 60 * 60 * 24 * 1000;
-	public static final String TIME_HOUR_PATTERN = String.valueOf(new char[]{JAVA_HOUR_IN_DAY24,JAVA_HOUR_IN_DAY24});
-	public static final String TIME_MINUTE_PATTERN = String.valueOf(new char[]{JAVA_MINUTE,JAVA_MINUTE});
-	public static final String TIME_SECOND_PATTERN = String.valueOf(new char[]{JAVA_SECOND,JAVA_SECOND});
-	public static final String TIME_MILISECOND_PATTERN = String.valueOf(new char[]{JAVA_MILLISECOND,JAVA_MILLISECOND,JAVA_MILLISECOND});
+	/** HH */
+	public static final String TIME_HOUR_PATTERN = String.valueOf(new char[]{JAVA_HOUR_IN_DAY24, JAVA_HOUR_IN_DAY24});
+	/** mm */
+	public static final String TIME_MINUTE_PATTERN = String.valueOf(new char[]{JAVA_MINUTE, JAVA_MINUTE});
+	/** ss */
+	public static final String TIME_SECOND_PATTERN = String.valueOf(new char[]{JAVA_SECOND, JAVA_SECOND});
+	/** SS */
+	public static final String TIME_MILISECOND_PATTERN = String.valueOf(new char[]{JAVA_MILLISECOND, JAVA_MILLISECOND, JAVA_MILLISECOND});
 
 	public static final char DEFAULT_TIME_SEPARATOR = ':';
-	public static final String DEFAULT_TIME_PATTERN = TIME_HOUR_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_MINUTE_PATTERN;
-	public static final String DEFAULT_TIMESTAMP_PATTERN = DATE_YEAR_PATTERN+DEFAULT_DATE_SEPARATOR+DATE_MONTH_PATTERN+DEFAULT_DATE_SEPARATOR+DATE_DAY_PATTERN+";"+
-			TIME_HOUR_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_MINUTE_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_SECOND_PATTERN+DEFAULT_TIME_SEPARATOR+TIME_MILISECOND_PATTERN;
+	/** HH:mm */
+	public static final String DEFAULT_TIME_PATTERN = TIME_HOUR_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MINUTE_PATTERN;
+	/** yyyy-MM-dd;HH:mm:ss:SS */
+	public static final String DEFAULT_TIMESTAMP_PATTERN = DATE_YEAR_PATTERN + DEFAULT_DATE_SEPARATOR + DATE_MONTH_PATTERN + DEFAULT_DATE_SEPARATOR + DATE_DAY_PATTERN+";"+
+			TIME_HOUR_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MINUTE_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_SECOND_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MILISECOND_PATTERN;
 
 	/*
 	 * Validation
@@ -138,6 +148,12 @@ public class TimeDateUtils {
 
 
 	/** Date formatted with {@link #DEFAULT_DATE_PATTERN} */
+	public static String getDateFormatted() {
+		return getDateFormatted(getCurrentDate());
+	}
+
+
+	/** Date formatted with {@link #DEFAULT_DATE_PATTERN} */
 	public static String getDateFormatted(Date date) {
 		return getDateFormatted(date, DEFAULT_DATE_PATTERN);
 	}
@@ -154,6 +170,12 @@ public class TimeDateUtils {
 
 		}catch(Exception e){}
 		return null;
+	}
+
+
+	/** Time formatted with {@link #DEFAULT_TIME_PATTERN} */
+	public static String getTimeFormatted() {
+		return getTimeFormatted(getCurrentTime());
 	}
 
 
