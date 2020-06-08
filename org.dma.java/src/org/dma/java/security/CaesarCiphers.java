@@ -5,7 +5,6 @@
  *******************************************************************************/
 package org.dma.java.security;
 
-
 public class CaesarCiphers {
 
 	private final String message;
