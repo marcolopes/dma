@@ -98,9 +98,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 
 
-	/**
-	 * Debug
-	 */
+	/** Debug */
 	public void print() {
 		if (!Debug.STATUS) return;
 		System.out.println("---PROGRESS SUPPORT---");
