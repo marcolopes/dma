@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -58,14 +58,14 @@ public class VatNumber {
 
 	public VatNumber(COUNTRIES country, String vatNumber) {
 		this.country=country;
-		this.number=parse(country, vatNumber);
+		this.number=country==null ? vatNumber : parse(country, vatNumber);
 	}
 
 	public boolean isValid() {
-		switch(country){
+		if (country!=null) switch(country){
 		default: return true;
 		case PT: return CheckDigit.PT(number);
-		}
+		}return false;
 	}
 
 	public CheckVatResult query() {
