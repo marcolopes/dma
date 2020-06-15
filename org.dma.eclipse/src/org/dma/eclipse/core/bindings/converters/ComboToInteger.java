@@ -18,7 +18,7 @@ public class ComboToInteger extends CustomConverter {
 	@Override
 	public Integer convert(Object fromObject) {
 		for(int i=0; i<elements.length; i++){
-			if(elements[i].equals(fromObject)) return Integer.valueOf(i);
+			if(elements[i].equals(fromObject)) return i;
 		}return 0;
 	}
 

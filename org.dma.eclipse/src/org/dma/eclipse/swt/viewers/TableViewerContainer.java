@@ -39,7 +39,6 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 
 	public TableViewerContainer(TableViewer viewer, int direction) {
 		super(viewer.getTable(), direction);
-
 		this.viewer=viewer;
 		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
 		this.viewer.setInput(objectCollection);
