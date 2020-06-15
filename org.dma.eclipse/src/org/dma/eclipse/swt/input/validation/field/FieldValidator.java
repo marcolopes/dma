@@ -199,9 +199,7 @@ public abstract class FieldValidator implements IValidator {
 
 		for(FieldBinding binding: validatorMap.values()){
 			if(binding.hasError()) return true;
-		}
-
-		return false;
+		}return false;
 
 	}
 

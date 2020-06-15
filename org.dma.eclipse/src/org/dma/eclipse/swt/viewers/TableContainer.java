@@ -55,7 +55,6 @@ public abstract class TableContainer {
 	 */
 	public TableContainer(Table table, int direction) {
 		this.table=table;
-
 		if (direction==SWT.UP || direction==SWT.DOWN) addSortColumnSupport(direction);
 		addTableListeners();
 	}

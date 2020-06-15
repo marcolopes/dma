@@ -180,9 +180,7 @@ public abstract class TableValidator<T> implements IValidator {
 
 		for(ColumnBinding binding: validatorMap.values()){
 			if(binding.hasError()) return true;
-		}
-
-		return false;
+		}return false;
 
 	}
 
