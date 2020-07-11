@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -83,6 +83,7 @@ public class JKSCertificate {
 			this.keyStore.load(new ByteArrayInputStream(keystore), password==null ? null : password.toCharArray());
 			this.alias=alias==null ? keyStore.aliases().nextElement() : alias;
 			this.X509Cert=(X509Certificate)keyStore.getCertificate(this.alias);
+			if (X509Cert==null) throw new KeyStoreException("Alias not found: "+alias);
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -105,8 +106,7 @@ public class JKSCertificate {
 
 	public PrivateKey getPrivateKey() throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException {
 		KeyStore keyStore=getKeyStore(); // check
-		return (PrivateKey)keyStore.getKey(alias,
-				password==null ? null : password.toCharArray());
+		return (PrivateKey)keyStore.getKey(alias, password==null ? null : password.toCharArray());
 	}
 
 
@@ -137,8 +137,7 @@ public class JKSCertificate {
 
 	/** Returns X509 Certificate days left */
 	public long daysToExpire() {
-		return X509Cert==null ? 0 :
-			TimeDateUtils.getDaysBetween(new Date(), X509Cert.getNotAfter());
+		return X509Cert==null ? 0 : TimeDateUtils.getDaysBetween(new Date(), X509Cert.getNotAfter());
 	}
 
 
