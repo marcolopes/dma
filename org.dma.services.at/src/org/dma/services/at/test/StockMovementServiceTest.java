@@ -80,12 +80,12 @@ public class StockMovementServiceTest {
 			StockMovementServiceHandler handler=new StockMovementServiceHandler(
 				//Service Username / Password
 				RequesterTaxID+"/0037", "testes1234",
-				//Scheme Administrator Certificate - BUG? implementacao AT nao aceita chave de testes
-				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod"),
+				//Scheme Administrator Certificate
+				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
 				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebservices.pfx", "TESTEwebservice"),
+				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
 				//Trusted Store Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/TrustStoreAT.jks", "123456", "portaldasfinancas"),
+				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
 				//Endpoint address
 				ENDPOINTS.TESTES);
 
