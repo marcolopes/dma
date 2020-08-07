@@ -46,8 +46,8 @@ import org.dma.java.cipher.CryptoCipher.CIPHERS;
 import org.dma.java.cipher.MessageDigest;
 import org.dma.java.cipher.MessageDigest.ALGORITHMS;
 import org.dma.java.cipher.RSAPublicCipher;
-import org.dma.java.io.NTPServerHandler.NTPTimeInfo;
-import org.dma.java.io.NTPServerHandler.NTP_SERVERS;
+import org.dma.java.net.NTPServerHandler.NTPTimeInfo;
+import org.dma.java.net.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.util.Debug;
 /**
