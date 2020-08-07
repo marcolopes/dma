@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.io;
+package org.dma.java.net;
 
 import java.net.HttpURLConnection;
 
@@ -36,7 +36,6 @@ public class HttpURLHandler extends URLHandler {
 		}return false;
 
 	}
-
 
 
 	/** @see HttpURLConnection */

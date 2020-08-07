@@ -22,16 +22,14 @@ public class ServerParameters {
 		public static final String[] NAMES = ArrayUtils.toStringArray(values());
 
 		public static SECURITY get(String name) {
-			try{
-				return valueOf(name);
-			}catch(Exception e){}
+			try{return valueOf(name);}
+			catch(Exception e){}
 			return NONE;
 		}
 
 		public static SECURITY get(int security) {
-			try{
-				return values()[security];
-			}catch(Exception e){}
+			try{return values()[security];}
+			catch(Exception e){}
 			return NONE;
 		}
 

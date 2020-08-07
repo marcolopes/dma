@@ -4,7 +4,7 @@
  * Sergio Gomes (sergiogomes@projectocolibri.com)
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.io;
+package org.dma.java.net;
 
 import java.net.InetAddress;
 import java.net.URL;
@@ -47,6 +47,11 @@ public class URLHandler {
 
 	public boolean isValid() {
 		return !urlname.isEmpty() && URL_PATTERN.matcher(urlname).matches();
+	}
+
+	@Override
+	public String toString() {
+		return urlname;
 	}
 
 
