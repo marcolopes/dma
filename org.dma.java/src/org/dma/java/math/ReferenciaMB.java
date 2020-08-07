@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public class ReferenciaMB {
 
-	/** Maximo VALOR a pagar = 999999.99 */
+	/** Valor MAXIMO a pagar = 999999.99 */
 	public final static BigDecimal VALOR_MAX = new BigDecimal("999999.99");
 
 	public final String entidade;
@@ -101,7 +101,8 @@ public class ReferenciaMB {
 	 * @return TRUE caso o VALOR a pagar seja valido
 	 * <p>
 	 * O VALOR a pagar e' considerado valido quando:<br>
-	 * - Nao ultrapasse o valor maximo permitido: {@link #VALOR_MAX}<br>
+	 * - Seja superior a ZERO<br>
+	 * - Nao seja superior a {@link #VALOR_MAX}<br>
 	 * - A parte fraccionaria nao necessite de mais de 2 digitos<br>
 	 */
 	public boolean isValid(BigDecimal valor) {

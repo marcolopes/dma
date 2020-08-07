@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.io;
+package org.dma.java.net;
 
 import java.net.InetAddress;
 import java.util.Date;
@@ -45,7 +45,7 @@ public class NTPServerHandler {
 
 		public String[] hosts;
 
-		private NTP_SERVERS(String...hosts){
+		private NTP_SERVERS(String...hosts) {
 			this.hosts=hosts;
 		}
 
