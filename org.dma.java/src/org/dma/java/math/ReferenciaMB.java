@@ -107,7 +107,7 @@ public class ReferenciaMB {
 	 */
 	public boolean isValid(BigDecimal valor) {
 
-		if (valor.compareTo(VALOR_MAX)<=0) try{
+		if (valor.signum()>0 && valor.compareTo(VALOR_MAX)<=0) try{
 			valor.movePointRight(2).intValueExact();
 
 		}catch(Exception e){
