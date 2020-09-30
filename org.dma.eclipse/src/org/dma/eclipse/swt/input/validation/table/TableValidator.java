@@ -76,7 +76,7 @@ public abstract class TableValidator<T> implements IValidator {
 
 		ColumnBinding binding=new ColumnBinding(text, fieldFormat, label){
 			@Override
-			public String processErrorMessage(String message, String label) {
+			public String processError(String message, String label) {
 				return TableValidator.this.processError(message, label);
 			}
 		};
@@ -90,7 +90,7 @@ public abstract class TableValidator<T> implements IValidator {
 
 		ColumnBinding binding=new ColumnBinding(text, label){
 			@Override
-			public String processErrorMessage(String message, String label) {
+			public String processError(String message, String label) {
 				return TableValidator.this.processError(message, label);
 			}
 		};
@@ -191,7 +191,7 @@ public abstract class TableValidator<T> implements IValidator {
 		String errorMessage="";
 
 		for(ColumnBinding binding: validatorMap.values()){
-			if(binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getErrorMessage();
+			if(binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getError();
 		}
 
 		return errorMessage;

@@ -109,49 +109,44 @@ public abstract class FieldBinding extends FieldError {
 		enabled=!rules.isNotEditable(edited) && !rules.isReadOnly();
 
 		//rules applied only if ENABLED
-		if (!enabled) return;
+		if (enabled){
 
-		//SPINNER
-		if (control instanceof Spinner){
-			//is zero?
-			if (rules.isNotZero() && getText().trim().equals("0")) setError(ERRORS.IS_ZERO);
-		}
-		//CCOMBO
-		else if (control instanceof CCombo){
-			//has no elements?
-			if (rules.isNotEmpty() && getCCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
-			//has no selected elements?
-			if (rules.isNotZero() && getCCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
-		}
-		//COMBO
-		else if (control instanceof Combo){
-			//has no elements?
-			if (rules.isNotEmpty() && getCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
-			//has no selected elements?
-			if (rules.isNotZero() && getCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
-		}
-		//LIST
-		else if (control instanceof List){
-			//has no elements?
-			if (rules.isNotEmpty() && getList().getItemCount()==0) setError(ERRORS.IS_EMPTY);
-			//has no selected elements?
-			if (rules.isNotZero() && getList().getSelectionCount()==0) setError(ERRORS.IS_ZERO);
-		}
-		//BUTTON
-		else if (control instanceof Button){
-		}
-		//DATETIME
-		else if (control instanceof DateTime){
-		}
-		//TEXT
-		else if (control instanceof Text){
-			String text=getText().trim();
-			//is zero?
-			if (rules.isNotZero() && text.equals("0")) setError(ERRORS.IS_ZERO);
-			//has no chars?
-			if (rules.isNotEmpty() && text.isEmpty()) setError(ERRORS.IS_EMPTY);
-			//length not exact?
-			if (rules.isLimitMatch() && text.length()!=fieldFormat.getSize().size) setError(ERRORS.WRONG_LENGTH);
+			//SPINNER
+			if (control instanceof Spinner){
+				//is zero?
+				if (rules.isNotZero() && getText().trim().equals("0")) setError(ERRORS.IS_ZERO);
+			}//CCOMBO
+			else if (control instanceof CCombo){
+				//has no elements?
+				if (rules.isNotEmpty() && getCCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
+				//has no selected elements?
+				if (rules.isNotZero() && getCCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
+			}//COMBO
+			else if (control instanceof Combo){
+				//has no elements?
+				if (rules.isNotEmpty() && getCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
+				//has no selected elements?
+				if (rules.isNotZero() && getCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
+			}//LIST
+			else if (control instanceof List){
+				//has no elements?
+				if (rules.isNotEmpty() && getList().getItemCount()==0) setError(ERRORS.IS_EMPTY);
+				//has no selected elements?
+				if (rules.isNotZero() && getList().getSelectionCount()==0) setError(ERRORS.IS_ZERO);
+			}//BUTTON
+			else if (control instanceof Button){
+			}//DATETIME
+			else if (control instanceof DateTime){
+			}//TEXT
+			else if (control instanceof Text){
+				String text=getText().trim();
+				//is zero?
+				if (rules.isNotZero() && text.equals("0")) setError(ERRORS.IS_ZERO);
+				//has no chars?
+				if (rules.isNotEmpty() && text.isEmpty()) setError(ERRORS.IS_EMPTY);
+				//length not exact?
+				if (rules.isLimitMatch() && text.length()!=fieldFormat.getSize().size) setError(ERRORS.WRONG_LENGTH);
+			}
 		}
 
 	}
@@ -216,25 +211,19 @@ public abstract class FieldBinding extends FieldError {
 	public String getText() {
 		if (control instanceof Spinner){
 			return getSpinner().getText();
-		}
-		else if (control instanceof CCombo){
+		}else if (control instanceof CCombo){
 			return getCCombo().getText();
-		}
-		else if (control instanceof Combo){
+		}else if (control instanceof Combo){
 			return getCombo().getText();
-		}
-		else if (control instanceof List){
+		}else if (control instanceof List){
 			return getList().getSelection()[0];
-		}
-		else if (control instanceof Button){
+		}else if (control instanceof Button){
 			return getButton().getText();
-		}
-		else if (control instanceof DateTime){
+		}else if (control instanceof DateTime){
 			DateTime dt=getDatetime();
 			return fieldFormat.format(TimeDateUtils.getCalendar(
 					dt.getYear(), dt.getMonth(), dt.getDay()).getTime());
-		}
-		else if (control instanceof Text){
+		}else if (control instanceof Text){
 			Text control=(Text)this.control;
 			return control.getText();
 		}return "";

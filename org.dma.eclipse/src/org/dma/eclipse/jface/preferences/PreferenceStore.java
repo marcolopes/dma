@@ -25,16 +25,14 @@ public class PreferenceStore extends org.eclipse.jface.preference.PreferenceStor
 	}
 
 	public void load() {
-		try{
-			super.load();
+		try{super.load();
 		}catch(IOException e){
 			System.err.println(e);
 		}
 	}
 
 	public void save() {
-		try{
-			super.save();
+		try{super.save();
 		}catch(IOException e){
 			System.err.println(e);
 		}

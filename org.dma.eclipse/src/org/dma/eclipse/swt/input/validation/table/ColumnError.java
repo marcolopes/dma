@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -7,7 +7,7 @@ package org.dma.eclipse.swt.input.validation.table;
 
 public abstract class ColumnError {
 
-	public abstract String processErrorMessage(String message, String label);
+	public abstract String processError(String message, String label);
 
 	private String message;
 
@@ -21,21 +21,20 @@ public abstract class ColumnError {
 	/*
 	 * Message
 	 */
-	public String getErrorMessage() {
-		return processErrorMessage(message==null ? "" : message,
-				label==null ? "" : label);
+	public String getError() {
+		return processError(message==null ? "" : message, label==null ? "" : label);
 	}
 
-	public void setErrorMessage(String message) {
+	public void setError(String message) {
 		this.message=message;
 	}
 
 	public void clearError() {
-		setErrorMessage(null);
+		setError(null);
 	}
 
 	public boolean hasError() {
-		return this.message!=null && !this.message.isEmpty();
+		return message!=null && !message.isEmpty();
 	}
 
 

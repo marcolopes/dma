@@ -77,25 +77,19 @@ public abstract class ColumnBinding extends ColumnError {
 	public String getText() {
 		if (control instanceof Spinner){
 			return getSpinner().getText();
-		}
-		else if (control instanceof CCombo){
+		}else if (control instanceof CCombo){
 			return getCCombo().getText();
-		}
-		else if (control instanceof Combo){
+		}else if (control instanceof Combo){
 			return getCombo().getText();
-		}
-		else if (control instanceof List){
+		}else if (control instanceof List){
 			return getList().getSelection()[0];
-		}
-		else if (control instanceof Button){
+		}else if (control instanceof Button){
 			return getButton().getText();
-		}
-		else if (control instanceof DateTime){
+		}else if (control instanceof DateTime){
 			DateTime dt=getDatetime();
 			return fieldFormat.format(TimeDateUtils.getCalendar(
 					dt.getYear(), dt.getMonth(), dt.getDay()).getTime());
-		}
-		else if (control instanceof Text){
+		}else if (control instanceof Text){
 			Text control=(Text)this.control;
 			return control.getText();
 		}return "";
