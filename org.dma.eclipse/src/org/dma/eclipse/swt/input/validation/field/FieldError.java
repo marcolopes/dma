@@ -39,8 +39,7 @@ public abstract class FieldError  {
 	 * Message
 	 */
 	public String getMessage() {
-		return processError(error, message==null ? "" : message,
-				label==null ? "" : label.getText());
+		return processError(error, message==null ? "" : message, label==null ? "" : label.getText());
 	}
 
 	public void setError(String message) {

@@ -60,6 +60,12 @@ public abstract class CustomStyledText extends StyledText {
 		super.dispose();
 	}
 
+	@Override
+	public void setText(String text) {
+		super.setText(text);
+		doUpdate();
+	}
+
 
 	public void resetTimer() {
 		timer.cancel();
