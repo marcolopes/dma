@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -28,13 +28,11 @@ public class EmailAddress {
 
 
 	public boolean isValid() {
-		try{
+		if (address!=null) try{
 			address.validate();
 			return true;
 
 		}catch(AddressException e){
-		}catch(Exception e){
-			System.err.println(e);
 		}return false;
 	}
 
