@@ -126,10 +126,10 @@ public class ReferenciaMB {
 	 * @throws IllegalArgumentException caso a ENTIDADE nao tenha 5 digitos
 	 * @throws IllegalArgumentException caso o VALOR a pagar seja invalido
 	 */
-	public boolean isValid(String ref, BigDecimal valor) {
+	public boolean isValid(String ref, BigDecimal valor) throws IllegalArgumentException {
 
-		if (!isValid(valor)) throw new IllegalArgumentException("Valor "+valor+" invalido");
 		if (entidade.length()!=5) throw new IllegalArgumentException("Entidade "+entidade+" invalida");
+		if (!isValid(valor)) throw new IllegalArgumentException("Valor "+valor+" invalido");
 
 		String ref9=ref.replaceAll(" ", "");
 		String id7=ref9.substring(0, 7);
@@ -150,17 +150,14 @@ public class ReferenciaMB {
 	 * @throws IllegalArgumentException caso a ENTIDADE nao tenha 5 digitos
 	 * @throws IllegalArgumentException caso o VALOR a pagar seja invalido
 	 *
-	 * @see ReferenciaMB#isValid(BigDecimal)
+	 * @see ReferenciaMB#isValid(String, BigDecimal)
 	 */
-	public ResultadoMB generate(String id, BigDecimal valor) {
-
-		if (entidade.length()!=5) throw new IllegalArgumentException("Entidade "+entidade+" invalida");
-		if (!isValid(valor)) throw new IllegalArgumentException("Valor "+valor+" invalido");
+	public ResultadoMB generate(String id, BigDecimal valor) throws IllegalArgumentException {
 
 		String id7=subentidade + right("0000000"+id, 7-subentidade.length());
 		String ref9=id7 + checkDigits(id7, valor);
 
-		return new ResultadoMB(entidade, ref9, valor);
+		return isValid(ref9, valor) ? new ResultadoMB(entidade, ref9, valor) : null;
 
 	}
 
