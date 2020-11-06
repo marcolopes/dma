@@ -1,15 +1,15 @@
 @echo off
-echo *******************************************************************************
+echo *****************************************************************************
 echo * 2008-2018 Public Domain
 echo * Marco Lopes (marcolopespt@gmail.com)
 echo * https://xmlbeans.apache.org/docs/2.0.0/guide/tools.html
-echo *******************************************************************************
+echo *****************************************************************************
 setlocal
 
 set SCHEMA_FOLDER=.
 if not "%2"=="" set SCHEMA_FOLDER=%2%
 set SOURCE_FOLDER=..\src
-set OUTPUT_FOLDER=%SCHEMA_FOLDER%\output
+set OUTPUT_FOLDER=..\libraries
 set CONFIG_XSD=%SCHEMA_FOLDER%\%1.xsdconfig
 set OUTPUT_JAR=%OUTPUT_FOLDER%\%1.jar
 md %OUTPUT_FOLDER%
