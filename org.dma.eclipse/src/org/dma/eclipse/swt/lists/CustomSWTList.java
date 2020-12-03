@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2015 Public Domain
+ * 2010-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.SystemUtils;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.CollectionUtils;
 import org.dma.java.util.MovableList;
@@ -34,7 +35,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 		List<String> list=new ArrayList(Arrays.asList(getItems()));
 		list.addAll(index, Arrays.asList(array));
 		setItems(CollectionUtils.toArray(list, String.class));
-		deselectAll(); // needed in MAC
+		if (SystemUtils.IS_OS_MAC) deselectAll();
 		select(index, index+array.length-1);
 		showSelection(); // scroll items
 		notifyListeners(SWT.Selection, new Event());
@@ -47,7 +48,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
 		list.remove(indexes);
 		setItems(CollectionUtils.toArray(list, String.class));
-		deselectAll(); // needed in MAC
+		if (SystemUtils.IS_OS_MAC) deselectAll();
 		showSelection(); // scroll items
 		notifyListeners(SWT.Selection, new Event());
 
@@ -59,7 +60,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
 		list.moveTo(position, indexes);
 		setItems(CollectionUtils.toArray(list, String.class));
-		deselectAll(); // needed in MAC
+		if (SystemUtils.IS_OS_MAC) deselectAll();
 		select(position, position+indexes.length-1);
 		showSelection(); // scroll items
 		notifyListeners(SWT.Selection, new Event());
@@ -72,7 +73,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
 		list.moveTo(position, indexes);
 		setItems(CollectionUtils.toArray(list, String.class));
-		deselectAll(); // needed in MAC
+		if (SystemUtils.IS_OS_MAC) deselectAll();
 		select(position, position+indexes.length-1);
 		showSelection(); // scroll items
 		notifyListeners(SWT.Selection, new Event());
