@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import org.apache.commons.lang.SystemUtils;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.ClipboardManager;
 import org.dma.java.util.Debug;
@@ -57,6 +58,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	 */
 	public void refreshTable(boolean updateLabels) {
 		viewer.refresh(updateLabels);
+		if (SystemUtils.IS_OS_MAC) table.redraw();
 	}
 
 	public void refreshTable() {

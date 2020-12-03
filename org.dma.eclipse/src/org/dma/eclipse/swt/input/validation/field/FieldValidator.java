@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -8,6 +8,7 @@ package org.dma.eclipse.swt.input.validation.field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.SystemUtils;
 import org.dma.eclipse.swt.input.validation.IValidationManager;
 import org.dma.eclipse.swt.input.validation.IValidator;
 import org.dma.eclipse.swt.input.validation.ValidationManager;
@@ -76,10 +77,11 @@ public abstract class FieldValidator implements IValidator {
 		if(validatorMap.containsKey(property))
 			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
 
-		//needed in MAC
-		binding.reset();
-		binding.validate(isEdited());
-		binding.update();
+		if (SystemUtils.IS_OS_MAC){
+			binding.reset();
+			binding.validate(isEdited());
+			binding.update();
+		}
 
 		//listeners
 		binding.addFocusListener(new FocusListener() {
