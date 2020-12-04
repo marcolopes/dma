@@ -90,7 +90,7 @@ public class SendMail {
 
 		try{
 			SendMail mail=new SendMail(new ServerParameters(
-					"mail.projectocolibri.com", 25, SECURITY.STARTTLS,
+					"mail.projectocolibri.com", 25, SECURITY.NONE,
 					new PasswordAuthentication("marcolopes@projectocolibri.com", "***")));
 
 			EmailAddress from=new EmailAddress("suporte@projectocolibri.com", "FROM: Projecto Colibri");

@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Utils
 Bundle-SymbolicName: org.dma.java;singleton:=true
-Bundle-Version: 6.11.2.qualifier
+Bundle-Version: 6.11.3.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -15,7 +15,7 @@ Bundle-ClassPath: .,
  libraries/commons/commons-lang-2.6.jar,
  libraries/commons/commons-logging-1.2.jar,
  libraries/commons/commons-net-3.6.jar,
- libraries/commons/javax.mail-1.5.6.jar,
+ libraries/commons/javax.mail-1.6.2.jar,
  libraries/itext/bcprov-jdk14-138.jar,
  libraries/itext/itext-2.1.7.jar,
  libraries/pdfbox/fontbox-1.8.16.jar,
