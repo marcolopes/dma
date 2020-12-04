@@ -11,6 +11,7 @@
 	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-logging-1.2.jar" sourcepath="libraries/commons/commons-logging-1.2-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-net-3.6.jar" sourcepath="libraries/commons/commons-net-3.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/javax.mail-1.6.2.jar" sourcepath="libraries/commons/javax.mail-1.6.2-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons/activation-1.1.1.jar" sourcepath="libraries/commons/activation-1.1.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/itext/bcprov-jdk14-138.jar" sourcepath="libraries/itext/bcprov-jdk14-138-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/itext/itext-2.1.7.jar" sourcepath="libraries/itext/itext-2.1.7-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/fontbox-1.8.16.jar"/>
