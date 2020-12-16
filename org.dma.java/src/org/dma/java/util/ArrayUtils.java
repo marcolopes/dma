@@ -145,7 +145,7 @@ public class ArrayUtils {
 
 	public static int greater(int[] array) {
 
-		if(array.length==0) return 0;
+		if(array.length==0) return -1;
 
 		int result=array[0];
 
@@ -160,7 +160,7 @@ public class ArrayUtils {
 
 	public static int smaller(int[] array) {
 
-		if(array.length==0) return 0;
+		if(array.length==0) return -1;
 
 		int result=array[0];
 

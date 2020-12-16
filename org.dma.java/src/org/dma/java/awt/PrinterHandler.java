@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -26,30 +26,29 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class PrinterHandler {
 
-	public static PrintService lookupDefaultPrintService() {
-		return PrintServiceLookup.lookupDefaultPrintService();
-	}
-
-	public static String lookupDefaultPrinterName() {
-		PrintService ps=lookupDefaultPrintService();
-		return ps==null ? "" : ps.getName();
-	}
-
 	public static PrintService lookupPrintService(String printerName) {
-		PrintService[] ps=PrinterJob.lookupPrintServices();
-		for(int i=0; i<ps.length; i++) {
-			if(ps[i].getName().indexOf(printerName)>=0) return ps[i];
+		for(PrintService ps: PrinterJob.lookupPrintServices()) {
+			if (ps.getName().indexOf(printerName)>=0) return ps;
 		}return null;
 	}
 
+	public static PrintService lookupPrintService() {
+		return PrintServiceLookup.lookupDefaultPrintService();
+	}
+
+
+	public static String lookupDefaultPrinterName() {
+		PrintService ps=lookupPrintService();
+		return ps==null ? "" : ps.getName();
+	}
+
 	/** Returns default printer if invalid */
-	public static String getPrinterNameOrDefault(String printerName) {
+	public static String lookupPrinterName(String printerName) {
 		try{
 			new PrinterHandler(printerName).checkPrinter();
-			return printerName;
-		}
-		catch(PrinterException e){}
-		return lookupDefaultPrinterName();
+		}catch(PrinterException e){
+			return lookupDefaultPrinterName();
+		}return printerName;
 	}
 
 	private final PrintService service;
@@ -70,6 +69,7 @@ public class PrinterHandler {
 	public PrinterJob createPrinterJob() throws PrinterException {
 
 		checkPrinter();
+
 		PrinterJob job=PrinterJob.getPrinterJob();
 		job.setPrintService(service);
 		return job;
@@ -81,6 +81,7 @@ public class PrinterHandler {
 	public void print(InputStream in) throws PrinterException, PrintException {
 
 		checkPrinter();
+
 		DocPrintJob job=service.createPrintJob();
 		Doc document=new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 		job.print(document, null);
@@ -97,27 +98,35 @@ public class PrinterHandler {
 
 
 	/** Prints FILE DATA using java print */
-	public void print(File file) throws PrinterException, PrintException, IOException {
+	public void print(File file) throws PrinterException, PrintException {
 
-		FileInputStream in=new FileInputStream(file);
+		if (file!=null) try{
 
-		try{
-			print(in);
+			FileInputStream in=new FileInputStream(file);
 
-		}finally{
-			in.close();
+			try{
+				print(in);
+
+			}finally{
+				in.close();
+			}
+
+		}catch(IOException e){
+			throw new PrintException("Error loading file "+file);
 		}
 
 	}
 
 
 	/** Prints a PDF using apache pdfbox */
-	public void printPdf(File file) throws PrinterException, IOException {
+	public void printPdf(File file) throws PrinterException, PrintException {
 
 		PrinterJob job=createPrinterJob();
-		job.setJobName(file.getName());
 
-		try{
+		if (file!=null) try{
+
+			job.setJobName(file.getName());
+
 			PDDocument doc=PDDocument.load(file);
 
 			try{
@@ -127,7 +136,6 @@ public class PrinterHandler {
 				job.setPageable(printer.getPageable());
 				job.print();
 				*/
-
 			}catch(PrinterAbortException e){
 				 //avoid abort exception
 			}catch(PrinterException e){
@@ -137,7 +145,7 @@ public class PrinterHandler {
 			}
 
 		}catch(IOException e){
-			throw new IOException("Error reading file "+file);
+			throw new PrintException("Error loading file "+file);
 		}
 
 	}

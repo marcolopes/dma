@@ -26,8 +26,7 @@ public class CaesarCiphers {
 		for(char c: message.toCharArray()) {
 			char lc = Character.toLowerCase(c);
 			result.append(c += //avoids cast to char
-					(lc >= 'a' && lc <= 'm' ? 13 :
-						(lc >= 'n' && lc <= 'z' ? -13 : 0)));
+					(lc >= 'a' && lc <= 'm' ? 13 : (lc >= 'n' && lc <= 'z' ? -13 : 0)));
 		}
 
 		return result.toString();
@@ -49,8 +48,7 @@ public class CaesarCiphers {
 
 		for(char c: message.toCharArray()){
 			result.append(c += //avoids cast to char
-					(c >= '!' && c <= 'O' ? 47 :
-						(c >= 'P' && c <= '~' ? -47 : 0)));
+					(c >= '!' && c <= 'O' ? 47 : (c >= 'P' && c <= '~' ? -47 : 0)));
 		}
 
 		return result.toString();
