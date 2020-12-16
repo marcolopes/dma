@@ -86,10 +86,8 @@ public abstract class TableContainer {
 	 * Table
 	 */
 	private void addSortColumnSupport(int direction) {
-
 		table.setSortColumn(table.getColumn(0));
 		table.setSortDirection(direction);
-
 		for(TableColumn column: table.getColumns()){
 			column.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -105,9 +103,7 @@ public abstract class TableContainer {
 				}
 			});
 		}
-
 	}
-
 
 	public void forceFocus() {
 		table.forceFocus();
@@ -128,6 +124,10 @@ public abstract class TableContainer {
 		int index=getSelectionIndex();
 		table.select(index==table.getItemCount()-1 && wrap ? 0 : index+1);
 		table.showSelection();
+	}
+
+	public void showFirstColumn() {
+		table.showColumn(table.getColumn(0));
 	}
 
 	public int getOrderingIndex() {

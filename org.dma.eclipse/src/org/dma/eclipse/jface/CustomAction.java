@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -31,8 +31,18 @@ public abstract class CustomAction extends Action {
 		setImageDescriptor(ImageUtils.createImage(imagePath, imageSize));
 	}
 
-	public void setImageDescriptor(BufferedImage bufferedImage) {
-		setImageDescriptor(new CustomImageDescriptor(bufferedImage));
+	public void setImageDescriptor(BufferedImage image) {
+		setImageDescriptor(new CustomImageDescriptor(image));
+	}
+
+	/** @see Action#setEnabled(boolean) */
+	public void enable() {
+		setEnabled(true);
+	}
+
+	/** @see Action#setEnabled(boolean) */
+	public void disable() {
+		setEnabled(false);
 	}
 
 }

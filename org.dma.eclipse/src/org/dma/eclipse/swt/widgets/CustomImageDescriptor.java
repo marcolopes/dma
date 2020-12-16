@@ -59,16 +59,13 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	}
 
 	public static ImageData createImageData(BufferedImage image) {
-		if(image.getType()!=BufferedImage.TYPE_3BYTE_BGR){
-			return createImageData(image, image.getTransparency()!=Transparency.OPAQUE);
-		}
+		if(image.getType()!=BufferedImage.TYPE_3BYTE_BGR) return createImageData(image, image.getTransparency()!=Transparency.OPAQUE);
 		int width=image.getWidth();
 		int height=image.getHeight();
 		int bands=image.getColorModel().getColorSpace().getNumComponents();
 		int depth=24;
 		byte[] pixels=((DataBufferByte)image.getRaster().getDataBuffer()).getData();
-		return new ImageData(width, height, depth, new PaletteData(
-				0x0000ff, 0x00ff00, 0xff0000), width * bands, pixels);
+		return new ImageData(width, height, depth, new PaletteData(0x0000ff, 0x00ff00, 0xff0000), width * bands, pixels);
 	}
 
 	private static void close(InputStream stream) {

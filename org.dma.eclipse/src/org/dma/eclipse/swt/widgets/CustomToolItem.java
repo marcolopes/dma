@@ -39,8 +39,8 @@ public class CustomToolItem extends ToolItem {
 		setImage(ImageUtils.createImage(imagePath, imageSize));
 	}
 
-	public void setImage(BufferedImage bufferedImage) {
-		setImage(ImageManager.getImage(bufferedImage));
+	public void setImage(BufferedImage image) {
+		setImage(ImageManager.getImage(image));
 	}
 
 

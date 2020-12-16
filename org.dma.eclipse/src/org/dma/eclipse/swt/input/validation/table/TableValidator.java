@@ -33,7 +33,7 @@ public abstract class TableValidator<T> implements IValidator {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			Debug.err("TABLE");
-			if(!viewer.isCellEditorActive()) validateTable();
+			if (!viewer.isCellEditorActive()) validateTable();
 		}
 		@Override
 		public void widgetDefaultSelected(SelectionEvent e) {}
@@ -44,8 +44,8 @@ public abstract class TableValidator<T> implements IValidator {
 		public void focusGained(FocusEvent e) {}
 		@Override
 		public void focusLost(FocusEvent e) {
-			Debug.err("TABLE");
-			if(!viewer.isCellEditorActive()) validateTable();
+			Debug.out("TABLE");
+			if (!viewer.isCellEditorActive()) validateTable();
 		}
 	};
 
@@ -102,7 +102,7 @@ public abstract class TableValidator<T> implements IValidator {
 
 	protected void register(String property, ColumnBinding binding) {
 
-		if(validatorMap.containsKey(property))
+		if (validatorMap.containsKey(property))
 			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
 
 		validatorMap.put(property, binding);
@@ -113,7 +113,8 @@ public abstract class TableValidator<T> implements IValidator {
 	public void unregister(String property) {
 
 		ColumnBinding binding=validatorMap.remove(property);
-		if(binding!=null) binding.dispose();
+
+		if (binding!=null) binding.dispose();
 
 	}
 
@@ -123,6 +124,8 @@ public abstract class TableValidator<T> implements IValidator {
 	 * Validation
 	 */
 	public void validateTable() {
+
+		Debug.err("VALIDATING", validatorMap.keySet());
 
 		validationManager.processValidators();
 
@@ -179,7 +182,7 @@ public abstract class TableValidator<T> implements IValidator {
 	public boolean hasError() {
 
 		for(ColumnBinding binding: validatorMap.values()){
-			if(binding.hasError()) return true;
+			if (binding.hasError()) return true;
 		}return false;
 
 	}
@@ -191,7 +194,7 @@ public abstract class TableValidator<T> implements IValidator {
 		String errorMessage="";
 
 		for(ColumnBinding binding: validatorMap.values()){
-			if(binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getError();
+			if (binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getError();
 		}
 
 		return errorMessage;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -12,6 +12,12 @@ import org.eclipse.swt.graphics.ImageLoader;
 
 public class ImageHandler {
 
+	public static final int IMAGE_BMP = SWT.IMAGE_BMP;
+	public static final int IMAGE_GIF = SWT.IMAGE_GIF;
+	public static final int IMAGE_ICO = SWT.IMAGE_ICO;
+	public static final int IMAGE_JPEG = SWT.IMAGE_JPEG;
+	public static final int IMAGE_PNG = SWT.IMAGE_PNG;
+
 	private final Image image;
 
 	public ImageHandler(Image image) {
@@ -22,25 +28,15 @@ public class ImageHandler {
 	 * Saves an {@link Image}
 	 * to file in the specified {@link SWT} format.
 	 */
-	public boolean saveImage(String pathname, int format) {
+	public boolean save(String pathname, int format) {
 		try{
 			ImageLoader saver=new ImageLoader();
 			saver.data=new ImageData[]{image.getImageData()};
 			saver.save(pathname, format);
 
 		}catch(Exception e){
-			e.printStackTrace();
+			System.err.println(e);
 		}return false;
-	}
-
-
-	public boolean savePNG(String pathname) {
-		return saveImage(pathname, SWT.IMAGE_PNG);
-	}
-
-
-	public boolean saveJPEG(String pathname) {
-		return saveImage(pathname, SWT.IMAGE_JPEG);
 	}
 
 

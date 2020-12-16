@@ -43,10 +43,10 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 	}
 
 
-	public void remove(int[] indexes) {
+	public void remove(int[] indices) {
 
 		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
-		list.remove(indexes);
+		list.remove(indices);
 		setItems(CollectionUtils.toArray(list, String.class));
 		if (SystemUtils.IS_OS_MAC) deselectAll();
 		showSelection(); // scroll items
@@ -55,26 +55,26 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 	}
 
 
-	public void moveUp(int[] indexes, int position) {
+	public void moveUp(int[] indices, int position) {
 
 		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
-		list.moveTo(position, indexes);
+		list.moveTo(position, indices);
 		setItems(CollectionUtils.toArray(list, String.class));
 		if (SystemUtils.IS_OS_MAC) deselectAll();
-		select(position, position+indexes.length-1);
+		select(position, position+indices.length-1);
 		showSelection(); // scroll items
 		notifyListeners(SWT.Selection, new Event());
 
 	}
 
 
-	public void moveDown(int[] indexes, int position) {
+	public void moveDown(int[] indices, int position) {
 
 		MovableList<String> list=new MovableList(Arrays.asList(getItems()));
-		list.moveTo(position, indexes);
+		list.moveTo(position, indices);
 		setItems(CollectionUtils.toArray(list, String.class));
 		if (SystemUtils.IS_OS_MAC) deselectAll();
-		select(position, position+indexes.length-1);
+		select(position, position+indices.length-1);
 		showSelection(); // scroll items
 		notifyListeners(SWT.Selection, new Event());
 
@@ -87,7 +87,8 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 
 	public boolean canMoveDown() {
-		return ArrayUtils.greater(getSelectionIndices())+1<getItemCount();
+		int selectionIndex=ArrayUtils.greater(getSelectionIndices());
+		return selectionIndex>=0 && selectionIndex<getItemCount()-1;
 	}
 
 
