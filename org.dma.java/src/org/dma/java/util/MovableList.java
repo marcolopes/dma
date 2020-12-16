@@ -25,11 +25,11 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Returns removed elements */
-	public Collection<T> remove(int...indexes) {
+	public Collection<T> remove(int...indices) {
 
-		Collection<T> remove=new ArrayList(indexes.length);
+		Collection<T> remove=new ArrayList(indices.length);
 
-		for(int index: indexes){
+		for(int index: indices){
 			remove.add(get(index));
 		}
 
@@ -41,12 +41,12 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Returns inserted elements */
-	public Collection<T> insert(List<T> list, int position, int...indexes) {
+	public Collection<T> insert(List<T> list, int position, int...indices) {
 
-		Collection<T> insert=new ArrayList(indexes.length);
+		Collection<T> insert=new ArrayList(indices.length);
 
-		Arrays.sort(indexes);
-		for(int index: indexes){
+		Arrays.sort(indices);
+		for(int index: indices){
 			insert.add(list.get(index));
 		}
 
@@ -58,10 +58,10 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Moves elements (ordered) */
-	public void moveTo(int position, int...indexes) {
+	public void moveTo(int position, int...indices) {
 
-		Arrays.sort(indexes);
-		addAll(position, remove(indexes));
+		Arrays.sort(indices);
+		addAll(position, remove(indices));
 
 	}
 

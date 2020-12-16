@@ -39,19 +39,19 @@ public class ImageOverlay {
 	private Color outlineColor = Color.WHITE;
 	private int margin = 5;
 
-	private final BufferedImage bufferedImage;
+	private final BufferedImage image;
 	private final Graphics2D g2d;
 	private Font font;
 
-	public ImageOverlay(BufferedImage bufferedImage) {
-		this(bufferedImage, null);
+	public ImageOverlay(BufferedImage image) {
+		this(image, null);
 	}
 
-	public ImageOverlay(BufferedImage bufferedImage, Font font) {
-		this.bufferedImage=bufferedImage;
-		this.g2d=bufferedImage.createGraphics();
+	public ImageOverlay(BufferedImage image, Font font) {
+		this.image=image;
+		this.g2d=image.createGraphics();
 		this.font=font==null ? g2d.getFont() : font;
-		g2d.drawImage(bufferedImage, 0, 0, null);
+		g2d.drawImage(image, 0, 0, null);
 	}
 
 
@@ -96,14 +96,14 @@ public class ImageOverlay {
 		int x=0;
 		switch(horizontalAlignment){
 		case LEFT: x=margin; break;
-		case RIGHT: x=bufferedImage.getWidth() - fm.stringWidth(text) - margin; break;
-		case CENTER: x=(bufferedImage.getWidth() - fm.stringWidth(text))/2; break;
+		case RIGHT: x=image.getWidth() - fm.stringWidth(text) - margin; break;
+		case CENTER: x=(image.getWidth() - fm.stringWidth(text))/2; break;
 		}
 
 		int y=0;
 		switch(verticalAlignment){
 		case TOP: y=fm.getHeight(); break;
-		case BOTTOM: y=bufferedImage.getHeight() - margin; break;
+		case BOTTOM: y=image.getHeight() - margin; break;
 		}
 
 		switch(style){

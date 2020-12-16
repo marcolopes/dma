@@ -53,8 +53,7 @@ public class ByteFileHandler extends FileHandler {
 				int offset=0;
 				int numRead=0;
 				// Read in the bytes
-				while(offset < length &&
-						(numRead=in.read(buffer, offset, buffer.length-offset)) > 0){
+				while(offset < length && (numRead=in.read(buffer, offset, buffer.length-offset)) > 0){
 					offset+=numRead;
 				}
 
