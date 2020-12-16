@@ -5,10 +5,8 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.viewers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.apache.commons.lang.SystemUtils;
@@ -16,6 +14,7 @@ import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.ClipboardManager;
 import org.dma.java.util.Debug;
 import org.dma.java.util.MessageList;
+import org.dma.java.util.MovableList;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -31,7 +30,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	public abstract void copyObject();
 	public abstract T getNewObject();
 
-	protected final List<T> objectCollection=new ArrayList();
+	protected final MovableList<T> objectCollection=new MovableList();
 	protected final TableViewer viewer;
 
 	public TableViewerContainer(TableViewer viewer) {
@@ -118,11 +117,15 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	}
 
 	public int insertElements(Collection<T> col, int index) {
+		/*
+		 * VERSION 1
+		 *
 		objectCollection.addAll(index>objectCollection.size() ?
 				objectCollection.size() : index, col);
-		//viewer.refresh(false);
-		index=selectElement(index);
-		return index;
+		return selectElement(index);
+		*/
+		objectCollection.addAll(index, col);
+		return selectElement(index);
 	}
 
 	/** If no element is selected, inserts on top */
@@ -138,8 +141,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	}
 
 	public int addElements(Collection<T> col) {
-		table.showColumn(table.getColumn(0));
-		return insertElements(col, table.getItemCount());
+		return insertElements(col, objectCollection.size());
 	}
 
 	public int addNewElement() {
@@ -148,9 +150,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 
 	public int replaceElement(T element, int index) {
 		objectCollection.set(index, element);
-		//viewer.refresh(false);
-		index=selectElement(index);
-		return index;
+		return selectElement(index);
 	}
 
 	/** If no element is selected, replaces first one */
@@ -160,6 +160,9 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	}
 
 	public int removeElements(int[] indices) {
+		/*
+		 * VERSION 1
+		 *
 		Collection<T> col=new LinkedHashSet();
 		//Arrays.sort(indices);
 		for(int i: indices) col.add(objectCollection.get(i));
@@ -167,6 +170,9 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		//viewer.refresh(false);
 		int index=selectElement(indices.length==0 ? 0 : indices[0]);
 		return index;
+		*/
+		objectCollection.remove(indices);
+		return selectElement(indices.length==0 ? 0 : indices[0]);
 	}
 
 	public void removeSelectedElements() {
@@ -174,6 +180,9 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	}
 
 	public int moveElementsUp(int[] indices) {
+		/*
+		 * VERSION 1
+		 *
 		int index=ArrayUtils.smaller(indices)-1;
 		if (index>=0){
 			Collection<T> col=new LinkedHashSet();
@@ -181,6 +190,16 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 			objectCollection.removeAll(col);
 			index=insertElements(col, index);
 		}return index;
+		*/
+		/*
+		 * VERSION 2
+		 *
+		int index=ArrayUtils.smaller(indices);
+		return index>0 ? insertElements(objectCollection.remove(indices), index-1) : index;
+		*/
+		int index=ArrayUtils.smaller(indices);
+		if (index>0) objectCollection.moveTo(index-1, indices);
+		return selectElement(indices.length==0 ? 0 : index-1);
 	}
 
 	public void moveSelectedElementsUp() {
@@ -188,6 +207,9 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	}
 
 	public int moveElementsDown(int[] indices) {
+		/*
+		 * VERSION 1
+		 *
 		int index=ArrayUtils.greater(indices)+1;
 		if (index<table.getItemCount()){
 			Collection<T> col=new LinkedHashSet();
@@ -195,6 +217,17 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 			objectCollection.removeAll(col);
 			index=insertElements(col, index-indices.length+1);
 		}return index;
+		*/
+		/*
+		 * VERSION 2
+		 *
+		int index=ArrayUtils.greater(indices);
+		return index<table.getItemCount()-1 ? insertElements(
+				objectCollection.remove(indices), ArrayUtils.smaller(indices)+1) : index;
+		*/
+		int index=ArrayUtils.greater(indices);
+		if (index<objectCollection.size()-1) objectCollection.moveTo(ArrayUtils.smaller(indices)+1, indices);
+		return selectElement(indices.length==0 ? 0 : index+1);
 	}
 
 	public void moveSelectedElementsDown() {

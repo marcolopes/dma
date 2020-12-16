@@ -74,7 +74,7 @@ public abstract class FieldValidator implements IValidator {
 
 	protected FieldBinding register(String property, FieldBinding binding) {
 
-		if(validatorMap.containsKey(property))
+		if (validatorMap.containsKey(property))
 			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
 
 		if (SystemUtils.IS_OS_MAC){
@@ -115,7 +115,8 @@ public abstract class FieldValidator implements IValidator {
 	public void unregister(String property) {
 
 		FieldBinding binding=validatorMap.remove(property);
-		if(binding!=null) binding.dispose();
+
+		if (binding!=null) binding.dispose();
 
 	}
 
@@ -178,6 +179,8 @@ public abstract class FieldValidator implements IValidator {
 	@Override
 	public void validateFields() {
 
+		Debug.err("VALIDATING", validatorMap.keySet());
+
 		resetBindings();
 		validateBindings();
 		validateInput();
@@ -200,7 +203,7 @@ public abstract class FieldValidator implements IValidator {
 	public boolean hasError() {
 
 		for(FieldBinding binding: validatorMap.values()){
-			if(binding.hasError()) return true;
+			if (binding.hasError()) return true;
 		}return false;
 
 	}
@@ -212,7 +215,7 @@ public abstract class FieldValidator implements IValidator {
 		String errorMessage="";
 
 		for(FieldBinding binding: validatorMap.values()){
-			if(binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getMessage();
+			if (binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getMessage();
 		}
 
 		return errorMessage;

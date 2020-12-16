@@ -58,7 +58,6 @@ public class CustomMessageDialog extends MessageDialog {
 		}
 
 		public boolean open(final String header, final String message, final Font messageFont) {
-
 			if (!message.isEmpty()) try{
 				Display.getDefault().syncExec(new Runnable() {
 					public void run() {
@@ -78,9 +77,7 @@ public class CustomMessageDialog extends MessageDialog {
 			}catch(Exception e){
 				e.printStackTrace();
 			}return this==CONFIRM || this==QUESTION;
-
 		}
-
 	}
 
 	private static String[] getButtonLabels(int dialogType) {

@@ -1,11 +1,12 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.graphics;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.util.Arrays;
 
 import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
@@ -38,9 +39,9 @@ public class ImageManager {
 		return "bytes:"+String.valueOf(Arrays.hashCode(bytes));
 	}
 
-	/** Returns the {@link Image} key based on {@link BufferedImage} hash */
-	public static String getKey(BufferedImage bufferedImage) {
-		return "pixels:"+String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(bufferedImage)));
+	/** Returns the {@link Image} key based on {@link RenderedImage} hash */
+	public static String getKey(RenderedImage image) {
+		return "pixels:"+String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(image)));
 	}
 
 
