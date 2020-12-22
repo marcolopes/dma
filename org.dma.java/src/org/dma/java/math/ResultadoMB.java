@@ -13,6 +13,8 @@ import org.dma.java.util.StringUtils;
 
 public class ResultadoMB {
 
+	public final static ResultadoMB EXEMPLO = new ResultadoMB("123", "123456789", new BigDecimal("123.00"));
+
 	public final static String DECIMAL_PATTERN = "###,##0.00";
 
 	public final String entidade;
