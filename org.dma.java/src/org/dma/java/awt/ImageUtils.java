@@ -51,6 +51,7 @@ public class ImageUtils {
 	}
 
 
+	/** @see Scalr#resize(BufferedImage, int, java.awt.image.BufferedImageOp...) */
 	public static BufferedImage resizeImage(BufferedImage image, int size) {
 		try{
 			return size==0 ? image : Scalr.resize(image, size);
