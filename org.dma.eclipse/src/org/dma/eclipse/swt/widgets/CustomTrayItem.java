@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2020 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -34,13 +34,13 @@ public class CustomTrayItem extends TrayItem {
 	private final Shell parent;
 
 	/** @see TrayItem#TrayItem(org.eclipse.swt.widgets.Tray, int) */
-	public CustomTrayItem(Shell parent, String name, String imagePath, boolean minimized) {
+	public CustomTrayItem(Shell parent, String name, String imagePath, boolean visible) {
 		super(parent.getDisplay().getSystemTray(), SWT.NONE);
 		this.parent=parent;
 		setToolTipText(name);
 		setImage(ImageManager.getImage(imagePath));
 		addListener(SWT.Selection, maximizeListener);
-		update(minimized);
+		setVisible(visible);
 	}
 
 	@Override
@@ -62,18 +62,6 @@ public class CustomTrayItem extends TrayItem {
 	/** @see TrayItem#getVisible */
 	public boolean isVisible() {
 		return getVisible();
-	}
-
-	/** @see TrayItem#setVisible */
-	@Deprecated
-	public void update(boolean minimized) {
-		setVisible(minimized);
-	}
-
-	/** @see CustomTrayItem#isVisible */
-	@Deprecated
-	public boolean isMinimized() {
-		return isVisible();
 	}
 
 	public void showTip(String text, String message) {
