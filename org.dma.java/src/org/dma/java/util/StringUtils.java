@@ -5,7 +5,6 @@
  *******************************************************************************/
 package org.dma.java.util;
 
-import java.io.UnsupportedEncodingException;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -522,9 +521,9 @@ public class StringUtils {
 	    String normalized=Normalizer.normalize(string, Normalizer.Form.NFKD);
 	    try{
 			return new String(DIACRITICS_PATTERN.matcher(normalized).replaceAll("").getBytes("ascii"), "ascii");
-			//return new String(normalized.replaceAll("\\p{M}", "").getBytes("ascii"), "ascii");
-		}catch(UnsupportedEncodingException e){
-		}return normalized;
+			//return new String(normalized.replaceAll("\\p{M}", "").getBytes("ascii"), "ascii");try{
+		}catch(Exception e){}
+		return normalized;
 
 	}
 
@@ -581,7 +580,7 @@ public class StringUtils {
 
 	public static void main(String[] argvs) {
 
-		System.out.println(unaccent("口水雞 hello ÄÀÁàáÃãÂâ"));
+		System.out.println(unaccent("口水雞,hello,Ä,Ã,Â,À,Á,ã,â,à,á,č,ć,đ,š,ž"));
 		System.out.println("toHex: "+toHex((byte)255));
 		System.out.println("toHexString: "+toHexString((byte)255));
 
