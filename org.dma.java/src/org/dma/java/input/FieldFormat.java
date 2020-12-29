@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,12 +20,14 @@ import org.dma.java.util.TimeDateUtils;
 
 public class FieldFormat extends FieldRegex {
 
+	private static final DecimalFormatSymbols FORMAT_SYMBOLS = new DecimalFormatSymbols();
+
 	/** Decimal Format CACHE */
 	private static final Map<String, DecimalFormat> DF_CACHE=new ConcurrentHashMap();
 
-	public static DecimalFormat getDecimalFormat(String pattern) {
+	public static DecimalFormat getDecimalFormat(String pattern, DecimalFormatSymbols symbols) {
 		DecimalFormat df=DF_CACHE.get(pattern);
-		if (df==null) DF_CACHE.put(pattern, df=new DecimalFormat(pattern));
+		if (df==null) DF_CACHE.put(pattern, df=new DecimalFormat(pattern, symbols));
 		return df;
 	}
 
@@ -139,12 +142,12 @@ public class FieldFormat extends FieldRegex {
 			//#,###,##
 			for(int i=size.size; i>1; i--){
 				pattern+="#";
-				if(i%3==1) pattern+=",";
+				if (i%3==1) pattern+=",";
 			}
 			//#,###,##0
 			pattern+="0";
 			//#,###,##0.000
-			if(size.scale>0) pattern+="."+StringUtils.replicate("0", size.scale);
+			if (size.scale>0) pattern+="."+StringUtils.replicate("0", size.scale);
 			return pattern;
 
 		case STRING: break;
@@ -171,12 +174,17 @@ public class FieldFormat extends FieldRegex {
 		}return pattern;
 	}
 
+	@Deprecated
 	public String format(Object value) {
+		return format(value, FORMAT_SYMBOLS);
+	}
+
+	public String format(Object value, DecimalFormatSymbols symbols) {
 		switch(type){
 		case TIME: return TimeDateUtils.getTimeFormatted((Time)value, pattern);
 		case DATE: return TimeDateUtils.getDateFormatted((Date)value, pattern);
 		case DECIMAL:
-		case INTEGER: return getDecimalFormat(pattern).format(value);
+		case INTEGER: return getDecimalFormat(pattern, symbols).format(value);
 		case BOOLEAN:
 		case STRING: break;
 		}return value.toString();
