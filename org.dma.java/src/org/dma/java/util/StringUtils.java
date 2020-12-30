@@ -519,9 +519,9 @@ public class StringUtils {
 	public static String unaccent(String string) {
 
 	    String normalized=Normalizer.normalize(string, Normalizer.Form.NFKD);
-	    try{
+	    if (!normalized.equals(string)) try{
 			return new String(DIACRITICS_PATTERN.matcher(normalized).replaceAll("").getBytes("ascii"), "ascii");
-			//return new String(normalized.replaceAll("\\p{M}", "").getBytes("ascii"), "ascii");try{
+			//return new String(normalized.replaceAll("\\p{M}", "").getBytes("ascii"), "ascii");
 		}catch(Exception e){}
 		return normalized;
 
