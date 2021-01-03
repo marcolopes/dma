@@ -104,6 +104,7 @@ public class ImageManager {
 		Image image=REGISTRY.get(key);
 		if (image==null){
 			image=new CustomImageDescriptor(bufferedImage).createImage();
+			bufferedImage.flush();
 			REGISTRY.put(key, image);
 		}return image;
 	}
