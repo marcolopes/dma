@@ -1,0 +1,1 @@
+Password para o ficheiro sapubkey.jks : saKeyPubPass
