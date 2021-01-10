@@ -71,9 +71,9 @@ public class ReferenciaMB {
 	}
 
 
-	private static String right(String string, int lenght) {
+	private static String right(String string, int length) {
 
-		return string.substring(string.length()-lenght);
+		return string.substring(string.length()-length);
 
 	}
 
