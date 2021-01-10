@@ -97,8 +97,7 @@ public abstract class TableContainer {
 					if (table.getSortColumn().getText().equals(column.getText())){
 						//inverts sort direction
 						table.setSortDirection(table.getSortDirection()==SWT.UP ? SWT.DOWN : SWT.UP);
-					}
-					table.setSortColumn(column);
+					}table.setSortColumn(column);
 					updateTable();
 				}
 			});
