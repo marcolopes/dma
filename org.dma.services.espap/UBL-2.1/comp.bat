@@ -1,6 +1,6 @@
 @echo off
 echo *****************************************************************************
-echo * 2008-2018 Public Domain
+echo * 2008-2021 Public Domain
 echo * Marco Lopes (marcolopespt@gmail.com)
 echo * https://xmlbeans.apache.org/docs/2.0.0/guide/tools.html
 echo *****************************************************************************
@@ -32,13 +32,8 @@ goto END
 
 :XMLBEANS
 set BEANS_HOME=..
-set BEANS_LIB=%BEANS_HOME%\xbean-3.0.1
-set BEANS_CP=%BEANS_LIB%\xbean.jar
-rem set BEANS_CP=%BEANS_CP%;%BEANS_LIB%\jsr173_1.0_api.jar
-rem set BEANS_CP=%BEANS_CP%;%BEANS_LIB%\resolver.jar
-rem set BEANS_CP=%BEANS_CP%;%BEANS_LIB%\xbean_xpath.jar
-rem set BEANS_CP=%BEANS_CP%;%BEANS_LIB%\xmlbeans-qname.jar
-rem set BEANS_CP=%BEANS_CP%;%BEANS_LIB%\xmlpublic.jar
+set BEANS_LIB=%BEANS_HOME%\xmlbeans
+set BEANS_CP=%BEANS_LIB%\xmlbeans-3.1.0.jar
 if exist %BEANS_LIB% goto COMPILE
 echo XMLBEANS LIB NOT FOUND @ %BEANS_LIB%
 goto END
