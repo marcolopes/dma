@@ -52,8 +52,8 @@ public class CTMessageServiceTest {
 		 * Regras: n.a.
 		 * Exemplo: n.a.
 		 */
-		UBLVersionIDType ublVersionID=invoice.addNewUBLVersionID();
-		ublVersionID.setStringValue("2.1");
+		UBLVersionIDType UBLVersionID=invoice.addNewUBLVersionID();
+		UBLVersionID.setStringValue("2.1");
 		/*
 		 * Id: 002
 		 * Nome: CustomizationID
