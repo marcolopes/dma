@@ -8,8 +8,6 @@ package org.dma.java.drivers.jdbc;
 import java.io.File;
 import java.sql.Connection;
 
-import org.dma.java.util.Debug;
-
 public class DatabaseParameters {
 
 	public final DRIVERS driver;
@@ -54,9 +52,7 @@ public class DatabaseParameters {
 		this.driver=driver;
 		this.host=host.isEmpty() ? "localhost" : host;
 		this.database=database;
-		Debug.err("database", this.database);
 		this.folder=folder==null ? "" : folder.getAbsolutePath()+File.separator;
-		Debug.err("folder", this.folder);
 		this.properties=properties;
 		this.user=user;
 		this.password=password;
