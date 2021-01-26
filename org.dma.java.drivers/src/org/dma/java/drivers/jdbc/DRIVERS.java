@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 
 import org.dma.java.drivers.Activator;
 import org.dma.java.io.Command;
@@ -147,8 +146,7 @@ public enum DRIVERS {
 	public void executeBackup(String host, String database, String folder, String user, String password,
 			BackupParameters backup) throws Exception {
 		//colibri9_H2_2014-12-31_125959
-		String prefix=new File(database).getName()+"_"+name()+"_"+
-				TimeDateUtils.getDateFormatted(new Date(),"yyyy-MM-dd_HHmmss");
+		String prefix=new File(database).getName()+"_"+name()+"_"+TimeDateUtils.getDateFormatted("yyyy-MM-dd_HHmmss");
 
 		FileParameters zip=new FileParameters(prefix, "zip", backup.folder);
 		Debug.out("BACKUP FILE: "+zip);

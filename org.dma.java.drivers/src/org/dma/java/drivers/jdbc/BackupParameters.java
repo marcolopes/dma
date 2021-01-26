@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.dma.java.io.Command;
 import org.dma.java.io.FileParameters;
-import org.dma.java.util.CollectionUtils;
+import org.dma.java.util.StringList;
 
 public class BackupParameters {
 
@@ -44,7 +44,7 @@ public class BackupParameters {
 
 		@Override
 		public String toString() {
-			return CollectionUtils.concat(this, ", ");
+			return new StringList(this).concat(", ");
 		}
 
 	}
@@ -75,8 +75,7 @@ public class BackupParameters {
 				{Arguments.DATABASE, database},
 				{Arguments.DUMP, dump.toString()}}){
 				arg=arg.replace(value[0], value[1]);
-			}
-			command.add(arg.trim());
+			}command.add(arg.trim());
 		}
 
 		return new Command(command);
