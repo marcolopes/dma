@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -17,6 +17,10 @@ public class MovableList<T> extends LinkedList<T> {
 
 	public MovableList() {
 		super();
+	}
+
+	public MovableList(T[] array) {
+		this(Arrays.asList(array));
 	}
 
 	public MovableList(Collection<T> list) {

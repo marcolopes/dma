@@ -1,9 +1,9 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.util;
+package org.dma.java.time;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -18,8 +18,14 @@ public abstract class TimerClock {
 
 	public enum CLOCK_FORMAT {
 
-		SIMPLE ("dd MMM yyyy - HH:mm", 60*1000),
-		FULL ("EEEE, dd MMMM yyyy - HH:mm", 60*1000);
+		/** 1 Jan 2020 - 23:59 */
+		DATE_TIME ("dd MMM yyyy - HH:mm", 60*1000),
+		/** 1 Jan 2020 - 23:59:59 */
+		DATE_TIME_SECONDS ("dd MMM yyyy - HH:mm:ss", 1000),
+		/** Monday, 1 January 2020 - 23:59 */
+		DAY_DATE_TIME ("EEEE, dd MMMM yyyy - HH:mm", 60*1000),
+		/** Monday, 1 January 2020 - 23:59:59 */
+		DAY_DATE_TIME_SECONDS ("EEEE, dd MMMM yyyy - HH:mm:ss", 1000);
 
 		public String pattern;
 		public int period;
@@ -38,8 +44,16 @@ public abstract class TimerClock {
 	private final CLOCK_FORMAT format;
 	private final Format formatter;
 
+	public TimerClock() {
+		this(Locale.getDefault());
+	}
+
 	public TimerClock(Locale locale) {
-		this(locale, CLOCK_FORMAT.SIMPLE);
+		this(locale, CLOCK_FORMAT.DATE_TIME);
+	}
+
+	public TimerClock(CLOCK_FORMAT format) {
+		this(Locale.getDefault(), format);
 	}
 
 	public TimerClock(Locale locale, CLOCK_FORMAT format) {
@@ -53,8 +67,7 @@ public abstract class TimerClock {
 			public void run() {
 				event();
 			}
-		},
-		//remaining milliseconds to next period
+		},//remaining milliseconds to next period
 		format.period-(System.currentTimeMillis() % format.period),
 			//milliseconds period between executions
 			format.period);
@@ -73,6 +86,23 @@ public abstract class TimerClock {
 		//reuse date object
 		date.setTime(System.currentTimeMillis());
 		return formatter.format(date);
+	}
+
+
+	public static void main(String[] argvs) throws Exception {
+
+		new TimerClock() {
+			@Override
+			public void event() {
+				System.out.println(toString());
+			}
+		}.start();
+
+		do try{
+			Thread.sleep(1000);
+		}catch(Exception e){}
+		while(true);
+
 	}
 
 }

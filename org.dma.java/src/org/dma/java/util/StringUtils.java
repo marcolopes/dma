@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.dma.java.time.Chronograph;
+
 public class StringUtils {
 
 	public static final Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+");
@@ -59,7 +61,7 @@ public class StringUtils {
 			'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
 		return new String(new char[]{
-			HEX_DIGITS[(b >> 4) & 0x0f],
+			HEX_DIGITS[(b>>4) & 0x0f],
 			HEX_DIGITS[b & 0x0f]});
 
 	}
@@ -267,18 +269,18 @@ public class StringUtils {
 	/*
 	 * Transformation
 	 */
-	public static String left(String string, int lenght) {
+	public static String left(String string, int length) {
 
-		return string.length()<=lenght ?
-				string : string.substring(0, lenght);
+		return string.length()<=length ?
+				string : string.substring(0, length);
 
 	}
 
 
-	public static String right(String string, int lenght) {
+	public static String right(String string, int length) {
 
-		return string.length()<lenght ?
-				string : string.substring(string.length()-lenght);
+		return string.length()<length ?
+				string : string.substring(string.length()-length);
 
 	}
 
@@ -339,8 +341,7 @@ public class StringUtils {
 			index+=searchFor.length();
 			beginIndex=index;
 			count--;
-		}
-		result.append(string.substring(beginIndex, string.length()));
+		}result.append(string.substring(beginIndex, string.length()));
 
 		return result.toString();
 
@@ -418,18 +419,18 @@ public class StringUtils {
 	}
 
 
-	public static String padLeft(String string, int lenght, char character) {
+	public static String padLeft(String string, int length, char character) {
 
-		return string.length()>=lenght ?
-				string : replicate(character, lenght-string.length())+string;
+		return string.length()>=length ?
+				string : replicate(character, length-string.length())+string;
 
 	}
 
 
-	public static String padRight(String string, int lenght, char character) {
+	public static String padRight(String string, int length, char character) {
 
-		return string.length()>=lenght ?
-				string : string+replicate(character, lenght-string.length());
+		return string.length()>=length ?
+				string : string+replicate(character, length-string.length());
 
 	}
 
@@ -479,8 +480,7 @@ public class StringUtils {
 	/** Remove surrounded QUOTE chars */
 	public static String unquote(String string, char...quotes) {
 
-		return !isQuoted(string, quotes) ?
-				string : string.substring(1, string.length()-1);
+		return !isQuoted(string, quotes) ? string : string.substring(1, string.length()-1);
 
 	}
 
@@ -555,7 +555,7 @@ public class StringUtils {
 	}
 
 
-	/** Adapted from JAVA 7 native String split */
+	/** Adapted from JAVA 7 (NO REGEX!) */
 	public static String[] split(String string, String searchFor) {
 
 		int beginIndex=0;
@@ -564,8 +564,7 @@ public class StringUtils {
 		while((endIndex=string.indexOf(searchFor, beginIndex))!=-1) {
 		    list.add(string.substring(beginIndex, endIndex));
 		    beginIndex=endIndex+1;
-		}
-		// If no match was found, return this
+		}// If no match was found, return this
 		if (beginIndex==0) return new String[]{string};
 		// Add remaining segment
 		list.add(string.substring(beginIndex, string.length()));
@@ -580,64 +579,47 @@ public class StringUtils {
 
 	public static void main(String[] argvs) {
 
-		System.out.println(unaccent("口水雞,hello,Ä,Ã,Â,À,Á,ã,â,à,á,č,ć,đ,š,ž"));
-		System.out.println("toHex: "+toHex((byte)255));
-		System.out.println("toHexString: "+toHexString((byte)255));
+		String format="%20s";
+
+		System.out.printf(format, "toHex: "); System.out.println(toHex((byte)255));
+		System.out.printf(format, "toHexString: "); System.out.println(toHexString((byte)255));
+		System.out.printf(format, "unaccent: "); System.out.println(unaccent("口水雞,hello,Ä,Ã,Â,À,Á,ã,â,à,á,č,ć,đ,š,ž"));
 
 		StringBuilder sb=new StringBuilder(".");
 		for(char c='a'; c<='z'; c++) sb.append(new char[]{c,'.'});
 		String string=sb.toString();
-		System.out.println(string);
-
-		System.out.println(Arrays.asList(Pattern.compile("\\.").split(string)));
-		System.out.println(Arrays.asList(string.split("\\.")));
-		System.out.println(Arrays.asList(split(string, ".")));
-
-		System.out.println(string.replaceAll("\\.", "**"));
-		System.out.println(string.replace(".", "**"));
-		System.out.println(replace(string, ".", "**", 0));
-		System.out.println(replace(string, ".", "**", 3));
-		System.out.println(replace(string, ".", "**", -1));
-		System.out.println(replaceAll(string, ".", "**"));
+		System.out.printf(format, "STRING: "); System.out.println(string);
+		System.out.printf(format, "java7.split: "); System.out.println(Arrays.asList(split(string, ".")));
+		System.out.printf(format, "pattern.split: "); System.out.println(Arrays.asList(Pattern.compile("\\.").split(string)));
+		System.out.printf(format, "string.split: "); System.out.println(Arrays.asList(string.split("\\.")));
+		System.out.printf(format, "replaceAll: "); System.out.println(replaceAll(string, ".", "**"));
+		System.out.printf(format, "string.replaceAll: "); System.out.println(string.replaceAll("\\.", "**"));
+		System.out.printf(format, "replace: "); System.out.println(replace(string, ".", "**", 0));
+		System.out.printf(format, "replace: "); System.out.println(replace(string, ".", "**", 3));
+		System.out.printf(format, "replace: "); System.out.println(replace(string, ".", "**", -1));
+		System.out.printf(format, "string.replace: "); System.out.println(string.replace(".", "**"));
 
 		int repeat=1000000;
 		Chronograph time=new Chronograph();
 
 		time.reset();
-		time.start();
-		for(int i=0; i<repeat; i++) Pattern.compile("\\.").split(string);
-		time.stop();
-		System.out.println("regex.split: "+time);
-
+		time.start(); for(int i=0; i<repeat; i++) Pattern.compile("\\.").split(string); time.stop();
+		System.out.printf(format, "pattern.split: "); System.out.println(time);
 		time.reset();
-		time.start();
-		for(int i=0; i<repeat; i++) string.split("\\.");
-		time.stop();
-		System.out.println("string.split: "+time);
-
+		time.start(); for(int i=0; i<repeat; i++) string.split("\\."); time.stop();
+		System.out.printf(format, "string.split: "); System.out.println(time);
 		time.reset();
-		time.start();
-		for(int i=0; i<repeat; i++) split(string, ".");
-		time.stop();
-		System.out.println("split (java7): "+time);
-
+		time.start(); for(int i=0; i<repeat; i++) split(string, "."); time.stop();
+		System.out.printf(format, "java7.split: "); System.out.println(time);
 		time.reset();
-		time.start();
-		for(int i=0; i<repeat; i++) string.replace("z", "**");
-		time.stop();
-		System.out.println("string.replace: "+time);
-
+		time.start(); for(int i=0; i<repeat; i++) string.replace("z", "**"); time.stop();
+		System.out.printf(format, "string.replace: "); System.out.println(time);
 		time.reset();
-		time.start();
-		for(int i=0; i<repeat; i++) string.replaceAll("z", "**");
-		time.stop();
-		System.out.println("string.replaceAll: "+time);
-
+		time.start(); for(int i=0; i<repeat; i++) string.replaceAll("z", "**"); time.stop();
+		System.out.printf(format, "string.replaceAll: "); System.out.println(time);
 		time.reset();
-		time.start();
-		for(int i=0; i<repeat; i++) replaceAll(string, "z", "**");
-		time.stop();
-		System.out.println("replaceAll: "+time);
+		time.start(); for(int i=0; i<repeat; i++) replaceAll(string, "z", "**"); time.stop();
+		System.out.printf(format, "replaceAll: "); System.out.println(time);
 
 	}
 

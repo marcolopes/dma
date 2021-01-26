@@ -1,11 +1,20 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.util;
 
 public final class VersionNumber {
+
+	public static VersionNumber valueOf(String version) {
+		String[] array=StringUtils.split(version, ".");
+		int major=array.length>0 ? StringUtils.val(StringUtils.numbers(array[0])) : 0;
+		int minor=array.length>1 ? StringUtils.val(StringUtils.numbers(array[1])) : 0;
+		int micro=array.length>2 ? StringUtils.val(StringUtils.numbers(array[2])) : 0;
+		int build=array.length>3 ? StringUtils.val(StringUtils.numbers(array[3])) : 0;
+		return new VersionNumber(major, minor, micro, build);
+	}
 
 	public final int major;
 	public final int minor;
@@ -29,14 +38,6 @@ public final class VersionNumber {
 		this.minor=minor;
 		this.micro=micro;
 		this.build=build;
-	}
-
-	public VersionNumber(String version) {
-		String[] array=ArrayUtils.numbers(StringUtils.split(version, "."));
-		major=array.length>0 ? StringUtils.val(array[0]) : 0;
-		minor=array.length>1 ? StringUtils.val(array[1]) : 0;
-		micro=array.length>2 ? StringUtils.val(array[2]) : 0;
-		build=array.length>3 ? StringUtils.val(array[3]) : 0;
 	}
 
 
@@ -95,7 +96,7 @@ public final class VersionNumber {
 	}
 
 	public boolean equals(String version) {
-		return equals(new VersionNumber(version));
+		return equals(VersionNumber.valueOf(version));
 	}
 
 	public boolean equals(VersionNumber version) {
