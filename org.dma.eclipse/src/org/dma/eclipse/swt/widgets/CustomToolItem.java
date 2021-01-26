@@ -35,7 +35,8 @@ public class CustomToolItem extends ToolItem {
 		setImage(ImageManager.getImage(imagePath));
 	}
 
-	public void setImage(String imagePath, int imageSize) {
+	@Deprecated
+	void setImage(String imagePath, int imageSize) {
 		setImage(ImageUtils.createImage(imagePath, imageSize));
 	}
 

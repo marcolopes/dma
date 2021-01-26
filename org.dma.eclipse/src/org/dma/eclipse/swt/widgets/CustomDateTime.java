@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -35,10 +35,9 @@ public class CustomDateTime extends DateTime {
 
 	@Override
 	public String toString() {
-		int style=getStyle();
-		if (NumericUtils.bit(style, SWT.CALENDAR)) return TimeDateUtils.getDateFormatted(getCalendar().getTime());
-		if (NumericUtils.bit(style, SWT.TIME)) return TimeDateUtils.getDateFormatted(getTime());
-		return super.toString();
+		return NumericUtils.bit(getStyle(), SWT.TIME) ?
+				TimeDateUtils.getTimeFormatted(getTime()) :
+				TimeDateUtils.getDateFormatted(getCalendar().getTime());
 	}
 
 
