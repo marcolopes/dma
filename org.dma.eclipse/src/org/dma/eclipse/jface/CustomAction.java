@@ -27,7 +27,8 @@ public abstract class CustomAction extends Action {
 		setImageDescriptor(ImageUtils.createImage(imagePath));
 	}
 
-	public void setImageDescriptor(String imagePath, int imageSize) {
+	@Deprecated
+	void setImageDescriptor(String imagePath, int imageSize) {
 		setImageDescriptor(ImageUtils.createImage(imagePath, imageSize));
 	}
 

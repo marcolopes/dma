@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2020 Public Domain
+ * 2010-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -86,7 +86,7 @@ public abstract class TableContainer {
 	 * Table
 	 */
 	private void addSortColumnSupport(int direction) {
-		table.setSortColumn(table.getColumn(0));
+		if (table.getColumnCount()>0) table.setSortColumn(table.getColumn(0));
 		table.setSortDirection(direction);
 		for(TableColumn column: table.getColumns()){
 			column.addSelectionListener(new SelectionAdapter() {
@@ -130,7 +130,7 @@ public abstract class TableContainer {
 	}
 
 	public int getOrderingIndex() {
-		return ArrayUtils.indexOrFirst(table.getColumns(), table.getSortColumn());
+		return ArrayUtils.indexOf(table.getColumns(), table.getSortColumn());
 	}
 
 	public int getSelectionIndex() {

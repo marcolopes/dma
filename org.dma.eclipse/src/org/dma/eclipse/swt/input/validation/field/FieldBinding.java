@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class FieldBinding extends FieldError {
@@ -86,7 +87,8 @@ public abstract class FieldBinding extends FieldError {
 
 		this.selectionListener=selectionListener;
 
-		if (control instanceof Spinner ||
+		if (control instanceof TabFolder ||
+				control instanceof Spinner ||
 				control instanceof CCombo ||
 				control instanceof Combo ||
 				control instanceof List ||

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -16,8 +16,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -33,28 +31,13 @@ public class Activator extends Plugin {
 	}
 
 	/** plug-in relative path */
-	public static ImageDescriptor getImageDescriptor(String imagePath) {
-		return ImageDescriptor.createFromFile(Activator.class, imagePath);
-	}
-
-	/** plug-in relative path */
-	public static BufferedImage getBufferedImage(String imagePath, int iconSize) {
-		return ImageUtils.createImage(Activator.class, imagePath, iconSize);
-	}
-
-	/** plug-in relative path */
 	public static BufferedImage getBufferedImage(String imagePath) {
 		return ImageUtils.createImage(Activator.class, imagePath);
 	}
 
 	/** plug-in relative path */
-	public static Image getImage(String imagePath, int iconSize) {
-		return ImageManager.getImage(getBufferedImage(imagePath, iconSize));
-	}
-
-	/** plug-in relative path */
-	public static Image getImage(String imagePath) {
-		return ImageManager.getImage(getBufferedImage(imagePath));
+	public static BufferedImage getBufferedImage(String imagePath, int iconSize) {
+		return ImageUtils.createImage(Activator.class, imagePath, iconSize);
 	}
 
 	/*
@@ -72,6 +55,7 @@ public class Activator extends Plugin {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
+		ImageManager.REGISTRY.dispose();
 	}
 
 }
