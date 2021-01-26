@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -187,6 +187,7 @@ public class JKSCertificate {
 	    	"\nSERIAL: " + X509Cert.getSerialNumber()+
 	    	"\nISSUER: " + X509Cert.getIssuerX500Principal()+
 	    	"\nSUBJECT: " + X509Cert.getSubjectX500Principal()+
+	    	"\nISSUED: " + X509Cert.getNotBefore()+
 	    	"\nEXPIRES: " + X509Cert.getNotAfter()+
 	    	"\nDAYS LEFT: " + daysToExpire()+
 			"\nHASH CODE: " + hashCode();

@@ -26,18 +26,15 @@ public class ImageUtils {
 	 * will not show when converted to SWT Image
 	 */
 	public static BufferedImage drawImage(BufferedImage image) {
-		try{
-			// Setup the rendering resources to match the source image's
+		try{//Setup the rendering resources to match the source image's
 			BufferedImage result=new BufferedImage(image.getWidth(), image.getHeight(),
 					image.getTransparency()==Transparency.OPAQUE ?
 					BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB);
-
-			// Scale the image to the new buffer using the specified rendering hint
-			Graphics2D resultGraphics=result.createGraphics();
-			resultGraphics.drawImage(image, 0, 0, null);
-			resultGraphics.dispose();
-
-			// Return the scaled image to the caller
+			//Scale the image to the new buffer using the specified rendering hint
+			Graphics2D g2d=result.createGraphics();
+			g2d.drawImage(image, 0, 0, null);
+			g2d.dispose();
+			//Return the scaled image to the caller
 			return result;
 
 		}catch(Exception e){

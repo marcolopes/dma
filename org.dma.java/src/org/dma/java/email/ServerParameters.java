@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -7,19 +7,22 @@ package org.dma.java.email;
 
 import javax.mail.PasswordAuthentication;
 
-import org.dma.java.util.ArrayUtils;
+import org.dma.java.util.StringList;
 
 public class ServerParameters {
 
+	@Deprecated
 	public final static int SECURITY_NONE = SECURITY.NONE.ordinal();
+	@Deprecated
 	public final static int SECURITY_STARTTLS = SECURITY.STARTTLS.ordinal();
+	@Deprecated
 	public final static int SECURITY_SSLTLS = SECURITY.SSLTLS.ordinal();
 
 	public enum SECURITY {
 
 		NONE, STARTTLS, SSLTLS;
 
-		public static final String[] NAMES = ArrayUtils.toStringArray(values());
+		public static final String[] NAMES = StringList.valueOf(values()).toArray();
 
 		public static SECURITY get(String name) {
 			try{return valueOf(name);}
@@ -40,6 +43,7 @@ public class ServerParameters {
 	private final SECURITY security;
 	private final PasswordAuthentication authentication;
 
+	@Deprecated
 	public ServerParameters(String hostName, int smtpPort, int security) {
 		this(hostName, smtpPort, security, null);
 	}
@@ -48,6 +52,7 @@ public class ServerParameters {
 		this(hostName, smtpPort, security, null);
 	}
 
+	@Deprecated
 	public ServerParameters(String hostName, int smtpPort, int security, PasswordAuthentication authentication) {
 		this(hostName, smtpPort, SECURITY.get(security), authentication);
 	}

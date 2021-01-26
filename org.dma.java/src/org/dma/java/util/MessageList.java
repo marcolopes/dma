@@ -40,8 +40,8 @@ public class MessageList extends LinkedHashSet<String> {
 
 	public void print(OutputStream out) {
 		if (!isEmpty()) try{
-			out.write(toString().getBytes());
-			out.write("\n".getBytes());
+			String message=toString()+"\n";
+			out.write(message.getBytes());
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -64,7 +64,7 @@ public class MessageList extends LinkedHashSet<String> {
 
 	@Override
 	public String[] toArray() {
-		return CollectionUtils.toArray(this, String.class);
+		return StringList.valueOf(this).toArray();
 	}
 
 
