@@ -42,7 +42,13 @@ goto END
 set JAVA=%JAVA_HOME%\bin\java.exe
 set JAVAC=%JAVA_HOME%\bin\javac.exe
 echo COMPILING: %SOURCE_XSD%
+if not exist %SOURCE_FOLDER% goto WITHOUT_SOURCE
 
+"%JAVA%" -Xmx2048m -classpath %BEANS_CP% org.apache.xmlbeans.impl.tool.SchemaCompiler -src %SOURCE_FOLDER% -out %OUTPUT_JAR% %SOURCE_XSD% -compiler "%JAVAC%" -javasource "1.5"
+goto END
+
+:WITHOUT_SOURCE
+echo %SOURCE_FOLDER% NOT FOUND! Compiling without source
 "%JAVA%" -Xmx2048m -classpath %BEANS_CP% org.apache.xmlbeans.impl.tool.SchemaCompiler -out %OUTPUT_JAR% %SOURCE_XSD% -compiler "%JAVAC%" -javasource "1.5"
 
 :END
