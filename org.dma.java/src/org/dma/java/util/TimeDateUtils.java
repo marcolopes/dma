@@ -76,13 +76,13 @@ public class TimeDateUtils {
 	public static final String TIME_MINUTE_PATTERN = String.valueOf(new char[]{JAVA_MINUTE, JAVA_MINUTE});
 	/** ss */
 	public static final String TIME_SECOND_PATTERN = String.valueOf(new char[]{JAVA_SECOND, JAVA_SECOND});
-	/** SS */
+	/** SSS */
 	public static final String TIME_MILISECOND_PATTERN = String.valueOf(new char[]{JAVA_MILLISECOND, JAVA_MILLISECOND, JAVA_MILLISECOND});
 	/** (:) Colon */
 	public static final char DEFAULT_TIME_SEPARATOR = ':';
 	/** HH:mm */
 	public static final String DEFAULT_TIME_PATTERN = TIME_HOUR_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MINUTE_PATTERN;
-	/** yyyy-MM-dd;HH:mm:ss:SS */
+	/** yyyy-MM-dd;HH:mm:ss:SSS */
 	public static final String DEFAULT_TIMESTAMP_PATTERN = DATE_YEAR_PATTERN + DEFAULT_DATE_SEPARATOR + DATE_MONTH_PATTERN + DEFAULT_DATE_SEPARATOR + DATE_DAY_PATTERN+";"+
 			TIME_HOUR_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MINUTE_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_SECOND_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MILISECOND_PATTERN;
 
