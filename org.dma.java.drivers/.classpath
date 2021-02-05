@@ -11,7 +11,7 @@
 	<classpathentry exported="true" kind="lib" path="libraries/dbcp/commons-dbcp-1.4.jar" sourcepath="libraries/dbcp/commons-dbcp-1.4-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/dbcp/commons-logging-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/dbcp/commons-pool-1.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/jdbc/h2-1.3.169.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jdbc/h2-1.3.169.jar" sourcepath="libraries/jdbc/h2-1.3.169-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jdbc/mysql-connector-java-5.1.48.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jdbc/postgresql-42.2.12.jre6.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jdbc/sqljdbc4.jar"/>
