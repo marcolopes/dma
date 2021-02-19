@@ -92,7 +92,8 @@ public abstract class FieldBinding extends FieldError {
 				control instanceof CCombo ||
 				control instanceof Combo ||
 				control instanceof List ||
-				control instanceof Button){
+				control instanceof Button ||
+				control instanceof DateTime){
 
 			control.addListener(SWT.Selection, selectionListener);
 
