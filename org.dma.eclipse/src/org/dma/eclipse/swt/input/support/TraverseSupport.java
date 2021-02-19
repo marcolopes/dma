@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -22,28 +22,28 @@ public class TraverseSupport {
 	private final TraverseListener traverseListener = new TraverseListener() {
 		@Override
 		public void keyTraversed(TraverseEvent event) {
-			try{
-				//current control
+			try{//current control
 				Control control=(Control)event.getSource();
 				//multi-line TEXT?
-				if (control instanceof Text &&
-						NumericUtils.bit(((Text)control).getStyle(), SWT.MULTI)){
-					Debug.out("SWT.MULTI");
-					//TAB key pressed?
-					if (event.keyCode==SWT.TAB){
-						event.doit=true; // traverse
+				if (control instanceof Text){
+					Text text=(Text)control;
+					if (NumericUtils.bit(text.getStyle(), SWT.MULTI)){
+						Debug.out("SWT.MULTI");
+						//TAB key pressed?
+						if (event.keyCode==SWT.TAB){
+							event.doit=true; // traverse
+						}//control KEYPAD return?
+						else if (keypadReturn) switch(event.keyCode){
+						case SWT.KEYPAD_CR:
+							event.doit=false; // do not traverse
+							break;
+						case SWT.CR:
+							event.detail=SWT.TRAVERSE_NONE; // avoid NEW line
+							event.doit=true; // traverse
+							break;
+						}
 					}
-					else if (keypadReturn) switch(event.keyCode){
-					case SWT.KEYPAD_CR:
-						event.doit=false; // do not traverse
-						break;
-					case SWT.CR:
-						event.detail=SWT.TRAVERSE_NONE; // avoid NEW line
-						event.doit=true; // traverse
-						break;
-					}
-				}
-				//next control
+				}//next control
 				if (event.doit) selectNext(control);
 
 			}catch(Exception e) {
@@ -52,7 +52,7 @@ public class TraverseSupport {
 		}
 	};
 
-	private final List<Control> controlList = new ArrayList();
+	private final List<Control> controlList=new ArrayList();
 
 	private final boolean keypadReturn;
 
@@ -99,21 +99,22 @@ public class TraverseSupport {
 	public Control getNext(Control control) {
 		int index=controlList.indexOf(control);
 		int index2=index;
-		do{
-			index=index+1==controlList.size() ? 0 : index+1;
+		do{index=index+1==controlList.size() ? 0 : index+1;
 		}while(index!=index2 && !controlList.get(index).isEnabled());
 		return controlList.get(index);
 	}
 
 	public void select(Control control) {
+		//remove focus (isolated control)
+		if (controlList.size()==1) control.getShell().setFocus();
 		control.setFocus();
-		control.update();
 		//selects text
 		if (control instanceof Text){
 			Text text=(Text)control;
 			//avoid MULTI
 			if (!NumericUtils.bit(text.getStyle(), SWT.MULTI)) text.selectAll();
-		}
+		}//update control
+		control.update();
 	}
 
 	public void selectNext(Control control) {

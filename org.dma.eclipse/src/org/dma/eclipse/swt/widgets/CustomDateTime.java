@@ -25,6 +25,10 @@ public class CustomDateTime extends DateTime {
 		super(parent, style);
 	}
 
+	public void setDate(Calendar calendar) {
+		setDate(TimeDateUtils.getYear(calendar), TimeDateUtils.getMonth(calendar), TimeDateUtils.getDayOfMonth(calendar));
+	}
+
 	public Calendar getCalendar() {
 		return TimeDateUtils.getCalendar(getYear(), getMonth(), getDay());
 	}
