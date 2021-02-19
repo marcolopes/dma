@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -74,16 +74,13 @@ public class FileHandler {
 	 * @param dst can be file or directory
 	 */
 	public boolean copyTo(File dst) {
-		try{
-			//destination can be a directory!
-			Files.copy(file.toPath(), dst.isDirectory() ?
-					new File(dst.getPath()+File.separator+file.getName()).toPath() : dst.toPath(),
-					StandardCopyOption.REPLACE_EXISTING);
-			return true;
-
+		try{//destination can be a directory!
+			File target=dst.isDirectory() ? new File(dst.getPath()+File.separator+file.getName()) : dst;
+			Files.copy(file.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}catch(Exception e){
 			System.err.println(e);
-		}return false;
+			return false;
+		}return true;
 	}
 
 
@@ -92,23 +89,18 @@ public class FileHandler {
 	 * @param dst can be file or directory
 	 */
 	public boolean moveTo(File dst) {
-		try{
-			//destination can be a directory!
-			Files.move(file.toPath(), dst.isDirectory() ?
-					new File(dst.getPath()+File.separator+file.getName()).toPath() : dst.toPath(),
-					StandardCopyOption.REPLACE_EXISTING);
-			return true;
-
+		try{//destination can be a directory!
+			File target=dst.isDirectory() ? new File(dst.getPath()+File.separator+file.getName()) : dst;
+			Files.move(file.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}catch(Exception e){
 			System.err.println(e);
-		}return false;
+			return false;
+		}return true;
 	}
 
 
 	public boolean renameTo(String pathname) {
-		try{
-			return file.renameTo(new File(pathname));
-
+		try{return file.renameTo(new File(pathname));
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
@@ -116,9 +108,7 @@ public class FileHandler {
 
 
 	public boolean delete() {
-		try{
-			return file.delete();
-
+		try{return file.delete();
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
@@ -126,9 +116,7 @@ public class FileHandler {
 
 
 	public InputStream asInputStream() {
-		try{
-			return new FileInputStream(file);
-
+		try{return new FileInputStream(file);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -136,9 +124,7 @@ public class FileHandler {
 
 
 	public OutputStream asOutputStream() {
-		try{
-			return new FileOutputStream(file);
-
+		try{return new FileOutputStream(file);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -146,9 +132,7 @@ public class FileHandler {
 
 
 	public URL toURL() {
-		try{
-			return file.toURI().toURL();
-
+		try{return file.toURI().toURL();
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -156,9 +140,7 @@ public class FileHandler {
 
 
 	public boolean equals(File file) {
-		try{
-			return this.file.getCanonicalFile().equals(file.getCanonicalFile());
-
+		try{return this.file.getCanonicalFile().equals(file.getCanonicalFile());
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
