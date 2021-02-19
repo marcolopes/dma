@@ -17,7 +17,7 @@ public class StringList extends ArrayList<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	public static <T> StringList valueOf(T[] array) {
+	public static <T> StringList valueOf(T...array) {
 		return valueOf(Arrays.asList(array));
 	}
 

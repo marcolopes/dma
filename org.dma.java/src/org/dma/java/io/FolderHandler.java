@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,10 +11,15 @@ import java.util.regex.Pattern;
 
 public class FolderHandler {
 
-	public static File currentFolder() {
-		try{
-			return new File(".").getCanonicalFile();
+	public static File temporaryFolder() {
+		try{return new File(System.getProperty("java.io.tmpdir")).getAbsoluteFile();
+		}catch(Exception e){
+			System.err.println(e);
+		}return null;
+	}
 
+	public static File currentFolder() {
+		try{return new File(".").getCanonicalFile();
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;

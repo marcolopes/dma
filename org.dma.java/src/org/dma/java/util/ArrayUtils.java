@@ -88,15 +88,13 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns the greater number, or -1 if empty */
-	public static int greater(int[] array) {
+	/** Returns the sum of all elements */
+	public static int sum(int[] array) {
 
-		if (array.length==0) return -1;
+		int result=0;
 
-		int result=array[0];
-
-		for(int i=1; i<array.length; i++){
-			if (array[i]>result) result=array[i];
+		for(int value: array){
+			result+=value;
 		}
 
 		return result;
@@ -111,8 +109,24 @@ public class ArrayUtils {
 
 		int result=array[0];
 
-		for(int i: array){
-			if (i<result) result=i;
+		for(int value: array){
+			if (value<result) result=value;
+		}
+
+		return result;
+
+	}
+
+
+	/** Returns the greater number, or -1 if empty */
+	public static int greater(int[] array) {
+
+		if (array.length==0) return -1;
+
+		int result=array[0];
+
+		for(int value: array){
+			if (value>result) result=value;
 		}
 
 		return result;
