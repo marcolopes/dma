@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,7 +11,7 @@ public class FileParameters {
 
 	public final String prefix;
 	public final String suffix;
-	public final File folder;
+	public final Folder folder;
 	public final String filename;
 	public final String wildcards;
 
@@ -29,7 +29,7 @@ public class FileParameters {
 	public FileParameters(String prefix, String suffix, File folder) {
 		this.prefix=prefix;
 		this.suffix=suffix==null || suffix.startsWith(".") ? suffix : "."+suffix;
-		this.folder=folder;
+		this.folder=new Folder(folder);
 		this.filename=prefix + (suffix==null ? "" : this.suffix);
 		this.wildcards="*" + (suffix==null ? "" : this.suffix);
 	}
@@ -56,11 +56,12 @@ public class FileParameters {
 	}
 
 
-	/** @see #createTempFile() */
+	/** @see FileParameters#createTempFile() */
 	public File createTempFile(byte[] bytes) {
 
-		File file=createTempFile();
-		new ByteFileHandler(file).write(bytes);
+		ByteFile file=new ByteFile(createTempFile());
+
+		file.write(bytes);
 
 		return file;
 
@@ -81,7 +82,7 @@ public class FileParameters {
 	/** path + filename */
 	@Override
 	public String toString() {
-		return folder.getAbsolutePath() + File.separator + filename;
+		return folder + File.separator + filename;
 	}
 
 

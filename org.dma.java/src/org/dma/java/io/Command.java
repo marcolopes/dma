@@ -102,9 +102,9 @@ public class Command {
 
 		FileParameters parameters=new FileParameters("new image", "jpg", "c:\\tmp");
 		//create working folder
-		new FolderHandler(parameters.folder).create();
+		new Folder(parameters.folder).create();
 		//create empty image
-		new ByteFileHandler(parameters.toFile()).write(new byte[0]);
+		new ByteFile(parameters.toFile()).write(new byte[0]);
 
 		Command cmd=new Command("mspaint", parameters.filename);
 		cmd.setDirectory(parameters.folder);

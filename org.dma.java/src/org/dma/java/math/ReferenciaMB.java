@@ -7,6 +7,8 @@ package org.dma.java.math;
 
 import java.math.BigDecimal;
 
+import org.dma.java.util.StringUtils;
+
 public class ReferenciaMB {
 
 	/** Valor MAXIMO a pagar = 999999.99 */
@@ -131,7 +133,7 @@ public class ReferenciaMB {
 		if (entidade.length()!=5) throw new IllegalArgumentException("Entidade "+entidade+" invalida");
 		if (!isValid(valor)) throw new IllegalArgumentException("Valor "+valor+" invalido");
 
-		String ref9=ref.replaceAll(" ", "");
+		String ref9=StringUtils.replaceAll(ref," ","");
 		String id7=ref9.substring(0, 7);
 		String checkDigits=ref9.substring(7, 9);
 

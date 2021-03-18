@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -7,26 +7,26 @@ package org.dma.java.io;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 import org.dma.java.input.FieldFormat.SEPARATOR;
 
-public class URLTextFileHandler {
+public class URLTextFile extends URLFile {
 
-	public final URLFileHandler file;
 	public final Charset charset;
 
 	/** Uses JAVA DEFAULT charset */
-	public URLTextFileHandler(URLFileHandler file) {
-		this(file, Charset.defaultCharset());
+	public URLTextFile(String urlname, String...more) {
+		this(Charset.defaultCharset(), urlname, more);
 	}
 
-	public URLTextFileHandler(URLFileHandler file, String charsetName) {
-		this(file, Charset.forName(charsetName));
+	public URLTextFile(Charset charset, String urlname, String...more) {
+		this(charset, getURL(urlname, more));
 	}
 
-	public URLTextFileHandler(URLFileHandler file, Charset charset) {
-		this.file=file;
+	public URLTextFile(Charset charset, URL url) {
+		super(url);
 		this.charset=charset;
 	}
 
@@ -52,11 +52,11 @@ public class URLTextFileHandler {
 	/** Reads text from URL */
 	public String read() {
 
-		StringBuffer buffer=new StringBuffer(FileHandler.STRING_BUFFER_LENGTH);
+		StringBuffer buffer=new StringBuffer(CustomFile.STRING_BUFFER_LENGTH);
 
 		try{
 			BufferedReader in=new BufferedReader(
-					new InputStreamReader(file.asInputStream(), charset));
+					new InputStreamReader(asInputStream(), charset));
 
 			try{
 				String line;

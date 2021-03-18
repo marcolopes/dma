@@ -1,11 +1,12 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.net;
 
 import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -15,11 +16,15 @@ public class HttpURLHandler extends URLHandler {
 		super(urlname);
 	}
 
+	public HttpURLHandler(URL url) {
+		super(url);
+	}
+
 
 	public boolean ping(int timeout) {
 
 		try{
-			HttpURLConnection connection=(HttpURLConnection)url.openConnection();
+			HttpURLConnection connection=(HttpURLConnection)openConnection();
 			if (connection!=null) try{
 				connection.setRequestMethod("HEAD");
 				connection.setConnectTimeout(timeout);
@@ -42,7 +47,7 @@ public class HttpURLHandler extends URLHandler {
 	public boolean check(int status) {
 
 		try{
-			HttpURLConnection connection=(HttpURLConnection)url.openConnection();
+			HttpURLConnection connection=(HttpURLConnection)openConnection();
 			if (connection!=null) try{
 				connection.setRequestMethod("HEAD");
 				connection.setInstanceFollowRedirects(false);
@@ -61,23 +66,22 @@ public class HttpURLHandler extends URLHandler {
 	}
 
 
-	public boolean isAuthValid(final String key) {
+	public HttpURLConnection getConnection(String key) {
 
 		try{
-			HttpURLConnection connection=(HttpURLConnection)url.openConnection();
+			HttpURLConnection connection=(HttpURLConnection)openConnection();
 			if (connection!=null) try{
-				connection.setRequestMethod("GET");
-				connection.setRequestProperty("Content-Type", "application/xml");
 				connection.setRequestProperty("Authorization",
 						"Basic "+new String(new Base64(0).encode(key.getBytes())));
-				/* AVOID Authenticator mayhem at ALL COST!
+				/*
+				AVOID Authenticator mayhem at ALL COST!
 				Authenticator.setDefault(new Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(key, new char[0]);
 					}
 				});
 				*/
-				return connection.getResponseCode()==HttpURLConnection.HTTP_OK;
+				return connection;
 
 			}catch(Exception e){
 				System.err.println(e);
@@ -86,7 +90,23 @@ public class HttpURLHandler extends URLHandler {
 			}
 
 		}catch(Exception e){
+			e.printStackTrace();
+		}return null;
+
+	}
+
+
+	public boolean isAuthValid(String key) {
+
+		HttpURLConnection connection=getConnection(key);
+
+		if (connection!=null) try{
+			return connection.getResponseCode()==HttpURLConnection.HTTP_OK;
+
+		}catch(Exception e){
 			System.err.println(e);
+		}finally{
+			connection.disconnect();
 		}return false;
 
 	}
@@ -96,10 +116,11 @@ public class HttpURLHandler extends URLHandler {
 
 		HttpURLHandler handler=new HttpURLHandler("http://loja.projectocolibri.com/api");
 
+		System.err.println(handler);
 		System.err.println("Valid? " + handler.isValid());
 		System.err.println("HTTP? " + handler.check(HttpURLConnection.HTTP_OK));
 		System.err.println("Ping? " + handler.ping(3*1000));
-		System.err.println("Auth? " + handler.isAuthValid(""));
+		System.err.println("Auth? " + handler.isAuthValid("5TMPHJMYLDEZK7CERL3X8ELC3NAGIFLF"));
 
 	}
 

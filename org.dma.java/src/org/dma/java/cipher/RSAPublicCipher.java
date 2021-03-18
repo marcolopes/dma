@@ -13,7 +13,7 @@ import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.dma.java.io.ByteFileHandler;
+import org.dma.java.io.ByteFile;
 
 public class RSAPublicCipher extends CryptoCipher {
 
@@ -42,7 +42,7 @@ public class RSAPublicCipher extends CryptoCipher {
 
 	/** @see RSAPrivateCipher#decode(byte[]) */
 	public RSAPublicCipher(File file) {
-		this(new ByteFileHandler(file).readFully());
+		this(new ByteFile(file).readFully());
 	}
 
 	/** @see RSAPrivateCipher#decode(byte[]) */

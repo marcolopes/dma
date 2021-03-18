@@ -1,14 +1,14 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.io;
 
-public class UTF8URLTextFileHandler extends URLTextFileHandler {
+public class UTF8URLTextFile extends URLTextFile {
 
-	public UTF8URLTextFileHandler(URLFileHandler file) {
-		super(file, FileHandler.UTF8_CHARSET);
+	public UTF8URLTextFile(String urlname, String...more) {
+		super(CustomFile.UTF8_CHARSET, urlname, more);
 	}
 
 

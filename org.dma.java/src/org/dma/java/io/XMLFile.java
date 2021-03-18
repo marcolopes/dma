@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,13 +11,13 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 
-public class XMLFileHandler<T> extends FileHandler {
+public class XMLFile<T> extends CustomFile {
 
-	public XMLFileHandler(String pathname) {
-		super(pathname);
+	public XMLFile(String pathname, String... more) {
+		super(pathname, more);
 	}
 
-	public XMLFileHandler(File file) {
+	public XMLFile(File file) {
 		super(file);
 	}
 
@@ -90,7 +90,7 @@ public class XMLFileHandler<T> extends FileHandler {
 
 	public static void main(String[] argvs) {
 
-		XMLFileHandler<String> handler=new XMLFileHandler("XMLFileHandler.xml");
+		XMLFile<String> handler=new XMLFile("XMLFileHandler.xml");
 		handler.write("The quick brown fox jumps over the lazy dog.");
 		System.out.println(handler.read());
 

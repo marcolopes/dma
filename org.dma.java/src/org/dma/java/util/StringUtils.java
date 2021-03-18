@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -9,7 +9,6 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -27,9 +26,6 @@ public class StringUtils {
 	public static final String DECIMAL_NUMBERS = "0123456789";
 	public static final String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
 	public static final String UPPERCASE_LETTERS = LOWERCASE_LETTERS.toUpperCase();
-
-	public static final String EMPTY_QUOTE = quote("");
-	public static final String QUOTED_SPACE = quote(" ");
 
 	/*
 	 * Conversion
@@ -175,23 +171,16 @@ public class StringUtils {
 
 		for(int i=0; i<searchFor.length; i++){
 			if (string.equals(searchFor[i])) return i;
-		}
-
-		return -1;
+		}return -1;
 
 	}
 
 
 	public static int startsWith(String string, String...searchFor) {
 
-		String[] array=Arrays.copyOf(searchFor, searchFor.length);
-		Arrays.sort(array, Collections.reverseOrder());
-
-		for(int i=0; i<array.length; i++){
-			if (string.startsWith(array[i])) return ArrayUtils.indexOf(searchFor, array[i]);
-		}
-
-		return -1;
+		for(int i=0; i<searchFor.length; i++){
+			if (string.startsWith(searchFor[i])) return i;
+		}return -1;
 
 	}
 

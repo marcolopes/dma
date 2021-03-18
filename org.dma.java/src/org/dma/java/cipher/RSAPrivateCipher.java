@@ -13,7 +13,7 @@ import java.security.SignatureException;
 import java.security.spec.PKCS8EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.dma.java.io.ByteFileHandler;
+import org.dma.java.io.ByteFile;
 
 public class RSAPrivateCipher extends CryptoCipher {
 
@@ -42,7 +42,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 
 	/** @see RSAPrivateCipher#decode(byte[]) */
 	public RSAPrivateCipher(File file) {
-		this(new ByteFileHandler(file).readFully());
+		this(new ByteFile(file).readFully());
 	}
 
 	/** @see RSAPrivateCipher#decode(byte[]) */

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -8,7 +8,6 @@ package org.dma.java.io;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
@@ -17,29 +16,26 @@ import java.nio.charset.Charset;
 
 import org.dma.java.input.FieldFormat.SEPARATOR;
 
-public class TextFileHandler extends FileHandler {
+public class TextFile extends CustomFile {
 
 	public final Charset charset;
 
 	/** Uses JAVA DEFAULT charset */
-	public TextFileHandler(String pathname) {
-		this(new File(pathname));
+	public TextFile(String pathname, String...more) {
+		this(Charset.defaultCharset(), pathname, more);
+	}
+
+	public TextFile(Charset charset, String pathname, String...more) {
+		super(pathname, more);
+		this.charset=charset;
 	}
 
 	/** Uses JAVA DEFAULT charset */
-	public TextFileHandler(File file) {
-		this(file, Charset.defaultCharset());
+	public TextFile(File file) {
+		this(Charset.defaultCharset(), file);
 	}
 
-	public TextFileHandler(String pathname, String charsetName) {
-		this(new File(pathname), charsetName);
-	}
-
-	public TextFileHandler(File file, String charsetName) {
-		this(file, Charset.forName(charsetName));
-	}
-
-	public TextFileHandler(File file, Charset charset) {
+	public TextFile(Charset charset, File file) {
 		super(file);
 		this.charset=charset;
 	}
@@ -65,7 +61,7 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader in=new BufferedReader(new FileReader(file));
+			BufferedReader in=new BufferedReader(new FileReader(this));
 
 			try{
 				String line;
@@ -94,7 +90,7 @@ public class TextFileHandler extends FileHandler {
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
 		try{
-			BufferedReader in=new BufferedReader(new FileReader(file));
+			BufferedReader in=new BufferedReader(new FileReader(this));
 
 			try{
 				String line;
@@ -141,7 +137,7 @@ public class TextFileHandler extends FileHandler {
 	public boolean writeText(String text) {
 
 		try{
-			BufferedWriter out=new BufferedWriter(new FileWriter(file));
+			BufferedWriter out=new BufferedWriter(new FileWriter(this));
 
 			try{
 				out.write(text);
@@ -183,7 +179,7 @@ public class TextFileHandler extends FileHandler {
 
 		try{
 			BufferedReader in=new BufferedReader(
-							new InputStreamReader(asInputStream(), charset));
+					new InputStreamReader(asInputStream(), charset));
 
 			try{
 				String line;
@@ -240,8 +236,8 @@ public class TextFileHandler extends FileHandler {
 	public boolean write(String text, boolean append) {
 
 		try{
-			BufferedWriter out=new BufferedWriter(new OutputStreamWriter(
-							new FileOutputStream(file, append), charset));
+			BufferedWriter out=new BufferedWriter(
+					new OutputStreamWriter(asOutputStream(append), charset));
 
 			try{
 				out.write(text);

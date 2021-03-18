@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Sergio Gomes (s.miguelgomes@hotmail.com)
@@ -27,13 +27,16 @@ import com.lowagie.text.pdf.PdfStamper;
 
 import org.dma.java.security.JKSCertificate;
 
-public class PdfFileHandler extends FileHandler {
+/**
+ * https://kb.itextpdf.com/home/it5kb/faq/can-itext-2-1-7-itextsharp-4-1-6-or-earlier-be-used-commercially
+ */
+public class PdfFile extends CustomFile {
 
-	public PdfFileHandler(String pathname) {
-		super(pathname);
+	public PdfFile(String pathname, String...more) {
+		super(pathname, more);
 	}
 
-	public PdfFileHandler(File file) {
+	public PdfFile(File file) {
 		super(file);
 	}
 
@@ -45,10 +48,10 @@ public class PdfFileHandler extends FileHandler {
 	public void sign(PrivateKey privateKey, Certificate[] certChain,
 			String reason, String location, String contact) throws DocumentException, IOException {
 
-		File output=new File(file+".tmp");
+		CustomFile output=new CustomFile(this+".tmp");
 
-		FileInputStream in=new FileInputStream(file);
-		FileOutputStream out=new FileOutputStream(output);
+		FileInputStream in=asInputStream();
+		FileOutputStream out=output.asOutputStream();
 
 		try{
 			PdfStamper stamper=PdfStamper.createSignature(
@@ -75,8 +78,8 @@ public class PdfFileHandler extends FileHandler {
 			in.close();
 		}
 
-		file.delete();
-		output.renameTo(file);
+		delete();
+		output.renameTo(this);
 
 	}
 
@@ -103,9 +106,10 @@ public class PdfFileHandler extends FileHandler {
 
 	public void addScript(String script) throws DocumentException, IOException {
 
-		File output=new File(file+".tmp");
-		FileInputStream in=new FileInputStream(file);
-		FileOutputStream out=new FileOutputStream(output);
+		CustomFile output=new CustomFile(this+".tmp");
+
+		FileInputStream in=asInputStream();
+		FileOutputStream out=output.asOutputStream();
 
 		try{
 			PdfStamper stamper=new PdfStamper(new PdfReader(in), out);
@@ -122,8 +126,8 @@ public class PdfFileHandler extends FileHandler {
 			in.close();
 		}
 
-		file.delete();
-		output.renameTo(file);
+		delete();
+		output.renameTo(this);
 
 	}
 
@@ -133,7 +137,7 @@ public class PdfFileHandler extends FileHandler {
 
 		if (files.size()==0) return;
 
-		FileOutputStream out=new FileOutputStream(file);
+		FileOutputStream out=asOutputStream();
 
 		try{
 			PdfCopyFields copy=new PdfCopyFields(out);
