@@ -43,7 +43,7 @@ public class VatNumber {
 
 	/** Returns the VAT NUMBER without spaces and country prefix */
 	public static String parse(COUNTRIES country, String vatNumber) {
-		String compacted=vatNumber.replaceAll(" ","").toUpperCase();
+		String compacted=vatNumber.replace(" ","").toUpperCase();
 		return compacted.startsWith(country.name()) ?
 				compacted.substring(country.name().length()) : compacted;
 	}
