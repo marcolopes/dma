@@ -18,7 +18,7 @@ import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.dma.java.io.FileHandler;
+import org.dma.java.io.CustomFile;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.ImageData;
@@ -98,8 +98,8 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the the file at the specified path.
 	 */
-	public CustomImageDescriptor(String path) {
-		this(getImageData(new FileHandler(path).asInputStream()));
+	public CustomImageDescriptor(String pathname) {
+		this(getImageData(new CustomFile(pathname).asInputStream()));
 	}
 
 	/**

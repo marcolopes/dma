@@ -8,8 +8,6 @@ package org.dma.eclipse.swt.widgets;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.dma.java.util.Debug;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -85,16 +83,16 @@ public class CustomTable extends Table {
 				CustomTableColumn customColumn=(CustomTableColumn)column;
 				totalPercentage+=customColumn.getWidthPercentage();
 				width=tableWidth * customColumn.getWidthPercentage() / 100;
-			}//set DEFINED WIDTH
+			}//set defined WIDTH
 			if (width>0) column.setWidth(width);
 			else columns.add(column);
 		}
 		if (totalPercentage<0 || totalPercentage>100){
-			Debug.err("Wrong total percentage: "+totalPercentage);
+			System.err.println("Wrong total percentage: "+totalPercentage);
 		}else if (columns.size()>0){
 			int remainingWidth=tableWidth * (100-totalPercentage) / 100;
 			if (remainingWidth==0){
-				Debug.err("No remaining width for "+columns.size()+" columns");
+				System.err.println("No remaining width for "+columns.size()+" columns");
 			}else{
 				int width=remainingWidth / columns.size();
 				for(TableColumn column: columns) column.setWidth(width);
