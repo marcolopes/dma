@@ -1,15 +1,17 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.dialogs.file;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import org.dma.java.io.TextFileHandler;
-import org.dma.java.io.XMLFileHandler;
+import org.dma.java.io.Folder;
+import org.dma.java.io.TextFile;
+import org.dma.java.io.XMLFile;
 import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
@@ -35,14 +37,14 @@ public class FileExport extends FileDialog {
 
 
 	/** @see FileDialog#setFilterPath(String) */
-	public File filePicker(String defaultPath, String filename) {
+	public File filePicker(Folder defaultPath, String filename) {
 
 		try{
 			// FileDialog SWT 3.7 BUG
 			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
 			// OSX 10.9 workaround
 			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
-			setFilterPath(defaultPath==null ? "." : defaultPath);
+			setFilterPath(defaultPath==null ? "." : defaultPath.getAbsolutePath());
 			setFileName(filename);
 
 			return new File(open());
@@ -64,21 +66,15 @@ public class FileExport extends FileDialog {
 	}
 
 
-	public void writeText(String text, String defaultFile, String charsetName) {
+	public void writeText(String text, String defaultFile, Charset charset) {
 		setFileName(defaultFile);
-		if(open()!=null){
-			String filename=getFilterPath()+File.separator+getFileName();
-			new TextFileHandler(filename, charsetName).write(text);
-		}
+		if (open()!=null) new TextFile(charset, getFilterPath(), getFileName()).write(text);
 	}
 
 
 	public void writeXML(Object obj, String defaultFile) {
 		setFileName(defaultFile);
-		if(open()!=null){
-			String filename=getFilterPath()+File.separator+getFileName();
-			new XMLFileHandler(filename).write(obj);
-		}
+		if (open()!=null) new XMLFile(getFilterPath(), getFileName()).write(obj);
 	}
 
 

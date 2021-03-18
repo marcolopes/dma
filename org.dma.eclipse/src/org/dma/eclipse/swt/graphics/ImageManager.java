@@ -30,8 +30,8 @@ public class ImageManager {
 	}
 
 	/** Returns the {@link Image} key based on image-path string */
-	public static String getKey(String path) {
-		return "path:"+path;
+	public static String getKey(String pathname) {
+		return "path:"+pathname;
 	}
 
 	/** Returns the {@link Image} key based on image-bytes hash */
@@ -71,11 +71,11 @@ public class ImageManager {
 	 * Returns the CACHED {@link Image}
 	 * or a new one if not CACHED or is DISPOSED
 	 */
-	public static Image getImage(String path) {
-		String key=getKey(path);
+	public static Image getImage(String pathname) {
+		String key=getKey(pathname);
 		Image image=REGISTRY.get(key);
 		if (image==null){
-			image=new CustomImageDescriptor(path).createImage();
+			image=new CustomImageDescriptor(pathname).createImage();
 			REGISTRY.put(key, image);
 		}return image;
 	}
