@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -9,6 +9,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ import java.util.Collection;
 import org.dma.java.drivers.Activator;
 import org.dma.java.io.Command;
 import org.dma.java.io.FileParameters;
-import org.dma.java.io.ZipFileHandler;
+import org.dma.java.io.ZipFile;
 import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
@@ -161,7 +162,7 @@ public enum DRIVERS {
 			//check lock
 			checkH2Lock(pathname);
 			//ZIP dump
-			new ZipFileHandler(zip.toFile()).deflate(Arrays.asList(file));
+			new ZipFile(zip.toFile()).deflate(Arrays.asList(file));
 			//Driver H2 v1.3.169
 			//Backup.execute does not work with eclipse exported product on MAC!
 			//https://groups.google.com/forum/#!topic/h2-database/AT7OpOkQfZ4
@@ -182,7 +183,7 @@ public enum DRIVERS {
 					database, user, password, dump), password); break;
 			}
 			//ZIP dump
-			new ZipFileHandler(zip.toFile()).deflate(Arrays.asList(dump.toFile()));
+			new ZipFile(zip.toFile()).deflate(Arrays.asList(dump.toFile()));
 			//delete dump
 			dump.toFile().delete();
 		}
@@ -249,7 +250,7 @@ public enum DRIVERS {
 		case H2: break;
 		case MySQL:
 			Statement st=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs=st.executeQuery("select CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where CONSTRAINT_SCHEMA = SCHEMA() and TABLE_NAME = '"+tableName.toUpperCase()+"' and COLUMN_NAME = '"+columnName.toUpperCase()+"'");
+			ResultSet rs=st.executeQuery("SELECT CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where CONSTRAINT_SCHEMA = SCHEMA() and TABLE_NAME = '"+tableName.toUpperCase()+"' and COLUMN_NAME = '"+columnName.toUpperCase()+"'");
 			while(rs.next()) col.add(rs.getString("CONSTRAINT_NAME"));
 			st.close();
 			break;
@@ -264,7 +265,7 @@ public enum DRIVERS {
 		case H2: break;
 		case MySQL:
 			Statement st=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs=st.executeQuery("SHOW INDEX FROM `" + tableName.toUpperCase() + "` where column_name = '" + columnName.toUpperCase() + "'");
+			ResultSet rs=st.executeQuery("SHOW INDEX FROM '"+tableName.toUpperCase()+"' where COLUMN_NAME = '"+columnName.toUpperCase()+"'");
 			while(rs.next()) col.add(rs.getString("Key_name"));
 			st.close();
 			break;
@@ -276,10 +277,14 @@ public enum DRIVERS {
 	public void executeSQLUpdate(Connection connection, String sql) throws SQLException {
 		try{
 			Statement st=connection.createStatement();
-			st.executeUpdate(sql);
-			st.close();
-			connection.commit();
-		}catch(Exception e){
+			try{
+				st.executeUpdate(sql);
+			}catch(SQLTimeoutException e){
+				System.out.println(e);
+			}finally{
+				st.close();
+			}connection.commit();
+		}catch(SQLException e){
 			connection.rollback();
 			throw new SQLException(e);
 		}
