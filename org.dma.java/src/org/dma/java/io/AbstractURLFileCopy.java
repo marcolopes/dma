@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2016 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -14,18 +14,24 @@ import java.io.OutputStream;
 
 public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
+	private final URLFile file;
+
+	public AbstractURLFileCopy(URLFile file) {
+		this.file=file;
+	}
+
 	/**
-	 * Downloads a file from SOURCE to DESTINATION
+	 * Downloads the file to DESTINATION
 	 * @return
 	 * TRUE if download was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean to(URLFileHandler src, String dst) {
+	public boolean to(File dst) {
 
 		try{
 			File output=new File(dst+".tmp");
 
-			BufferedInputStream in=new BufferedInputStream(src.asInputStream());
+			BufferedInputStream in=new BufferedInputStream(file.asInputStream());
 
 			OutputStream out=new BufferedOutputStream(new FileOutputStream(output));
 
@@ -37,9 +43,9 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 				in.close();
 			}
 
-			new File(dst).delete();
+			dst.delete();
 
-			return output.renameTo(new File(dst));
+			return output.renameTo(dst);
 
 		}catch(InterruptedException e){
 			System.out.println(e);
@@ -51,17 +57,17 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
 
 	/**
-	 * Uploads a file from SOURCE to DESTINATION
+	 * Uploads the file from SOURCE
 	 * @return
 	 * TRUE if download was completed;
 	 * FALSE if canceled or error
 	 */
-	public boolean to(String src, URLFileHandler dst) {
+	public boolean from(File src) {
 
 		try{
 			BufferedInputStream in=new BufferedInputStream(new FileInputStream(src));
 
-			OutputStream out=new BufferedOutputStream(dst.asOutputStream());
+			OutputStream out=new BufferedOutputStream(file.asOutputStream());
 
 			try{
 				copy(in, out);

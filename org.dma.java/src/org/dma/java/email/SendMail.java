@@ -14,7 +14,7 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.dma.java.email.ServerParameters.SECURITY;
 import org.dma.java.io.FileParameters;
-import org.dma.java.io.UTF8TextFileHandler;
+import org.dma.java.io.UTF8TextFile;
 import org.dma.java.util.Debug;
 
 public class SendMail {
@@ -101,7 +101,7 @@ public class SendMail {
 
 			//attachment file
 			File file=new FileParameters("attachment", "txt").createTempFile();
-			new UTF8TextFileHandler(file).write("Email attachment created "+new Date());
+			new UTF8TextFile(file).write("Email attachment created "+new Date());
 
 			//simple mail
 			mail.send(from, to, "SUBJECT: Simple Mail Test", "MESSAGE: Plain Text");

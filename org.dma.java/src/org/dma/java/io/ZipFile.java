@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -10,13 +10,13 @@ import java.util.Collection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class ZipFileHandler extends FileHandler {
+public class ZipFile extends CustomFile {
 
-	public ZipFileHandler(String path) {
-		super(path);
+	public ZipFile(String pathname, String...more) {
+		super(pathname, more);
 	}
 
-	public ZipFileHandler(File file) {
+	public ZipFile(File file) {
 		super(file);
 	}
 
@@ -29,7 +29,7 @@ public class ZipFileHandler extends FileHandler {
 			ZipEntry entry=new ZipEntry(file.getName());
 			entry.setMethod(method);
 			out.putNextEntry(entry);
-			out.write(new ByteFileHandler(file).read());
+			out.write(new ByteFile(file).read());
 			out.closeEntry();
 		}
 

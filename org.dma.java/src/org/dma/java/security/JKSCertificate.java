@@ -21,7 +21,7 @@ import java.util.Date;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.dma.java.io.ByteFileHandler;
+import org.dma.java.io.ByteFile;
 import org.dma.java.util.TimeDateUtils;
 
 public class JKSCertificate {
@@ -47,7 +47,7 @@ public class JKSCertificate {
 	 * @param password - the keystore password (null=no integrity checking)
 	 */
 	public JKSCertificate(CERTIFICATE_TYPE type, String keystore, String password) {
-		this(type, new ByteFileHandler(keystore).read(), password, null);
+		this(type, new ByteFile(keystore).read(), password, null);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class JKSCertificate {
 	 * @param alias - the alias to load (null=use first alias found)
 	 */
 	public JKSCertificate(CERTIFICATE_TYPE type, String keystore, String password, String alias) {
-		this(type, new ByteFileHandler(keystore).read(), password, alias);
+		this(type, new ByteFile(keystore).read(), password, alias);
 	}
 
 	/**

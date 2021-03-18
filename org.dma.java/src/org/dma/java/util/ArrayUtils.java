@@ -228,7 +228,7 @@ public class ArrayUtils {
 	public static String[] insert(String[] array, int index, String...element) {
 
 		//ensure exact capacity
-		StringList result=new StringList(array, array.length+element.length);
+		StringList result=new StringList(array.length+element.length, array);
 
 		result.addAll(index, Arrays.asList(element));
 
@@ -241,7 +241,7 @@ public class ArrayUtils {
 	public static String[] append(String[] array, String...element) {
 
 		//ensure exact capacity
-		StringList result=new StringList(array, array.length+element.length);
+		StringList result=new StringList(array.length+element.length, array);
 
 		result.addAll(Arrays.asList(element));
 

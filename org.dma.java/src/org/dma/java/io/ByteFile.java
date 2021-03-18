@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,13 +11,13 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 
-public class ByteFileHandler extends FileHandler {
+public class ByteFile extends CustomFile {
 
-	public ByteFileHandler(String pathname) {
-		super(pathname);
+	public ByteFile(String pathname, String...more) {
+		super(pathname, more);
 	}
 
-	public ByteFileHandler(File file) {
+	public ByteFile(File file) {
 		super(file);
 	}
 
@@ -39,11 +39,11 @@ public class ByteFileHandler extends FileHandler {
 
 		try{
 			// Get the size of the file
-			long length=file.length();
+			long length=length();
 
 			// File is too large
 			if (length > Integer.MAX_VALUE)
-				throw new IOException("File is too large: "+file.getName());
+				throw new IOException("File is too large: "+getName());
 
 			byte[] buffer=new byte[(int)length];
 
@@ -59,7 +59,7 @@ public class ByteFileHandler extends FileHandler {
 
 				// Ensure all the bytes have been read in
 				if (offset < buffer.length)
-					throw new IOException("Could not completely read file: "+file.getName());
+					throw new IOException("Could not completely read file: "+getName());
 
 			}finally{
 				in.close();
@@ -76,11 +76,11 @@ public class ByteFileHandler extends FileHandler {
 
 		try{
 			// Get the size of the file
-			long length=file.length();
+			long length=length();
 
 			// File is too large
 			if (length > Integer.MAX_VALUE)
-				throw new IOException("File is too large: "+file.getName());
+				throw new IOException("File is too large: "+getName());
 
 			byte[] buffer=new byte[(int)length];
 

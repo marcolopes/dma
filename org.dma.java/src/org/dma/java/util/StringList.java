@@ -33,10 +33,10 @@ public class StringList extends ArrayList<String> {
 	}
 
 	public StringList(String[] array) {
-		this(array, array.length);
+		this(array.length, array);
 	}
 
-	public StringList(String[] array, int initialCapacity) {
+	public StringList(int initialCapacity, String[] array) {
 		this(initialCapacity);
 		addAll(Arrays.asList(array));
 	}

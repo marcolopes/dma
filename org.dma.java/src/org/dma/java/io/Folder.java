@@ -9,45 +9,28 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.regex.Pattern;
 
-public class FolderHandler {
+public class Folder extends CustomFile {
 
-	public static File temporaryFolder() {
-		try{return new File(System.getProperty("java.io.tmpdir")).getAbsoluteFile();
+	public static Folder current(String...more) {
+		try{return new Folder("", more);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
 	}
 
-	public static File currentFolder() {
-		try{return new File(".").getCanonicalFile();
+	public static Folder temporary(String...more) {
+		try{return new Folder(System.getProperty("java.io.tmpdir"), more);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
 	}
 
-	public final File folder;
-
-	/** Uses CURRENT FOLDER */
-	public FolderHandler() {
-		this(currentFolder());
+	public Folder(String pathname, String...more) {
+		super(pathname, more);
 	}
 
-	public FolderHandler(String foldername) {
-		this(new File(foldername));
-	}
-
-	public FolderHandler(File folder) {
-		this.folder=folder;
-	}
-
-
-	/** Returns folder path relative to current folder */
-	public String getRelativePath() {
-		String current=currentFolder().getAbsolutePath();
-		String folder=this.folder.getAbsolutePath();
-		return folder.toLowerCase().startsWith(current.toLowerCase()) &&
-				folder.length()>current.length() ?
-						folder.substring(current.length()+1) : folder;
+	public Folder(File folder) {
+		super(folder);
 	}
 
 
@@ -57,7 +40,7 @@ public class FolderHandler {
 	public File[] listDirectories(final String wildcards) {
 
 		try{
-			return folder.listFiles(new FileFilter() {
+			return listFiles(new FileFilter() {
 				//convert to regex
 				String regex=wildcards.replace("*", ".*").replace("?", ".");
 				Pattern pattern=Pattern.compile(regex);
@@ -83,7 +66,7 @@ public class FolderHandler {
 	public boolean create() {
 
 		try{
-			return folder.exists() ? true : folder.mkdir();
+			return exists() ? true : mkdir();
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -99,7 +82,7 @@ public class FolderHandler {
 	public File[] listFiles(final String wildcards) {
 
 		try{
-			return folder.listFiles(new FileFilter() {
+			return listFiles(new FileFilter() {
 				//convert to regex
 				String regex=wildcards.replace("*", ".*").replace("?", ".");
 				Pattern pattern=Pattern.compile(regex);
@@ -115,6 +98,7 @@ public class FolderHandler {
 
 	}
 
+	@Override
 	public File[] listFiles() {
 
 		return listFiles("*.*");
@@ -122,7 +106,8 @@ public class FolderHandler {
 	}
 
 
-	public String[] getFileNames(String wildcards) {
+	@Deprecated
+	String[] getFileNames(String wildcards) {
 
 		int index=0;
 		File[] files=listFiles(wildcards);
@@ -132,7 +117,8 @@ public class FolderHandler {
 
 	}
 
-	public String[] getFileNames() {
+	@Deprecated
+	String[] getFileNames() {
 
 		return getFileNames("*.*");
 
@@ -149,10 +135,7 @@ public class FolderHandler {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-
-		System.out.println(count+"/"+files.length+" files deleted in "+
-				folder.getAbsolutePath()+File.separator+wildcards);
+		}System.out.println(count+"/"+files.length+" files deleted in "+toString());
 
 		return count;
 
@@ -168,11 +151,9 @@ public class FolderHandler {
 
 	public static final void main(String[] args) {
 
-		System.out.println(currentFolder());
-
-		FolderHandler handler=new FolderHandler(currentFolder()+"/tmp/");
-		System.out.println(handler.folder.getAbsolutePath());
-		System.out.println(handler.getRelativePath());
+		System.out.println(current());
+		System.out.println(current("tmp"));
+		System.out.println(temporary());
 
 	}
 
