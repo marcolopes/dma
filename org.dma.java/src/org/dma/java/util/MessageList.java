@@ -53,12 +53,14 @@ public class MessageList extends LinkedHashSet<String> {
 	}
 
 	/** "prefix: message" */
-	public void add(String prefix, String message) {
+	public MessageList add(String prefix, String message) {
 		add(prefix+": "+message);
+		return this;
 	}
 
-	public boolean add(Throwable e) {
-		return add(e.getMessage()==null ? e.toString() : e.getMessage());
+	public MessageList add(Throwable e) {
+		add(e.getMessage()==null ? e.toString() : e.getMessage());
+		return this;
 	}
 
 
