@@ -11,6 +11,8 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class ByteFile extends CustomFile {
 
 	public ByteFile(String pathname, String...more) {
@@ -98,6 +100,14 @@ public class ByteFile extends CustomFile {
 			System.err.println(e);
 		}return new byte[0];
 
+	}
+
+	public byte[] encodeBase64() {
+		return Base64.encodeBase64(readFully());
+	}
+
+	public String encodeBase64String() {
+		return Base64.encodeBase64String(readFully());
 	}
 
 

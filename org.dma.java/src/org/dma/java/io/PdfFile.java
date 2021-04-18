@@ -15,17 +15,14 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
-import java.security.cert.Certificate;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfCopyFields;
 import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfSignatureAppearance;
 import com.lowagie.text.pdf.PdfStamper;
 
-import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.PdfSignature;
 
 /**
  * https://kb.itextpdf.com/home/it5kb/faq/can-itext-2-1-7-itextsharp-4-1-6-or-earlier-be-used-commercially
@@ -45,8 +42,7 @@ public class PdfFile extends CustomFile {
 	 * <a href=http://itextpdf.sourceforge.net/howtosign.html>
 	 * How to sign a PDF using iText</a>
 	 */
-	public void sign(PrivateKey privateKey, Certificate[] certChain,
-			String reason, String location, String contact) throws DocumentException, IOException {
+	public void append(PdfSignature signature) throws DocumentException, IOException {
 
 		CustomFile output=new CustomFile(this+".tmp");
 
@@ -55,23 +51,12 @@ public class PdfFile extends CustomFile {
 
 		try{
 			PdfStamper stamper=PdfStamper.createSignature(
-					new PdfReader(in), out, '\0'); // keep pdf version
+					new PdfReader(in), out,
+					'\0', //keep pdf version
+					null, //process in memory
+					true); //allow multiple signatures
 
-			try{
-				PdfSignatureAppearance signature=stamper.getSignatureAppearance();
-				signature.setCrypto(privateKey, certChain, null,
-						PdfSignatureAppearance.WINCER_SIGNED);
-
-				signature.setSignDate(new GregorianCalendar());
-				signature.setReason(reason);
-				signature.setLocation(location);
-				signature.setContact(contact);
-				//comment next line to have an invisible signature
-				//signature.setVisibleSignature(new Rectangle(100, 100, 200, 200), 1, null);
-
-			}finally{
-				stamper.close();
-			}
+			signature.stampWith(stamper);
 
 		}finally{
 			out.close(); //PdfReader does not close stream
@@ -84,14 +69,6 @@ public class PdfFile extends CustomFile {
 	}
 
 
-	public void sign(JKSCertificate cert, String reason, String location, String contact)
-			throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, DocumentException, IOException {
-
-		sign(cert.getPrivateKey(), cert.getCertificateChain(), reason, location, contact);
-
-	}
-
-
 	@Deprecated
 	public void sign(KeyStore keyStore, String password, String reason, String location, String contact)
 			throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, DocumentException, IOException {
@@ -99,7 +76,12 @@ public class PdfFile extends CustomFile {
 		String alias=keyStore.aliases().nextElement();
 		PrivateKey privateKey=(PrivateKey)keyStore.getKey(alias, password.toCharArray());
 
-		sign(privateKey, keyStore.getCertificateChain(alias), reason, location, contact);
+		PdfSignature signature=new PdfSignature(privateKey, keyStore.getCertificateChain(alias));
+		signature.setReason(reason);
+		signature.setLocation(location);
+		signature.setContact(contact);
+
+		append(signature);
 
 	}
 
