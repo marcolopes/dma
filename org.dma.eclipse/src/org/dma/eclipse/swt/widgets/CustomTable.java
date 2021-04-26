@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -22,6 +22,10 @@ public class CustomTable extends Table {
 	 */
 	public static final int STYLE_SINGLE = SWT.BORDER | SWT.SINGLE | SWT.FULL_SELECTION;
 	public static final int STYLE_MULTI =  SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION;
+
+	public enum SORT_DIRECTION {
+		NONE, ASCENDING, DESCENDING;
+	}
 
 	@Override //subclassing
 	protected void checkSubclass() {}
@@ -102,5 +106,12 @@ public class CustomTable extends Table {
 		busy=false;
 	}
 
+
+	public SORT_DIRECTION sortDirection() {
+		switch(getSortDirection()){
+		case SWT.UP: return SORT_DIRECTION.ASCENDING;
+		case SWT.DOWN: return SORT_DIRECTION.DESCENDING;
+		}return SORT_DIRECTION.NONE;
+	}
 
 }

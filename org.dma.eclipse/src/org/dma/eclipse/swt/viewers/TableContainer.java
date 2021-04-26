@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.viewers;
 
+import org.dma.eclipse.swt.widgets.CustomTable.SORT_DIRECTION;
 import org.dma.java.util.ArrayUtils;
 
 import org.eclipse.swt.SWT;
@@ -26,7 +27,7 @@ public abstract class TableContainer {
 	private final MouseAdapter tableDoubleClickListener=new MouseAdapter() {
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
-			if(getSelectionIndex()!=-1) editObject();
+			if (getSelectionIndex()!=-1) editObject();
 		}
 	};
 
@@ -43,7 +44,7 @@ public abstract class TableContainer {
 	protected final Table table;
 
 	public TableContainer(Table table) {
-		this(table, SWT.NONE);
+		this(table, SORT_DIRECTION.NONE);
 	}
 
 	/**
@@ -53,9 +54,9 @@ public abstract class TableContainer {
 	 * {@link SWT#DOWN}
 	 * {@link SWT#NONE}
 	 */
-	public TableContainer(Table table, int direction) {
+	public TableContainer(Table table, SORT_DIRECTION direction) {
 		this.table=table;
-		if (direction==SWT.UP || direction==SWT.DOWN) addSortColumnSupport(direction);
+		if (direction!=SORT_DIRECTION.NONE) addSortColumnSupport(direction);
 		addTableListeners();
 	}
 
@@ -85,22 +86,25 @@ public abstract class TableContainer {
 	/*
 	 * Table
 	 */
-	private void addSortColumnSupport(int direction) {
-		if (table.getColumnCount()>0) table.setSortColumn(table.getColumn(0));
-		table.setSortDirection(direction);
-		for(TableColumn column: table.getColumns()){
-			column.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					TableColumn column=(TableColumn)e.widget;
-					//avoids if unselected
-					if (table.getSortColumn().getText().equals(column.getText())){
-						//inverts sort direction
-						table.setSortDirection(table.getSortDirection()==SWT.UP ? SWT.DOWN : SWT.UP);
-					}table.setSortColumn(column);
-					updateTable();
-				}
-			});
+	private void addSortColumnSupport(SORT_DIRECTION direction) {
+		table.setSortDirection(direction==SORT_DIRECTION.ASCENDING ? SWT.UP : SWT.DOWN);
+		if (table.getColumnCount()>0){
+			table.setSortColumn(table.getColumn(0));
+			for(TableColumn column: table.getColumns()){
+				column.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						TableColumn column=(TableColumn)e.widget;
+						//sort column selected?
+						if (table.getSortColumn().getText().equals(column.getText())){
+							//invert sort direction
+							table.setSortDirection(table.getSortDirection()==SWT.UP ? SWT.DOWN : SWT.UP);
+						}//select sort column
+						table.setSortColumn(column);
+						updateTable();
+					}
+				});
+			}
 		}
 	}
 
