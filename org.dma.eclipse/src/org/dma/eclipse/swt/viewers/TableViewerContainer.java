@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2020 Public Domain
+ * 2010-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.SystemUtils;
+import org.dma.eclipse.swt.graphics.FontManager;
+import org.dma.eclipse.swt.widgets.CustomTable.SORT_DIRECTION;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.ClipboardManager;
 import org.dma.java.util.Debug;
@@ -20,34 +22,120 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseWheelListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.ScrollBar;
+import org.eclipse.swt.widgets.Table;
 
 public abstract class TableViewerContainer<T> extends TableContainer {
 
-	public abstract Collection<T> retrieveObjects();
+	public static final int TABLE_DINAMIC_LOAD = Display.getDefault().getClientArea().height / FontManager.AVERAGE_ITEM_HEIGHT;
+
+	public abstract Collection<T> retrieveObjects(long topIndex, long bottomIndex);
 	public abstract MessageList insertObject();
 	public abstract MessageList removeObject();
 	public abstract void createObject();
 	public abstract void copyObject();
 	public abstract T getNewObject();
 
+	private final SelectionListener verticallBarSelectionListener=new SelectionAdapter() {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			ScrollBar scrollBar=(ScrollBar)e.getSource();
+			if (scrollBar.getMaximum()-(scrollBar.getSelection()+scrollBar.getThumb())==0){
+				updateTable(SWT.MouseWheel);
+			}
+		}
+	};
+
+	private final MouseWheelListener tableMouseListener=new MouseWheelListener() {
+		@Override
+		public void mouseScrolled(MouseEvent e) {
+			ScrollBar scrollBar=((Table)e.getSource()).getVerticalBar();
+			if (scrollBar.getMaximum()-(scrollBar.getSelection()+scrollBar.getThumb())==0){
+				updateTable(SWT.MouseWheel);
+			}
+		}
+	};
+
+	private final KeyAdapter tableNavigationKeyListener=new KeyAdapter() {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			e.doit=!viewer.isBusy();
+			if (e.doit) switch(e.keyCode) {
+				case SWT.ARROW_DOWN: updateTable(SWT.ARROW_DOWN); break;
+				case SWT.PAGE_DOWN: updateTable(SWT.PAGE_DOWN); break;
+			}
+		}
+	};
+
 	protected final MovableList<T> objectCollection=new MovableList();
 	protected final TableViewer viewer;
+	protected final long dynamicLoad;
 
 	public TableViewerContainer(TableViewer viewer) {
-		this(viewer, SWT.NONE);
+		this(viewer, 0);
 	}
 
-	public TableViewerContainer(TableViewer viewer, int direction) {
+	public TableViewerContainer(TableViewer viewer, int dynamicLoad) {
+		this(viewer, dynamicLoad, SORT_DIRECTION.NONE);
+	}
+
+	public TableViewerContainer(TableViewer viewer, SORT_DIRECTION direction) {
+		this(viewer, 0, direction);
+	}
+
+	public TableViewerContainer(TableViewer viewer, int dynamicLoad, SORT_DIRECTION direction) {
 		super(viewer.getTable(), direction);
 		this.viewer=viewer;
-		this.viewer.setContentProvider(ArrayContentProvider.getInstance());
-		this.viewer.setInput(objectCollection);
+		this.dynamicLoad=dynamicLoad;
+
+		viewer.setContentProvider(ArrayContentProvider.getInstance());
+		viewer.setInput(objectCollection);
+
+		if (dynamicLoad>0) addTableListeners();
 	}
 
 
 	public void dispose() {
+		removeTableListeners();
 		clearTable();
 		super.dispose();
+	}
+
+
+	public long getObjectsToLoad(int keycode) {
+		switch(keycode){
+		default: //reset
+		case SWT.DEFAULT: return dynamicLoad==0 ? getNumberOfObjects() : dynamicLoad;
+		case SWT.ARROW_UP: break; //nothing
+		case SWT.PAGE_UP: break; //nothing
+		case SWT.ARROW_DOWN: if (getSelectionIndex()+1>=objectCollection.size()) return dynamicLoad; break;
+		case SWT.PAGE_DOWN: if (getSelectionIndex()+computeSize()>=objectCollection.size()) return dynamicLoad; break;
+		case SWT.MouseWheel: return dynamicLoad;
+		}return 0;
+	}
+
+
+	/*
+	 * Listeners
+	 */
+	private void addTableListeners() {
+		table.getVerticalBar().addSelectionListener(verticallBarSelectionListener);
+		table.addMouseWheelListener(tableMouseListener);
+		table.addKeyListener(tableNavigationKeyListener);
+	}
+
+	private void removeTableListeners() {
+		table.getVerticalBar().removeSelectionListener(verticallBarSelectionListener);
+		table.removeMouseWheelListener(tableMouseListener);
+		table.removeKeyListener(tableNavigationKeyListener);
 	}
 
 
@@ -55,7 +143,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	/*
 	 * Viewer
 	 */
-	public void refreshTable(boolean updateLabels) {
+	protected void refreshTable(boolean updateLabels) {
 		viewer.refresh(updateLabels);
 		if (SystemUtils.IS_OS_MAC) table.redraw();
 	}
@@ -66,14 +154,32 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 
 	public void clearTable() {
 		objectCollection.clear();
-		refreshTable();
+		refreshTable(true);
+	}
+
+	protected boolean updateTable(int keycode) {
+		boolean changed=false;
+		long objectsToLoad=getObjectsToLoad(keycode);
+		if (objectsToLoad!=0) {
+			long topIndex=objectCollection.size();
+			long bottomIndex=topIndex+objectsToLoad;
+			changed=objectCollection.addAll(retrieveObjects(topIndex, bottomIndex));
+			refreshTable(keycode==SWT.DEFAULT);
+		}return changed;
 	}
 
 	@Override
 	public void updateTable() {
+		int index=getSelectionIndex();
+		objectCollection.clear();
+		refreshTable(false); // avoids SLOW refresh!
+		updateTable(SWT.DEFAULT);
+		selectElement(index);
+		/*
 		objectCollection.clear();
 		objectCollection.addAll(retrieveObjects());
 		refreshTable();
+		*/
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -247,8 +353,8 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		return objectCollection;
 	}
 
-	public int getNumberOfObjects() {
-		return objectCollection.size();
+	public long getNumberOfObjects() {
+		return Integer.MAX_VALUE;
 	}
 
 	public TableViewer getViewer() {
