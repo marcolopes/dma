@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -14,6 +14,8 @@ public class EmailRecipients {
 	private final Collection<EmailAddress> to=new ArrayList();
 	private final Collection<EmailAddress> cc=new ArrayList();
 	private final Collection<EmailAddress> bcc=new ArrayList();
+
+	public EmailRecipients() {}
 
 	public EmailRecipients(EmailAddress to) {
 		addTo(to);
