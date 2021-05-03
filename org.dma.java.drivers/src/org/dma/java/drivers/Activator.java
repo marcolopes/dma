@@ -5,11 +5,12 @@
  *******************************************************************************/
 package org.dma.java.drivers;
 
-import org.dma.java.drivers.jdbc.POOLMANAGERS;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+
+import org.dma.java.drivers.jdbc.POOLMANAGERS;
 
 /**
  * The activator class controls the plug-in life cycle

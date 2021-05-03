@@ -15,6 +15,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.h2.engine.Constants;
+import org.h2.message.TraceSystem;
+import org.h2.store.FileLock;
+import org.h2.tools.DeleteDbFiles;
+import org.h2.tools.RunScript;
+import org.h2.tools.Script;
+
 import org.dma.java.drivers.Activator;
 import org.dma.java.io.Command;
 import org.dma.java.io.FileParameters;
@@ -23,12 +30,6 @@ import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.java.util.VersionNumber;
-import org.h2.engine.Constants;
-import org.h2.message.TraceSystem;
-import org.h2.store.FileLock;
-import org.h2.tools.DeleteDbFiles;
-import org.h2.tools.RunScript;
-import org.h2.tools.Script;
 
 public enum DRIVERS {
 
