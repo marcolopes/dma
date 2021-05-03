@@ -7,13 +7,14 @@ package org.dma.eclipse;
 
 import java.awt.image.BufferedImage;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+
 import org.dma.eclipse.swt.graphics.ColorManager;
 import org.dma.eclipse.swt.graphics.FontManager;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 import org.eclipse.core.runtime.Plugin;
 
