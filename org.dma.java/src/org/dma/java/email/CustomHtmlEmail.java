@@ -13,6 +13,7 @@ import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.MultiPartEmail;
+
 import org.dma.java.email.ServerParameters.SECURITY;
 import org.dma.java.util.Debug;
 

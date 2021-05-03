@@ -206,7 +206,7 @@ public class StringUtils {
 
 		for(int i=0; i<string.length(); i++){
 			for(char c: searchFor){
-				if(string.charAt(i)==c) count++;
+				if (string.charAt(i)==c) count++;
 			}
 		}
 
@@ -372,7 +372,7 @@ public class StringUtils {
 		final String CHARS=new String(searchFor);
 		for(int i=0; i<string.length(); i++){
 			char at=string.charAt(i);
-			if(ocurrences(CHARS, at)==0) result.append(at);
+			if (ocurrences(CHARS, at)==0) result.append(at);
 		}
 
 		return result.toString();

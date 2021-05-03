@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.math;
+package org.dma.java.payment;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -11,43 +11,43 @@ import java.text.DecimalFormatSymbols;
 
 import org.dma.java.util.StringUtils;
 
-public class ResultadoMB {
+public class MultibancoRef {
 
-	public final static ResultadoMB EXEMPLO = new ResultadoMB("123", "123456789", new BigDecimal("123.00"));
+	public final static MultibancoRef EXAMPLE = new MultibancoRef("123", "123456789", new BigDecimal("123.00"));
 
 	public final static String DECIMAL_PATTERN = "###,##0.00";
 
-	public final String entidade;
+	public final String entity;
 	public final String ref9;
-	public final BigDecimal valor;
+	public final BigDecimal value;
 
-	public ResultadoMB() {
+	public MultibancoRef() {
 		this("000", "000000000", BigDecimal.ZERO);
 	}
 
-	public ResultadoMB(String entidade, String ref9, BigDecimal valor) {
-		this.entidade=entidade;
+	public MultibancoRef(String entity, String ref9, BigDecimal value) {
+		this.entity=entity;
 		this.ref9=ref9;
-		this.valor=valor;
+		this.value=value;
 	}
 
-	/** Devolve {@link ResultadoMB#entidade} */
+	/** Devolve {@link MultibancoRef#entity} */
 	public String getEntidade() {
-		return entidade;
+		return entity;
 	}
 
-	/** Devolve {@link ResultadoMB#ref9} formatado */
+	/** Devolve {@link MultibancoRef#ref9} formatado */
 	public String getReferencia() {
 		return ref9.substring(0,3)+" "+ref9.substring(3,6)+" "+ref9.substring(6,9);
 	}
 
-	/** Devolve {@link ResultadoMB#valor} formatado */
+	/** Devolve {@link MultibancoRef#value} formatado */
 	public String getMontante() {
 		DecimalFormatSymbols symbols=new DecimalFormatSymbols();
 		symbols.setDecimalSeparator(',');
 		symbols.setGroupingSeparator('.');
 		DecimalFormat df = new DecimalFormat(DECIMAL_PATTERN, symbols);
-		return df.format(valor)+"€";
+		return df.format(value)+"€";
 	}
 
 	public String toText() {
@@ -57,6 +57,14 @@ public class ResultadoMB {
 			"REFERENCIA" + StringUtils.padLeft(getReferencia(),13,' ') +"\n"+
 			"MONTANTE  " + StringUtils.padLeft(getMontante(),13,' ') +"\n"+
 			StringUtils.replicate('─',10+13);
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() +
+				" [entity=" + entity +
+				", ref9=" + ref9 +
+				", value=" + value + "]";
 	}
 
 }
