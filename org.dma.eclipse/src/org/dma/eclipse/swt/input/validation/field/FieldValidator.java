@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.SystemUtils;
+
 import org.dma.eclipse.swt.input.validation.IValidationManager;
 import org.dma.eclipse.swt.input.validation.IValidator;
 import org.dma.eclipse.swt.input.validation.ValidationManager;

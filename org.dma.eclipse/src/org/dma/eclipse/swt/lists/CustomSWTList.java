@@ -8,6 +8,7 @@ package org.dma.eclipse.swt.lists;
 import java.util.Arrays;
 
 import org.apache.commons.lang.SystemUtils;
+
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.MovableList;
 import org.dma.java.util.RandomValue;

@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.SystemUtils;
+
 import org.dma.eclipse.swt.graphics.FontManager;
 import org.dma.eclipse.swt.widgets.CustomTable.SORT_DIRECTION;
 import org.dma.java.util.ArrayUtils;

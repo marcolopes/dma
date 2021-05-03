@@ -6,6 +6,7 @@
 package org.dma.eclipse.swt.widgets;
 
 import org.apache.commons.lang.SystemUtils;
+
 import org.dma.eclipse.swt.graphics.ImageManager;
 
 import org.eclipse.swt.SWT;
