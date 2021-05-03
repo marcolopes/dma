@@ -13,6 +13,7 @@ import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
+
 import org.dma.java.io.ByteFile;
 
 public class RSAPublicCipher extends CryptoCipher {

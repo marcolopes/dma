@@ -12,6 +12,7 @@ import javax.mail.PasswordAuthentication;
 
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
+
 import org.dma.java.email.ServerParameters.SECURITY;
 import org.dma.java.io.FileParameters;
 import org.dma.java.io.UTF8TextFile;
