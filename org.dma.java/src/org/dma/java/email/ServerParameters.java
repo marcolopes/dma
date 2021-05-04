@@ -66,18 +66,6 @@ public class ServerParameters {
 
 
 	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object
-	 */
-	@Override
-	public String toString() {
-		return "Host Name: "+hostName+
-				"\nSMTP Port: "+smtpPort+
-				"\nSecurity: "+security;
-	}
-
-
-	/*
 	 * Getters and setters
 	 */
 	public String getHostName() {
@@ -94,6 +82,19 @@ public class ServerParameters {
 
 	public PasswordAuthentication getAuthentication() {
 		return authentication;
+	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object
+	 */
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() +
+				" [hostName=" + hostName +
+				", smtpPort=" + smtpPort +
+				", security=" + security + "]";
 	}
 
 }

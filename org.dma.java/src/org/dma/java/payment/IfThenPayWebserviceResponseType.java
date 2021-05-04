@@ -65,7 +65,8 @@ public class IfThenPayWebserviceResponseType {
 			String dtHrPagamento, String processamento, String terminal, String tarifa, String valorLiquido,
 			String codigoErro, String mensagemErro) {
 		this(entidade, referencia,
-				valor.isEmpty() ? BigDecimal.ZERO : new BigDecimal(valor.replace(',','.')), Integer.valueOf(id),
+				valor.isEmpty() ? BigDecimal.ZERO : new BigDecimal(valor.replace(',','.')),
+				id.isEmpty() ? 0 : Integer.valueOf(id),
 				TimeDateUtils.getDate(dtHrPagamento, "dd/MM/yyyy HH:mm:ss"),
 				TimeDateUtils.getDate(processamento, "yyyyMMdd"), terminal,
 				tarifa.isEmpty() ? BigDecimal.ZERO : new BigDecimal(tarifa.replace(',','.')),
