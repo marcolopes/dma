@@ -39,6 +39,23 @@ public class EmailAddress {
 
 
 	/*
+	 * Getters and setters
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public InternetAddress getAddress() {
+		return address;
+	}
+
+
+
+	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object
 	 */
@@ -65,23 +82,6 @@ public class EmailAddress {
 
 	public boolean equals(String email) {
 		return this.email.equals(email);
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public InternetAddress getAddress() {
-		return address;
 	}
 
 
