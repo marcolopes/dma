@@ -180,8 +180,7 @@ public enum DRIVERS {
 					getDatabaseUrl(host, database, folder), user, password, dump), password); break;
 			case MySQL:
 			case PostgreSQL:
-			case SQLServer: executeBackup(backup.buildCommand(
-					database, user, password, dump), password); break;
+			case SQLServer: executeBackup(backup.buildCommand(database, user, password, dump), password); break;
 			}
 			//ZIP dump
 			new ZipFile(zip.toFile()).deflate(Arrays.asList(dump.toFile()));
@@ -197,7 +196,6 @@ public enum DRIVERS {
 		Script.execute(url, user, password, file);
 		DeleteDbFiles.execute(System.getProperty("java.io.tmpdir"), database, true);
 		RunScript.execute(url, user, password, file, null, false);
-
 	}
 
 	public String getDropForeignKeySQL(String tableName, String foreignKeyName) {
