@@ -192,7 +192,7 @@ public enum DRIVERS {
 	/** Only for H2 database */
 	public void compact(String host, String database, String folder, String user, String password) throws Exception {
 		String url=getDatabaseUrl(host, database, folder);
-		String file = database+".sql";
+		String file=database+".sql";
 		Script.execute(url, user, password, file);
 		DeleteDbFiles.execute(System.getProperty("java.io.tmpdir"), database, true);
 		RunScript.execute(url, user, password, file, null, false);
