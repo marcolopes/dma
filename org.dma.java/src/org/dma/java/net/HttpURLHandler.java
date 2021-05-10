@@ -120,7 +120,7 @@ public class HttpURLHandler extends URLHandler {
 		System.err.println("Valid? " + handler.isValid());
 		System.err.println("HTTP? " + handler.check(HttpURLConnection.HTTP_OK));
 		System.err.println("Ping? " + handler.ping(3*1000));
-		System.err.println("Auth? " + handler.isAuthValid("5TMPHJMYLDEZK7CERL3X8ELC3NAGIFLF"));
+		System.err.println("Auth? " + handler.isAuthValid("***"));
 
 	}
 
