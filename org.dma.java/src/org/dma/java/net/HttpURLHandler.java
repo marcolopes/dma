@@ -20,7 +20,6 @@ public class HttpURLHandler extends URLHandler {
 		super(url);
 	}
 
-
 	public boolean ping(int timeout) {
 
 		try{
