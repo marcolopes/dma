@@ -4,6 +4,8 @@
  *******************************************************************************/
 package org.dma.java.net;
 
+import org.dma.java.util.ArrayUtils;
+
 public class ServerParameters {
 
 	public static final String LOCALHOST = "localhost";
@@ -38,8 +40,10 @@ public class ServerParameters {
 				"http://" + host + ":" + port;
 	}
 
-	public String getURL(String path) {
-		return getURL() + "/" + path;
+	public String getURL(String...more) {
+		return more.length==1 ?
+			getURL() + "/" + more :
+			getURL() + "/" + ArrayUtils.concat(more, "/");
 	}
 
 	@Override
