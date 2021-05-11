@@ -2,7 +2,6 @@
  * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
- * Sergio Gomes (sergiogomes@projectocolibri.com)
  *******************************************************************************/
 package org.dma.java.net;
 
