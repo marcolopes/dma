@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.h2.engine.Constants;
@@ -24,8 +23,10 @@ import org.h2.tools.Script;
 
 import org.dma.java.drivers.Activator;
 import org.dma.java.io.Command;
-import org.dma.java.io.FileParameters;
+import org.dma.java.io.CustomFile;
+import org.dma.java.io.Folder;
 import org.dma.java.io.ZipFile;
+import org.dma.java.net.ServerParameters;
 import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
@@ -34,7 +35,6 @@ import org.dma.java.util.VersionNumber;
 public enum DRIVERS {
 
 	H2 ("org.h2.Driver",
-			//TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"));
 			//https://javadocs.com/docs/com.h2database/h2/1.3.169/org/h2/constant/SysProperties.html#STORE_LOCAL_TIME
 			new SystemProperty("h2.storeLocalTime", "true")),
 
@@ -64,7 +64,7 @@ public enum DRIVERS {
 	}
 
 	public boolean isH2Embedded(String host) {
-		return this==H2 && isLocalhost(host);
+		return this==H2 && new ServerParameters(host).isLocalhost();
 	}
 
 	public Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
@@ -82,13 +82,13 @@ public enum DRIVERS {
 		getConnection(url, user, password).close();
 	}
 
-	private String getDatabaseUrl(String host, String database, String folder) {
+	private String getDatabaseUrl(String host, String database, Folder folder) {
 		switch(this){
 		case H2: return isH2Embedded(host) ?
 				// jdbc:h2:[file:][<path>]<database>
-				"jdbc:h2:file:" + folder + database :
+				"jdbc:h2:file:" + new CustomFile(folder.getAbsolutePath(), database) :
 				// jdbc:h2:tcp://<server>[:<port>]/[<path>]<database>
-				"jdbc:h2:tcp://" + host + "/" + folder + database;
+				"jdbc:h2:tcp://" + host + "/" + new CustomFile(folder.getAbsolutePath(), database);
 
 		// jdbc:mysql://<host>:<port>/<database>
 		case MySQL: return "jdbc:mysql://" + host + "/" + database;
@@ -101,35 +101,49 @@ public enum DRIVERS {
 		}return null;
 	}
 
-	public String getConnectionUrl(String host, String database, String folder, String properties, POOLMANAGERS pool) {
+	public String getConnectionUrl(String host, String database, Folder folder, String properties, POOLMANAGERS pool) {
 		StringBuilder url=new StringBuilder(getDatabaseUrl(host, database, folder));
 		switch(this){
 		case H2:
 			if (isH2Embedded(host)){
 				//Multiple processes can access the same database
-				if (isLocalhost(host)) url.append(";AUTO_SERVER=TRUE");
+				if (new ServerParameters(host).isLocalhost()) url.append(";AUTO_SERVER=TRUE");
 			}else{
-				//URL;property=value;property=value...
+				//URL;property=value[;property=value]
 				url.append(properties.isEmpty() ? "" : ";"+properties);
 				//The connection only succeeds when the database already exists
 				url.append(";IFEXISTS=TRUE");
-			}
-			//needed when there is NO POOL
-			url.append(pool==POOLMANAGERS.NONE ? ";DB_CLOSE_DELAY=10" : ""); break;
+			}//needed when there is NO POOL
+			if (pool==POOLMANAGERS.NONE) url.append(";DB_CLOSE_DELAY=10"); break;
 
 		case MySQL:
-			//URL?property=value&property=value...
+			//URL?property=value[&property=value]
 			url.append(properties.isEmpty() ? "" : "?"+properties); break;
 
 		case PostgreSQL:
-			//URL?property=value&property=value...
+			//URL?property=value[&property=value]
 			url.append(properties.isEmpty() ? "" : "?"+properties); break;
 
 		case SQLServer:
-			//URL;property=value;property=value...
+			//URL;property=value[;property=value]
 			url.append(properties.isEmpty() ? "" : ";"+properties);
 			url.append(";SelectMethod=cursor"); break;
 		}return url.toString();
+	}
+
+	/** Only for H2 database */
+	public void compact(String host, String database, Folder folder, String user, String password) throws Exception {
+		String url=getDatabaseUrl(host, database, folder);
+		//SQL script file
+		File file=new CustomFile(Folder.temporary().getAbsolutePath(), database+".sql");
+		//Backup the database to the SQL script file
+		Script.execute(url, user, password, file.getAbsolutePath());
+		//Delete the database file
+		DeleteDbFiles.execute(folder.getAbsolutePath(), database, true);
+		//Recreate the database from the SQL script file
+		RunScript.execute(url, user, password, file.getAbsolutePath(), null, false);
+		//Delete the SQL script file
+		file.delete();
 	}
 
 	private void executeBackup(Command cmd, String password) throws Exception {
@@ -139,63 +153,54 @@ public enum DRIVERS {
 		case SQLServer: break;
 		//http://www.postgresql.org/docs/8.1/static/libpq-envars.html
 		case PostgreSQL: cmd.setVariable("PGPASSWORD", password); break;
-		}
+		}//execute command
 		Debug.out("BACKUP COMMAND: "+cmd);
-		//execute command
 		if (cmd.startAndWait()!=0) throw new Exception(cmd.toString());
 	}
 
-	public void executeBackup(String host, String database, String folder, String user, String password,
-			BackupParameters backup) throws Exception {
+	private void executeH2Backup(String database, Folder folder, ZipFile zip) throws Exception {
+		File file=new CustomFile(folder.getAbsolutePath(), database+Constants.SUFFIX_PAGE_FILE);
+		Debug.out("DATABASE FILE: "+file);
+		//NOT empty?
+		if (file.length()>0){
+			//locked?
+			checkH2Lock(database);
+			//ZIP file
+			new ZipFile(zip).deflate(file);
+		}
+	}
+
+	public void executeBackup(String host, String database, Folder folder, String user, String password, BackupParameters backup) throws Exception {
 		//colibri9_H2_2014-12-31_125959
 		String prefix=new File(database).getName()+"_"+name()+"_"+TimeDateUtils.getDateFormatted("yyyy-MM-dd_HHmmss");
-
-		FileParameters zip=new FileParameters(prefix, "zip", backup.folder);
-		Debug.out("BACKUP FILE: "+zip);
-
+		//[folder]/[prefix].zip
+		ZipFile zip=new ZipFile(backup.folder, prefix+".zip");
+		Debug.out("BACKUP ZIP: "+zip);
+		//H2 Embedded
 		if (isH2Embedded(host)){
-			String pathname=folder + database;
-			Debug.out("DATABASE PATH: "+pathname);
-			File file=new File(pathname + Constants.SUFFIX_PAGE_FILE).getAbsoluteFile();
-			Debug.out("DATABASE FILE: "+file);
-			//empty database?
-			if (file.length()==0) return;
-			//check lock
-			checkH2Lock(pathname);
-			//ZIP dump
-			new ZipFile(zip.toFile()).deflate(Arrays.asList(file));
-			//Driver H2 v1.3.169
-			//Backup.execute does not work with eclipse exported product on MAC!
-			//https://groups.google.com/forum/#!topic/h2-database/AT7OpOkQfZ4
 			/*
-			File db=new File(database).getAbsoluteFile();
-			Backup.execute(dump.toString(), db.getParent(), db.getName(), false);
-			*/
+			 * H2 Driver v1.3.169
+			 * Backup.execute does not work with eclipse exported product on MAC!
+			 * https://groups.google.com/forum/#!topic/h2-database/AT7OpOkQfZ4
+			 * File db=new File(database).getAbsoluteFile();
+			 * Backup.execute(dump.toString(), db.getParent(), db.getName(), false);
+			 */
+			executeH2Backup(database, folder, zip);
 		}else{
 			//H2, MySQL, PostgreSQL
-			FileParameters dump=new FileParameters(prefix, "sql", backup.folder);
+			CustomFile dump=new CustomFile(backup.folder, prefix+".sql");
 			Debug.out("BACKUP DUMP: "+dump);
 			switch(this){
-			case H2: executeBackup(backup.buildCommand(
-					getDatabaseUrl(host, database, folder), user, password, dump), password); break;
+			case H2: executeBackup(backup.buildCommand(getDatabaseUrl(host, database, folder), user, password, dump), password); break;
 			case MySQL:
 			case PostgreSQL:
 			case SQLServer: executeBackup(backup.buildCommand(database, user, password, dump), password); break;
 			}
 			//ZIP dump
-			new ZipFile(zip.toFile()).deflate(Arrays.asList(dump.toFile()));
+			zip.deflate(dump);
 			//delete dump
-			dump.toFile().delete();
+			dump.delete();
 		}
-	}
-
-	/** Only for H2 database */
-	public void compact(String host, String database, String folder, String user, String password) throws Exception {
-		String url=getDatabaseUrl(host, database, folder);
-		String file=database+".sql";
-		Script.execute(url, user, password, file);
-		DeleteDbFiles.execute(System.getProperty("java.io.tmpdir"), database, true);
-		RunScript.execute(url, user, password, file, null, false);
 	}
 
 	public String getDropForeignKeySQL(String tableName, String foreignKeyName) {
@@ -307,18 +312,13 @@ public enum DRIVERS {
 		executeSQLUpdate(connection, getDropTableSQL(tableName));
 	}
 
-	public static boolean isLocalhost(String host) {
-		return host.startsWith("localhost") || host.startsWith("127.0.0.1");
-	}
-
 	public static void checkH2Lock(String database) throws Exception {
 		String filename=database+Constants.SUFFIX_LOCK_FILE;
 		Debug.out("DATABASE LOCK: "+filename);
-		try{
+		try{//catch RuntimeException
 			FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
 			lock.lock(FileLock.LOCK_FILE);
 			lock.unlock();
-
 		}catch(Exception e){
 			throw new Exception(e);
 		}

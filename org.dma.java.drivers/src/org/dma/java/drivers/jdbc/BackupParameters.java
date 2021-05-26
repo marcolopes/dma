@@ -1,15 +1,15 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.drivers.jdbc;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.dma.java.io.Command;
-import org.dma.java.io.FileParameters;
 import org.dma.java.util.StringList;
 
 public class BackupParameters {
@@ -63,7 +63,7 @@ public class BackupParameters {
 		this.arguments=arguments==null ? new Arguments() : arguments;
 	}
 
-	public Command buildCommand(String database, String user, String password, FileParameters dump) {
+	public Command buildCommand(String database, String user, String password, File dump) {
 
 		List<String> command=new ArrayList();
 		command.add(this.command);
@@ -73,7 +73,7 @@ public class BackupParameters {
 				{Arguments.USER, user},
 				{Arguments.PASSWORD, password},
 				{Arguments.DATABASE, database},
-				{Arguments.DUMP, dump.toString()}}){
+				{Arguments.DUMP, dump.getAbsolutePath()}}){
 				arg=arg.replace(value[0], value[1]);
 			}command.add(arg.trim());
 		}
