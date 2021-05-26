@@ -18,7 +18,7 @@ public class ServerParameters {
 	}
 
 	public ServerParameters(String host, int port) {
-		this.host=host.toLowerCase();
+		this.host=host;
 		this.port=port;
 	}
 
@@ -31,7 +31,7 @@ public class ServerParameters {
 	}
 
 	public boolean isLocalhost() {
-		return host.startsWith(LOCALHOST) || host.startsWith("127.0.0.1");
+		return host.toLowerCase().startsWith(LOCALHOST) || host.startsWith("127.0.0.1");
 	}
 
 	public String getURL() {
