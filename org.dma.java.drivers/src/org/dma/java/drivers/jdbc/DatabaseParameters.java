@@ -1,19 +1,21 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.drivers.jdbc;
 
-import java.io.File;
 import java.sql.Connection;
+
+import org.dma.java.io.Folder;
+import org.dma.java.net.ServerParameters;
 
 public class DatabaseParameters {
 
 	public final DRIVERS driver;
 	public final String host;
 	public final String database;
-	public final String folder;
+	public final Folder folder;
 	public final String properties;
 	public final String user;
 	public final String password;
@@ -30,7 +32,7 @@ public class DatabaseParameters {
 		this(driver, host, database, null, properties, user, password, pool);
 	}
 
-	public DatabaseParameters(DRIVERS driver, String host, String database, File folder,
+	public DatabaseParameters(DRIVERS driver, String host, String database, Folder folder,
 			String properties, String user, String password, POOLMANAGERS pool) {
 		this(driver, host, database, folder, properties, user, password, pool, new BackupParameters());
 	}
@@ -46,13 +48,12 @@ public class DatabaseParameters {
 	 * @param pool - poolmanager {@link POOLMANAGERS}
 	 * @param backup - backup parameters
 	 */
-	public DatabaseParameters(DRIVERS driver, String host, String database, File folder,
-			String properties, String user, String password, POOLMANAGERS pool,
-			BackupParameters backup) {
+	public DatabaseParameters(DRIVERS driver, String host, String database, Folder folder,
+			String properties, String user, String password, POOLMANAGERS pool, BackupParameters backup) {
 		this.driver=driver;
-		this.host=host.isEmpty() ? "localhost" : host;
+		this.host=host.isEmpty() ? ServerParameters.LOCALHOST : host;
 		this.database=database;
-		this.folder=folder==null ? "" : folder.getAbsolutePath()+File.separator;
+		this.folder=folder;
 		this.properties=properties;
 		this.user=user;
 		this.password=password;
@@ -61,11 +62,7 @@ public class DatabaseParameters {
 	}
 
 	public boolean isLocalhost() {
-		return DRIVERS.isLocalhost(host);
-	}
-
-	public void checkH2Lock() throws Exception {
-		DRIVERS.checkH2Lock(database);
+		return new ServerParameters(host).isLocalhost();
 	}
 
 	public boolean isH2Embedded() {
