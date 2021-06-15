@@ -134,8 +134,7 @@ public class CheckVatHandler {
 
 		/** Returns NULL if not found */
 		public static COUNTRIES get(String countryCode) {
-			try{
-				return valueOf(countryCode.toUpperCase());
+			try{return valueOf(countryCode.toUpperCase());
 			}catch(Exception e){}
 			/* try ISO countries */
 			return ISO3166.get(countryCode);
