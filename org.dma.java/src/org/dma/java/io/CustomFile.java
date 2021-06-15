@@ -46,6 +46,11 @@ public class CustomFile extends File {
 		return StringUtils.removeChars(plain,"<>:?*\"\n\r\t\f\0");
 	}
 
+	/** @see CustomFile#CustomFile(String, String...) */
+	public CustomFile(File path, String...more) {
+		this(path.getAbsolutePath(), more);
+	}
+
 	/** @see Paths#get(String, String...) */
 	public CustomFile(String pathname, String...more) {
 		this(Paths.get(pathname, more).toFile());
