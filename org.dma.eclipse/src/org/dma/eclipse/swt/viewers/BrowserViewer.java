@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -37,9 +37,9 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 	private class BrowserAction extends CustomAction {
 
-		public BrowserAction(String text, String iconPath, int iconSize) {
+		public BrowserAction(String text, String iconName, int iconSize) {
 			setText(text);
-			setImageDescriptor(Activator.getBufferedImage(iconPath, iconSize));
+			setImageDescriptor(Activator.getBufferedImage("icons/"+iconName, iconSize));
 		}
 
 	}
@@ -81,32 +81,31 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 		while(!isEmpty()){
 			CTabItem tabItem=keySet().iterator().next();
 			dispose(tabItem);
-		}
-		tabFolder.dispose();
+		}tabFolder.dispose();
 
 	}
 
 	private void createToolBar(int iconSize) {
 
-		button_home=new BrowserAction("Home", "icons/browser_home.png", iconSize){
+		button_home=new BrowserAction("Home", "browser_home.png", iconSize){
 			public final void run(){
 				goHome();
 			}
 		};
 
-		button_stop=new BrowserAction("Stop", "icons/browser_stop.png", iconSize){
+		button_stop=new BrowserAction("Stop", "browser_stop.png", iconSize){
 			public final void run(){
 				getBrowser().stop();
 			}
 		};
 
-		button_back=new BrowserAction("Back", "icons/browser_back.png", iconSize){
+		button_back=new BrowserAction("Back", "browser_back.png", iconSize){
 			public final void run(){
 				getBrowser().back();
 			}
 		};
 
-		button_forward=new BrowserAction("Forward", "icons/browser_forward.png", iconSize){
+		button_forward=new BrowserAction("Forward", "browser_forward.png", iconSize){
 			public final void run(){
 				getBrowser().forward();
 			}
@@ -227,17 +226,17 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	public void setFocus() {
 		Browser browser=getBrowser();
 		//browser may not exist!
-		if (browser==null) return;
-		browser.setFocus();
+		if (browser!=null) browser.setFocus();
 	}
 
 
 	public void setInvisible() {
 		Browser browser=getBrowser();
 		//browser may not exist!
-		if (browser==null) return;
-		browser.setVisible(false);
-		browser.setBounds(0, 0, 1, 1);
+		if (browser!=null){
+			browser.setVisible(false);
+			browser.setBounds(0, 0, 1, 1);
+		}
 	}
 
 
@@ -245,8 +244,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 		this.homeUrl=homeUrl;
 		Browser browser=getBrowser();
 		//browser may not exist!
-		if (browser==null) return;
-		browser.setUrl(homeUrl);
+		if (browser!=null) browser.setUrl(homeUrl);
 	}
 
 
