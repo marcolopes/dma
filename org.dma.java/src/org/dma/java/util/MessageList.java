@@ -33,10 +33,14 @@ public class MessageList extends LinkedHashSet<String> {
 	}
 
 
+	/** Throws exception if NOT empty */
+	public void throwException() throws Exception {
+		if (!isEmpty()) throw new Exception(toString());
+	}
+
 	public void print() {
 		print(System.out);
 	}
-
 
 	public void print(OutputStream out) {
 		if (!isEmpty()) try{
@@ -69,12 +73,10 @@ public class MessageList extends LinkedHashSet<String> {
 		return StringList.valueOf(this).toArray();
 	}
 
-
 	@Override
 	public String toString() {
 		return ArrayUtils.concat(toArray(), "\n");
 	}
-
 
 	public String toString(String separator) {
 		return ArrayUtils.concat(toArray(), separator);
