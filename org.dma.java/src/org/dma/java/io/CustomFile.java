@@ -37,6 +37,9 @@ public class CustomFile extends File {
 	public static final CopyOption[] COPY_OPTIONS = new CopyOption[]{
 		StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES};
 
+	public static final CopyOption[] MOVE_OPTIONS = new CopyOption[]{
+		StandardCopyOption.REPLACE_EXISTING};
+
 	/** Replaces accented and illegal characters */
 	public static String normalize(String filename) {
 		String plain=StringUtils.unaccent(filename).
@@ -98,7 +101,7 @@ public class CustomFile extends File {
 	public boolean moveTo(File dst, CopyOption...options) {
 		try{//destination can be a directory!
 			File target=dst.isDirectory() ? Paths.get(dst.getPath(), getName()).toFile() : dst;
-			Files.move(toPath(), target.toPath(), options.length==0 ? COPY_OPTIONS : options);
+			Files.move(toPath(), target.toPath(), options.length==0 ? MOVE_OPTIONS : options);
 		}catch(Exception e){
 			System.err.println(e);
 			return false;
