@@ -590,24 +590,24 @@ public class StringUtils {
 
 		int repeat=1000000;
 		Chronograph time=new Chronograph();
+		time.start();
 
-		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) Pattern.compile("\\.").split(string); time.stop();
+		for(int i=0; i<repeat; i++) Pattern.compile("\\.").split(string);
 		System.out.printf(format, "pattern.split: "); System.out.println(time);
 		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) string.split("\\."); time.stop();
+		for(int i=0; i<repeat; i++) string.split("\\.");
 		System.out.printf(format, "string.split: "); System.out.println(time);
 		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) split(string, "."); time.stop();
+		for(int i=0; i<repeat; i++) split(string, ".");
 		System.out.printf(format, "java7.split: "); System.out.println(time);
 		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) string.replace("z", "**"); time.stop();
+		for(int i=0; i<repeat; i++) string.replace("z", "**");
 		System.out.printf(format, "string.replace: "); System.out.println(time);
 		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) string.replaceAll("z", "**"); time.stop();
+		for(int i=0; i<repeat; i++) string.replaceAll("z", "**");
 		System.out.printf(format, "string.replaceAll: "); System.out.println(time);
 		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) replaceAll(string, "z", "**"); time.stop();
+		for(int i=0; i<repeat; i++) replaceAll(string, "z", "**");
 		System.out.printf(format, "replaceAll: "); System.out.println(time);
 
 	}

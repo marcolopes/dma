@@ -353,15 +353,17 @@ public class ArrayUtils {
 
 		int repeat=10000;
 		Chronograph time=new Chronograph();
-		time.start(); for(int i=0; i<repeat; i++) array=insert(array, 0, "0"); time.stop();
+		time.start();
+
+		for(int i=0; i<repeat; i++) array=insert(array, 0, "0");
 		System.out.printf(format, "insert: "); System.out.println(time);		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) append(array, "0"); time.stop();
+		for(int i=0; i<repeat; i++) append(array, "0");
 		System.out.printf(format, "append: "); System.out.println(time);
 		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) remove(array, 0); time.stop();
+		for(int i=0; i<repeat; i++) remove(array, 0);
 		System.out.printf(format, "remove: "); System.out.println(time);
 		time.reset();
-		time.start(); for(int i=0; i<repeat; i++) remove(array, 0,1); time.stop();
+		for(int i=0; i<repeat; i++) remove(array, 0,1);
 		System.out.printf(format, "remove: "); System.out.println(time);
 
 
