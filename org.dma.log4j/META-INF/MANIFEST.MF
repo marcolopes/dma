@@ -10,5 +10,5 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
  libraries/log4j-1.2.16.jar
-Export-Package: org.apache.log4j
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2"
+Export-Package: org.apache.log4j
