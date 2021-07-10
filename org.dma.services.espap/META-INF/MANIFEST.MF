@@ -17,7 +17,6 @@ Bundle-ClassPath: .,
  libraries/UBL-eSPap-DebitNote-2.1.jar,
  libraries/UBL-eSPap-DocumentStatus-2.1.jar,
  libraries/UBL-eSPap-Invoice-2.1.jar
+Require-Bundle: org.dma.java;bundle-version="6.4.3"
 Export-Package: org.dma.services.espap,
  org.dma.services.espap.proxy
-Require-Bundle: org.dma.java;bundle-version="6.4.3"
-
