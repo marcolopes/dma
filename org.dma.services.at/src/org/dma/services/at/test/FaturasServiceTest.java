@@ -71,7 +71,7 @@ public class FaturasServiceTest {
 				//Software Developer Certificate
 				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
 				//Trusted Store Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
+				//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
 				//Endpoint address
 				ENDPOINTS.TESTES);
 
