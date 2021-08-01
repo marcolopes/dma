@@ -1,11 +1,13 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.at.test;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
@@ -19,6 +21,7 @@ import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType.DocumentTotals;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType.Line;
 import pt.gov.portaldasfinancas.servicos.faturas.Tax;
+
 /**
  * Teste de envio de FACTURAS
  */
@@ -26,13 +29,15 @@ public class FaturasServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
 
+	public static final String InvoiceDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
 	public static RegisterInvoiceType buildRequest() throws Exception {
 
 		RegisterInvoiceType request = new RegisterInvoiceType();
 
 		request.setTaxRegistrationNumber(RequesterTaxID);
 		request.setInvoiceNo("CFA 2018/"+new RandomValue().integer(6));
-		request.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar("2018-12-18"));
+		request.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
 		request.setInvoiceType("FT");
 		request.setInvoiceStatus("N");
 		request.setCustomerTaxID(999999990);

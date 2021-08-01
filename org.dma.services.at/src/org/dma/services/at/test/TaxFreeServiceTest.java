@@ -1,11 +1,13 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.at.test;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
@@ -30,12 +32,15 @@ import pt.gov.portaldasfinancas.servicos.taxfree.RequestHeaderType;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeCommType;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionRequestType;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
+
 /**
  * Teste de eTaxFree
  */
 public class TaxFreeServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
+
+	public static final String InvoiceDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
 	public static TaxFreeSubmissionRequestType buildRequest() throws Exception {
 
@@ -96,7 +101,7 @@ public class TaxFreeServiceTest {
 		//invoice.setATCUD(StringUtils.numbers(100));
 		invoice.setInvoiceIdentifiers(invoiceIdentifiers);
 		invoice.setInvoiceType("FT");
-		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(/*"2018-12-31"*/));
+		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
 		//invoice.setBuyer(simpleBuyer);
 		invoice.setGrossTotal(new BigDecimal("246.00"));
 		invoice.setRefundableAmount(new BigDecimal("46.00"));

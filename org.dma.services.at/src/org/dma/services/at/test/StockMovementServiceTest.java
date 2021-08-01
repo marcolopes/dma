@@ -1,11 +1,13 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.at.test;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import org.dma.java.security.JKSCertificate;
@@ -21,12 +23,17 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.MovementType;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.ResponseStatus;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovement;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementResponse;
+
 /**
  * Teste de envio de DOCUMENTOS TRANSPORTE
  */
 public class StockMovementServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
+
+	public static final String InvoiceDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+	public static final String SystemEntryDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
 
 	public static StockMovement buildRequest() throws Exception {
 
@@ -38,14 +45,14 @@ public class StockMovementServiceTest {
 		request.setDocumentNumber("CGT 2013/"+new Random().nextInt(999999));
 		request.setMovementStatus(MovementStatus.N);
 		request.setMovementType(MovementType.GT);
-		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar("2018-12-18"));
+		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
 		request.setCustomerTaxID("999999990");
 		request.setCustomerName("Cliente");
 		request.setCustomerAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		request.setAddressTo(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		request.setAddressFrom(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		request.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar("2018-12-18T07:20:59"));
-		request.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar("2018-12-18T07:20:00"));
+		request.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
+		request.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
 		request.setVehicleID("XX-YY-ZZ");
 
 		Line line = new Line();
