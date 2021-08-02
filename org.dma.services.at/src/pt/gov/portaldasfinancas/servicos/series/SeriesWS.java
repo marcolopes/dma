@@ -41,12 +41,12 @@ public interface SeriesWS {
      * @param tipoSerie
      * @param classeDoc
      * @return
-     *     returns pt.gov.at.SeriesResp
+     *     returns pt.gov.portaldasfinancas.servicos.series.SeriesResp
      */
     @WebMethod
     @WebResult(name = "registarSerieResp", targetNamespace = "")
-    @RequestWrapper(localName = "registarSerie", targetNamespace = "http://at.gov.pt/", className = "pt.gov.at.RegistarSerie")
-    @ResponseWrapper(localName = "registarSerieResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.at.RegistarSerieResponse")
+    @RequestWrapper(localName = "registarSerie", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.RegistarSerie")
+    @ResponseWrapper(localName = "registarSerieResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.RegistarSerieResponse")
     @Action(input = "http://at.gov.pt/SeriesWS/registarSerieRequest", output = "http://at.gov.pt/SeriesWS/registarSerieResponse")
     public SeriesResp registarSerie(
         @WebParam(name = "serie", targetNamespace = "")
@@ -79,12 +79,12 @@ public interface SeriesWS {
      * @param seqUltimoDocEmitido
      * @param classeDoc
      * @return
-     *     returns pt.gov.at.SeriesResp
+     *     returns pt.gov.portaldasfinancas.servicos.series.SeriesResp
      */
     @WebMethod
     @WebResult(name = "finalizarSerieResp", targetNamespace = "")
-    @RequestWrapper(localName = "finalizarSerie", targetNamespace = "http://at.gov.pt/", className = "pt.gov.at.FinalizarSerie")
-    @ResponseWrapper(localName = "finalizarSerieResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.at.FinalizarSerieResponse")
+    @RequestWrapper(localName = "finalizarSerie", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.FinalizarSerie")
+    @ResponseWrapper(localName = "finalizarSerieResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.FinalizarSerieResponse")
     @Action(input = "http://at.gov.pt/SeriesWS/finalizarSerieRequest", output = "http://at.gov.pt/SeriesWS/finalizarSerieResponse")
     public SeriesResp finalizarSerie(
         @WebParam(name = "serie", targetNamespace = "")
@@ -115,12 +115,12 @@ public interface SeriesWS {
      * @param dataRegistoAte
      * @param classeDoc
      * @return
-     *     returns pt.gov.at.ConsultSeriesResp
+     *     returns pt.gov.portaldasfinancas.servicos.series.ConsultSeriesResp
      */
     @WebMethod
     @WebResult(name = "consultarSeriesResp", targetNamespace = "")
-    @RequestWrapper(localName = "consultarSeries", targetNamespace = "http://at.gov.pt/", className = "pt.gov.at.ConsultarSeries")
-    @ResponseWrapper(localName = "consultarSeriesResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.at.ConsultarSeriesResponse")
+    @RequestWrapper(localName = "consultarSeries", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.ConsultarSeries")
+    @ResponseWrapper(localName = "consultarSeriesResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResponse")
     @Action(input = "http://at.gov.pt/SeriesWS/consultarSeriesRequest", output = "http://at.gov.pt/SeriesWS/consultarSeriesResponse")
     public ConsultSeriesResp consultarSeries(
         @WebParam(name = "serie", targetNamespace = "")
@@ -155,12 +155,12 @@ public interface SeriesWS {
      * @param codValidacaoSerie
      * @param classeDoc
      * @return
-     *     returns pt.gov.at.SeriesResp
+     *     returns pt.gov.portaldasfinancas.servicos.series.SeriesResp
      */
     @WebMethod
     @WebResult(name = "anularSerieResp", targetNamespace = "")
-    @RequestWrapper(localName = "anularSerie", targetNamespace = "http://at.gov.pt/", className = "pt.gov.at.AnularSerie")
-    @ResponseWrapper(localName = "anularSerieResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.at.AnularSerieResponse")
+    @RequestWrapper(localName = "anularSerie", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.AnularSerie")
+    @ResponseWrapper(localName = "anularSerieResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.AnularSerieResponse")
     @Action(input = "http://at.gov.pt/SeriesWS/anularSerieRequest", output = "http://at.gov.pt/SeriesWS/anularSerieResponse")
     public SeriesResp anularSerie(
         @WebParam(name = "serie", targetNamespace = "")
