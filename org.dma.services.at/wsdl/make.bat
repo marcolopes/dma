@@ -6,6 +6,9 @@ echo * https://javaee.github.io/metro-jax-ws/
 echo * https://docs.oracle.com/javase/7/docs/technotes/tools/share/wsimport.html
 echo *****************************************************************************
 
+set JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+
+wsimport series.wsdl -verbose -Xnocompile -s ..\src
 wsimport faturas.wsdl -verbose -Xnocompile -s ..\src
 wsimport documentosTransporte.wsdl -verbose -Xnocompile -s ..\src
 wsimport eTaxFreeSoapWebServices.wsdl -verbose -Xnocompile -s ..\src
