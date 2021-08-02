@@ -129,11 +129,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ConsultSeriesResp }
+     * Create an instance of {@link ConsultarSeriesResp }
      * 
      */
-    public ConsultSeriesResp createConsultSeriesResp() {
-        return new ConsultSeriesResp();
+    public ConsultarSeriesResp createConsultSeriesResp() {
+        return new ConsultarSeriesResp();
     }
 
     /**

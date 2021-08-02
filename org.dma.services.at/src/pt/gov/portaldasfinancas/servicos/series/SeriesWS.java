@@ -123,7 +123,7 @@ public interface SeriesWS {
     @RequestWrapper(localName = "consultarSeries", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.ConsultarSeries")
     @ResponseWrapper(localName = "consultarSeriesResponse", targetNamespace = "http://at.gov.pt/", className = "pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResponse")
     @Action(input = "http://at.gov.pt/SeriesWS/consultarSeriesRequest", output = "http://at.gov.pt/SeriesWS/consultarSeriesResponse")
-    public ConsultSeriesResp consultarSeries(
+    public ConsultarSeriesResp consultarSeries(
         @WebParam(name = "serie", targetNamespace = "")
         String serie,
         @WebParam(name = "tipoSerie", targetNamespace = "")

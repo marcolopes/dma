@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlType;
     "infoSerie",
     "infoResultOper"
 })
-public class ConsultSeriesResp {
+public class ConsultarSeriesResp {
 
     protected List<SeriesInfo> infoSerie;
     @XmlElement(required = true)

@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 public class ConsultarSeriesResponse {
 
     @XmlElement(required = true)
-    protected ConsultSeriesResp consultarSeriesResp;
+    protected ConsultarSeriesResp consultarSeriesResp;
 
     /**
      * Gets the value of the consultarSeriesResp property.
      * 
      * @return
      *     possible object is
-     *     {@link ConsultSeriesResp }
+     *     {@link ConsultarSeriesResp }
      *     
      */
-    public ConsultSeriesResp getConsultarSeriesResp() {
+    public ConsultarSeriesResp getConsultarSeriesResp() {
         return consultarSeriesResp;
     }
 
@@ -52,10 +52,10 @@ public class ConsultarSeriesResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link ConsultSeriesResp }
+     *     {@link ConsultarSeriesResp }
      *     
      */
-    public void setConsultarSeriesResp(ConsultSeriesResp value) {
+    public void setConsultarSeriesResp(ConsultarSeriesResp value) {
         this.consultarSeriesResp = value;
     }
 
