@@ -23,7 +23,6 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 
-		//fews = Facturas Envio WebService?
 		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService"),
 		TESTES ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService");
 
