@@ -75,7 +75,7 @@ public class SeriesServiceTest {
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}return null;
+		}return "ZZZZZZZZ";
 
 	}
 
