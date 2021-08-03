@@ -6,8 +6,6 @@
 package org.dma.services.at.test;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 import org.dma.java.security.JKSCertificate;
@@ -33,7 +31,7 @@ public class StockMovementServiceTest {
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
-	public static final String SystemEntryDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
+	public static final String SystemEntryDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd'T'HH:mm:ss");
 
 	public static final StockMovementServiceHandler ServiceHandler = new StockMovementServiceHandler(
 			//Service Username / Password
