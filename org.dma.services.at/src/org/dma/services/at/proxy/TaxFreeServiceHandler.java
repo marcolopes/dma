@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -53,8 +53,8 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia a conexao, adiciona o handler e invoca o webservice */
-	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType request) throws Exception {
+	/** Instancia o servico e inicializa o handler */
+	private TaxFreeService getService() throws Exception {
 
 		// cria um novo servico
 		TaxFreeServiceImpl service = new TaxFreeServiceImpl();
@@ -65,7 +65,15 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 		// inicializa handler
 		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
 
-		return soapService.taxFreeSubmission(request);
+		return soapService;
+
+	}
+
+
+	/** Instancia a conexao, adiciona o handler e invoca o webservice */
+	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType request) throws Exception {
+
+		return getService().taxFreeSubmission(request);
 
 	}
 

@@ -107,7 +107,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 			kmf.init(swCertificate.getKeyStore(), swCertificate.password.toCharArray());
 
-			SSLContext sslContext = SSLContext.getInstance("TLSv1"); // JAVA8 usa TLSv2
+			SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // necessita JAVA 7
 			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 			sslContext.init(kmf.getKeyManagers(), tsCertificate==null ?
 					// Trust Store que aceita ligacao SSL sem validar o certificado

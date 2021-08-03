@@ -31,6 +31,18 @@ public class FaturasServiceTest {
 
 	public static final String InvoiceDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
+	public static final FaturasServiceHandler ServiceHandler = new FaturasServiceHandler(
+			//Service Username / Password
+			RequesterTaxID+"/0037", "testes1234",
+			//Scheme Administrator Certificate
+			new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
+			//Software Developer Certificate
+			new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
+			//Trusted Store Certificate
+			//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
+			//Endpoint address
+			ENDPOINTS.TESTES);
+
 	public static RegisterInvoiceType buildRequest() throws Exception {
 
 		RegisterInvoiceType request = new RegisterInvoiceType();
@@ -67,20 +79,7 @@ public class FaturasServiceTest {
 	public static void main(String[] argvs) {
 
 		try{
-			//ambiente de testes
-			FaturasServiceHandler handler=new FaturasServiceHandler(
-				//Service Username / Password
-				RequesterTaxID+"/0037", "testes1234",
-				//Scheme Administrator Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
-				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
-				//Trusted Store Certificate
-				//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
-				//Endpoint address
-				ENDPOINTS.TESTES);
-
-			RegisterInvoiceResponseType response=handler.register(buildRequest());
+			RegisterInvoiceResponseType response=ServiceHandler.register(buildRequest());
 
 			System.out.println(response.getReturnCode());
 			System.out.println(response.getReturnMessage());

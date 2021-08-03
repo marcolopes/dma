@@ -42,6 +42,18 @@ public class TaxFreeServiceTest {
 
 	public static final String InvoiceDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
+	public static final TaxFreeServiceHandler ServiceHandler = new TaxFreeServiceHandler(
+			//Service Username / Password
+			RequesterTaxID+"/0037", "testes1234",
+			//Scheme Administrator Certificate
+			new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
+			//Software Developer Certificate
+			new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
+			//Trusted Store Certificate
+			//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
+			//Endpoint address
+			ENDPOINTS.TESTES);
+
 	public static TaxFreeSubmissionRequestType buildRequest() throws Exception {
 
 		//--- HEADER ---
@@ -144,20 +156,7 @@ public class TaxFreeServiceTest {
 	public static void main(String[] argvs) {
 
 		try{
-			//ambiente de testes
-			TaxFreeServiceHandler handler=new TaxFreeServiceHandler(
-				//Service Username / Password
-				RequesterTaxID+"/0037", "testes1234",
-				//Scheme Administrator Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
-				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
-				//Trusted Store Certificate
-				//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
-				//Endpoint address
-				ENDPOINTS.TESTES);
-
-			TaxFreeSubmissionResponseType response=handler.register(buildRequest());
+			TaxFreeSubmissionResponseType response=ServiceHandler.register(buildRequest());
 
 			System.out.println(response.getReturnInfo().getReturnCode());
 			System.out.println(response.getReturnInfo().getReturnMessage());

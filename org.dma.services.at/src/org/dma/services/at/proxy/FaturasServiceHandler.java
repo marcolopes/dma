@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Ricardo (AT)
@@ -55,19 +55,26 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia a conexao, adiciona o handler e invoca o webservice */
-	public RegisterInvoiceResponseType register(RegisterInvoiceType request) throws Exception {
+	/** Instancia o servico e inicializa o handler */
+	private Faturas getService() throws Exception {
 
 		// cria um novo servico
 		FaturasService service = new FaturasService();
 		// wsdlLocation esta' definido no servico
 		Debug.out(service.getWSDLDocumentLocation());
-		Faturas soapService = service.getFaturasSOAP();
 
+		Faturas soapService = service.getFaturasSOAP();
 		// inicializa handler
 		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
 
-		return soapService.registerInvoice(request);
+		return soapService;
+
+	}
+
+
+	public RegisterInvoiceResponseType register(RegisterInvoiceType request) throws Exception {
+
+		return getService().registerInvoice(request);
 
 	}
 

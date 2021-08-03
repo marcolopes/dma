@@ -35,6 +35,18 @@ public class StockMovementServiceTest {
 
 	public static final String SystemEntryDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
 
+	public static final StockMovementServiceHandler ServiceHandler = new StockMovementServiceHandler(
+			//Service Username / Password
+			RequesterTaxID+"/0037", "testes1234",
+			//Scheme Administrator Certificate
+			new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
+			//Software Developer Certificate
+			new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
+			//Trusted Store Certificate
+			//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
+			//Endpoint address
+			ENDPOINTS.TESTES);
+
 	public static StockMovement buildRequest() throws Exception {
 
 		StockMovement request=new StockMovement();
@@ -83,20 +95,7 @@ public class StockMovementServiceTest {
 	public static void main(String[] argvs) {
 
 		try{
-			//ambiente de testes
-			StockMovementServiceHandler handler=new StockMovementServiceHandler(
-				//Service Username / Password
-				RequesterTaxID+"/0037", "testes1234",
-				//Scheme Administrator Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
-				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
-				//Trusted Store Certificate
-				//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
-				//Endpoint address
-				ENDPOINTS.TESTES);
-
-			StockMovementResponse response=handler.register(buildRequest());
+			StockMovementResponse response=ServiceHandler.register(buildRequest());
 
 			System.out.println(response.getATDocCodeID());
 			System.out.println(response.getDocumentNumber());

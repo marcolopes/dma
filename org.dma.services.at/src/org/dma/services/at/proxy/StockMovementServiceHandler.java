@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Ricardo (AT)
@@ -55,19 +55,27 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia a conexao, adiciona o handler e invoca o webservice */
-	public StockMovementResponse register(StockMovement request) throws Exception {
+	/** Instancia o servico e inicializa o handler */
+	private DocumentosTransporte getService() throws Exception {
 
 		// cria um novo servico
 		DocumentosTransporteService service = new DocumentosTransporteService();
 		// wsdlLocation esta' definido no servico
 		Debug.out(service.getWSDLDocumentLocation());
-		DocumentosTransporte soapService = service.getDocumentosTransporteSOAP();
 
+		DocumentosTransporte soapService = service.getDocumentosTransporteSOAP();
 		// inicializa handler
 		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
 
-		return soapService.envioDocumentoTransporte(request);
+		return soapService;
+
+	}
+
+
+	/** Instancia a conexao, adiciona o handler e invoca o webservice */
+	public StockMovementResponse register(StockMovement request) throws Exception {
+
+		return getService().envioDocumentoTransporte(request);
 
 	}
 
