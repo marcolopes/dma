@@ -31,7 +31,7 @@ public class StockMovementServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
 
-	public static final String InvoiceDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
 	public static final String SystemEntryDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
 

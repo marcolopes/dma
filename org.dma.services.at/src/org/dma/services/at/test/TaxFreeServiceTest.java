@@ -6,8 +6,6 @@
 package org.dma.services.at.test;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
@@ -40,7 +38,7 @@ public class TaxFreeServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
 
-	public static final String InvoiceDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
 	public static final TaxFreeServiceHandler ServiceHandler = new TaxFreeServiceHandler(
 			//Service Username / Password

@@ -5,7 +5,7 @@
  *******************************************************************************/
 package pt.gov.portaldasfinancas.servicos.series.types;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -15,6 +15,8 @@ import org.dma.java.util.TimeDateUtils;
  * Todos os campos são facultativos
  */
 public class ConsultarSeriesType {
+
+	private static final String DATE_PATTERN = "yyyy-MM-dd";
 
 	private String serie;
 	private TipoSerieType tipoSerie;
@@ -28,11 +30,11 @@ public class ConsultarSeriesType {
 
 	public ConsultarSeriesType() {}
 
-	public ConsultarSeriesType(Calendar dataRegistoDe) {
+	public ConsultarSeriesType(Date dataRegistoDe) {
 		setDataRegistoDe(dataRegistoDe);
 	}
 
-	public ConsultarSeriesType(Calendar dataRegistoDe, Calendar dataRegistoAte) {
+	public ConsultarSeriesType(Date dataRegistoDe, Date dataRegistoAte) {
 		setDataRegistoDe(dataRegistoDe);
 		setDataRegistoAte(dataRegistoAte);
 	}
@@ -87,8 +89,9 @@ public class ConsultarSeriesType {
 		return dataRegistoDe;
 	}
 
-	public void setDataRegistoDe(Calendar dataRegistoDe) {
-		this.dataRegistoDe=TimeDateUtils.getXMLGregorianCalendar(dataRegistoDe);
+	public void setDataRegistoDe(Date dataRegistoDe) {
+		this.dataRegistoDe=TimeDateUtils.getXMLGregorianCalendar(
+				TimeDateUtils.getDateFormatted(dataRegistoDe, DATE_PATTERN));
 	}
 
 
@@ -96,8 +99,9 @@ public class ConsultarSeriesType {
 		return dataRegistoAte;
 	}
 
-	public void setDataRegistoAte(Calendar dataRegistoAte) {
-		this.dataRegistoAte=TimeDateUtils.getXMLGregorianCalendar(dataRegistoAte);
+	public void setDataRegistoAte(Date dataRegistoAte) {
+		this.dataRegistoAte=TimeDateUtils.getXMLGregorianCalendar(
+				TimeDateUtils.getDateFormatted(dataRegistoAte, DATE_PATTERN));
 	}
 
 

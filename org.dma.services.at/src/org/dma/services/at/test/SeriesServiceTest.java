@@ -62,7 +62,7 @@ public class SeriesServiceTest {
 
 		try{
 			RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, ClasseDoc, TipoDoc,
-					BigInteger.ONE, TimeDateUtils.getCalendar(), BigInteger.ZERO, MeioProcessamento);
+					BigInteger.ONE, TimeDateUtils.getCurrentDate(), BigInteger.ZERO, MeioProcessamento);
 
 			SeriesResp response=ServiceHandler.registarSerie(type);
 
@@ -124,7 +124,7 @@ public class SeriesServiceTest {
 	public static void ConsultarSeries() {
 
 		try{
-			ConsultarSeriesType type=new ConsultarSeriesType(TimeDateUtils.getCalendar(), TimeDateUtils.getCalendar());
+			ConsultarSeriesType type=new ConsultarSeriesType(TimeDateUtils.getCurrentDate());
 			type.setEstado(EstadoSerieType.A);
 
 			ConsultarSeriesResp response=ServiceHandler.consultarSeries(type);
