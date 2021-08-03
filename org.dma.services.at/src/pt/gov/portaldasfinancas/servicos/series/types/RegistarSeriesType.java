@@ -25,9 +25,16 @@ public class RegistarSeriesType {
 	public final BigInteger numCertSWFatur;
 	public final MeioProcessamentoType meioProcessamento;
 
+	@Deprecated
 	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, ClasseDocType classeDoc, TipoDocType tipoDoc,
-			BigInteger numInicialSeq, Date dataInicioPrevUtiliz, BigInteger numCertSWFatur) {
+			int numInicialSeq, Date dataInicioPrevUtiliz, int numCertSWFatur) {
 		this(serie, tipoSerie, classeDoc, tipoDoc, numInicialSeq, dataInicioPrevUtiliz, numCertSWFatur, null);
+	}
+
+	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, ClasseDocType classeDoc, TipoDocType tipoDoc,
+			int numInicialSeq, Date dataInicioPrevUtiliz, int numCertSWFatur, MeioProcessamentoType meioProcessamento) {
+		this(serie, tipoSerie, classeDoc, tipoDoc, BigInteger.valueOf(numInicialSeq),
+				dataInicioPrevUtiliz, BigInteger.valueOf(numCertSWFatur), meioProcessamento);
 	}
 
 	@Deprecated

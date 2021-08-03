@@ -5,8 +5,6 @@
  *******************************************************************************/
 package org.dma.services.at.test;
 
-import java.math.BigInteger;
-
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.TimeDateUtils;
@@ -58,11 +56,12 @@ public class SeriesServiceTest {
 		//Endpoint address
 		ENDPOINTS.TESTES);
 
+	/** Devolve o Codigo de Validacao */
 	public static String registarSerie() {
 
 		try{
 			RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, ClasseDoc, TipoDoc,
-					BigInteger.ONE, TimeDateUtils.getCurrentDate(), BigInteger.ZERO, MeioProcessamento);
+					1, TimeDateUtils.getCurrentDate(), 9999, MeioProcessamento);
 
 			SeriesResp response=ServiceHandler.registarSerie(type);
 
@@ -80,10 +79,10 @@ public class SeriesServiceTest {
 
 	}
 
-	public static void anularSerie(String CodigoValidacao) {
+	public static void anularSerie(String codValidacaoSerie) {
 
 		try{
-			AnularSerieType type=new AnularSerieType(Serie, ClasseDoc, TipoDoc, CodigoValidacao, MotivoAnulacao, true);
+			AnularSerieType type=new AnularSerieType(Serie, ClasseDoc, TipoDoc, codValidacaoSerie, MotivoAnulacao, true);
 
 			SeriesResp response=ServiceHandler.anularSerie(type);
 
@@ -100,10 +99,10 @@ public class SeriesServiceTest {
 
 	}
 
-	public static void finalizarSerie(String CodigoValidacao) {
+	public static void finalizarSerie(String codValidacaoSerie) {
 
 		try{
-			FinalizarSerieType type=new FinalizarSerieType(Serie, ClasseDoc, TipoDoc, CodigoValidacao, BigInteger.ONE);
+			FinalizarSerieType type=new FinalizarSerieType(Serie, ClasseDoc, TipoDoc, codValidacaoSerie, 1);
 
 			SeriesResp response=ServiceHandler.finalizarSerie(type);
 

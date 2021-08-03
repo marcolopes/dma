@@ -18,8 +18,8 @@ public class FinalizarSerieType {
 	public final String justificacao;
 
 	public FinalizarSerieType(String serie, ClasseDocType classeDoc, TipoDocType tipoDoc,
-			String codValidacaoSerie, BigInteger seqUltimoDocEmitido) {
-		this(serie, classeDoc, tipoDoc, codValidacaoSerie, seqUltimoDocEmitido, null);
+			String codValidacaoSerie, int seqUltimoDocEmitido) {
+		this(serie, classeDoc, tipoDoc, codValidacaoSerie, BigInteger.valueOf(seqUltimoDocEmitido), null);
 	}
 
 	public FinalizarSerieType(String serie, ClasseDocType classeDoc, TipoDocType tipoDoc,
