@@ -15,13 +15,13 @@ public class AnularSerieType {
 	public final boolean declaracaoNaoEmissao;
 
 	public AnularSerieType(String serie, ClasseDocType classeDoc, TipoDocType tipoDoc,
-			String codigoValidacao, MotivoAnulacaoType motivo, boolean declaracaoNaoEmissao) {
+			String codigoValidacao, MotivoAnulacaoType motivo) {
 		this.serie=serie;
 		this.classeDoc=classeDoc;
 		this.tipoDoc=tipoDoc;
 		this.codigoValidacao=codigoValidacao;
 		this.motivo=motivo;
-		this.declaracaoNaoEmissao=declaracaoNaoEmissao;
+		this.declaracaoNaoEmissao=true;
 	}
 
 

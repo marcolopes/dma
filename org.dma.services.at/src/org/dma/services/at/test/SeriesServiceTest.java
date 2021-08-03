@@ -82,7 +82,7 @@ public class SeriesServiceTest {
 	public static void anularSerie(String codValidacaoSerie) {
 
 		try{
-			AnularSerieType type=new AnularSerieType(Serie, ClasseDoc, TipoDoc, codValidacaoSerie, MotivoAnulacao, true);
+			AnularSerieType type=new AnularSerieType(Serie, ClasseDoc, TipoDoc, codValidacaoSerie, MotivoAnulacao);
 
 			SeriesResp response=ServiceHandler.anularSerie(type);
 

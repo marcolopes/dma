@@ -27,7 +27,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 
-		PRODUCAO ("Ainda nao definido a data de fecho da v1.0 do documento"),
+		PRODUCAO ("Ainda não definido à data de fecho da versão 1.0"),
 		TESTES ("https://servicos.portaldasfinancas.gov.pt:722/SeriesWSService");
 
 		public final String url;
