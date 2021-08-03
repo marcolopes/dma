@@ -3,8 +3,9 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Utils
 Bundle-SymbolicName: org.dma.java;singleton:=true
-Bundle-Version: 7.2.3.qualifier
+Bundle-Version: 7.2.4.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
+Bundle-Activator: org.dma.java.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
@@ -22,6 +23,7 @@ Bundle-ClassPath: .,
  libraries/pdfbox/fontbox-1.8.16.jar,
  libraries/pdfbox/pdfbox-1.8.16.jar,
  libraries/imgscalr-lib-4.2.jar
+Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2"
 Export-Package: com.lowagie.text,
  com.lowagie.text.exceptions,
  com.lowagie.text.factories,
