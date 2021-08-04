@@ -8,18 +8,18 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each
- * Java content interface and Java element interface
- * generated in the pt.gov.portaldasfinancas.servicos.series package.
- * <p>An ObjectFactory allows you to programatically
- * construct new instances of the Java representation
- * for XML content. The Java representation of XML
- * content can consist of schema derived interfaces
- * and classes representing the binding of schema
- * type definitions, element declarations and model
- * groups.  Factory methods for each of these are
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the pt.gov.portaldasfinancas.servicos.series package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
  * provided in this class.
- *
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -35,14 +35,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: pt.gov.portaldasfinancas.servicos.series
-     *
+     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link FinalizarSerie }
-     *
+     * 
      */
     public FinalizarSerie createFinalizarSerie() {
         return new FinalizarSerie();
@@ -50,7 +50,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link RegistarSerieResponse }
-     *
+     * 
      */
     public RegistarSerieResponse createRegistarSerieResponse() {
         return new RegistarSerieResponse();
@@ -58,7 +58,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link FinalizarSerieResponse }
-     *
+     * 
      */
     public FinalizarSerieResponse createFinalizarSerieResponse() {
         return new FinalizarSerieResponse();
@@ -66,7 +66,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link AnularSerieResponse }
-     *
+     * 
      */
     public AnularSerieResponse createAnularSerieResponse() {
         return new AnularSerieResponse();
@@ -74,7 +74,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link RegistarSerie }
-     *
+     * 
      */
     public RegistarSerie createRegistarSerie() {
         return new RegistarSerie();
@@ -82,7 +82,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link AnularSerie }
-     *
+     * 
      */
     public AnularSerie createAnularSerie() {
         return new AnularSerie();
@@ -90,7 +90,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ConsultarSeriesResponse }
-     *
+     * 
      */
     public ConsultarSeriesResponse createConsultarSeriesResponse() {
         return new ConsultarSeriesResponse();
@@ -98,7 +98,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ConsultarSeries }
-     *
+     * 
      */
     public ConsultarSeries createConsultarSeries() {
         return new ConsultarSeries();
@@ -106,7 +106,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link OperationResultInfo }
-     *
+     * 
      */
     public OperationResultInfo createOperationResultInfo() {
         return new OperationResultInfo();
@@ -114,7 +114,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SeriesResp }
-     *
+     * 
      */
     public SeriesResp createSeriesResp() {
         return new SeriesResp();
@@ -122,7 +122,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SeriesInfo }
-     *
+     * 
      */
     public SeriesInfo createSeriesInfo() {
         return new SeriesInfo();
@@ -130,7 +130,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ConsultarSeriesResp }
-     *
+     * 
      */
     public ConsultarSeriesResp createConsultSeriesResp() {
         return new ConsultarSeriesResp();
@@ -138,7 +138,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AnularSerie }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://at.gov.pt/", name = "anularSerie")
     public JAXBElement<AnularSerie> createAnularSerie(AnularSerie value) {
@@ -147,7 +147,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ConsultarSeries }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://at.gov.pt/", name = "consultarSeries")
     public JAXBElement<ConsultarSeries> createConsultarSeries(ConsultarSeries value) {
@@ -156,7 +156,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ConsultarSeriesResponse }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://at.gov.pt/", name = "consultarSeriesResponse")
     public JAXBElement<ConsultarSeriesResponse> createConsultarSeriesResponse(ConsultarSeriesResponse value) {
@@ -165,7 +165,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AnularSerieResponse }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://at.gov.pt/", name = "anularSerieResponse")
     public JAXBElement<AnularSerieResponse> createAnularSerieResponse(AnularSerieResponse value) {
@@ -174,7 +174,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link FinalizarSerieResponse }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://at.gov.pt/", name = "finalizarSerieResponse")
     public JAXBElement<FinalizarSerieResponse> createFinalizarSerieResponse(FinalizarSerieResponse value) {
@@ -183,7 +183,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RegistarSerie }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://at.gov.pt/", name = "registarSerie")
     public JAXBElement<RegistarSerie> createRegistarSerie(RegistarSerie value) {
@@ -192,7 +192,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RegistarSerieResponse }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://at.gov.pt/", name = "registarSerieResponse")
     public JAXBElement<RegistarSerieResponse> createRegistarSerieResponse(RegistarSerieResponse value) {
@@ -201,7 +201,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link FinalizarSerie }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://at.gov.pt/", name = "finalizarSerie")
     public JAXBElement<FinalizarSerie> createFinalizarSerie(FinalizarSerie value) {

@@ -8,18 +8,18 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each
- * Java content interface and Java element interface
- * generated in the pt.gov.portaldasfinancas.servicos.taxfree package.
- * <p>An ObjectFactory allows you to programatically
- * construct new instances of the Java representation
- * for XML content. The Java representation of XML
- * content can consist of schema derived interfaces
- * and classes representing the binding of schema
- * type definitions, element declarations and model
- * groups.  Factory methods for each of these are
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the pt.gov.portaldasfinancas.servicos.taxfree package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
  * provided in this class.
- *
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -43,14 +43,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: pt.gov.portaldasfinancas.servicos.taxfree
-     *
+     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link RefundQueryByRefundCompanyRequestType }
-     *
+     * 
      */
     public RefundQueryByRefundCompanyRequestType createRefundQueryByRefundCompanyRequestType() {
         return new RefundQueryByRefundCompanyRequestType();
@@ -58,7 +58,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeSearchResponseType }
-     *
+     * 
      */
     public TaxFreeSearchResponseType createTaxFreeSearchResponseType() {
         return new TaxFreeSearchResponseType();
@@ -66,7 +66,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeCommQueryRequestType }
-     *
+     * 
      */
     public TaxFreeCommQueryRequestType createTaxFreeCommQueryRequestType() {
         return new TaxFreeCommQueryRequestType();
@@ -74,7 +74,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ForeignCertificationSubmissionRequestType }
-     *
+     * 
      */
     public ForeignCertificationSubmissionRequestType createForeignCertificationSubmissionRequestType() {
         return new ForeignCertificationSubmissionRequestType();
@@ -82,7 +82,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DomesticCertificationSubmissionRequestType }
-     *
+     * 
      */
     public DomesticCertificationSubmissionRequestType createDomesticCertificationSubmissionRequestType() {
         return new DomesticCertificationSubmissionRequestType();
@@ -90,7 +90,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeSearchRequestType }
-     *
+     * 
      */
     public TaxFreeSearchRequestType createTaxFreeSearchRequestType() {
         return new TaxFreeSearchRequestType();
@@ -98,7 +98,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeCommQueryResponseType }
-     *
+     * 
      */
     public TaxFreeCommQueryResponseType createTaxFreeCommQueryResponseType() {
         return new TaxFreeCommQueryResponseType();
@@ -106,7 +106,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeSubmissionResponseType }
-     *
+     * 
      */
     public TaxFreeSubmissionResponseType createTaxFreeSubmissionResponseType() {
         return new TaxFreeSubmissionResponseType();
@@ -114,7 +114,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ContingencySubmissionRequestType }
-     *
+     * 
      */
     public ContingencySubmissionRequestType createContingencySubmissionRequestType() {
         return new ContingencySubmissionRequestType();
@@ -122,7 +122,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeSubmissionRequestType }
-     *
+     * 
      */
     public TaxFreeSubmissionRequestType createTaxFreeSubmissionRequestType() {
         return new TaxFreeSubmissionRequestType();
@@ -130,7 +130,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ContingencySubmissionResponseType }
-     *
+     * 
      */
     public ContingencySubmissionResponseType createContingencySubmissionResponseType() {
         return new ContingencySubmissionResponseType();
@@ -138,7 +138,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link RefundQueryByRefundCompanyResponseType }
-     *
+     * 
      */
     public RefundQueryByRefundCompanyResponseType createRefundQueryByRefundCompanyResponseType() {
         return new RefundQueryByRefundCompanyResponseType();
@@ -146,7 +146,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CertificationSubmissionResponseType }
-     *
+     * 
      */
     public CertificationSubmissionResponseType createCertificationSubmissionResponseType() {
         return new CertificationSubmissionResponseType();
@@ -154,7 +154,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeAnnulmentResponseType }
-     *
+     * 
      */
     public TaxFreeAnnulmentResponseType createTaxFreeAnnulmentResponseType() {
         return new TaxFreeAnnulmentResponseType();
@@ -162,7 +162,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeAnnulmentRequestType }
-     *
+     * 
      */
     public TaxFreeAnnulmentRequestType createTaxFreeAnnulmentRequestType() {
         return new TaxFreeAnnulmentRequestType();
@@ -170,7 +170,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CompanyType }
-     *
+     * 
      */
     public CompanyType createCompanyType() {
         return new CompanyType();
@@ -178,7 +178,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CalculatedTaxType }
-     *
+     * 
      */
     public CalculatedTaxType createCalculatedTaxType() {
         return new CalculatedTaxType();
@@ -186,7 +186,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoiceDetailType }
-     *
+     * 
      */
     public InvoiceDetailType createInvoiceDetailType() {
         return new InvoiceDetailType();
@@ -194,7 +194,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoiceLineDetailType }
-     *
+     * 
      */
     public InvoiceLineDetailType createInvoiceLineDetailType() {
         return new InvoiceLineDetailType();
@@ -202,7 +202,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DateIntervalType }
-     *
+     * 
      */
     public DateIntervalType createDateIntervalType() {
         return new DateIntervalType();
@@ -210,7 +210,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoicesDetailType }
-     *
+     * 
      */
     public InvoicesDetailType createInvoicesDetailType() {
         return new InvoicesDetailType();
@@ -218,7 +218,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CertifiedInvoiceType }
-     *
+     * 
      */
     public CertifiedInvoiceType createCertifiedInvoiceType() {
         return new CertifiedInvoiceType();
@@ -226,7 +226,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeSearchResultType }
-     *
+     * 
      */
     public TaxFreeSearchResultType createTaxFreeSearchResultType() {
         return new TaxFreeSearchResultType();
@@ -234,7 +234,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CurrentStatusCriteriaType }
-     *
+     * 
      */
     public CurrentStatusCriteriaType createCurrentStatusCriteriaType() {
         return new CurrentStatusCriteriaType();
@@ -242,7 +242,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DomesticExportCertificateType }
-     *
+     * 
      */
     public DomesticExportCertificateType createDomesticExportCertificateType() {
         return new DomesticExportCertificateType();
@@ -250,7 +250,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SerialNumbersListType }
-     *
+     * 
      */
     public SerialNumbersListType createSerialNumbersListType() {
         return new SerialNumbersListType();
@@ -258,7 +258,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeSearchCriteriaType }
-     *
+     * 
      */
     public TaxFreeSearchCriteriaType createTaxFreeSearchCriteriaType() {
         return new TaxFreeSearchCriteriaType();
@@ -266,7 +266,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CertifiedInvoicesType }
-     *
+     * 
      */
     public CertifiedInvoicesType createCertifiedInvoicesType() {
         return new CertifiedInvoicesType();
@@ -274,7 +274,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ForeignExportCertificateType }
-     *
+     * 
      */
     public ForeignExportCertificateType createForeignExportCertificateType() {
         return new ForeignExportCertificateType();
@@ -282,7 +282,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link PreviousTaxFreeCommType }
-     *
+     * 
      */
     public PreviousTaxFreeCommType createPreviousTaxFreeCommType() {
         return new PreviousTaxFreeCommType();
@@ -290,7 +290,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeSearchResultsType }
-     *
+     * 
      */
     public TaxFreeSearchResultsType createTaxFreeSearchResultsType() {
         return new TaxFreeSearchResultsType();
@@ -298,7 +298,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link BuyerType }
-     *
+     * 
      */
     public BuyerType createBuyerType() {
         return new BuyerType();
@@ -306,7 +306,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CurrentStatusType }
-     *
+     * 
      */
     public CurrentStatusType createCurrentStatusType() {
         return new CurrentStatusType();
@@ -314,7 +314,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoiceType }
-     *
+     * 
      */
     public InvoiceType createInvoiceType() {
         return new InvoiceType();
@@ -322,7 +322,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IdentityDocType }
-     *
+     * 
      */
     public IdentityDocType createIdentityDocType() {
         return new IdentityDocType();
@@ -330,7 +330,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CalculatedTaxesType }
-     *
+     * 
      */
     public CalculatedTaxesType createCalculatedTaxesType() {
         return new CalculatedTaxesType();
@@ -338,7 +338,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SimpleBuyerType }
-     *
+     * 
      */
     public SimpleBuyerType createSimpleBuyerType() {
         return new SimpleBuyerType();
@@ -346,7 +346,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoiceLineType }
-     *
+     * 
      */
     public InvoiceLineType createInvoiceLineType() {
         return new InvoiceLineType();
@@ -354,7 +354,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ReturnInfoType }
-     *
+     * 
      */
     public ReturnInfoType createReturnInfoType() {
         return new ReturnInfoType();
@@ -362,7 +362,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeCommType }
-     *
+     * 
      */
     public TaxFreeCommType createTaxFreeCommType() {
         return new TaxFreeCommType();
@@ -370,7 +370,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoiceIdentifiersType }
-     *
+     * 
      */
     public InvoiceIdentifiersType createInvoiceIdentifiersType() {
         return new InvoiceIdentifiersType();
@@ -378,7 +378,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SoftwareProviderType }
-     *
+     * 
      */
     public SoftwareProviderType createSoftwareProviderType() {
         return new SoftwareProviderType();
@@ -386,7 +386,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link RefundType }
-     *
+     * 
      */
     public RefundType createRefundType() {
         return new RefundType();
@@ -394,7 +394,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ContingencySubmissionType }
-     *
+     * 
      */
     public ContingencySubmissionType createContingencySubmissionType() {
         return new ContingencySubmissionType();
@@ -402,7 +402,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoiceLinesListType }
-     *
+     * 
      */
     public InvoiceLinesListType createInvoiceLinesListType() {
         return new InvoiceLinesListType();
@@ -410,7 +410,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeCommDetailType }
-     *
+     * 
      */
     public TaxFreeCommDetailType createTaxFreeCommDetailType() {
         return new TaxFreeCommDetailType();
@@ -418,7 +418,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link RequestHeaderType }
-     *
+     * 
      */
     public RequestHeaderType createRequestHeaderType() {
         return new RequestHeaderType();
@@ -426,7 +426,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoiceLinesListDetailType }
-     *
+     * 
      */
     public InvoiceLinesListDetailType createInvoiceLinesListDetailType() {
         return new InvoiceLinesListDetailType();
@@ -434,7 +434,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoicesListDetailType }
-     *
+     * 
      */
     public InvoicesListDetailType createInvoicesListDetailType() {
         return new InvoicesListDetailType();
@@ -442,7 +442,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link VatNumberInfoType }
-     *
+     * 
      */
     public VatNumberInfoType createVatNumberInfoType() {
         return new VatNumberInfoType();
@@ -450,7 +450,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TaxFreeCommRegistrationType }
-     *
+     * 
      */
     public TaxFreeCommRegistrationType createTaxFreeCommRegistrationType() {
         return new TaxFreeCommRegistrationType();
@@ -458,7 +458,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoicesType }
-     *
+     * 
      */
     public InvoicesType createInvoicesType() {
         return new InvoicesType();
@@ -466,7 +466,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link RefundQueryResultsType }
-     *
+     * 
      */
     public RefundQueryResultsType createRefundQueryResultsType() {
         return new RefundQueryResultsType();
@@ -474,7 +474,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link InvoicesListType }
-     *
+     * 
      */
     public InvoicesListType createInvoicesListType() {
         return new InvoicesListType();
@@ -482,7 +482,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TaxFreeAnnulmentRequestType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "TaxFreeAnnulmentRequest")
     public JAXBElement<TaxFreeAnnulmentRequestType> createTaxFreeAnnulmentRequest(TaxFreeAnnulmentRequestType value) {
@@ -491,7 +491,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CertificationSubmissionResponseType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "DomesticCertificationSubmissionResponse")
     public JAXBElement<CertificationSubmissionResponseType> createDomesticCertificationSubmissionResponse(CertificationSubmissionResponseType value) {
@@ -500,7 +500,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TaxFreeAnnulmentResponseType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "TaxFreeAnnulmentResponse")
     public JAXBElement<TaxFreeAnnulmentResponseType> createTaxFreeAnnulmentResponse(TaxFreeAnnulmentResponseType value) {
@@ -509,7 +509,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CertificationSubmissionResponseType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "ForeignCertificationSubmissionResponse")
     public JAXBElement<CertificationSubmissionResponseType> createForeignCertificationSubmissionResponse(CertificationSubmissionResponseType value) {
@@ -518,7 +518,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RefundQueryByRefundCompanyResponseType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "RefundQueryByRefundCompanyResponse")
     public JAXBElement<RefundQueryByRefundCompanyResponseType> createRefundQueryByRefundCompanyResponse(RefundQueryByRefundCompanyResponseType value) {
@@ -527,7 +527,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ContingencySubmissionResponseType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "ContingencySubmissionResponse")
     public JAXBElement<ContingencySubmissionResponseType> createContingencySubmissionResponse(ContingencySubmissionResponseType value) {
@@ -536,7 +536,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TaxFreeSubmissionRequestType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "TaxFreeSubmissionRequest")
     public JAXBElement<TaxFreeSubmissionRequestType> createTaxFreeSubmissionRequest(TaxFreeSubmissionRequestType value) {
@@ -545,7 +545,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ContingencySubmissionRequestType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "ContingencySubmissionRequest")
     public JAXBElement<ContingencySubmissionRequestType> createContingencySubmissionRequest(ContingencySubmissionRequestType value) {
@@ -554,7 +554,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TaxFreeSubmissionResponseType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "TaxFreeSubmissionResponse")
     public JAXBElement<TaxFreeSubmissionResponseType> createTaxFreeSubmissionResponse(TaxFreeSubmissionResponseType value) {
@@ -563,7 +563,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TaxFreeCommQueryResponseType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "TaxFreeCommQueryResponse")
     public JAXBElement<TaxFreeCommQueryResponseType> createTaxFreeCommQueryResponse(TaxFreeCommQueryResponseType value) {
@@ -572,7 +572,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TaxFreeSearchRequestType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "TaxFreeSearchRequest")
     public JAXBElement<TaxFreeSearchRequestType> createTaxFreeSearchRequest(TaxFreeSearchRequestType value) {
@@ -581,7 +581,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ForeignCertificationSubmissionRequestType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "ForeignCertificationSubmissionRequest")
     public JAXBElement<ForeignCertificationSubmissionRequestType> createForeignCertificationSubmissionRequest(ForeignCertificationSubmissionRequestType value) {
@@ -590,7 +590,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DomesticCertificationSubmissionRequestType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "DomesticCertificationSubmissionRequest")
     public JAXBElement<DomesticCertificationSubmissionRequestType> createDomesticCertificationSubmissionRequest(DomesticCertificationSubmissionRequestType value) {
@@ -599,7 +599,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RefundQueryByRefundCompanyRequestType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "RefundQueryByRefundCompanyRequest")
     public JAXBElement<RefundQueryByRefundCompanyRequestType> createRefundQueryByRefundCompanyRequest(RefundQueryByRefundCompanyRequestType value) {
@@ -608,7 +608,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TaxFreeSearchResponseType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "TaxFreeSearchResponse")
     public JAXBElement<TaxFreeSearchResponseType> createTaxFreeSearchResponse(TaxFreeSearchResponseType value) {
@@ -617,7 +617,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TaxFreeCommQueryRequestType }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "http://servicos.portaldasfinancas.gov.pt/eTaxFree/TaxFreeService", name = "TaxFreeCommQueryRequest")
     public JAXBElement<TaxFreeCommQueryRequestType> createTaxFreeCommQueryRequest(TaxFreeCommQueryRequestType value) {

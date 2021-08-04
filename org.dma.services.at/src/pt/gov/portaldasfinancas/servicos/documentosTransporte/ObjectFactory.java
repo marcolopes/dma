@@ -8,18 +8,18 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each
- * Java content interface and Java element interface
- * generated in the pt.gov.portaldasfinancas.servicos.documentosTransporte package.
- * <p>An ObjectFactory allows you to programatically
- * construct new instances of the Java representation
- * for XML content. The Java representation of XML
- * content can consist of schema derived interfaces
- * and classes representing the binding of schema
- * type definitions, element declarations and model
- * groups.  Factory methods for each of these are
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the pt.gov.portaldasfinancas.servicos.documentosTransporte package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
  * provided in this class.
- *
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -29,14 +29,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: pt.gov.portaldasfinancas.servicos.documentosTransporte
-     *
+     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link StockMovementResponse }
-     *
+     * 
      */
     public StockMovementResponse createStockMovementResponse() {
         return new StockMovementResponse();
@@ -44,7 +44,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link StockMovement }
-     *
+     * 
      */
     public StockMovement createStockMovement() {
         return new StockMovement();
@@ -52,7 +52,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link OrderReferences }
-     *
+     * 
      */
     public OrderReferences createOrderReferences() {
         return new OrderReferences();
@@ -60,7 +60,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link AddressStructurePT }
-     *
+     * 
      */
     public AddressStructurePT createAddressStructurePT() {
         return new AddressStructurePT();
@@ -68,7 +68,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ResponseStatus }
-     *
+     * 
      */
     public ResponseStatus createResponseStatus() {
         return new ResponseStatus();
@@ -76,7 +76,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Line }
-     *
+     * 
      */
     public Line createLine() {
         return new Line();
@@ -84,7 +84,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link StockMovement }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", name = "envioDocumentoTransporteRequestElem")
     public JAXBElement<StockMovement> createEnvioDocumentoTransporteRequestElem(StockMovement value) {
@@ -93,7 +93,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link StockMovementResponse }{@code >}}
-     *
+     * 
      */
     @XmlElementDecl(namespace = "https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/", name = "envioDocumentoTransporteResponseElem")
     public JAXBElement<StockMovementResponse> createEnvioDocumentoTransporteResponseElem(StockMovementResponse value) {
