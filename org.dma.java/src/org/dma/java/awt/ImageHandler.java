@@ -31,12 +31,9 @@ public class ImageHandler {
 	 * to array, in the specified format.
 	 */
 	public byte[] getBytes(String formatName) {
-		try{
-			ByteArrayOutputStream baos=new ByteArrayOutputStream();
-			try{
-				ImageOutputStream ios=ImageIO.createImageOutputStream(baos);
-				try{
-					ImageIO.write(image, formatName, ios);
+		try{ByteArrayOutputStream baos=new ByteArrayOutputStream();
+			try{ImageOutputStream ios=ImageIO.createImageOutputStream(baos);
+				try{ImageIO.write(image, formatName, ios);
 				}finally{
 					ios.flush();
 					ios.close();
@@ -56,9 +53,7 @@ public class ImageHandler {
 	 * to file, in the specified format.
 	 */
 	public boolean save(File file, String formatName) {
-		try{
-			return ImageIO.write(image, formatName, file);
-
+		try{return ImageIO.write(image, formatName, file);
 		}catch(IOException e){
 			System.err.println(e);
 		}return false;

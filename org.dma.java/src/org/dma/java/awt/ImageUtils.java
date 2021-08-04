@@ -50,9 +50,7 @@ public class ImageUtils {
 
 	/** @see Scalr#resize(BufferedImage, int, java.awt.image.BufferedImageOp...) */
 	public static BufferedImage resizeImage(BufferedImage image, int size) {
-		try{
-			return size==0 ? image : Scalr.resize(image, size);
-
+		try{return size==0 ? image : Scalr.resize(image, size);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -64,9 +62,7 @@ public class ImageUtils {
 	 * encoded by the specified buffer.
 	 */
 	public static BufferedImage createImage(byte[] bytes) {
-		try{
-			return drawImage(ImageIO.read(new ByteArrayInputStream(bytes)));
-
+		try{return drawImage(ImageIO.read(new ByteArrayInputStream(bytes)));
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -78,9 +74,7 @@ public class ImageUtils {
 	 * encoded by the specified file at the specified path.
 	 */
 	public static BufferedImage createImage(String pathname) {
-		try{
-			return drawImage(ImageIO.read(new File(pathname)));
-
+		try{return drawImage(ImageIO.read(new File(pathname)));
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -92,10 +86,8 @@ public class ImageUtils {
 	 * encoded by the specified resource at the specified location.
 	 */
 	public static BufferedImage createImage(Class location, String resource) {
-		try{
-			InputStream stream=location.getClassLoader().getResourceAsStream(resource);
-			try{
-				BufferedImage image=ImageIO.read(stream);
+		try{InputStream stream=location.getClassLoader().getResourceAsStream(resource);
+			try{BufferedImage image=ImageIO.read(stream);
 				return drawImage(image);
 			}finally{
 				stream.close();

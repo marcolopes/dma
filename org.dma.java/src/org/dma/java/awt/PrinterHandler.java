@@ -44,8 +44,7 @@ public class PrinterHandler {
 
 	/** Returns default printer if invalid */
 	public static String lookupPrinterName(String printerName) {
-		try{
-			new PrinterHandler(printerName).checkPrinter();
+		try{new PrinterHandler(printerName).checkPrinter();
 		}catch(PrinterException e){
 			return lookupDefaultPrinterName();
 		}return printerName;
