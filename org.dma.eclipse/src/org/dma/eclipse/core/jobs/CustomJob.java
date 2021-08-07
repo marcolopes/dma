@@ -196,7 +196,7 @@ public class CustomJob extends Job {
 			time.stop();
 			lock.release();
 			monitor.done();
-			Debug.out("FINISHED JOB ("+time.toString()+")", this);
+			Debug.out("FINISHED JOB ("+time+")", this);
 
 		}return Status.CANCEL_STATUS;
 

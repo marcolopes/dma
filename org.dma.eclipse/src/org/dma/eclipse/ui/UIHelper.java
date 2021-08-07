@@ -1,32 +1,17 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.ui;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 
-import org.dma.java.util.Debug;
-
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.dynamichelpers.IExtensionChangeHandler;
-import org.eclipse.jface.preference.IPreferenceNode;
-import org.eclipse.jface.preference.PreferenceManager;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
@@ -37,9 +22,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
-import org.eclipse.ui.internal.PerspectiveBarManager;
-import org.eclipse.ui.internal.WorkbenchPage;
-import org.eclipse.ui.internal.WorkbenchWindow;
 
 /**
  * The term used to represent the entire UI is workbench.
@@ -75,92 +57,12 @@ import org.eclipse.ui.internal.WorkbenchWindow;
  */
 public class UIHelper {
 
-	public static ToolBar getPerspectiveToolBar() {
-		try{
-			WorkbenchWindow workbenchWindow=(WorkbenchWindow)getWorkbenchWindow();
-			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
-			return manager.getControl();
-		}catch(Exception e){
-			e.printStackTrace();
-		}return null;
-	}
-
-
-	//ECLIPSE BUG: https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
-	public static void disablePerspectiveToolBarMenu() {
-		ToolBar toolBar=getPerspectiveToolBar();
-		if (toolBar!=null) for (Listener listener: toolBar.getListeners(SWT.MenuDetect)){
-			toolBar.removeListener(SWT.MenuDetect, listener);
-			Debug.out("REMOVED", listener.toString());
-		}
-	}
-
-
-	/**
-	* Removes perspectives from RCP application
-	*/
-	public static void removeUnwantedPerspectives(String[] perspectives) {
-		IPerspectiveRegistry perspectiveRegistry=PlatformUI.getWorkbench().getPerspectiveRegistry();
-		if(perspectiveRegistry instanceof IExtensionChangeHandler) try{
-			Collection<String> unwantedPerspectives=Arrays.asList(perspectives);
-			Collection<IPerspectiveDescriptor> removePerspectives=new ArrayList();
-			for (IPerspectiveDescriptor perspectiveDescriptor: perspectiveRegistry.getPerspectives()) {
-				if (unwantedPerspectives.contains(perspectiveDescriptor.getId())) removePerspectives.add(perspectiveDescriptor);
-			}
-			if (!removePerspectives.isEmpty()){
-				IExtensionChangeHandler handler=(IExtensionChangeHandler)perspectiveRegistry;
-				handler.removeExtension(null, removePerspectives.toArray());
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-
-	/**
-	 * Adds all other perspective shortcuts to the layout
-	 * so they can be present in the PerspectiveBarManager
-	 */
-	public static void addOtherPerspectiveShortcuts(String perspectiveId, IPageLayout layout) {
-		for (IConfigurationElement element: Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.ui.perspectives")) try{
-			String id=element.getAttribute("id");
-			if (!id.equals(perspectiveId)){
-				layout.addPerspectiveShortcut(id);
-				Debug.out("ADDED", id);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-
-	public static void removePreferenceManagerNodes() {
-		PreferenceManager manager=getWorkbench().getPreferenceManager();
-		if (manager!=null) for (IPreferenceNode node: manager.getRootSubNodes()) try{
-			manager.remove(node);
-			Debug.out("REMOVED", node.getId());
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-
-	public static void saveWorkspaceState(boolean full) {
-		try{
-			ResourcesPlugin.getWorkspace().save(full, null);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-
 	/*
 	 * IWorkbench
 	 */
 	/** @see PlatformUI#getWorkbench */
 	public static IWorkbench getWorkbench() {
-		try{
-			return PlatformUI.getWorkbench();
+		try{return PlatformUI.getWorkbench();
 		}catch(Exception e){
 			e.printStackTrace();
 		}return null;
@@ -187,8 +89,7 @@ public class UIHelper {
 	}
 
 	public static boolean openWorkbenchBrowser(URL url) {
-		try{
-			IWorkbenchBrowserSupport browserSupport=getWorkbench().getBrowserSupport();
+		try{IWorkbenchBrowserSupport browserSupport=getWorkbench().getBrowserSupport();
 			IWebBrowser browser=browserSupport.createBrowser(url.toString());
 			browser.openURL(url);
 			return true;
@@ -202,16 +103,16 @@ public class UIHelper {
 	/*
 	 * IWorkbenchWindow
 	 */
-	public static IWorkbenchWindow getWorkbenchWindow() {
+	public static IWorkbenchWindow getActiveWorkbenchWindow() {
 		return getWorkbench().getActiveWorkbenchWindow();
 	}
 
 	public static IWorkbenchPage getActivePage() {
-		return getWorkbenchWindow().getActivePage();
+		return getActiveWorkbenchWindow().getActivePage();
 	}
 
 	public static Shell getWorkbenchShell() {
-		return getWorkbenchWindow().getShell();
+		return getActiveWorkbenchWindow().getShell();
 	}
 
 
@@ -223,8 +124,17 @@ public class UIHelper {
 		return getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(perspectiveId);
 	}
 
+	public static void removePerspective(String perspectiveId) {
+		IExtensionChangeHandler handler=(IExtensionChangeHandler)getWorkbench().getPerspectiveRegistry();
+		handler.removeExtension(null, new Object[]{findPerspectiveWithId(perspectiveId)});
+	}
+
+	public static IPerspectiveDescriptor[] getOpenPerspectives() {
+		return getActivePage().getOpenPerspectives();
+	}
+
 	public static boolean isPerspectiveOpen(String perspectiveId) {
-		for (IPerspectiveDescriptor perspective: getActivePage().getOpenPerspectives()) {
+		for (IPerspectiveDescriptor perspective: getOpenPerspectives()) {
 			if (perspective.getId().equals(perspectiveId)) return true;
 		}return false;
 	}
@@ -234,22 +144,23 @@ public class UIHelper {
 	}
 
 	public static void setPerspective(String perspectiveId) {
-		getActivePage().setPerspective(findPerspectiveWithId(perspectiveId));
+		setPerspective(findPerspectiveWithId(perspectiveId));
 	}
 
-	public static void closePerspective(IPerspectiveDescriptor perspective) {
+	/** Returns the active perspective */
+	public static IPerspectiveDescriptor closePerspective(IPerspectiveDescriptor perspective) {
 		getActivePage().closePerspective(perspective,false,false);
+		return getActivePage().getPerspective();
 	}
 
-	public static void closePerspective(String perspectiveId) {
-		closePerspective(findPerspectiveWithId(perspectiveId));
+	/** Returns the active perspective */
+	public static IPerspectiveDescriptor closePerspective(String perspectiveId) {
+		return closePerspective(findPerspectiveWithId(perspectiveId));
 	}
 
-	public static void removePerspective(String perspectiveId) {
-		IExtensionChangeHandler handler=(IExtensionChangeHandler)getWorkbench().getPerspectiveRegistry();
-		handler.removeExtension(null, new Object[]{findPerspectiveWithId(perspectiveId)});
+	public static void resetPerspective() {
+		getActivePage().resetPerspective();
 	}
-
 
 
 
@@ -315,11 +226,6 @@ public class UIHelper {
 
 	public static void hideView(IViewPart view) {
 		getActivePage().hideView(view);
-	}
-
-	public static void detachView(IViewPart view) {
-		WorkbenchPage page=(WorkbenchPage)view.getViewSite().getPage();
-		page.detachView(findViewReference(view.getViewSite().getId(), view.getViewSite().getSecondaryId()));
 	}
 
 

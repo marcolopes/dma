@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -83,7 +83,7 @@ public class ConsoleView extends MessageConsole {
 	}
 
 	/** Opens console and redirects system messages */
-	public void open(boolean captureSystemOut) {
+	public void open(boolean captureOutputStream) {
 		UIHelper.getActivePage().addPartListener(new IPartListener() {
 			@Override
 			public void partOpened(IWorkbenchPart part) {}
@@ -94,7 +94,7 @@ public class ConsoleView extends MessageConsole {
 				if(part instanceof IConsoleView){
 					IConsoleView view=(IConsoleView)part;
 					if (view.getViewSite().getId().equals(ID)){
-						restoreSystemOut();
+						restoreOutputStream();
 					}
 				}
 			}
@@ -104,7 +104,7 @@ public class ConsoleView extends MessageConsole {
 			public void partActivated(IWorkbenchPart part) {}
 		});
 		activate();
-		if (captureSystemOut) captureSystemOut();
+		if (captureOutputStream) captureOutputStream();
 	}
 
 	public boolean isOpen() {
@@ -133,21 +133,24 @@ public class ConsoleView extends MessageConsole {
 	}
 
 
-	/** Redirects System messages */
-	public void captureSystemOut() {
+	/** Redirects system messages */
+	public void captureOutputStream() {
 		if (systemStream==null) try{
+			//backup
 			systemStream=new SystemStream(System.out, System.err);
-			SystemStream newSystemStream=new SystemStream(consoleStream);
-			System.setOut(newSystemStream.out);
-			System.setErr(newSystemStream.err);
+			//redirect
+			SystemStream systemStream=new SystemStream(consoleStream);
+			System.setOut(systemStream.out);
+			System.setErr(systemStream.err);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 
-	/** Restores System messages */
-	public void restoreSystemOut() {
+	/** Restores system messages */
+	public void restoreOutputStream() {
 		if (systemStream!=null) try{
+			//restore
 			System.setOut(systemStream.out);
 			System.setErr(systemStream.err);
 			systemStream=null;
