@@ -82,7 +82,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	public SeriesResp registarSerie(RegistarSeriesType type) throws Exception {
 
 		return getService().registarSerie(type.serie, type.tipoSerie.value(),
-				type.classeDoc.value(), type.tipoDoc.value(),
+				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
 				type.numInicialSeq, type.dataInicioPrevUtiliz, type.numCertSWFatur,
 				type.meioProcessamento==null ? null : type.meioProcessamento.value());
 
@@ -95,7 +95,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	public SeriesResp anularSerie(AnularSerieType type) throws Exception {
 
 		return getService().anularSerie(type.serie,
-				type.classeDoc.value(), type.tipoDoc.value(),
+				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
 				type.codigoValidacao, type.motivo.value(), type.declaracaoNaoEmissao);
 
 	}
@@ -108,7 +108,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	public SeriesResp finalizarSerie(FinalizarSerieType type) throws Exception {
 
 		return getService().finalizarSerie(type.serie,
-				type.classeDoc.value(), type.tipoDoc.value(),
+				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
 				type.codValidacaoSerie, type.seqUltimoDocEmitido, type.justificacao);
 
 	}

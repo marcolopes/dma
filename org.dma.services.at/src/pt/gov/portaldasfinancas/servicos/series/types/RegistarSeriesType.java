@@ -18,31 +18,22 @@ public class RegistarSeriesType {
 
 	public final String serie;
 	public final TipoSerieType tipoSerie;
-	public final ClasseDocType classeDoc;
 	public final TipoDocType tipoDoc;
 	public final BigInteger numInicialSeq;
 	public final XMLGregorianCalendar dataInicioPrevUtiliz;
 	public final BigInteger numCertSWFatur;
 	public final MeioProcessamentoType meioProcessamento;
 
-	@Deprecated
-	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, ClasseDocType classeDoc, TipoDocType tipoDoc,
-			int numInicialSeq, Date dataInicioPrevUtiliz, int numCertSWFatur) {
-		this(serie, tipoSerie, classeDoc, tipoDoc, numInicialSeq, dataInicioPrevUtiliz, numCertSWFatur, null);
-	}
-
-	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, ClasseDocType classeDoc, TipoDocType tipoDoc,
+	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, TipoDocType tipoDoc,
 			int numInicialSeq, Date dataInicioPrevUtiliz, int numCertSWFatur, MeioProcessamentoType meioProcessamento) {
-		this(serie, tipoSerie, classeDoc, tipoDoc, BigInteger.valueOf(numInicialSeq),
+		this(serie, tipoSerie, tipoDoc, BigInteger.valueOf(numInicialSeq),
 				dataInicioPrevUtiliz, BigInteger.valueOf(numCertSWFatur), meioProcessamento);
 	}
 
-	@Deprecated
-	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, ClasseDocType classeDoc, TipoDocType tipoDoc,
+	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, TipoDocType tipoDoc,
 			BigInteger numInicialSeq, Date dataInicioPrevUtiliz, BigInteger numCertSWFatur, MeioProcessamentoType meioProcessamento) {
 		this.serie=serie;
 		this.tipoSerie=tipoSerie;
-		this.classeDoc=classeDoc;
 		this.tipoDoc=tipoDoc;
 		this.numInicialSeq=numInicialSeq;
 		this.dataInicioPrevUtiliz=TimeDateUtils.getXMLGregorianCalendar(

@@ -8,16 +8,13 @@ package pt.gov.portaldasfinancas.servicos.series.types;
 public class AnularSerieType {
 
 	public final String serie;
-	public final ClasseDocType classeDoc;
 	public final TipoDocType tipoDoc;
 	public final String codigoValidacao;
 	public final MotivoAnulacaoType motivo;
 	public final boolean declaracaoNaoEmissao;
 
-	public AnularSerieType(String serie, ClasseDocType classeDoc, TipoDocType tipoDoc,
-			String codigoValidacao, MotivoAnulacaoType motivo) {
+	public AnularSerieType(String serie, TipoDocType tipoDoc, String codigoValidacao, MotivoAnulacaoType motivo) {
 		this.serie=serie;
-		this.classeDoc=classeDoc;
 		this.tipoDoc=tipoDoc;
 		this.codigoValidacao=codigoValidacao;
 		this.motivo=motivo;

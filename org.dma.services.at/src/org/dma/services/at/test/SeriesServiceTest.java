@@ -15,7 +15,6 @@ import pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResp;
 import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
 import pt.gov.portaldasfinancas.servicos.series.SeriesResp;
 import pt.gov.portaldasfinancas.servicos.series.types.AnularSerieType;
-import pt.gov.portaldasfinancas.servicos.series.types.ClasseDocType;
 import pt.gov.portaldasfinancas.servicos.series.types.ConsultarSeriesType;
 import pt.gov.portaldasfinancas.servicos.series.types.EstadoSerieType;
 import pt.gov.portaldasfinancas.servicos.series.types.FinalizarSerieType;
@@ -35,8 +34,6 @@ public class SeriesServiceTest {
 	public static final String Serie = "2022";
 
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
-
-	public static final ClasseDocType ClasseDoc = ClasseDocType.SI;
 
 	public static final TipoDocType TipoDoc = TipoDocType.FT;
 
@@ -60,7 +57,7 @@ public class SeriesServiceTest {
 	public static String registarSerie() {
 
 		try{
-			RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, ClasseDoc, TipoDoc,
+			RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, TipoDoc,
 					1, TimeDateUtils.getCurrentDate(), 9999, MeioProcessamento);
 
 			SeriesResp response=ServiceHandler.registarSerie(type);
@@ -82,7 +79,7 @@ public class SeriesServiceTest {
 	public static void anularSerie(String codValidacaoSerie) {
 
 		try{
-			AnularSerieType type=new AnularSerieType(Serie, ClasseDoc, TipoDoc, codValidacaoSerie, MotivoAnulacao);
+			AnularSerieType type=new AnularSerieType(Serie, TipoDoc, codValidacaoSerie, MotivoAnulacao);
 
 			SeriesResp response=ServiceHandler.anularSerie(type);
 
@@ -102,7 +99,7 @@ public class SeriesServiceTest {
 	public static void finalizarSerie(String codValidacaoSerie) {
 
 		try{
-			FinalizarSerieType type=new FinalizarSerieType(Serie, ClasseDoc, TipoDoc, codValidacaoSerie, 1);
+			FinalizarSerieType type=new FinalizarSerieType(Serie, TipoDoc, codValidacaoSerie, 1);
 
 			SeriesResp response=ServiceHandler.finalizarSerie(type);
 
