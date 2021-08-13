@@ -51,7 +51,7 @@ public class RegexMatcher {
 
 		String text="";
 
-		if(control instanceof CCombo){
+		if (control instanceof CCombo){
 			CCombo control=(CCombo)this.control;
 			text=control.getText();
 		}
