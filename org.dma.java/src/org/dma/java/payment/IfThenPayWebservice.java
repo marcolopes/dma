@@ -99,7 +99,7 @@ public class IfThenPayWebservice {
 			Element element = (Element)nodes.item(index);
 
 			IfThenPayWebserviceResponseType response=new IfThenPayWebserviceResponseType(
-					element.getAttribute("Entidade"),
+					element.getElementsByTagName("Entidade").item(0).getTextContent(),
 					element.getElementsByTagName("Referencia").item(0).getTextContent(),
 					element.getElementsByTagName("Valor").item(0).getTextContent(),
 					element.getElementsByTagName("Id").item(0).getTextContent(),
