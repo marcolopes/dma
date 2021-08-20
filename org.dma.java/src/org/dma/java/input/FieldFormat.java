@@ -20,6 +20,8 @@ import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
 
 public class FieldFormat extends FieldRegex {
+	
+	private static final DecimalFormatSymbols FORMAT_SYMBOLS = new DecimalFormatSymbols();
 
 	/** Decimal Format CACHE */
 	private static final Map<String, DecimalFormat> DF_CACHE=new ConcurrentHashMap();
@@ -167,6 +169,11 @@ public class FieldFormat extends FieldRegex {
 		case BOOLEAN:
 		case STRING: break;
 		}return pattern;
+	}
+
+	@Deprecated
+	public String format(Object value) {
+		return format(value, FORMAT_SYMBOLS);
 	}
 
 	public String format(Object value, DecimalFormatSymbols symbols) {
