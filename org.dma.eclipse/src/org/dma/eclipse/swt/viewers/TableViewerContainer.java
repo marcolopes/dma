@@ -111,19 +111,6 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	}
 
 
-	public long getObjectsToLoad(int keycode) {
-		switch(keycode){
-		default: //reset
-		case SWT.DEFAULT: return dynamicLoad==0 ? getNumberOfObjects() : dynamicLoad;
-		case SWT.ARROW_UP: break; //nothing
-		case SWT.PAGE_UP: break; //nothing
-		case SWT.ARROW_DOWN: if (getSelectionIndex()+1>=objectCollection.size()) return dynamicLoad; break;
-		case SWT.PAGE_DOWN: if (getSelectionIndex()+computeSize()>=objectCollection.size()) return dynamicLoad; break;
-		case SWT.MouseWheel: return dynamicLoad;
-		}return 0;
-	}
-
-
 	/*
 	 * Listeners
 	 */
@@ -144,29 +131,13 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	/*
 	 * Viewer
 	 */
-	protected void refreshTable(boolean updateLabels) {
-		viewer.refresh(updateLabels);
-		if (SystemUtils.IS_OS_MAC) table.redraw();
-	}
-
-	public void refreshTable() {
-		refreshTable(true);
-	}
-
 	public void clearTable() {
 		objectCollection.clear();
 		refreshTable(true);
 	}
 
-	protected boolean updateTable(int keycode) {
-		boolean changed=false;
-		long objectsToLoad=getObjectsToLoad(keycode);
-		if (objectsToLoad!=0) {
-			long topIndex=objectCollection.size();
-			long bottomIndex=topIndex+objectsToLoad;
-			changed=objectCollection.addAll(retrieveObjects(topIndex, bottomIndex));
-			refreshTable(keycode==SWT.DEFAULT);
-		}return changed;
+	public void refreshTable() {
+		refreshTable(true);
 	}
 
 	@Override
@@ -181,6 +152,35 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		objectCollection.addAll(retrieveObjects());
 		refreshTable();
 		*/
+	}
+
+	protected void refreshTable(boolean updateLabels) {
+		viewer.refresh(updateLabels);
+		if (SystemUtils.IS_OS_MAC) table.redraw();
+	}
+
+	protected boolean updateTable(int keycode) {
+		boolean changed=false;
+		long objectsToLoad=getObjectsToLoad(keycode);
+		if (objectsToLoad!=0) {
+			long topIndex=objectCollection.size();
+			long bottomIndex=topIndex+objectsToLoad;
+			changed=objectCollection.addAll(retrieveObjects(topIndex, bottomIndex));
+			refreshTable(keycode==SWT.DEFAULT);
+		}return changed;
+	}
+
+	/* Used for dynamic load */
+	private long getObjectsToLoad(int keycode) {
+		switch(keycode){
+		default: //reset
+		case SWT.DEFAULT: return dynamicLoad==0 ? getNumberOfObjects() : dynamicLoad;
+		case SWT.ARROW_UP: break; //nothing
+		case SWT.PAGE_UP: break; //nothing
+		case SWT.ARROW_DOWN: if (getSelectionIndex()+1>=objectCollection.size()) return dynamicLoad; break;
+		case SWT.PAGE_DOWN: if (getSelectionIndex()+computeSize()>=objectCollection.size()) return dynamicLoad; break;
+		case SWT.MouseWheel: return dynamicLoad;
+		}return 0;
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -212,6 +212,11 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	/*
 	 * Elements
 	 */
+	public void removeSelection() {
+		table.deselectAll();
+		viewer.setSelection(StructuredSelection.EMPTY);
+	}
+
 	public int selectElement(int index) {
 		viewer.refresh(false);
 		if (index>table.getItemCount()-1) index=table.getItemCount()-1;
@@ -282,8 +287,8 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		return selectElement(indices.length==0 ? 0 : indices[0]);
 	}
 
-	public void removeSelectedElements() {
-		removeElements(getSelectionIndices());
+	public int removeSelectedElements() {
+		return removeElements(getSelectionIndices());
 	}
 
 	public int moveElementsUp(int[] indices) {
@@ -309,8 +314,8 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		return selectElement(indices.length==0 ? 0 : index-1);
 	}
 
-	public void moveSelectedElementsUp() {
-		moveElementsUp(getSelectionIndices());
+	public int moveSelectedElementsUp() {
+		return moveElementsUp(getSelectionIndices());
 	}
 
 	public int moveElementsDown(int[] indices) {
@@ -337,8 +342,8 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		return selectElement(indices.length==0 ? 0 : index+1);
 	}
 
-	public void moveSelectedElementsDown() {
-		moveElementsDown(getSelectionIndices());
+	public int moveSelectedElementsDown() {
+		return moveElementsDown(getSelectionIndices());
 	}
 
 
@@ -354,6 +359,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		return objectCollection;
 	}
 
+	@Deprecated
 	public long getNumberOfObjects() {
 		return Integer.MAX_VALUE;
 	}

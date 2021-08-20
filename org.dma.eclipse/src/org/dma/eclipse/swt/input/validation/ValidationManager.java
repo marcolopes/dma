@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -26,7 +26,7 @@ public class ValidationManager implements IValidationManager {
 	@Override
 	public void register(String property, IValidator validator) {
 
-		if(validatorMap.containsKey(property))
+		if (validatorMap.containsKey(property))
 			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
 
 		validator.setValidationManager(this);
@@ -40,7 +40,7 @@ public class ValidationManager implements IValidationManager {
 	public IValidator remove(String property) {
 
 		IValidator validator=validatorMap.remove(property);
-		if(validator!=null) validator.clearError();
+		if (validator!=null) validator.clearError();
 
 		return validator;
 
@@ -51,7 +51,7 @@ public class ValidationManager implements IValidationManager {
 	public void unregister(String property) {
 
 		IValidator validator=remove(property);
-		if(validator!=null) validator.unregisterAll();
+		if (validator!=null) validator.unregisterAll();
 
 	}
 
@@ -87,7 +87,7 @@ public class ValidationManager implements IValidationManager {
 	public boolean hasError() {
 
 		for(IValidator validator: validatorMap.values()){
-			if(validator.hasError()) return true;
+			if (validator.hasError()) return true;
 		}
 
 		return false;
@@ -96,27 +96,26 @@ public class ValidationManager implements IValidationManager {
 
 
 	@Override
+	public String getErrorMessage() {
+
+		String message="";
+
+		for(IValidator validator: validatorMap.values()){
+			if (validator.hasError()) message=StringUtils.addIfNotEmpy(message,"; ")+validator.getErrorMessage();
+		}
+
+		return message;
+
+	}
+
+
+	@Deprecated
+	@Override
 	public String getErrorMessage(String property) {
 
 		IValidator validator=validatorMap.get(property);
 
 		return validator==null || !validator.hasError() ? "" : validator.getErrorMessage();
-
-	}
-
-
-	@Override
-	public String getErrorMessage() {
-
-		String errorMessage="";
-
-		for(String property: validatorMap.keySet()){
-			String propertyError=getErrorMessage(property);
-			if(!propertyError.isEmpty())
-				errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+propertyError;
-		}
-
-		return errorMessage;
 
 	}
 

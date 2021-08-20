@@ -19,9 +19,10 @@ public interface IValidationManager {
 
 	public boolean hasError();
 
-	public String getErrorMessage(String property);
-
 	public String getErrorMessage();
+
+	@Deprecated
+	public String getErrorMessage(String property);
 
 
 }

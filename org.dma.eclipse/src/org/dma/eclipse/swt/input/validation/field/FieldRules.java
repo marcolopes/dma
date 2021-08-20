@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -27,12 +27,13 @@ public class FieldRules implements IFieldRules {
 		return edited && is(NOTEDITABLE);
 	}
 
+	@Deprecated
 	public boolean isNotZero() {
 		return is(NOTZERO);
 	}
 
 	public boolean isNotEmpty() {
-		return is(NOTEMPTY);
+		return is(NOTEMPTY) || isNotZero();
 	}
 
 	public boolean isLimitMatch() {

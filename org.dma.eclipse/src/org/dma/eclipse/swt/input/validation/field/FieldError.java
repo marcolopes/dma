@@ -1,54 +1,52 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.input.validation.field;
 
 import org.dma.eclipse.swt.graphics.ColorManager;
-
-import org.eclipse.swt.widgets.Label;
+import org.dma.java.util.StringUtils;
 
 public abstract class FieldError  {
 
-	public abstract String processError(ERRORS error, String message, String label);
+	public abstract String formatLabel(ERRORS error, String message, String label);
 
 	public enum ERRORS {
-		NONE,
-		IS_ZERO,
-		IS_EMPTY,
+		NO_ERROR,
 		WRONG_LENGTH,
+		INVALID_VALUE,
 		USER_DEFINED}
 
 	private String message;
 	private ERRORS error;
 
-	protected final Label label;
+	protected final FieldLabel label;
 
-	public FieldError(Label label) {
+	public FieldError(FieldLabel label) {
 		this.label=label;
 		clearError();
 	}
 
 	public void update() {
-		if (label!=null) label.setForeground(hasError() ? ColorManager.COLOR_RED : null);
+		label.setColor(hasError() ? ColorManager.COLOR_RED : null);
 	}
 
 
 	/*
 	 * Message
 	 */
-	public String getMessage() {
-		return processError(error, message==null ? "" : message, label==null ? "" : label.getText());
+	public String getErrorMessage() {
+		return formatLabel(error, error==ERRORS.NO_ERROR ? "" : message, label.getText());
 	}
 
 	public void setError(String message) {
 		this.message=message;
-		setError(message==null || message.isEmpty() ? ERRORS.NONE : ERRORS.USER_DEFINED);
+		setError(StringUtils.isEmpty(message) ? ERRORS.NO_ERROR : ERRORS.USER_DEFINED);
 	}
 
 	public void clearError() {
-		setError(ERRORS.NONE);
+		setError(ERRORS.NO_ERROR);
 	}
 
 
@@ -57,7 +55,7 @@ public abstract class FieldError  {
 	 * Getters and setters
 	 */
 	public boolean hasError() {
-		return error!=ERRORS.NONE;
+		return error!=ERRORS.NO_ERROR;
 	}
 
 	public void setError(ERRORS error) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -15,22 +15,10 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-public class RegexMatcher {
-
-	private final Listener verifyListener = new Listener() {
-		@Override
-		public void handleEvent(Event event) {
-			if(regex.isUppercase()){
-				event.text=event.text.toUpperCase();
-			}
-			else if(regex.isLowercase()){
-				event.text=event.text.toLowerCase();
-			}
-			event.doit=patternMatcher(event);
-		}
-	};
+public class RegexMatcher implements Listener {
 
 	private final Control control;
 	private final FieldRegex regex;
@@ -40,31 +28,22 @@ public class RegexMatcher {
 		this.control=control;
 		this.regex=regex;
 		this.pattern=regex.getRegexPattern();
-		control.addListener(SWT.Verify, verifyListener);
+		control.addListener(SWT.Verify, this);
 	}
 
 	public void dispose() {
-		control.removeListener(SWT.Verify, verifyListener);
+		control.removeListener(SWT.Verify, this);
 	}
 
-	private boolean patternMatcher(Event event) {
-
-		String text="";
-
-		if (control instanceof CCombo){
-			CCombo control=(CCombo)this.control;
-			text=control.getText();
-		}
-		else if(control instanceof Combo){
-			Combo control=(Combo)this.control;
-			text=control.getText();
-		}
-		else if(control instanceof Text){
-			Text control=(Text)this.control;
-			text=control.getText();
+	@Override
+	public void handleEvent(Event event) {
+		if (regex.isUppercase()){
+			event.text=event.text.toUpperCase();
+		}else if (regex.isLowercase()){
+			event.text=event.text.toLowerCase();
 		}
 
-		StringBuffer newText=new StringBuffer(text).
+		StringBuffer newText=new StringBuffer(getText()).
 			replace(event.start, event.end, "").
 			insert(event.start, event.text);
 
@@ -75,8 +54,16 @@ public class RegexMatcher {
 		Debug.out("newText", newText);
 		*/
 
-		return pattern.matcher(newText.toString()).matches();
+		event.doit=pattern.matcher(newText.toString()).matches();
 
+	}
+
+	public String getText() {
+		if (control instanceof Spinner) return ((Spinner)control).getText();
+		if (control instanceof CCombo) return ((CCombo)control).getText();
+		if (control instanceof Combo) return ((Combo)control).getText();
+		if (control instanceof Text) return ((Text)control).getText();
+		return "";
 	}
 
 

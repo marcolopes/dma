@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,7 +11,6 @@ import java.util.Map;
 import org.dma.eclipse.swt.input.validation.IValidationManager;
 import org.dma.eclipse.swt.input.validation.IValidator;
 import org.dma.eclipse.swt.input.validation.ValidationManager;
-import org.dma.java.input.FieldFormat;
 import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 
@@ -20,14 +19,12 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 public abstract class TableValidator<T> implements IValidator {
 
 	public abstract void validateLine(T element);
-	public abstract String processError(String message, String label);
 
 	private final SelectionListener selectionListener=new SelectionListener() {
 		@Override
@@ -71,41 +68,14 @@ public abstract class TableValidator<T> implements IValidator {
 		unregisterAll();
 	}
 
-	/** Text / combo (with regex) */
-	public ColumnBinding register(String property, Control text, FieldFormat fieldFormat, String label) {
 
-		ColumnBinding binding=new ColumnBinding(text, fieldFormat, label){
-			@Override
-			public String processError(String message, String label) {
-				return TableValidator.this.processError(message, label);
-			}
-		};
-		register(property, binding);
-		return binding;
+	public ColumnBinding register(String property, ColumnBinding binding) {
 
-	}
-
-	/** Generic (no regex) */
-	public ColumnBinding register(String property, Control text, String label) {
-
-		ColumnBinding binding=new ColumnBinding(text, label){
-			@Override
-			public String processError(String message, String label) {
-				return TableValidator.this.processError(message, label);
-			}
-		};
-		register(property, binding);
-		return binding;
-
-	}
-
-
-	protected void register(String property, ColumnBinding binding) {
-
-		if (validatorMap.containsKey(property))
-			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
+		if (validatorMap.containsKey(property))	throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
 
 		validatorMap.put(property, binding);
+
+		return binding;
 
 	}
 
@@ -191,13 +161,13 @@ public abstract class TableValidator<T> implements IValidator {
 	@Override
 	public String getErrorMessage() {
 
-		String errorMessage="";
+		String message="";
 
 		for(ColumnBinding binding: validatorMap.values()){
-			if (binding.hasError()) errorMessage=StringUtils.addIfNotEmpy(errorMessage,"; ")+binding.getError();
+			if (binding.hasError()) message=StringUtils.addIfNotEmpy(message,"; ")+binding.getErrorMessage();
 		}
 
-		return errorMessage;
+		return message;
 
 	}
 

@@ -5,8 +5,11 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.input.validation.field;
 
+import java.text.DecimalFormatSymbols;
+
 import org.dma.eclipse.swt.input.support.RegexMatcher;
 import org.dma.java.input.FieldFormat;
+import org.dma.java.input.FieldFormat.TYPES;
 import org.dma.java.util.TimeDateUtils;
 
 import org.eclipse.swt.SWT;
@@ -16,7 +19,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Spinner;
@@ -25,47 +27,45 @@ import org.eclipse.swt.widgets.Text;
 
 public abstract class FieldBinding extends FieldError {
 
+	private static final DecimalFormatSymbols FORMAT_SYMBOLS = DecimalFormatSymbols.getInstance();
+
+	private Listener selectionListener;
+	private FocusListener focusListener;
+
+	private FieldRules rules;
+	private boolean enabled=true;
+
 	private final Control control;
 	private final FieldFormat fieldFormat;
 	private final RegexMatcher regexMatcher;
 
-	protected FieldRules rules;
+	/** Without regex matcher */
+	public FieldBinding(Control control, FieldRules rules) {
+		this(new FieldLabel(), control, rules);
+	}
 
-	private boolean enabled=true;
-	private Listener selectionListener;
-	private FocusListener focusListener;
+	/** Without regex matcher */
+	public FieldBinding(FieldLabel label, Control control, FieldRules rules) {
+		this(label, control, new FieldFormat(TYPES.STRING, -1), null, rules);
+	}
 
-	/** Text / combo (with regex) */
-	public FieldBinding(Label label, Control control, FieldFormat fieldFormat, int rules) {
+	/** With regex matcher */
+	public FieldBinding(FieldLabel label, Control control, FieldFormat fieldFormat, FieldRules rules) {
+		this(label, control, fieldFormat, new RegexMatcher(control, fieldFormat), rules);
+	}
+
+	private FieldBinding(FieldLabel label, Control control, FieldFormat fieldFormat, RegexMatcher regexMatcher, FieldRules rules) {
 		super(label);
 		this.control=control;
 		this.fieldFormat=fieldFormat;
-		this.regexMatcher=new RegexMatcher(control, fieldFormat);
-		this.rules=new FieldRules(rules);
-	}
-
-	/** Text / combo / list / button (no regex) */
-	public FieldBinding(Label label, Control control, int rules) {
-		super(label);
-		this.control=control;
-		this.fieldFormat=null;
-		this.regexMatcher=null;
-		this.rules=new FieldRules(rules);
-	}
-
-	/** Generic (no regex) */
-	public FieldBinding(Control control, int rules) {
-		super(null);
-		this.control=control;
-		this.fieldFormat=null;
-		this.regexMatcher=null;
-		this.rules=new FieldRules(rules);
+		this.regexMatcher=regexMatcher;
+		this.rules=rules;
 	}
 
 
 	public void dispose() {
-		control.removeFocusListener(focusListener);
-		control.removeListener(SWT.Selection, selectionListener);
+		if (focusListener!=null) control.removeFocusListener(focusListener);
+		if (selectionListener!=null) control.removeListener(SWT.Selection, selectionListener);
 		if (regexMatcher!=null) regexMatcher.dispose();
 	}
 
@@ -75,30 +75,20 @@ public abstract class FieldBinding extends FieldError {
 	 * Listeners
 	 */
 	public void addFocusListener(FocusListener focusListener) {
-
 		this.focusListener=focusListener;
-
 		control.addFocusListener(focusListener);
-
 	}
 
 
 	public void addSelectionListener(Listener selectionListener) {
-
 		this.selectionListener=selectionListener;
-
 		if (control instanceof TabFolder ||
 				control instanceof Spinner ||
 				control instanceof CCombo ||
 				control instanceof Combo ||
 				control instanceof List ||
 				control instanceof Button ||
-				control instanceof DateTime){
-
-			control.addListener(SWT.Selection, selectionListener);
-
-		}
-
+				control instanceof DateTime) control.addListener(SWT.Selection, selectionListener);
 	}
 
 
@@ -107,51 +97,33 @@ public abstract class FieldBinding extends FieldError {
 	 * Validation
 	 */
 	public void validate(boolean edited) {
-
-		//can be edited AND is not readonly?
+		//can be edited? is not readonly?
 		enabled=!rules.isNotEditable(edited) && !rules.isReadOnly();
-
 		//rules applied only if ENABLED
-		if (enabled){
+		if (enabled && rules.isNotEmpty() && isEmpty()) setError(ERRORS.INVALID_VALUE);
+		if (enabled && rules.isLimitMatch() && !isLimitMatch()) setError(ERRORS.WRONG_LENGTH);
+	}
 
-			//SPINNER
-			if (control instanceof Spinner){
-				//is zero?
-				if (rules.isNotZero() && getText().trim().equals("0")) setError(ERRORS.IS_ZERO);
-			}//CCOMBO
-			else if (control instanceof CCombo){
-				//has no elements?
-				if (rules.isNotEmpty() && getCCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
-				//has no selected elements?
-				if (rules.isNotZero() && getCCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
-			}//COMBO
-			else if (control instanceof Combo){
-				//has no elements?
-				if (rules.isNotEmpty() && getCombo().getItemCount()==0) setError(ERRORS.IS_EMPTY);
-				//has no selected elements?
-				if (rules.isNotZero() && getCombo().getSelectionIndex()==-1) setError(ERRORS.IS_ZERO);
-			}//LIST
-			else if (control instanceof List){
-				//has no elements?
-				if (rules.isNotEmpty() && getList().getItemCount()==0) setError(ERRORS.IS_EMPTY);
-				//has no selected elements?
-				if (rules.isNotZero() && getList().getSelectionCount()==0) setError(ERRORS.IS_ZERO);
-			}//BUTTON
-			else if (control instanceof Button){
-			}//DATETIME
-			else if (control instanceof DateTime){
-			}//TEXT
-			else if (control instanceof Text){
-				String text=getText().trim();
-				//is zero?
-				if (rules.isNotZero() && text.equals("0")) setError(ERRORS.IS_ZERO);
-				//has no chars?
-				if (rules.isNotEmpty() && text.isEmpty()) setError(ERRORS.IS_EMPTY);
-				//length not exact?
-				if (rules.isLimitMatch() && text.length()!=fieldFormat.getSize().size) setError(ERRORS.WRONG_LENGTH);
-			}
-		}
+	public boolean isEmpty() {
+		if (control instanceof Spinner) return getSpinner().getText().isEmpty();
+		if (control instanceof CCombo) return getCCombo().getSelectionIndex()==-1;
+		if (control instanceof Combo) return getCombo().getSelectionIndex()==-1;
+		if (control instanceof List) return getList().getSelectionCount()==0;
+		if (control instanceof Button) return getButton().getText().isEmpty();
+		if (control instanceof DateTime) return getDatetime()!=null;
+		if (control instanceof Text) return getText().isEmpty();
+		return false;
+	}
 
+	public boolean isLimitMatch() {
+		if (control instanceof Spinner) return false;
+		if (control instanceof CCombo) return false;
+		if (control instanceof Combo) return false;
+		if (control instanceof List) return false;
+		if (control instanceof Button) return false;
+		if (control instanceof DateTime) return false;
+		if (control instanceof Text) return getText().length()==fieldFormat.getSize().size;
+		return false;
 	}
 
 	@Override
@@ -176,6 +148,10 @@ public abstract class FieldBinding extends FieldError {
 
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	public FieldRules getRules() {
+		return rules;
 	}
 
 	public void setRules(int rules) {
@@ -212,24 +188,15 @@ public abstract class FieldBinding extends FieldError {
 	}
 
 	public String getText() {
-		if (control instanceof Spinner){
-			return getSpinner().getText();
-		}else if (control instanceof CCombo){
-			return getCCombo().getText();
-		}else if (control instanceof Combo){
-			return getCombo().getText();
-		}else if (control instanceof List){
-			return getList().getSelection()[0];
-		}else if (control instanceof Button){
-			return getButton().getText();
-		}else if (control instanceof DateTime){
-			DateTime dt=getDatetime();
-			return fieldFormat.format(TimeDateUtils.getCalendar(
-					dt.getYear(), dt.getMonth(), dt.getDay()).getTime());
-		}else if (control instanceof Text){
-			Text control=(Text)this.control;
-			return control.getText();
-		}return "";
+		if (control instanceof Spinner) return getSpinner().getText();
+		if (control instanceof CCombo) return getCCombo().getText();
+		if (control instanceof Combo) return getCombo().getText();
+		if (control instanceof List) return getList().getSelection()[0];
+		if (control instanceof Button) return getButton().getText();
+		if (control instanceof Text) return ((Text)control).getText();
+		if (control instanceof DateTime) return fieldFormat.format(TimeDateUtils.getCalendar(
+				getDatetime().getYear(), getDatetime().getMonth(), getDatetime().getDay()).getTime(), FORMAT_SYMBOLS);
+		return "";
 	}
 
 

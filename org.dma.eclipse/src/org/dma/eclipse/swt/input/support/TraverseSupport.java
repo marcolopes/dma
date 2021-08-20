@@ -17,40 +17,7 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-public class TraverseSupport {
-
-	private final TraverseListener traverseListener = new TraverseListener() {
-		@Override
-		public void keyTraversed(TraverseEvent event) {
-			try{//current control
-				Control control=(Control)event.getSource();
-				//multi-line TEXT?
-				if (control instanceof Text){
-					Text text=(Text)control;
-					if (NumericUtils.bit(text.getStyle(), SWT.MULTI)){
-						Debug.out("SWT.MULTI");
-						//TAB key pressed?
-						if (event.keyCode==SWT.TAB){
-							event.doit=true; // traverse
-						}//control KEYPAD return?
-						else if (keypadReturn) switch(event.keyCode){
-						case SWT.KEYPAD_CR:
-							event.doit=false; // do not traverse
-							break;
-						case SWT.CR:
-							event.detail=SWT.TRAVERSE_NONE; // avoid NEW line
-							event.doit=true; // traverse
-							break;
-						}
-					}
-				}//next control
-				if (event.doit) selectNext(control);
-
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-	};
+public class TraverseSupport implements TraverseListener {
 
 	private final List<Control> controlList=new ArrayList();
 
@@ -61,11 +28,43 @@ public class TraverseSupport {
 	}
 
 
+	@Override
+	public void keyTraversed(TraverseEvent event) {
+		try{//current control
+			Control control=(Control)event.getSource();
+			//multi-line TEXT?
+			if (control instanceof Text){
+				Text text=(Text)control;
+				if (NumericUtils.bit(text.getStyle(), SWT.MULTI)){
+					Debug.out("SWT.MULTI");
+					//TAB key pressed?
+					if (event.keyCode==SWT.TAB){
+						event.doit=true; // traverse
+					}//control KEYPAD return?
+					else if (keypadReturn) switch(event.keyCode){
+					case SWT.KEYPAD_CR:
+						event.doit=false; // do not traverse
+						break;
+					case SWT.CR:
+						event.detail=SWT.TRAVERSE_NONE; // avoid NEW line
+						event.doit=true; // traverse
+						break;
+					}
+				}
+			}//next control
+			if (event.doit) selectNext(control);
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	/*
 	 * Add / Remove
 	 */
 	public boolean add(Control control) {
-		control.addTraverseListener(traverseListener);
+		control.addTraverseListener(this);
 		return controlList.add(control);
 	}
 
@@ -76,7 +75,7 @@ public class TraverseSupport {
 	}
 
 	public boolean remove(Control control) {
-		control.removeTraverseListener(traverseListener);
+		control.removeTraverseListener(this);
 		return controlList.remove(control);
 	}
 
