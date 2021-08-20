@@ -153,10 +153,9 @@ public class CustomJob extends Job {
 
 		ILock lock = getJobManager().newLock();
 
-		Chronograph time = new Chronograph();
+		Chronograph time = new Chronograph().start();
 
 		try{
-			time.start();
 			lock.acquire();
 			monitor.beginTask("", IProgressMonitor.UNKNOWN);
 			Debug.out("STARTED JOB", this);
@@ -193,10 +192,9 @@ public class CustomJob extends Job {
 					}
 				});
 			}
-			time.stop();
 			lock.release();
 			monitor.done();
-			Debug.out("FINISHED JOB ("+time+")", this);
+			Debug.out("FINISHED JOB ("+time.stop()+")", this);
 
 		}return Status.CANCEL_STATUS;
 
