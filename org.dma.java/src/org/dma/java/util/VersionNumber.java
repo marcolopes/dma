@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.dma.java.util;
 
+import org.osgi.framework.Version;
+
 public final class VersionNumber {
 
 	public static VersionNumber valueOf(String version) {
@@ -20,6 +22,14 @@ public final class VersionNumber {
 	public final int minor;
 	public final int micro;
 	public final int build;
+
+	public VersionNumber(Version version) {
+		this(version, StringUtils.val(version.getQualifier()));
+	}
+
+	public VersionNumber(Version version, int build) {
+		this(version.getMajor(), version.getMinor(), version.getMicro(), build);
+	}
 
 	public VersionNumber(int major) {
 		this(major, 0);
@@ -90,8 +100,7 @@ public final class VersionNumber {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof VersionNumber)
-			return equals((VersionNumber)obj);
+		if (obj instanceof VersionNumber) return equals((VersionNumber)obj);
 		return equals(obj.toString());
 	}
 

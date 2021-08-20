@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,19 +11,20 @@ public class Chronograph {
 	private long elapsedTime=0;
 	private boolean running=false;
 
-	public void start() {
+	public Chronograph start() {
 		if (running) throw new RuntimeException("STOP timer first!");
 		running=true;
 		startTime=System.nanoTime();
+		return this;
 	}
 
 
-	/** Returns elapsed time */
-	public long stop() {
+	/** Returns elapsed time in millis */
+	public Chronograph stop() {
 		if (!running) throw new RuntimeException("START timer first!");
 		elapsedTime=elapsed();
 		running=false;
-		return elapsed()/1000000;
+		return this;
 	}
 
 
@@ -33,50 +34,49 @@ public class Chronograph {
 		return this;
 	}
 
-
+	/** Returns elapsed time in nanos */
 	public long elapsed() {
-		return running ?
-			elapsedTime+System.nanoTime()-startTime : elapsedTime;
+		return running ? elapsedTime+System.nanoTime()-startTime : elapsedTime;
 	}
 
 
 	@Override
 	public String toString() {
-		return elapsed()/1000000+"ms";
+		return String.format("%,d", elapsed()/1000000)+"ms";
 	}
 
 
 	public static void main(String[] argvs) throws Exception {
 
 		Chronograph timer=new Chronograph();
-		System.out.println("TIMER (0): "+timer.toString());
+		System.out.println("TIMER (0): "+timer);
 
 		timer.start();
 		Thread.sleep(100);
-		System.out.println("TIMER (~100): "+timer.toString());
+		System.out.println("TIMER (~100): "+timer);
 		Thread.sleep(100);
-		System.out.println("TIMER (~200): "+timer.toString());
+		System.out.println("TIMER (~200): "+timer);
 
 		System.out.println(timer.stop());
 		Thread.sleep(100);
-		System.out.println("TIMER (~200): "+timer.toString());
+		System.out.println("TIMER (~200): "+timer);
 
 		timer.start();
 		Thread.sleep(100);
-		System.out.println("TIMER (~300): "+timer.toString());
+		System.out.println("TIMER (~300): "+timer);
 
 		System.out.println(timer.stop());
-		System.out.println("TIMER (~300): "+timer.toString());
+		System.out.println("TIMER (~300): "+timer);
 
 		timer.start();
 		Thread.sleep(100);
-		System.out.println("TIMER (~400): "+timer.toString());
+		System.out.println("TIMER (~400): "+timer);
 
 		timer.reset();
 		Thread.sleep(100);
-		System.out.println("TIMER (~100): "+timer.toString());
+		System.out.println("TIMER (~100): "+timer);
 		Thread.sleep(100);
-		System.out.println("TIMER (~200): "+timer.toString());
+		System.out.println("TIMER (~200): "+timer);
 
 	}
 

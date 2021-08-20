@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2014 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -54,33 +54,33 @@ public class MathFormula {
 		String enumeration=formula;
 		for(FormulaSymbol symbol: symbols){
 
-			if(symbol!=null && !symbol.isEmpty()){
+			Debug.out("symbol #"+index, symbol);
+
+			if (symbol!=null && !symbol.isEmpty()){
 				String name=ignoreCase ? symbol.name.toLowerCase() : symbol.name;
 				enumeration=enumeration.replace(name, String.valueOf(symbol.value));
-				Debug.out("symbol #"+index, symbol);
-				Debug.out("enumeration #"+index, enumeration);
 				index++;
 			}
 
 		}
 
-		Debug.out("formula", formula);
 		Debug.out("enumeration", enumeration);
 
-		if(!enumeration.equals(formula)) try{
+		if (!enumeration.equals(formula)) try{
 
 			Object value=interpreter.eval("result="+enumeration);
-			Debug.out("value",interpreter.get("result"));
+			Debug.out(interpreter.get("result").toString());
+			Debug.out(value);
 
-			BigDecimal result=new BigDecimal(value.toString());
-			Debug.out("result",result);
+			return value instanceof Double ?
+					new BigDecimal((Double)value) : new BigDecimal(value.toString());
 
-			return result;
-
+		}catch(NumberFormatException e){
 		}catch(ScriptException e){
+			System.out.println(e);
 		}catch(Exception e){
 			e.printStackTrace();
-		}return null;
+		}return BigDecimal.ZERO;
 
 	}
 
@@ -90,19 +90,21 @@ public class MathFormula {
 		FormulaSymbol[] symbols=new FormulaSymbol[vars.length];
 		for(int i=0; i<vars.length; i++){
 			symbols[i]=new FormulaSymbol(vars[i], BigDecimal.valueOf(i+1));
-		}return eval(symbols)!=null;
+		}return eval(symbols).signum()!=0;
 
 	}
 
 
 	public static void main(String[] argvs) {
 
+		BigDecimal x = new BigDecimal("10.01");
+		BigDecimal y = new BigDecimal("10.02");
+		System.out.println(x.multiply(y));
+
 		MathFormula mf=new MathFormula("x * y", true);
-
-		BigDecimal result=mf.eval(
-			new FormulaSymbol("x", new BigDecimal("10.01")),
-			new FormulaSymbol("y", new BigDecimal("10.02")));
-
+		System.out.println(mf.isValid("x"));
+		System.out.println(mf.isValid("x", "y"));
+		BigDecimal result=mf.eval(new FormulaSymbol("x", x), new FormulaSymbol("y", y));
 		System.out.println(result);
 
 	}

@@ -54,4 +54,16 @@ public class DatePeriod {
 		return new String[]{getStartDate(pattern), getEndDate(pattern)};
 	}
 
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() +
+				" [startDate=" + startDate +
+				", endDate=" + endDate + "]";
+	}
+
 }

@@ -43,17 +43,17 @@ public class Folder extends CustomFile {
 	 */
 	public File[] listDirectories(final String wildcards) {
 
-		try{
-			return listFiles(new FileFilter() {
-				//convert to regex
-				String regex=wildcards.replace("*", ".*").replace("?", ".");
-				Pattern pattern=Pattern.compile(regex);
-				@Override
-				public boolean accept(File file) {
-					return file.isDirectory() && pattern.matcher(file.getName()).find();
-				}
-			});
+		FileFilter filter=new FileFilter() {
+			//convert to regex
+			String regex=wildcards.replace("*", ".*").replace("?", ".");
+			Pattern pattern=Pattern.compile(regex);
+			@Override
+			public boolean accept(File file) {
+				return file.isDirectory() && pattern.matcher(file.getName()).find();
+			}
+		};
 
+		try{return listFiles(filter);
 		}catch(Exception e){
 			System.err.println(e);
 		}return new File[0];
@@ -85,17 +85,17 @@ public class Folder extends CustomFile {
 	 */
 	public File[] listFiles(final String wildcards) {
 
-		try{
-			return listFiles(new FileFilter() {
-				//convert to regex
-				String regex=wildcards.replace("*", ".*").replace("?", ".");
-				Pattern pattern=Pattern.compile(regex);
-				@Override
-				public boolean accept(File file) {
-					return file.isFile() &&	pattern.matcher(file.getName()).find();
-				}
-			});
+		FileFilter filter=new FileFilter() {
+			//convert to regex
+			String regex=wildcards.replace("*", ".*").replace("?", ".");
+			Pattern pattern=Pattern.compile(regex);
+			@Override
+			public boolean accept(File file) {
+				return file.isFile() &&	pattern.matcher(file.getName()).find();
+			}
+		};
 
+		try{return listFiles(filter);
 		}catch(Exception e){
 			System.err.println(e);
 		}return new File[0];

@@ -589,9 +589,7 @@ public class StringUtils {
 		System.out.printf(format, "string.replace: "); System.out.println(string.replace(".", "**"));
 
 		int repeat=1000000;
-		Chronograph time=new Chronograph();
-		time.start();
-
+		Chronograph time=new Chronograph().start();
 		for(int i=0; i<repeat; i++) Pattern.compile("\\.").split(string);
 		System.out.printf(format, "pattern.split: "); System.out.println(time);
 		time.reset();

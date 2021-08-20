@@ -34,9 +34,11 @@ public class CustomFile extends File {
 	public static final int BASE64_LINE_LENGTH = 64;
 	public static final int STRING_BUFFER_LENGTH = 4096;
 
+	/** Replace an existing file AND copy attributes */
 	public static final CopyOption[] COPY_OPTIONS = new CopyOption[]{
 		StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES};
 
+	/** Replace an existing file */
 	public static final CopyOption[] MOVE_OPTIONS = new CopyOption[]{
 		StandardCopyOption.REPLACE_EXISTING};
 
@@ -84,13 +86,13 @@ public class CustomFile extends File {
 	 * @param dst can be file or directory
 	 */
 	public boolean copyTo(File dst, CopyOption...options) {
-		try{//destination can be a directory!
+		if (exists()) try{//destination can be a directory!
 			File target=dst.isDirectory() ? Paths.get(dst.getPath(), getName()).toFile() : dst;
 			Files.copy(toPath(), target.toPath(), options.length==0 ? COPY_OPTIONS : options);
+			return true;
 		}catch(Exception e){
 			System.err.println(e);
-			return false;
-		}return true;
+		}return false;
 	}
 
 
@@ -99,13 +101,13 @@ public class CustomFile extends File {
 	 * @param dst can be file or directory
 	 */
 	public boolean moveTo(File dst, CopyOption...options) {
-		try{//destination can be a directory!
+		if (exists()) try{//destination can be a directory!
 			File target=dst.isDirectory() ? Paths.get(dst.getPath(), getName()).toFile() : dst;
 			Files.move(toPath(), target.toPath(), options.length==0 ? MOVE_OPTIONS : options);
+			return true;
 		}catch(Exception e){
 			System.err.println(e);
-			return false;
-		}return true;
+		}return false;
 	}
 
 

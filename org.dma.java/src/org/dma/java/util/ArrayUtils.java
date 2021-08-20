@@ -352,9 +352,7 @@ public class ArrayUtils {
 		System.out.printf(format, "concat: "); System.out.println(concat(array, ":"));
 
 		int repeat=10000;
-		Chronograph time=new Chronograph();
-		time.start();
-
+		Chronograph time=new Chronograph().start();
 		for(int i=0; i<repeat; i++) array=insert(array, 0, "0");
 		System.out.printf(format, "insert: "); System.out.println(time);		time.reset();
 		for(int i=0; i<repeat; i++) append(array, "0");

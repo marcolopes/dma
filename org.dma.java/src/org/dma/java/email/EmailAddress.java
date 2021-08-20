@@ -71,8 +71,7 @@ public class EmailAddress {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EmailAddress)
-			return equals((EmailAddress)obj);
+		if (obj instanceof EmailAddress) return equals((EmailAddress)obj);
 		return equals(obj.toString());
 	}
 

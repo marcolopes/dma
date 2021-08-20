@@ -5,13 +5,11 @@
  *******************************************************************************/
 package org.dma.java.security;
 
-import java.io.IOException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import com.lowagie.text.DocumentException;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfSignatureAppearance;
 import com.lowagie.text.pdf.PdfStamper;
@@ -59,7 +57,8 @@ public class PdfSignature {
 		this.certChain=certChain;
 	}
 
-	public void stampWith(PdfStamper stamper) throws DocumentException, IOException {
+	/** Close stamper to apply signature */
+	public void stampWith(PdfStamper stamper) {
 		PdfSignatureAppearance signature=stamper.getSignatureAppearance();
 		signature.setCrypto(privateKey, certChain, null, PdfSignatureAppearance.SELF_SIGNED);
 		signature.setSignDate(signDate==null ? new GregorianCalendar() : signDate);
@@ -67,7 +66,6 @@ public class PdfSignature {
 		signature.setLocation(location);
 		signature.setContact(contact);
 		if (visible!=null) signature.setVisibleSignature(visible.pageRect, visible.page, visible.fieldName);
-		stamper.close(); //apply signature
 	}
 
 	/** @see PdfSignatureAppearance#setSignDate(Calendar) */

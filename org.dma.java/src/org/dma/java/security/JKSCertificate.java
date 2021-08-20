@@ -207,8 +207,7 @@ public class JKSCertificate {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof JKSCertificate)
-			return equals((JKSCertificate)obj);
+		if (obj instanceof JKSCertificate) return equals((JKSCertificate)obj);
 		return false;
 	}
 
