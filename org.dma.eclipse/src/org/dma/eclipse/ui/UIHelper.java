@@ -149,7 +149,7 @@ public class UIHelper {
 
 	/** Returns the active perspective */
 	public static IPerspectiveDescriptor closePerspective(IPerspectiveDescriptor perspective) {
-		getActivePage().closePerspective(perspective,false,false);
+		getActivePage().closePerspective(perspective, false, false);
 		return getActivePage().getPerspective();
 	}
 
