@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -28,6 +28,7 @@ public class CustomTabItem extends TabItem {
 		super(parent, style, index);
 	}
 
+	/** Override */
 	public void setFocus() {}
 
 	public void update() {
@@ -36,10 +37,6 @@ public class CustomTabItem extends TabItem {
 		setFocus();
 	}
 
-
-	/*
-	 * Selection
-	 */
 	public void select() {
 		if (isDisposed()) return;
 		getParent().setSelection(this);

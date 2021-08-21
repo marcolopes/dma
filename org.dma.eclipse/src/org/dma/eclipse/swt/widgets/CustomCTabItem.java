@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -25,8 +25,8 @@ public class CustomCTabItem extends CTabItem {
 		super(parent, style, index);
 	}
 
+	/** Override */
 	public void setFocus() {}
-
 
 	public void update() {
 		if (isDisposed()) return;
@@ -34,13 +34,11 @@ public class CustomCTabItem extends CTabItem {
 		setFocus();
 	}
 
-
 	public void select() {
 		if (isDisposed()) return;
 		getParent().setSelection(this);
 		setFocus();
 	}
-
 
 	public boolean isSelected() {
 		if (isDisposed()) return false;
@@ -48,13 +46,12 @@ public class CustomCTabItem extends CTabItem {
 		return selection!=null && selection.equals(this);
 	}
 
-
 	public void setFontStyle(int style) {
 		FontData[] fd = getFont().getFontData();
 		for(int i=0; i<fd.length; i++){
 			fd[i].setStyle(style);
-		}
-		setFont(new Font(getDisplay(), fd));
+		}setFont(new Font(getDisplay(), fd));
 	}
+
 
 }
