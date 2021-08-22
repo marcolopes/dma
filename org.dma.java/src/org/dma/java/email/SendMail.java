@@ -91,14 +91,14 @@ public class SendMail {
 
 		try{
 			SendMail mail=new SendMail(new ServerParameters(
-					"mail.projectocolibri.com", 25, SECURITY.NONE,
-					new PasswordAuthentication("marcolopes@projectocolibri.com", "***")));
+					"mail.xxxxxx.com", 25, SECURITY.NONE,
+					new PasswordAuthentication("marcolopes@xxxxxx.com", "***")));
 
-			EmailAddress from=new EmailAddress("suporte@projectocolibri.com", "FROM: Projecto Colibri");
-			EmailAddress to=new EmailAddress("marcolopes@projectocolibri.com", "TO: Marco Lopes");
+			EmailAddress from=new EmailAddress("suporte@xxxxxx.com", "FROM: xxxxxx");
+			EmailAddress to=new EmailAddress("marcolopes@xxxxxx.com", "TO: Marco Lopes");
 			EmailAddress[] bcc=new EmailAddress[]{
-					new EmailAddress("sergiogomes@projectocolibri.com", "TO: Sérgio Gomes"),
-					new EmailAddress("antonioferreira@projectocolibri.com", "TO: António Ferreira")};
+					new EmailAddress("bcc1@xxxxxx.com", "TO: First Last"),
+					new EmailAddress("bcc2@xxxxxx.com", "TO: First Last")};
 
 			//attachment file
 			File file=new FileParameters("attachment", "txt").createTempFile();
