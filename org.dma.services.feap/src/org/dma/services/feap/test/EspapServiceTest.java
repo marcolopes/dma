@@ -18,10 +18,10 @@ import oasisNamesSpecificationUblSchemaXsdInvoice2.InvoiceType;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
-import org.dma.services.feap.proxy.CTMessageServiceHandler;
-import org.dma.services.feap.proxy.CTMessageServiceHandler.ENDPOINTS;
+import org.dma.services.feap.proxy.EspapServiceHandler;
+import org.dma.services.feap.proxy.EspapServiceHandler.ENDPOINTS;
 
-public class CTMessageServiceTest {
+public class EspapServiceTest {
 
 	public static byte[] buildMessage() throws Exception {
 
@@ -111,7 +111,7 @@ public class CTMessageServiceTest {
 
 		try{
 			//ambiente de testes
-			CTMessageServiceHandler handler=new CTMessageServiceHandler(
+			EspapServiceHandler handler=new EspapServiceHandler(
 				//Service Username / Password
 				"Username", "Password",
 				//Scheme Administrator Certificate

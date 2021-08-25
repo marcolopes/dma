@@ -18,7 +18,7 @@ import org.dma.services.feap.SOAPMessageHandler;
  *
  * https://www.espap.gov.pt/spfin/Paginas/spfin.aspx#maintab5
  */
-public class CTMessageServiceHandler extends SOAPMessageHandler {
+public class EspapServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 		PRODUCAO ("https://ws.netdocs.com.pt/TradeHttp/CTMessageService.svc/ssl"),
@@ -38,7 +38,7 @@ public class CTMessageServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public CTMessageServiceHandler(String username, String password,
+	public EspapServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
 		super(username, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
