@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-Name: Factura Electronica Administracao Publica
+Bundle-SymbolicName: org.dma.services.feap;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: marcolopespt@gmail.com
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ xmlbeans/xmlbeans-3.1.0.jar,
+ libraries/jaxb-impl-2.1.4.jar,
+ libraries/jaxws-rt-2.1.4.jar,
+ libraries/stax-ex-1.2.jar,
+ libraries/streambuffer-0.8.jar,
+ libraries/UBL-eSPap-CreditNote-2.1.jar,
+ libraries/UBL-eSPap-DebitNote-2.1.jar,
+ libraries/UBL-eSPap-DocumentStatus-2.1.jar,
+ libraries/UBL-eSPap-Invoice-2.1.jar
+Require-Bundle: org.dma.java;bundle-version="6.4.3"
+Export-Package: org.dma.services.feap,
+ org.dma.services.feap.proxy
