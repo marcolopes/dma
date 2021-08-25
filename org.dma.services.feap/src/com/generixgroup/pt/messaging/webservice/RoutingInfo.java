@@ -1,25 +1,24 @@
 
-package com.softlimits.clarinet;
+package com.generixgroup.pt.messaging.webservice;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for MessageOutputIdentification complex type.
+ * <p>Java class for routingInfo complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="MessageOutputIdentification">
+ * &lt;complexType name="routingInfo">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="MessageId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Receiver" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Sender" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="documentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="receiver" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="sender" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,42 +28,39 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MessageOutputIdentification", propOrder = {
-    "messageId",
+@XmlType(name = "routingInfo", propOrder = {
+    "documentType",
     "receiver",
     "sender"
 })
-public class MessageOutputIdentification {
+public class RoutingInfo {
 
-    @XmlElement(name = "MessageId", required = true, nillable = true)
-    protected String messageId;
-    @XmlElement(name = "Receiver", required = true, nillable = true)
+    protected String documentType;
     protected String receiver;
-    @XmlElement(name = "Sender", required = true, nillable = true)
     protected String sender;
 
     /**
-     * Gets the value of the messageId property.
+     * Gets the value of the documentType property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getMessageId() {
-        return messageId;
+    public String getDocumentType() {
+        return documentType;
     }
 
     /**
-     * Sets the value of the messageId property.
+     * Sets the value of the documentType property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setMessageId(String value) {
-        this.messageId = value;
+    public void setDocumentType(String value) {
+        this.documentType = value;
     }
 
     /**
