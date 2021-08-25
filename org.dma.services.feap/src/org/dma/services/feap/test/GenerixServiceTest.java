@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -14,14 +14,18 @@ import oasisNamesSpecificationUblSchemaXsdCommonBasicComponents2.UBLVersionIDTyp
 import oasisNamesSpecificationUblSchemaXsdInvoice2.InvoiceDocument;
 import oasisNamesSpecificationUblSchemaXsdInvoice2.InvoiceType;
 
-import com.softlimits.clarinet.ArrayOfMessageOutputData;
+import org.apache.commons.codec.binary.Base64;
+
+import com.generixgroup.pt.messaging.webservice.Credentials;
+import com.generixgroup.pt.messaging.webservice.RoutingInfo;
+import com.generixgroup.pt.messaging.webservice.UploadDocResponse;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
-import org.dma.services.feap.proxy.EspapServiceHandler;
-import org.dma.services.feap.proxy.EspapServiceHandler.ENDPOINTS;
+import org.dma.services.feap.proxy.GenerixServiceHandler;
+import org.dma.services.feap.proxy.GenerixServiceHandler.ENDPOINTS;
 
-public class EspapServiceTest {
+public class GenerixServiceTest {
 
 	public static byte[] buildMessage() throws Exception {
 
@@ -109,9 +113,8 @@ public class EspapServiceTest {
 
 	public static void main(String[] argvs) {
 
-		try{
-			//ambiente de testes
-			EspapServiceHandler handler=new EspapServiceHandler(
+		try{//ambiente de testes
+			GenerixServiceHandler handler=new GenerixServiceHandler(
 				//Service Username / Password
 				"Username", "Password",
 				//Scheme Administrator Certificate
@@ -121,9 +124,20 @@ public class EspapServiceTest {
 				//Endpoint address
 				ENDPOINTS.TESTES);
 
-			ArrayOfMessageOutputData response=handler.processMessage(buildMessage());
+			//Credentials
+			Credentials credentials=new Credentials();
+			credentials.setUsername("USER");
+			credentials.setPassword("PASS");
+			//Routing Info
+			RoutingInfo info=new RoutingInfo();
+			info.setDocumentType("type");
+			info.setReceiver("receiver");
+			info.setSender("sender");
+			//Document
+			String document=new Base64().encodeToString(buildMessage());
 
-			System.out.println(response.getMessageOutputData());
+			UploadDocResponse response=handler.uploadDocument("teste.txt", credentials, info, document);
+			System.out.println(response.getStatusCode());
 
 		}catch(Exception e){
 			e.printStackTrace();

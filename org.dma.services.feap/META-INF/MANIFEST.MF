@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
-Bundle-Name: Factura Electronica Administracao Publica
-Bundle-SymbolicName: org.dma.services.feap;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Name: Servicos Partilhados de Financas
+Bundle-SymbolicName: org.dma.services.espap;singleton:=true
+Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -45,8 +45,8 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia a conexao, coloca o adiciona e invoca o webservice */
-	public ArrayOfMessageOutputData register(byte[] message) throws Exception {
+	/** Instancia o servico e inicializa o handler */
+	private IMessageService getService() throws Exception {
 
 		// cria um novo servico
 		MessageService service = new MessageService();
@@ -57,7 +57,14 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 		// inicializa handler
 		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
 
-		return soapService.processMessage(message);
+		return soapService;
+
+	}
+
+
+	public ArrayOfMessageOutputData processMessage(byte[] message) throws Exception {
+
+		return getService().processMessage(message);
 
 	}
 

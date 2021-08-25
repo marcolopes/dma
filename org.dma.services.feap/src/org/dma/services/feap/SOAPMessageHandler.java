@@ -1,13 +1,15 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
+ * Ricardo (AT)
  *******************************************************************************/
 package org.dma.services.feap;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -31,6 +33,8 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import com.sun.xml.ws.developer.JAXWSProperties;
 import com.sun.xml.ws.developer.WSBindingProvider;
 
+import org.dma.java.cipher.MessageDigest;
+import org.dma.java.cipher.MessageDigest.ALGORITHMS;
 import org.dma.java.security.JKSCertificate;
 /**
  * SOAP Message Handler
@@ -49,6 +53,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	private final String password;
 	private final JKSCertificate saCertificate;
 	private final JKSCertificate swCertificate;
+	private final JKSCertificate tsCertificate;
 
 	/**
 	 * @param username - Service Username
@@ -56,12 +61,23 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	 * @param saCertificate - Scheme Administrator Certificate
 	 * @param swCertificate - Software Developer Certificate
 	 */
-	public SOAPMessageHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate) {
+	public SOAPMessageHandler(String username, String password, JKSCertificate saCertificate, JKSCertificate swCertificate) {
+		this(username, password, saCertificate, swCertificate, null);
+	}
+
+	/**
+	 * @param username - Service Username
+	 * @param password - Service Password
+	 * @param saCertificate - Scheme Administrator Certificate
+	 * @param swCertificate - Software Developer Certificate
+	 * @param tsCertificate - Trusted Store Certificate
+	 */
+	public SOAPMessageHandler(String username, String password, JKSCertificate saCertificate, JKSCertificate swCertificate, JKSCertificate tsCertificate) {
 		this.username = username;
 		this.password = password;
 		this.saCertificate = saCertificate;
 		this.swCertificate = swCertificate;
+		this.tsCertificate = tsCertificate;
 	}
 
 
@@ -86,9 +102,12 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 			kmf.init(swCertificate.getKeyStore(), swCertificate.password.toCharArray());
 
-			// adiciona um Trust Store que aceita ligacao SSL sem validar o certificado
-			SSLContext sslContext = SSLContext.getInstance("TLSv1"); // JAVA8 usa TLSv2
-			sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, null);
+			SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // necessita JAVA 7
+			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
+			sslContext.init(kmf.getKeyManagers(), tsCertificate==null ?
+					// Trust Store que aceita ligacao SSL sem validar o certificado
+					new TrustManager[]{new PermissiveTrustStore()} :
+					tsCertificate.getTrustManagers(), null);
 
 			/*
 			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
@@ -124,15 +143,13 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	/**
-	 * Adiciona header para autenticacao
-	 */
+	/** Adiciona header para autenticacao */
 	@Override
 	public boolean handleMessage(SOAPMessageContext smc) {
 
 		try{
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			if(direction){
+			if (direction){
 				/*
 				 * Falta informacao tecnica do ESPAP
 				 */
@@ -145,6 +162,25 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 		}
 
 		return true;
+
+	}
+
+
+	private byte[] createPasswordDigest(byte[] simetricKey, String timestamp, String password) throws UnsupportedEncodingException {
+
+		byte[] createdBytes = timestamp.getBytes("UTF8");
+		byte[] passwordBytes = password.getBytes("UTF8");
+
+		byte[] message = new byte[simetricKey.length + createdBytes.length + passwordBytes.length];
+		System.arraycopy(simetricKey, 0, message, 0, simetricKey.length);
+		System.arraycopy(createdBytes, 0, message, simetricKey.length, createdBytes.length);
+		System.arraycopy(passwordBytes, 0, message, simetricKey.length + createdBytes.length, passwordBytes.length);
+
+		return new MessageDigest(ALGORITHMS.SHA1).digest(message);
+		/*
+		MessageDigest md = MessageDigest.getInstance("SHA-1");
+		return md.digest(digestInput);
+		*/
 
 	}
 
