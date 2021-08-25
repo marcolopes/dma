@@ -42,13 +42,7 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
 	public TaxFreeServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		this(username, password, saCertificate, swCertificate, null, endpoint);
-	}
-
-	public TaxFreeServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate,
-			JKSCertificate tsCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate, tsCertificate);
+		super(username, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
 	}
 
@@ -70,7 +64,6 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia a conexao, adiciona o handler e invoca o webservice */
 	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType request) throws Exception {
 
 		return getService().taxFreeSubmission(request);

@@ -44,13 +44,7 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 
 	public StockMovementServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		this(username, password, saCertificate, swCertificate, null, endpoint);
-	}
-
-	public StockMovementServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate,
-			JKSCertificate tsCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate, tsCertificate);
+		super(username, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
 	}
 
@@ -72,7 +66,6 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia a conexao, adiciona o handler e invoca o webservice */
 	public StockMovementResponse register(StockMovement request) throws Exception {
 
 		return getService().envioDocumentoTransporte(request);

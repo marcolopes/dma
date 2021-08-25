@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Ricardo (AT)
@@ -68,6 +68,16 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	private final JKSCertificate saCertificate;
 	private final JKSCertificate swCertificate;
 	private final JKSCertificate tsCertificate;
+
+	/**
+	 * @param username - Service Username
+	 * @param password - Service Password
+	 * @param saCertificate - Scheme Administrator Certificate
+	 * @param swCertificate - Software Developer Certificate
+	 */
+	public SOAPMessageHandler(String username, String password, JKSCertificate saCertificate, JKSCertificate swCertificate) {
+		this(username, password, saCertificate, swCertificate, null);
+	}
 
 	/**
 	 * @param username - Service Username
@@ -148,15 +158,13 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	/**
-	 * Adiciona header para autenticacao
-	 */
+	/** Adiciona header para autenticacao */
 	@Override
 	public boolean handleMessage(SOAPMessageContext smc) {
 
 		try{
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			if(direction){
+			if (direction){
 
 				// Generate simetric key used for this request!
 				final CryptoCipher simetricKeyCipher = new CryptoCipher(CIPHERS.AES_ECB_PKCS5);

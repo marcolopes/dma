@@ -46,13 +46,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 
 	public SeriesServiceHandler(String username, String password,
 			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		this(username, password, saCertificate, swCertificate, null, endpoint);
-	}
-
-	public SeriesServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate,
-			JKSCertificate tsCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate, tsCertificate);
+		super(username, password, saCertificate, swCertificate);
 		this.endpoint = endpoint;
 	}
 
