@@ -8,7 +8,7 @@ echo ***************************************************************************
 
 REM Necessario utilizar o parametro -extension para importar MessageService
 REM [WARNING] Ignoring SOAP port "CustomBinding_IMessageService": it uses non-standard SOAP 1.2 binding
-REM wsimport CTMessageService.wsdl -extension -verbose -Xnocompile -s ..\src
-
+wsimport CTMessageService.wsdl -extension -verbose -Xnocompile -s ..\src
+REM Generix NetixMessaging
 wsimport NetixMessaging-1.2.0.wsdl -verbose -Xnocompile -s ..\src
 pause

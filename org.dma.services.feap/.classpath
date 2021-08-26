@@ -8,9 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="libraries/jaxws-rt-2.1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/stax-ex-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/streambuffer-0.8.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/UBL-eSPap-CreditNote-2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/UBL-eSPap-DebitNote-2.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/UBL-eSPap-DocumentStatus-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/UBL-eSPap-Invoice-2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
