@@ -19,15 +19,13 @@ public class CheckDigits {
 		for(char c: digits.toCharArray()){
 			checksum+=Character.getNumericValue(c) * multiplier[index];
 			index++;
-		}
-		checksum=98-(checksum % 97);
+		}checksum=98-(checksum % 97);
 		*/
 
 		int checksum=0;
 		for(char c: digits.toCharArray()){
 			checksum=(checksum + Character.getNumericValue(c)) * 10 % 97;
-		}
-		checksum=98-(checksum * 10 % 97);
+		}checksum=98-(checksum * 10 % 97);
 
 		return checksum>=10 ? ""+checksum : "0"+checksum;
 
