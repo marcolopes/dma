@@ -12,6 +12,7 @@ import org.dma.services.at.proxy.SeriesServiceHandler;
 import org.dma.services.at.proxy.SeriesServiceHandler.ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResp;
+import pt.gov.portaldasfinancas.servicos.series.OperationResultInfo;
 import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
 import pt.gov.portaldasfinancas.servicos.series.SeriesResp;
 import pt.gov.portaldasfinancas.servicos.series.types.AnularSerieType;
@@ -56,20 +57,10 @@ public class SeriesServiceTest {
 	/** Devolve o Codigo de Validacao */
 	public static String registarSerie() {
 
-		try{
-			RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, TipoDoc,
-					1, TimeDateUtils.getCurrentDate(), 9999, MeioProcessamento);
+		RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, TipoDoc,
+				1, TimeDateUtils.getCurrentDate(), 9999, MeioProcessamento);
 
-			SeriesResp response=ServiceHandler.registarSerie(type);
-
-			System.out.print(response.getInfoResultOper().getCodResultOper());
-			System.out.print(" - ");
-			System.out.println(response.getInfoResultOper().getMsgResultOper());
-			if (response.getInfoSerie()!=null){
-				System.out.println(response.getInfoSerie().getCodValidacaoSerie());
-				return response.getInfoSerie().getCodValidacaoSerie();
-			}
-
+		try{print(ServiceHandler.registarSerie(type));
 		}catch(Exception e){
 			e.printStackTrace();
 		}return "ZZZZZZZZ";
@@ -78,18 +69,9 @@ public class SeriesServiceTest {
 
 	public static void anularSerie(String codValidacaoSerie) {
 
-		try{
-			AnularSerieType type=new AnularSerieType(Serie, TipoDoc, codValidacaoSerie, MotivoAnulacao);
+		AnularSerieType type=new AnularSerieType(Serie, TipoDoc, codValidacaoSerie, MotivoAnulacao);
 
-			SeriesResp response=ServiceHandler.anularSerie(type);
-
-			System.out.print(response.getInfoResultOper().getCodResultOper());
-			System.out.print(" - ");
-			System.out.println(response.getInfoResultOper().getMsgResultOper());
-			if (response.getInfoSerie()!=null){
-				System.out.println(response.getInfoSerie().getCodValidacaoSerie());
-			}
-
+		try{print(ServiceHandler.anularSerie(type));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -98,18 +80,9 @@ public class SeriesServiceTest {
 
 	public static void finalizarSerie(String codValidacaoSerie) {
 
-		try{
-			FinalizarSerieType type=new FinalizarSerieType(Serie, TipoDoc, codValidacaoSerie, 1);
+		FinalizarSerieType type=new FinalizarSerieType(Serie, TipoDoc, codValidacaoSerie, 1);
 
-			SeriesResp response=ServiceHandler.finalizarSerie(type);
-
-			System.out.print(response.getInfoResultOper().getCodResultOper());
-			System.out.print(" - ");
-			System.out.println(response.getInfoResultOper().getMsgResultOper());
-			if (response.getInfoSerie()!=null){
-				System.out.println(response.getInfoSerie().getCodValidacaoSerie());
-			}
-
+		try{print(ServiceHandler.finalizarSerie(type));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -119,18 +92,85 @@ public class SeriesServiceTest {
 
 	public static void ConsultarSeries() {
 
-		try{
-			ConsultarSeriesType type=new ConsultarSeriesType(TimeDateUtils.getCurrentDate());
-			type.setEstado(EstadoSerieType.A);
+		ConsultarSeriesType type=new ConsultarSeriesType(TimeDateUtils.getCurrentDate());
+		type.setEstado(EstadoSerieType.A);
 
-			ConsultarSeriesResp response=ServiceHandler.consultarSeries(type);
+		try{print(ServiceHandler.consultarSeries(type));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
-			System.out.print(response.getInfoResultOper().getCodResultOper());
-			System.out.print(" - ");
-			System.out.println(response.getInfoResultOper().getMsgResultOper());
+	}
+
+
+	public static void print(SeriesResp response) {
+
+		if (response!=null) try{
+
+			print(response.getInfoResultOper());
+
+			print(response.getInfoSerie());
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+
+
+	public static void print(ConsultarSeriesResp response) {
+
+		if (response!=null) try{
+
+			print(response.getInfoResultOper());
+
 			for(SeriesInfo info: response.getInfoSerie()){
-				System.out.println(info.getCodValidacaoSerie());
+				print(info);
 			}
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+
+
+	public static void print(OperationResultInfo info) {
+
+		if (info!=null) try{
+
+			System.out.print(info.getCodResultOper());
+			System.out.print(" - ");
+			System.out.println(info.getMsgResultOper());
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+
+
+	public static void print(SeriesInfo info) {
+
+		if (info!=null) try{
+
+			System.out.print("Doc/Serie/Numero: ");
+			System.out.print(info.getTipoDoc());
+			System.out.print("/");
+			System.out.print(info.getSerie());
+			System.out.print("/");
+			System.out.println(info.getNumFinalSeq());
+
+			System.out.print("Codigo Validacao: "); System.out.println(info.getCodValidacaoSerie());
+			System.out.print("Tipo Serie: "); System.out.println(info.getTipoSerie());
+			System.out.print("Classe Doc: "); System.out.println(info.getClasseDoc());
+			System.out.print("Justificacao: "); System.out.println(info.getJustificacao());
+			System.out.print("Motivo Estado: "); System.out.println(info.getMotivoEstado());
+			System.out.print("Data Estado: "); System.out.println(info.getDataEstado());
+			System.out.print("Data Registo: "); System.out.println(info.getDataRegisto());
+			System.out.print("Data Utilizacao: "); System.out.println(info.getDataInicioPrevUtiliz());
+			System.out.print("Meio Processamento: "); System.out.println(info.getMeioProcessamento());
+			System.out.print("Nif Comunicou: "); System.out.println(info.getNifComunicou());
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -141,14 +181,9 @@ public class SeriesServiceTest {
 
 	public static void main(String[] argvs) {
 
-		try{
-			anularSerie(registarSerie());
-			finalizarSerie(registarSerie());
-			ConsultarSeries();
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		anularSerie(registarSerie());
+		finalizarSerie(registarSerie());
+		ConsultarSeries();
 
 	}
 
