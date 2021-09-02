@@ -21,6 +21,7 @@ import org.dma.services.feap.SOAPMessageHandler;
 public class EspapServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
+
 		PRODUCAO ("https://ws.netdocs.com.pt/TradeHttp/CTMessageService.svc/ssl"),
 		TESTES ("https://www-qa.netdocs.com.pt/TradeHttpQa/CTMessageService.svc/ssl");
 
