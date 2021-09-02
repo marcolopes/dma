@@ -7,10 +7,9 @@ package org.dma.services.at.test;
 
 import java.math.BigDecimal;
 
-import org.dma.java.security.JKSCertificate;
-import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
+import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.TaxFreeServiceHandler;
 import org.dma.services.at.proxy.TaxFreeServiceHandler.ENDPOINTS;
 
@@ -37,20 +36,13 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
 public class TaxFreeServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
-
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
+	public static final String ServiceUsername = RequesterTaxID+"/0037";
+	public static final String ServicePassword = "testes1234";
+
 	public static final TaxFreeServiceHandler ServiceHandler = new TaxFreeServiceHandler(
-			//Service Username / Password
-			RequesterTaxID+"/0037", "testes1234",
-			//Scheme Administrator Certificate
-			new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
-			//Software Developer Certificate
-			new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
-			//Trusted Store Certificate
-			//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
-			//Endpoint address
-			ENDPOINTS.TESTES);
+			ServiceUsername, ServicePassword, Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
 	public static TaxFreeSubmissionRequestType buildRequest() throws Exception {
 

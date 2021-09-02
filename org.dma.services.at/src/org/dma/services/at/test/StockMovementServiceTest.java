@@ -8,9 +8,8 @@ package org.dma.services.at.test;
 import java.math.BigDecimal;
 import java.util.Random;
 
-import org.dma.java.security.JKSCertificate;
-import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.TimeDateUtils;
+import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.StockMovementServiceHandler;
 import org.dma.services.at.proxy.StockMovementServiceHandler.ENDPOINTS;
 
@@ -28,22 +27,14 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementRespo
 public class StockMovementServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
-
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
-
 	public static final String SystemEntryDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd'T'HH:mm:ss");
 
+	public static final String ServiceUsername = RequesterTaxID+"/0037";
+	public static final String ServicePassword = "testes1234";
+
 	public static final StockMovementServiceHandler ServiceHandler = new StockMovementServiceHandler(
-			//Service Username / Password
-			RequesterTaxID+"/0037", "testes1234",
-			//Scheme Administrator Certificate
-			new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
-			//Software Developer Certificate
-			new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
-			//Trusted Store Certificate
-			//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
-			//Endpoint address
-			ENDPOINTS.TESTES);
+			ServiceUsername, ServicePassword, Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
 	public static StockMovement buildRequest() throws Exception {
 

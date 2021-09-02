@@ -5,9 +5,8 @@
  *******************************************************************************/
 package org.dma.services.at.test;
 
-import org.dma.java.security.JKSCertificate;
-import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 import org.dma.java.util.TimeDateUtils;
+import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.SeriesServiceHandler;
 import org.dma.services.at.proxy.SeriesServiceHandler.ENDPOINTS;
 
@@ -30,35 +29,24 @@ import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
  */
 public class SeriesServiceTest {
 
-	public static final Integer RequesterTaxID = 599999993;
-
 	public static final String Serie = "2022";
-
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
-
 	public static final TipoDocType TipoDoc = TipoDocType.FT;
-
+	public static final int NumCertSWFatur = 9999;
 	public static final MeioProcessamentoType MeioProcessamento = MeioProcessamentoType.PI;
-
 	public static final MotivoAnulacaoType MotivoAnulacao = MotivoAnulacaoType.ER;
 
+	public static final String ServiceUsername = "599999993/0037";
+	public static final String ServicePassword = "testes1234";
+
 	public static SeriesServiceHandler ServiceHandler = new SeriesServiceHandler(
-		//Service Username / Password
-		RequesterTaxID+"/0037", "testes1234",
-		//Scheme Administrator Certificate
-		new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey"),
-		//Software Developer Certificate
-		new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice"),
-		//Trusted Store Certificate
-		//new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas"),
-		//Endpoint address
-		ENDPOINTS.TESTES);
+			ServiceUsername, ServicePassword, Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
 	/** Devolve o Codigo de Validacao */
 	public static String registarSerie() {
 
 		RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, TipoDoc,
-				1, TimeDateUtils.getCurrentDate(), 9999, MeioProcessamento);
+				1, TimeDateUtils.getCurrentDate(), NumCertSWFatur, MeioProcessamento);
 
 		try{print(ServiceHandler.registarSerie(type));
 		}catch(Exception e){
@@ -181,6 +169,7 @@ public class SeriesServiceTest {
 
 	public static void main(String[] argvs) {
 
+		registarSerie();
 		anularSerie(registarSerie());
 		finalizarSerie(registarSerie());
 		ConsultarSeries();
