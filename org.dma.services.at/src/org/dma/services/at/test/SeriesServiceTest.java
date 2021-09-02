@@ -30,17 +30,19 @@ import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
 public class SeriesServiceTest {
 
 	public static final String Serie = "2022";
+
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
+
 	public static final TipoDocType TipoDoc = TipoDocType.FT;
+
 	public static final int NumCertSWFatur = 9999;
+
 	public static final MeioProcessamentoType MeioProcessamento = MeioProcessamentoType.PI;
+
 	public static final MotivoAnulacaoType MotivoAnulacao = MotivoAnulacaoType.ER;
 
-	public static final String ServiceUsername = "599999993/0037";
-	public static final String ServicePassword = "testes1234";
-
 	public static SeriesServiceHandler ServiceHandler = new SeriesServiceHandler(
-			ServiceUsername, ServicePassword, Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+			"599999993/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
 	/** Devolve o Codigo de Validacao */
 	public static String registarSerie() {
@@ -170,9 +172,9 @@ public class SeriesServiceTest {
 	public static void main(String[] argvs) {
 
 		registarSerie();
-		anularSerie(registarSerie());
-		finalizarSerie(registarSerie());
-		ConsultarSeries();
+		//anularSerie(registarSerie());
+		//finalizarSerie(registarSerie());
+		//ConsultarSeries();
 
 	}
 

@@ -25,13 +25,11 @@ import pt.gov.portaldasfinancas.servicos.faturas.Tax;
 public class FaturasServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
+
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
-	public static final String ServiceUsername = RequesterTaxID+"/0037";
-	public static final String ServicePassword = "testes1234";
-
 	public static final FaturasServiceHandler ServiceHandler = new FaturasServiceHandler(
-			ServiceUsername, ServicePassword, Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+			RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
 	public static RegisterInvoiceType buildRequest() throws Exception {
 

@@ -27,14 +27,13 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementRespo
 public class StockMovementServiceTest {
 
 	public static final Integer RequesterTaxID = 599999993;
+
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
+
 	public static final String SystemEntryDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd'T'HH:mm:ss");
 
-	public static final String ServiceUsername = RequesterTaxID+"/0037";
-	public static final String ServicePassword = "testes1234";
-
 	public static final StockMovementServiceHandler ServiceHandler = new StockMovementServiceHandler(
-			ServiceUsername, ServicePassword, Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+			RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
 	public static StockMovement buildRequest() throws Exception {
 
