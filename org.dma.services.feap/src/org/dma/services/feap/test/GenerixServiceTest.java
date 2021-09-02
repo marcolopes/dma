@@ -9,39 +9,32 @@ import com.generixgroup.pt.messaging.webservice.Credentials;
 import com.generixgroup.pt.messaging.webservice.RoutingInfo;
 import com.generixgroup.pt.messaging.webservice.UploadDocResponse;
 
-import org.dma.java.security.JKSCertificate;
-import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
+import org.dma.services.feap.Certificates;
 import org.dma.services.feap.proxy.GenerixServiceHandler;
 import org.dma.services.feap.proxy.GenerixServiceHandler.ENDPOINTS;
 
 public class GenerixServiceTest {
 
+	public static final GenerixServiceHandler ServiceHandler=new GenerixServiceHandler(
+			"Username", "Password", Certificates.SaphetyDoc, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+
 	public static void main(String[] argvs) {
 
-		try{//ambiente de testes
-			GenerixServiceHandler handler=new GenerixServiceHandler(
-				//Service Username / Password
-				"Username", "Password",
-				//Scheme Administrator Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saphetydoc.jks", "123456"),
-				//Software Developer Certificate
-				new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebservices.pfx", "TESTEwebservice"),
-				//Endpoint address
-				ENDPOINTS.TESTES);
-
+		try{
 			//Credentials
 			Credentials credentials=new Credentials();
 			credentials.setUsername("USER");
 			credentials.setPassword("PASS");
+
 			//Routing Info
 			RoutingInfo info=new RoutingInfo();
 			info.setDocumentType("type");
 			info.setReceiver("receiver");
 			info.setSender("sender");
-			//Document
-			String document=new DocumentBuilder().toBase64();
 
-			UploadDocResponse response=handler.uploadDocument("teste.txt", credentials, info, document);
+			UploadDocResponse response=ServiceHandler.uploadDocument("teste.txt",
+					credentials, info, new DocumentBuilder().toBase64());
+
 			System.out.println(response.getStatusCode());
 
 		}catch(Exception e){
