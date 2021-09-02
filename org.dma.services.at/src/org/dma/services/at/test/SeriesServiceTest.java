@@ -41,6 +41,8 @@ public class SeriesServiceTest {
 
 	public static final MotivoAnulacaoType MotivoAnulacao = MotivoAnulacaoType.ER;
 
+	public static final String CodValidacaoSerie = "ZZZZZZZZ";
+
 	public static SeriesServiceHandler ServiceHandler = new SeriesServiceHandler(
 			"599999993/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
@@ -53,7 +55,7 @@ public class SeriesServiceTest {
 		try{print(ServiceHandler.registarSerie(type));
 		}catch(Exception e){
 			e.printStackTrace();
-		}return "ZZZZZZZZ";
+		}return CodValidacaoSerie;
 
 	}
 
@@ -172,9 +174,9 @@ public class SeriesServiceTest {
 	public static void main(String[] argvs) {
 
 		registarSerie();
-		//anularSerie(registarSerie());
-		//finalizarSerie(registarSerie());
-		//ConsultarSeries();
+		anularSerie(registarSerie());
+		finalizarSerie(registarSerie());
+		ConsultarSeries();
 
 	}
 
