@@ -111,7 +111,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 		//com.sun.xml.internal.ws.request.timeout
 		provider.getRequestContext().put(JAXWSProperties.REQUEST_TIMEOUT, DEFAULT_REQUEST_TIMEOUT);
 
-		if(secure){
+		if (secure){
 
 			// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
 			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
