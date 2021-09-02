@@ -22,7 +22,6 @@ import pt.gov.portaldasfinancas.servicos.series.types.RegistarSeriesType;
 
 /**
  * PROXY para ligacao ao endpoint do webservice
- * https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Faturacao/Comunicacao_Series_ATCUD/Paginas/default.aspx
  */
 public class SeriesServiceHandler extends SOAPMessageHandler {
 
