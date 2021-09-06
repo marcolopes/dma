@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -15,11 +15,13 @@ public interface IValidationManager {
 
 	public void unregisterAll();
 
-	public void processValidators();
+	public boolean processValidators();
 
 	public boolean hasError();
 
 	public String getErrorMessage();
+
+	public void postError(String message);
 
 	@Deprecated
 	public String getErrorMessage(String property);

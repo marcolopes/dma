@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.dma.java.util.StringUtils;
 
-public class ValidationManager implements IValidationManager {
+public abstract class ValidationManager implements IValidationManager {
 
 	/** Insertion-ordered KEYS */
 	private final Map<String, IValidator> validatorMap=new LinkedHashMap();
@@ -68,13 +68,13 @@ public class ValidationManager implements IValidationManager {
 
 
 	@Override
-	public void processValidators() {
+	public boolean processValidators() {
 
 		for(IValidator validator: validatorMap.values()){
 			validator.validateFields();
 			validator.validateButtons();
-			validator.postError(getErrorMessage());
-		}
+		}postError(getErrorMessage());
+		return !hasError();
 
 	}
 
@@ -88,9 +88,7 @@ public class ValidationManager implements IValidationManager {
 
 		for(IValidator validator: validatorMap.values()){
 			if (validator.hasError()) return true;
-		}
-
-		return false;
+		}		return false;
 
 	}
 

@@ -49,7 +49,10 @@ public abstract class TableValidator<T> implements IValidator {
 	/** Insertion-ordered KEYS */
 	private final Map<String, ColumnBinding> validatorMap=new LinkedHashMap();
 
-	private IValidationManager validationManager=new ValidationManager(this);
+	private IValidationManager validationManager=new ValidationManager(this){
+		@Override
+		public void postError(String message) {}
+	};
 
 	protected final TableViewer viewer;
 	protected final Table table;
@@ -93,11 +96,11 @@ public abstract class TableValidator<T> implements IValidator {
 	/*
 	 * Validation
 	 */
-	public void validateTable() {
+	public boolean validateTable() {
 
 		Debug.err("VALIDATING", validatorMap.keySet());
 
-		validationManager.processValidators();
+		return validationManager.processValidators();
 
 	}
 

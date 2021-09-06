@@ -29,7 +29,10 @@ public abstract class FieldValidator implements IValidator {
 	/** Insertion-ordered KEYS */
 	private final Map<String, FieldBinding> validatorMap=new LinkedHashMap();
 
-	private IValidationManager validationManager=new ValidationManager(this);
+	private IValidationManager validationManager=new ValidationManager(this){
+		@Override
+		public void postError(String message) {}
+	};
 
 	public FieldBinding register(String property, FieldBinding binding) {
 

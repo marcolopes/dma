@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -58,11 +58,16 @@ public class CustomShell extends Shell {
 	}
 
 
-	public void openAndSleep() {
-		open();
+	public void sleep() {
 		while(!isDisposed()){
 			if (!getDisplay().readAndDispatch()) getDisplay().sleep();
 		}
+	}
+
+
+	public void openAndSleep() {
+		open();
+		sleep();
 	}
 
 

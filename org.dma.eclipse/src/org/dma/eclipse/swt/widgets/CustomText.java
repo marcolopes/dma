@@ -45,7 +45,7 @@ public class CustomText extends Text {
 			fontData[i].setHeight(height);
 		}
 		final Font font=new Font(getDisplay(), fontData);
-		// Since you created the font, you must dispose it
+		//since you created the font, you must dispose it
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				font.dispose();
@@ -60,15 +60,11 @@ public class CustomText extends Text {
 		switch(function){
 		case BACK: setSelection(getCaretPosition()-1); break;
 		case FORWARD: setSelection(getCaretPosition()+1); break;
-		case DELETE:
-			//select 1 char before cursor
+		case DELETE: //select 1 char before cursor
 			if (getSelectionCount()==0) setSelection(getCaretPosition()-1, getCaretPosition());
-			insert("");
-			break;
-		case CLEAR:
-			selectAll();
-			function(FUNCTIONS.DELETE);
-			break;
+			insert(""); break;
+		case CLEAR: selectAll();
+			function(FUNCTIONS.DELETE); break;
 		}
 
 	}
