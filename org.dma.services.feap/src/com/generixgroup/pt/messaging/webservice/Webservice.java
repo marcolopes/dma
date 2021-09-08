@@ -63,6 +63,29 @@ public interface Webservice {
      * @param arg1
      * @param arg0
      * @return
+     *     returns com.generixgroup.pt.messaging.webservice.GetDocResponse
+     * @throws MalformedURLException_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "deleteDocument", targetNamespace = "http://webservice.messaging.pt.generixgroup.com/", className = "com.generixgroup.pt.messaging.webservice.DeleteDocument")
+    @ResponseWrapper(localName = "deleteDocumentResponse", targetNamespace = "http://webservice.messaging.pt.generixgroup.com/", className = "com.generixgroup.pt.messaging.webservice.DeleteDocumentResponse")
+    @Action(input = "http://webservice.messaging.pt.generixgroup.com/Webservice/deleteDocumentRequest", output = "http://webservice.messaging.pt.generixgroup.com/Webservice/deleteDocumentResponse", fault = {
+        @FaultAction(className = MalformedURLException_Exception.class, value = "http://webservice.messaging.pt.generixgroup.com/Webservice/deleteDocument/Fault/MalformedURLException")
+    })
+    public GetDocResponse deleteDocument(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Credentials arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1)
+        throws MalformedURLException_Exception
+    ;
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
      *     returns com.generixgroup.pt.messaging.webservice.ListDocResponse
      */
     @WebMethod
@@ -99,28 +122,5 @@ public interface Webservice {
         RoutingInfo arg2,
         @WebParam(name = "arg3", targetNamespace = "")
         String arg3);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns com.generixgroup.pt.messaging.webservice.GetDocResponse
-     * @throws MalformedURLException_Exception
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "deleteDocument", targetNamespace = "http://webservice.messaging.pt.generixgroup.com/", className = "com.generixgroup.pt.messaging.webservice.DeleteDocument")
-    @ResponseWrapper(localName = "deleteDocumentResponse", targetNamespace = "http://webservice.messaging.pt.generixgroup.com/", className = "com.generixgroup.pt.messaging.webservice.DeleteDocumentResponse")
-    @Action(input = "http://webservice.messaging.pt.generixgroup.com/Webservice/deleteDocumentRequest", output = "http://webservice.messaging.pt.generixgroup.com/Webservice/deleteDocumentResponse", fault = {
-        @FaultAction(className = MalformedURLException_Exception.class, value = "http://webservice.messaging.pt.generixgroup.com/Webservice/deleteDocument/Fault/MalformedURLException")
-    })
-    public GetDocResponse deleteDocument(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Credentials arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        String arg1)
-        throws MalformedURLException_Exception
-    ;
 
 }
