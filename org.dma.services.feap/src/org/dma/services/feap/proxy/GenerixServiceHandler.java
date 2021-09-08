@@ -23,8 +23,8 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	/** Netix Messaging */
 	public enum ENDPOINTS {
 
-		PRODUCAO ("http://messaging.generixpt.com:9090/messaging_webservice"),
-		TESTES ("http://messaging.generixpt.com:9090/messaging_webservice");
+		PRODUCAO ("http://85.158.120.184:9090/einvoice_webservice"),
+		TESTES ("http://85.158.120.184:9090/einvoice_webservice");
 
 		public final String url;
 
