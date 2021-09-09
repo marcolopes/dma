@@ -24,13 +24,14 @@ public abstract class ValidationManager implements IValidationManager {
 
 
 	@Override
-	public void register(String property, IValidator validator) {
+	public IValidationManager register(String property, IValidator validator) {
 
 		if (validatorMap.containsKey(property))
 			throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
 
-		validator.setValidationManager(this);
 		validatorMap.put(property, validator);
+
+		return validator.setManager(this);
 
 	}
 
@@ -68,12 +69,15 @@ public abstract class ValidationManager implements IValidationManager {
 
 
 	@Override
-	public boolean processValidators() {
+	public boolean validateAll() {
 
 		for(IValidator validator: validatorMap.values()){
 			validator.validateFields();
 			validator.validateButtons();
-		}postError(getErrorMessage());
+		}
+
+		postError(getErrorMessage());
+
 		return !hasError();
 
 	}
@@ -88,7 +92,7 @@ public abstract class ValidationManager implements IValidationManager {
 
 		for(IValidator validator: validatorMap.values()){
 			if (validator.hasError()) return true;
-		}		return false;
+		}return false;
 
 	}
 

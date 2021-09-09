@@ -110,7 +110,7 @@ public abstract class FieldBinding extends FieldError {
 		if (control instanceof Combo) return getCombo().getSelectionIndex()==-1;
 		if (control instanceof List) return getList().getSelectionCount()==0;
 		if (control instanceof Button) return getButton().getText().isEmpty();
-		if (control instanceof DateTime) return getDatetime()!=null;
+		if (control instanceof DateTime) return getDatetime().getYear()<1752;
 		if (control instanceof Text) return getText().isEmpty();
 		return false;
 	}

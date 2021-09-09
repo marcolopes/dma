@@ -7,7 +7,7 @@ package org.dma.eclipse.swt.input.validation;
 
 public interface IValidator {
 
-	public void setValidationManager(IValidationManager validationManager);
+	public IValidationManager setManager(IValidationManager manager);
 
 	public void unregisterAll();
 

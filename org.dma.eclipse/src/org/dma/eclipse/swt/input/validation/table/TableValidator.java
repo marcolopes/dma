@@ -49,7 +49,7 @@ public abstract class TableValidator<T> implements IValidator {
 	/** Insertion-ordered KEYS */
 	private final Map<String, ColumnBinding> validatorMap=new LinkedHashMap();
 
-	private IValidationManager validationManager=new ValidationManager(this){
+	private IValidationManager manager=new ValidationManager(this){
 		@Override
 		public void postError(String message) {}
 	};
@@ -100,7 +100,7 @@ public abstract class TableValidator<T> implements IValidator {
 
 		Debug.err("VALIDATING", validatorMap.keySet());
 
-		return validationManager.processValidators();
+		return manager.validateAll();
 
 	}
 
@@ -111,8 +111,8 @@ public abstract class TableValidator<T> implements IValidator {
 	 * @see org.dma.eclipse.swt.validation.IValidator
 	 */
 	@Override
-	public void setValidationManager(IValidationManager validationManager) {
-		this.validationManager=validationManager;
+	public IValidationManager setManager(IValidationManager manager) {
+		return this.manager=manager;
 	}
 
 

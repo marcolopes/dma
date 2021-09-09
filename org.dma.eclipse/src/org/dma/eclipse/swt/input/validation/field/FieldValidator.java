@@ -29,7 +29,7 @@ public abstract class FieldValidator implements IValidator {
 	/** Insertion-ordered KEYS */
 	private final Map<String, FieldBinding> validatorMap=new LinkedHashMap();
 
-	private IValidationManager validationManager=new ValidationManager(this){
+	private IValidationManager manager=new ValidationManager(this){
 		@Override
 		public void postError(String message) {}
 	};
@@ -49,21 +49,18 @@ public abstract class FieldValidator implements IValidator {
 		binding.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				Debug.out();
-				validationManager.processValidators();
+				Debug.out(manager.validateAll());
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				Debug.out();
-				//validationManager.processValidators();
+				//Debug.out(manager.validateAll());
 			}
 		});
 
 		binding.addSelectionListener(new Listener() {
 			@Override
 			public void handleEvent(Event e) {
-				Debug.out();
-				validationManager.processValidators();
+				Debug.out(manager.validateAll());
 			}
 		});
 
@@ -120,8 +117,8 @@ public abstract class FieldValidator implements IValidator {
 	 * @see org.dma.eclipse.swt.validation.IValidator
 	 */
 	@Override
-	public void setValidationManager(IValidationManager validationManager) {
-		this.validationManager=validationManager;
+	public IValidationManager setManager(IValidationManager manager) {
+		return this.manager=manager;
 	}
 
 
@@ -194,8 +191,8 @@ public abstract class FieldValidator implements IValidator {
 	}
 
 
-	public IValidationManager getValidationManager() {
-		return validationManager;
+	public IValidationManager getManager() {
+		return manager;
 	}
 
 
