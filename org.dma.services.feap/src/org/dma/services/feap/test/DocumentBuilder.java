@@ -36,7 +36,6 @@ public class DocumentBuilder {
 		 * Componentes Básicos eSPap (ebc) e Componentes Agregadores eSPap (eac).
 		 * Exemplo: n.a.
 		 */
-		InvoiceDocument document=InvoiceDocument.Factory.newInstance();
 		InvoiceType invoice=document.addNewInvoice();
 		/*
 		 * Id: 001
