@@ -5,6 +5,10 @@
  *******************************************************************************/
 package org.dma.services.at.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.SeriesServiceHandler;
@@ -16,7 +20,6 @@ import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
 import pt.gov.portaldasfinancas.servicos.series.SeriesResp;
 import pt.gov.portaldasfinancas.servicos.series.types.AnularSerieType;
 import pt.gov.portaldasfinancas.servicos.series.types.ConsultarSeriesType;
-import pt.gov.portaldasfinancas.servicos.series.types.EstadoSerieType;
 import pt.gov.portaldasfinancas.servicos.series.types.FinalizarSerieType;
 import pt.gov.portaldasfinancas.servicos.series.types.MeioProcessamentoType;
 import pt.gov.portaldasfinancas.servicos.series.types.MotivoAnulacaoType;
@@ -29,7 +32,7 @@ import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
  */
 public class SeriesServiceTest {
 
-	public static final String Serie = "2022";
+	public static final String Serie = new RandomValue().numbers(20);
 
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
 
@@ -47,47 +50,65 @@ public class SeriesServiceTest {
 			"599999993/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
 	/** Devolve o Codigo de Validacao */
-	public static String registarSerie() {
+	public static SeriesInfo registarSerie() {
 
 		RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, TipoDoc,
 				1, TimeDateUtils.getCurrentDate(), NumCertSWFatur, MeioProcessamento);
 
-		try{print(ServiceHandler.registarSerie(type));
+		try{SeriesResp response=ServiceHandler.registarSerie(type);
+			print(response);
+			return response.getInfoSerie();
 		}catch(Exception e){
 			e.printStackTrace();
-		}return CodValidacaoSerie;
+		}return null;
 
 	}
 
-	public static void anularSerie(String codValidacaoSerie) {
+	public static SeriesInfo anularSerie(SeriesInfo info) {
 
-		AnularSerieType type=new AnularSerieType(Serie, TipoDoc, codValidacaoSerie, MotivoAnulacao);
-
-		try{print(ServiceHandler.anularSerie(type));
+		if (info!=null) try{
+			AnularSerieType type=new AnularSerieType(info, MotivoAnulacao);
+			SeriesResp response=ServiceHandler.anularSerie(type);
+			print(response);
+			return response.getInfoSerie();
 		}catch(Exception e){
 			e.printStackTrace();
-		}
+		}return null;
 
 	}
 
-	public static void finalizarSerie(String codValidacaoSerie) {
+	public static SeriesInfo finalizarSerie(SeriesInfo info) {
 
-		FinalizarSerieType type=new FinalizarSerieType(Serie, TipoDoc, codValidacaoSerie, 1);
-
-		try{print(ServiceHandler.finalizarSerie(type));
+		if (info!=null) try{
+			FinalizarSerieType type=new FinalizarSerieType(info);
+			SeriesResp response=ServiceHandler.finalizarSerie(type);
+			print(response);
+			return response.getInfoSerie();
 		}catch(Exception e){
 			e.printStackTrace();
-		}
+		}return null;
 
 	}
 
 
-	public static void ConsultarSeries() {
+	public static List<SeriesInfo> consultarSeries() {
 
-		ConsultarSeriesType type=new ConsultarSeriesType(TimeDateUtils.getCurrentDate());
-		type.setEstado(EstadoSerieType.A);
+		try{ConsultarSeriesType type=new ConsultarSeriesType();
+			//type.setEstado(EstadoSerieType.A);
+			ConsultarSeriesResp response=ServiceHandler.consultarSeries(type);
+			print(response);
+			return response.getInfoSerie();
+		}catch(Exception e){
+			e.printStackTrace();
+		}return new ArrayList();
 
-		try{print(ServiceHandler.consultarSeries(type));
+	}
+
+
+	public static void anularSeries() {
+
+		for(SeriesInfo info: consultarSeries()) try{
+			anularSerie(info);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -176,7 +197,8 @@ public class SeriesServiceTest {
 		registarSerie();
 		anularSerie(registarSerie());
 		finalizarSerie(registarSerie());
-		ConsultarSeries();
+		consultarSeries();
+		anularSeries();
 
 	}
 
