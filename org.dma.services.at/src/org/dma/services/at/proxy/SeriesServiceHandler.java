@@ -5,10 +5,9 @@
  *******************************************************************************/
 package org.dma.services.at.proxy;
 
-import com.sun.xml.ws.developer.WSBindingProvider;
+import javax.xml.ws.BindingProvider;
 
 import org.dma.java.security.JKSCertificate;
-import org.dma.java.util.Debug;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResp;
@@ -55,15 +54,12 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	private SeriesWS getService() throws Exception {
 
 		// cria um novo servico
-		SeriesWSService service = new SeriesWSService();
-		// wsdlLocation esta' definido no servico
-		Debug.out(service.getWSDLDocumentLocation());
+		SeriesWS service = new SeriesWSService().getSeriesWSPort();
 
-		SeriesWS soapService = service.getSeriesWSPort();
 		// inicializa handler
-		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
+		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
 
-		return soapService;
+		return service;
 
 	}
 

@@ -96,7 +96,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	public void initializeHandler(WSBindingProvider provider, String endpoint, boolean secure) throws Exception {
+	public void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws Exception {
 
 		// adiciona handler
 		Binding binding = provider.getBinding();

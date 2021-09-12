@@ -49,7 +49,6 @@ public class SeriesServiceTest {
 	public static SeriesServiceHandler ServiceHandler = new SeriesServiceHandler(
 			"599999993/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
-	/** Devolve o Codigo de Validacao */
 	public static SeriesInfo registarSerie() {
 
 		RegistarSeriesType type=new RegistarSeriesType(Serie, TipoSerie, TipoDoc,

@@ -6,10 +6,9 @@
  *******************************************************************************/
 package org.dma.services.at.proxy;
 
-import com.sun.xml.ws.developer.WSBindingProvider;
+import javax.xml.ws.BindingProvider;
 
 import org.dma.java.security.JKSCertificate;
-import org.dma.java.util.Debug;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporte;
@@ -53,15 +52,12 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 	private DocumentosTransporte getService() throws Exception {
 
 		// cria um novo servico
-		DocumentosTransporteService service = new DocumentosTransporteService();
-		// wsdlLocation esta' definido no servico
-		Debug.out(service.getWSDLDocumentLocation());
+		DocumentosTransporte service = new DocumentosTransporteService().getDocumentosTransporteSOAP();
 
-		DocumentosTransporte soapService = service.getDocumentosTransporteSOAP();
 		// inicializa handler
-		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
+		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
 
-		return soapService;
+		return service;
 
 	}
 
