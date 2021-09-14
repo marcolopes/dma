@@ -12,6 +12,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.dma.java.util.TimeDateUtils;
 
+import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+
 public class RegistarSeriesType {
 
 	private static final String DATE_PATTERN = "yyyy-MM-dd";
@@ -24,20 +26,26 @@ public class RegistarSeriesType {
 	public final BigInteger numCertSWFatur;
 	public final MeioProcessamentoType meioProcessamento;
 
-	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, TipoDocType tipoDoc,
-			int numInicialSeq, Date dataInicioPrevUtiliz, int numCertSWFatur, MeioProcessamentoType meioProcessamento) {
-		this(serie, tipoSerie, tipoDoc, BigInteger.valueOf(numInicialSeq),
-				dataInicioPrevUtiliz, BigInteger.valueOf(numCertSWFatur), meioProcessamento);
+	public RegistarSeriesType(SeriesInfo info) {
+		this(info.getSerie(), TipoSerieType.valueOf(info.getTipoSerie()), TipoDocType.valueOf(info.getTipoDoc()),
+				info.getNumInicialSeq(), info.getDataInicioPrevUtiliz(),  info.getNumCertSWFatur(),
+				MeioProcessamentoType.valueOf(info.getMeioProcessamento()));
 	}
 
 	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, TipoDocType tipoDoc,
-			BigInteger numInicialSeq, Date dataInicioPrevUtiliz, BigInteger numCertSWFatur, MeioProcessamentoType meioProcessamento) {
+			int numInicialSeq, Date dataInicioPrevUtiliz, int numCertSWFatur, MeioProcessamentoType meioProcessamento) {
+		this(serie, tipoSerie, tipoDoc, BigInteger.valueOf(numInicialSeq),
+				TimeDateUtils.getXMLGregorianCalendar(TimeDateUtils.getDateFormatted(dataInicioPrevUtiliz, DATE_PATTERN)),
+				BigInteger.valueOf(numCertSWFatur), meioProcessamento);
+	}
+
+	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, TipoDocType tipoDoc,
+			BigInteger numInicialSeq, XMLGregorianCalendar dataInicioPrevUtiliz, BigInteger numCertSWFatur, MeioProcessamentoType meioProcessamento) {
 		this.serie=serie;
 		this.tipoSerie=tipoSerie;
 		this.tipoDoc=tipoDoc;
 		this.numInicialSeq=numInicialSeq;
-		this.dataInicioPrevUtiliz=TimeDateUtils.getXMLGregorianCalendar(
-				TimeDateUtils.getDateFormatted(dataInicioPrevUtiliz, DATE_PATTERN));
+		this.dataInicioPrevUtiliz=dataInicioPrevUtiliz;
 		this.numCertSWFatur=numCertSWFatur;
 		this.meioProcessamento=meioProcessamento;
 	}

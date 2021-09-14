@@ -30,13 +30,8 @@ public class ConsultarSeriesType {
 
 	public ConsultarSeriesType() {}
 
-	public ConsultarSeriesType(Date dataRegistoDe) {
-		setDataRegistoDe(dataRegistoDe);
-	}
-
-	public ConsultarSeriesType(Date dataRegistoDe, Date dataRegistoAte) {
-		setDataRegistoDe(dataRegistoDe);
-		setDataRegistoAte(dataRegistoAte);
+	public ConsultarSeriesType(EstadoSerieType estado) {
+		this.estado=estado;
 	}
 
 

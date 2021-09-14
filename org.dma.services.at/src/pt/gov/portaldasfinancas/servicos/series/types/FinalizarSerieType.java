@@ -19,7 +19,7 @@ public class FinalizarSerieType {
 	public final String justificacao;
 
 	public FinalizarSerieType(SeriesInfo info) {
-		this(info.getSerie(), TipoDocType.valueOf(info.getTipoDoc()), info.getCodValidacaoSerie(), info.getSeqUltimoDocEmitido(), null);
+		this(info.getSerie(), TipoDocType.valueOf(info.getTipoDoc()), info.getCodValidacaoSerie(), info.getNumInicialSeq(), null);
 	}
 
 	public FinalizarSerieType(String serie, TipoDocType tipoDoc, String codValidacaoSerie, int seqUltimoDocEmitido) {
