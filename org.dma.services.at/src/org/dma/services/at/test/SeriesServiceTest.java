@@ -31,7 +31,7 @@ import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
 public class SeriesServiceTest {
 
 	/** A documentacao indica maxLength = 35 */
-	public static final int SeriemaxLength = /*35*/20;
+	public static final int SeriemaxLength = 20;
 
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
 
@@ -343,13 +343,13 @@ public class SeriesServiceTest {
 	public static void main(String[] argvs) {
 
 		//erros();
+		//anularSeries();
+		//finalizarSeries();
 
 		registarSerie();
 		anularSerie(registarSerie());
 		finalizarSerie(registarSerie());
-
-		//anularSeries();
-		//finalizarSeries();
+		registarSerie(anularSerie(registarSerie()));
 
 		PRINT print=PRINT.ID;
 		consultarSeries(print, EstadoSerieType.A);
