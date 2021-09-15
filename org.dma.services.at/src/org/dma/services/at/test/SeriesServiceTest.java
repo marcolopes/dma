@@ -30,7 +30,8 @@ import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
  */
 public class SeriesServiceTest {
 
-	public static final int SeriemaxLength = 20/*35*/;
+	/** A documentacao indica maxLength = 35 */
+	public static final int SeriemaxLength = /*35*/20;
 
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
 
@@ -321,27 +322,36 @@ public class SeriesServiceTest {
 	}
 
 
+	/** Teste de erros */
+	public static void erros() {
+
+		//Registar -> Registar
+		registarSerie(registarSerie());
+		//Anular -> Anular
+		anularSerie(anularSerie(registarSerie()));
+		//Finalizar -> Finalizar
+		finalizarSerie(finalizarSerie(registarSerie()));
+
+		//Anular -> Finalizar
+ 		finalizarSerie(anularSerie(registarSerie()));
+		//Finalizar -> Anular
+		anularSerie(finalizarSerie(registarSerie()));
+
+	}
+
+
 	public static void main(String[] argvs) {
 
-		/*
+		//erros();
+
 		registarSerie();
 		anularSerie(registarSerie());
 		finalizarSerie(registarSerie());
-		*/
-
-		/*
-		registarSerie(registarSerie()); //Teste de erro: Registar -> Registar
-		anularSerie(anularSerie(registarSerie())); //Teste de erro: Anular -> Anular
-		finalizarSerie(finalizarSerie(registarSerie())); //Teste de erro: Finalizar -> Finalizar
- 		finalizarSerie(anularSerie(registarSerie())); //Teste de erro: Anular -> Finalizar
-		anularSerie(finalizarSerie(registarSerie())); //Teste de erro: Finalizar -> Anular
-		*/
 
 		//anularSeries();
 		//finalizarSeries();
 
-		PRINT print=PRINT.INFO;
-		consultarSeries(print);
+		PRINT print=PRINT.ID;
 		consultarSeries(print, EstadoSerieType.A);
 		consultarSeries(print, EstadoSerieType.N);
 		consultarSeries(print, EstadoSerieType.F);
