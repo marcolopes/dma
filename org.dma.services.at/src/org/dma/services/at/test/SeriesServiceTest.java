@@ -270,19 +270,21 @@ public class SeriesServiceTest {
 
 		if (info!=null) try{
 
-			System.out.print("Tipo Serie: "); System.out.println(info.getTipoSerie());
-			System.out.print("Classe Doc: "); System.out.println(info.getClasseDoc());
-			System.out.print("Número Inicial Seq: "); System.out.println(info.getNumInicialSeq());
-			System.out.print("Número Final Seq: "); System.out.println(info.getNumFinalSeq());
-			System.out.print("Último Doc Emitido: "); System.out.println(info.getSeqUltimoDocEmitido());
-			System.out.print("Codigo Validacao: "); System.out.println(info.getCodValidacaoSerie());
+			System.out.print("Tipo Série: "); System.out.println(info.getTipoSerie());
+			System.out.print("Tipo Documento: "); System.out.println(info.getTipoDoc());
+			System.out.print("Classe Documento: "); System.out.println(info.getClasseDoc());
+			System.out.print("NIF Comunicou: "); System.out.println(info.getNifComunicou());
 			System.out.print("Data Registo: "); System.out.println(info.getDataRegisto());
-			System.out.print("Data Utilizacao: "); System.out.println(info.getDataInicioPrevUtiliz());
+			System.out.print("Data Utilização: "); System.out.println(info.getDataInicioPrevUtiliz());
+			System.out.print("Data Estado (Alteração): "); System.out.println(info.getDataEstado());
+			System.out.print("Número Inicial Sequência: "); System.out.println(info.getNumInicialSeq());
+			System.out.print("Último Documento Emitido: "); System.out.println(info.getSeqUltimoDocEmitido());
+			System.out.print("Número Final Sequência: "); System.out.println(info.getNumFinalSeq());
+			System.out.print("Código Validação: "); System.out.println(info.getCodValidacaoSerie());
 			System.out.print("Meio Processamento: "); System.out.println(info.getMeioProcessamento());
-			System.out.print("Número Cert Software: "); System.out.println(info.getNumCertSWFatur());
-			System.out.print("Justificacao: "); System.out.println(info.getJustificacao());
-			System.out.print("Motivo Estado: "); System.out.println(info.getMotivoEstado());
-			System.out.print("Data Estado: "); System.out.println(info.getDataEstado());
+			System.out.print("Número Certificado Software: "); System.out.println(info.getNumCertSWFatur());
+			System.out.print("Justificação Finalização: "); System.out.println(info.getJustificacao());
+			System.out.print("Motivo Estado (Anulação): "); System.out.println(info.getMotivoEstado());
 			System.out.print("Estado: "); System.out.println(info.getEstado());
 			System.out.println();
 
@@ -322,39 +324,33 @@ public class SeriesServiceTest {
 	}
 
 
-	/** Teste de erros */
-	public static void erros() {
-
-		//Registar -> Registar
-		registarSerie(registarSerie());
-		//Anular -> Anular
-		anularSerie(anularSerie(registarSerie()));
-		//Finalizar -> Finalizar
-		finalizarSerie(finalizarSerie(registarSerie()));
-
-		//Anular -> Finalizar
- 		finalizarSerie(anularSerie(registarSerie()));
-		//Finalizar -> Anular
-		anularSerie(finalizarSerie(registarSerie()));
-
-	}
-
-
 	public static void main(String[] argvs) {
 
-		//erros();
 		//anularSeries();
 		//finalizarSeries();
 
+		/** Situações ACEITES */
+		//Registar
 		registarSerie();
+		//Registar -> Anular
 		anularSerie(registarSerie());
+		//Registar -> Finalizar
 		finalizarSerie(registarSerie());
+		//Registar -> Anular -> Registar
 		registarSerie(anularSerie(registarSerie()));
 
+		/** Situações NÃO ACEITES */
+		//Registar -> Registar
+		registarSerie(registarSerie());
+		//Registar -> Anular -> Finalizar
+ 		finalizarSerie(anularSerie(registarSerie()));
+		//Registar -> Finalizar -> Anular
+		anularSerie(finalizarSerie(registarSerie()));
+
 		PRINT print=PRINT.ID;
-		consultarSeries(print, EstadoSerieType.A);
-		consultarSeries(print, EstadoSerieType.N);
-		consultarSeries(print, EstadoSerieType.F);
+		//consultarSeries(print, EstadoSerieType.A);
+		//consultarSeries(print, EstadoSerieType.N);
+		//consultarSeries(print, EstadoSerieType.F);
 
 	}
 
