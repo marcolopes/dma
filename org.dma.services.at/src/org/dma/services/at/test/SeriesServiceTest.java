@@ -43,8 +43,6 @@ public class SeriesServiceTest {
 
 	public static final MotivoAnulacaoType MotivoAnulacao = MotivoAnulacaoType.ER;
 
-	public static final String CodValidacaoSerie = "ZZZZZZZZ";
-
 	public static SeriesServiceHandler ServiceHandler = new SeriesServiceHandler(
 			"599999993/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
 
