@@ -22,8 +22,7 @@ public class HttpURLHandler extends URLHandler {
 
 	public boolean ping(int timeout) {
 
-		try{
-			HttpURLConnection connection=(HttpURLConnection)openConnection();
+		try{HttpURLConnection connection=(HttpURLConnection)openConnection();
 			if (connection!=null) try{
 				connection.setRequestMethod("HEAD");
 				connection.setConnectTimeout(timeout);
@@ -45,8 +44,7 @@ public class HttpURLHandler extends URLHandler {
 	/** @see HttpURLConnection */
 	public boolean check(int status) {
 
-		try{
-			HttpURLConnection connection=(HttpURLConnection)openConnection();
+		try{HttpURLConnection connection=(HttpURLConnection)openConnection();
 			if (connection!=null) try{
 				connection.setRequestMethod("HEAD");
 				connection.setInstanceFollowRedirects(false);
@@ -67,8 +65,7 @@ public class HttpURLHandler extends URLHandler {
 
 	public HttpURLConnection getConnection(String key) {
 
-		try{
-			HttpURLConnection connection=(HttpURLConnection)openConnection();
+		try{HttpURLConnection connection=(HttpURLConnection)openConnection();
 			if (connection!=null) try{
 				connection.setRequestProperty("Authorization",
 						"Basic "+new String(new Base64(0).encode(key.getBytes())));

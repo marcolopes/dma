@@ -41,9 +41,7 @@ public class ServerParameters {
 	}
 
 	public String getURL(String...more) {
-		return more.length==1 ?
-			getURL() + "/" + more :
-			getURL() + "/" + ArrayUtils.concat(more, "/");
+		return getURL() + "/" + ArrayUtils.concat(more, "/");
 	}
 
 	@Override
