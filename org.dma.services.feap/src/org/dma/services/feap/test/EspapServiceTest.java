@@ -7,6 +7,7 @@ package org.dma.services.feap.test;
 
 import com.softlimits.clarinet.ArrayOfMessageOutputData;
 
+import org.dma.services.feap.CIUSExamples;
 import org.dma.services.feap.Certificates;
 import org.dma.services.feap.proxy.EspapServiceHandler;
 import org.dma.services.feap.proxy.EspapServiceHandler.ENDPOINTS;
@@ -14,14 +15,12 @@ import org.dma.services.feap.proxy.EspapServiceHandler.ENDPOINTS;
 public class EspapServiceTest {
 
 	public static final EspapServiceHandler ServiceHandler=new EspapServiceHandler(
-			"Username", "Password", Certificates.SaphetyDoc, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+			"Username", "Password", Certificates.SaphetyDoc, ENDPOINTS.TESTES);
 
 	public static void main(String[] argvs) {
 
 		try{
-			byte[] message=new DocumentBuilder().toByteArray();
-
-			ArrayOfMessageOutputData response=ServiceHandler.processMessage(message);
+			ArrayOfMessageOutputData response=ServiceHandler.processMessage(CIUSExamples.FATURA);
 
 			System.out.println(response.getMessageOutputData());
 

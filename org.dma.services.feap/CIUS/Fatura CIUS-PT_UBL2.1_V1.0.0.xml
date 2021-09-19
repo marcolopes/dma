@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" xmlns:n1="http://uri.etsi.org/01903/v1.4.1#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:n2="urn:oasis:names:specification:ubl:schema:xsd:CommonSignatureComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2" xmlns:sac="urn:oasis:names:specification:ubl:schema:xsd:SignatureAggregateComponents-2" xmlns:sbc="urn:oasis:names:specification:ubl:schema:xsd:SignatureBasicComponents-2" xmlns:udt="urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2" xmlns:ccts-cct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<cbc:CustomizationID>[OBRIGATÓRIO] ID Customização [Predefinição: urn:www:espap:pt:profiles:profile1:seguido do identificador da versão]</cbc:CustomizationID><!--1..1-->
+	<cbc:ProfileID>Perfil onde se enquadra a customização associada ao Template UBL 2.1</cbc:ProfileID><!--0..1-->
+	<cbc:ID>[OBRIGATÓRIO] Número do documento</cbc:ID><!--1..1-->
+	<cbc:IssueDate>[OBRIGATÓRIO] Data de emissão do documento [AAAA-MM-DD]</cbc:IssueDate><!--1..1-->
+	<cbc:DueDate>Data de vencimento do documento [AAAA-MM-DD]</cbc:DueDate><!--0..1-->
+	<cbc:InvoiceTypeCode listID="UNCL1001">[OBRIGATÓRIO] Código que identifica o tipo funcional da fatura eletrónica, segundo a lista de códigos UNCL1001 (http://www.unece.org/trade/untdid/d98a/uncl/uncl1001.htm) [FE: 380 / ND: 383]</cbc:InvoiceTypeCode><!--1..1-->
+	<cbc:Note>Notas textuais que permitem ao fornecedor enviar informação não estruturada relativa ao documento.</cbc:Note><!--0..N-->
+	<cbc:TaxPointDate>A data em que o IVA se torna aplicável para o Vendedor e para o Comprador na medida em que essa data pode ser determinada e difere da data de emissão da fatura, de acordo com a diretiva do IVA [AAAA-MM-DD]</cbc:TaxPointDate><!--0..1-->
+	<cbc:DocumentCurrencyCode listID="ISO4217">[OBRIGATÓRIO] Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) [Predefinição: EUR]</cbc:DocumentCurrencyCode><!--1..1-->
+	<cbc:TaxCurrencyCode listID="ISO4217">A moeda usada para fins de contabilidade e relatórios de IVA, conforme aceite ou exigida no país do vendedor.</cbc:TaxCurrencyCode><!--0..1-->
+	<cbc:AccountingCost>Número do compromisso.</cbc:AccountingCost><!--0..1-->
+	<cbc:BuyerReference>Referência do Cliente</cbc:BuyerReference><!--0..1-->
+	<cac:InvoicePeriod><!--0..1-->
+		<cbc:StartDate>A data em que o período de faturação começa.[AAAA-MM-DD]</cbc:StartDate><!--0..1-->
+		<cbc:EndDate>A data em que o período de faturação acaba.[AAAA-MM-DD]</cbc:EndDate><!--0..1-->
+		<cbc:DescriptionCode>O código da data em que o IVA se torna aplicável pelo vendedor e pelo comprador.</cbc:DescriptionCode><!--0..1-->
+	</cac:InvoicePeriod><!--0..1-->
+	<cac:OrderReference><!--0..1--> 
+		<cbc:ID>Número da nota de encomenda.</cbc:ID><!--0..1-->
+		<cbc:SalesOrderID>Número da ordem de venda, emitida pelo fornecedor.</cbc:SalesOrderID><!--0..1-->
+	</cac:OrderReference><!--0..1-->
+	<cac:BillingReference><!--0..N-->
+		<cac:InvoiceDocumentReference><!--1..1-->
+			<cbc:ID>[OBRIGATÓRIO - Condicional] Número de referência do documento, emitido pelo fornecedor, anteriormente enviado.</cbc:ID><!--1..1-->
+			<cbc:IssueDate>Data de emissão do documento, anteriormente enviado.[AAAA-MM-DD]</cbc:IssueDate><!--0..1-->
+		</cac:InvoiceDocumentReference><!--1..1-->
+	</cac:BillingReference><!--0..N-->
+	<cac:DespatchDocumentReference><!--0..N-->
+		<cbc:ID>[OBRIGATÓRIO - Condicional]Referência do aviso de envio.</cbc:ID><!--1..1-->
+	</cac:DespatchDocumentReference><!--0..N-->
+	<cac:ReceiptDocumentReference><!--0..1-->
+		<cbc:ID>[OBRIGATÓRIO - Condicional] Número do aviso de recebimento referenciado.</cbc:ID><!--1..1-->
+	</cac:ReceiptDocumentReference><!--0..1-->
+	<cac:OriginatorDocumentReference><!--0..1-->
+		<cbc:ID>[OBRIGATÓRIO - Condicional] Número do acordo quadro.</cbc:ID><!--1..1-->
+	</cac:OriginatorDocumentReference><!--0..1-->
+	<cac:ContractDocumentReference><!--0..1-->
+		<cbc:ID>[OBRIGATÓRIO - Condicional] Número do contrato.</cbc:ID><!--1..1-->
+	</cac:ContractDocumentReference><!--0..1-->
+   <cac:AdditionalDocumentReference><!--0..N-->
+        <cbc:ID schemeID="AIM">Identificador do processo de registo de entrada do documento.Identificador do anexo referenciado de acordo com a norma UNCL1153 (https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL1153/) Scheme ID = AIM para colocar UUID</cbc:ID> <!--0..1-->  
+   </cac:AdditionalDocumentReference><!--0..N-->
+	<cac:AdditionalDocumentReference><!--0..N-->
+		<cbc:ID>Identificador do processo de registo de entrada do documento.Identificador do anexo referenciado de acordo com a norma UNCL1153 (https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL1153/)</cbc:ID><!--0..1-->
+		<cbc:DocumentTypeCode listID="UNCL1001">Código que identifica o tipo funcional da fatura eletrónica, segundo a lista de códigos UNCL1001 (http://www.unece.org/trade/untdid/d98a/uncl/uncl1001.htm) [FE: 380]</cbc:DocumentTypeCode><!--0..1-->
+		<cbc:DocumentDescription>Descrição do documento anexado [Predefinição: Facturas: INVOICE_REPRESENTATION | Anexos: ATTACHMENT]</cbc:DocumentDescription><!--0..1-->
+		<cac:Attachment><!--0..1-->
+			<cbc:EmbeddedDocumentBinaryObject mimeCode="mime code">Documento codificado em base 64</cbc:EmbeddedDocumentBinaryObject><!--0..1-->
+			<cac:ExternalReference><!--0..1-->
+				<cbc:URI>[OBRIGATÓRIO - Condicional]Endereço para um documento, localizado externamente.</cbc:URI><!--1..1-->
+			</cac:ExternalReference><!--0..1-->
+		</cac:Attachment><!--0..1-->
+	</cac:AdditionalDocumentReference><!--0..N-->
+	<cac:ProjectReference><!--0..1-->
+		<cbc:ID>[OBRIGATÓRIO - Condicional] Número do Projeto</cbc:ID><!--1..1-->
+	</cac:ProjectReference><!--0..1-->
+	<cac:AccountingSupplierParty><!--1..1-->
+		<cac:Party><!--1..1-->
+			<cbc:EndpointID schemeID="lista de códigos EAS (https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/) [Pais+NIF: 9946 ou GLN: 0088]">Código de identificação do Fornecedor, por exemplo GLN, URN etc</cbc:EndpointID><!--0..1-->
+			<cac:PartyIdentification><!--0..N-->
+				<cbc:ID schemeID="Identificador do credor designado pelo banco de acordo com a lista de códigos ISO 6523 (https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/)">[OBRIGATÓRIO - Condicional] Identificação do vendedor (ID Bancário)</cbc:ID><!--1..1-->
+			</cac:PartyIdentification><!--0..N-->
+			<cac:PartyName><!--0..1-->
+				<cbc:Name>[OBRIGATÓRIO - Condicional] Nome do fornecedor</cbc:Name><!--1..1-->
+			</cac:PartyName><!--0..1-->
+			<cac:PostalAddress><!--1..1-->
+				<cbc:StreetName>[OBRIGATÓRIO] Morada do fornecedor</cbc:StreetName><!--1..1-->
+				<cbc:AdditionalStreetName> Morada do fornecedor (adicional)</cbc:AdditionalStreetName><!--0..1-->
+				<cbc:CityName>[OBRIGATÓRIO] Cidade do fornecedor</cbc:CityName><!--1..1-->
+				<cbc:PostalZone>[OBRIGATÓRIO] Código Postal do fornecedor</cbc:PostalZone><!--1..1-->
+				<cbc:CountrySubentity>Região/Província da morada do fornecedor</cbc:CountrySubentity><!--0..1-->
+				<cac:AddressLine><!--0..1-->
+					<cbc:Line>[OBRIGATÓRIO - Condicional] Linha de endereço adicional que pode ser usado para fornecer mais detalhes, complementando a linha principal.</cbc:Line><!--1..1-->
+				</cac:AddressLine><!--0..1-->
+				<cac:Country><!--1..1-->
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2">[OBRIGATÓRIO] País do fornecedor, segundo o código ISO 3166-1 alfa-2</cbc:IdentificationCode><!--1..1-->
+				</cac:Country><!--1..1-->
+			</cac:PostalAddress><!--1..1-->
+			<cac:PartyTaxScheme><!--0..1-->
+				<cbc:CompanyID>[OBRIGATÓRIO] Número de identificação fiscal do fornecedor, precedido do código do país, segundo o código ISO 3166-1 alfa-2</cbc:CompanyID><!--1..1-->
+				<cac:TaxScheme><!--1..1-->
+					<cbc:ID schemeID="UN/ECE 5153">[OBRIGATÓRIO] O valor do ID corresponde à lista de códigos UN/ECE 5153, da Comissão Económica das Nações Unidas para a Europa. [Predefinição: VAT]</cbc:ID><!--1..1-->
+				</cac:TaxScheme><!--1..1-->
+			</cac:PartyTaxScheme><!--0..1-->
+			<cac:PartyLegalEntity><!--1..1-->
+				<cbc:RegistrationName>[OBRIGATÓRIO] Identificação do fornecedor na IRN</cbc:RegistrationName><!--1..1-->
+				<cbc:CompanyID>Número de Identificação do fornecedor na conservatória</cbc:CompanyID><!--0..1-->
+				<cbc:CompanyLegalForm>Capital Social do fornecedor</cbc:CompanyLegalForm><!--0..1-->				
+			</cac:PartyLegalEntity><!--1..1-->
+			<cac:Contact><!--0..1-->
+				<cbc:Name>Ponto de contato do fornecedor.</cbc:Name><!--0..1-->
+				<cbc:Telephone>Contacto telefónico do fornecedor.</cbc:Telephone><!--0..1-->
+				<cbc:ElectronicMail>Endereço de correio eletrónico do fornecedor.</cbc:ElectronicMail><!--0..1-->
+			</cac:Contact><!--0..1-->
+		</cac:Party><!--1..1-->
+	</cac:AccountingSupplierParty><!--1..1-->
+	<cac:AccountingCustomerParty><!--1..1-->
+		<cac:Party><!--1..1-->
+			<cbc:EndpointID schemeID="lista de códigos EAS (https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/) [Pais+NIF: 9946 ou GLN: 0088]">Código de identificação do Cliente, por exemplo GLN, URN etc</cbc:EndpointID><!--0..1-->
+			<cac:PartyIdentification><!--0..N-->
+				<cbc:ID schemeID="Identificador do credor designado pelo banco de acordo com a lista de códigos ISO 6523 (https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/)">[OBRIGATÓRIO - Condicional] Identificação do cliente</cbc:ID><!--1..1-->
+			</cac:PartyIdentification><!--0..N-->
+			<cac:PartyName><!--0..1-->
+				<cbc:Name>[OBRIGATÓRIO - Condicional] Nome do cliente</cbc:Name><!--1..1-->
+			</cac:PartyName><!--0..1-->
+			<cac:PostalAddress><!--1..1-->
+				<cbc:StreetName>Linha 1 da morada do cliente.</cbc:StreetName><!--0..1-->
+				<cbc:AdditionalStreetName>Linha 2 da morada do cliente.</cbc:AdditionalStreetName><!--0..1-->				
+				<cbc:CityName>Cidade do cliente</cbc:CityName><!--0..1-->
+				<cbc:PostalZone>Código Postal do cliente</cbc:PostalZone><!--0..1-->
+				<cbc:CountrySubentity>Região/Província da morada do cliente.</cbc:CountrySubentity><!--0..1-->
+				<cac:AddressLine><!--0..1-->
+					<cbc:Line>[OBRIGATÓRIO - Condicional] Linha de endereço adicional que pode ser usado para fornecer mais detalhes, complementando a linha principal.</cbc:Line><!--1..1-->
+				</cac:AddressLine><!--0..1-->
+				<cac:Country><!--1..1-->
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2">[OBRIGATÓRIO] País do cliente, segundo o código ISO 3166-1 alfa-2</cbc:IdentificationCode><!--1..1-->
+				</cac:Country><!--1..1-->
+			</cac:PostalAddress><!--1..1-->
+			<cac:PartyTaxScheme><!--0..1-->
+				<cbc:CompanyID>[OBRIGATÓRIO] Número de identificação fiscal do cliente, precedido do código do país, segundo o código ISO 3166-1 alfa-2</cbc:CompanyID><!--1..1-->
+				<cac:TaxScheme><!--1..1-->
+					<cbc:ID schemeID="UN/ECE 5153">[OBRIGATÓRIO] O valor do ID corresponde à lista de códigos UN/ECE 5153, da Comissão Económica das Nações Unidas para a Europa. [Predefinição: VAT]</cbc:ID><!--1..1-->
+				</cac:TaxScheme><!--1..1-->
+			</cac:PartyTaxScheme><!--0..1-->
+			<cac:PartyLegalEntity><!--1..1-->
+				<cbc:RegistrationName>[OBRIGATÓRIO] Nome do cliente.</cbc:RegistrationName><!--1..1-->
+				<cbc:CompanyID>Informação sobre o registo na conservatória do cliente.</cbc:CompanyID><!--0..1-->
+			</cac:PartyLegalEntity><!--1..1-->
+			<cac:Contact><!--0..1-->
+				<cbc:Name>Ponto de contato do cliente.</cbc:Name><!--0..1-->
+				<cbc:Telephone>Contacto telefónico do cliente.</cbc:Telephone><!--0..1-->
+				<cbc:ElectronicMail>Email de contacto do cliente</cbc:ElectronicMail><!--0..1-->
+			</cac:Contact><!--0..1-->
+		</cac:Party><!--1..1-->
+	</cac:AccountingCustomerParty><!--1..1-->
+	<cac:PayeeParty><!--0..1-->
+		<cac:PartyIdentification><!--0..1-->
+			<cbc:ID schemeID="Identificador do credor designado pelo banco de acordo com a lista de códigos ISO 6523 (https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/)">[OBRIGATÓRIO - Condicional] Identificador do recebedor do pagamento.</cbc:ID><!--1..1-->
+		</cac:PartyIdentification><!--0..1-->
+		<cac:PartyName><!--1..1-->
+			<cbc:Name>[OBRIGATÓRIO - Condicional] Nome da entidade que recebe o pagamento.</cbc:Name><!--1..1-->
+		</cac:PartyName><!--1..1-->
+		<cac:PartyLegalEntity><!--1..1-->
+			<cbc:CompanyID>Informação sobre o registo na conservatória do recebedor do pagamento</cbc:CompanyID><!--0..1-->
+		</cac:PartyLegalEntity><!--1..1-->
+	</cac:PayeeParty><!--0..1-->
+	<cac:TaxRepresentativeParty><!--0..1-->
+		<cac:PartyName><!--1..1-->
+			<cbc:Name>[OBRIGATÓRIO] Nome do representante legal para os temas fiscais.</cbc:Name><!--1..1-->
+		</cac:PartyName><!--1..1-->
+		<cac:PostalAddress><!--1..1-->
+			<cbc:StreetName>Linha 1 da morada do representante legal para os temas fiscais.</cbc:StreetName><!--0..1-->
+			<cbc:AdditionalStreetName>Linha 2 da morada do representante legal para os temas fiscais.</cbc:AdditionalStreetName><!--0..1-->
+			<cbc:CityName>Cidade da morada do representante legal para os temas fiscais.</cbc:CityName><!--0..1-->
+			<cbc:PostalZone>Código postal da morada do representante legal para os temas fiscais.</cbc:PostalZone><!--0..1-->
+			<cbc:CountrySubentity>Região/Província da morada do representante legal para os temas fiscais.</cbc:CountrySubentity><!--0..1-->
+			<cac:AddressLine><!--0..1-->
+				<cbc:Line>[OBRIGATÓRIO - Condicional] Linha de endereço adicional que pode ser usado para fornecer mais detalhes, complementando a linha principal.</cbc:Line><!--1..1-->
+			</cac:AddressLine><!--0..1-->
+			<cac:Country><!--1..1-->
+				<cbc:IdentificationCode>[OBRIGATÓRIO] Código identificador do país da morada do representante legal para os temas fiscais.</cbc:IdentificationCode><!--1..1-->
+			</cac:Country><!--1..1-->
+		</cac:PostalAddress><!--1..1-->
+		<cac:PartyTaxScheme><!--1..1-->
+			<cbc:CompanyID>[OBRIGATÓRIO] Número de identificação fiscal do representante legal para os temas fiscais.</cbc:CompanyID><!--1..1-->
+			<cac:TaxScheme><!--1..1-->
+				<cbc:ID schemeID="UN/ECE 5153">[OBRIGATÓRIO] O valor do ID corresponde à lista de códigos UN/ECE 5153, da Comissão Económica das Nações Unidas para a Europa. [Predefinição:VAT]</cbc:ID><!--1..1-->
+			</cac:TaxScheme><!--1..1-->
+		</cac:PartyTaxScheme><!--1..1-->
+	</cac:TaxRepresentativeParty><!--0..1-->
+	<cac:Delivery><!--1..N-->
+		<cbc:ActualDeliveryDate>Data de entrega</cbc:ActualDeliveryDate><!--0..1-->
+		<cac:DeliveryLocation><!--0..1-->
+			<cbc:ID schemeID="Lista de códigos EAS (https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/) [Pais+NIF: 9946 ou GLN: 0088]">Identificador do local em que os bens e serviços são entregues.</cbc:ID><!--0..1-->
+			<cac:Address><!--0..1-->
+				<cbc:StreetName>[OBRIGATÓRIO - Condicional] Linha 1 da morada do local de entrega.</cbc:StreetName><!--1..1-->
+				<cbc:AdditionalStreetName>Linha 2 da morada do local de entrega.</cbc:AdditionalStreetName><!--0..1-->
+				<cbc:CityName>[OBRIGATÓRIO - Condicional] Cidade do local de entrega</cbc:CityName><!--1..1-->
+				<cbc:PostalZone>[OBRIGATÓRIO - Condicional] Código postal da morada do local de entrega</cbc:PostalZone><!--1..1-->
+				<cbc:CountrySubentity>Região/Província da morada do local de entrega.</cbc:CountrySubentity><!--0..1-->
+				<cac:AddressLine><!--0..1-->
+					<cbc:Line>[OBRIGATÓRIO - Condicional] Linha de endereço adicional que pode ser usado para fornecer mais detalhes, complementando a linha principal.</cbc:Line><!--1..1-->
+				</cac:AddressLine><!--0..1-->
+				<cac:Country><!--1..1-->
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2">[OBRIGATÓRIO] País do local de entrega, segundo o código ISO 3166-1 alfa-2</cbc:IdentificationCode><!--1..1-->
+				</cac:Country><!--1..1-->
+			</cac:Address><!--0..1-->
+		</cac:DeliveryLocation><!--0..1-->
+		<cac:DeliveryParty><!--0..1-->
+			<cac:PartyName><!--0..N-->
+				<cbc:Name>[OBRIGATÓRIO - Condicional] Nome do local de entrega</cbc:Name><!--1..1-->
+			</cac:PartyName><!--0..N-->
+		</cac:DeliveryParty><!--0..1-->
+	</cac:Delivery><!--1..N-->
+	<cac:PaymentMeans><!--0..1-->
+		<cbc:PaymentMeansCode listID="UNCL4461">[OBRIGATÓRIO - Condicional] Código identificador do método de pagamento,deve mencionar o método de pagamento, segundo o código UNCL4461.</cbc:PaymentMeansCode><!--1..1-->
+		<cbc:PaymentID>Descrição da referência a pagamento do documento por ATM.</cbc:PaymentID><!--0..1-->
+		<cac:CardAccount><!--0..1-->
+			<cbc:PrimaryAccountNumberID>[OBRIGATÓRIO - Condicional] Número da conta principal do cartão utilizado no pagamento, PAN.</cbc:PrimaryAccountNumberID><!--1..1-->
+			<cbc:NetworkID>[OBRIGATÓRIO - Condicional] Identificador da rede [ex: VISA, MASTER CARD, American Express...]</cbc:NetworkID><!--1..1-->
+			<cbc:HolderName>Nome do titular do cartão de pagamento.</cbc:HolderName><!--0..1-->
+		</cac:CardAccount><!--0..1-->
+		<cac:PayeeFinancialAccount><!--0..N-->
+			<cbc:ID schemeID="IBAN">Identificador do pagamento, código IBAN.</cbc:ID><!--0..1-->
+			<cbc:Name>Identificação da conta, para a qual o pagamento deve ser efectuado.</cbc:Name><!--0..1-->
+			<cac:FinancialInstitutionBranch><!--0..1-->
+				<cbc:ID schemeID="SWIFT">[OBRIGATÓRIO - Condicional] Código da instituição bancária. Será considerado o código SWIFT se o atributo schemeID for igual a BIC, segundo a lista de códigos ISO 9362.</cbc:ID><!--1..1-->
+			</cac:FinancialInstitutionBranch><!--0..1-->
+		</cac:PayeeFinancialAccount><!--0..N-->
+		<cac:PaymentMandate><!--0..1-->
+			<cbc:ID>Identificador exclusivo atribuído pelo Beneficiário para referenciar o mandato de débito direto (Nº Mandato).</cbc:ID><!--0..1-->
+			<cac:PayerFinancialAccount><!--0..1-->
+				<cbc:ID>[OBRIGATÓRIO - Condicional] A conta a ser debitada pelo débito direto.</cbc:ID><!--1..1-->
+			</cac:PayerFinancialAccount><!--0..1-->
+		</cac:PaymentMandate><!--0..1-->
+	</cac:PaymentMeans><!--0..1-->
+	<cac:PaymentTerms><!--0..1-->
+		<cbc:Note>Descritivo das condições de pagamento.</cbc:Note><!--0..N-->
+	</cac:PaymentTerms><!--0..1-->
+	<cac:AllowanceCharge><!--0..N-->
+		<cbc:ChargeIndicator>[OBRIGATÓRIO - Condicional] Indica se o valor é um encargo ou um desconto da linha do documento. Indicador de encargo (true). Indicador de desconto (false).</cbc:ChargeIndicator><!--1..1-->
+		<cbc:AllowanceChargeReasonCode listID="Allowance reason codes (UNCL5189 subset(https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5189/)), Charge reason code (UNCL7161 (https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL7161/))">Código do motivo, que possa levar a que o montante contemplado no desconto/encargo, esteja isento de imposto.</cbc:AllowanceChargeReasonCode><!--0..1-->
+		<cbc:AllowanceChargeReason>Representação textual do desconto/encargo</cbc:AllowanceChargeReason><!--0..1-->
+		<cbc:MultiplierFactorNumeric>Fator multiplicador sobre o montante base do desconto/encargo</cbc:MultiplierFactorNumeric><!--0..1-->
+		<cbc:Amount currencyID="EUR">[OBRIGATÓRIO - Condicional] Montante do desconto/encargo, sem impostos.A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html)</cbc:Amount><!--1..1-->
+		<cbc:BaseAmount currencyID="EUR">Montante base do desconto/encargo. A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html)</cbc:BaseAmount><!--0..1-->
+		<cac:TaxCategory><!--0..1-->
+			<cbc:ID>[OBRIGATÓRIO - Condicional] Código de imposto aplicado ao desconto/encargo</cbc:ID><!--1..1-->
+			<cbc:Percent>[OBRIGATÓRIO - Condicional] Percentagem de imposto aplicada ao desconto/encargo</cbc:Percent><!--1..1-->
+			<cac:TaxScheme><!--1..1-->
+				<cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">[OBRIGATÓRIO] O valor do ID corresponde à lista de códigos UN/ECE 5153 [Predefinição:VAT]</cbc:ID><!--1..1-->
+			</cac:TaxScheme><!--1..1-->
+		</cac:TaxCategory><!--0..1-->
+	</cac:AllowanceCharge><!--0..N-->
+	<cac:TaxTotal><!--0..1-->
+		<cbc:TaxAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO - Condicional] Total de impostos.A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:TaxAmount><!--1..1-->
+		<cac:TaxSubtotal><!--1..N-->
+			<cbc:TaxableAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO - Condicional] Montante base de incidência para a taxa de imposto aplicada no respetivo subtotal.A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html)</cbc:TaxableAmount><!--1..1-->
+			<cbc:TaxAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO - Condicional] Montante calculado do imposto sobre o montante base de incidência respetivo..A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html)</cbc:TaxAmount><!--1..1-->
+			<cac:TaxCategory><!--1..1-->
+				<cbc:ID>[OBRIGATÓRIO - Condicional] Código de imposto respeitante à taxa aplicada no item da linha do documento, segundo a lista de códigos UN/ECE 5305 (http://www.unece.org/trade/untdid/d07a/tred/tred5305.htm) [Predefinição: S]</cbc:ID><!--1..1-->
+				<cbc:Percent>[OBRIGATÓRIO - Condicional] Percentagem de imposto do subtotal</cbc:Percent><!--1..1-->
+				<cbc:TaxExemptionReasonCode>Código do motivo, que possa levar a que o montante contemplado no subtotal, respetivo, esteja isento de imposto.</cbc:TaxExemptionReasonCode><!--0..1-->
+				<cbc:TaxExemptionReason>Descrição textual do motivo, que possa levar a que o montante contemplado no subtotal, respetivo, esteja isento de imposto.</cbc:TaxExemptionReason><!--0..1-->
+				<cac:TaxScheme><!--1..1-->
+					<cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">[OBRIGATÓRIO - Condicional] O valor do ID corresponde à lista de códigos UN/ECE 5153 [Predefinição: VAT]</cbc:ID><!--1..1-->
+				</cac:TaxScheme><!--1..1-->
+			</cac:TaxCategory><!--1..1-->
+		</cac:TaxSubtotal><!--1..N-->
+	</cac:TaxTotal><!--0..1-->	
+	<cac:LegalMonetaryTotal><!--1..1-->
+		<cbc:LineExtensionAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO] Soma dos montantes das linhas do documento (s/imposto). A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:LineExtensionAmount><!--1..1-->
+		<cbc:TaxExclusiveAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO] Total do documento (s/imposto).A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:TaxExclusiveAmount><!--1..1-->
+		<cbc:TaxInclusiveAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO] Total do documento (c/imposto). A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:TaxInclusiveAmount><!--1..1-->
+		<cbc:AllowanceTotalAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">Total de descontos aplicados no documento. A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:AllowanceTotalAmount><!--0..1-->
+		<cbc:ChargeTotalAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">Total de encargos aplicados no documento. A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:ChargeTotalAmount><!--0..1-->
+		<cbc:PrepaidAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">Valor pago à-priori. O documento pode conter a soma de todos os montantes pré-pagos, que devem ser deduzidos do pagamento. A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:PrepaidAmount><!--0..1-->
+		<cbc:PayableRoundingAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">Montante de arredondamento aplicado ao total do documento c/imposto. A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:PayableRoundingAmount><!--0..1-->
+		<cbc:PayableAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO] Valor a pagar. A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) </cbc:PayableAmount><!--1..1-->
+	</cac:LegalMonetaryTotal><!--1..1-->
+	<cac:InvoiceLine><!--1..N-->
+		<cbc:ID>[OBRIGATÓRIO] Identificador único da linha do documento, atribuído pelo fornecedor</cbc:ID><!--1..1-->
+		<cbc:Note>Texto livre para descrever alguma observação em relação ao item respetivo à linha do documento.</cbc:Note><!--0..1-->
+		<cbc:InvoicedQuantity unitCode="Unid">[OBRIGATÓRIO] Quantidade faturada. A propriedade unitCode deverá ser preenchida com o código UNECERec20 de unidade medida. (http://www.unece.org/cefact/recommendations/rec20/Rec20_Rev6e_2009.xls).</cbc:InvoicedQuantity><!--1..1-->
+		<cbc:LineExtensionAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO] Montante da linha (s/imposto).  O valor deve incluir os respetivos encargos ou descontos aplicados à linha, desprovidos de imposto e outras taxas (que não sejam de IVA). A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) [EUR]</cbc:LineExtensionAmount><!--1..1-->
+		<cbc:AccountingCost>Número do compromisso associado à linha do documento.</cbc:AccountingCost><!--0..1-->		
+		<cac:InvoicePeriod><!--0..1-->	
+			<cbc:StartDate>A data em que o período começa.[AAAA-MM-DD]</cbc:StartDate><!--0..1-->	
+			<cbc:EndDate>A data em que o período acaba.[AAAA-MM-DD]</cbc:EndDate><!--0..1-->				
+		</cac:InvoicePeriod><!--0..1-->	
+		<cac:OrderLineReference><!--0..1-->
+			<cbc:LineID>[OBRIGATÓRIO - Condicional] Referência para o item da nota de encomenda do cliente.</cbc:LineID><!--1..1-->
+		</cac:OrderLineReference><!--0..1-->
+		<cac:DocumentReference><!--0..1-->
+			<cbc:ID>Identificador para um objeto no qual a linha da fatura é baseada, fornecida pelo fornecedor.</cbc:ID><!--1..1-->
+		</cac:DocumentReference><!--0..1-->		
+		<cac:AllowanceCharge><!--0..N-->	
+			<cbc:ChargeIndicator>[OBRIGATÓRIO - Condicional] Indica se o valor é um encargo ou um desconto da linha do documento. Indicador de encargo (true). Indicador de desconto (false).</cbc:ChargeIndicator><!--1..1-->	
+			<cbc:AllowanceChargeReasonCode listID="Allowance reason codes (UNCL5189 subset(https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5189/)), Charge reason code (UNCL7161 (https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL7161/))">Código do motivo, que possa levar a que o montante contemplado no desconto/encargo, esteja isento de imposto.</cbc:AllowanceChargeReasonCode><!--0..1-->
+			<cbc:AllowanceChargeReason>Representação textual da acção da linha do documento.</cbc:AllowanceChargeReason><!--0..1-->
+			<cbc:MultiplierFactorNumeric>Fator multiplicador sobre o montante base da acção da linha do documento.</cbc:MultiplierFactorNumeric><!--0..1-->
+			<cbc:Amount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO - Condicional] Montante do encargo/desconto da linha do documento.A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) [EUR] </cbc:Amount><!--1..1-->
+			<cbc:BaseAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">Montante base da acção da linha do documento.A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) [EUR]</cbc:BaseAmount><!--0..1-->
+		</cac:AllowanceCharge><!--0..N-->	
+		<cac:Item><!--1..1-->
+			<cbc:Description>Descrição do item da linha do documento.</cbc:Description><!--0..N-->
+			<cbc:Name>[OBRIGATÓRIO] Nome do item da linha do documento.</cbc:Name><!--1..1-->
+			<cac:BuyersItemIdentification><!--0..1-->
+				<cbc:ID>[OBRIGATÓRIO - Condicional] Código de material do cliente.</cbc:ID><!--1..1-->
+			</cac:BuyersItemIdentification><!--0..1-->
+			<cac:SellersItemIdentification><!--0..1-->
+				<cbc:ID>[OBRIGATÓRIO - Condicional] Código de material usado pelo fornecedor para identificar univocamente o item da linha do documento.</cbc:ID><!--1..1-->
+			</cac:SellersItemIdentification><!--0..1-->
+			<cac:StandardItemIdentification><!--0..1-->
+				<cbc:ID schemeID="0160">[OBRIGATÓRIO - Condicional] Identificador do item da linha do documento de acordo com um esquema padrão (GTIN). A propriedade schemeID deve mencionar a norma de códigos EAN .</cbc:ID><!--1..1-->
+			</cac:StandardItemIdentification><!--0..1-->			
+			<cac:OriginCountry><!--0..1-->
+				<cbc:IdentificationCode listID="ISO3166-1:Alpha2">[OBRIGATÓRIO - Condicional] País de origem do item, segundo o código ISO 3166-1 alfa-2</cbc:IdentificationCode><!--1..1-->
+			</cac:OriginCountry><!--0..1-->
+			<cac:CommodityClassification><!--0..N-->
+					<cbc:ItemClassificationCode listID="CPV">[OBRIGATÓRIO - Condicional] Código da classificação da mercadoria do item da linha do documento empregue na Administração Pública.Se o atributo listID for CPV, será considerado como o código CPV associado ao item da linha do documento.</cbc:ItemClassificationCode><!--1..1-->
+			</cac:CommodityClassification><!--0..N-->
+			<cac:ClassifiedTaxCategory><!--1..1-->
+				<cbc:ID schemeID="UN/ECE 5305" schemeAgencyID="6">[OBRIGATÓRIO] Código de imposto respeitante à taxa aplicada no item da linha do documento, segundo a lista de códigos UN/ECE 5305,[Predefinição: S]</cbc:ID><!--1..1-->
+				<cbc:Percent>[OBRIGATÓRIO] Percentagem de imposto respeitante à taxa aplicada no item da linha do documento</cbc:Percent><!--1..1-->
+				<cac:TaxScheme><!--1..1-->
+					<cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">[OBRIGATÓRIO] Tipo de imposto do item da linha do documento, segundo a lista de códigos UN/ECE 5153. [Predefinição: VAT]</cbc:ID><!--1..1-->
+				</cac:TaxScheme><!--1..1-->
+			</cac:ClassifiedTaxCategory><!--1..1-->
+			<cac:AdditionalItemProperty><!--0..N-->
+				<cbc:Name>[OBRIGATÓRIO - Condicional] Tipo da propriedade adicional do item da linha do documento.</cbc:Name><!--1..1-->
+				<cbc:Value>[OBRIGATÓRIO - Condicional] Valor da propriedade do item da linha do documento.</cbc:Value><!--1..1-->
+			</cac:AdditionalItemProperty><!--0..N-->
+		</cac:Item><!--1..1-->
+		<cac:Price><!--1..1-->
+			<cbc:PriceAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO] Montante do item após aplicação do desconto.Estrutura que guarda a informação de preço do item por quantidade base. Este preço, no caso de preenchida a estrtura de desconto sobre o preço, já será o resultante da aplicabilidade do referido desconto. A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) [EUR] </cbc:PriceAmount><!--1..1-->
+			<cbc:BaseQuantity unitCode="">Número de quantidades que fazem o montante do preço. Por exemplo, se a quantidade faturada for 1000 litros, o preço pode ser 15e por 10 litros. A propriedade unitCode deverá ser preenchida com o código UNECERec20 de unidade medida, ex: KGM (quilograma).</cbc:BaseQuantity><!--0..1-->
+			<cac:AllowanceCharge><!--0..1-->
+				<cbc:ChargeIndicator>[OBRIGATÓRIO - Condicional] Indica se o valor é um encargo (true) ou um desconto (false) do preço do item da linha do documento.</cbc:ChargeIndicator><!--1..1-->
+				<cbc:Amount currencyID="EUR" currencyCodeListVersionID="ISO4217">[OBRIGATÓRIO - Condicional] Montante do desconto ou encardo sobre o preço do item da linha do documento.A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) [EUR]</cbc:Amount><!--1..1-->
+				<cbc:BaseAmount currencyID="EUR" currencyCodeListVersionID="ISO4217">Montante base onde incidirá o desconto ou encargo.A Moeda, segundo a lista de códigos ISO4217 (https://www.iso.org/iso-4217-currency-codes.html) [EUR]</cbc:BaseAmount><!--0..1-->
+			</cac:AllowanceCharge><!--0..1-->
+		</cac:Price><!--1..1-->
+	</cac:InvoiceLine><!--1..N-->
+</Invoice>

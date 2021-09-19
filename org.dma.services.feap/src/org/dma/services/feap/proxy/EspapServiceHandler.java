@@ -1,17 +1,17 @@
 /*******************************************************************************
- * 2008-2018 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.feap.proxy;
 
+import javax.xml.ws.BindingProvider;
+
 import com.softlimits.clarinet.ArrayOfMessageOutputData;
 import com.softlimits.clarinet.IMessageService;
 import com.softlimits.clarinet.MessageService;
-import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.security.JKSCertificate;
-import org.dma.java.util.Debug;
 import org.dma.services.feap.SOAPMessageHandler;
 /**
  * PROXY para ligacao ao endpoint do webservice
@@ -39,9 +39,8 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public EspapServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate);
+	public EspapServiceHandler(String username, String password, JKSCertificate swCertificate, ENDPOINTS endpoint) {
+		super(username, password, null, swCertificate);
 		this.endpoint = endpoint;
 	}
 
@@ -50,15 +49,12 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 	private IMessageService getService() throws Exception {
 
 		// cria um novo servico
-		MessageService service = new MessageService();
-		// wsdlLocation esta' definido no servico
-		Debug.out(service.getWSDLDocumentLocation());
-		IMessageService soapService = service.getCustomBindingIMessageService();
+		IMessageService service = new MessageService().getCustomBindingIMessageService();
 
 		// inicializa handler
-		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
+		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
 
-		return soapService;
+		return service;
 
 	}
 

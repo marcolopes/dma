@@ -1,7 +1,6 @@
 
 package com.generixgroup.pt.messaging.webservice;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -31,8 +30,8 @@ public class WebserviceService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:wsdl/InvoiceManager-1.2.0.wsdl");
-        } catch (MalformedURLException ex) {
+            url = WebserviceService.class.getClassLoader().getResource("wsdl/InvoiceManager-1.2.0.wsdl");
+        } catch (Exception ex) {
             e = new WebServiceException(ex);
         }
         WEBSERVICESERVICE_WSDL_LOCATION = url;

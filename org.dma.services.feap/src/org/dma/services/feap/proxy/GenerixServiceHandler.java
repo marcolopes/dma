@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.dma.services.feap.proxy;
 
+import javax.xml.ws.BindingProvider;
+
 import com.generixgroup.pt.messaging.webservice.Credentials;
 import com.generixgroup.pt.messaging.webservice.GetDocResponse;
 import com.generixgroup.pt.messaging.webservice.ListDocResponse;
@@ -12,10 +14,7 @@ import com.generixgroup.pt.messaging.webservice.RoutingInfo;
 import com.generixgroup.pt.messaging.webservice.UploadDocResponse;
 import com.generixgroup.pt.messaging.webservice.Webservice;
 import com.generixgroup.pt.messaging.webservice.WebserviceService;
-import com.sun.xml.ws.developer.WSBindingProvider;
 
-import org.dma.java.security.JKSCertificate;
-import org.dma.java.util.Debug;
 import org.dma.services.feap.SOAPMessageHandler;
 
 public class GenerixServiceHandler extends SOAPMessageHandler {
@@ -40,9 +39,8 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public GenerixServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate);
+	public GenerixServiceHandler(ENDPOINTS endpoint) {
+		super(null, null, null, null);
 		this.endpoint = endpoint;
 	}
 
@@ -51,15 +49,12 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	private Webservice getService() throws Exception {
 
 		// cria um novo servico
-		WebserviceService service = new WebserviceService();
-		// wsdlLocation esta' definido no servico
-		Debug.out(service.getWSDLDocumentLocation());
-		Webservice soapService = service.getWebservicePort();
+		Webservice service = new WebserviceService().getWebservicePort();
 
 		// inicializa handler
-		initializeHandler((WSBindingProvider)soapService, endpoint.url, endpoint.isSecure());
+		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
 
-		return soapService;
+		return service;
 
 	}
 

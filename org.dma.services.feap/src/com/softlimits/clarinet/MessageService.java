@@ -1,7 +1,6 @@
 
 package com.softlimits.clarinet;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -10,6 +9,8 @@ import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.WebServiceFeature;
+
+import com.generixgroup.pt.messaging.webservice.WebserviceService;
 
 
 /**
@@ -31,8 +32,8 @@ public class MessageService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:wsdl/CTMessageService.wsdl");
-        } catch (MalformedURLException ex) {
+            url = WebserviceService.class.getClassLoader().getResource("wsdl/CTMessageService.wsdl");
+        } catch (Exception ex) {
             e = new WebServiceException(ex);
         }
         MESSAGESERVICE_WSDL_LOCATION = url;

@@ -31,7 +31,6 @@ import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import com.sun.xml.ws.developer.JAXWSProperties;
-import com.sun.xml.ws.developer.WSBindingProvider;
 
 import org.dma.java.cipher.MessageDigest;
 import org.dma.java.cipher.MessageDigest.ALGORITHMS;
@@ -81,7 +80,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	public void initializeHandler(WSBindingProvider provider, String endpoint, boolean secure) throws Exception {
+	public void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws Exception {
 
 		// adiciona handler
 		Binding binding = provider.getBinding();
@@ -138,7 +137,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	@Override
 	public boolean handleFault(SOAPMessageContext smc) {
-		interceptAndRecordSoapMessage(smc);
+		logSOAPMessage(smc);
 		return true;
 	}
 
@@ -151,7 +150,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 			if (direction){/* Falta informacao tecnica da ESPAP */}
 
-			interceptAndRecordSoapMessage(smc);
+			logSOAPMessage(smc);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -181,23 +180,23 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	private void interceptAndRecordSoapMessage(SOAPMessageContext smc) {
+	private void logSOAPMessage(SOAPMessageContext smc) {
 
 		try{
 			Source source = smc.getMessage().getSOAPPart().getContent();
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") + sourceToXMLString(source));
+			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") + toXMLString(source));
 
 		}catch(Exception e){
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw));
-			LOGGER.severe("Could not intercept and log soap message\n\n" + sw.toString());
+			LOGGER.severe("Could not log SOAP message\n" + sw.toString());
 		}
 
 	}
 
 
-	private String sourceToXMLString(Source source) throws Exception {
+	private String toXMLString(Source source) throws Exception {
 
 		TransformerFactory factory = TransformerFactory.newInstance();
 		Transformer transformer = factory.newTransformer();

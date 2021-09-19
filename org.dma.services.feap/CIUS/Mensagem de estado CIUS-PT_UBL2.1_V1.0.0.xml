@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ubl:DocumentStatus xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:ubl="urn:oasis:names:specification:ubl:schema:xsd:DocumentStatus-2">
+  <cbc:CustomizationID>[OBRIGATÓRIO]  ID Costumização [Predefinição: urn:feap.gov.pt:MSGSTS_CIUS-PT: seguido do identificador da versão]</cbc:CustomizationID><!--1..1-->
+  <cbc:ID>[OBRIGATÓRIO]  Número de referência deste documento emitido pelo emissor desta mensagem</cbc:ID><!--1..1-->
+  <cbc:IssueDate>[OBRIGATÓRIO] Data de emissão da mensagem de estado [AAAA-MM-DD]</cbc:IssueDate><!--1..1-->
+  <cbc:IssueTime>Hora de emissão da mensagem de estado [HH:MM:SS]</cbc:IssueTime><!--0..1-->
+  <cbc:Note>Notas textuais que permitem ao emissor enviar informação não estruturada relativa ao documento</cbc:Note><!--1..N-->
+  <cac:SenderParty><!--1..1-->
+	<cac:PartyName><!--0..1-->
+		<cbc:Name>[OBRIGATÓRIO] Nome do emissor da mensagem de estado.</cbc:Name><!--1..1-->
+	</cac:PartyName><!--0..1-->
+    <cac:PostalAddress><!--1..1-->
+      <cac:Country><!--1..1-->
+        <cbc:IdentificationCode>[OBRIGATÓRIO] Código identificador do país da morada do emissor da mensagem de estado de acordo com os códigos ISO 3166-1 alfa-2.</cbc:IdentificationCode><!--1..1-->
+      </cac:Country><!--1..1-->
+    </cac:PostalAddress><!--1..1-->
+    <cac:PartyTaxScheme><!--1..1-->
+      <cbc:CompanyID>[OBRIGATÓRIO]  Número de identificação fiscal do emissor da mensagem de estado precedido do código do país, segundo o código ISO 3166-1 alfa-2</cbc:CompanyID><!--1..1-->
+      <cac:TaxScheme><!--1..1-->
+        <cbc:ID>[OBRIGATÓRIO]  O valor do ID corresponde à lista de códigos UN/ECE 5153, da Comissão Económica das Nações Unidas para a Europa. [Predefinição: VAT]</cbc:ID><!--1..1-->
+      </cac:TaxScheme>
+    </cac:PartyTaxScheme><!--1..1-->
+    <cac:PartyLegalEntity><!--1..1-->
+      <cbc:RegistrationName>[OBRIGATÓRIO] Identificação do emissor da mensagem de estado na IRN</cbc:RegistrationName><!--1..1-->
+      <cbc:CompanyID>Número de Identificação do emissor da mensagem de estado na conservatória</cbc:CompanyID><!--0..1-->
+    </cac:PartyLegalEntity><!--1..1-->
+    <cac:Contact><!--0..1-->
+		<cbc:ElectronicMail>[OBRIGATÓRIO - Condicional] Endereço de correio eletrónico do emissor da mensagem de estado.</cbc:ElectronicMail><!--1..1-->
+    </cac:Contact><!--0..1-->
+  </cac:SenderParty><!--1..1-->  
+  <cac:ReceiverParty><!--1..1-->
+	<cac:PartyName><!--0..1-->
+		<cbc:Name>[OBRIGATÓRIO] Nome do receptor da mensagem de estado.</cbc:Name><!--1..1-->
+	</cac:PartyName><!--0..1-->
+    <cac:PostalAddress><!--1..1-->
+      <cac:Country><!--1..1-->
+        <cbc:IdentificationCode>[OBRIGATÓRIO] Código identificador do país da morada do receptor da mensagem de estado de acordo com os códigos ISO 3166-1 alfa-2</cbc:IdentificationCode><!--1..1-->
+      </cac:Country><!--1..1-->
+    </cac:PostalAddress><!--1..1-->
+    <cac:PartyTaxScheme><!--1..1-->
+      <cbc:CompanyID>[OBRIGATÓRIO]  Número de identificação fiscal do receptor da mensagem de estado precedido do código do país, segundo o código ISO 3166-1 alfa-2</cbc:CompanyID><!--1..1-->
+      <cac:TaxScheme><!--1..1-->
+        <cbc:ID>[OBRIGATÓRIO]  O valor do ID corresponde à lista de códigos UN/ECE 5153, da Comissão Económica das Nações Unidas para a Europa. [Predefinição: VAT]</cbc:ID><!--1..1-->
+      </cac:TaxScheme><!--1..1-->
+    </cac:PartyTaxScheme><!--1..1-->
+    <cac:PartyLegalEntity><!--1..1-->
+      <cbc:RegistrationName>[OBRIGATÓRIO] Identificação do receptor da mensagem de estado na IRN</cbc:RegistrationName><!--1..1-->
+	  <cbc:CompanyID>Número de Identificação do receptor da mensagem de estado na conservatória</cbc:CompanyID><!--0..1-->
+    </cac:PartyLegalEntity><!--1..1-->
+    <cac:Contact><!--0..1-->
+		<cbc:ElectronicMail>[OBRIGATÓRIO - Condicional] Endereço de correio eletrónico do receptor da mensagem de estado.</cbc:ElectronicMail><!--1..1-->
+    </cac:Contact><!--0..1-->
+  </cac:ReceiverParty><!--1..1-->
+  <cac:DocumentResponse><!--0..1-->
+    <cac:Response><!--1..1-->
+      <cbc:ResponseCode>Código da resposta</cbc:ResponseCode><!--1..1-->
+      <cbc:Description languageID="">Nota textual, que permite discriminar o(s) erro(s), ou o(s) aviso(s) ou a(s) informação (ões).</cbc:Description><!--0..N-->
+    </cac:Response><!--1..1-->
+    <cac:DocumentReference><!--1..1-->
+      <cbc:ID>Número de referência do documento que deu origem a esta mensagem.</cbc:ID><!--1..1-->
+      <cbc:UUID>Número de referência universal do documento (UUID)</cbc:UUID><!--0..1-->
+      <cbc:IssueDate>Data de emissão do documento.[AAAA-MM-DD]</cbc:IssueDate><!--1..1-->
+      <cbc:DocumentTypeCode listID="UNCL1001">Código que identifica o tipo funcional do documento, segundo a lista de códigos UNCL1001 (http://www.unece.org/trade/untdid/d98a/uncl/uncl1001.htm) [FE: 380 / ND: 383] / NC: 381</cbc:DocumentTypeCode><!--1..1-->
+      <cbc:DocumentStatusCode>Código do estado do documento, na prespectiva do cliente referenciado no mesmo.</cbc:DocumentStatusCode><!--0..1-->
+    </cac:DocumentReference><!--1..1-->
+  </cac:DocumentResponse><!--0..1-->
+</ubl:DocumentStatus>
