@@ -55,6 +55,18 @@ public enum DRIVERS {
 		}
 	}
 
+	public static void checkH2Lock(String database) throws Exception {
+		String filename=database+Constants.SUFFIX_LOCK_FILE;
+		Debug.out("DATABASE LOCK: "+filename);
+		try{//catch RuntimeException
+			FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
+			lock.lock(FileLock.LOCK_FILE);
+			lock.unlock();
+		}catch(Exception e){
+			throw new Exception(e);
+		}
+	}
+
 	public final String name;
 	public final Class klass;
 
@@ -186,8 +198,7 @@ public enum DRIVERS {
 			 * Backup.execute(dump.toString(), db.getParent(), db.getName(), false);
 			 */
 			executeH2Backup(database, folder, zip);
-		}else{
-			//H2, MySQL, PostgreSQL
+		}else{//H2, MySQL, PostgreSQL
 			CustomFile dump=new CustomFile(backup.folder, prefix+".sql");
 			Debug.out("BACKUP DUMP: "+dump);
 			switch(this){
@@ -203,61 +214,79 @@ public enum DRIVERS {
 		}
 	}
 
-	public String getDropForeignKeySQL(String tableName, String foreignKeyName) {
-		switch(this){
-		case H2: throw new UnsupportedOperationException();
-		//ALTER TABLE table DROP FOREIGN KEY foreignKey
-		case MySQL: return "ALTER TABLE "+tableName.toUpperCase()+" DROP FOREIGN KEY "+foreignKeyName;
-		case PostgreSQL: throw new UnsupportedOperationException();
-		case SQLServer: throw new UnsupportedOperationException();
-		}return null;
-	}
-
-	public String getDropIndexKeySQL(String tableName, String indexKeyName) {
-		switch(this){
-		case H2: throw new UnsupportedOperationException();
-		//ALTER TABLE table DROP INDEX indexKey
-		case MySQL: return "ALTER TABLE `" + tableName.toUpperCase() + "` DROP INDEX `" + indexKeyName + "`";
-		case PostgreSQL: throw new UnsupportedOperationException();
-		case SQLServer: throw new UnsupportedOperationException();
-		}return null;
-	}
-
-	public String getDropColumnSQL(String tableName, String columnName) {
-		switch(this){
-		//ALTER TABLE table DROP COLUMN IF EXISTS column
-		case H2: return "ALTER TABLE "+tableName.toUpperCase()+" DROP COLUMN IF EXISTS "+columnName.toUpperCase();
-		//ALTER TABLE table DROP COLUMN column
-		case MySQL: return "ALTER TABLE "+tableName.toUpperCase()+" DROP COLUMN "+columnName.toUpperCase();
-		//ALTER TABLE "table" DROP COLUMN IF EXISTS "column"
-		case PostgreSQL: return "ALTER TABLE "+StringUtils.quote(tableName.toUpperCase())+" "+"DROP COLUMN IF EXISTS "+StringUtils.quote(columnName.toUpperCase());
-		//ALTER TABLE table DROP COLUMN column
-		case SQLServer: return "ALTER TABLE "+tableName.toUpperCase()+" DROP COLUMN "+columnName.toUpperCase();
-		}return null;
-	}
-
-	public String getDropTableSQL(String tableName) {
+	/*
+	 *  SQL statements
+	 */
+	public String dropTableSQL(String tableName) {
 		switch(this){
 		case H2:
 		//DROP TABLE IF EXISTS table
-		case MySQL: return "DROP TABLE IF EXISTS "+tableName.toUpperCase();
+		case MySQL: return "DROP TABLE IF EXISTS "+tableName;
 		//DROP TABLE IF EXISTS "table"
-		case PostgreSQL: return "DROP TABLE IF EXISTS "+StringUtils.quote(tableName.toUpperCase());
+		case PostgreSQL: return "DROP TABLE IF EXISTS "+StringUtils.quote(tableName);
 		//DROP TABLE table
-		case SQLServer: return "DROP TABLE "+tableName.toUpperCase();
+		case SQLServer: return "DROP TABLE "+tableName;
 		}return null;
 	}
 
+	public String dropForeignKeySQL(String tableName, String foreignKeyName) {
+		switch(this){
+		case H2: throw new UnsupportedOperationException();
+		//ALTER TABLE table DROP FOREIGN KEY foreignKey
+		case MySQL: return "ALTER TABLE "+tableName+" DROP FOREIGN KEY "+foreignKeyName;
+		case PostgreSQL: throw new UnsupportedOperationException();
+		case SQLServer: throw new UnsupportedOperationException();
+		}return null;
+	}
+
+	public String dropIndexKeySQL(String tableName, String indexKeyName) {
+		switch(this){
+		case H2: throw new UnsupportedOperationException();
+		//ALTER TABLE table DROP INDEX indexKey
+		case MySQL: return "ALTER TABLE "+tableName+" DROP INDEX "+indexKeyName;
+		case PostgreSQL: throw new UnsupportedOperationException();
+		case SQLServer: throw new UnsupportedOperationException();
+		}return null;
+	}
+
+	/** MySQL does not suport IF EXISTS */
+	public String dropColumnSQL(String tableName, String columnName) {
+		switch(this){
+		//ALTER TABLE table DROP COLUMN IF EXISTS column
+		case H2: return "ALTER TABLE "+tableName+" DROP COLUMN IF EXISTS "+columnName;
+		//ALTER TABLE table DROP COLUMN column
+		case MySQL: return "ALTER TABLE "+tableName+" DROP COLUMN "+columnName;
+		//ALTER TABLE "table" DROP COLUMN IF EXISTS "column"
+		case PostgreSQL: return "ALTER TABLE "+StringUtils.quote(tableName)+" DROP COLUMN IF EXISTS "+StringUtils.quote(columnName);
+		//ALTER TABLE table DROP COLUMN column
+		case SQLServer: return "ALTER TABLE "+tableName+" DROP COLUMN "+columnName;
+		}return null;
+	}
+
+	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
+		switch(this){
+		//ALTER TABLE table ALTER COLUMN column SET DATA TYPE type
+		case H2: return "ALTER TABLE "+tableName+" ALTER COLUMN "+columnName+" SET DATA TYPE "+dataType;
+		//ALTER TABLE table MODIFY COLUMN column type
+		case MySQL: return "ALTER TABLE "+tableName+" MODIFY COLUMN "+columnName+" "+dataType;
+		//ALTER TABLE "table" ALTER COLUMN "column" TYPE type
+		case PostgreSQL: return "ALTER TABLE "+StringUtils.quote(tableName)+" ALTER COLUMN "+StringUtils.quote(columnName)+" TYPE "+dataType;
+		case SQLServer: throw new UnsupportedOperationException();
+		}return null;
+	}
+
+	/*
+	 *  SQL queries
+	 */
 	public Collection<String> getForeignKeyNames(Connection connection, String tableName, String columnName) throws SQLException {
 		Collection<String> col=new ArrayList();
 		switch(this){
 		case H2: break;
 		case MySQL:
 			Statement st=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs=st.executeQuery("SELECT CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where CONSTRAINT_SCHEMA = SCHEMA() and TABLE_NAME = '"+tableName.toUpperCase()+"' and COLUMN_NAME = '"+columnName.toUpperCase()+"'");
+			ResultSet rs=st.executeQuery("SELECT CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where CONSTRAINT_SCHEMA = SCHEMA() and TABLE_NAME = '"+tableName+"' and COLUMN_NAME = '"+columnName+"'");
 			while(rs.next()) col.add(rs.getString("CONSTRAINT_NAME"));
-			st.close();
-			break;
+			st.close(); break;
 		case PostgreSQL: break;
 		case SQLServer: break;
 		}return col;
@@ -269,7 +298,7 @@ public enum DRIVERS {
 		case H2: break;
 		case MySQL:
 			Statement st=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs=st.executeQuery("SHOW INDEX FROM '"+tableName.toUpperCase()+"' where COLUMN_NAME = '"+columnName.toUpperCase()+"'");
+			ResultSet rs=st.executeQuery("SHOW INDEX FROM '"+tableName+"' where COLUMN_NAME = '"+columnName+"'");
 			while(rs.next()) col.add(rs.getString("Key_name"));
 			st.close();
 			break;
@@ -278,11 +307,12 @@ public enum DRIVERS {
 		}return col;
 	}
 
-	public void executeSQLUpdate(Connection connection, String sql) throws SQLException {
-		try{
-			Statement st=connection.createStatement();
-			try{
-				st.executeUpdate(sql);
+	/*
+	 *  SQL updates
+	 */
+	public int executeSQLUpdate(Connection connection, String sql) throws SQLException {
+		try{Statement st=connection.createStatement();
+			try{return st.executeUpdate(sql);
 			}catch(SQLTimeoutException e){
 				System.out.println(e);
 			}finally{
@@ -291,37 +321,48 @@ public enum DRIVERS {
 		}catch(SQLException e){
 			connection.rollback();
 			throw new SQLException(e);
+		}return -1;
+	}
+
+	private int executeSQLUpdateNoException(Connection connection, String sql) throws SQLException {
+		if (this==MySQL) try{
+			return executeSQLUpdate(connection, sql);
+		}catch(Exception e){
+			System.out.println(e);
+		}else{
+			return executeSQLUpdate(connection, sql);
+		}return -1;
+	}
+
+	public void executeDropForeignKeys(Connection connection, String tableName, String columnName) throws SQLException {
+		for(String foreignKeyName: getForeignKeyNames(connection, tableName, columnName)){
+			Debug.out("DROPPING FOREIGN KEY <"+tableName+":"+foreignKeyName+">");
+			executeSQLUpdate(connection, dropForeignKeySQL(tableName, foreignKeyName));
+		}
+	}
+
+	public void executeDropIndices(Connection connection, String tableName, String columnName) throws SQLException {
+		for(String indexKeyName: getIndexKeyNames(connection, tableName, columnName)){
+			Debug.out("DROPPING INDEX <"+tableName+":"+indexKeyName+">");
+			executeSQLUpdate(connection, dropIndexKeySQL(tableName, indexKeyName));
 		}
 	}
 
 	public void executeDropColumn(Connection connection, String tableName, String columnName) throws SQLException {
-		for(String foreignKeyName: getForeignKeyNames(connection, tableName, columnName)){
-			Debug.out("DROPPING <"+tableName+":"+foreignKeyName+">");
-			executeSQLUpdate(connection, getDropForeignKeySQL(tableName, foreignKeyName));
-		}
-		for(String indexKeyName: getIndexKeyNames(connection, tableName, columnName)){
-			Debug.out("DROPPING <"+tableName+":"+indexKeyName+">");
-			executeSQLUpdate(connection, getDropIndexKeySQL(tableName, indexKeyName));
-		}
+		executeDropForeignKeys(connection, tableName, columnName);
+		executeDropIndices(connection, tableName, columnName);
 		Debug.out("DROPPING <"+tableName+":"+columnName+">");
-		executeSQLUpdate(connection, getDropColumnSQL(tableName, columnName));
+		executeSQLUpdateNoException(connection, dropColumnSQL(tableName, columnName));
 	}
 
 	public void executeDropTable(Connection connection, String tableName) throws SQLException {
 		Debug.out("DROPPING <"+tableName+">");
-		executeSQLUpdate(connection, getDropTableSQL(tableName));
+		executeSQLUpdateNoException(connection, dropTableSQL(tableName));
 	}
 
-	public static void checkH2Lock(String database) throws Exception {
-		String filename=database+Constants.SUFFIX_LOCK_FILE;
-		Debug.out("DATABASE LOCK: "+filename);
-		try{//catch RuntimeException
-			FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
-			lock.lock(FileLock.LOCK_FILE);
-			lock.unlock();
-		}catch(Exception e){
-			throw new Exception(e);
-		}
+	public void executeAlterDataType(Connection connection, String tableName, String columnName, String dataType) throws SQLException {
+		Debug.out("ALTERING DATA TYPE <"+tableName+":"+columnName+">");
+		executeSQLUpdate(connection, alterDataTypeSQL(tableName, columnName, dataType));
 	}
 
 }
