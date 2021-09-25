@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.util.Collection;
 
 import org.dma.java.input.FieldFormat.SEPARATOR;
 
@@ -25,18 +26,20 @@ public class TextFile extends CustomFile {
 		this(Charset.defaultCharset(), pathname, more);
 	}
 
+	/** @see CustomFile#CustomFile(String, String...) */
 	public TextFile(Charset charset, String pathname, String...more) {
 		super(pathname, more);
 		this.charset=charset;
 	}
 
 	/** Uses JAVA DEFAULT charset */
-	public TextFile(File file) {
-		this(Charset.defaultCharset(), file);
+	public TextFile(File path, String...more) {
+		this(Charset.defaultCharset(), path, more);
 	}
 
-	public TextFile(Charset charset, File file) {
-		super(file);
+	/** @see CustomFile#CustomFile(File, String...) */
+	public TextFile(Charset charset, File path, String...more) {
+		super(path, more);
 		this.charset=charset;
 	}
 
@@ -203,9 +206,7 @@ public class TextFile extends CustomFile {
 
 	/** Reads text from file */
 	public String read() {
-
 		return read(-1);
-
 	}
 
 
@@ -235,7 +236,8 @@ public class TextFile extends CustomFile {
 	/** Writes text to file */
 	public boolean write(String text, boolean append) {
 
-		try{
+		if (!text.isEmpty()) try{
+
 			BufferedWriter out=new BufferedWriter(
 					new OutputStreamWriter(asOutputStream(append), charset));
 
@@ -255,17 +257,25 @@ public class TextFile extends CustomFile {
 
 	/** Writes text to file */
 	public boolean write(String text) {
-
 		return write(text, false);
-
 	}
 
 
 	/** Appends text to file */
 	public boolean append(String text) {
-
 		return write(text, true);
+	}
 
+
+	public void append(File file) {
+		append(new TextFile(file).read());
+	}
+
+
+	public void append(Collection<File> files) {
+		for(File file: files) {
+			append(file);
+		}
 	}
 
 

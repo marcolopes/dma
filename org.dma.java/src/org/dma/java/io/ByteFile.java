@@ -10,17 +10,20 @@ import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 
 import org.apache.commons.codec.binary.Base64;
 
 public class ByteFile extends CustomFile {
 
+	/** @see CustomFile#CustomFile(String, String...) */
 	public ByteFile(String pathname, String...more) {
 		super(pathname, more);
 	}
 
-	public ByteFile(File file) {
-		super(file);
+	/** @see CustomFile#CustomFile(File, String...) */
+	public ByteFile(File path, String...more) {
+		super(path, more);
 	}
 
 
@@ -121,10 +124,11 @@ public class ByteFile extends CustomFile {
 	 * the underlying system for each byte written.
 	 *
 	 */
-	public int write(byte[] bytes) {
+	public int write(byte[] bytes, boolean append) {
 
-		try{
-			BufferedOutputStream out=new BufferedOutputStream(asOutputStream());
+		if (bytes.length>0) try{
+
+			BufferedOutputStream out=new BufferedOutputStream(asOutputStream(append));
 
 			try{
 				out.write(bytes);
@@ -137,6 +141,28 @@ public class ByteFile extends CustomFile {
 			System.err.println(e);
 		}return 0;
 
+	}
+
+
+	public int write(byte[] bytes) {
+		return write(bytes, false);
+	}
+
+
+	public int append(byte[] bytes) {
+		return write(bytes, true);
+	}
+
+
+	public void append(File file) {
+		append(new ByteFile(file).readFully());
+	}
+
+
+	public void append(Collection<File> files) {
+		for(File file: files) {
+			append(file);
+		}
 	}
 
 

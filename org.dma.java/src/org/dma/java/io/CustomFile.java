@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -23,12 +24,13 @@ public class CustomFile extends File {
 	 * Unicode Byte Order Mark<br>
 	 * http://unicode.org/faq/utf_bom.html
 	 */
-	public static final String UTF8_BOM = new String(new char[]{0xEF,0xBB,0xBF});
+	public static final char[] UTF8_BOM_BYTES = new char[]{0xEF,0xBB,0xBF};
+	public static final String UTF8_BOM = new String(UTF8_BOM_BYTES);
 	public static final String UTF16_BOM = "\ufeff";
 
-	public static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
-	public static final Charset UTF16_CHARSET = Charset.forName("UTF-16");
-	public static final Charset ISO_CHARSET = Charset.forName("ISO-8859-1");
+	public static final Charset UTF8_CHARSET = StandardCharsets.UTF_8;
+	public static final Charset UTF16_CHARSET = StandardCharsets.UTF_16;
+	public static final Charset ISO_CHARSET = StandardCharsets.ISO_8859_1;
 	public static final Charset WIN1252_CHARSET = Charset.forName("Windows-1252");
 
 	public static final int BASE64_LINE_LENGTH = 64;
@@ -48,21 +50,17 @@ public class CustomFile extends File {
 				replace("  "," ").replace(" -","-").replace("- ","-").
 				replace('\\','-').replace('/','-').replace('|','-').replace("--","-").
 				replace(' ','_').replace("__","_");
-		return StringUtils.removeChars(plain,"<>:?*\"\n\r\t\f\0");
+		return StringUtils.remove(plain).chars("<>:?*\"\n\r\t\f\0");
 	}
 
-	/** @see CustomFile#CustomFile(String, String...) */
-	public CustomFile(File path, String...more) {
-		this(path.getAbsolutePath(), more);
+	public CustomFile(String pathname, String...more) {
+		this(new File(pathname), more);
 	}
 
 	/** @see Paths#get(String, String...) */
-	public CustomFile(String pathname, String...more) {
-		this(Paths.get(pathname, more).toFile());
-	}
-
-	public CustomFile(File file) {
-		super(file.getAbsolutePath());
+	public CustomFile(File path, String...more) {
+		super(more.length==0 ? path.getAbsolutePath() :
+			Paths.get(path.getAbsolutePath(), more).toFile().getAbsolutePath());
 	}
 
 

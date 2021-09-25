@@ -25,16 +25,14 @@ public class Folder extends CustomFile {
 		}return null;
 	}
 
-	public Folder(File path, String...more) {
-		super(path, more);
-	}
-
+	/** @see CustomFile#CustomFile(String, String...) */
 	public Folder(String pathname, String...more) {
 		super(pathname, more);
 	}
 
-	public Folder(File folder) {
-		super(folder);
+	/** @see CustomFile#CustomFile(File, String...) */
+	public Folder(File path, String...more) {
+		super(path, more);
 	}
 
 

@@ -14,7 +14,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import com.lowagie.text.Document;
@@ -29,21 +28,21 @@ import org.dma.java.time.Chronograph;
 
 /**
  * https://kb.itextpdf.com/home/it5kb/faq/can-itext-2-1-7-itextsharp-4-1-6-or-earlier-be-used-commercially
+ * https://itextpdf.com/en/blog/itext-news-technical-notes/announcing-deprecation-support-java-7
+ * https://stackoverflow.com/questions/1260895/merging-1000-pdf-thru-itext-throws-java-lang-outofmemoryerror-java-heap-space
+ * https://stackoverflow.com/questions/30449348/signing-pdf-memory-consumption
+ * https://stackoverflow.com/questions/12596643/itext-multiple-signatures
  */
 public class PdfFile extends CustomFile {
-
-	/** @see CustomFile#CustomFile(File, String...) */
-	public PdfFile(File path, String...more) {
-		super(path, more);
-	}
 
 	/** @see CustomFile#CustomFile(String, String...) */
 	public PdfFile(String pathname, String...more) {
 		super(pathname, more);
 	}
 
-	public PdfFile(File file) {
-		super(file);
+	/** @see CustomFile#CustomFile(File, String...) */
+	public PdfFile(File path, String...more) {
+		super(path, more);
 	}
 
 
@@ -113,7 +112,9 @@ public class PdfFile extends CustomFile {
 	}
 
 
-	/** Parameterized file will be used as OUTPUT */
+	/**
+	 * {@link PdfFile} will be used as OUTPUT
+	 */
 	public void merge(Collection<File> files) throws DocumentException, IOException {
 
 		if (files.isEmpty()) return;
@@ -144,29 +145,28 @@ public class PdfFile extends CustomFile {
 	public static void main(String[] argvs) throws Exception {
 
 		CustomFile source=new CustomFile(Folder.temporary(), "source.pdf");
-		PdfFile output=new PdfFile(Folder.temporary(), "output.pdf");
-
 		Chronograph time=new Chronograph().start();
-		File[] other=new File[5];
-		for(int i=0; i<other.length; i++){
-			CustomFile file=new CustomFile(Folder.temporary(), "other"+i+".pdf");
+		Collection<File> files=new ArrayList(5);
+		for(int i=0; i<5; i++){
+			CustomFile file=new CustomFile(Folder.temporary(), "append"+i+".pdf");
 			if (!file.exists()){
 				System.out.println(file);
 				source.copyTo(file);
-			}other[i]=file;
+			}files.add(file);
 		}System.out.println("COPY time="+time);
 
 		time.reset();
+		PdfFile output=new PdfFile(Folder.temporary(), "output.pdf");
 		output.merge(new ArrayList());
-		output.merge(Arrays.asList(other));
+		output.merge(files);
 		System.out.println("MERGE time="+time);
 
 		time.reset();
-		output.addScript("script");
+		//output.addScript("script");
 		System.out.println("ADD SCRIPT time="+time);
 
 		time.reset();
-		try{output.stamp(null);
+		try{//output.stamp(null);
 		}catch(NullPointerException e){
 		}System.out.println("STAMP time="+time);
 

@@ -13,12 +13,14 @@ import java.io.File;
 
 public class XMLFile<T> extends CustomFile {
 
-	public XMLFile(String pathname, String... more) {
+	/** @see CustomFile#CustomFile(String, String...) */
+	public XMLFile(String pathname, String...more) {
 		super(pathname, more);
 	}
 
-	public XMLFile(File file) {
-		super(file);
+	/** @see CustomFile#CustomFile(File, String...) */
+	public XMLFile(File path, String...more) {
+		super(path, more);
 	}
 
 
