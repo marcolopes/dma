@@ -264,7 +264,6 @@ Export-Package: com.lowagie.text,
  org.dma.java.payment,
  org.dma.java.security,
  org.dma.java.snippets,
- org.dma.java.string,
  org.dma.java.time,
  org.dma.java.util,
  org.imgscalr
