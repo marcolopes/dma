@@ -50,7 +50,7 @@ public class CustomFile extends File {
 				replace("  "," ").replace(" -","-").replace("- ","-").
 				replace('\\','-').replace('/','-').replace('|','-').replace("--","-").
 				replace(' ','_').replace("__","_");
-		return StringUtils.remove(plain).chars("<>:?*\"\n\r\t\f\0");
+		return StringUtils.removeChars(plain,"<>:?*\"\n\r\t\f\0");
 	}
 
 	public CustomFile(String pathname, String...more) {
