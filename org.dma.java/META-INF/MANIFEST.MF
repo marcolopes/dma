@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Utils
 Bundle-SymbolicName: org.dma.java;singleton:=true
-Bundle-Version: 7.3.1.qualifier
+Bundle-Version: 7.3.2.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.java.Activator
 Bundle-ActivationPolicy: lazy
@@ -264,6 +264,7 @@ Export-Package: com.lowagie.text,
  org.dma.java.payment,
  org.dma.java.security,
  org.dma.java.snippets,
+ org.dma.java.string,
  org.dma.java.time,
  org.dma.java.util,
  org.imgscalr
