@@ -10,7 +10,6 @@ import java.util.Date;
 
 import org.dma.java.util.TimeDateUtils;
 
-
 public class DatePeriod {
 
 	private final Date startDate;
