@@ -52,6 +52,7 @@ public class MessageList extends LinkedHashSet<String> {
 	}
 
 
+	/** @see Collection#addAll(Collection) */
 	public boolean add(Collection<? extends String> col) {
 		return addAll(col);
 	}
