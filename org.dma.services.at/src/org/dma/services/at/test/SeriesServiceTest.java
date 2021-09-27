@@ -96,7 +96,7 @@ public class SeriesServiceTest {
 
 			info("Anular série: " + info.getSerie());
 
-			AnularSerieType type=new AnularSerieType(info, MotivoAnulacao);
+			AnularSerieType type=new AnularSerieType(info, MotivoAnulacao, true);
 
 			SeriesResp response=ServiceHandler.anularSerie(type);
 			print(response);
@@ -268,22 +268,22 @@ public class SeriesServiceTest {
 
 		if (info!=null) try{
 
+			System.out.print("Estado: "); System.out.println(info.getEstado());
 			System.out.print("Tipo Série: "); System.out.println(info.getTipoSerie());
 			System.out.print("Tipo Documento: "); System.out.println(info.getTipoDoc());
 			System.out.print("Classe Documento: "); System.out.println(info.getClasseDoc());
-			System.out.print("NIF Comunicou: "); System.out.println(info.getNifComunicou());
 			System.out.print("Data Registo: "); System.out.println(info.getDataRegisto());
 			System.out.print("Data Utilização: "); System.out.println(info.getDataInicioPrevUtiliz());
-			System.out.print("Data Estado (Alteração): "); System.out.println(info.getDataEstado());
 			System.out.print("Número Inicial Sequência: "); System.out.println(info.getNumInicialSeq());
 			System.out.print("Último Documento Emitido: "); System.out.println(info.getSeqUltimoDocEmitido());
+			System.out.print("Justificação Finalização: "); System.out.println(info.getJustificacao());
+			System.out.print("Data Estado (Alteração): "); System.out.println(info.getDataEstado());
+			System.out.print("Motivo Estado (Anulação): "); System.out.println(info.getMotivoEstado());
 			System.out.print("Número Final Sequência: "); System.out.println(info.getNumFinalSeq());
 			System.out.print("Código Validação: "); System.out.println(info.getCodValidacaoSerie());
+			System.out.print("NIF Comunicou: "); System.out.println(info.getNifComunicou());
 			System.out.print("Meio Processamento: "); System.out.println(info.getMeioProcessamento());
 			System.out.print("Número Certificado Software: "); System.out.println(info.getNumCertSWFatur());
-			System.out.print("Justificação Finalização: "); System.out.println(info.getJustificacao());
-			System.out.print("Motivo Estado (Anulação): "); System.out.println(info.getMotivoEstado());
-			System.out.print("Estado: "); System.out.println(info.getEstado());
 			System.out.println();
 
 		}catch(Exception e){
