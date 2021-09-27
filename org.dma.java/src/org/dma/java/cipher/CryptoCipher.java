@@ -64,8 +64,7 @@ public class CryptoCipher {
 		}
 
 		public SecretKey generateKey(int keySize) {
-			try{
-				KeyGenerator generator=KeyGenerator.getInstance(algorithm);
+			try{KeyGenerator generator=KeyGenerator.getInstance(algorithm);
 				generator.init(keySize);
 				return generator.generateKey();
 
