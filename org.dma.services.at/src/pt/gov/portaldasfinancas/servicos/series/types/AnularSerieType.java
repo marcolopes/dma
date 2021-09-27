@@ -15,16 +15,16 @@ public class AnularSerieType {
 	public final MotivoAnulacaoType motivo;
 	public final boolean declaracaoNaoEmissao;
 
-	public AnularSerieType(SeriesInfo info, MotivoAnulacaoType motivo) {
-		this(info.getSerie(), TipoDocType.valueOf(info.getTipoDoc()), info.getCodValidacaoSerie(), motivo);
+	public AnularSerieType(SeriesInfo info, MotivoAnulacaoType motivo, boolean declaracaoNaoEmissao) {
+		this(info.getSerie(), TipoDocType.valueOf(info.getTipoDoc()), info.getCodValidacaoSerie(), motivo, declaracaoNaoEmissao);
 	}
 
-	public AnularSerieType(String serie, TipoDocType tipoDoc, String codigoValidacao, MotivoAnulacaoType motivo) {
+	public AnularSerieType(String serie, TipoDocType tipoDoc, String codigoValidacao, MotivoAnulacaoType motivo, boolean declaracaoNaoEmissao) {
 		this.serie=serie;
 		this.tipoDoc=tipoDoc;
 		this.codigoValidacao=codigoValidacao;
 		this.motivo=motivo;
-		this.declaracaoNaoEmissao=true;
+		this.declaracaoNaoEmissao=declaracaoNaoEmissao;
 	}
 
 
