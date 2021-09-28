@@ -46,7 +46,7 @@ public abstract class CustomStyledText extends StyledText {
 		addLineBackgroundListener(new LineBackgroundListener() {
 			@Override
 			public void lineGetBackground(LineBackgroundEvent event) {
-				if(getLineAtOffset(event.lineOffset)%2==1){
+				if (getLineAtOffset(event.lineOffset)%2==1){
 					event.lineBackground=ColorManager.COLOR_LIGHT_GRAY;
 				}
 			}
