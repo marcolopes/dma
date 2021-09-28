@@ -44,7 +44,8 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 	}
 
-	private String homeUrl;
+	private String url;
+
 	private CTabFolder tabFolder;
 
 	private CustomAction button_home;
@@ -53,8 +54,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	private CustomAction button_forward;
 
 	public BrowserViewer(Composite parent, int iconSize) {
-		try{
-			createToolBar(iconSize);
+		try{createToolBar(iconSize);
 			createTabFolder(parent);
 			createBrowser();
 
@@ -176,8 +176,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 		tabItem.setShowClose(!isEmpty());
 		tabItem.setText("Loading...");
 
-		try{
-			//browser creation failure test
+		try{//browser creation failure test
 			//if (size()>=0) throw new Exception();
 
 			browser=new CustomBrowser(tabFolder);
@@ -240,16 +239,16 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	}
 
 
-	public void goHome(String homeUrl) {
-		this.homeUrl=homeUrl;
+	public void setUrl(String url) {
+		this.url=url;
 		Browser browser=getBrowser();
 		//browser may not exist!
-		if (browser!=null) browser.setUrl(homeUrl);
+		if (browser!=null) browser.setUrl(url);
 	}
 
 
 	public void goHome() {
-		goHome(homeUrl);
+		setUrl(url);
 	}
 
 
