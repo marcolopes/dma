@@ -217,18 +217,6 @@ public enum DRIVERS {
 	/*
 	 *  SQL statements
 	 */
-	public String dropTableSQL(String tableName) {
-		switch(this){
-		case H2:
-		//DROP TABLE IF EXISTS table
-		case MySQL: return "DROP TABLE IF EXISTS "+tableName;
-		//DROP TABLE IF EXISTS "table"
-		case PostgreSQL: return "DROP TABLE IF EXISTS "+StringUtils.quote(tableName);
-		//DROP TABLE table
-		case SQLServer: return "DROP TABLE "+tableName;
-		}return null;
-	}
-
 	public String dropForeignKeySQL(String tableName, String foreignKeyName) {
 		switch(this){
 		case H2: throw new UnsupportedOperationException();
@@ -249,7 +237,7 @@ public enum DRIVERS {
 		}return null;
 	}
 
-	/** MySQL does not suport IF EXISTS */
+	/** IF EXISTS is not supported by MySQL and SQLServer */
 	public String dropColumnSQL(String tableName, String columnName) {
 		switch(this){
 		//ALTER TABLE table DROP COLUMN IF EXISTS column
@@ -260,6 +248,20 @@ public enum DRIVERS {
 		case PostgreSQL: return "ALTER TABLE "+StringUtils.quote(tableName)+" DROP COLUMN IF EXISTS "+StringUtils.quote(columnName);
 		//ALTER TABLE table DROP COLUMN column
 		case SQLServer: return "ALTER TABLE "+tableName+" DROP COLUMN "+columnName;
+		}return null;
+	}
+
+	/** IF EXISTS is not supported by SQLServer */
+	public String dropTableSQL(String tableName) {
+		switch(this){
+		//DROP TABLE IF EXISTS table
+		case H2: return "DROP TABLE IF EXISTS "+tableName;
+		//DROP TABLE IF EXISTS table
+		case MySQL: return "DROP TABLE IF EXISTS "+tableName;
+		//DROP TABLE IF EXISTS "table"
+		case PostgreSQL: return "DROP TABLE IF EXISTS "+StringUtils.quote(tableName);
+		//DROP TABLE table
+		case SQLServer: return "DROP TABLE "+tableName;
 		}return null;
 	}
 
@@ -298,7 +300,7 @@ public enum DRIVERS {
 		case H2: break;
 		case MySQL:
 			Statement st=connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs=st.executeQuery("SHOW INDEX FROM '"+tableName+"' where COLUMN_NAME = '"+columnName+"'");
+			ResultSet rs=st.executeQuery("SHOW INDEX FROM "+tableName+" WHERE COLUMN_NAME = '"+columnName+"'");
 			while(rs.next()) col.add(rs.getString("Key_name"));
 			st.close();
 			break;
@@ -329,9 +331,8 @@ public enum DRIVERS {
 			return executeSQLUpdate(connection, sql);
 		}catch(Exception e){
 			System.out.println(e);
-		}else{
-			return executeSQLUpdate(connection, sql);
-		}return -1;
+			return -1;
+		}return executeSQLUpdate(connection, sql);
 	}
 
 	public void executeDropForeignKeys(Connection connection, String tableName, String columnName) throws SQLException {
@@ -362,7 +363,7 @@ public enum DRIVERS {
 
 	public void executeAlterDataType(Connection connection, String tableName, String columnName, String dataType) throws SQLException {
 		Debug.out("ALTERING DATA TYPE <"+tableName+":"+columnName+">");
-		executeSQLUpdate(connection, alterDataTypeSQL(tableName, columnName, dataType));
+		executeSQLUpdateNoException(connection, alterDataTypeSQL(tableName, columnName, dataType));
 	}
 
 }
