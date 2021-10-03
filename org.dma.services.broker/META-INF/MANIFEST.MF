@@ -14,5 +14,6 @@ Bundle-ClassPath: .,
  libraries/stax-ex-1.2.jar
 Require-Bundle: org.dma.java;bundle-version="6.4.3"
 Export-Package: com.generixgroup.pt.messaging.webservice,
+ com.softlimits.clarinet,
  org.dma.services.broker,
  org.dma.services.broker.proxy
