@@ -60,9 +60,9 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType request) throws Exception {
+	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType type) throws Exception {
 
-		return getService().taxFreeSubmission(request);
+		return getService().taxFreeSubmission(type);
 
 	}
 

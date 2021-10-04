@@ -62,9 +62,9 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	public StockMovementResponse register(StockMovement request) throws Exception {
+	public StockMovementResponse register(StockMovement type) throws Exception {
 
-		return getService().envioDocumentoTransporte(request);
+		return getService().envioDocumentoTransporte(type);
 
 	}
 
