@@ -27,9 +27,10 @@ public class EmailAttachment extends org.apache.commons.mail.EmailAttachment {
 	 */
 	@Override
 	public String toString() {
-		return "Name: "+getName()+
-				"\nPath: "+getPath()+
-				"\nDescription: " +getDescription();
+		return getClass().getSimpleName() +
+				" [name=" + getName() +
+				", path=" + getPath() +
+				", description=" + getDescription() + "]";
 	}
 
 
