@@ -22,7 +22,7 @@ public class BusinessRules {
 	public static BigDecimal proportionalValue(BigDecimal a, BigDecimal b, BigDecimal c){
 
 		return a.signum()==0 ? BigDecimal.ZERO :
-			b.multiply(c).divide(a,MathContext.DECIMAL64);
+			b.multiply(c).divide(a, MathContext.DECIMAL64);
 
 	}
 
@@ -36,7 +36,7 @@ public class BusinessRules {
 
 		return entries.signum()<=0 ? price1 :
 			(stock.abs().multiply(price1).add(entries.multiply(price2))).
-				divide(stock.abs().add(entries),MathContext.DECIMAL64);
+				divide(stock.abs().add(entries), MathContext.DECIMAL64);
 
 	}
 
@@ -48,8 +48,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal salePrice(BigDecimal cost, BigDecimal margin){
 
-		return cost.divide(BigDecimal.ONE.
-				subtract(margin.divide(DECIMAL_100)),MathContext.DECIMAL64);
+		return cost.divide(BigDecimal.ONE.subtract(margin.divide(DECIMAL_100)), MathContext.DECIMAL64);
 
 	}
 
@@ -62,7 +61,7 @@ public class BusinessRules {
 	public static BigDecimal markupPercentage(BigDecimal price, BigDecimal cost){
 
 		return cost.signum()==0 ? BigDecimal.ZERO :
-			(price.subtract(cost)).divide(cost,MathContext.DECIMAL64).multiply(DECIMAL_100);
+			(price.subtract(cost)).divide(cost, MathContext.DECIMAL64).multiply(DECIMAL_100);
 
 	}
 
@@ -107,7 +106,7 @@ public class BusinessRules {
 	public static BigDecimal valuePercentage(BigDecimal total, BigDecimal value){
 
 		return total.signum()==0 ? BigDecimal.ZERO :
-			value.multiply(DECIMAL_100).divide(total,MathContext.DECIMAL64);
+			value.multiply(DECIMAL_100).divide(total, MathContext.DECIMAL64);
 
 	}
 
@@ -132,8 +131,7 @@ public class BusinessRules {
 	public static BigDecimal valueIncluded(BigDecimal value, BigDecimal perc){
 
 		return perc.compareTo(DECIMAL_100)==0 ? BigDecimal.ZERO :
-			value.divide(BigDecimal.ONE.
-					subtract(perc.divide(DECIMAL_100)),MathContext.DECIMAL64);
+			value.divide(BigDecimal.ONE.subtract(perc.divide(DECIMAL_100)), MathContext.DECIMAL64);
 
 	}
 
@@ -145,8 +143,7 @@ public class BusinessRules {
 	 */
 	public static BigDecimal valueExcluded(BigDecimal value, BigDecimal perc){
 
-		return value.divide(BigDecimal.ONE.
-				add(perc.divide(DECIMAL_100)),MathContext.DECIMAL64);
+		return value.divide(BigDecimal.ONE.add(perc.divide(DECIMAL_100)), MathContext.DECIMAL64);
 
 	}
 
