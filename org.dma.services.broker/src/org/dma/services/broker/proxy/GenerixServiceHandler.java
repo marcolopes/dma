@@ -39,8 +39,8 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public GenerixServiceHandler(ENDPOINTS endpoint) {
-		super(null, null, null, null);
+	public GenerixServiceHandler(String username, String password, ENDPOINTS endpoint) {
+		super(username, password);
 		this.endpoint = endpoint;
 	}
 
