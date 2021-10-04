@@ -13,32 +13,42 @@ import com.generixgroup.pt.messaging.webservice.UploadDocResponse;
 
 import org.dma.services.broker.CIUSExamples;
 import org.dma.services.broker.proxy.GenerixServiceHandler;
-import org.dma.services.broker.proxy.GenerixServiceHandler.ENDPOINTS;
 
-public class GenerixServiceTest {
+public class GenerixServiceTest extends GenerixServiceHandler {
 
-	public static final GenerixServiceHandler ServiceHandler=new GenerixServiceHandler(ENDPOINTS.TESTES);
+	public GenerixServiceTest() {
+		super("USER", "PASS", ENDPOINTS.TESTES);
+	}
+
+	public UploadDocResponse uploadDocument() throws Exception {
+
+		//Credentials
+		Credentials credentials=new Credentials();
+		credentials.setUsername(username);
+		credentials.setPassword(password);
+
+		//Routing Info
+		RoutingInfo info=new RoutingInfo();
+		info.setDocumentType("type");
+		info.setReceiver("receiver");
+		info.setSender("sender");
+
+		//Document
+		String document=new Base64().encodeToString(CIUSExamples.FATURA);
+
+		return uploadDocument("CIUS-PT.xml", credentials, info, document);
+
+	}
 
 	public static void main(String[] argvs) {
 
 		try{
-			//Credentials
-			Credentials credentials=new Credentials();
-			credentials.setUsername("USER");
-			credentials.setPassword("PASS");
+			GenerixServiceTest service=new GenerixServiceTest();
 
-			//Routing Info
-			RoutingInfo info=new RoutingInfo();
-			info.setDocumentType("type");
-			info.setReceiver("receiver");
-			info.setSender("sender");
-
-			//Document
-			String document=new Base64().encodeToString(CIUSExamples.FATURA);
-
-			UploadDocResponse response=ServiceHandler.uploadDocument("CIUS-PT.xml", credentials, info, document);
+			UploadDocResponse response=service.uploadDocument();
 
 			System.out.println(response.getStatusCode());
+			System.out.println(response.getOperationInfo());
 
 		}catch(Exception e){
 			e.printStackTrace();

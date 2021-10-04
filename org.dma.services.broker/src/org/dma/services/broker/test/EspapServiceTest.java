@@ -10,17 +10,25 @@ import com.softlimits.clarinet.ArrayOfMessageOutputData;
 import org.dma.services.broker.CIUSExamples;
 import org.dma.services.broker.Certificates;
 import org.dma.services.broker.proxy.EspapServiceHandler;
-import org.dma.services.broker.proxy.EspapServiceHandler.ENDPOINTS;
 
-public class EspapServiceTest {
+public class EspapServiceTest extends EspapServiceHandler {
 
-	public static final EspapServiceHandler ServiceHandler=new EspapServiceHandler(
-			"Username", "Password", Certificates.SaphetyDoc, ENDPOINTS.TESTES);
+	public EspapServiceTest() {
+		super("Username", "Password", Certificates.SaphetyDoc, ENDPOINTS.TESTES);
+	}
+
+	public ArrayOfMessageOutputData processMessage() throws Exception {
+
+		return processMessage(CIUSExamples.FATURA);
+
+	}
 
 	public static void main(String[] argvs) {
 
 		try{
-			ArrayOfMessageOutputData response=ServiceHandler.processMessage(CIUSExamples.FATURA);
+			EspapServiceTest service=new EspapServiceTest();
+
+			ArrayOfMessageOutputData response=service.processMessage();
 
 			System.out.println(response.getMessageOutputData());
 
