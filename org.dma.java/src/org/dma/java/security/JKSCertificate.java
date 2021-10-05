@@ -6,6 +6,7 @@
 package org.dma.java.security;
 
 import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -14,6 +15,7 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -37,57 +39,41 @@ public class JKSCertificate {
 
 	public final String password;
 
+	private X509Certificate X509Cert;
 	private KeyStore keyStore;
 	private String alias;
-	private X509Certificate X509Cert;
 
 	/**
 	 * @param type - the certificate type
-	 * @param keystore - the keystore pathname
+	 * @param pathname - the keystore pathname
 	 * @param password - the keystore password (null=no integrity checking)
+	 * @param alias - the alias to load (if empty, use first alias found)
 	 */
-	public JKSCertificate(CERTIFICATE_TYPE type, String keystore, String password) {
-		this(type, new ByteFile(keystore).read(), password, null);
+	public JKSCertificate(CERTIFICATE_TYPE type, String pathname, String password, String...alias) {
+		this(type, new ByteFile(pathname).read(), password, alias);
 	}
 
 	/**
 	 * @param type - the certificate type
-	 * @param keystore - the keystore pathname
-	 * @param password - the keystore password (null=no integrity checking)
-	 * @param alias - the alias to load (null=use first alias found)
+	 * @param data - the keyStore data
+	 * @param password - the keyStore password (null=no integrity checking)
+	 * @param alias - the alias to load (if empty, use first alias found)
 	 */
-	public JKSCertificate(CERTIFICATE_TYPE type, String keystore, String password, String alias) {
-		this(type, new ByteFile(keystore).read(), password, alias);
-	}
-
-	/**
-	 * @param type - the certificate type
-	 * @param keystore - the keystore data
-	 * @param password - the keystore password (null=no integrity checking)
-	 */
-	public JKSCertificate(CERTIFICATE_TYPE type, byte[] keystore, String password) {
-		this(type, keystore, password, null);
-	}
-
-	/**
-	 * @param type - the certificate type
-	 * @param keystore - the keystore data
-	 * @param password - the keystore password (null=no integrity checking)
-	 * @param alias - the alias to load (null=use first alias found)
-	 */
-	public JKSCertificate(CERTIFICATE_TYPE type, byte[] keystore, String password, String alias) {
+	public JKSCertificate(CERTIFICATE_TYPE type, byte[] data, String password, String...alias) {
 		this.password=password;
+		try{KeyStore keyStore=KeyStore.getInstance(type.name());
+			keyStore.load(new ByteArrayInputStream(data), password==null ? null : password.toCharArray());
+			if (alias.length==0 && keyStore.aliases().hasMoreElements()) alias=new String[]{keyStore.aliases().nextElement()};
+			int index=-1;
+			while(X509Cert==null && ++index<alias.length){
+				X509Cert=(X509Certificate)keyStore.getCertificate(alias[index]);
+			}if (X509Cert==null) throw new KeyStoreException("Certificate not found: "+Arrays.asList(alias));
+			this.keyStore=keyStore;
+			this.alias=alias[index];
 
-		try{
-			this.keyStore=KeyStore.getInstance(type.name());
-			this.keyStore.load(new ByteArrayInputStream(keystore), password==null ? null : password.toCharArray());
-			this.alias=alias==null ? keyStore.aliases().nextElement() : alias;
-			this.X509Cert=(X509Certificate)keyStore.getCertificate(this.alias);
-			if (X509Cert==null) throw new KeyStoreException("Alias not found: "+alias);
-
+		}catch(EOFException e){
 		}catch(Exception e){
 			System.err.println(e);
-			keyStore=null;
 		}
 
 	}
