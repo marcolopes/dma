@@ -62,12 +62,12 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	private static final Logger LOGGER = Logger.getLogger(SOAPMessageHandler.class.getSimpleName());
 
-	protected final String username;
-	protected final String password;
+	public final String username;
+	public final String password;
 
-	protected final JKSCertificate saCertificate;
-	protected final JKSCertificate swCertificate;
-	protected final JKSCertificate tsCertificate;
+	public final JKSCertificate saCertificate;
+	public final JKSCertificate swCertificate;
+	public final JKSCertificate tsCertificate;
 
 	/**
 	 * @param username - Service Username
