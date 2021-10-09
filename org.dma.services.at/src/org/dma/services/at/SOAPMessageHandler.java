@@ -96,7 +96,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	protected void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws Exception {
+	public void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws Exception {
 
 		// adiciona handler
 		Binding binding = provider.getBinding();
@@ -144,17 +144,6 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	@Override
 	public Set<QName> getHeaders() {
 		return null;
-	}
-
-
-	@Override
-	public void close(MessageContext messageContext) {}
-
-
-	@Override
-	public boolean handleFault(SOAPMessageContext smc) {
-		logSOAPMessage(smc);
-		return true;
 	}
 
 
@@ -251,11 +240,20 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}
-
-		return true;
+		}return true;
 
 	}
+
+
+	@Override
+	public boolean handleFault(SOAPMessageContext smc) {
+		logSOAPMessage(smc);
+		return true;
+	}
+
+
+	@Override
+	public void close(MessageContext messageContext) {}
 
 
 	private byte[] createPasswordDigest(byte[] simetricKey, String timestamp, String password) throws UnsupportedEncodingException {
