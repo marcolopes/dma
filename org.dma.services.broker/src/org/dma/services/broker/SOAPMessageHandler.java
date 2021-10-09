@@ -89,7 +89,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	protected void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws Exception {
+	public void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws Exception {
 
 		// adiciona handler
 		Binding binding = provider.getBinding();
@@ -140,8 +140,21 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
+	/** Adiciona header para autenticacao */
 	@Override
-	public void close(MessageContext messageContext) {}
+	public boolean handleMessage(SOAPMessageContext smc) {
+
+		try{
+			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+			if (direction){/* Falta informacao tecnica */}
+
+			logSOAPMessage(smc);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}return true;
+
+	}
 
 
 	@Override
@@ -151,23 +164,8 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	/** Adiciona header para autenticacao */
 	@Override
-	public boolean handleMessage(SOAPMessageContext smc) {
-
-		try{
-			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			if (direction){/* Falta informacao tecnica da ESPAP */}
-
-			logSOAPMessage(smc);
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return true;
-
-	}
+	public void close(MessageContext messageContext) {}
 
 
 	private byte[] createPasswordDigest(byte[] simetricKey, String timestamp, String password) throws UnsupportedEncodingException {
