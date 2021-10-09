@@ -28,7 +28,7 @@
 		</cac:InvoiceDocumentReference><!--1..1-->
 	</cac:BillingReference><!--0..N-->
 	<cac:DespatchDocumentReference><!--0..N-->
-		<cbc:ID>[OBRIGATÓRIO - Condicional]Referência do aviso de envio.</cbc:ID><!--1..1-->
+		<cbc:ID>[OBRIGATÓRIO - Condicional] Referência do aviso de envio.</cbc:ID><!--1..1-->
 	</cac:DespatchDocumentReference><!--0..N-->
 	<cac:ReceiptDocumentReference><!--0..1-->
 		<cbc:ID>[OBRIGATÓRIO - Condicional] Número do aviso de recebimento referenciado.</cbc:ID><!--1..1-->
