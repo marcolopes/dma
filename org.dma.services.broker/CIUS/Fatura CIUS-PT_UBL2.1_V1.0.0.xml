@@ -39,9 +39,9 @@
 	<cac:ContractDocumentReference><!--0..1-->
 		<cbc:ID>[OBRIGATÓRIO - Condicional] Número do contrato.</cbc:ID><!--1..1-->
 	</cac:ContractDocumentReference><!--0..1-->
-   <cac:AdditionalDocumentReference><!--0..N-->
-        <cbc:ID schemeID="AIM">Identificador do processo de registo de entrada do documento.Identificador do anexo referenciado de acordo com a norma UNCL1153 (https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL1153/) Scheme ID = AIM para colocar UUID</cbc:ID> <!--0..1-->  
-   </cac:AdditionalDocumentReference><!--0..N-->
+	<cac:AdditionalDocumentReference><!--0..N-->
+		<cbc:ID schemeID="AIM">Identificador do processo de registo de entrada do documento.Identificador do anexo referenciado de acordo com a norma UNCL1153 (https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL1153/) Scheme ID = AIM para colocar UUID</cbc:ID> <!--0..1-->  
+	</cac:AdditionalDocumentReference><!--0..N-->
 	<cac:AdditionalDocumentReference><!--0..N-->
 		<cbc:ID>Identificador do processo de registo de entrada do documento.Identificador do anexo referenciado de acordo com a norma UNCL1153 (https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL1153/)</cbc:ID><!--0..1-->
 		<cbc:DocumentTypeCode listID="UNCL1001">Código que identifica o tipo funcional da fatura eletrónica, segundo a lista de códigos UNCL1001 (http://www.unece.org/trade/untdid/d98a/uncl/uncl1001.htm) [FE: 380]</cbc:DocumentTypeCode><!--0..1-->
