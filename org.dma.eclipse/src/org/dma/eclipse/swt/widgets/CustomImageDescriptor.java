@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * IBM Corporation and others
@@ -16,6 +16,7 @@ import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import org.dma.java.io.CustomFile;
@@ -98,7 +99,7 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the the file at the specified path.
 	 */
-	public CustomImageDescriptor(String pathname) {
+	public CustomImageDescriptor(String pathname) throws FileNotFoundException {
 		this(getImageData(new CustomFile(pathname).asInputStream()));
 	}
 

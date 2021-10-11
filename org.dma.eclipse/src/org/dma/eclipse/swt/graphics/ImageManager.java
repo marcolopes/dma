@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -60,7 +60,6 @@ public class ImageManager {
 			gc.setBackground(DISPLAY.getSystemColor(SWT.TRANSPARENT));
 			gc.fillRectangle(0, 0, size, size);
 			gc.dispose();
-
 		}catch(Exception e){
 			e.printStackTrace();
 		}return image;
@@ -74,9 +73,11 @@ public class ImageManager {
 	public static Image getImage(String pathname) {
 		String key=getKey(pathname);
 		Image image=REGISTRY.get(key);
-		if (image==null){
+		if (image==null) try{
 			image=new CustomImageDescriptor(pathname).createImage();
 			REGISTRY.put(key, image);
+		}catch(Exception e){
+			e.printStackTrace();
 		}return image;
 	}
 
