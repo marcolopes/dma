@@ -1,9 +1,11 @@
 /*******************************************************************************
- * 2008-2015 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.io;
+
+import java.nio.charset.Charset;
 
 import org.apache.commons.configuration.HierarchicalINIConfiguration;
 
@@ -13,8 +15,11 @@ public class UTF8INIConfiguration extends HierarchicalINIConfiguration {
 
 	public UTF8INIConfiguration() {
 		super();
-		setEncoding(CustomFile.UTF8_CHARSET.name());
+		setEncoding(getCharset().name());
 	}
 
+	public Charset getCharset() {
+		return CustomFile.UTF8_CHARSET;
+	}
 
 }

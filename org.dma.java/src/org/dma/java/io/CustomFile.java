@@ -7,6 +7,7 @@ package org.dma.java.io;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -126,24 +127,18 @@ public class CustomFile extends File {
 	}
 
 
-	public FileInputStream asInputStream() {
-		try{return new FileInputStream(this);
-		}catch(Exception e){
-			System.err.println(e);
-		}return null;
+	public FileInputStream asInputStream() throws FileNotFoundException {
+		return new FileInputStream(this);
 	}
 
 
-	public FileOutputStream asOutputStream() {
+	public FileOutputStream asOutputStream(boolean append) throws FileNotFoundException {
+		return new FileOutputStream(this, append);
+	}
+
+
+	public FileOutputStream asOutputStream() throws FileNotFoundException {
 		return asOutputStream(false);
-	}
-
-
-	public FileOutputStream asOutputStream(boolean append) {
-		try{return new FileOutputStream(this, append);
-		}catch(Exception e){
-			System.err.println(e);
-		}return null;
 	}
 
 
