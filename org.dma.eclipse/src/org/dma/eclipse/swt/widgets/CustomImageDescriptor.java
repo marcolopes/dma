@@ -70,14 +70,12 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	}
 
 	private static void close(InputStream stream) {
-		try{
-			stream.close();
+		try{stream.close();
 		}catch(Exception e){}
 	}
 
 	private static ImageData getImageData(InputStream stream) {
-		try{
-			return new ImageData(stream);
+		try{return new ImageData(stream);
 		}catch(Exception e){
 			return null;
 		}finally{
