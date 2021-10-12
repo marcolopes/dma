@@ -189,10 +189,11 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	private void logSOAPMessage(SOAPMessageContext smc) {
 
-		try{
-			Source source = smc.getMessage().getSOAPPart().getContent();
+		if (!smc.isEmpty())	try{
+
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") + toXMLString(source));
+			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") +
+					toXMLString(smc.getMessage().getSOAPPart().getContent()));
 
 		}catch(Exception e){
 			StringWriter sw = new StringWriter();

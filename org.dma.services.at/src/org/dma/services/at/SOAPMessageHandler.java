@@ -195,8 +195,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				*/
 				// Encrypt with the simetric key and B64 encode the digest
 				byte[] passwordDigest = createPasswordDigest(simetricKey, timestamp, password);
-				passwordElem.addAttribute(soapFactory.createName("Digest"),
-						simetricKeyCipher.BASE64encrypt(passwordDigest, 0));
+				passwordElem.addAttribute(soapFactory.createName("Digest"), simetricKeyCipher.BASE64encrypt(passwordDigest, 0));
 				/*
 				final byte[] encryptedDigest = new AutenticationCypher(simetricKey).cypherCredentialBuffer(computedDigest);
 				final String b64EncryptedDigest = DatatypeConverter.printBase64Binary(encryptedDigest);
@@ -277,10 +276,11 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	private void logSOAPMessage(SOAPMessageContext smc) {
 
-		try{
-			Source source = smc.getMessage().getSOAPPart().getContent();
+		if (!smc.isEmpty())	try{
+
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") + toXMLString(source));
+			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") +
+					toXMLString(smc.getMessage().getSOAPPart().getContent()));
 
 		}catch(Exception e){
 			StringWriter sw = new StringWriter();
