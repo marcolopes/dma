@@ -94,8 +94,7 @@ public class PdfFile extends CustomFile {
 		CustomFile output=new CustomFile(this+".tmp");
 
 		FileOutputStream out=output.asOutputStream();
-		try{
-			//only parts of the pdf are read as needed
+		try{//only parts of the pdf are read as needed
 			PdfReader reader=new PdfReader(new RandomAccessFileOrArray(getAbsolutePath(), false, true), null);
 			//PdfReader reader=new PdfReader(getAbsolutePath());
 			PdfStamper stamper=new PdfStamper(reader, out);
