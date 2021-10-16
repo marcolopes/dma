@@ -12,6 +12,7 @@ public class FileParameters {
 	public final String prefix;
 	public final String suffix;
 	public final Folder folder;
+	/** prefix.suffix */
 	public final String filename;
 	public final String wildcards;
 
