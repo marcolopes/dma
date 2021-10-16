@@ -61,7 +61,7 @@ public class ImageManager {
 			gc.fillRectangle(0, 0, size, size);
 			gc.dispose();
 		}catch(Exception e){
-			e.printStackTrace();
+			System.err.println(e);
 		}return image;
 	}
 
@@ -77,7 +77,7 @@ public class ImageManager {
 			image=new CustomImageDescriptor(pathname).createImage();
 			REGISTRY.put(key, image);
 		}catch(Exception e){
-			e.printStackTrace();
+			System.err.println(e);
 		}return image;
 	}
 
