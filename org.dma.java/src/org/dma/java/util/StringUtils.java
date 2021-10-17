@@ -167,6 +167,7 @@ public class StringUtils {
 	}
 
 
+	@Deprecated
 	public static int equals(String string, String...searchFor) {
 
 		for(int i=0; i<searchFor.length; i++){
@@ -176,6 +177,7 @@ public class StringUtils {
 	}
 
 
+	@Deprecated
 	public static int startsWith(String string, String...searchFor) {
 
 		for(int i=0; i<searchFor.length; i++){
@@ -517,6 +519,7 @@ public class StringUtils {
 	}
 
 
+	@Deprecated
 	public static String[] splitAndTrim(String string, String regex) {
 
 		return ArrayUtils.trim(string.split(regex));
