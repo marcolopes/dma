@@ -1,6 +1,7 @@
 /*******************************************************************************
- * 2008-2021 Projecto Colibri
- * Marco Lopes (marcolopes@projectocolibri.com)
+ * 2008-2021 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.net;
 
