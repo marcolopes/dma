@@ -52,11 +52,11 @@ public class MultibancoRef {
 
 	public String toText() {
 		return "PAGAMENTO MULTIBANCO" +"\n"+
-			StringUtils.replicate('─',10+13) +"\n"+
+			StringUtils.replicas("─",10+13) +"\n"+
 			"ENTIDADE  " + StringUtils.padLeft(getEntidade(),13,' ') +"\n"+
 			"REFERENCIA" + StringUtils.padLeft(getReferencia(),13,' ') +"\n"+
 			"MONTANTE  " + StringUtils.padLeft(getMontante(),13,' ') +"\n"+
-			StringUtils.replicate('─',10+13);
+			StringUtils.replicas("─",10+13);
 	}
 
 	@Override

@@ -109,7 +109,7 @@ public class FieldFormat extends FieldRegex {
 				}//#,###,##0
 				pattern+="0";
 				//#,###,##0.000
-				if (size.scale>0) pattern+="."+StringUtils.replicate("0", size.scale);
+				if (size.scale>0) pattern+="."+StringUtils.replicas("0", size.scale);
 				return pattern;
 
 			case STRING: break;

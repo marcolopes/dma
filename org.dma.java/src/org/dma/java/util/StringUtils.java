@@ -79,25 +79,12 @@ public class StringUtils {
 	/*
 	 * Creation
 	 */
-	public static String replicate(String string, int replicas) {
+	public static String replicas(String string, int replicas) {
 
 		StringBuilder result=new StringBuilder(replicas);
 
 		for(int i=0; i<replicas; i++){
 			result.append(string);
-		}
-
-		return result.toString();
-
-	}
-
-
-	public static String replicate(char character, int replicas) {
-
-		StringBuilder result=new StringBuilder(replicas);
-
-		for(int i=0; i<replicas; i++){
-			result.append(character);
 		}
 
 		return result.toString();
@@ -396,14 +383,14 @@ public class StringUtils {
 	}
 
 
-	public static String addIfEmpy(String string, String toAdd) {
+	public static String appendIfEmpy(String string, String toAdd) {
 
 		return string.isEmpty() ? toAdd : string;
 
 	}
 
 
-	public static String addIfNotEmpy(String string, String toAdd) {
+	public static String appendIfNotEmpy(String string, String toAdd) {
 
 		return string.isEmpty() ? string : string+toAdd;
 
@@ -412,16 +399,16 @@ public class StringUtils {
 
 	public static String padLeft(String string, int length, char character) {
 
-		return string.length()>=length ?
-				string : replicate(character, length-string.length())+string;
+		return string.length()>=length ? string :
+			replicas(String.valueOf(character), length-string.length())+string;
 
 	}
 
 
 	public static String padRight(String string, int length, char character) {
 
-		return string.length()>=length ?
-				string : string+replicate(character, length-string.length());
+		return string.length()>=length ? string :
+			string+replicas(String.valueOf(character), length-string.length());
 
 	}
 
@@ -497,7 +484,7 @@ public class StringUtils {
 		int count=0;
 		for(String line: text.split("\n")) {
 			if (line.contains("}")) count--;
-			result.append(replicate("\t", count) + line + "\n");
+			result.append(replicas("\t", count) + line + "\n");
 			if (line.contains("{")) count++;
 		}
 

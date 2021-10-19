@@ -16,8 +16,8 @@ public class URLFile extends URLHandler {
 	/** Replaces accented and illegal characters */
 	public static String normalize(String string) {
 		//http://www.w3.org/Addressing/URL/uri-spec.html
-		String plain=StringUtils.unaccent(string).replaceAll(" ","+");
-		return StringUtils.removeChars(plain,"\n\r\t\f\0");
+		String plain=StringUtils.replaceAll(StringUtils.unaccent(string), " ", "+");
+		return StringUtils.removeChars(plain, "\n\r\t\f\0");
 	}
 
 	/** Example: "www.ftp.com", "file.txt" */
