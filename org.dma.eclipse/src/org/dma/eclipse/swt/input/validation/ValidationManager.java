@@ -41,6 +41,7 @@ public abstract class ValidationManager implements IValidationManager {
 	public IValidator remove(String property) {
 
 		IValidator validator=validatorMap.remove(property);
+
 		if (validator!=null) validator.clearError();
 
 		return validator;
@@ -52,6 +53,7 @@ public abstract class ValidationManager implements IValidationManager {
 	public void unregister(String property) {
 
 		IValidator validator=remove(property);
+
 		if (validator!=null) validator.unregisterAll();
 
 	}
@@ -101,12 +103,10 @@ public abstract class ValidationManager implements IValidationManager {
 	public String getErrorMessage() {
 
 		String message="";
-
 		for(IValidator validator: validatorMap.values()){
-			if (validator.hasError()) message=StringUtils.addIfNotEmpy(message,"; ")+validator.getErrorMessage();
-		}
-
-		return message;
+			if (validator.hasError()) message=StringUtils.appendIfNotEmpy(message, "; ") +
+					validator.getErrorMessage();
+		}return message;
 
 	}
 

@@ -165,12 +165,10 @@ public abstract class TableValidator<T> implements IValidator {
 	public String getErrorMessage() {
 
 		String message="";
-
 		for(ColumnBinding binding: validatorMap.values()){
-			if (binding.hasError()) message=StringUtils.addIfNotEmpy(message,"; ")+binding.getErrorMessage();
-		}
-
-		return message;
+			if (binding.hasError()) message=StringUtils.appendIfNotEmpy(message, "; ") +
+					binding.getErrorMessage();
+		}return message;
 
 	}
 

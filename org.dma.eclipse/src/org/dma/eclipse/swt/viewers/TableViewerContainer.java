@@ -220,12 +220,12 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	public int selectElement(int index) {
 		viewer.refresh(false);
 		if (index>table.getItemCount()-1) index=table.getItemCount()-1;
-		if (index>=0){
-			table.select(index);
-			Object element=viewer.getElementAt(index);
-			viewer.setSelection(new StructuredSelection(element));
-			//viewer.refresh(element);
-		}return index;
+		if (index<0) return 0;
+		table.select(index);
+		Object element=viewer.getElementAt(index);
+		viewer.setSelection(new StructuredSelection(element));
+		//viewer.refresh(element);
+		return index;
 	}
 
 	public int insertElements(Collection<T> col, int index) {

@@ -93,7 +93,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 
 	/** DEBUG */
 	public void fill(int size) {
-		String line=StringUtils.replicate('-',20);
+		String line=StringUtils.replicas("-", 20);
 		add(line+" DUMMY ITEMS "+line);
 		for (int i=getItemCount(); i<=size; i++){
 			add(new RandomValue().letters(50));
