@@ -279,7 +279,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 		if (!smc.isEmpty())	try{
 
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			LOGGER.info((direction ? "\n>>>SENT<<<\n" : "\n>>>RECEIVED<<<\n") +
+			LOGGER.info((direction ? "<!-- SENT -->" : "<!-- RECEIVED -->") + "\n" +
 					toXMLString(smc.getMessage().getSOAPPart().getContent()));
 
 		}catch(Exception e){
