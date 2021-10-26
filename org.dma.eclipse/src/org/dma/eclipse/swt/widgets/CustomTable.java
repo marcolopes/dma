@@ -23,9 +23,7 @@ public class CustomTable extends Table {
 	public static final int STYLE_SINGLE = SWT.BORDER | SWT.SINGLE | SWT.FULL_SELECTION;
 	public static final int STYLE_MULTI =  SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION;
 
-	public enum SORT_DIRECTION {
-		NONE, ASCENDING, DESCENDING;
-	}
+	public enum SORT_DIRECTION {NONE, ASCENDING, DESCENDING}
 
 	@Override //subclassing
 	protected void checkSubclass() {}
