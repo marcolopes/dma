@@ -56,6 +56,8 @@ public class FieldRegex extends FieldProperties {
 			regex+="{0," + size.size + "}";
 			break;
 
+		case LONG:
+		case DOUBLE:
 		case DECIMAL:
 		case INTEGER:
 			//negative signal?

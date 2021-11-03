@@ -77,6 +77,8 @@ public class FieldFormat extends FieldRegex {
 
 		TIME (java.sql.Time.class),
 		DATE (java.util.Date.class),
+		LONG (java.lang.Long.class),
+		DOUBLE (java.lang.Double.class),
 		DECIMAL (java.math.BigDecimal.class),
 		INTEGER (java.lang.Integer.class),
 		BOOLEAN (java.lang.Boolean.class),
@@ -98,6 +100,8 @@ public class FieldFormat extends FieldRegex {
 			switch(this){
 			case TIME: return TimeDateUtils.DEFAULT_TIME_PATTERN;
 			case DATE: return TimeDateUtils.DEFAULT_DATE_PATTERN;
+			case LONG:
+			case DOUBLE:
 			case DECIMAL:
 			case INTEGER:
 			case BOOLEAN:
@@ -162,6 +166,8 @@ public class FieldFormat extends FieldRegex {
 		switch(type){
 		case TIME:
 		case DATE: break;
+		case LONG:
+		case DOUBLE:
 		case DECIMAL:
 		case INTEGER: return isPositive() ? pattern : "-"+pattern;
 		case BOOLEAN:
@@ -173,6 +179,8 @@ public class FieldFormat extends FieldRegex {
 		switch(type){
 		case TIME: return TimeDateUtils.getTimeFormatted((Time)value, pattern);
 		case DATE: return TimeDateUtils.getDateFormatted((Date)value, pattern);
+		case LONG:
+		case DOUBLE:
 		case DECIMAL:
 		case INTEGER: return getDecimalFormat(pattern, symbols).format(value);
 		case BOOLEAN:
@@ -184,6 +192,8 @@ public class FieldFormat extends FieldRegex {
 		try{switch(type){
 			case TIME: return TimeDateUtils.getTime(text, pattern);
 			case DATE: return TimeDateUtils.getDate(text, pattern);
+			case LONG: return new Long(text);
+			case DOUBLE: return new Double(text);
 			case DECIMAL: return new BigDecimal(text);
 			case INTEGER: return new Integer(text);
 			case BOOLEAN: return new Boolean(text);
