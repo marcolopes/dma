@@ -40,7 +40,7 @@ import org.dma.java.util.Debug;
  * Sandbox: Devem indicar 1 ou 0 no caso de utilizarem ou nao a plataforma de testes.
  * Obrigatorio.
  */
-public class IfThenPayWebservice {
+public class IfThenPayService {
 
 	public static final String URL = "https://www.ifthenpay.com/IfmbWS/WsIfmb.asmx/GetPaymentsXml";
 
@@ -49,7 +49,7 @@ public class IfThenPayWebservice {
 	public final String chavebackoffice;
 	public final String sandbox;
 
-	public IfThenPayWebservice(String entidade, String subentidade, String chavebackoffice) {
+	public IfThenPayService(String entidade, String subentidade, String chavebackoffice) {
 		this.entidade=entidade;
 		this.subentidade=subentidade;
 		this.chavebackoffice=chavebackoffice;
@@ -70,35 +70,35 @@ public class IfThenPayWebservice {
 		return new URL(URLFile.normalize(url.toString()));
 	}
 
-	public Collection<IfThenPayWebserviceResponseType> getPayments() throws Exception {
+	public Collection<IfThenPayServiceResponseType> getPayments() throws Exception {
 		return getPayments(null, null);
 	}
 
-	public Collection<IfThenPayWebserviceResponseType> getPayments(String referencia, String valor) throws Exception {
+	public Collection<IfThenPayServiceResponseType> getPayments(String referencia, String valor) throws Exception {
 		return getPayments(getURL(null, referencia, valor));
 	}
 
-	public Collection<IfThenPayWebserviceResponseType> getPayments(DatePeriod periodo) throws Exception {
+	public Collection<IfThenPayServiceResponseType> getPayments(DatePeriod periodo) throws Exception {
 		return getPayments(getURL(periodo, null, null));
 	}
 
-	private Collection<IfThenPayWebserviceResponseType> getPayments(URL url) throws Exception {
+	private Collection<IfThenPayServiceResponseType> getPayments(URL url) throws Exception {
 
 		Debug.err(url);
 
-		Collection<IfThenPayWebserviceResponseType> col=new ArrayList();
+		Collection<IfThenPayServiceResponseType> col=new ArrayList();
 
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
+		DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder=factory.newDocumentBuilder();
 		Document document=builder.parse(url.openStream());
 		document.getDocumentElement().normalize();
 
-		NodeList nodes = document.getElementsByTagName("Ifmb");
+		NodeList nodes=document.getElementsByTagName("Ifmb");
 		for (int index=0; index<nodes.getLength(); index++){
 
-			Element element = (Element)nodes.item(index);
+			Element element=(Element)nodes.item(index);
 
-			IfThenPayWebserviceResponseType response=new IfThenPayWebserviceResponseType(
+			IfThenPayServiceResponseType response=new IfThenPayServiceResponseType(
 					element.getElementsByTagName("Entidade").item(0).getTextContent(),
 					element.getElementsByTagName("Referencia").item(0).getTextContent(),
 					element.getElementsByTagName("Valor").item(0).getTextContent(),

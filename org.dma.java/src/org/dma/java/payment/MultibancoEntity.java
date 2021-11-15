@@ -33,7 +33,11 @@ public class MultibancoEntity {
 	/** Valor MAXIMO a pagar = 999999.99 */
 	public final static BigDecimal VALOR_MAX = new BigDecimal("999999.99");
 
-	public final String entity;
+	public static String right(String string, int length) {
+		return string.substring(string.length()-length);
+	}
+
+	private final String entity;
 
 	/**
 	 * @param entity - os 5 digitos da entidade (fornecida pelo provider)
@@ -43,9 +47,23 @@ public class MultibancoEntity {
 	}
 
 
-	protected static String right(String string, int length) {
+	/**
+	 * @param value - VALOR a pagar
+	 *
+	 * @throws IllegalArgumentException caso a ENTIDADE seja invalida
+	 * @throws IllegalArgumentException caso o VALOR a pagar seja invalido
+	 */
+	public void validate(BigDecimal value) throws IllegalArgumentException {
 
-		return string.substring(string.length()-length);
+		if (entity.length()!=5) throw new IllegalArgumentException("Entidade "+entity+" não tem 5 dígitos");
+		if (!StringUtils.isNumeric(entity)) throw new IllegalArgumentException("Entidade "+entity+" não é numérica");
+
+		if (value.signum()<=0) throw new IllegalArgumentException("Valor "+value+" inferior ou igual a 0 (zero)");
+		if (value.compareTo(VALOR_MAX)>0) throw new IllegalArgumentException("Valor "+value+" superior a "+VALOR_MAX);
+		try{value.movePointRight(2).intValueExact();
+		}catch(Exception e){
+			throw new IllegalArgumentException("Valor "+value+" tem mais de 2 decimais");
+		}
 
 	}
 
@@ -57,58 +75,12 @@ public class MultibancoEntity {
 	 * <p>
 	 * Utiliza o algoritmo ISO 7064 Mod 97,10 check digit
 	 */
-	protected String checkDigits(String id7, BigDecimal value) {
+	private String checkDigits(String id7, BigDecimal value) {
 
 		String value8=right("00000000"+value.movePointRight(2).intValueExact(), 8);
-		System.err.println(value8);
 		String control=entity + id7 + value8;
 
 		return CheckDigits.ISO7064Mod97_10(control);
-
-	}
-
-
-	/**
-	 * @param value - VALOR a pagar
-	 *
-	 * @return TRUE caso o VALOR a pagar seja valido
-	 * <p>
-	 * O VALOR a pagar e' considerado valido quando:<br>
-	 * - Seja superior a ZERO<br>
-	 * - Nao seja superior a {@link #VALOR_MAX}<br>
-	 * - A parte fraccionaria nao necessite de mais de 2 digitos<br>
-	 */
-	public boolean isValid(BigDecimal value) {
-
-		if (value.signum()>0 && value.compareTo(VALOR_MAX)<=0) try{
-			value.movePointRight(2).intValueExact();
-
-		}catch(Exception e){
-			return false;
-		}return true;
-
-	}
-
-
-	/**
-	 * @param ref - REFERENCIA MULTIBANCO (pode conter espacos)
-	 * @param value - VALOR a pagar
-	 *
-	 * @return TRUE caso a REFERENCIA MULTIBANCO seja valida
-	 *
-	 * @throws IllegalArgumentException caso a ENTIDADE nao tenha 5 digitos
-	 * @throws IllegalArgumentException caso o VALOR a pagar seja invalido
-	 */
-	public boolean isValid(String ref, BigDecimal value) throws IllegalArgumentException {
-
-		if (entity.length()!=5) throw new IllegalArgumentException("Entidade "+entity+" invalida");
-		if (!isValid(value)) throw new IllegalArgumentException("Valor "+value+" invalido");
-
-		String ref9=StringUtils.removeChars(ref,' ');
-		String id7=ref9.substring(0, 7);
-		String checkDigits=ref9.substring(7, 9);
-
-		return checkDigits(id7, value).equals(checkDigits);
 
 	}
 
@@ -120,12 +92,14 @@ public class MultibancoEntity {
 	 * @return REFERENCIA MULTIBANCO formatada em grupos de 3 digitos
 	 * obtida a partir de ID7 + CHECKDIGITS
 	 *
-	 * @throws IllegalArgumentException caso a ENTIDADE nao tenha 5 digitos
+	 * @throws IllegalArgumentException caso a ENTIDADE seja invalida
 	 * @throws IllegalArgumentException caso o VALOR a pagar seja invalido
 	 *
 	 * @see MultibancoEntity#isValid(String, BigDecimal)
 	 */
 	public MultibancoRef generate(String id, BigDecimal value) throws IllegalArgumentException {
+
+		validate(value);
 
 		String id7=right("0000000"+id, 7);
 		String ref9=id7 + checkDigits(id7, value);
@@ -135,14 +109,36 @@ public class MultibancoEntity {
 	}
 
 
+	/**
+	 * @param ref - REFERENCIA MULTIBANCO (pode conter espacos)
+	 * @param value - VALOR a pagar
+	 *
+	 * @return true caso a REFERENCIA MULTIBANCO seja valida
+	 *
+	 * @throws IllegalArgumentException caso a ENTIDADE seja invalida
+	 * @throws IllegalArgumentException caso o VALOR a pagar seja invalido
+	 */
+	public boolean isValid(String ref, BigDecimal value) throws IllegalArgumentException {
+
+		validate(value);
+
+		String ref9=StringUtils.removeChars(ref, ' ');
+		String id7=ref9.substring(0, 7);
+		String checkDigits=ref9.substring(7, 9);
+
+		return checkDigits(id7, value).equals(checkDigits);
+
+	}
+
+
 	public static void main(String[] argvs) throws Exception {
 
 		//GERACAO de NOVA referencia
-		System.out.println("generate (999123490): "+new MultibancoEntity("11604").
-				generate("***9991234", new BigDecimal("25.86")));
+		System.out.println(new MultibancoEntity("11604").
+				generate("***9991234", new BigDecimal("123456.12")).toText());
 
 		System.out.println("isValid (999123490): "+new MultibancoEntity("11604").
-				isValid("999 123 490", new BigDecimal("25.86")));
+				isValid("999 123 483", new BigDecimal("123456.12")));
 
 		final String SEPARATOR = "-----------------------------------";
 

@@ -44,6 +44,22 @@ public class IfThenPayEntity extends MultibancoEntity {
 
 
 	/**
+	 * @param value - VALOR a pagar
+	 *
+	 * @throws IllegalArgumentException caso a ENTIDADE seja invalida
+	 * @throws IllegalArgumentException caso a SUB-ENTIDADE seja invalida
+	 * @throws IllegalArgumentException caso o VALOR a pagar seja invalido
+	 */
+	public void validate(BigDecimal value) throws IllegalArgumentException {
+
+		if (subentity.length()!=3) throw new IllegalArgumentException("Subentidade "+subentity+" não tem 3 dígitos");
+
+		super.validate(value);
+
+	}
+
+
+	/**
 	 * @param id - 4 digitos que identificam o nº do documento
 	 * a pagar ou o nº do v/cliente (conforme prefiram associar o pagamento
 	 * a um documento ou a um cliente). Caso o ID tenha mais que 4 digitos
@@ -51,6 +67,8 @@ public class IfThenPayEntity extends MultibancoEntity {
 	 */
 	@Override
 	public MultibancoRef generate(String id, BigDecimal value) throws IllegalArgumentException {
+
+		validate(value);
 
 		String id7=subentity + right("0000"+id, 4);
 

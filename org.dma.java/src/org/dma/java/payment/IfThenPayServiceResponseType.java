@@ -32,7 +32,7 @@ import org.dma.java.util.TimeDateUtils;
  * 3 - Chave invalida.
  * 9 - Erro desconhecido.
  */
-public class IfThenPayWebserviceResponseType {
+public class IfThenPayServiceResponseType {
 
 	public final String entidade;
 	public final String referencia;
@@ -47,7 +47,7 @@ public class IfThenPayWebserviceResponseType {
 	public final String mensagemErro;
 
 	/** Debug */
-	public IfThenPayWebserviceResponseType() {
+	public IfThenPayServiceResponseType() {
 		this(new RandomValue().numbers(5),
 			new RandomValue().numbers(9),
 			new RandomValue().Decimal(3,2),
@@ -61,7 +61,7 @@ public class IfThenPayWebserviceResponseType {
 			new RandomValue().string(50));
 	}
 
-	public IfThenPayWebserviceResponseType(String entidade, String referencia, String valor, String id,
+	public IfThenPayServiceResponseType(String entidade, String referencia, String valor, String id,
 			String dtHrPagamento, String processamento, String terminal, String tarifa, String valorLiquido,
 			String codigoErro, String mensagemErro) {
 		this(entidade, referencia,
@@ -74,7 +74,7 @@ public class IfThenPayWebserviceResponseType {
 				StringUtils.val(codigoErro), mensagemErro);
 	}
 
-	public IfThenPayWebserviceResponseType(String entidade, String referencia, BigDecimal valor, Integer id,
+	public IfThenPayServiceResponseType(String entidade, String referencia, BigDecimal valor, Integer id,
 			Date dtHrPagamento, Date processamento, String terminal, BigDecimal tarifa, BigDecimal valorLiquido,
 			Integer codigoErro, String mensagemErro) {
 		this.entidade=entidade;
