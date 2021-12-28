@@ -31,15 +31,18 @@ public class CustomTabItem extends TabItem {
 	/** Override */
 	public void setFocus() {}
 
+	/** Update and focus */
 	public void update() {
 		if (isDisposed()) return;
 		getControl().update();
 		setFocus();
 	}
 
+	/** Select and focus */
 	public void select() {
 		if (isDisposed()) return;
 		getParent().setSelection(this);
+		getParent().forceFocus();
 		setFocus();
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -13,12 +13,11 @@ public class JobTask {
 	private final IAction action;
 
 	public JobTask(IAction action) {
-		this.action=action;
-		this.name="";
+		this(action.getText(), action);
 	}
 
 	public JobTask(String name, IAction action) {
-		this.name=name;
+		this.name=name==null ? "" : name;
 		this.action=action;
 	}
 
