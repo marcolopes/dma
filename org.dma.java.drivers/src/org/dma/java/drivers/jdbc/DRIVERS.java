@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -119,7 +119,7 @@ public enum DRIVERS {
 		case H2:
 			if (isH2Embedded(host)){
 				//Multiple processes can access the same database
-				if (new ServerParameters(host).isLocalhost()) url.append(";AUTO_SERVER=TRUE");
+				url.append(";AUTO_SERVER=TRUE");
 			}else{
 				//URL;property=value[;property=value]
 				url.append(properties.isEmpty() ? "" : ";"+properties);
