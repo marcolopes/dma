@@ -115,7 +115,7 @@ public class NTPServerHandler {
 	}
 
 
-	public static final void main(String[] args) {
+	public static void main(String[] args) {
 
 		NTPServerHandler handler=new NTPServerHandler(NTP_SERVERS.OAL);
 		//NTPTimeInfo time=handler.getTime(1000);

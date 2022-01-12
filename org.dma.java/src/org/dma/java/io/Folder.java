@@ -151,7 +151,7 @@ public class Folder extends CustomFile {
 	}
 
 
-	public static final void main(String[] args) {
+	public static void main(String[] args) {
 
 		System.out.println(current());
 		System.out.println(current("tmp"));

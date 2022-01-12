@@ -141,7 +141,7 @@ public class PdfFile extends CustomFile {
 	}
 
 
-	public static void main(String[] argvs) throws Exception {
+	public static void main(String[] argvs) {
 
 		CustomFile source=new CustomFile(Folder.temporary(), "source.pdf");
 		Chronograph time=new Chronograph().start();
@@ -156,9 +156,11 @@ public class PdfFile extends CustomFile {
 
 		time.reset();
 		PdfFile output=new PdfFile(Folder.temporary(), "output.pdf");
-		output.merge(new ArrayList());
-		output.merge(files);
-		System.out.println("MERGE time="+time);
+		try{output.merge(new ArrayList());
+			output.merge(files);
+		}catch(Exception e){
+			e.printStackTrace();
+		}System.out.println("MERGE time="+time);
 
 		time.reset();
 		//output.addScript("script");

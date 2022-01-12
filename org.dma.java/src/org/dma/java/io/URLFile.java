@@ -66,7 +66,7 @@ public class URLFile extends URLHandler {
 	}
 
 
-	public static final void main(String[] args) {
+	public static void main(String[] args) {
 
 		URLFile handler=new URLFile("https://faturas.portaldasfinancas.gov.pt" ,"factemipf_static", "java", "certificados.zip");
 
