@@ -87,7 +87,7 @@ public class SendMail {
 	}
 
 
-	public static void main(String arg[]) {
+	public static void main(String args[]) {
 
 		try{
 			SendMail mail=new SendMail(new ServerParameters(
