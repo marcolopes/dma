@@ -117,8 +117,7 @@ public class CryptoCipher {
 	public CryptoCipher(Key key, String transformation) {
 		this.key=key;
 
-		try{
-			cipher=Cipher.getInstance(transformation);
+		try{cipher=Cipher.getInstance(transformation);
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 
 			decipher=Cipher.getInstance(transformation);
@@ -133,8 +132,7 @@ public class CryptoCipher {
 	/** @see Cipher#doFinal(byte[]) */
 	public byte[] encrypt(byte[] messageBytes) {
 
-		try{
-			// Encrypt Bytes
+		try{// Encrypt Bytes
 			return cipher.doFinal(messageBytes);
 
 		}catch(Exception e){
@@ -156,8 +154,7 @@ public class CryptoCipher {
 	 */
 	public String BASE64encrypt(byte[] messageBytes, int lineLength) {
 
-		try{
-			// Encrypt Bytes
+		try{// Encrypt Bytes
 			byte[] encrypted=encrypt(messageBytes);
 			// Encode Bytes to BASE64
 			byte[] base64Bytes=new Base64(lineLength).encode(encrypted);
@@ -184,8 +181,7 @@ public class CryptoCipher {
 	 */
 	public String BASE64encrypt(String message, int lineLength) {
 
-		try{
-			// Convert String to Bytes
+		try{// Convert String to Bytes
 			byte[] messageBytes=message.getBytes("UTF8");
 			// Encrypt Bytes
 			return BASE64encrypt(messageBytes, lineLength);
@@ -200,8 +196,7 @@ public class CryptoCipher {
 	/** @see Cipher#doFinal(byte[]) */
 	public byte[] decrypt(byte[] messageBytes) {
 
-		try{
-			// Decrypt Bytes
+		try{// Decrypt Bytes
 			return decipher.doFinal(messageBytes);
 
 		}catch(Exception e){
@@ -222,8 +217,7 @@ public class CryptoCipher {
 	 */
 	public String BASE64decrypt(byte[] messageBytes) {
 
-		try{
-			// Decode Bytes from BASE64
+		try{// Decode Bytes from BASE64
 			byte[] base64Bytes=new Base64(0).decode(messageBytes);
 			// Decrypt Bytes
 			byte[] decrypted=decrypt(base64Bytes);
@@ -249,8 +243,7 @@ public class CryptoCipher {
 	 */
 	public String BASE64decrypt(String message) {
 
-		try{
-			// Convert String to Bytes
+		try{// Convert String to Bytes
 			byte[] messageBytes=message.getBytes("UTF8");
 			// Decrypt Bytes
 			return BASE64decrypt(messageBytes);

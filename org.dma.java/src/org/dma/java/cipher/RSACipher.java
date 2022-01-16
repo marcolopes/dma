@@ -28,8 +28,7 @@ public class RSACipher {
 
 	/** Generate Key Pair */
 	public static KeyPair generateKeyPair(int keysize) {
-		try{
-			// Generate the private/public key pair
+		try{// Generate the private/public key pair
 			KeyPairGenerator keyGen=KeyPairGenerator.getInstance("RSA");
 			keyGen.initialize(keysize);
 			return keyGen.genKeyPair();
@@ -104,8 +103,7 @@ public class RSACipher {
 		System.out.println("-----END PUBLIC KEY-----");
 		System.out.println();
 
-		try{
-			// The bytes can be converted back to public and private key objects
+		try{// The bytes can be converted back to public and private key objects
 			KeyFactory keyFactory=KeyFactory.getInstance(keyPair.getPrivate().getAlgorithm());
 			EncodedKeySpec privateKeySpec=new PKCS8EncodedKeySpec(keyPair.getPrivate().getEncoded());
 			PrivateKey privateKey=keyFactory.generatePrivate(privateKeySpec);
@@ -124,7 +122,7 @@ public class RSACipher {
 
 	public static void main(String[] args) {
 
-		for (int size: new int[]{256, 512, 1024, 2048, 4096}) try{
+		for(int size: new int[]{256, 512, 1024, 2048, 4096}) try{
 			System.out.println("KEY SIZE: "+size);
 			debug(generateKeyPair(size));
 			System.out.println();

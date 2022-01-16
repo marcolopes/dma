@@ -19,10 +19,8 @@ public class PBECipher extends CryptoCipher {
 
 	/** PBKDF2 (Password-Based Key Derivation Function 2) */
 	public static SecretKey generateKey(KeySpec spec) {
-		try{
-			SecretKeyFactory factory=SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		try{SecretKeyFactory factory=SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 			return factory.generateSecret(spec);
-
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;

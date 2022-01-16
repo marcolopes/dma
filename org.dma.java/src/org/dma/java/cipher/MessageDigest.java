@@ -27,9 +27,7 @@ public class MessageDigest {
 	}
 
 	public static java.security.MessageDigest getDigest(String algorithm) {
-		try{
-			return java.security.MessageDigest.getInstance(algorithm);
-
+		try{return java.security.MessageDigest.getInstance(algorithm);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -50,8 +48,7 @@ public class MessageDigest {
 	/** @see java.security.MessageDigest#digest(byte[]) */
 	public byte[] digest(byte[] message) {
 
-		try{
-			// Digest Bytes
+		try{// Digest Bytes
 			return md.digest(message);
 
 		}catch(Exception e){
@@ -71,8 +68,7 @@ public class MessageDigest {
 	 */
 	public byte[] digest(String message) {
 
-		try{
-			// Convert String to Bytes
+		try{// Convert String to Bytes
 			byte[] messageBytes=message.getBytes("UTF8");
 			// Digest Bytes
 			return digest(messageBytes);
@@ -96,8 +92,7 @@ public class MessageDigest {
 	 */
 	public String BASE64digest(String message) {
 
-		try{
-			// Encode Bytes to BASE64
+		try{// Encode Bytes to BASE64
 			byte[] base64Bytes=new Base64(0).encode(digest(message));
 			// Convert Bytes to String
 			return new String(base64Bytes, "UTF8");

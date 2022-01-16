@@ -30,11 +30,9 @@ public class RSAPublicCipher extends CryptoCipher {
 	 * attribute certificates, and a certification path validation algorithm.
 	 */
 	public static PublicKey decode(byte[] encodedKey) {
-		try{
-			KeyFactory kf=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
+		try{KeyFactory kf=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
 			X509EncodedKeySpec spec=new X509EncodedKeySpec(encodedKey);
 			return kf.generatePublic(spec);
-
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -59,8 +57,7 @@ public class RSAPublicCipher extends CryptoCipher {
 	/** Verify signature */
 	public boolean verifySHA1Signature(byte[] signatureBytes, byte[] messageBytes) {
 
-		try{
-			Signature signature=Signature.getInstance("SHA1withRSA");
+		try{Signature signature=Signature.getInstance("SHA1withRSA");
 			signature.initVerify(getKey());
 			signature.update(messageBytes);
 
@@ -76,8 +73,7 @@ public class RSAPublicCipher extends CryptoCipher {
 	/** Verify signature */
 	public boolean verifySHA1Signature(String base64signature, String message) {
 
-		try{
-			byte[] base64Bytes=new Base64(0).decode(base64signature);
+		try{byte[] base64Bytes=new Base64(0).decode(base64signature);
 
 			return verifySHA1Signature(base64Bytes, message.getBytes("UTF8"));
 

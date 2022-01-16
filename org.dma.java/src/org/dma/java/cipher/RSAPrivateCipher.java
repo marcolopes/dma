@@ -30,11 +30,9 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 * PKCS#8 is mainly used to encode private keys.
 	 */
 	public static PrivateKey decode(byte[] encodedKey) {
-		try{
-			KeyFactory kf=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
+		try{KeyFactory kf=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
 			PKCS8EncodedKeySpec spec=new PKCS8EncodedKeySpec(encodedKey);
 			return kf.generatePrivate(spec);
-
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -59,8 +57,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 	/** Compute signature */
 	public byte[] signWithSHA1(byte[] messageBytes) throws SignatureException {
 
-		try{
-			Signature signature=Signature.getInstance("SHA1withRSA");
+		try{Signature signature=Signature.getInstance("SHA1withRSA");
 			signature.initSign(getKey());
 			signature.update(messageBytes);
 
@@ -83,8 +80,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 */
 	public String BASE64signWithSHA1(byte[] messageBytes) throws SignatureException {
 
-		try{
-			byte[] signatureBytes=signWithSHA1(messageBytes);
+		try{byte[] signatureBytes=signWithSHA1(messageBytes);
 			byte[] base64Bytes=new Base64(0).encode(signatureBytes);
 
 			return new String(base64Bytes, "UTF8");
@@ -107,8 +103,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 */
 	public String BASE64signWithSHA1(String message) throws SignatureException {
 
-		try{
-			byte[] messageBytes=message.getBytes("UTF8");
+		try{byte[] messageBytes=message.getBytes("UTF8");
 
 			return BASE64signWithSHA1(messageBytes);
 
