@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -118,6 +118,14 @@ public class CustomFile extends File {
 	}
 
 
+	public boolean create() {
+		try{return super.createNewFile();
+		}catch(Exception e){
+			System.err.println(e);
+		}return false;
+	}
+
+
 	@Override
 	public boolean delete() {
 		try{return super.delete();
@@ -162,6 +170,13 @@ public class CustomFile extends File {
 	@Override
 	public String toString() {
 		return getPath();
+	}
+
+
+	public static void main(String[] args) {
+
+		System.out.println(new CustomFile(""));
+
 	}
 
 
