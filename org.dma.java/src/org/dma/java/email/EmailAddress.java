@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -21,8 +21,7 @@ public class EmailAddress {
 	public EmailAddress(String email, String name) {
 		this.email=email;
 		this.name=name;
-		try{
-			address=new InternetAddress(email);
+		try{address=new InternetAddress(email);
 		}catch(Exception e){}
 	}
 
@@ -31,7 +30,6 @@ public class EmailAddress {
 		if (address!=null) try{
 			address.validate();
 			return true;
-
 		}catch(AddressException e){
 		}return false;
 	}
@@ -61,7 +59,7 @@ public class EmailAddress {
 	 */
 	@Override
 	public String toString() {
-		return name + " <"+email+">";
+		return name.isEmpty() ? email : name + " <"+email+">";
 	}
 
 	@Override

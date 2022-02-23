@@ -94,8 +94,7 @@ public class CustomHtmlEmail extends HtmlEmail {
 		for (EmailAttachment element: attachment){
 			Debug.err(element);
 			super.attach(element);
-		}
-		setBoolHasAttachments(true);
+		}setBoolHasAttachments(true);
 	}
 
 

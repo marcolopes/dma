@@ -12,11 +12,11 @@ import org.dma.java.util.StringList;
 public class ServerParameters {
 
 	@Deprecated
-	public final static int SECURITY_NONE = SECURITY.NONE.ordinal();
+	public static final int SECURITY_NONE = SECURITY.NONE.ordinal();
 	@Deprecated
-	public final static int SECURITY_STARTTLS = SECURITY.STARTTLS.ordinal();
+	public static final int SECURITY_STARTTLS = SECURITY.STARTTLS.ordinal();
 	@Deprecated
-	public final static int SECURITY_SSLTLS = SECURITY.SSLTLS.ordinal();
+	public static final int SECURITY_SSLTLS = SECURITY.SSLTLS.ordinal();
 
 	public enum SECURITY {
 

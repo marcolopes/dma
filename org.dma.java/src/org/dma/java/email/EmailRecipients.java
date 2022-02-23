@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class EmailRecipients {
+public class EmailRecipients extends ArrayList<EmailAddress> {
 
-	private final Collection<EmailAddress> to=new ArrayList();
 	private final Collection<EmailAddress> cc=new ArrayList();
 	private final Collection<EmailAddress> bcc=new ArrayList();
 
@@ -22,15 +21,29 @@ public class EmailRecipients {
 	}
 
 
+	/*
+	 * To
+	 */
+	public Collection<EmailAddress> getTo() {
+		return this;
+	}
+
 	public EmailRecipients addTo(EmailAddress...address) {
 		return addTo(Arrays.asList(address));
 	}
 
 	public EmailRecipients addTo(Collection<EmailAddress> address) {
-		to.addAll(address);
+		addAll(address);
 		return this;
 	}
 
+
+	/*
+	 * Carbon Copy
+	 */
+	public Collection<EmailAddress> getCc() {
+		return cc;
+	}
 
 	public EmailRecipients addCc(EmailAddress...address) {
 		return addCc(Arrays.asList(address));
@@ -42,6 +55,13 @@ public class EmailRecipients {
 	}
 
 
+	/*
+	 * Blind Carbon Copy
+	 */
+	public Collection<EmailAddress> getBcc() {
+		return bcc;
+	}
+
 	public EmailRecipients addBcc(EmailAddress...address) {
 		return addBcc(Arrays.asList(address));
 	}
@@ -51,17 +71,5 @@ public class EmailRecipients {
 		return this;
 	}
 
-
-	public Collection<EmailAddress> getTo() {
-		return to;
-	}
-
-	public Collection<EmailAddress> getCc() {
-		return cc;
-	}
-
-	public Collection<EmailAddress> getBcc() {
-		return bcc;
-	}
 
 }
