@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -25,18 +25,18 @@ public class VatNumber {
 		 */
 		public static boolean PT(String number) {
 			final int max=9;
-			//check if is numeric and has 9 numbers
-			if (!number.matches("[0-9]+") || number.length()!=max) return false;
-			int checkSum=0;
-			//calculate checkSum
-			for (int i=0; i<max-1; i++){
-				checkSum+=(number.charAt(i)-'0')*(max-i);
-			}
-			int checkDigit=11-(checkSum % 11);
-			//if checkDigit is higher than 9 set it to zero
-			if (checkDigit>9) checkDigit=0;
-			//compare checkDigit with the last number of NIF
-			return checkDigit==number.charAt(max-1)-'0';
+			//check if is numeric and has 9 digits
+			if (number.matches("[0-9]+") && !number.startsWith("0") && number.length()==max){
+				int checkSum=0;
+				//calculate checkSum
+				for (int i=0; i<max-1; i++) checkSum+=(number.charAt(i)-'0')*(max-i);
+				//calculate checkDigit
+				int checkDigit=11-(checkSum % 11);
+				//if checkDigit is higher than 9 set it to zero
+				if (checkDigit>9) checkDigit=0;
+				//compare checkDigit with the last digit
+				return checkDigit==number.charAt(max-1)-'0';
+			}return false;
 		}
 
 	}
