@@ -14,11 +14,11 @@ public class DBCPManager implements IPoolManager {
 
 	private final BasicDataSource pool;
 
-	public DBCPManager(String url, String user, String password) {
+	public DBCPManager(String url, String username, String password) {
 		pool=new BasicDataSource();
 		//pool.setDriverClassName("org.h2.Driver");
 		pool.setUrl(url);
-		pool.setUsername(user);
+		pool.setUsername(username);
 		pool.setPassword(password);
 	}
 

@@ -15,11 +15,11 @@ public class BoneCPManager implements IPoolManager {
 
 	private final BoneCP pool;
 
-	public BoneCPManager(String url, String user, String password) {
+	public BoneCPManager(String url, String username, String password) {
 		//Activator.classForName("org.h2.Driver");
 		BoneCPConfig config=new BoneCPConfig();
 		config.setJdbcUrl(url);
-		config.setUsername(user);
+		config.setUsername(username);
 		config.setPassword(password);
 		pool=getPool(config);
 	}

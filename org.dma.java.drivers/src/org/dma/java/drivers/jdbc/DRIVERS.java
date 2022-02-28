@@ -79,19 +79,19 @@ public enum DRIVERS {
 		return this==H2 && new ServerParameters(host).isLocalhost();
 	}
 
-	public Connection getConnection(String url, String user, String password, POOLMANAGERS pool) throws SQLException {
-		return pool.get(url, user, password).getConnection();
+	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException {
+		return pool.get(url, username, password).getConnection();
 	}
 
-	public Connection getConnection(String url, String user, String password) throws SQLException {
-		return getConnection(url, user, password, POOLMANAGERS.NONE);
+	public Connection getConnection(String url, String username, String password) throws SQLException {
+		return getConnection(url, username, password, POOLMANAGERS.NONE);
 	}
 
-	public void checkConnection(String url, String user, String password) throws SQLException {
+	public void checkConnection(String url, String username, String password) throws SQLException {
 		Debug.err("URL", url);
-		Debug.err("USER", user);
+		Debug.err("USERNAME", username);
 		Debug.err("PASSWORD", password);
-		getConnection(url, user, password).close();
+		getConnection(url, username, password).close();
 	}
 
 	private String getDatabaseUrl(String host, String database, Folder folder) {
@@ -144,16 +144,16 @@ public enum DRIVERS {
 	}
 
 	/** Only for H2 database */
-	public void compact(String host, String database, Folder folder, String user, String password) throws Exception {
+	public void compact(String host, String database, Folder folder, String username, String password) throws Exception {
 		String url=getDatabaseUrl(host, database, folder);
 		//SQL script file
 		File file=new CustomFile(Folder.temporary().getAbsolutePath(), database+".sql");
 		//Backup the database to the SQL script file
-		Script.execute(url, user, password, file.getAbsolutePath());
+		Script.execute(url, username, password, file.getAbsolutePath());
 		//Delete the database file
 		DeleteDbFiles.execute(folder.getAbsolutePath(), database, true);
 		//Recreate the database from the SQL script file
-		RunScript.execute(url, user, password, file.getAbsolutePath(), null, false);
+		RunScript.execute(url, username, password, file.getAbsolutePath(), null, false);
 		//Delete the SQL script file
 		file.delete();
 	}
@@ -182,7 +182,7 @@ public enum DRIVERS {
 		}
 	}
 
-	public void executeBackup(String host, String database, Folder folder, String user, String password, BackupParameters backup) throws Exception {
+	public void executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception {
 		//colibri9_H2_2014-12-31_125959
 		String prefix=new File(database).getName()+"_"+name()+"_"+TimeDateUtils.getDateFormatted("yyyy-MM-dd_HHmmss");
 		//[folder]/[prefix].zip
@@ -202,10 +202,10 @@ public enum DRIVERS {
 			CustomFile dump=new CustomFile(backup.folder, prefix+".sql");
 			Debug.out("BACKUP DUMP: "+dump);
 			switch(this){
-			case H2: executeBackup(backup.buildCommand(getDatabaseUrl(host, database, folder), user, password, dump), password); break;
+			case H2: executeBackup(backup.buildCommand(getDatabaseUrl(host, database, folder), username, password, dump), password); break;
 			case MySQL:
 			case PostgreSQL:
-			case SQLServer: executeBackup(backup.buildCommand(database, user, password, dump), password); break;
+			case SQLServer: executeBackup(backup.buildCommand(database, username, password, dump), password); break;
 			}
 			//ZIP dump
 			zip.deflate(dump);

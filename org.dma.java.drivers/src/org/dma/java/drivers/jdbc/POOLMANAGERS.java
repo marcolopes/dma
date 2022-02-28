@@ -28,25 +28,25 @@ public enum POOLMANAGERS {
 
 	private static Map<String, IPoolManager> CACHE=new ConcurrentHashMap();
 
-	public IPoolManager get(String url, String user, String password) {
+	public IPoolManager get(String url, String username, String password) {
 		IPoolManager manager=CACHE.get(url);
-		if (manager==null) CACHE.put(url, manager=create(url, user, password));
+		if (manager==null) CACHE.put(url, manager=create(url, username, password));
 		return manager;
 	}
 
-	private IPoolManager create(final String url, final String user, final String password) {
+	private IPoolManager create(final String url, final String username, final String password) {
 		switch(this){
 		case NONE: return new IPoolManager() {
 			@Override
 			public void shutdown() {}
 			@Override
 			public Connection getConnection() throws SQLException {
-				return DriverManager.getConnection(url, user, password);
+				return DriverManager.getConnection(url, username, password);
 			}
 		};
-		case DBCP: return new DBCPManager(url, user, password);
-		case C3P0: return new C3P0Manager(url, user, password);
-		case BONECP: return new BoneCPManager(url, user, password);
+		case DBCP: return new DBCPManager(url, username, password);
+		case C3P0: return new C3P0Manager(url, username, password);
+		case BONECP: return new BoneCPManager(url, username, password);
 		}return null;
 	}
 
