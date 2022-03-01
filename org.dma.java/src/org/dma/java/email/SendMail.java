@@ -18,6 +18,7 @@ import org.dma.java.io.FileParameters;
 import org.dma.java.io.UTF8TextFile;
 import org.dma.java.util.Debug;
 
+@Deprecated
 public class SendMail {
 
 	private final ServerParameters server;
