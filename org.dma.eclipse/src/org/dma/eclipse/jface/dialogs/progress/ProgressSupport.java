@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -49,6 +49,10 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 		}
 	}
 
+
+	public boolean run() throws Exception {
+		return run(false);
+	}
 
 	public boolean run(boolean silent) throws Exception {
 

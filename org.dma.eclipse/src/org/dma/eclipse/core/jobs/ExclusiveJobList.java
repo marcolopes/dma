@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2017 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -7,11 +7,9 @@ package org.dma.eclipse.core.jobs;
 
 import java.util.ArrayList;
 
-import org.dma.eclipse.core.jobs.tasks.JobUITask;
 import org.dma.java.util.Debug;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.jface.action.Action;
 
 public abstract class ExclusiveJobList extends ArrayList<CustomJob> {
 
@@ -28,14 +26,14 @@ public abstract class ExclusiveJobList extends ArrayList<CustomJob> {
 		public boolean belongsTo(Object family) {
 			return false; //avoid IJobManager cancel!
 		}
-	}.addTask(new JobUITask(new Action() {
+	}.addTask(new UIAction() {
 		@Override
 		public void run() {
 			Debug.out("DONE");
 			clear();
 			done();
 		}
-	}));
+	});
 
 	/** Schedules all jobs */
 	public synchronized void schedule() {

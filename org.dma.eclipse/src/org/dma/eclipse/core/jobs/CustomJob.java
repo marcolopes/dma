@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2021 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -8,8 +8,6 @@ package org.dma.eclipse.core.jobs;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dma.eclipse.core.jobs.tasks.JobTask;
-import org.dma.eclipse.core.jobs.tasks.JobUITask;
 import org.dma.java.time.Chronograph;
 import org.dma.java.util.Debug;
 
@@ -44,7 +42,7 @@ public class CustomJob extends Job {
 		}catch(Exception e){}
 	}
 
-	private final List<JobTask> tasks=new ArrayList();
+	private final List<IAction> tasks=new ArrayList();
 	@Deprecated
 	private IAction doneAction;
 
@@ -94,12 +92,12 @@ public class CustomJob extends Job {
 	/*
 	 * Tasks
 	 */
-	public CustomJob addTask(JobTask action) {
+	public CustomJob addTask(IAction action) {
 		tasks.add(action);
 		return this;
 	}
 
-	public CustomJob removeTask(JobTask action) {
+	public CustomJob removeTask(IAction action) {
 		tasks.remove(action);
 		return this;
 	}
@@ -163,20 +161,20 @@ public class CustomJob extends Job {
 			canceled=false;
 			for(int i=0; i<tasks.size() && !canceled; i++){
 
-				final JobTask jtask=tasks.get(i);
-				Debug.out("RUNNING TASK", jtask);
-				monitor.subTask(jtask.getName());
+				final IAction action=tasks.get(i);
+				Debug.out("RUNNING TASK", action);
+				monitor.subTask(action.getText());
 
-				if(jtask instanceof JobUITask){
+				if(action instanceof UIAction){
 					//UI task
 					Display.getDefault().syncExec(new Runnable() {
 						@Override
 						public void run() {
-							jtask.getAction().run();
+							action.run();
 						}
 					});
 				}else{//NORMAL task
-					jtask.getAction().run();
+					action.run();
 				}
 
 			}return Status.OK_STATUS;

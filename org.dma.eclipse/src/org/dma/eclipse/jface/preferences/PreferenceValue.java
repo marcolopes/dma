@@ -21,15 +21,15 @@ public class PreferenceValue implements IPreferenceValue {
 	private void setDefault() {
 		if(defaultValue instanceof Integer){
 			store.setDefault(name, (Integer)defaultValue);
-		}else if(defaultValue instanceof Long){
+		}else if (defaultValue instanceof Long){
 			store.setDefault(name, (Long)defaultValue);
-		}else if(defaultValue instanceof Float){
+		}else if (defaultValue instanceof Float){
 			store.setDefault(name, (Float)defaultValue);
-		}else if(defaultValue instanceof Double){
+		}else if (defaultValue instanceof Double){
 			store.setDefault(name, (Double)defaultValue);
-		}else if(defaultValue instanceof Boolean){
+		}else if (defaultValue instanceof Boolean){
 			store.setDefault(name, (Boolean)defaultValue);
-		}else if(defaultValue instanceof String){
+		}else if (defaultValue instanceof String){
 			store.setDefault(name, (String)defaultValue);
 		}else throw new UnsupportedOperationException();
 	}
@@ -49,12 +49,12 @@ public class PreferenceValue implements IPreferenceValue {
 	public String getString() {return store.getString(name);}
 
 	public Object getValue() {
-		if(defaultValue instanceof Integer) return getInt();
-		if(defaultValue instanceof Long) return getLong();
-		if(defaultValue instanceof Float) return getFloat();
-		if(defaultValue instanceof Double) return getDouble();
-		if(defaultValue instanceof Boolean) return getBoolean();
-		if(defaultValue instanceof String) return getString();
+		if (defaultValue instanceof Integer) return getInt();
+		if (defaultValue instanceof Long) return getLong();
+		if (defaultValue instanceof Float) return getFloat();
+		if (defaultValue instanceof Double) return getDouble();
+		if (defaultValue instanceof Boolean) return getBoolean();
+		if (defaultValue instanceof String) return getString();
 		throw new UnsupportedOperationException();
 	}
 
