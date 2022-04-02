@@ -15,9 +15,8 @@ public class MessageList extends LinkedHashSet<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	@Deprecated
-	public MessageList(Exception e) {
-		this(e.getMessage());
+	public MessageList(Throwable e) {
+		this(e.getMessage()==null ? e.toString() : e.getMessage());
 	}
 
 	public MessageList(String...message) {
@@ -57,10 +56,14 @@ public class MessageList extends LinkedHashSet<String> {
 		return addAll(col);
 	}
 
-	/** "prefix: message" */
 	public MessageList add(String prefix, String message) {
 		add(prefix+": "+message);
 		return this;
+	}
+
+	/** @see MessageList#add(String, String) */
+	public MessageList add(String prefix, Throwable e) {
+		return add(prefix, e.getMessage()==null ? e.toString() : e.getMessage());
 	}
 
 	public MessageList add(Throwable e) {
