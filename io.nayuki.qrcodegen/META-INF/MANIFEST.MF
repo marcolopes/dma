@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-Name: QR Code generator library
+Bundle-SymbolicName: io.nayuki.qrcodegen;singleton:=true
+Bundle-Version: 1.6.0.qualifier
+Bundle-Vendor: https://www.nayuki.io/page/qr-code-generator-library
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: .
+Export-Package: io.nayuki.qrcodegen
