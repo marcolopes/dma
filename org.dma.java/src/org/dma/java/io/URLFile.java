@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -7,6 +7,7 @@ package org.dma.java.io;
 
 import java.io.File;
 import java.net.URL;
+import java.net.URLConnection;
 
 import org.dma.java.net.URLHandler;
 import org.dma.java.util.StringUtils;
@@ -63,6 +64,14 @@ public class URLFile extends URLHandler {
 	/** Returns LOCAL filename */
 	public String getFilename() {
 		return new File(getFile()).getName();
+	}
+
+
+	/** @see URLConnection#getLastModified() */
+	public long getLastModified() {
+		try{return openConnection().getLastModified();
+		}catch(Exception e){}
+		return 0;
 	}
 
 

@@ -177,7 +177,6 @@ public class JKSCertificate {
 	    	"\nEXPIRES: " + X509Cert.getNotAfter()+
 	    	"\nDAYS LEFT: " + daysToExpire()+
 			"\nHASH CODE: " + hashCode();
-
 	}
 
 	@Override
