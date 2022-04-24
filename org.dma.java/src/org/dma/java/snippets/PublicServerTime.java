@@ -18,9 +18,7 @@ public final class PublicServerTime {
 
 	public static Date getNTPDate() {
 
-		String[] hosts = new String[]{
-			"ntp02.oal.ul.pt", "ntp04.oal.ul.pt",
-			"ntp.xs4all.nl"};
+		String[] hosts = {"ntp02.oal.ul.pt", "ntp04.oal.ul.pt", "ntp.xs4all.nl"};
 
 		NTPUDPClient client = new NTPUDPClient();
 		// We want to timeout if a response takes longer than 5 seconds

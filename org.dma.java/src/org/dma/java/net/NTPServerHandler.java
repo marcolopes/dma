@@ -61,8 +61,7 @@ public class NTPServerHandler {
 			for(NTP_SERVERS server: servers){
 				NTPTimeInfo time=server.query(timeout);
 				if (time!=null) return time;
-			}
-			return null;
+			}return null;
 		}
 
 		/** @see NTP_SERVERS#queryAll(int, NTP_SERVERS...) */
@@ -99,9 +98,7 @@ public class NTPServerHandler {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-
-		return null;
+		}return null;
 
 	}
 

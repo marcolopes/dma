@@ -38,14 +38,11 @@ public class XMLFile<T> extends CustomFile {
 	 */
 	public T read() {
 
-		try{
-			BufferedInputStream in=new BufferedInputStream(asInputStream());
+		try{BufferedInputStream in=new BufferedInputStream(asInputStream());
 
 			XMLDecoder decoder=new XMLDecoder(in);
 
-			try{
-				return (T)decoder.readObject();
-
+			try{return (T)decoder.readObject();
 			}finally{
 				decoder.close();
 				in.close();
@@ -70,14 +67,11 @@ public class XMLFile<T> extends CustomFile {
 	 */
 	public boolean write(T obj) {
 
-		try{
-			BufferedOutputStream out=new BufferedOutputStream(asOutputStream());
+		try{BufferedOutputStream out=new BufferedOutputStream(asOutputStream());
 
 			XMLEncoder encoder=new XMLEncoder(out);
 
-			try{
-				encoder.writeObject(obj);
-
+			try{encoder.writeObject(obj);
 			}finally{
 				encoder.close();
 				out.close();

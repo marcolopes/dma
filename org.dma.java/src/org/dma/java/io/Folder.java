@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -19,7 +19,8 @@ public class Folder extends CustomFile {
 	}
 
 	public static Folder temporary(String...more) {
-		try{return new Folder(System.getProperty("java.io.tmpdir"), more);
+		try{File tmpdir=new File(System.getProperty("java.io.tmpdir")).getCanonicalFile();
+			return new Folder(tmpdir, more);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -67,9 +68,7 @@ public class Folder extends CustomFile {
 
 	public boolean create() {
 
-		try{
-			return exists() ? true : mkdir();
-
+		try{return exists() ? true : mkdir();
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;

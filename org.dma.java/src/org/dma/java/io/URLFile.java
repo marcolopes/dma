@@ -63,7 +63,7 @@ public class URLFile extends URLHandler {
 
 	/** Returns LOCAL filename */
 	public String getFilename() {
-		return new File(getFile()).getName();
+		return getFile().getName();
 	}
 
 

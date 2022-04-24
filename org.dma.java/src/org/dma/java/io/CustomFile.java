@@ -5,6 +5,7 @@
  *******************************************************************************/
 package org.dma.java.io;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +17,11 @@ import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
+import org.apache.commons.lang.SystemUtils;
+
+import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 
 public class CustomFile extends File {
@@ -132,6 +137,37 @@ public class CustomFile extends File {
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
+	}
+
+
+	/** @see Desktop#open(File) */
+	public boolean open() {
+		if (Desktop.isDesktopSupported()){
+			Desktop desktop=Desktop.getDesktop();
+			if (desktop.isSupported(Desktop.Action.OPEN)) try{
+				Desktop.getDesktop().open(this);
+				return true;
+			}catch(Exception e){
+				Debug.err(e);
+				System.err.println(e);
+			}
+		}return false;
+	}
+
+
+	/** @see Command#Command(File, String, List) */
+	public boolean execute(File directory) {
+		Command command=new Command(directory, toString());
+		try{return command.start().exitValue()==0;
+		}catch(Exception e){
+			System.err.println(e);
+		}//The requested operation requires elevation
+		command=new Command(directory, "rundll32", "url.dll", "FileProtocolHandler", toString());
+		if (SystemUtils.IS_OS_WINDOWS) try{
+			return command.start().exitValue()==0;
+		}catch(Exception e){
+			System.err.println(e);
+		}return open();
 	}
 
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -42,29 +42,23 @@ public class ByteFile extends CustomFile {
 	 */
 	public byte[] read() {
 
-		try{
-			// Get the size of the file
+		try{// Get the size of the file
 			long length=length();
 
 			// File is too large
-			if (length > Integer.MAX_VALUE)
-				throw new IOException("File is too large: "+getName());
+			if (length > Integer.MAX_VALUE) throw new IOException("File is too large: "+getName());
 
 			byte[] buffer=new byte[(int)length];
 
 			BufferedInputStream in=new BufferedInputStream(asInputStream());
 
-			try{
-				int offset=0;
+			try{int offset=0;
 				int numRead=0;
 				// Read in the bytes
 				while(offset < length && (numRead=in.read(buffer, offset, buffer.length-offset)) > 0){
 					offset+=numRead;
-				}
-
-				// Ensure all the bytes have been read in
-				if (offset < buffer.length)
-					throw new IOException("Could not completely read file: "+getName());
+				}// Ensure all the bytes have been read in
+				if (offset < buffer.length) throw new IOException("Could not completely read file: "+getName());
 
 			}finally{
 				in.close();
@@ -79,22 +73,15 @@ public class ByteFile extends CustomFile {
 
 	public byte[] readFully() {
 
-		try{
-			// Get the size of the file
-			long length=length();
-
+		try{long length=length();
 			// File is too large
-			if (length > Integer.MAX_VALUE)
-				throw new IOException("File is too large: "+getName());
+			if (length>Integer.MAX_VALUE) throw new IOException("File is too large: "+getName());
 
 			byte[] buffer=new byte[(int)length];
 
-			DataInputStream in=new DataInputStream(
-					new BufferedInputStream(asInputStream()));
+			DataInputStream in=new DataInputStream(new BufferedInputStream(asInputStream()));
 
-			try{
-				in.readFully(buffer);
-
+			try{in.readFully(buffer);
 			}finally{
 				in.close();
 			}return buffer;
@@ -126,13 +113,9 @@ public class ByteFile extends CustomFile {
 	 */
 	public int write(byte[] bytes, boolean append) {
 
-		if (bytes.length>0) try{
+		try{BufferedOutputStream out=new BufferedOutputStream(asOutputStream(append));
 
-			BufferedOutputStream out=new BufferedOutputStream(asOutputStream(append));
-
-			try{
-				out.write(bytes);
-
+			try{out.write(bytes);
 			}finally{
 				out.close();
 			}return bytes.length;

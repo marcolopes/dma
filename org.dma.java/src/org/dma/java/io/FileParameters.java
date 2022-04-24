@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -46,11 +46,9 @@ public class FileParameters {
 
 	/** @see File#createTempFile(String, String, File) */
 	public File createTempFile() {
-		try{
-			File file=File.createTempFile(prefix+"-", suffix, folder);
+		try{File file=File.createTempFile(prefix+"-", suffix, folder);
 			file.deleteOnExit();
 			return file;
-
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -58,14 +56,10 @@ public class FileParameters {
 
 
 	/** @see FileParameters#createTempFile() */
-	public File createTempFile(byte[] bytes) {
-
+	public ByteFile createTempFile(byte[] bytes) {
 		ByteFile file=new ByteFile(createTempFile());
-
 		file.write(bytes);
-
 		return file;
-
 	}
 
 
@@ -75,8 +69,8 @@ public class FileParameters {
 	}
 
 
-	public File toFile() {
-		return new File(toString());
+	public CustomFile toFile() {
+		return new CustomFile(toString());
 	}
 
 

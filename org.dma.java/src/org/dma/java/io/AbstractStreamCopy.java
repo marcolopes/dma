@@ -16,12 +16,12 @@ public abstract class AbstractStreamCopy {
 	/** Streams must be closed by caller */
 	public void copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
 
-		byte[] buf=new byte[1024];
+		byte[] buffer=new byte[1024];
 
 		int len;
 		// Transfer bytes from input to output
-		while(!cancel() && (len=in.read(buf)) > 0){
-			out.write(buf, 0, len);
+		while(!cancel() && (len=in.read(buffer)) > 0){
+			out.write(buffer, 0, len);
 		}
 
 		if (cancel()) throw new InterruptedException();

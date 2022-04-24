@@ -54,26 +54,20 @@ public class URLTextFile extends URLFile {
 
 		StringBuffer buffer=new StringBuffer(CustomFile.STRING_BUFFER_LENGTH);
 
-		try{
-			BufferedReader in=new BufferedReader(
+		try{BufferedReader in=new BufferedReader(
 					new InputStreamReader(asInputStream(), charset));
 
-			try{
-				String line;
+			try{String line;
 				while((line=in.readLine()) != null){
-					buffer.append(buffer.length()==0 ?
-							line : SEPARATOR.LINE.value+line);
+					buffer.append(buffer.length()==0 ? line : SEPARATOR.LINE.value+line);
 				}
-
 			}finally{
 				in.close();
 			}
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-
-		return buffer.toString();
+		}return buffer.toString();
 
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -141,7 +141,7 @@ public class JKSCertificate {
 
 	/** Returns X509 Certificate usage */
 	public Collection<String> getKeyUsage() {
-		String[] purposes=new String[]{
+		String[] purposes={
 		     "digitalSignature",
 		     "nonRepudiation",
 		     "keyEncipherment",
@@ -166,17 +166,16 @@ public class JKSCertificate {
 	 */
 	@Override
 	public String toString() {
-		return !isValid() ? "INVALID" :
-			"-----X509 CERTIFICATE-----"+
-			"\nALIAS: " + alias+
-			"\nUSAGE: " + getKeyUsage()+
-	    	"\nSERIAL: " + X509Cert.getSerialNumber()+
-	    	"\nISSUER: " + X509Cert.getIssuerX500Principal()+
-	    	"\nSUBJECT: " + X509Cert.getSubjectX500Principal()+
-	    	"\nISSUED: " + X509Cert.getNotBefore()+
-	    	"\nEXPIRES: " + X509Cert.getNotAfter()+
-	    	"\nDAYS LEFT: " + daysToExpire()+
-			"\nHASH CODE: " + hashCode();
+		return isValid() ? new StringBuilder("-----X509 CERTIFICATE-----").
+			append("\n").append("ALIAS: ").append(alias).
+			append("\n").append("USAGE: ").append(getKeyUsage()).
+			append("\n").append("SERIAL: ").append(X509Cert.getSerialNumber()).
+			append("\n").append("ISSUER: ").append(X509Cert.getIssuerX500Principal()).
+			append("\n").append("SUBJECT: ").append(X509Cert.getSubjectX500Principal()).
+			append("\n").append("ISSUED: ").append(X509Cert.getNotBefore()).
+			append("\n").append("EXPIRES: ").append(X509Cert.getNotAfter()).
+			append("\n").append("DAYS LEFT: ").append(daysToExpire()).
+			append("\n").append("HASH CODE: ").append(hashCode()).toString() : "INVALID";
 	}
 
 	@Override

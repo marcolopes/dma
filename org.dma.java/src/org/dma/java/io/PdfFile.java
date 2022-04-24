@@ -33,7 +33,7 @@ import org.dma.java.time.Chronograph;
  * https://stackoverflow.com/questions/30449348/signing-pdf-memory-consumption
  * https://stackoverflow.com/questions/12596643/itext-multiple-signatures
  */
-public class PdfFile extends CustomFile {
+public class PdfFile extends ByteFile {
 
 	/** @see CustomFile#CustomFile(String, String...) */
 	public PdfFile(String pathname, String...more) {

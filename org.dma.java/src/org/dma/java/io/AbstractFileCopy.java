@@ -33,14 +33,11 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 		//avoid self copy!
 		if (new CustomFile(src).equals(dst)) return true;
 
-		try{
-			InputStream in=new BufferedInputStream(new FileInputStream(src));
+		try{InputStream in=new BufferedInputStream(new FileInputStream(src));
 
 			OutputStream out=new BufferedOutputStream(new FileOutputStream(dst));
 
-			try{
-				copy(in, out);
-
+			try{copy(in, out);
 			}finally{
 				out.close();
 				in.close();

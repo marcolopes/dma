@@ -71,17 +71,15 @@ public class WordNumerals {
 
 	public enum QUALIFIERS {
 
-		SINGULAR (new String[]{
-			"mil", "milhão", "bilião", "trilião", "quatrilião",
-			"quintilião", "sextilião", "septilião", "octilião", "nonilião"}),
+		SINGULAR ("mil", "milhão", "bilião", "trilião", "quatrilião",
+			"quintilião", "sextilião", "septilião", "octilião", "nonilião"),
 
-		PLURAL (new String[]{
-			"mil", "milhões", "biliões", "triliões", "quatriliões",
-			"quintiliões", "sextiliões", "septiliões", "octiliões", "noniliões"});
+		PLURAL ("mil", "milhões", "biliões", "triliões", "quatriliões",
+			"quintiliões", "sextiliões", "septiliões", "octiliões", "noniliões");
 
 		public final String[] names;
 
-		QUALIFIERS(String[] names) {
+		QUALIFIERS(String...names) {
 			this.names=names;
 		}
 
@@ -99,28 +97,27 @@ public class WordNumerals {
 
 	public enum NUMERALS {
 
-		GROUP0 (0, new String[]{"zero"}),
+		GROUP0 (0, "zero"),
 
-		GROUP1_19 (1, new String[]{
-			"um", "dois", "três", "quatro", "cinco",
+		GROUP1_19 (1, "um", "dois", "três", "quatro", "cinco",
 			"seis", "sete", "oito", "nove", "dez",
 			"onze", "doze", "treze", "catorze", "quinze",
-			"dezasseis", "dezassete", "dezoito", "dezanove"}),
+			"dezasseis", "dezassete", "dezoito", "dezanove"),
 
-		GROUP20_99 (10, new String[]{null,
+		GROUP20_99 (10, null,
 			"vinte", "trinta", "quarenta", "cinquenta",
-			"sessenta",	"setenta", "oitenta", "noventa"}),
+			"sessenta",	"setenta", "oitenta", "noventa"),
 
-		GROUP100 (100, new String[]{"cem"}),
+		GROUP100 (100, "cem"),
 
-		GROUP101_999 (100, new String[]{
-			"cento", "duzentos", "trezentos", "quatrocentos", "quinhentos",
-			"seiscentos", "setecentos", "oitocentos", "novecentos"});
+		GROUP101_999 (100, "cento",
+				"duzentos", "trezentos", "quatrocentos", "quinhentos",
+				"seiscentos", "setecentos", "oitocentos", "novecentos");
 
 		public final int divisor;
 		public final String[] names;
 
-		NUMERALS(int divisor, String[] names) {
+		NUMERALS(int divisor, String...names) {
 			this.divisor=divisor;
 			this.names=names;
 		}

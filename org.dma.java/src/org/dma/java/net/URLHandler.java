@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.dma.java.io.CustomFile;
+
 public class URLHandler {
 
 	public static Pattern URL_PATTERN = Pattern.compile(
@@ -101,8 +103,8 @@ public class URLHandler {
 
 
 	/** @see URL#getFile() */
-	public String getFile() {
-		return url.getFile();
+	public CustomFile getFile() {
+		return new CustomFile(url.getFile());
 	}
 
 

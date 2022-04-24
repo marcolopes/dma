@@ -63,25 +63,19 @@ public class TextFile extends CustomFile {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
-		try{
-			BufferedReader in=new BufferedReader(new FileReader(this));
+		try{BufferedReader in=new BufferedReader(new FileReader(this));
 
-			try{
-				String line;
+			try{String line;
 				while((line=in.readLine())!=null){
-					buffer.append(buffer.length()==0 ?
-							line : SEPARATOR.LINE.value+line);
+					buffer.append(buffer.length()==0 ? line : SEPARATOR.LINE.value+line);
 				}
-
 			}finally{
 				in.close();
 			}
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-
-		return buffer.toString();
+		}return buffer.toString();
 
 	}
 
@@ -92,25 +86,19 @@ public class TextFile extends CustomFile {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
-		try{
-			BufferedReader in=new BufferedReader(new FileReader(this));
+		try{BufferedReader in=new BufferedReader(new FileReader(this));
 
-			try{
-				String line;
+			try{String line;
 				while((line=in.readLine())!=null && lines--!=0){
-					buffer.append(buffer.length()==0 ?
-							line : SEPARATOR.LINE.value+line);
+					buffer.append(buffer.length()==0 ? line : SEPARATOR.LINE.value+line);
 				}
-
 			}finally{
 				in.close();
 			}
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-
-		return buffer.toString();
+		}return buffer.toString();
 
 	}
 
@@ -139,12 +127,9 @@ public class TextFile extends CustomFile {
 	@Deprecated
 	public boolean writeText(String text) {
 
-		try{
-			BufferedWriter out=new BufferedWriter(new FileWriter(this));
+		try{BufferedWriter out=new BufferedWriter(new FileWriter(this));
 
-			try{
-				out.write(text);
-
+			try{out.write(text);
 			}finally{
 				out.close();
 			}return true;
@@ -180,26 +165,20 @@ public class TextFile extends CustomFile {
 
 		StringBuffer buffer=new StringBuffer(STRING_BUFFER_LENGTH);
 
-		try{
-			BufferedReader in=new BufferedReader(
+		try{BufferedReader in=new BufferedReader(
 					new InputStreamReader(asInputStream(), charset));
 
-			try{
-				String line;
+			try{String line;
 				while((line=in.readLine())!=null && lines--!=0){
-					buffer.append(buffer.length()==0 ?
-							line : SEPARATOR.LINE.value+line);
+					buffer.append(buffer.length()==0 ? line : SEPARATOR.LINE.value+line);
 				}
-
 			}finally{
 				in.close();
 			}
 
 		}catch(Exception e){
 			System.err.println(e);
-		}
-
-		return buffer.toString();
+		}return buffer.toString();
 
 	}
 
@@ -241,9 +220,7 @@ public class TextFile extends CustomFile {
 			BufferedWriter out=new BufferedWriter(
 					new OutputStreamWriter(asOutputStream(append), charset));
 
-			try{
-				out.write(text);
-
+			try{out.write(text);
 			}finally{
 				out.close();
 			}return true;

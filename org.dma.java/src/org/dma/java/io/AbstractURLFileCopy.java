@@ -28,22 +28,17 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 	 */
 	public boolean to(File dst) {
 
-		try{
-			File output=new File(dst+".tmp");
+		try{File output=new File(dst+".tmp");
 
 			BufferedInputStream in=new BufferedInputStream(file.asInputStream());
 
 			OutputStream out=new BufferedOutputStream(new FileOutputStream(output));
 
-			try{
-				copy(in, out);
-
+			try{copy(in, out);
 			}finally{
 				out.close();
 				in.close();
-			}
-
-			dst.delete();
+			}dst.delete();
 
 			return output.renameTo(dst);
 
@@ -64,14 +59,11 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 	 */
 	public boolean from(File src) {
 
-		try{
-			BufferedInputStream in=new BufferedInputStream(new FileInputStream(src));
+		try{BufferedInputStream in=new BufferedInputStream(new FileInputStream(src));
 
 			OutputStream out=new BufferedOutputStream(file.asOutputStream());
 
-			try{
-				copy(in, out);
-
+			try{copy(in, out);
 			}finally{
 				out.close();
 				in.close();
