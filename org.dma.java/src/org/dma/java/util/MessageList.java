@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -10,6 +10,8 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+
+import org.dma.java.input.FieldFormat.SEPARATOR;
 
 public class MessageList extends LinkedHashSet<String> {
 
@@ -43,8 +45,8 @@ public class MessageList extends LinkedHashSet<String> {
 
 	public void print(OutputStream out) {
 		if (!isEmpty()) try{
-			String message=toString()+"\n";
-			out.write(message.getBytes());
+			out.write(new StringBuilder(toString()).
+					append(SEPARATOR.LINE.value).toString().getBytes());
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -79,7 +81,7 @@ public class MessageList extends LinkedHashSet<String> {
 
 	@Override
 	public String toString() {
-		return ArrayUtils.concat(toArray(), "\n");
+		return toString(SEPARATOR.LINE.value);
 	}
 
 	public String toString(String separator) {

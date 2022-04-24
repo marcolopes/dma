@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import org.dma.java.input.FieldFormat.SEPARATOR;
 import org.dma.java.util.StringList;
 import org.dma.java.util.StringUtils;
 
@@ -69,7 +70,7 @@ public class MultibancoRef {
 		list.add(StringUtils.padRight("REFERENCIA",10,' ') + StringUtils.padLeft(getRef9ToText(),13,' '));
 		list.add(StringUtils.padRight("MONTANTE",10,' ') + StringUtils.padLeft(getValueToText(),13,' '));
 		list.add(StringUtils.replicas("─", 10+13));
-		return list.concat("\n");
+		return list.concat(SEPARATOR.LINE.value);
 	}
 
 	@Override
