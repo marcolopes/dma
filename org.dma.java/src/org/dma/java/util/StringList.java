@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -32,11 +32,11 @@ public class StringList extends ArrayList<String> {
 		super();
 	}
 
-	public StringList(String[] array) {
+	public StringList(String...array) {
 		this(array.length, array);
 	}
 
-	public StringList(int initialCapacity, String[] array) {
+	public StringList(int initialCapacity, String...array) {
 		this(initialCapacity);
 		addAll(Arrays.asList(array));
 	}

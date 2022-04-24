@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -14,17 +14,13 @@ import org.dma.java.util.StringUtils;
 
 public class MultibancoRef {
 
-	public final static MultibancoRef EXAMPLE = new MultibancoRef("123", "123456789", new BigDecimal("123456.12"));
+	public final static MultibancoRef DEFAULT = new MultibancoRef("999", "999999999", new BigDecimal("999999.99"));
 
 	public final static String DECIMAL_PATTERN = "###,##0.00";
 
 	private final String entity;
 	private final String ref9;
 	private final BigDecimal value;
-
-	public MultibancoRef() {
-		this(EXAMPLE.entity, EXAMPLE.ref9, EXAMPLE.value);
-	}
 
 	public MultibancoRef(String entity, String ref9, BigDecimal value) {
 		this.entity=entity;
