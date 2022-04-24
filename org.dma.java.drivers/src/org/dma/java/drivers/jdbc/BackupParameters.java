@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -65,8 +65,7 @@ public class BackupParameters {
 
 	public Command buildCommand(String database, String user, String password, File dump) {
 
-		List<String> command=new ArrayList();
-		command.add(this.command);
+		List<String> args=new ArrayList();
 
 		for(String arg: arguments){
 			for(String[] value: new String[][]{
@@ -75,10 +74,10 @@ public class BackupParameters {
 				{Arguments.DATABASE, database},
 				{Arguments.DUMP, dump.getAbsolutePath()}}){
 				arg=arg.replace(value[0], value[1]);
-			}command.add(arg.trim());
+			}args.add(arg.trim());
 		}
 
-		return new Command(command);
+		return new Command(command, args);
 
 	}
 
