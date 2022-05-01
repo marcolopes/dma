@@ -174,7 +174,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				String formattedDate = sdf.format(calendar.getTime());
+				String timestamp = sdf.format(calendar.getTime());
 				*/
 
 				// create SOAP Factory
