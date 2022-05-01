@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.commons.lang.SystemUtils;
 
-import org.dma.java.util.Debug;
 import org.dma.java.util.StringUtils;
 
 public class CustomFile extends File {
@@ -145,10 +144,9 @@ public class CustomFile extends File {
 		if (Desktop.isDesktopSupported()){
 			Desktop desktop=Desktop.getDesktop();
 			if (desktop.isSupported(Desktop.Action.OPEN)) try{
-				Desktop.getDesktop().open(this);
+				desktop.open(this);
 				return true;
 			}catch(Exception e){
-				Debug.err(e);
 				System.err.println(e);
 			}
 		}return false;
