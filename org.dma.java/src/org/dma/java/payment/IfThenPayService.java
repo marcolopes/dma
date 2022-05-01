@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -57,15 +57,15 @@ public class IfThenPayService {
 	}
 
 	private URL getURL(DatePeriod periodo, String referencia, String valor) throws Exception {
-		StringBuilder url=new StringBuilder(URL+"?");
-		url.append("chavebackoffice=" + chavebackoffice);
-		url.append("&entidade=" + entidade);
-		url.append("&subentidade=" + subentidade);
-		url.append("&dtHrInicio=" + (periodo==null ? "" : periodo.getStartDate("dd-MM-yyyy")+" 00:00:00"));
-		url.append("&dtHrFim=" + (periodo==null ? "" : periodo.getEndDate("dd-MM-yyyy")+" 23:59:59"));
-		url.append("&referencia=" + (referencia==null ? "" : referencia));
-		url.append("&valor=" + (valor==null ? "" : valor));
-		url.append("&sandbox=" + sandbox);
+		StringBuilder url=new StringBuilder(URL+"?").
+			append("chavebackoffice=").append(chavebackoffice).
+			append("&entidade=").append(entidade).
+			append("&subentidade=").append(subentidade).
+			append("&dtHrInicio=").append(periodo==null ? "" : periodo.getStartDate("dd-MM-yyyy")+" 00:00:00").
+			append("&dtHrFim=").append(periodo==null ? "" : periodo.getEndDate("dd-MM-yyyy")+" 23:59:59").
+			append("&referencia=").append(referencia==null ? "" : referencia).
+			append("&valor=").append(valor==null ? "" : valor).
+			append("&sandbox=").append(sandbox);
 		//http://www.w3.org/Addressing/URL/uri-spec.html
 		return new URL(URLFile.normalize(url.toString()));
 	}
