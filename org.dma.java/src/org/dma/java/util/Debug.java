@@ -57,17 +57,13 @@ public class Debug {
 
 		StringBuilder sb=new StringBuilder();
 
-		try{
-			sb.insert(0, obj==null ? NULL : obj.equals(NULL) ? "" : obj.toString());
-			sb.insert(0, message==null || message.isEmpty() ?
-					"" : sb.length()==0 ? message : message+": ");
-			sb.insert(0, caller.toString());
+		try{sb.insert(0, obj==null ? NULL : obj.equals(NULL) ? "" : obj.toString()).
+			insert(0, message==null || message.isEmpty() ? "" : sb.length()==0 ? message : message+": ").
+			insert(0, caller.toString());
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}
-
-		return sb.toString();
+		}return sb.toString();
 
 	}
 
