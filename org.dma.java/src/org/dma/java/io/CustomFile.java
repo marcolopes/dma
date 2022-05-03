@@ -19,8 +19,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-import org.apache.commons.lang.SystemUtils;
-
 import org.dma.java.util.StringUtils;
 
 public class CustomFile extends File {
@@ -160,12 +158,12 @@ public class CustomFile extends File {
 		}catch(Exception e){
 			System.err.println(e);
 		}//The requested operation requires elevation
-		command=new Command(directory, "rundll32", "url.dll", "FileProtocolHandler", toString());
+		/*command=new Command(directory, "rundll32", "url.dll", "FileProtocolHandler", toString());
 		if (SystemUtils.IS_OS_WINDOWS) try{
 			return command.start().exitValue()==0;
 		}catch(Exception e){
 			System.err.println(e);
-		}return open();
+		}*/return false;
 	}
 
 
