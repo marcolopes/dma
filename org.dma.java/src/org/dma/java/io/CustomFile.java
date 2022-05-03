@@ -139,14 +139,11 @@ public class CustomFile extends File {
 
 	/** @see Desktop#open(File) */
 	public boolean open() {
-		if (Desktop.isDesktopSupported()){
-			Desktop desktop=Desktop.getDesktop();
-			if (desktop.isSupported(Desktop.Action.OPEN)) try{
-				desktop.open(this);
-				return true;
-			}catch(Exception e){
-				System.err.println(e);
-			}
+		if (Desktop.isDesktopSupported()) try{
+			Desktop.getDesktop().open(this);
+			return true;
+		}catch(Exception e){
+			System.err.println(e);
 		}return false;
 	}
 
