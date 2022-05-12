@@ -1,10 +1,11 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.net;
 
+import java.awt.Desktop;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -27,13 +28,11 @@ public class HttpURLHandler extends URLHandler {
 				connection.setRequestMethod("HEAD");
 				connection.setConnectTimeout(timeout);
 				return connection.getResponseCode()!=HttpURLConnection.HTTP_NOT_FOUND;
-
 			}catch(Exception e){
 				System.err.println(e);
 			}finally{
 				connection.disconnect();
 			}
-
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
@@ -49,13 +48,11 @@ public class HttpURLHandler extends URLHandler {
 				connection.setRequestMethod("HEAD");
 				connection.setInstanceFollowRedirects(false);
 				return connection.getResponseCode()==status;
-
 			}catch(Exception e){
 				System.err.println(e);
 			}finally{
 				connection.disconnect();
 			}
-
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
@@ -69,22 +66,18 @@ public class HttpURLHandler extends URLHandler {
 			if (connection!=null) try{
 				connection.setRequestProperty("Authorization",
 						"Basic "+new String(new Base64(0).encode(key.getBytes())));
-				/*
-				AVOID Authenticator mayhem at ALL COST!
+				/*AVOID Authenticator mayhem at ALL COST!
 				Authenticator.setDefault(new Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(key, new char[0]);
 					}
-				});
-				*/
+				});*/
 				return connection;
-
 			}catch(Exception e){
 				System.err.println(e);
 			}finally{
 				connection.disconnect();
 			}
-
 		}catch(Exception e){
 			e.printStackTrace();
 		}return null;
@@ -98,11 +91,22 @@ public class HttpURLHandler extends URLHandler {
 
 		if (connection!=null) try{
 			return connection.getResponseCode()==HttpURLConnection.HTTP_OK;
-
 		}catch(Exception e){
 			System.err.println(e);
 		}finally{
 			connection.disconnect();
+		}return false;
+
+	}
+
+
+	public boolean open() {
+
+		if (Desktop.isDesktopSupported()) try{
+			Desktop.getDesktop().browse(url.toURI());
+			return true;
+		}catch(Exception e){
+			System.err.println(e);
 		}return false;
 
 	}
