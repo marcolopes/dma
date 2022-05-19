@@ -149,18 +149,11 @@ public class CustomFile extends File {
 
 
 	/** @see Command#Command(File, String, List) */
-	public boolean execute(File directory) {
-		Command command=new Command(directory, toString());
-		try{return command.start().exitValue()==0;
+	public boolean execute(String...args) {
+		try{return new Command(getParentFile(), toString(), args).start().exitValue()==0;
 		}catch(Exception e){
 			System.err.println(e);
-		}//The requested operation requires elevation
-		/*command=new Command(directory, "rundll32", "url.dll", "FileProtocolHandler", toString());
-		if (SystemUtils.IS_OS_WINDOWS) try{
-			return command.start().exitValue()==0;
-		}catch(Exception e){
-			System.err.println(e);
-		}*/return false;
+		}return false;
 	}
 
 
@@ -205,6 +198,9 @@ public class CustomFile extends File {
 	public static void main(String[] args) {
 
 		System.out.println(new CustomFile(""));
+
+		System.out.println(new CustomFile("C:\\Users\\marcolopes\\Temp\\colibri\\colibri.rcp.win32.x86.exe").
+				execute(Folder.current().toString()));
 
 	}
 
