@@ -383,6 +383,7 @@ public class StringUtils {
 	}
 
 
+	@Deprecated
 	public static String appendIfEmpy(String string, String toAdd) {
 
 		return string.isEmpty() ? toAdd : string;
@@ -390,6 +391,7 @@ public class StringUtils {
 	}
 
 
+	@Deprecated
 	public static String appendIfNotEmpy(String string, String toAdd) {
 
 		return string.isEmpty() ? string : string+toAdd;
