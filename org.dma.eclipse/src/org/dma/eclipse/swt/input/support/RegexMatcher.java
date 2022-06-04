@@ -27,7 +27,7 @@ public class RegexMatcher implements Listener {
 	public RegexMatcher(Control control, FieldRegex regex) {
 		this.control=control;
 		this.regex=regex;
-		this.pattern=regex.getRegexPattern();
+		this.pattern=regex.getPattern();
 		control.addListener(SWT.Verify, this);
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Paulo Silva (wickay@hotmail.com)
@@ -33,27 +33,15 @@ public class ExecutionManager {
 	/*
 	 * Register
 	 */
-	public static ExecutionEvent register(Control control, IAction action) {
-		return register(control, new int[0], action);
+	public static ExecutionEvent register(Control control, IAction action, int...keycode) {
+		return register(control, null, action, keycode);
 	}
 
-	public static ExecutionEvent register(Control control, int keycode[], IAction action) {
-		return register(control, null, keycode, action);
+	public static ExecutionEvent register(Control control, String id, IAction action, int...keycode) {
+		return register(control, id, null, action, keycode);
 	}
 
-	public static ExecutionEvent register(Control control, String id, IAction action) {
-		return register(control, id, new int[0], action);
-	}
-
-	public static ExecutionEvent register(Control control, String id, int keycode[], IAction action) {
-		return register(control, id, null, keycode, action);
-	}
-
-	public static ExecutionEvent register(Control control, String id, String secondaryId, IAction action) {
-		return register(control, id, secondaryId, new int[0], action);
-	}
-
-	public static ExecutionEvent register(Control control, String id, String secondaryId, int keycode[], IAction action) {
+	public static ExecutionEvent register(Control control, String id, String secondaryId, IAction action, int...keycode) {
 		ExecutionDefinition execDefinition=new ExecutionDefinition(control, id, secondaryId);
 		ExecutionEvent execEvent=new ExecutionEvent(keycode, action);
 		return register(execDefinition, execEvent);

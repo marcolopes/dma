@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -32,12 +32,12 @@ public abstract class FieldBinding extends FieldError {
 	private Listener selectionListener;
 	private FocusListener focusListener;
 
-	private FieldRules rules;
 	private boolean enabled=true;
 
 	private final Control control;
-	private final FieldFormat fieldFormat;
-	private final RegexMatcher regexMatcher;
+	private final FieldFormat format;
+	private final RegexMatcher matcher;
+	private final FieldRules rules;
 
 	/** Without regex matcher */
 	public FieldBinding(Control control, FieldRules rules) {
@@ -50,15 +50,15 @@ public abstract class FieldBinding extends FieldError {
 	}
 
 	/** With regex matcher */
-	public FieldBinding(FieldLabel label, Control control, FieldFormat fieldFormat, FieldRules rules) {
-		this(label, control, fieldFormat, new RegexMatcher(control, fieldFormat), rules);
+	public FieldBinding(FieldLabel label, Control control, FieldFormat format, FieldRules rules) {
+		this(label, control, format, new RegexMatcher(control, format), rules);
 	}
 
-	private FieldBinding(FieldLabel label, Control control, FieldFormat fieldFormat, RegexMatcher regexMatcher, FieldRules rules) {
+	private FieldBinding(FieldLabel label, Control control, FieldFormat format, RegexMatcher matcher, FieldRules rules) {
 		super(label);
 		this.control=control;
-		this.fieldFormat=fieldFormat;
-		this.regexMatcher=regexMatcher;
+		this.format=format;
+		this.matcher=matcher;
 		this.rules=rules;
 	}
 
@@ -66,7 +66,7 @@ public abstract class FieldBinding extends FieldError {
 	public void dispose() {
 		if (focusListener!=null) control.removeFocusListener(focusListener);
 		if (selectionListener!=null) control.removeListener(SWT.Selection, selectionListener);
-		if (regexMatcher!=null) regexMatcher.dispose();
+		if (matcher!=null) matcher.dispose();
 	}
 
 
@@ -122,7 +122,7 @@ public abstract class FieldBinding extends FieldError {
 		if (control instanceof List) return false;
 		if (control instanceof Button) return false;
 		if (control instanceof DateTime) return false;
-		if (control instanceof Text) return getText().length()==fieldFormat.getSize().size;
+		if (control instanceof Text) return getText().length()==format.getSize().size;
 		return false;
 	}
 
@@ -148,14 +148,6 @@ public abstract class FieldBinding extends FieldError {
 
 	public boolean isEnabled() {
 		return enabled;
-	}
-
-	public FieldRules getRules() {
-		return rules;
-	}
-
-	public void setRules(int rules) {
-		this.rules=new FieldRules(rules);
 	}
 
 
@@ -194,7 +186,7 @@ public abstract class FieldBinding extends FieldError {
 		if (control instanceof List) return getList().getSelection()[0];
 		if (control instanceof Button) return getButton().getText();
 		if (control instanceof Text) return ((Text)control).getText();
-		if (control instanceof DateTime) return fieldFormat.format(TimeDateUtils.getCalendar(
+		if (control instanceof DateTime) return format.format(TimeDateUtils.getCalendar(
 				getDatetime().getYear(), getDatetime().getMonth(), getDatetime().getDay()).getTime(), FORMAT_SYMBOLS);
 		return "";
 	}

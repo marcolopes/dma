@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.Control;
 public abstract class ColumnBinding extends FieldBinding implements IFieldRules {
 
 	/** With regex matcher */
-	public ColumnBinding(FieldLabel label, Control control, FieldFormat fieldFormat) {
-		super(label, control, fieldFormat, new FieldRules(DEFAULT));
+	public ColumnBinding(FieldLabel label, Control control, FieldFormat format) {
+		super(label, control, format, new FieldRules(DEFAULT));
 	}
 
 	/** Without regex matcher */

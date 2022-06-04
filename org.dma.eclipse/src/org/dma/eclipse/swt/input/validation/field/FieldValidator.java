@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -42,8 +42,7 @@ public abstract class FieldValidator implements IValidator {
 		if (SystemUtils.IS_OS_MAC){
 			binding.reset();
 			binding.validate(isEdited());
-			binding.update();
-		}
+		}binding.update();
 
 		//listeners
 		binding.addFocusListener(new FocusListener() {
