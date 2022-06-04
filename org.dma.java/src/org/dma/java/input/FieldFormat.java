@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -226,7 +226,7 @@ public class FieldFormat extends FieldRegex {
 		return string!=null && string.length()<=size.size &&
 				(!isUppercase() || StringUtils.isUppercase(string)) &&
 				(!isLowercase() || StringUtils.isLowercase(string)) &&
-				getRegexPattern().matcher(string).matches();
+				getPattern().matcher(string).matches();
 	}
 
 

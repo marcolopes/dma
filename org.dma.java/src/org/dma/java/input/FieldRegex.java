@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -17,7 +17,7 @@ public class FieldRegex extends FieldProperties {
 	/** Regex Pattern CACHE */
 	private static final Map<String, Pattern> RP_CACHE=new ConcurrentHashMap();
 
-	public static Pattern getRegexPattern(String regex) {
+	public static Pattern getPattern(String regex) {
 		Pattern pattern=RP_CACHE.get(regex);
 		if (pattern==null) RP_CACHE.put(regex, pattern=Pattern.compile(regex));
 		return pattern;
@@ -27,14 +27,14 @@ public class FieldRegex extends FieldProperties {
 
 	public FieldRegex(TYPES type, FieldSize size, int properties, char...exclude) {
 		super(properties);
-		this.regex=buildRegex(type, size, String.valueOf(exclude).concat(isNoSpaces() ? " " : ""));
+		this.regex=build(type, size, String.valueOf(exclude).concat(isNoSpaces() ? " " : ""));
 	}
 
-	public Pattern getRegexPattern() {
-		return getRegexPattern(regex);
+	public Pattern getPattern() {
+		return getPattern(regex);
 	}
 
-	private String buildRegex(TYPES type, FieldSize size, String exclude) {
+	private String build(TYPES type, FieldSize size, String exclude) {
 		//expression start
 		String regex="^";
 		switch(type){
