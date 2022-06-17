@@ -8,8 +8,6 @@ package org.dma.eclipse.swt.input.validation;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.dma.java.util.StringUtils;
-
 public abstract class ValidationManager implements IValidationManager {
 
 	/** Insertion-ordered KEYS */
@@ -102,11 +100,13 @@ public abstract class ValidationManager implements IValidationManager {
 	@Override
 	public String getErrorMessage() {
 
-		String message="";
+		StringBuilder result=new StringBuilder();
 		for(IValidator validator: validatorMap.values()){
-			if (validator.hasError()) message=StringUtils.appendIfNotEmpy(message, "; ") +
-					validator.getErrorMessage();
-		}return message;
+			if (validator.hasError()){
+				if (result.length()>0) result.append("; ");
+				result.append(validator.getErrorMessage());
+			}
+		}return result.toString();
 
 	}
 

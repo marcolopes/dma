@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -12,7 +12,6 @@ import org.dma.eclipse.swt.input.validation.IValidationManager;
 import org.dma.eclipse.swt.input.validation.IValidator;
 import org.dma.eclipse.swt.input.validation.ValidationManager;
 import org.dma.java.util.Debug;
-import org.dma.java.util.StringUtils;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.events.FocusEvent;
@@ -164,11 +163,13 @@ public abstract class TableValidator<T> implements IValidator {
 	@Override
 	public String getErrorMessage() {
 
-		String message="";
+		StringBuilder result=new StringBuilder();
 		for(ColumnBinding binding: validatorMap.values()){
-			if (binding.hasError()) message=StringUtils.appendIfNotEmpy(message, "; ") +
-					binding.getErrorMessage();
-		}return message;
+			if (binding.hasError()){
+				if (result.length()>0) result.append("; ");
+				result.append(binding.getErrorMessage());
+			}
+		}return result.toString();
 
 	}
 
