@@ -21,6 +21,13 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 
 	public static final int TOTAL_WORK = Integer.MAX_VALUE;
 
+	public void print() {
+		System.out.println("---PROGRESS SUPPORT---");
+		for(IProgressAction element: keySet()){
+			System.out.println(element.getClass());
+		}
+	}
+
 	private final Shell parent;
 	private final String title;
 
@@ -98,17 +105,6 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			return false;
 		}return true;
 
-	}
-
-
-
-	/** Debug */
-	public void print() {
-		if (!Debug.STATUS) return;
-		System.out.println("---PROGRESS SUPPORT---");
-		for(IProgressAction element: keySet()){
-			System.out.println(element.getClass());
-		}
 	}
 
 
