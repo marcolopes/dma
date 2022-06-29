@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.binary.Base64;
 
 public class ByteFile extends CustomFile {
@@ -96,6 +97,7 @@ public class ByteFile extends CustomFile {
 		return Base64.encodeBase64(readFully());
 	}
 
+	/** @see Charsets#US_ASCII */
 	public String encodeBase64String() {
 		return Base64.encodeBase64String(readFully());
 	}
