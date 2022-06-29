@@ -75,12 +75,12 @@ public final class VersionNumber {
 
 
 	public String toString(int length) {
-		StringBuilder result=new StringBuilder();
+		StringBuilder sb=new StringBuilder();
 		int[] values=toArray();
 		for(int i=0; i<length && i<values.length; i++){
-			if (result.length()>0) result.append('.');
-			result.append(values[i]);
-		}return result.toString();
+			if (sb.length()>0) sb.append('.');
+			sb.append(values[i]);
+		}return sb.toString();
 	}
 
 
