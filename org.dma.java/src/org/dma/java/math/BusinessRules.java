@@ -19,7 +19,7 @@ public class BusinessRules {
 	 * Formula: b * c / a<br>
 	 * Example: 100 -> 25, 200 -> x = 50
 	 */
-	public static BigDecimal proportionalValue(BigDecimal a, BigDecimal b, BigDecimal c){
+	public static BigDecimal proportionalValue(BigDecimal a, BigDecimal b, BigDecimal c) {
 
 		return a.signum()==0 ? BigDecimal.ZERO :
 			b.multiply(c).divide(a, MathContext.DECIMAL64);
@@ -46,7 +46,7 @@ public class BusinessRules {
 	 * Formula: cost / (1 - (margin / 100))<br>
 	 * Example: 200, 20% = 250
 	 */
-	public static BigDecimal salePrice(BigDecimal cost, BigDecimal margin){
+	public static BigDecimal salePrice(BigDecimal cost, BigDecimal margin) {
 
 		return cost.divide(BigDecimal.ONE.subtract(margin.divide(DECIMAL_100)), MathContext.DECIMAL64);
 
@@ -58,7 +58,7 @@ public class BusinessRules {
 	 * Formula: (price - cost) / cost * 100<br>
 	 * Example: 200, 20 = 900%
 	 */
-	public static BigDecimal markupPercentage(BigDecimal price, BigDecimal cost){
+	public static BigDecimal markupPercentage(BigDecimal price, BigDecimal cost) {
 
 		return cost.signum()==0 ? BigDecimal.ZERO :
 			(price.subtract(cost)).divide(cost, MathContext.DECIMAL64).multiply(DECIMAL_100);
@@ -71,7 +71,7 @@ public class BusinessRules {
 	 * Formula: perc1 + (100 - perc1) * (perc2 / 100)<br>
 	 * Example: 60% + 50% = 80%
 	 */
-	public static BigDecimal addedPercentages(BigDecimal perc1, BigDecimal perc2){
+	public static BigDecimal addedPercentages(BigDecimal perc1, BigDecimal perc2) {
 
 		return perc1.add((DECIMAL_100.subtract(perc1)).multiply(perc2.divide(DECIMAL_100)));
 
@@ -83,7 +83,7 @@ public class BusinessRules {
 	 * Formula: <br>
 	 * Example: 60% + 50% + 40% = 88%
 	 */
-	public static BigDecimal addedPercentages(BigDecimal...perc){
+	public static BigDecimal addedPercentages(BigDecimal...perc) {
 
 		BigDecimal result=BigDecimal.ZERO;
 
@@ -103,7 +103,7 @@ public class BusinessRules {
 	 * Formula: value * 100 / total<br>
 	 * Example: 200, 20 = 10%
 	 */
-	public static BigDecimal valuePercentage(BigDecimal total, BigDecimal value){
+	public static BigDecimal valuePercentage(BigDecimal total, BigDecimal value) {
 
 		return total.signum()==0 ? BigDecimal.ZERO :
 			value.multiply(DECIMAL_100).divide(total, MathContext.DECIMAL64);
@@ -116,7 +116,7 @@ public class BusinessRules {
 	 * Formula: total * perc / 100<br>
 	 * Example: 200, 20% = 40
 	 */
-	public static BigDecimal percentageValue(BigDecimal total, BigDecimal perc){
+	public static BigDecimal percentageValue(BigDecimal total, BigDecimal perc) {
 
 		return total.multiply(perc).divide(DECIMAL_100);
 
@@ -128,7 +128,7 @@ public class BusinessRules {
 	 * Formula: value / (1 + (perc / 100))<br>
 	 * Example: 240, 20% = 200
 	 */
-	public static BigDecimal valueIncluded(BigDecimal value, BigDecimal perc){
+	public static BigDecimal valueIncluded(BigDecimal value, BigDecimal perc) {
 
 		return perc.compareTo(DECIMAL_100)==0 ? BigDecimal.ZERO :
 			value.divide(BigDecimal.ONE.subtract(perc.divide(DECIMAL_100)), MathContext.DECIMAL64);
@@ -141,7 +141,7 @@ public class BusinessRules {
 	 * Formula: value / (1 + (perc / 100))<br>
 	 * Example: 240, 20% = 200
 	 */
-	public static BigDecimal valueExcluded(BigDecimal value, BigDecimal perc){
+	public static BigDecimal valueExcluded(BigDecimal value, BigDecimal perc) {
 
 		return value.divide(BigDecimal.ONE.add(perc.divide(DECIMAL_100)), MathContext.DECIMAL64);
 
@@ -153,7 +153,7 @@ public class BusinessRules {
 	 * Formula: value + (value * perc / 100)<br>
 	 * Example: 200, 20% = 240
 	 */
-	public static BigDecimal valueAdded(BigDecimal value, BigDecimal perc){
+	public static BigDecimal valueAdded(BigDecimal value, BigDecimal perc) {
 
 		return value.add(percentageValue(value, perc));
 
@@ -165,7 +165,7 @@ public class BusinessRules {
 	 * Formula: value - (value * perc / 100)<br>
 	 * Example: 200, 20% = 160
 	 */
-	public static BigDecimal netValue(BigDecimal value, BigDecimal perc){
+	public static BigDecimal netValue(BigDecimal value, BigDecimal perc) {
 
 		return value.subtract(percentageValue(value, perc));
 
@@ -176,7 +176,7 @@ public class BusinessRules {
 	 * Rounds the number to the nearest<br>
 	 * Numbers can be with or without decimals<br>
 	 */
-	public static BigDecimal round(BigDecimal value, BigDecimal rounding, RoundingMode roundingMode){
+	public static BigDecimal round(BigDecimal value, BigDecimal rounding, RoundingMode roundingMode) {
 
 		return rounding.signum()==0 ? value :
 			(value.divide(rounding,0,roundingMode)).multiply(rounding);
@@ -196,7 +196,7 @@ public class BusinessRules {
 	 * otherwise, behaves as for RoundingMode.DOWN.
 	 * Note that this is the rounding mode commonly taught at school.
 	 */
-	public static BigDecimal roundUp(BigDecimal value, BigDecimal rounding){
+	public static BigDecimal roundUp(BigDecimal value, BigDecimal rounding) {
 
 		return round(value, rounding, RoundingMode.HALF_UP);
 
@@ -214,7 +214,7 @@ public class BusinessRules {
 	 * Behaves as for RoundingMode.UP if the discarded fraction is > 0.5;
 	 * otherwise, behaves as for RoundingMode.DOWN.
 	 */
-	public static BigDecimal roundDown(BigDecimal value, BigDecimal rounding){
+	public static BigDecimal roundDown(BigDecimal value, BigDecimal rounding) {
 
 		return round(value, rounding, RoundingMode.HALF_DOWN);
 
