@@ -57,7 +57,7 @@ public class IfThenPayService {
 	}
 
 	private URL getURL(DatePeriod periodo, String referencia, String valor) throws Exception {
-		StringBuilder url=new StringBuilder(URL+"?").
+		StringBuilder sb=new StringBuilder(URL+"?").
 			append("chavebackoffice=").append(chavebackoffice).
 			append("&entidade=").append(entidade).
 			append("&subentidade=").append(subentidade).
@@ -67,7 +67,7 @@ public class IfThenPayService {
 			append("&valor=").append(valor==null ? "" : valor).
 			append("&sandbox=").append(sandbox);
 		//http://www.w3.org/Addressing/URL/uri-spec.html
-		return new URL(URLFile.normalize(url.toString()));
+		return new URL(URLFile.normalize(sb.toString()));
 	}
 
 	public Collection<IfThenPayServiceResponseType> getPayments() throws Exception {
