@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -68,12 +68,12 @@ public class VatNumber {
 		}return false;
 	}
 
-	public CheckVatResult query() {
+	public CheckVatResult query() throws Exception {
 		return country.queryVatNumber(number);
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		VatNumber number=new VatNumber(COUNTRIES.PT, "509922716");
 		System.out.println("VALID: " + number.isValid());

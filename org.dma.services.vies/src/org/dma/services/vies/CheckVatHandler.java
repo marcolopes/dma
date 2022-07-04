@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -38,6 +38,7 @@ public class CheckVatHandler {
 		/* 01/01/1973 */
 		DK ("Denmark", "\\d{4}"),
 		IE ("Ireland", "[\\dA-Z]{3} ?[\\dA-Z]{4}"),
+		@Deprecated
 		GB ("United Kingdom", "GIR ?0AA|((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\\d[\\dA-Z]? ?\\d[ABD-HJLN-UW-Z]{2}))|BFPO ?\\d{1,4}"),
 		/* 01/01/1981 */
 		/** NOT ISO 3166 */
@@ -77,40 +78,35 @@ public class CheckVatHandler {
 		}
 
 		/** Queries VIES service */
-		public CheckVatResult queryVatNumber(String vatNumber) {
+		public CheckVatResult queryVatNumber(String vatNumber) throws Exception {
 
-			try{
-				CheckVatService service=new CheckVatService();
+			CheckVatService service=new CheckVatService();
 
-				System.out.println("Please read disclaimer from service provider at:");
-				System.out.println(service.getWSDLDocumentLocation());
-				System.out.println("Querying VAT Information Exchange System (VIES) via web service...");
-				System.out.println("Country: "+this);
-				System.out.println("Vat Number: "+vatNumber);
+			System.out.println("Please read disclaimer from service provider at:");
+			System.out.println(service.getWSDLDocumentLocation());
+			System.out.println("Querying VAT Information Exchange System (VIES) via web service...");
+			System.out.println("Country: "+this);
+			System.out.println("Vat Number: "+vatNumber);
 
-				Holder<Boolean> valid=new Holder(new Boolean(true));
-				Holder<String> name=new Holder(new String());
-				Holder<String> address=new Holder(new String());
+			Holder<Boolean> valid=new Holder(new Boolean(true));
+			Holder<String> name=new Holder(new String());
+			Holder<String> address=new Holder(new String());
 
-				CheckVatPortType servicePort=service.getCheckVatPort();
-				servicePort.checkVat(
-						new Holder(name()),
-						new Holder(vatNumber),
-						new Holder(DatatypeFactory.newInstance().newXMLGregorianCalendar()),
-						valid, name, address);
+			CheckVatPortType servicePort=service.getCheckVatPort();
+			servicePort.checkVat(
+					new Holder(name()),
+					new Holder(vatNumber),
+					new Holder(DatatypeFactory.newInstance().newXMLGregorianCalendar()),
+					valid, name, address);
 
-				return new CheckVatResult(valid.value, name.value, parse(address.value));
+			return new CheckVatResult(valid.value, name.value, parse(address.value));
 
-			}catch(Exception e){
-				System.err.println(e);
-			}return null;
 		}
 
 		/** Parses VIES address */
 		public CheckVatAddress parse(String address) {
 
-			try{
-				Matcher matcher=zipcode.matcher(address);
+			try{Matcher matcher=zipcode.matcher(address);
 				matcher.find();
 
 				/* STREET (before ZIPCODE) */
@@ -149,8 +145,7 @@ public class CheckVatHandler {
 
 			/** Returns NULL if not found */
 			public static COUNTRIES get(String countryCode) {
-				try{
-					return valueOf(countryCode.toUpperCase()).country;
+				try{return valueOf(countryCode.toUpperCase()).country;
 				}catch(Exception e){}
 				return null;
 			}
@@ -178,16 +173,22 @@ public class CheckVatHandler {
 		this.country=country;
 	}
 
-	public CheckVatResult query(String vatNumber) {
+	public CheckVatResult query(String vatNumber) throws Exception {
 		return country.queryVatNumber(vatNumber);
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		COUNTRIES.PT.queryVatNumber("199415250");
+		System.setProperty("https.protocols", "SSLv3,TLSv1,TLSv1.1,TLSv1.2");
 
-		CheckVatHandler handler=new CheckVatHandler(COUNTRIES.ES);
+		COUNTRIES.PT.queryVatNumber("505636700");
+
+		CheckVatHandler handler=new CheckVatHandler(COUNTRIES.PT);
+		System.out.println(handler.query("502011475"));
+		System.out.println(handler.query("505636700"));
+
+		handler=new CheckVatHandler(COUNTRIES.ES);
 		System.out.println(handler.query("A28250777"));
 		System.out.println(handler.query("A39000013"));
 		System.out.println(handler.query("B94123908"));
@@ -199,13 +200,6 @@ public class CheckVatHandler {
 		System.out.println(handler.query("136563568"));
 		System.out.println(handler.query("258071573"));
 
-		handler=new CheckVatHandler(COUNTRIES.GB);
-		System.out.println(handler.query("157577371"));
-		System.out.println(handler.query("180982579"));
-		System.out.println(handler.query("239354938"));
-		System.out.println(handler.query("644307352"));
-		System.out.println(handler.query("924049335"));
-
 		handler=new CheckVatHandler(COUNTRIES.FR);
 		System.out.println(handler.query("20410409460"));
 		System.out.println(handler.query("63775661390"));
@@ -213,10 +207,6 @@ public class CheckVatHandler {
 		handler=new CheckVatHandler(COUNTRIES.IT);
 		System.out.println(handler.query("01459531214"));
 		System.out.println(handler.query("05023760969"));
-
-		handler=new CheckVatHandler(COUNTRIES.PT);
-		System.out.println(handler.query("502011475"));
-		System.out.println(handler.query("505636700"));
 
 		handler=new CheckVatHandler(COUNTRIES.AT);
 		System.out.println(handler.query("U15447005"));
@@ -231,7 +221,13 @@ public class CheckVatHandler {
 
 		System.out.println(new CheckVatHandler("XX").query("1234567890"));
 
-	}
+		handler=new CheckVatHandler(COUNTRIES.GB);
+		System.out.println(handler.query("157577371"));
+		System.out.println(handler.query("180982579"));
+		System.out.println(handler.query("239354938"));
+		System.out.println(handler.query("644307352"));
+		System.out.println(handler.query("924049335"));
 
+	}
 
 }
