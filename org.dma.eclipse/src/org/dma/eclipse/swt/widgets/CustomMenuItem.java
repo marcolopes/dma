@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -49,6 +49,7 @@ public class CustomMenuItem extends MenuItem {
 	 * Selection
 	 */
 	public void setSelectionAction(final IAction action) {
+		selectionAction=action;
 		action.setEnabled(isEnabled()); //synchronize states
 		action.addPropertyChangeListener(new IPropertyChangeListener() {
 			@Override
@@ -59,10 +60,9 @@ public class CustomMenuItem extends MenuItem {
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				selectionAction.run();
+				action.run();
 			}
 		});
-		this.selectionAction=action;
 	}
 
 	@Override

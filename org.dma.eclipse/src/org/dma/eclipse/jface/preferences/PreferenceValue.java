@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -19,19 +19,13 @@ public class PreferenceValue implements IPreferenceValue {
 	}
 
 	private void setDefault() {
-		if(defaultValue instanceof Integer){
-			store.setDefault(name, (Integer)defaultValue);
-		}else if (defaultValue instanceof Long){
-			store.setDefault(name, (Long)defaultValue);
-		}else if (defaultValue instanceof Float){
-			store.setDefault(name, (Float)defaultValue);
-		}else if (defaultValue instanceof Double){
-			store.setDefault(name, (Double)defaultValue);
-		}else if (defaultValue instanceof Boolean){
-			store.setDefault(name, (Boolean)defaultValue);
-		}else if (defaultValue instanceof String){
-			store.setDefault(name, (String)defaultValue);
-		}else throw new UnsupportedOperationException();
+		if (defaultValue instanceof Integer) store.setDefault(name, (Integer)defaultValue);
+		else if (defaultValue instanceof Long) store.setDefault(name, (Long)defaultValue);
+		else if (defaultValue instanceof Float) store.setDefault(name, (Float)defaultValue);
+		else if (defaultValue instanceof Double) store.setDefault(name, (Double)defaultValue);
+		else if (defaultValue instanceof Boolean) store.setDefault(name, (Boolean)defaultValue);
+		else if (defaultValue instanceof String) store.setDefault(name, (String)defaultValue);
+		else throw new UnsupportedOperationException();
 	}
 
 	/** get */

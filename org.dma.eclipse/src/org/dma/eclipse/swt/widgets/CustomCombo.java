@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -30,6 +30,7 @@ public class CustomCombo<T> extends Combo {
 	 * Selection
 	 */
 	public void setSelectionAction(final IAction action) {
+		selectionAction=action;
 		action.setEnabled(isEnabled()); //synchronize states
 		action.addPropertyChangeListener(new IPropertyChangeListener() {
 			@Override
@@ -40,10 +41,9 @@ public class CustomCombo<T> extends Combo {
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				selectionAction.run();
+				action.run();
 			}
 		});
-		this.selectionAction=action;
 	}
 
 	@Override

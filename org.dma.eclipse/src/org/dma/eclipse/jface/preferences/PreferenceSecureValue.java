@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2019 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,55 +11,82 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 public class PreferenceSecureValue implements IPreferenceValue {
 
+	private class ValuePair {
+
+		private final BlowfishPassword cipher;
+		private final IPreferenceValue value;
+		private final IPreferenceValue hash;
+
+		public ValuePair(PreferenceStore store, String name, BlowfishPassword cipher) {
+			this.cipher=cipher;
+			this.value=new PreferenceValue(store, name+"_value", IPreferenceStore.STRING_DEFAULT_DEFAULT);
+			this.hash=new PreferenceValue(store, name+"_hash", IPreferenceStore.STRING_DEFAULT_DEFAULT);
+		}
+
+		public void setValue(String value) {
+			this.value.setValue(value);
+			this.hash.setValue(cipher.encode(value));
+		}
+
+		public String getString() {
+			String value=this.value.getString();
+			//decode result can be null!
+			return value.equals(cipher.decode(hash.getString())) ? value : IPreferenceStore.STRING_DEFAULT_DEFAULT;
+		}
+
+		public int getInt() {
+			String value=getString();
+			return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
+					IPreferenceStore.INT_DEFAULT_DEFAULT : Integer.valueOf(value);
+		}
+
+		public long getLong() {
+			String value=getString();
+			return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
+					IPreferenceStore.LONG_DEFAULT_DEFAULT : Long.valueOf(value);
+		}
+
+		public float getFloat() {
+			String value=getString();
+			return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
+					IPreferenceStore.FLOAT_DEFAULT_DEFAULT : Float.valueOf(value);
+		}
+
+		public double getDouble() {
+			String value=getString();
+			return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
+					IPreferenceStore.DOUBLE_DEFAULT_DEFAULT : Double.valueOf(value);
+		}
+
+		public boolean getBoolean() {
+			String value=getString();
+			return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
+					IPreferenceStore.BOOLEAN_DEFAULT_DEFAULT : !IPreferenceStore.BOOLEAN_DEFAULT_DEFAULT;
+		}
+
+	}
+
 	private final PreferenceStore store;
-	private final BlowfishPassword cipher;
-	private final PreferenceValue value;
-	private final PreferenceValue control;
+	private final ValuePair pair;
 
 	public PreferenceSecureValue(PreferenceStore store, String name, BlowfishPassword cipher) {
 		this.store=store;
-		this.cipher=cipher;
-		value=new PreferenceValue(store, name+"_value", IPreferenceStore.STRING_DEFAULT_DEFAULT);
-		control=new PreferenceValue(store, name+"_control", IPreferenceStore.STRING_DEFAULT_DEFAULT);
+		this.pair=new ValuePair(store, name, cipher);
 	}
 
 	/** get */
 	@Override
-	public int getInt() {
-		String value=getString();
-		return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
-				IPreferenceStore.INT_DEFAULT_DEFAULT : Integer.valueOf(value);
-	}
+	public int getInt() {return pair.getInt();}
 	@Override
-	public long getLong() {
-		String value=getString();
-		return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
-				IPreferenceStore.LONG_DEFAULT_DEFAULT : Long.valueOf(value);
-	}
+	public long getLong() {return pair.getLong();}
 	@Override
-	public float getFloat() {
-		String value=getString();
-		return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
-				IPreferenceStore.FLOAT_DEFAULT_DEFAULT : Float.valueOf(value);
-	}
+	public float getFloat() {return pair.getFloat();}
 	@Override
-	public double getDouble() {
-		String value=getString();
-		return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
-				IPreferenceStore.DOUBLE_DEFAULT_DEFAULT : Double.valueOf(value);
-	}
+	public double getDouble() {return pair.getDouble();}
 	@Override
-	public boolean getBoolean() {
-		String value=getString();
-		return value.equals(IPreferenceStore.STRING_DEFAULT_DEFAULT) ?
-				IPreferenceStore.BOOLEAN_DEFAULT_DEFAULT : !IPreferenceStore.BOOLEAN_DEFAULT_DEFAULT;
-	}
+	public boolean getBoolean() {return pair.getBoolean();}
 	@Override
-	public String getString() {
-		String value=this.value.getString();
-		//decode result can be null!
-		return value.equals(cipher.decode(control.getString())) ? value : IPreferenceStore.STRING_DEFAULT_DEFAULT;
-	}
+	public String getString() {return pair.getString();}
 
 	/** load & get */
 	@Override
@@ -90,9 +117,6 @@ public class PreferenceSecureValue implements IPreferenceValue {
 	@Override
 	public void setValue(boolean value) {setValue(Boolean.toString(value));}
 	@Override
-	public void setValue(String value) {
-		this.value.setValue(value);
-		this.control.setValue(cipher.encode(value));
-	}
+	public void setValue(String value) {pair.setValue(value);}
 
 }

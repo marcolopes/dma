@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -15,7 +15,7 @@ import org.eclipse.jface.action.Action;
 
 public abstract class CustomAction extends Action {
 
-	public final String ID=getClass().getName();
+	public final String ID=String.valueOf(System.nanoTime());
 
 	/** @see Action */
 	public CustomAction() {
