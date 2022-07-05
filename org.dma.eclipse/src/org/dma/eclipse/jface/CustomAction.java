@@ -15,7 +15,7 @@ import org.eclipse.jface.action.Action;
 
 public abstract class CustomAction extends Action {
 
-	public final String ID=String.valueOf(System.nanoTime());
+	public final String ID=getClass().getName()+":"+String.valueOf(System.nanoTime());
 
 	/** @see Action */
 	public CustomAction() {
