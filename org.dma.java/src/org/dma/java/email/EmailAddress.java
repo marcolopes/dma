@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -78,7 +78,7 @@ public class EmailAddress {
 	}
 
 	public boolean equals(String email) {
-		return this.email.equals(email);
+		return email.equals(this.email);
 	}
 
 
