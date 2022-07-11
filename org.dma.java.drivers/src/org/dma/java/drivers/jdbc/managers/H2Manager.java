@@ -103,18 +103,18 @@ public class H2Manager extends AbstractManager implements IDatabaseManager {
 
 	@Override
 	public String getConnectionUrl(String host, String database, Folder folder, String properties, POOLMANAGERS pool) {
-		StringBuilder url=new StringBuilder(getDatabaseUrl(host, database, folder));
+		StringBuilder sb=new StringBuilder(getDatabaseUrl(host, database, folder));
 		if (isH2Embedded(host)){
 			//Multiple processes can access the same database
-			url.append(";AUTO_SERVER=TRUE");
+			sb.append(";AUTO_SERVER=TRUE");
 		}else{
 			//URL;property=value[;property=value]
-			url.append(properties.isEmpty() ? "" : ";"+properties);
+			sb.append(properties.isEmpty() ? "" : ";"+properties);
 			//The connection only succeeds when the database already exists
-			url.append(";IFEXISTS=TRUE");
+			sb.append(";IFEXISTS=TRUE");
 		}//needed when there is NO POOL
-		if (pool==POOLMANAGERS.NONE) url.append(";DB_CLOSE_DELAY=10");
-		return url.toString();
+		if (pool==POOLMANAGERS.NONE) sb.append(";DB_CLOSE_DELAY=10");
+		return sb.toString();
 	}
 
 	private String getDatabaseUrl(String host, String database, Folder folder) {
