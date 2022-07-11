@@ -38,7 +38,7 @@ public class DatabaseParameters {
 	 * @param driver - database driver {@link DRIVERS}
 	 * @param host - connetion host; EMPTY=H2 Embedded mode
 	 * @param database - database name
-	 * @param folder - folder for H2 databases; NULL=no folder
+	 * @param folder - database folder (ex: H2); NULL=ignore
 	 * @param properties - connection properties; USUALLY property=value&property=value...
 	 * @param username - database username
 	 * @param password - database password
@@ -63,29 +63,32 @@ public class DatabaseParameters {
 	}
 
 	public boolean isH2Embedded() {
-		return driver.isH2Embedded(host);
+		return driver.manager.isH2Embedded(host);
 	}
 
-	public String getConnectionUrl() {
-		return driver.getConnectionUrl(host, database, folder, properties, pool);
-	}
-
-	public Connection getConnection() throws Exception {
-		return driver.getConnection(getConnectionUrl(), username, password, pool);
-	}
-
-	public void checkConnection() throws Exception {
-		driver.checkConnection(getConnectionUrl(), username, password);
+	public void compact() throws Exception {
+		driver.manager.compact(host, database, folder, username, password);
 	}
 
 	public void executeBackup() throws Exception {
-		driver.executeBackup(host, database, folder, username, password, backup);
+		driver.manager.executeBackup(host, database, folder, username, password, backup);
+	}
+
+	public String getConnectionUrl() {
+		return driver.manager.getConnectionUrl(host, database, folder, properties, pool);
+	}
+
+	public void checkConnection() throws Exception {
+		driver.manager.checkConnection(getConnectionUrl(), username, password);
+	}
+
+	public Connection getConnection() throws Exception {
+		return driver.manager.getConnection(getConnectionUrl(), username, password, pool);
 	}
 
 	@Override
 	public String toString() {
 		return getConnectionUrl();
 	}
-
 
 }

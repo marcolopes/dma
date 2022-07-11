@@ -11,10 +11,10 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.dma.java.drivers.pool.BoneCPManager;
-import org.dma.java.drivers.pool.C3P0Manager;
-import org.dma.java.drivers.pool.DBCPManager;
-import org.dma.java.drivers.pool.IPoolManager;
+import org.dma.java.drivers.jdbc.pool.BoneCPManager;
+import org.dma.java.drivers.jdbc.pool.C3P0Manager;
+import org.dma.java.drivers.jdbc.pool.DBCPManager;
+import org.dma.java.drivers.jdbc.pool.IPoolManager;
 
 public enum POOLMANAGERS {
 
