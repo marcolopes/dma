@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.drivers.jdbc;
+package org.dma.java.drivers.jdbc.pool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
