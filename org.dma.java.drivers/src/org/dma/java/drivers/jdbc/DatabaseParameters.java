@@ -38,7 +38,7 @@ public class DatabaseParameters {
 	 * @param driver - database driver {@link DRIVERS}
 	 * @param host - connetion host; EMPTY=H2 Embedded mode
 	 * @param database - database name
-	 * @param folder - database folder (ex: H2); NULL=ignore
+	 * @param folder - database folder (ex: H2); NULL=current folder
 	 * @param properties - connection properties; USUALLY property=value&property=value...
 	 * @param username - database username
 	 * @param password - database password
@@ -50,7 +50,7 @@ public class DatabaseParameters {
 		this.driver=driver;
 		this.host=host.isEmpty() ? ServerParameters.LOCALHOST : host;
 		this.database=database;
-		this.folder=folder;
+		this.folder=folder==null ? Folder.current() : folder;
 		this.properties=properties;
 		this.username=username;
 		this.password=password;
