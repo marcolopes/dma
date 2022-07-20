@@ -13,7 +13,7 @@ import org.dma.java.security.BlowfishPassword;
 
 public class PreferenceStore extends org.eclipse.jface.preference.PreferenceStore {
 
-	private static Map<String, IPreferenceValue> VALUE_CACHE=new ConcurrentHashMap();
+	private static Map<String, IPreferenceValue> VALUE_CACHE = new ConcurrentHashMap();
 
 	public PreferenceStore(String pathname) {
 		super(pathname);
