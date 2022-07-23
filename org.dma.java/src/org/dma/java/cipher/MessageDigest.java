@@ -93,7 +93,7 @@ public class MessageDigest {
 	public String BASE64digest(String message) {
 
 		try{// Encode Bytes to BASE64
-			byte[] base64Bytes=new Base64(0).encode(digest(message));
+			byte[] base64Bytes=new Base64().encode(digest(message));
 			// Convert Bytes to String
 			return new String(base64Bytes, "UTF8");
 

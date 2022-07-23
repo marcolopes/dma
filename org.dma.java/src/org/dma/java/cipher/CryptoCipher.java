@@ -218,7 +218,7 @@ public class CryptoCipher {
 	public String BASE64decrypt(byte[] messageBytes) {
 
 		try{// Decode Bytes from BASE64
-			byte[] base64Bytes=new Base64(0).decode(messageBytes);
+			byte[] base64Bytes=new Base64().decode(messageBytes);
 			// Decrypt Bytes
 			byte[] decrypted=decrypt(base64Bytes);
 			// Convert Bytes to String

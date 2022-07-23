@@ -81,7 +81,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 	public String BASE64signWithSHA1(byte[] messageBytes) throws SignatureException {
 
 		try{byte[] signatureBytes=signWithSHA1(messageBytes);
-			byte[] base64Bytes=new Base64(0).encode(signatureBytes);
+			byte[] base64Bytes=new Base64().encode(signatureBytes);
 
 			return new String(base64Bytes, "UTF8");
 
