@@ -22,7 +22,7 @@ import org.dma.java.util.TimeDateUtils;
 public class FieldFormat extends FieldRegex {
 
 	/** Decimal Format CACHE */
-	private static final Map<String, DecimalFormat> DF_CACHE=new ConcurrentHashMap();
+	private static final Map<String, DecimalFormat> DF_CACHE = new ConcurrentHashMap();
 
 	public static DecimalFormat getDecimalFormat(String pattern, DecimalFormatSymbols symbols) {
 		DecimalFormat df=DF_CACHE.get(pattern);

@@ -15,7 +15,7 @@ import org.dma.java.util.StringUtils;
 public class FieldRegex extends FieldProperties {
 
 	/** Regex Pattern CACHE */
-	private static final Map<String, Pattern> RP_CACHE=new ConcurrentHashMap();
+	private static final Map<String, Pattern> RP_CACHE = new ConcurrentHashMap();
 
 	public static Pattern getPattern(String regex) {
 		Pattern pattern=RP_CACHE.get(regex);
