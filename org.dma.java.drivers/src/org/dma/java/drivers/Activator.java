@@ -44,8 +44,7 @@ public class Activator implements BundleActivator {
 	}
 
 	public static Class classForName(String className) {
-		try{
-			return Class.forName(className);
+		try{return Class.forName(className);
 		}catch(ClassNotFoundException e){
 			System.err.println(e);
 		}return null;
