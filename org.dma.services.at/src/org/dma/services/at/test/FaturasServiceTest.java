@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,7 +11,6 @@ import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.FaturasServiceHandler;
-import org.dma.services.at.proxy.FaturasServiceHandler.ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceResponseType;
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
@@ -20,27 +19,28 @@ import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType.Line;
 import pt.gov.portaldasfinancas.servicos.faturas.Tax;
 
 /**
- * Teste de envio de FACTURAS
+ * Teste de comunicacao de FACTURAS
  */
-public class FaturasServiceTest {
+public class FaturasServiceTest extends FaturasServiceHandler {
 
 	public static final Integer RequesterTaxID = 599999993;
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
-	public static final FaturasServiceHandler ServiceHandler = new FaturasServiceHandler(
-			RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+	public FaturasServiceTest() {
+		super(RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+	}
 
-	public static RegisterInvoiceType buildRequest() throws Exception {
+	public static RegisterInvoiceType build() throws Exception {
 
-		RegisterInvoiceType request = new RegisterInvoiceType();
+		RegisterInvoiceType type = new RegisterInvoiceType();
 
-		request.setTaxRegistrationNumber(RequesterTaxID);
-		request.setInvoiceNo("CFA 2018/"+new RandomValue().integer(6));
-		request.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
-		request.setInvoiceType("FT");
-		request.setInvoiceStatus("N");
-		request.setCustomerTaxID(999999990);
+		type.setTaxRegistrationNumber(RequesterTaxID);
+		type.setInvoiceNo("CFA 2012/"+new RandomValue().integer(6));
+		type.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
+		type.setInvoiceType("FT");
+		type.setInvoiceStatus("N");
+		type.setCustomerTaxID(999999990);
 
 		Tax tax = new Tax();
 		tax.setTaxType("IVA");
@@ -50,16 +50,16 @@ public class FaturasServiceTest {
 		Line line = new Line();
 		line.setDebitAmount(new BigDecimal(100));
 		line.setTax(tax);
-		request.getLine().add(line);
+		type.getLine().add(line);
 
 		DocumentTotals documentTotals = new DocumentTotals();
 		documentTotals.setTaxPayable(new BigDecimal(23));
 		documentTotals.setNetTotal(new BigDecimal(100));
 		documentTotals.setGrossTotal(new BigDecimal(123));
 
-		request.setDocumentTotals(documentTotals);
+		type.setDocumentTotals(documentTotals);
 
-		return request;
+		return type;
 
 	}
 
@@ -67,7 +67,9 @@ public class FaturasServiceTest {
 	public static void main(String[] argvs) {
 
 		try{
-			RegisterInvoiceResponseType response=ServiceHandler.register(buildRequest());
+			FaturasServiceTest service = new FaturasServiceTest();
+
+			RegisterInvoiceResponseType response = service.register(build());
 
 			System.out.println(response.getReturnCode());
 			System.out.println(response.getReturnMessage());

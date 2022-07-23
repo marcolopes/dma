@@ -8,9 +8,10 @@ echo ***************************************************************************
 
 set JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 
-wsimport series.wsdl -verbose -Xnocompile -s ..\src
-wsimport faturas.wsdl -verbose -Xnocompile -s ..\src
-wsimport documentosTransporte.wsdl -verbose -Xnocompile -s ..\src
+wsimport Series.wsdl -verbose -Xnocompile -s ..\src
+wsimport Factemiws.wsdl -verbose -Xnocompile -s ..\src
+wsimport Fatcorews.wsdl -verbose -Xnocompile -s ..\src
+wsimport DocumentosTransporte.wsdl -verbose -Xnocompile -s ..\src
 wsimport eTaxFreeSoapWebServices.wsdl -verbose -Xnocompile -s ..\src
 
 pause

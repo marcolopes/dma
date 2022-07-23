@@ -1,12 +1,12 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
- * Ricardo (AT)
  *******************************************************************************/
 package org.dma.services.at.proxy;
 
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceException;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
@@ -49,7 +49,7 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 
 
 	/** Instancia o servico e inicializa o handler */
-	private Faturas getService() throws Exception {
+	private Faturas getService() throws WebServiceException {
 
 		// cria um novo servico
 		Faturas service = new FaturasService().getFaturasSOAP();
@@ -62,7 +62,7 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	public RegisterInvoiceResponseType register(RegisterInvoiceType type) throws Exception {
+	public RegisterInvoiceResponseType register(RegisterInvoiceType type) throws WebServiceException {
 
 		return getService().registerInvoice(type);
 

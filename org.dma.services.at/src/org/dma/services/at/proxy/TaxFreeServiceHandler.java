@@ -1,11 +1,12 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.at.proxy;
 
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceException;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
@@ -47,7 +48,7 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
 
 	/** Instancia o servico e inicializa o handler */
-	private TaxFreeService getService() throws Exception {
+	private TaxFreeService getService() throws WebServiceException {
 
 		// cria um novo servico
 		TaxFreeService service = new TaxFreeServiceImpl().getTaxFreeServicePort();
@@ -60,7 +61,7 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType type) throws Exception {
+	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType type) throws WebServiceException {
 
 		return getService().taxFreeSubmission(type);
 

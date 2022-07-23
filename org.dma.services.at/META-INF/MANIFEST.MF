@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Autoridade Tributaria Services
 Bundle-SymbolicName: org.dma.services.at;singleton:=true
-Bundle-Version: 3.3.8.qualifier
+Bundle-Version: 4.0.0.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -15,6 +15,7 @@ Bundle-ClassPath: .,
 Require-Bundle: org.dma.java;bundle-version="6.9.1"
 Export-Package: org.dma.services.at,
  org.dma.services.at.proxy,
+ pt.gov.portaldasfinancas.servicos.documentos,
  pt.gov.portaldasfinancas.servicos.documentosTransporte,
  pt.gov.portaldasfinancas.servicos.faturas,
  pt.gov.portaldasfinancas.servicos.series,

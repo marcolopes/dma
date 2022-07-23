@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,7 +11,6 @@ import java.util.Random;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.StockMovementServiceHandler;
-import org.dma.services.at.proxy.StockMovementServiceHandler.ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.AddressStructurePT;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.Line;
@@ -22,9 +21,9 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovement;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementResponse;
 
 /**
- * Teste de envio de DOCUMENTOS TRANSPORTE
+ * Teste de comunicacao de DOCUMENTOS TRANSPORTE
  */
-public class StockMovementServiceTest {
+public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 	public static final Integer RequesterTaxID = 599999993;
 
@@ -32,40 +31,40 @@ public class StockMovementServiceTest {
 
 	public static final String SystemEntryDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd'T'HH:mm:ss");
 
-	public static final StockMovementServiceHandler ServiceHandler = new StockMovementServiceHandler(
-			RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+	public StockMovementServiceTest() {
+		super(RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+	}
 
-	public static StockMovement buildRequest() throws Exception {
+	public static StockMovement build() throws Exception {
 
-		StockMovement request=new StockMovement();
+		StockMovement type = new StockMovement();
 
-		request.setTaxRegistrationNumber(RequesterTaxID);
-		request.setCompanyName("Empresa");
-		request.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		request.setDocumentNumber("CGT 2013/"+new Random().nextInt(999999));
-		request.setMovementStatus(MovementStatus.N);
-		request.setMovementType(MovementType.GT);
-		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
-		request.setCustomerTaxID("999999990");
-		request.setCustomerName("Cliente");
-		request.setCustomerAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		request.setAddressTo(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		request.setAddressFrom(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		request.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
-		request.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
-		request.setVehicleID("XX-YY-ZZ");
+		type.setTaxRegistrationNumber(RequesterTaxID);
+		type.setCompanyName("Empresa");
+		type.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
+		type.setDocumentNumber("CGT 2013/"+new Random().nextInt(999999));
+		type.setMovementStatus(MovementStatus.N);
+		type.setMovementType(MovementType.GT);
+		type.setMovementDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
+		type.setCustomerTaxID("999999990");
+		type.setCustomerName("Cliente");
+		type.setCustomerAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
+		type.setAddressTo(createAdressStructure("Rua","Localidade","1000-001","PT"));
+		type.setAddressFrom(createAdressStructure("Rua","Localidade","1000-001","PT"));
+		type.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
+		type.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
+		type.setVehicleID("XX-YY-ZZ");
 
 		Line line = new Line();
 		line.setProductDescription("Artigo");
 		line.setQuantity(new BigDecimal(10));
 		line.setUnitOfMeasure("UN");
 		line.setUnitPrice(new BigDecimal(100));
-		request.getLine().add(line);
+		type.getLine().add(line);
 
-		return request;
+		return type;
 
 	}
-
 
 	private static AddressStructurePT createAdressStructure(String addressdetail, String city, String postalCode, String country) throws Exception {
 
@@ -83,7 +82,9 @@ public class StockMovementServiceTest {
 	public static void main(String[] argvs) {
 
 		try{
-			StockMovementResponse response=ServiceHandler.register(buildRequest());
+			StockMovementServiceTest service = new StockMovementServiceTest();
+
+			StockMovementResponse response = service.register(build());
 
 			System.out.println(response.getATDocCodeID());
 			System.out.println(response.getDocumentNumber());

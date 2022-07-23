@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  *
  */
-@WebServiceClient(name = "faturas", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/faturas/", wsdlLocation = "file:wsdl/Faturas.wsdl")
+@WebServiceClient(name = "faturas", targetNamespace = "http://servicos.portaldasfinancas.gov.pt/faturas/", wsdlLocation = "file:wsdl/Factemiws.wsdl")
 public class FaturasService
     extends Service
 {
@@ -30,7 +30,7 @@ public class FaturasService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = FaturasService.class.getClassLoader().getResource("wsdl/Faturas.wsdl");
+            url = FaturasService.class.getClassLoader().getResource("wsdl/Factemiws.wsdl");
         } catch (Exception ex) {
             e = new WebServiceException(ex);
         }

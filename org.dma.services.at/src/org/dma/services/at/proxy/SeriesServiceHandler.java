@@ -1,11 +1,12 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.at.proxy;
 
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceException;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
@@ -51,7 +52,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 
 
 	/** Instancia o servico e inicializa o handler */
-	private SeriesWS getService() throws Exception {
+	private SeriesWS getService() throws WebServiceException {
 
 		// cria um novo servico
 		SeriesWS service = new SeriesWSService().getSeriesWSPort();
@@ -69,7 +70,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	 * através do registo das mesmas, de modo a que seja atribuído um
 	 * código único de validação da Série.
 	 */
-	public SeriesResp registarSerie(RegistarSeriesType type) throws Exception {
+	public SeriesResp registarSerie(RegistarSeriesType type) throws WebServiceException {
 
 		return getService().registarSerie(type.serie, type.tipoSerie.value(),
 				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
@@ -82,7 +83,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	 * Esta funcionalidade tem como objetivo disponibilizar a ação de anular
 	 * a comunicação de uma Série anteriormente comunicada, por erro.
 	 */
-	public SeriesResp anularSerie(AnularSerieType type) throws Exception {
+	public SeriesResp anularSerie(AnularSerieType type) throws WebServiceException {
 
 		return getService().anularSerie(type.serie,
 				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
@@ -95,7 +96,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	 * para um conjunto de documentos, mas que a mesma já não será usada a partir
 	 * do último documento comunicado.
 	 */
-	public SeriesResp finalizarSerie(FinalizarSerieType type) throws Exception {
+	public SeriesResp finalizarSerie(FinalizarSerieType type) throws WebServiceException {
 
 		return getService().finalizarSerie(type.serie,
 				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
@@ -106,7 +107,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	/**
 	 * Esta funcionalidade tem como objetivo disponibilizar a consulta das Séries comunicadas.
 	 */
-	public ConsultarSeriesResp consultarSeries(ConsultarSeriesType type) throws Exception {
+	public ConsultarSeriesResp consultarSeries(ConsultarSeriesType type) throws WebServiceException {
 
 		return getService().consultarSeries(type.getSerie(),
 				type.getTipoSerie()==null ? null : type.getTipoSerie().value(),

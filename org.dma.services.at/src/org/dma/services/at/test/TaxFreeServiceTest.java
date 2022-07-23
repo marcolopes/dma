@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -11,7 +11,6 @@ import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.TaxFreeServiceHandler;
-import org.dma.services.at.proxy.TaxFreeServiceHandler.ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.taxfree.BuyerType;
 import pt.gov.portaldasfinancas.servicos.taxfree.CalculatedTaxType;
@@ -33,16 +32,17 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
 /**
  * Teste de eTaxFree
  */
-public class TaxFreeServiceTest {
+public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 
 	public static final Integer RequesterTaxID = 599999993;
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
-	public static final TaxFreeServiceHandler ServiceHandler = new TaxFreeServiceHandler(
-			RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+	public TaxFreeServiceTest() {
+		super(RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+	}
 
-	public static TaxFreeSubmissionRequestType buildRequest() throws Exception {
+	public static TaxFreeSubmissionRequestType build() throws Exception {
 
 		//--- HEADER ---
 		RequestHeaderType header = new RequestHeaderType();
@@ -132,11 +132,11 @@ public class TaxFreeServiceTest {
 		taxFree.setInvoices(invoices);
 
 		//--- REQUEST ---
-		TaxFreeSubmissionRequestType request = new TaxFreeSubmissionRequestType();
-		request.setRequestHeader(header);
-		request.setTaxFreeComm(taxFree);
+		TaxFreeSubmissionRequestType type = new TaxFreeSubmissionRequestType();
+		type.setRequestHeader(header);
+		type.setTaxFreeComm(taxFree);
 
-		return request;
+		return type;
 
 	}
 
@@ -144,10 +144,13 @@ public class TaxFreeServiceTest {
 	public static void main(String[] argvs) {
 
 		try{
-			TaxFreeSubmissionResponseType response=ServiceHandler.register(buildRequest());
+			TaxFreeServiceTest service=new TaxFreeServiceTest();
+
+			TaxFreeSubmissionResponseType response=service.register(build());
 
 			System.out.println(response.getReturnInfo().getReturnCode());
 			System.out.println(response.getReturnInfo().getReturnMessage());
+
 			if (response.getTaxFreeCommRegistration()!=null){
 				System.out.println(response.getTaxFreeCommRegistration().getTaxFreeCommCode());
 				System.out.println(response.getTaxFreeCommRegistration().getQRCodeContent());

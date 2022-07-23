@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -9,7 +9,6 @@ import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.SeriesServiceHandler;
-import org.dma.services.at.proxy.SeriesServiceHandler.ENDPOINTS;
 
 import pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResp;
 import pt.gov.portaldasfinancas.servicos.series.OperationResultInfo;
@@ -28,10 +27,9 @@ import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
 /**
  * Teste de comunicacao de SERIES
  */
-public class SeriesServiceTest {
+public class SeriesServiceTest extends SeriesServiceHandler {
 
-	/** A documentacao indica maxLength = 35 */
-	public static final int SeriemaxLength = 20;
+	public static final int SeriemaxLength = 35;
 
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
 
@@ -43,29 +41,30 @@ public class SeriesServiceTest {
 
 	public static final MotivoAnulacaoType MotivoAnulacao = MotivoAnulacaoType.ER;
 
-	public static SeriesServiceHandler ServiceHandler = new SeriesServiceHandler(
-			"599999993/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
-
 	private enum PRINT {NONE, INFO, ID}
 
-	public static SeriesInfo registarSerie() {
+	public SeriesServiceTest() {
+		super("599999993/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+	}
+
+	public SeriesInfo registar() {
 
 		String serie=new RandomValue().numbers(SeriemaxLength);
 
 		RegistarSeriesType type=new RegistarSeriesType(serie, TipoSerie, TipoDoc,
 				1, TimeDateUtils.getCurrentDate(), NumCertSWFatur, MeioProcessamento);
 
-		return registarSerie(type);
+		return registar(type);
 
 	}
 
-	public static SeriesInfo registarSerie(RegistarSeriesType type) {
+	public SeriesInfo registar(RegistarSeriesType type) {
 
 		if (type!=null) try{
 
 			info("Registar série: " + type.serie);
 
-			SeriesResp response=ServiceHandler.registarSerie(type);
+			SeriesResp response=registarSerie(type);
 			print(response);
 
 			return response.getInfoSerie();
@@ -76,13 +75,13 @@ public class SeriesServiceTest {
 
 	}
 
-	public static SeriesInfo registarSerie(SeriesInfo info) {
+	public SeriesInfo registar(SeriesInfo info) {
 
 		if (info!=null) try{
 
 			RegistarSeriesType type=new RegistarSeriesType(info);
 
-			return registarSerie(type);
+			return registar(type);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -90,7 +89,7 @@ public class SeriesServiceTest {
 
 	}
 
-	public static SeriesInfo anularSerie(SeriesInfo info) {
+	public SeriesInfo anular(SeriesInfo info) {
 
 		if (info!=null) try{
 
@@ -98,7 +97,7 @@ public class SeriesServiceTest {
 
 			AnularSerieType type=new AnularSerieType(info, MotivoAnulacao, true);
 
-			SeriesResp response=ServiceHandler.anularSerie(type);
+			SeriesResp response=anularSerie(type);
 			print(response);
 
 			return response.getInfoSerie();
@@ -109,7 +108,7 @@ public class SeriesServiceTest {
 
 	}
 
-	public static SeriesInfo finalizarSerie(SeriesInfo info) {
+	public SeriesInfo finalizar(SeriesInfo info) {
 
 		if (info!=null) try{
 
@@ -117,7 +116,7 @@ public class SeriesServiceTest {
 
 			FinalizarSerieType type=new FinalizarSerieType(info);
 
-			SeriesResp response=ServiceHandler.finalizarSerie(type);
+			SeriesResp response=finalizarSerie(type);
 			print(response);
 
 			return response.getInfoSerie();
@@ -129,13 +128,13 @@ public class SeriesServiceTest {
 	}
 
 
-	public static ConsultarSeriesResp consultarSeries(EstadoSerieType estado) {
+	public ConsultarSeriesResp consultar(EstadoSerieType estado) {
 
 		if (estado!=null) try{
 
 			ConsultarSeriesType type=new ConsultarSeriesType(estado);
 
-			return ServiceHandler.consultarSeries(type);
+			return consultarSeries(type);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -144,7 +143,7 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void consultarSeries(PRINT print, EstadoSerieType...estados) {
+	public void consultar(PRINT print, EstadoSerieType...estados) {
 
 		for(EstadoSerieType estado: estados){
 
@@ -154,7 +153,7 @@ public class SeriesServiceTest {
 			case F: info("Consultar todas as séries FINALIZADAS"); break;
 			}
 
-			ConsultarSeriesResp response=consultarSeries(estado);
+			ConsultarSeriesResp response=consultar(estado);
 
 			switch(print){
 			case NONE: break;
@@ -166,13 +165,13 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void anularSeries() {
+	public void anular() {
 
 		info("Anular todas as séries ACTIVAS");
 
-		for(SeriesInfo info: consultarSeries(EstadoSerieType.A).getInfoSerie()) try{
+		for(SeriesInfo info: consultar(EstadoSerieType.A).getInfoSerie()) try{
 
-			anularSerie(info);
+			anular(info);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -181,13 +180,13 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void finalizarSeries() {
+	public void finalizar() {
 
 		info("Finalizar todas as séries ACTIVAS");
 
-		for(SeriesInfo info: consultarSeries(EstadoSerieType.A).getInfoSerie()) try{
+		for(SeriesInfo info: consultar(EstadoSerieType.A).getInfoSerie()) try{
 
-			finalizarSerie(info);
+			finalizar(info);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -196,7 +195,7 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void print(SeriesResp response) {
+	public void print(SeriesResp response) {
 
 		if (response!=null) try{
 
@@ -211,7 +210,7 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void print(ConsultarSeriesResp response) {
+	public void print(ConsultarSeriesResp response) {
 
 		if (response!=null) try{
 
@@ -228,7 +227,7 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void printID(ConsultarSeriesResp response) {
+	public void printID(ConsultarSeriesResp response) {
 
 		if (response!=null) try{
 
@@ -246,7 +245,7 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void print(OperationResultInfo info) {
+	public void print(OperationResultInfo info) {
 
 		if (info!=null) try{
 
@@ -262,7 +261,7 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void print(SeriesInfo info) {
+	public void print(SeriesInfo info) {
 
 		if (printID(info)) System.out.println();
 
@@ -293,7 +292,7 @@ public class SeriesServiceTest {
 	}
 
 
-	public static boolean printID(SeriesInfo info) {
+	public boolean printID(SeriesInfo info) {
 
 		if (info!=null) try{
 
@@ -312,7 +311,7 @@ public class SeriesServiceTest {
 	}
 
 
-	public static void info(String text) {
+	public void info(String text) {
 
 		String separator="========================================";
 		System.out.println(separator);
@@ -324,31 +323,35 @@ public class SeriesServiceTest {
 
 	public static void main(String[] argvs) {
 
-		//anularSeries();
-		//finalizarSeries();
+		SeriesServiceTest service=new SeriesServiceTest();
+
+		//service.anular();
+		//service.finalizar();
 
 		/** Situações ACEITES */
 		//Registar
-		registarSerie();
+		service.registar();
 		//Registar -> Anular
-		anularSerie(registarSerie());
+		service.anular(service.registar());
 		//Registar -> Finalizar
-		finalizarSerie(registarSerie());
-		//Registar -> Anular -> Registar
-		registarSerie(anularSerie(registarSerie()));
+		service.finalizar(service.registar());
 
 		/** Situações NÃO ACEITES */
 		//Registar -> Registar
-		registarSerie(registarSerie());
+		service.registar(service.registar());
+		//Registar -> Anular -> Registar
+		service.registar(service.anular(service.registar()));
+		//Registar -> Finalizar -> Registar
+		service.registar(service.finalizar(service.registar()));
 		//Registar -> Anular -> Finalizar
- 		finalizarSerie(anularSerie(registarSerie()));
+		service.finalizar(service.anular(service.registar()));
 		//Registar -> Finalizar -> Anular
-		anularSerie(finalizarSerie(registarSerie()));
+		service.anular(service.finalizar(service.registar()));
 
 		PRINT print=PRINT.ID;
-		//consultarSeries(print, EstadoSerieType.A);
-		//consultarSeries(print, EstadoSerieType.N);
-		//consultarSeries(print, EstadoSerieType.F);
+		//service.consultar(print, EstadoSerieType.A);
+		//service.consultar(print, EstadoSerieType.N);
+		//service.consultar(print, EstadoSerieType.F);
 
 	}
 

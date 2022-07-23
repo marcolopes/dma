@@ -1,12 +1,12 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
- * Ricardo (AT)
  *******************************************************************************/
 package org.dma.services.at.proxy;
 
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceException;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.services.at.SOAPMessageHandler;
@@ -49,7 +49,7 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 
 
 	/** Instancia o servico e inicializa o handler */
-	private DocumentosTransporte getService() throws Exception {
+	private DocumentosTransporte getService() throws WebServiceException {
 
 		// cria um novo servico
 		DocumentosTransporte service = new DocumentosTransporteService().getDocumentosTransporteSOAP();
@@ -62,7 +62,7 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	public StockMovementResponse register(StockMovement type) throws Exception {
+	public StockMovementResponse register(StockMovement type) throws WebServiceException {
 
 		return getService().envioDocumentoTransporte(type);
 
