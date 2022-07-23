@@ -16,6 +16,8 @@ import java.security.spec.X509EncodedKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
+import org.dma.java.io.CustomFile;
+
 /**
  * RSA is an asymmetric encryption algorithm developed in 1977
  * that use a pair of private key and public key.
@@ -94,12 +96,12 @@ public class RSACipher {
 
 		// Get the bytes of the public and private keys
 		System.out.println("-----BEGIN PRIVATE KEY-----");
-		System.out.print(new Base64(64).encodeToString(keyPair.getPrivate().getEncoded()));
+		System.out.print(new Base64(CustomFile.BASE64_LINE_LENGTH).encodeToString(keyPair.getPrivate().getEncoded()));
 		System.out.println("-----END PRIVATE KEY-----");
 		System.out.println();
 
 		System.out.println("-----BEGIN PUBLIC KEY-----");
-		System.out.print(new Base64(64).encodeToString(keyPair.getPublic().getEncoded()));
+		System.out.print(new Base64(CustomFile.BASE64_LINE_LENGTH).encodeToString(keyPair.getPublic().getEncoded()));
 		System.out.println("-----END PUBLIC KEY-----");
 		System.out.println();
 
