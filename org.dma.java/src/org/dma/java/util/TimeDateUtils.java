@@ -90,7 +90,7 @@ public class TimeDateUtils {
 	 * Format
 	 */
 	/** Simple Date Format CACHE */
-	private static final Map<String, SimpleDateFormat> SDF_CACHE=new ConcurrentHashMap();
+	private static final Map<String, SimpleDateFormat> SDF_CACHE = new ConcurrentHashMap();
 
 	public static SimpleDateFormat getSimpleDateFormat(String pattern) {
 		SimpleDateFormat sdf=SDF_CACHE.get(pattern);
