@@ -65,7 +65,7 @@ public class HttpURLHandler extends URLHandler {
 		try{HttpURLConnection connection=(HttpURLConnection)openConnection();
 			if (connection!=null) try{
 				connection.setRequestProperty("Authorization",
-						"Basic "+new String(new Base64(0).encode(key.getBytes())));
+						"Basic "+new String(new Base64().encode(key.getBytes())));
 				/*AVOID Authenticator mayhem at ALL COST!
 				Authenticator.setDefault(new Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
