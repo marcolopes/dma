@@ -1,11 +1,12 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.broker.proxy;
 
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceException;
 
 import com.generixgroup.pt.messaging.webservice.Credentials;
 import com.generixgroup.pt.messaging.webservice.GetDocResponse;
@@ -49,7 +50,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 
 
 	/** Instancia o servico e inicializa o handler */
-	private Webservice getService() throws Exception {
+	private Webservice getService() throws WebServiceException {
 
 		// cria um novo servico
 		Webservice service = new WebserviceService().getWebservicePort();
@@ -69,7 +70,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	 * @param document Mensagem a transportar codificada em base64
 	 */
 	public UploadDocResponse uploadDocument(String transactionID, Credentials credentials,
-			RoutingInfo info, String document) throws Exception {
+			RoutingInfo info, String document) throws WebServiceException {
 
 		return getService().uploadDocument(transactionID, credentials, info, document);
 
@@ -80,7 +81,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	 *
 	 * @param credentials Autenticação
 	 */
-	public ListDocResponse listDocuments(Credentials credentials) throws Exception {
+	public ListDocResponse listDocuments(Credentials credentials) throws WebServiceException {
 
 		return getService().listDocuments(credentials, "*");
 
@@ -92,7 +93,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	 * @param credentials Autenticação
 	 * @param messageID Nome do ficheiro
 	 */
-	public GetDocResponse getDocument(Credentials credentials, String messageID) throws Exception {
+	public GetDocResponse getDocument(Credentials credentials, String messageID) throws WebServiceException {
 
 		return getService().getDocument(credentials, messageID, true);
 

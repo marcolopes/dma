@@ -1,11 +1,12 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.services.broker.proxy;
 
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceException;
 
 import com.softlimits.clarinet.ArrayOfMessageOutputData;
 import com.softlimits.clarinet.IMessageService;
@@ -47,7 +48,7 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 
 
 	/** Instancia o servico e inicializa o handler */
-	private IMessageService getService() throws Exception {
+	private IMessageService getService() throws WebServiceException {
 
 		// cria um novo servico
 		IMessageService service = new MessageService().getCustomBindingIMessageService();
@@ -60,7 +61,7 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	public ArrayOfMessageOutputData processMessage(byte[] message) throws Exception {
+	public ArrayOfMessageOutputData processMessage(byte[] message) throws WebServiceException {
 
 		return getService().processMessage(message);
 

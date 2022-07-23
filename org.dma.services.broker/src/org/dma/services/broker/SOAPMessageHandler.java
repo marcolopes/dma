@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Ricardo (AT)
@@ -25,6 +25,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.WebServiceException;
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
@@ -89,7 +90,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	public void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws Exception {
+	public void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws WebServiceException {
 
 		// adiciona handler
 		Binding binding = provider.getBinding();
@@ -104,7 +105,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 		//com.sun.xml.internal.ws.request.timeout
 		provider.getRequestContext().put(JAXWSProperties.REQUEST_TIMEOUT, DEFAULT_REQUEST_TIMEOUT);
 
-		if (secure){
+		if (secure) try{
 
 			// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
 			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
@@ -129,6 +130,8 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 			provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
 
+		}catch(Exception e){
+			throw new WebServiceException(e);
 		}
 
 	}
@@ -192,7 +195,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 		if (!smc.isEmpty())	try{
 
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			LOGGER.info((direction ? "<!-- SENT -->	" : "<!-- RECEIVED -->") + "\n" +
+			LOGGER.info((direction ? "<!---SENT--->	" : "<!---RECEIVED--->") + "\n" +
 					toXMLString(smc.getMessage().getSOAPPart().getContent()));
 
 		}catch(Exception e){
