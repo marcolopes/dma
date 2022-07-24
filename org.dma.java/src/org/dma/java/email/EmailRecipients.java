@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -18,6 +18,13 @@ public class EmailRecipients extends ArrayList<EmailAddress> {
 
 	public EmailRecipients(EmailAddress to) {
 		addTo(to);
+	}
+
+	public EmailRecipients addAll(EmailRecipients recipients) {
+		addTo(recipients);
+		addCc(recipients.getCc());
+		addBcc(recipients.getBcc());
+		return this;
 	}
 
 
