@@ -6,7 +6,6 @@
 package org.dma.java.drivers.jdbc.managers;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -49,11 +48,6 @@ public class PostgreSQLManager extends AbstractManager implements IDatabaseManag
 	private String getDatabaseUrl(String host, String database, Folder folder) {
 		//jdbc:postgresql://<host>:<port>/<database>
 		return new StringBuilder("jdbc:postgresql://").append(host).append("/").append(database).toString();
-	}
-
-	@Override
-	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException {
-		return pool.get(url, username, password).getConnection();
 	}
 
 	/*

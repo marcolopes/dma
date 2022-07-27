@@ -6,7 +6,6 @@
 package org.dma.java.drivers.jdbc.managers;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -41,11 +40,6 @@ public class SQLServerManager extends AbstractManager implements IDatabaseManage
 	private String getDatabaseUrl(String host, String database, Folder folder) {
 		// jdbc:sqlserver://[serverName[\instanceName][:portNumber]]
 		return new StringBuilder("jdbc:sqlserver://").append(host).append(";databaseName=").append(database).toString();
-	}
-
-	@Override
-	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException {
-		return pool.get(url, username, password).getConnection();
 	}
 
 	/*

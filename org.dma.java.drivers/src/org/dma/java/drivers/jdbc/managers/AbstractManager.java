@@ -51,6 +51,11 @@ public abstract class AbstractManager implements IDatabaseManager {
 	}
 
 	@Override
+	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException {
+		return pool.get(url, username, password).getConnection();
+	}
+
+	@Override
 	public void checkConnection(String url, String username, String password) throws SQLException {
 		Debug.err("URL", url);
 		Debug.err("USERNAME", username);

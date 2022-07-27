@@ -7,7 +7,6 @@ package org.dma.java.drivers.jdbc.managers;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -125,11 +124,6 @@ public class H2Manager extends AbstractManager implements IDatabaseManager {
 				//jdbc:h2:tcp://<server>[:<port>]/[<path>]<database>
 				new StringBuilder("jdbc:h2:tcp://").
 					append(host).append("/").append(file).toString();
-	}
-
-	@Override
-	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException {
-		return pool.get(url, username, password).getConnection();
 	}
 
 	/*

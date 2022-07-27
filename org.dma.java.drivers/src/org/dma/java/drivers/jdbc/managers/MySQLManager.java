@@ -44,11 +44,6 @@ public class MySQLManager extends AbstractManager implements IDatabaseManager {
 		return new StringBuilder("jdbc:mysql://").append(host).append("/").append(database).toString();
 	}
 
-	@Override
-	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException {
-		return pool.get(url, username, password).getConnection();
-	}
-
 	/*
 	 *  SQL updates
 	 */

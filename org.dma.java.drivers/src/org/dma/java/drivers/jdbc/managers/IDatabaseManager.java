@@ -30,9 +30,10 @@ public interface IDatabaseManager {
 
 	public String getConnectionUrl(String host, String database, Folder folder, String properties, POOLMANAGERS pool);
 
-	public void checkConnection(String url, String username, String password) throws SQLException;
-
+	/** Should NOT be used to check the connection! */
 	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException;
+
+	public void checkConnection(String url, String username, String password) throws SQLException;
 
 	/*
 	 *  SQL updates
