@@ -149,6 +149,12 @@ public class H2Manager extends AbstractManager implements IDatabaseManager {
 	 *  SQL statements
 	 */
 	@Override
+	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
+		//ALTER TABLE table ALTER COLUMN column SET DATA TYPE type
+		return "ALTER TABLE "+tableName+" ALTER COLUMN "+columnName+" SET DATA TYPE "+dataType;
+	}
+
+	@Override
 	public String dropForeignKeySQL(String tableName, String foreignKeyName) {
 		throw new UnsupportedOperationException();
 	}
@@ -168,12 +174,6 @@ public class H2Manager extends AbstractManager implements IDatabaseManager {
 	public String dropTableSQL(String tableName) {
 		//DROP TABLE IF EXISTS table
 		return "DROP TABLE IF EXISTS "+tableName;
-	}
-
-	@Override
-	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
-		//ALTER TABLE table ALTER COLUMN column SET DATA TYPE type
-		return "ALTER TABLE "+tableName+" ALTER COLUMN "+columnName+" SET DATA TYPE "+dataType;
 	}
 
 }

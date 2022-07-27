@@ -73,6 +73,12 @@ public class PostgreSQLManager extends AbstractManager implements IDatabaseManag
 	 *  SQL statements
 	 */
 	@Override
+	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
+		//ALTER TABLE "table" ALTER COLUMN "column" TYPE type
+		return "ALTER TABLE "+StringUtils.quote(tableName)+" ALTER COLUMN "+StringUtils.quote(columnName)+" TYPE "+dataType;
+	}
+
+	@Override
 	public String dropForeignKeySQL(String tableName, String foreignKeyName) {
 		throw new UnsupportedOperationException();
 	}
@@ -92,12 +98,6 @@ public class PostgreSQLManager extends AbstractManager implements IDatabaseManag
 	public String dropTableSQL(String tableName) {
 		//DROP TABLE IF EXISTS "table"
 		return "DROP TABLE IF EXISTS "+StringUtils.quote(tableName);
-	}
-
-	@Override
-	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
-		//ALTER TABLE "table" ALTER COLUMN "column" TYPE type
-		return "ALTER TABLE "+StringUtils.quote(tableName)+" ALTER COLUMN "+StringUtils.quote(columnName)+" TYPE "+dataType;
 	}
 
 }

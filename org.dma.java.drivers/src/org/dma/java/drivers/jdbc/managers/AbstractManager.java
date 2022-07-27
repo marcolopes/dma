@@ -62,17 +62,9 @@ public abstract class AbstractManager implements IDatabaseManager {
 	 *  SQL updates
 	 */
 	@Override
-	public int executeSQLUpdate(Connection connection, String sql) throws SQLException {
-		try{Statement st=connection.createStatement();
-			try{return st.executeUpdate(sql);
-			}catch(SQLTimeoutException e){
-				System.out.println(e);
-			}finally{st.close();
-			}connection.commit();
-		}catch(SQLException e){
-			connection.rollback();
-			throw new SQLException(e);
-		}return -1;
+	public void executeAlterDataType(Connection connection, String tableName, String columnName, String dataType) throws SQLException {
+		Debug.out("ALTERING DATA TYPE <"+tableName+":"+columnName+">");
+		executeSQLUpdate(connection, alterDataTypeSQL(tableName, columnName, dataType));
 	}
 
 	@Override
@@ -106,9 +98,17 @@ public abstract class AbstractManager implements IDatabaseManager {
 	}
 
 	@Override
-	public void executeAlterDataType(Connection connection, String tableName, String columnName, String dataType) throws SQLException {
-		Debug.out("ALTERING DATA TYPE <"+tableName+":"+columnName+">");
-		executeSQLUpdate(connection, alterDataTypeSQL(tableName, columnName, dataType));
+	public int executeSQLUpdate(Connection connection, String sql) throws SQLException {
+		try{Statement st=connection.createStatement();
+			try{return st.executeUpdate(sql);
+			}catch(SQLTimeoutException e){
+				System.out.println(e);
+			}finally{st.close();
+			}connection.commit();
+		}catch(SQLException e){
+			connection.rollback();
+			throw new SQLException(e);
+		}return -1;
 	}
 
 }

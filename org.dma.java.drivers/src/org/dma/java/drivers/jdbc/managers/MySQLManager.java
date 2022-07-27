@@ -103,6 +103,12 @@ public class MySQLManager extends AbstractManager implements IDatabaseManager {
 	 *  SQL statements
 	 */
 	@Override
+	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
+		//ALTER TABLE table MODIFY COLUMN column type
+		return "ALTER TABLE "+tableName+" MODIFY COLUMN "+columnName+" "+dataType;
+	}
+
+	@Override
 	public String dropForeignKeySQL(String tableName, String foreignKeyName) {
 		//ALTER TABLE table DROP FOREIGN KEY foreignKey
 		return "ALTER TABLE "+tableName+" DROP FOREIGN KEY "+foreignKeyName;
@@ -124,12 +130,6 @@ public class MySQLManager extends AbstractManager implements IDatabaseManager {
 	public String dropTableSQL(String tableName) {
 		//DROP TABLE IF EXISTS table
 		return "DROP TABLE IF EXISTS "+tableName;
-	}
-
-	@Override
-	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
-		//ALTER TABLE table MODIFY COLUMN column type
-		return "ALTER TABLE "+tableName+" MODIFY COLUMN "+columnName+" "+dataType;
 	}
 
 }

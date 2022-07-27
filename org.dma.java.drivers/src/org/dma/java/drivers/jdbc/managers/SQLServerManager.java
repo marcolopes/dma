@@ -65,6 +65,11 @@ public class SQLServerManager extends AbstractManager implements IDatabaseManage
 	 *  SQL statements
 	 */
 	@Override
+	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String dropForeignKeySQL(String tableName, String foreignKeyName) {
 		throw new UnsupportedOperationException();
 	}
@@ -84,11 +89,6 @@ public class SQLServerManager extends AbstractManager implements IDatabaseManage
 	public String dropTableSQL(String tableName) {
 		//DROP TABLE table
 		return "DROP TABLE "+tableName;
-	}
-
-	@Override
-	public String alterDataTypeSQL(String tableName, String columnName, String dataType) {
-		throw new UnsupportedOperationException();
 	}
 
 }

@@ -37,7 +37,7 @@ public interface IDatabaseManager {
 	/*
 	 *  SQL updates
 	 */
-	public int executeSQLUpdate(Connection connection, String sql) throws SQLException;
+	public void executeAlterDataType(Connection connection, String tableName, String columnName, String dataType) throws SQLException;
 
 	public void executeDropForeignKeys(Connection connection, String tableName, String columnName) throws SQLException;
 
@@ -47,7 +47,7 @@ public interface IDatabaseManager {
 
 	public void executeDropTable(Connection connection, String tableName) throws SQLException;
 
-	public void executeAlterDataType(Connection connection, String tableName, String columnName, String dataType) throws SQLException;
+	public int executeSQLUpdate(Connection connection, String sql) throws SQLException;
 
 	/*
 	 *  SQL queries
@@ -59,6 +59,8 @@ public interface IDatabaseManager {
 	/*
 	 *  SQL statements
 	 */
+	public String alterDataTypeSQL(String tableName, String columnName, String dataType);
+
 	public String dropForeignKeySQL(String tableName, String foreignKeyName);
 
 	public String dropIndexKeySQL(String tableName, String indexKeyName);
@@ -68,8 +70,6 @@ public interface IDatabaseManager {
 
 	/** IF EXISTS is not supported by SQLServer */
 	public String dropTableSQL(String tableName);
-
-	public String alterDataTypeSQL(String tableName, String columnName, String dataType);
 
 
 }
