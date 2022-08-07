@@ -25,7 +25,6 @@ public class DocumentosServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 
-		//fews = Facturas Envio WebService?
 		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:423/fatcorews/ws/"),
 		TESTES ("https://servicos.portaldasfinancas.gov.pt:723/fatcorews/ws/");
 
