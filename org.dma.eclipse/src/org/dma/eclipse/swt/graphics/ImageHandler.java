@@ -29,11 +29,9 @@ public class ImageHandler {
 	 * to file in the specified {@link SWT} format.
 	 */
 	public boolean save(String pathname, int format) {
-		try{
-			ImageLoader saver=new ImageLoader();
+		try{ImageLoader saver=new ImageLoader();
 			saver.data=new ImageData[]{image.getImageData()};
 			saver.save(pathname, format);
-
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
