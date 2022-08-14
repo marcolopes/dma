@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jsp/javax.el-3.0.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jsp/javax.servlet.jsp-2.3.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jsp/javax.servlet.jsp-api-2.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jsp/javax.servlet.jsp.jstl-1.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jsp/jetty-jsp-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jsp/jetty-jsp-jdt-2.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jsp/org.eclipse.jetty.orbit.javax.servlet.jsp.jstl-1.2.0.v201105211821.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-alpn-client-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-alpn-server-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-annotations-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-cdi-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-client-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-continuation-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-deploy-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-http-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-io-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-jaas-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-jaspi-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-jmx-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-jndi-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-plus-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-proxy-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-quickstart-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-rewrite-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-schemas-3.1.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-security-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-server-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-servlet-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-servlets-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-util-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-webapp-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-xml-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/servlet-api-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/api/javax.ws.rs-api-2.0.1.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/aopalliance-repackaged-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/hk2-api-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/hk2-locator-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/hk2-utils-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/javassist-3.20.0-GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/javax.annotation-api-1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/javax.inject-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/jaxb-api-2.2.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/jersey-guava-2.25.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/org.osgi.core-4.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/osgi-resource-locator-1.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/persistence-api-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/validation-api-1.1.0.Final.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-client.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-common.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-container-servlet-core.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-container-servlet.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-media-jaxb.jar" sourcepath="libraries/jaxrs-ri-2.25.1/lib/jersey-media-jaxb-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-server.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jackson-2.11.2/jackson-annotations-2.11.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jackson-2.11.2/jackson-core-2.11.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jackson-2.11.2/jackson-databind-2.11.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

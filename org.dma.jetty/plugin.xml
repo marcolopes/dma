@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+/*******************************************************************************
+ * 2008-2021 Public Domain
+ * Contributors
+ * Marco Lopes (marcolopespt@gmail.com)
+ *******************************************************************************/
+-->
+<plugin>
+
+	<extension
+		id="application"
+		point="org.eclipse.core.runtime.applications">
+		<application>
+			<run
+				class="org.dma.jetty.Application">
+			</run>
+		</application>
+	</extension>
+
+	<extension
+		id="product"
+		point="org.eclipse.core.runtime.products">
+		<product
+			application="org.dma.jetty.application"
+			name="Jetty Server">
+			<property
+				name="appName"
+				value="Jetty Server">
+			</property>
+		</product>
+	</extension>
+
+</plugin>
