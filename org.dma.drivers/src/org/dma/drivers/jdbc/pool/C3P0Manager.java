@@ -3,22 +3,22 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.drivers.jdbc.pool;
+package org.dma.drivers.jdbc.pool;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-public class DBCPManager implements IPoolManager {
+public class C3P0Manager implements IPoolManager {
 
-	private final BasicDataSource pool;
+	private final ComboPooledDataSource pool;
 
-	public DBCPManager(String url, String username, String password) {
-		pool=new BasicDataSource();
-		//pool.setDriverClassName("org.h2.Driver");
-		pool.setUrl(url);
-		pool.setUsername(username);
+	public C3P0Manager(String url, String user, String password) {
+		pool=new ComboPooledDataSource();
+		//pool.setDriverClass("org.h2.Driver");
+		pool.setJdbcUrl(url);
+		pool.setUser(user);
 		pool.setPassword(password);
 	}
 
@@ -29,11 +29,7 @@ public class DBCPManager implements IPoolManager {
 
 	@Override
 	public void shutdown() {
-		if (pool!=null) try{
-			pool.close();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		if (pool!=null) pool.close();
 	}
 
 

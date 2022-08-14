@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.drivers.jdbc;
+package org.dma.drivers.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,10 +11,10 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.dma.java.drivers.jdbc.pool.BoneCPManager;
-import org.dma.java.drivers.jdbc.pool.C3P0Manager;
-import org.dma.java.drivers.jdbc.pool.DBCPManager;
-import org.dma.java.drivers.jdbc.pool.IPoolManager;
+import org.dma.drivers.jdbc.pool.BoneCPManager;
+import org.dma.drivers.jdbc.pool.C3P0Manager;
+import org.dma.drivers.jdbc.pool.DBCPManager;
+import org.dma.drivers.jdbc.pool.IPoolManager;
 
 public enum POOLMANAGERS {
 

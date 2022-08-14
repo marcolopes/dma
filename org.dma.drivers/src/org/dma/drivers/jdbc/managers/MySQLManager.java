@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.drivers.jdbc.managers;
+package org.dma.drivers.jdbc.managers;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.dma.java.drivers.jdbc.POOLMANAGERS;
+import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.Folder;
 
 public class MySQLManager extends AbstractManager implements IDatabaseManager {

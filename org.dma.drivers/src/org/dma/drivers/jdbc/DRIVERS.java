@@ -3,16 +3,16 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.drivers.jdbc;
+package org.dma.drivers.jdbc;
 
 import org.h2.engine.Constants;
 
-import org.dma.java.drivers.Activator;
-import org.dma.java.drivers.jdbc.managers.H2Manager;
-import org.dma.java.drivers.jdbc.managers.IDatabaseManager;
-import org.dma.java.drivers.jdbc.managers.MySQLManager;
-import org.dma.java.drivers.jdbc.managers.PostgreSQLManager;
-import org.dma.java.drivers.jdbc.managers.SQLServerManager;
+import org.dma.drivers.Activator;
+import org.dma.drivers.jdbc.managers.H2Manager;
+import org.dma.drivers.jdbc.managers.IDatabaseManager;
+import org.dma.drivers.jdbc.managers.MySQLManager;
+import org.dma.drivers.jdbc.managers.PostgreSQLManager;
+import org.dma.drivers.jdbc.managers.SQLServerManager;
 import org.dma.java.util.VersionNumber;
 
 public enum DRIVERS {

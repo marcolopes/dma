@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.drivers.jdbc.managers;
+package org.dma.drivers.jdbc.managers;
 
 import java.io.File;
 import java.sql.Connection;
@@ -17,8 +17,8 @@ import org.h2.tools.DeleteDbFiles;
 import org.h2.tools.RunScript;
 import org.h2.tools.Script;
 
-import org.dma.java.drivers.jdbc.BackupParameters;
-import org.dma.java.drivers.jdbc.POOLMANAGERS;
+import org.dma.drivers.jdbc.BackupParameters;
+import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.CustomFile;
 import org.dma.java.io.Folder;
 import org.dma.java.io.ZipFile;

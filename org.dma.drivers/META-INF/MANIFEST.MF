@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Drivers
-Bundle-SymbolicName: org.dma.java.drivers;singleton:=true
+Bundle-SymbolicName: org.dma.drivers;singleton:=true
 Bundle-Version: 1.4.1.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
-Bundle-Activator: org.dma.java.drivers.Activator
+Bundle-Activator: org.dma.drivers.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
@@ -22,8 +22,8 @@ Bundle-ClassPath: .,
  libraries/jdbc/postgresql-42.2.12.jre6.jar,
  libraries/jdbc/sqljdbc4.jar
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
- org.dma.java;bundle-version="7.5.2",
- org.dma.log4j;bundle-version="1.2.16"
+ org.dma.log4j;bundle-version="1.2.16",
+ org.dma.java;bundle-version="7.5.2"
 Export-Package: com.jolbox.bonecp,
  com.mchange.v2.c3p0,
  org.apache.commons.dbcp,
@@ -31,9 +31,9 @@ Export-Package: com.jolbox.bonecp,
  org.apache.commons.logging.impl,
  org.apache.commons.pool,
  org.apache.commons.pool.impl,
- org.dma.java.drivers.jdbc,
- org.dma.java.drivers.jdbc.managers,
- org.dma.java.drivers.jdbc.pool,
+ org.dma.drivers.jdbc,
+ org.dma.drivers.jdbc.managers,
+ org.dma.drivers.jdbc.pool,
  org.h2.constant,
  org.h2.engine,
  org.h2.tools

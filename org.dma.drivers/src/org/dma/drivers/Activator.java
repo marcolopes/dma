@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.drivers;
+package org.dma.drivers;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -11,7 +11,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
-import org.dma.java.drivers.jdbc.POOLMANAGERS;
+import org.dma.drivers.jdbc.POOLMANAGERS;
 
 /**
  * The activator class controls the plug-in life cycle
