@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  * Filipe Santos (filipesantos__12@hotmail.com)
