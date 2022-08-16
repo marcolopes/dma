@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="xmlbeans/xmlbeans-3.1.0.jar" sourcepath="xmlbeans/xmlbeans-3.1.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/UBL-CIUS-PT-Invoice-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/UBL-CIUS-PT-CreditNote-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/SAFTPT1.01_01.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/SAFTPT1.02_01.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/SAFTPT1.03_01.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/SAFTPT1.04_01.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/Stock_1_01.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/Stock_1_02.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/Stock_2_01.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

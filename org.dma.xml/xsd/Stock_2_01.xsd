@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<!-- Formato obrigatório após 2021/01/01 e para os exercícios de 2020 ou superior) -->
+<xs:schema xmlns:doc="urn:schemas-basda-org:schema-extensions:documentation" xmlns:ns="urn:StockFile:PT_2_01" xmlns="urn:StockFile:PT_2_01" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:StockFile:PT_2_01" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2_01" id="STOCK_PT">
+	<xs:annotation>
+		<xs:documentation>
+			<doc:Title>Stock File - Portuguese Version </doc:Title>
+			<doc:Subject>Stock File - Portuguese Version </doc:Subject>
+			<doc:Copyright>Copyright AT</doc:Copyright>
+			<doc:Version>
+				<doc:Number>2_01</doc:Number>
+				<doc:Status>Production</doc:Status>
+			</doc:Version>
+			<doc:Author>Autoridade Tributaria e Aduaneira</doc:Author>
+			<doc:ModificationDate>2020-10-21</doc:ModificationDate>
+		</xs:documentation>
+	</xs:annotation>
+	<!-- Estrutura do ficheiro -->
+	<xs:element name="StockFile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="StockHeader" minOccurs="1"/>
+				<xs:element ref="Stock" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- Estrutura de cabecalho (StockHeader) -->
+	<xs:element name="StockHeader">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FileVersion"/>
+				<xs:element name="TaxRegistrationNumber" type="SAFPTPortugueseVatNumber"/>
+				<xs:element ref="FiscalYear"/>
+				<xs:element ref="EndDate"/>
+				<xs:element name="NoStock" type="xs:boolean"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- Estrutura de inventario (Stock) -->
+	<xs:element name="Stock">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ProductCategory" minOccurs="1"/>
+				<xs:element ref="ProductCode" minOccurs="1"/>
+				<xs:element ref="ProductDescription" minOccurs="1"/>
+				<xs:element ref="ProductNumberCode" minOccurs="1"/>
+				<xs:element ref="ClosingStockQuantity" minOccurs="1"/>
+				<xs:element ref="UnitOfMeasure" minOccurs="1"/>
+				<xs:element ref="ClosingStockValue" minOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- ELEMENTOS SIMPLES -->
+	<xs:element name="EndDate" type="SAFPTDateSpan"/>
+	<xs:element name="ProductCode" type="SAFPTtextTypeMandatoryMax60Car"/>
+	<xs:element name="ProductDescription" type="SAFPTtextTypeMandatoryMax200Car"/>
+	<xs:element name="ProductNumberCode" type="SAFPTtextTypeMandatoryMax60Car"/>
+	<xs:element name="ClosingStockQuantity" type="SAFdecimalType"/>
+	<xs:element name="UnitOfMeasure" type="SAFPTtextTypeMandatoryMax20Car"/>
+	<xs:element name="ClosingStockValue" type="SAFdecimalType"/>
+	<!-- ELEMENTOS SIMPLES COM RESTRICOES ADICIONAIS -->
+	<xs:element name="FileVersion">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="2_01"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FiscalYear">
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="2000"/>
+				<xs:maxInclusive value="9999"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<!-- Tipos de produto -->
+	<xs:element name="ProductCategory">
+		<xs:annotation>
+			<xs:documentation>Restricao: "M" Mercadorias, "P" materias-primas,
+				subsidiarias e de consumo, "A" produtos acabados e intermedios, "S"
+				subprodutos, desperdicios e refugos, "T" produtos e trabalhos em curso, 
+				"B" - ativos biologicos
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="M"/>
+				<xs:enumeration value="P"/>
+				<xs:enumeration value="A"/>
+				<xs:enumeration value="S"/>
+				<xs:enumeration value="T"/>
+				<xs:enumeration value="B"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<!-- TIPOS DE DADOS BASE SAFT OCDE -->
+	<xs:simpleType name="SAFPTDateSpan">
+		<xs:restriction base="xs:date">
+			<xs:minInclusive value="2000-01-01"/>
+			<xs:maxInclusive value="9999-12-31"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAFPTPortugueseVatNumber">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="100000000"/>
+			<xs:maxInclusive value="999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAFPTtextTypeMandatoryMax60Car">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAFPTtextTypeMandatoryMax200Car">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAFdecimalType">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0.00"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAFPTtextTypeMandatoryMax20Car">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
