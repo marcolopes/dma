@@ -1,7 +1,8 @@
 @echo off
 echo *****************************************************************************
-echo * 2008-2021 Projecto Colibri
-echo * Marco Lopes (marcolopes@projectocolibri.com)
+echo * 2008-2021 Public Domain
+echo * Contributors
+echo * Marco Lopes (marcolopespt@gmail.com)
 echo * https://xmlbeans.apache.org/docs/2.0.0/guide/tools.html
 echo *****************************************************************************
 setlocal
