@@ -17,9 +17,7 @@ Bundle-ClassPath: .,
  libraries/Stock_1_01.jar,
  libraries/Stock_1_02.jar,
  libraries/Stock_2_01.jar
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
- org.dma.eclipse;bundle-version="7.4.6",
- org.dma.java;bundle-version="7.0.0"
+Require-Bundle: org.dma.java;bundle-version="7.0.0"
 Export-Package: oasisNamesSpecificationUblSchemaXsdCommonAggregateComponents2,
  oasisNamesSpecificationUblSchemaXsdCommonAggregateComponents2.impl,
  oasisNamesSpecificationUblSchemaXsdCommonBasicComponents2,
