@@ -17,6 +17,7 @@ import org.dma.eclipse.swt.graphics.ColorManager;
 import org.dma.eclipse.swt.graphics.FontManager;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageUtils;
+import org.dma.java.util.Debug;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -52,6 +53,7 @@ public class Activator implements BundleActivator {
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
+		Debug.err();
 		ColorManager.DISPLAY.isDisposed();
 		FontManager.DISPLAY.isDisposed();
 		ImageManager.DISPLAY.isDisposed();
@@ -59,6 +61,7 @@ public class Activator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		Debug.err();
 		ImageManager.REGISTRY.dispose();
 	}
 
