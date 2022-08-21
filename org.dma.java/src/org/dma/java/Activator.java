@@ -16,6 +16,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
+import org.dma.java.util.Debug;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -40,6 +42,7 @@ public class Activator implements BundleActivator {
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
+		Debug.err();
 		//in JDK 1.4, defaultEncodingName will typically be "Cp1252"
 		System.out.println("FILE ENCODING: "+System.getProperty("file.encoding"));
 		//in JDK 1.5+, will typically be "windows-1252"
@@ -57,6 +60,8 @@ public class Activator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {}
+	public void stop(BundleContext context) throws Exception {
+		Debug.err();
+	}
 
 }
