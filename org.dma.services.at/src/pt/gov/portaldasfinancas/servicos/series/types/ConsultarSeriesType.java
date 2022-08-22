@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2021 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -29,6 +29,10 @@ public class ConsultarSeriesType {
 	private MeioProcessamentoType meioProcessamento;
 
 	public ConsultarSeriesType() {}
+
+	public ConsultarSeriesType(String serie) {
+		this.serie=serie;
+	}
 
 	public ConsultarSeriesType(EstadoSerieType estado) {
 		this.estado=estado;
