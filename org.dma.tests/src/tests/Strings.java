@@ -17,7 +17,9 @@ public class Strings {
 		
 	}
 
-	public static void main(String[] argvs){
+	public static void main(String[] argvs) {
+		
+		String words="The quick brown fox jumps over the lazy dog";
 
 		final char[] array={'1','2','3'};
 		System.out.println(array);
