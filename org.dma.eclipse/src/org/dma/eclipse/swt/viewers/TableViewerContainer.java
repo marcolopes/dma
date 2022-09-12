@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2021 Public Domain
+ * 2010-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -115,13 +115,13 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	 * Listeners
 	 */
 	private void addTableListeners() {
-		table.getVerticalBar().addSelectionListener(verticallBarSelectionListener);
+		if (table.getVerticalBar()!=null) table.getVerticalBar().addSelectionListener(verticallBarSelectionListener);
 		table.addMouseWheelListener(tableMouseListener);
 		table.addKeyListener(tableNavigationKeyListener);
 	}
 
 	private void removeTableListeners() {
-		table.getVerticalBar().removeSelectionListener(verticallBarSelectionListener);
+		if (table.getVerticalBar()!=null) table.getVerticalBar().removeSelectionListener(verticallBarSelectionListener);
 		table.removeMouseWheelListener(tableMouseListener);
 		table.removeKeyListener(tableNavigationKeyListener);
 	}
@@ -133,39 +133,43 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	 */
 	public void clearTable() {
 		objectCollection.clear();
-		refreshTable(true);
+		refreshTable(false);
 	}
 
 	public void refreshTable() {
 		refreshTable(true);
 	}
 
-	@Override
-	public void updateTable() {
-		int index=getSelectionIndex();
-		objectCollection.clear();
-		refreshTable(false); // avoids SLOW refresh!
-		updateTable(SWT.DEFAULT);
-		selectElement(index);
-		/*
-		objectCollection.clear();
-		objectCollection.addAll(retrieveObjects());
-		refreshTable();
-		*/
-	}
-
-	protected void refreshTable(boolean updateLabels) {
+	private void refreshTable(boolean updateLabels) {
 		viewer.refresh(updateLabels);
 		if (SystemUtils.IS_OS_MAC) table.redraw();
 	}
 
-	protected boolean updateTable(int keycode) {
+	/** Returns true if changed */
+	@Override
+	public boolean updateTable() {
+		/*
+		 * VERSION 1
+		 *
+		objectCollection.clear();
+		objectCollection.addAll(retrieveObjects());
+		refreshTable();*/
+		int index=getSelectionIndex();
+		table.setRedraw(false);
+		clearTable();
+		boolean changed=updateTable(SWT.DEFAULT);
+		selectElement(index);
+		table.setRedraw(true);
+		return changed;
+	}
+
+	/** Returns true if changed */
+	public boolean updateTable(int keycode) {
 		boolean changed=false;
 		long objectsToLoad=getObjectsToLoad(keycode);
 		if (objectsToLoad!=0) {
 			long topIndex=objectCollection.size();
-			long bottomIndex=topIndex+objectsToLoad;
-			changed=objectCollection.addAll(retrieveObjects(topIndex, bottomIndex));
+			changed=objectCollection.addAll(retrieveObjects(topIndex, topIndex+objectsToLoad));
 			refreshTable(keycode==SWT.DEFAULT);
 		}return changed;
 	}
@@ -222,6 +226,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		if (index>table.getItemCount()-1) index=table.getItemCount()-1;
 		if (index<0) return 0;
 		table.select(index);
+		table.showSelection();
 		Object element=viewer.getElementAt(index);
 		viewer.setSelection(new StructuredSelection(element));
 		//viewer.refresh(element);
@@ -232,10 +237,8 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		/*
 		 * VERSION 1
 		 *
-		objectCollection.addAll(index>objectCollection.size() ?
-				objectCollection.size() : index, col);
-		return selectElement(index);
-		*/
+		objectCollection.addAll(index>objectCollection.size() ? objectCollection.size() : index, col);
+		return selectElement(index);*/
 		objectCollection.addAll(index, col);
 		return selectElement(index);
 	}
@@ -281,8 +284,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		objectCollection.removeAll(col);
 		//viewer.refresh(false);
 		int index=selectElement(indices.length==0 ? 0 : indices[0]);
-		return index;
-		*/
+		return index;*/
 		objectCollection.remove(indices);
 		return selectElement(indices.length==0 ? 0 : indices[0]);
 	}
@@ -301,14 +303,12 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 			for(int i: indices) col.add(objectCollection.get(i));
 			objectCollection.removeAll(col);
 			index=insertElements(col, index);
-		}return index;
-		*/
+		}return index;*/
 		/*
 		 * VERSION 2
 		 *
 		int index=ArrayUtils.smaller(indices);
-		return index>0 ? insertElements(objectCollection.remove(indices), index-1) : index;
-		*/
+		return index>0 ? insertElements(objectCollection.remove(indices), index-1) : index;*/
 		int index=ArrayUtils.smaller(indices);
 		if (index>0) objectCollection.moveTo(index-1, indices);
 		return selectElement(indices.length==0 ? 0 : index-1);
@@ -328,15 +328,13 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 			for(int i: indices) col.add(objectCollection.get(i));
 			objectCollection.removeAll(col);
 			index=insertElements(col, index-indices.length+1);
-		}return index;
-		*/
+		}return index;*/
 		/*
 		 * VERSION 2
 		 *
 		int index=ArrayUtils.greater(indices);
-		return index<table.getItemCount()-1 ? insertElements(
-				objectCollection.remove(indices), ArrayUtils.smaller(indices)+1) : index;
-		*/
+		return index<table.getItemCount()-1 ? insertElements(objectCollection.remove(indices),
+			ArrayUtils.smaller(indices)+1) : index;*/
 		int index=ArrayUtils.greater(indices);
 		if (index<objectCollection.size()-1) objectCollection.moveTo(ArrayUtils.smaller(indices)+1, indices);
 		return selectElement(indices.length==0 ? 0 : index+1);

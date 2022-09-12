@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2010-2021 Public Domain
+ * 2010-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.TableColumn;
 public abstract class TableContainer {
 
 	public abstract void editObject();
-	public abstract void updateTable();
+	public abstract boolean updateTable();
 
 	private final MouseAdapter tableDoubleClickListener=new MouseAdapter() {
 		@Override
