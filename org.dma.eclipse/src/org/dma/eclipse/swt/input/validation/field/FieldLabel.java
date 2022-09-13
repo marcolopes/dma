@@ -42,7 +42,8 @@ public class FieldLabel {
 	}
 
 	public String getText() {
-		if (text==null && control!=null){
+		if (text!=null) return text;
+		if (control!=null){
 			if (control instanceof Label) return ((Label)control).getText();
 			if (control instanceof Button) return ((Button)control).getText();
 		}return "";
