@@ -25,7 +25,6 @@ chcp 65001
 
 echo RENAME CERTIFICATES
 copy ChaveCifraPublicaAT2023.cer %OUTPUT_FOLDER%\ChavePublicaAT.cer
-copy TesteWebservices.pfx %OUTPUT_FOLDER%\TesteWebservices.pfx
 copy portaldasfinancas.pem %OUTPUT_FOLDER%\TrustStoreAT.cer
 
 echo EXTRAI A CHAVE PUBLICA DO CERTIFICADO AT (formato:PEM, encoding:BASE64)
