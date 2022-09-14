@@ -49,7 +49,7 @@ import org.dma.java.cipher.RSAPublicCipher;
 import org.dma.java.net.NTPServerHandler.NTPTimeInfo;
 import org.dma.java.net.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.security.JKSCertificate;
-import org.dma.java.util.Debug;
+
 /**
  * SOAP Message Handler
  */
@@ -161,24 +161,14 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				// Generate simetric key used for this request!
 				final CryptoCipher simetricKeyCipher = new CryptoCipher(CIPHERS.AES_ECB_PKCS5);
 				final byte[] simetricKey = simetricKeyCipher.getKey().getEncoded();
-				/*
-				KeyGenerator generator = KeyGenerator.getInstance(CIPHERS.AES_ECB_PKCS5.algorithm);
-				generator.init(128); // Implementacao JAVA permite apenas 128 bits
-				final byte[] simetricKey = generator.generateKey().getEncoded();
-				*/
 
 				// create Timestamp
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+				/*Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+				String timestamp = sdf.format(calendar.getTime());*/
 				NTPTimeInfo time = NTP_SERVERS.queryAll(500, NTP_SERVERS.OAL, NTP_SERVERS.XS2ALL, NTP_SERVERS.WINDOWS);
 				final String timestamp = sdf.format(time==null ? new Date() : time.getServerDate());
-				Debug.out("DATE: "+timestamp);
-				/*
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
-				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				String timestamp = sdf.format(calendar.getTime());
-				*/
 
 				// create SOAP Factory
 				final SOAPFactory soapFactory = SOAPFactory.newInstance();
@@ -191,30 +181,18 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				final SOAPElement passwordElem = soapFactory.createElement("Password", AUTH_PREFIX, AUTH_NS);
 				// Encrypt with the simetric key and B64 encode the password
 				passwordElem.addTextNode(simetricKeyCipher.BASE64encrypt(password, 0));
-				/*
-				final byte[] encryptedPassword = new AutenticationCypher(simetricKey).cypherCredential(password);
-				final String b64EncryptedPassword = DatatypeConverter.printBase64Binary(encryptedPassword);
-				passwordElem.addTextNode(b64EncryptedPassword);
-				*/
+
 				// Encrypt with the simetric key and B64 encode the digest
 				byte[] passwordDigest = createPasswordDigest(simetricKey, timestamp, password);
 				passwordElem.addAttribute(soapFactory.createName("Digest"), simetricKeyCipher.BASE64encrypt(passwordDigest, 0));
-				/*
-				final byte[] encryptedDigest = new AutenticationCypher(simetricKey).cypherCredentialBuffer(computedDigest);
-				final String b64EncryptedDigest = DatatypeConverter.printBase64Binary(encryptedDigest);
-				passwordElem.addAttribute(soapFactory.createName("Digest"), b64EncryptedDigest);
-				*/
+
 
 				// Nonce
 				final SOAPElement nonceElem = soapFactory.createElement("Nonce", AUTH_PREFIX, AUTH_NS);
 				// Encrypt with the SA public key and B64 encode the request simetric key
 				PublicKey publicKey = saCertificate.getCertificate().getPublicKey();
 				nonceElem.addTextNode(new RSAPublicCipher(publicKey).BASE64encrypt(simetricKey, 0));
-				/*
-				final byte[] encryptedSimetricKey = new AutenticationCypher(simetricKey).cypherRequestKey(publicKey);
-				final String b64EncryptedSimetricKey = DatatypeConverter.printBase64Binary(encryptedSimetricKey);
-				nonceElem.addTextNode(b64EncryptedSimetricKey);
-				*/
+
 
 				// Created
 				final SOAPElement createdElem = soapFactory.createElement("Created", AUTH_PREFIX, AUTH_NS);
@@ -269,10 +247,6 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 		System.arraycopy(passwordBytes, 0, message, simetricKey.length + createdBytes.length, passwordBytes.length);
 
 		return new MessageDigest(ALGORITHMS.SHA1).digest(message);
-		/*
-		MessageDigest md = MessageDigest.getInstance("SHA-1");
-		return md.digest(digestInput);
-		*/
 
 	}
 
