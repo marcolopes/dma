@@ -184,13 +184,11 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				byte[] passwordDigest = createPasswordDigest(simetricKey, timestamp, password);
 				passwordElem.addAttribute(soapFactory.createName("Digest"), simetricKeyCipher.BASE64encrypt(passwordDigest, 0));
 
-
 				// Nonce
 				final SOAPElement nonceElem = soapFactory.createElement("Nonce", AUTH_PREFIX, AUTH_NS);
 				// Encrypt with the SA public key and B64 encode the request simetric key
 				PublicKey publicKey = saCertificate.getCertificate().getPublicKey();
 				nonceElem.addTextNode(new RSAPublicCipher(publicKey).BASE64encrypt(simetricKey, 0));
-
 
 				// Created
 				final SOAPElement createdElem = soapFactory.createElement("Created", AUTH_PREFIX, AUTH_NS);
