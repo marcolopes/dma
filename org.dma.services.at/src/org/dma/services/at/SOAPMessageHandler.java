@@ -125,15 +125,13 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 					new TrustManager[]{new PermissiveTrustStore()} :
 					tsCertificate.getTrustManagers(), null);
 
-			/*
-			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
+			/*Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 			KeyStore ks = KeyStore.getInstance("JKS");
 			ks.load(this.getClass().getClassLoader().getResourceAsStream("trustStore"), "cliente".toCharArray());
 			TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
 			tmf.init(ks);
 			SSLContext sslContext = SSLContext.getInstance("TLS");
-			sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
-			*/
+			sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);*/
 
 			provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
 
