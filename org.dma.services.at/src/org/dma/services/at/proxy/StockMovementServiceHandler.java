@@ -8,7 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporte;
@@ -24,8 +24,8 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 	public enum ENDPOINTS {
 
 		//sgdtws = Servico de Gestao de Documentos de Transporte WebService?
-		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:401/sgdtws/documentosTransporte"),
-		TESTES ("https://servicos.portaldasfinancas.gov.pt:701/sgdtws/documentosTransporte");
+		PROD ("https://servicos.portaldasfinancas.gov.pt:401/sgdtws/documentosTransporte"),
+		TEST ("https://servicos.portaldasfinancas.gov.pt:701/sgdtws/documentosTransporte");
 
 		public final String url;
 
@@ -41,9 +41,8 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public StockMovementServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate);
+	public StockMovementServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
+		super(username, password, cert);
 		this.endpoint = endpoint;
 	}
 

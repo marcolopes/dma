@@ -8,8 +8,8 @@ package org.dma.services.at.test;
 import java.math.BigDecimal;
 import java.util.Random;
 
+import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.TimeDateUtils;
-import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.StockMovementServiceHandler;
 
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.AddressStructurePT;
@@ -31,8 +31,10 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 	public static final String SystemEntryDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd'T'HH:mm:ss");
 
+	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
+
 	public StockMovementServiceTest() {
-		super(RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+		super(RequesterTaxID+"/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
 	}
 
 	public static StockMovement build() throws Exception {

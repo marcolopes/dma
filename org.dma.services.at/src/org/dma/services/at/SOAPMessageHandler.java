@@ -48,7 +48,7 @@ import org.dma.java.cipher.MessageDigest.ALGORITHMS;
 import org.dma.java.cipher.RSAPublicCipher;
 import org.dma.java.net.NTPServerHandler.NTPTimeInfo;
 import org.dma.java.net.NTPServerHandler.NTP_SERVERS;
-import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.ServiceCertificates;
 
 /**
  * SOAP Message Handler
@@ -65,39 +65,23 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	public final String username;
 	public final String password;
-
-	public final JKSCertificate saCertificate;
-	public final JKSCertificate swCertificate;
-	public final JKSCertificate tsCertificate;
+	public final ServiceCertificates cert;
 
 	/**
 	 * @param username - Service Username
 	 * @param password - Service Password
-	 * @param saCertificate - Scheme Administrator Certificate
-	 * @param swCertificate - Software Developer Certificate
+	 * @param cert - Service Certificates
 	 */
-	public SOAPMessageHandler(String username, String password, JKSCertificate saCertificate, JKSCertificate swCertificate) {
-		this(username, password, saCertificate, swCertificate, null);
-	}
-
-	/**
-	 * @param username - Service Username
-	 * @param password - Service Password
-	 * @param saCertificate - Scheme Administrator Certificate
-	 * @param swCertificate - Software Developer Certificate
-	 * @param tsCertificate - Trusted Store Certificate
-	 */
-	public SOAPMessageHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, JKSCertificate tsCertificate) {
+	public SOAPMessageHandler(String username, String password, ServiceCertificates cert) {
 		this.username = username;
 		this.password = password;
-		this.saCertificate = saCertificate;
-		this.swCertificate = swCertificate;
-		this.tsCertificate = tsCertificate;
+		this.cert = cert;
 	}
 
 
 	public void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws WebServiceException {
+
+		cert.validate();
 
 		// adiciona handler
 		Binding binding = provider.getBinding();
@@ -116,14 +100,13 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 			// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
 			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-			kmf.init(swCertificate.getKeyStore(), swCertificate.password.toCharArray());
+			kmf.init(cert.sw.getKeyStore(), cert.sw.password.toCharArray());
 
 			SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // necessita JAVA 7
 			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
-			sslContext.init(kmf.getKeyManagers(), tsCertificate==null ?
+			sslContext.init(kmf.getKeyManagers(), cert.ts==null ?
 					// Trust Store que aceita ligacao SSL sem validar o certificado
-					new TrustManager[]{new PermissiveTrustStore()} :
-					tsCertificate.getTrustManagers(), null);
+					new TrustManager[]{new PermissiveTrustStore()} : cert.ts.getTrustManagers(), null);
 
 			/*Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 			KeyStore ks = KeyStore.getInstance("JKS");
@@ -187,7 +170,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				// Nonce
 				final SOAPElement nonceElem = soapFactory.createElement("Nonce", AUTH_PREFIX, AUTH_NS);
 				// Encrypt with the SA public key and B64 encode the request simetric key
-				PublicKey publicKey = saCertificate.getCertificate().getPublicKey();
+				PublicKey publicKey = cert.sa.getCertificate().getPublicKey();
 				nonceElem.addTextNode(new RSAPublicCipher(publicKey).BASE64encrypt(simetricKey, 0));
 
 				// Created

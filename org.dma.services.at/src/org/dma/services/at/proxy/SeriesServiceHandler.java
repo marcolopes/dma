@@ -8,7 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResp;
@@ -27,8 +27,8 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 
-		PRODUCAO ("Ainda não definido à data de fecho da versão 1.0"),
-		TESTES ("https://servicos.portaldasfinancas.gov.pt:722/SeriesWSService");
+		PROD ("https://servicos.portaldasfinancas.gov.pt:422/SeriesWSService"),
+		TEST ("https://servicos.portaldasfinancas.gov.pt:722/SeriesWSService");
 
 		public final String url;
 
@@ -44,9 +44,8 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public SeriesServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate);
+	public SeriesServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
+		super(username, password, cert);
 		this.endpoint = endpoint;
 	}
 

@@ -8,9 +8,9 @@ package org.dma.services.at.test;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
-import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.DocumentosServiceHandler;
 
 import pt.gov.portaldasfinancas.servicos.documentos.DebitCreditIndicator;
@@ -39,8 +39,10 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 
 	public static final BigInteger SoftwareCertificateNumber = new BigInteger("0");
 
+	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
+
 	public DocumentosServiceTest() {
-		super(RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+		super(RequesterTaxID+"/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
 	}
 
 	public static RegisterInvoiceRequest build() throws Exception {

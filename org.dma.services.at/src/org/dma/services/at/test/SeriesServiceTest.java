@@ -5,9 +5,9 @@
  *******************************************************************************/
 package org.dma.services.at.test;
 
+import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
-import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.SeriesServiceHandler;
 
 import pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResp;
@@ -41,10 +41,12 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 	public static final MotivoAnulacaoType MotivoAnulacao = MotivoAnulacaoType.ER;
 
+	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
+
 	private enum PRINT {NONE, INFO, ID}
 
 	public SeriesServiceTest() {
-		super("599999993/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+		super("599999993/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
 	}
 
 	public SeriesInfo registar() {

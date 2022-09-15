@@ -8,7 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
@@ -24,8 +24,8 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 	public enum ENDPOINTS {
 
 		//fews = Facturas Envio WebService?
-		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:400/fews/faturas"),
-		TESTES ("https://servicos.portaldasfinancas.gov.pt:700/fews/faturas");
+		PROD ("https://servicos.portaldasfinancas.gov.pt:400/fews/faturas"),
+		TEST ("https://servicos.portaldasfinancas.gov.pt:700/fews/faturas");
 
 		public final String url;
 
@@ -41,9 +41,8 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public FaturasServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate);
+	public FaturasServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
+		super(username, password, cert);
 		this.endpoint = endpoint;
 	}
 

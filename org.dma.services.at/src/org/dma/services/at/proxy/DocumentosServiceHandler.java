@@ -8,7 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.documentos.FatcorewsPort;
@@ -25,8 +25,8 @@ public class DocumentosServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 
-		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:423/fatcorews/ws/"),
-		TESTES ("https://servicos.portaldasfinancas.gov.pt:723/fatcorews/ws/");
+		PROD ("https://servicos.portaldasfinancas.gov.pt:423/fatcorews/ws/"),
+		TEST ("https://servicos.portaldasfinancas.gov.pt:723/fatcorews/ws/");
 
 		public final String url;
 
@@ -42,9 +42,8 @@ public class DocumentosServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public DocumentosServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate);
+	public DocumentosServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
+		super(username, password, cert);
 		this.endpoint = endpoint;
 	}
 

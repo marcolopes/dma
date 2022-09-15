@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.services.at;
+package org.dma.services.at.test;
 
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
@@ -14,10 +14,10 @@ public class Certificates {
 	/** Trusted Store Certificate */
 	public static final JKSCertificate TrustStoreAT = new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas");
 
-	/** Scheme Administrator Certificate */
+	/** Tax Authority Public KEY */
 	public static final JKSCertificate ChavePublicaAT = new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey");
 
-	/** Software Developer Certificate */
+	/** Webservices TEST Certificate */
 	public static final JKSCertificate TesteWebservices = new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/TesteWebservices.pfx", "TESTEwebservice");
 
 

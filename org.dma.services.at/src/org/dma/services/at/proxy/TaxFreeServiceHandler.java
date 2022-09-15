@@ -8,7 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeService;
@@ -23,8 +23,8 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 
-		PRODUCAO ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService"),
-		TESTES ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService");
+		PROD ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService"),
+		TEST ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService");
 
 		public final String url;
 
@@ -40,9 +40,8 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public TaxFreeServiceHandler(String username, String password,
-			JKSCertificate saCertificate, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, saCertificate, swCertificate);
+	public TaxFreeServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
+		super(username, password, cert);
 		this.endpoint = endpoint;
 	}
 

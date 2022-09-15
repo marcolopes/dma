@@ -7,9 +7,9 @@ package org.dma.services.at.test;
 
 import java.math.BigDecimal;
 
+import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
-import org.dma.services.at.Certificates;
 import org.dma.services.at.proxy.FaturasServiceHandler;
 
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceResponseType;
@@ -27,8 +27,10 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
+	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
+
 	public FaturasServiceTest() {
-		super(RequesterTaxID+"/0037", "testes1234", Certificates.ChavePublicaAT, Certificates.TesteWebservices, ENDPOINTS.TESTES);
+		super(RequesterTaxID+"/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
 	}
 
 	public static RegisterInvoiceType build() throws Exception {
