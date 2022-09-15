@@ -26,8 +26,8 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	/** Invoice Manager */
 	public enum ENDPOINTS {
 
-		PRODUCAO ("http://85.158.120.184:9090/einvoice_webservice/WebservicePort"),
-		TESTES ("http://85.158.120.184:9090/einvoice_webservice/WebservicePort");
+		PROD ("http://85.158.120.184:9090/einvoice_webservice/WebservicePort"),
+		TEST ("http://85.158.120.184:9090/einvoice_webservice/WebservicePort");
 
 		public final String url;
 

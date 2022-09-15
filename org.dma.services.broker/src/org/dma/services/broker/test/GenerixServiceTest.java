@@ -17,7 +17,7 @@ import org.dma.services.broker.proxy.GenerixServiceHandler;
 public class GenerixServiceTest extends GenerixServiceHandler {
 
 	public GenerixServiceTest() {
-		super("USER", "PASS", ENDPOINTS.TESTES);
+		super("USER", "PASS", ENDPOINTS.TEST);
 	}
 
 	public UploadDocResponse uploadDocument() throws Exception {

@@ -8,13 +8,12 @@ package org.dma.services.broker.test;
 import com.softlimits.clarinet.ArrayOfMessageOutputData;
 
 import org.dma.services.broker.CIUSExamples;
-import org.dma.services.broker.Certificates;
 import org.dma.services.broker.proxy.EspapServiceHandler;
 
 public class EspapServiceTest extends EspapServiceHandler {
 
 	public EspapServiceTest() {
-		super("Username", "Password", Certificates.SaphetyDoc, ENDPOINTS.TESTES);
+		super("Username", "Password", Certificates.SaphetyDoc, ENDPOINTS.TEST);
 	}
 
 	public ArrayOfMessageOutputData processMessage() throws Exception {

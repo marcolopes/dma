@@ -13,6 +13,7 @@ import com.softlimits.clarinet.IMessageService;
 import com.softlimits.clarinet.MessageService;
 
 import org.dma.java.security.JKSCertificate;
+import org.dma.java.security.ServiceCertificates;
 import org.dma.services.broker.SOAPMessageHandler;
 
 /**
@@ -24,8 +25,8 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 
-		PRODUCAO ("https://ws.netdocs.com.pt/TradeHttp/CTMessageService.svc/ssl"),
-		TESTES ("https://www-qa.netdocs.com.pt/TradeHttpQa/CTMessageService.svc/ssl");
+		PROD ("https://ws.netdocs.com.pt/TradeHttp/CTMessageService.svc/ssl"),
+		TEST ("https://www-qa.netdocs.com.pt/TradeHttpQa/CTMessageService.svc/ssl");
 
 		public final String url;
 
@@ -42,7 +43,7 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 	private final ENDPOINTS endpoint;
 
 	public EspapServiceHandler(String username, String password, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, null, swCertificate);
+		super(username, password, new ServiceCertificates(null, swCertificate));
 		this.endpoint = endpoint;
 	}
 
