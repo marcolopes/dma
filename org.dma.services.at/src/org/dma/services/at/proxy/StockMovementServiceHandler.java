@@ -8,6 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
+import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
@@ -27,16 +28,19 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 		PROD ("https://servicos.portaldasfinancas.gov.pt:401/sgdtws/documentosTransporte"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:701/sgdtws/documentosTransporte");
 
-		public final String url;
+		public final HttpURLHandler url;
 
-		private ENDPOINTS(String url) {
-			this.url = url;
+		private ENDPOINTS(String urlname) {
+			this.url = new HttpURLHandler(urlname);
 		}
 
-		public boolean isSecure() {
-			return url.startsWith("https");
-		}
+	}
 
+	private final DocumentosTransporte service = new DocumentosTransporteService().getDocumentosTransporteSOAP();
+
+	private DocumentosTransporte getService() throws WebServiceException {
+		initialize((BindingProvider)service, endpoint.url);
+		return service;
 	}
 
 	private final ENDPOINTS endpoint;
@@ -47,24 +51,8 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia o servico e inicializa o handler */
-	private DocumentosTransporte getService() throws WebServiceException {
-
-		// cria um novo servico
-		DocumentosTransporte service = new DocumentosTransporteService().getDocumentosTransporteSOAP();
-
-		// inicializa handler
-		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
-
-		return service;
-
-	}
-
-
 	public StockMovementResponse register(StockMovement type) throws WebServiceException {
-
 		return getService().envioDocumentoTransporte(type);
-
 	}
 
 

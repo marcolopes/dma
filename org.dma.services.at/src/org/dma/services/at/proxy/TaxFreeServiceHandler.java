@@ -8,6 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
+import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
@@ -26,16 +27,19 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 		PROD ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService");
 
-		public final String url;
+		public final HttpURLHandler url;
 
-		private ENDPOINTS(String url) {
-			this.url = url;
+		private ENDPOINTS(String urlname) {
+			this.url = new HttpURLHandler(urlname);
 		}
 
-		public boolean isSecure() {
-			return url.startsWith("https");
-		}
+	}
 
+	private final TaxFreeService service = new TaxFreeServiceImpl().getTaxFreeServicePort();
+
+	private TaxFreeService getService() throws WebServiceException {
+		initialize((BindingProvider)service, endpoint.url);
+		return service;
 	}
 
 	private final ENDPOINTS endpoint;
@@ -46,24 +50,8 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia o servico e inicializa o handler */
-	private TaxFreeService getService() throws WebServiceException {
-
-		// cria um novo servico
-		TaxFreeService service = new TaxFreeServiceImpl().getTaxFreeServicePort();
-
-		// inicializa handler
-		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
-
-		return service;
-
-	}
-
-
 	public TaxFreeSubmissionResponseType register(TaxFreeSubmissionRequestType type) throws WebServiceException {
-
 		return getService().taxFreeSubmission(type);
-
 	}
 
 

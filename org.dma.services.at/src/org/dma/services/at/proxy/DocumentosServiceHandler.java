@@ -8,6 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
+import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
@@ -28,16 +29,19 @@ public class DocumentosServiceHandler extends SOAPMessageHandler {
 		PROD ("https://servicos.portaldasfinancas.gov.pt:423/fatcorews/ws/"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:723/fatcorews/ws/");
 
-		public final String url;
+		public final HttpURLHandler url;
 
-		private ENDPOINTS(String url) {
-			this.url = url;
+		private ENDPOINTS(String urlname) {
+			this.url = new HttpURLHandler(urlname);
 		}
 
-		public boolean isSecure() {
-			return url.startsWith("https");
-		}
+	}
 
+	private final FatcorewsPort service = new FatcorewsPortService().getFatcorewsPortSoap11();
+
+	private FatcorewsPort getService() throws WebServiceException {
+		initialize((BindingProvider)service, endpoint.url);
+		return service;
 	}
 
 	private final ENDPOINTS endpoint;
@@ -48,34 +52,17 @@ public class DocumentosServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia o servico e inicializa o handler */
-	private FatcorewsPort getService() throws WebServiceException {
-
-		// cria um novo servico
-		FatcorewsPort service = new FatcorewsPortService().getFatcorewsPortSoap11();
-
-		// inicializa handler
-		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
-
-		return service;
-
-	}
-
-
 	public ResponseType register(RegisterInvoiceRequest type) throws WebServiceException {
-
 		return getService().registerInvoice(type).getResponse();
 	}
 
 
 	public ResponseType register(RegisterWorkRequest type) throws WebServiceException {
-
 		return getService().registerWork(type).getResponse();
 	}
 
 
 	public ResponseType register(RegisterPaymentRequest type) throws WebServiceException {
-
 		return getService().registerPayment(type).getResponse();
 	}
 

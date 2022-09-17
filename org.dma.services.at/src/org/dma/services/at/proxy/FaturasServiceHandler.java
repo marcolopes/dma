@@ -8,6 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
+import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
@@ -27,16 +28,19 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 		PROD ("https://servicos.portaldasfinancas.gov.pt:400/fews/faturas"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:700/fews/faturas");
 
-		public final String url;
+		public final HttpURLHandler url;
 
-		private ENDPOINTS(String url) {
-			this.url = url;
+		private ENDPOINTS(String urlname) {
+			this.url = new HttpURLHandler(urlname);
 		}
 
-		public boolean isSecure() {
-			return url.startsWith("https");
-		}
+	}
 
+	private final Faturas service = new FaturasService().getFaturasSOAP();
+
+	private Faturas getService() throws WebServiceException {
+		initialize((BindingProvider)service, endpoint.url);
+		return service;
 	}
 
 	private final ENDPOINTS endpoint;
@@ -47,24 +51,8 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia o servico e inicializa o handler */
-	private Faturas getService() throws WebServiceException {
-
-		// cria um novo servico
-		Faturas service = new FaturasService().getFaturasSOAP();
-
-		// inicializa handler
-		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
-
-		return service;
-
-	}
-
-
 	public RegisterInvoiceResponseType register(RegisterInvoiceType type) throws WebServiceException {
-
 		return getService().registerInvoice(type);
-
 	}
 
 

@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Autoridade Tributaria Services
 Bundle-SymbolicName: org.dma.services.at;singleton:=true
-Bundle-Version: 4.2.0.qualifier
+Bundle-Version: 4.2.1.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -12,7 +12,7 @@ Bundle-ClassPath: .,
  libraries/jaxb-impl-2.1.4.jar,
  libraries/jaxws-rt-2.1.4.jar,
  libraries/stax-ex-1.2.jar
-Require-Bundle: org.dma.java;bundle-version="6.9.1"
+Require-Bundle: org.dma.java;bundle-version="7.5.7"
 Export-Package: org.dma.services.at,
  org.dma.services.at.proxy,
  pt.gov.portaldasfinancas.servicos.documentos,

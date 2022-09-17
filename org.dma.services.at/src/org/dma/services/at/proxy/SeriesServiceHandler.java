@@ -8,6 +8,7 @@ package org.dma.services.at.proxy;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
+import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.ServiceCertificates;
 import org.dma.services.at.SOAPMessageHandler;
 
@@ -30,16 +31,19 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 		PROD ("https://servicos.portaldasfinancas.gov.pt:422/SeriesWSService"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:722/SeriesWSService");
 
-		public final String url;
+		public final HttpURLHandler url;
 
-		private ENDPOINTS(String url) {
-			this.url = url;
+		private ENDPOINTS(String urlname) {
+			this.url = new HttpURLHandler(urlname);
 		}
 
-		public boolean isSecure() {
-			return url.startsWith("https");
-		}
+	}
 
+	private final SeriesWS service = new SeriesWSService().getSeriesWSPort();
+
+	private SeriesWS getService() throws WebServiceException {
+		initialize((BindingProvider)service, endpoint.url);
+		return service;
 	}
 
 	private final ENDPOINTS endpoint;
@@ -50,32 +54,16 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia o servico e inicializa o handler */
-	private SeriesWS getService() throws WebServiceException {
-
-		// cria um novo servico
-		SeriesWS service = new SeriesWSService().getSeriesWSPort();
-
-		// inicializa handler
-		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
-
-		return service;
-
-	}
-
-
 	/**
 	 * Esta funcionalidade tem como objetivo permitir a comunicação das Séries à AT,
 	 * através do registo das mesmas, de modo a que seja atribuído um
 	 * código único de validação da Série.
 	 */
 	public SeriesResp registarSerie(RegistarSeriesType type) throws WebServiceException {
-
 		return getService().registarSerie(type.serie, type.tipoSerie.value(),
 				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
 				type.numInicialSeq, type.dataInicioPrevUtiliz, type.numCertSWFatur,
 				type.meioProcessamento==null ? null : type.meioProcessamento.value());
-
 	}
 
 	/**
@@ -83,11 +71,9 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	 * a comunicação de uma Série anteriormente comunicada, por erro.
 	 */
 	public SeriesResp anularSerie(AnularSerieType type) throws WebServiceException {
-
 		return getService().anularSerie(type.serie,
 				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
 				type.codigoValidacao, type.motivo.value(), type.declaracaoNaoEmissao);
-
 	}
 
 	/**
@@ -96,18 +82,15 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	 * do último documento comunicado.
 	 */
 	public SeriesResp finalizarSerie(FinalizarSerieType type) throws WebServiceException {
-
 		return getService().finalizarSerie(type.serie,
 				type.tipoDoc.classeDoc.value(), type.tipoDoc.value(),
 				type.codValidacaoSerie, type.seqUltimoDocEmitido, type.justificacao);
-
 	}
 
 	/**
 	 * Esta funcionalidade tem como objetivo disponibilizar a consulta das Séries comunicadas.
 	 */
 	public ConsultarSeriesResp consultarSeries(ConsultarSeriesType type) throws WebServiceException {
-
 		return getService().consultarSeries(type.getSerie(),
 				type.getTipoSerie()==null ? null : type.getTipoSerie().value(),
 				type.getClasseDoc()==null ? null : type.getClasseDoc().value(),
@@ -116,7 +99,6 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 				type.getDataRegistoDe(), type.getDataRegistoAte(),
 				type.getEstado()==null ? null : type.getEstado().value(),
 				type.getMeioProcessamento()==null ? null : type.getMeioProcessamento().value());
-
 	}
 
 
