@@ -16,6 +16,7 @@ import com.generixgroup.pt.messaging.webservice.UploadDocResponse;
 import com.generixgroup.pt.messaging.webservice.Webservice;
 import com.generixgroup.pt.messaging.webservice.WebserviceService;
 
+import org.dma.java.net.HttpURLHandler;
 import org.dma.services.broker.SOAPMessageHandler;
 
 /**
@@ -29,16 +30,19 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 		PROD ("http://85.158.120.184:9090/einvoice_webservice/WebservicePort"),
 		TEST ("http://85.158.120.184:9090/einvoice_webservice/WebservicePort");
 
-		public final String url;
+		public final HttpURLHandler url;
 
-		private ENDPOINTS(String url) {
-			this.url = url;
+		private ENDPOINTS(String urlname) {
+			this.url = new HttpURLHandler(urlname);
 		}
 
-		public boolean isSecure() {
-			return url.startsWith("https");
-		}
+	}
 
+	private final Webservice service = new WebserviceService().getWebservicePort();
+
+	private Webservice getService() throws WebServiceException {
+		initialize((BindingProvider)service, endpoint.url);
+		return service;
 	}
 
 	private final ENDPOINTS endpoint;
@@ -49,19 +53,6 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia o servico e inicializa o handler */
-	private Webservice getService() throws WebServiceException {
-
-		// cria um novo servico
-		Webservice service = new WebserviceService().getWebservicePort();
-
-		// inicializa handler
-		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
-
-		return service;
-
-	}
-
 	/**
 	 * @param transactionID Identificação do documento.
 	 * Aconselha-se a que seja o nome do ficheiro original.
@@ -71,9 +62,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	 */
 	public UploadDocResponse uploadDocument(String transactionID, Credentials credentials,
 			RoutingInfo info, String document) throws WebServiceException {
-
 		return getService().uploadDocument(transactionID, credentials, info, document);
-
 	}
 
 	/**
@@ -82,9 +71,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	 * @param credentials Autenticação
 	 */
 	public ListDocResponse listDocuments(Credentials credentials) throws WebServiceException {
-
 		return getService().listDocuments(credentials, "*");
-
 	}
 
 	/**
@@ -94,9 +81,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 	 * @param messageID Nome do ficheiro
 	 */
 	public GetDocResponse getDocument(Credentials credentials, String messageID) throws WebServiceException {
-
 		return getService().getDocument(credentials, messageID, true);
-
 	}
 
 

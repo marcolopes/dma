@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Fatura Eletronica Broker Services
 Bundle-SymbolicName: org.dma.services.broker;singleton:=true
-Bundle-Version: 0.3.2.qualifier
+Bundle-Version: 0.3.3.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -12,7 +12,7 @@ Bundle-ClassPath: .,
  libraries/jaxb-impl-2.1.4.jar,
  libraries/jaxws-rt-2.1.4.jar,
  libraries/stax-ex-1.2.jar
-Require-Bundle: org.dma.java;bundle-version="6.4.3"
+Require-Bundle: org.dma.java;bundle-version="7.5.7"
 Export-Package: com.generixgroup.pt.messaging.webservice,
  com.softlimits.clarinet,
  org.dma.services.broker,

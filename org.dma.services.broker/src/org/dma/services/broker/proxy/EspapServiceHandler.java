@@ -12,6 +12,7 @@ import com.softlimits.clarinet.ArrayOfMessageOutputData;
 import com.softlimits.clarinet.IMessageService;
 import com.softlimits.clarinet.MessageService;
 
+import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.ServiceCertificates;
 import org.dma.services.broker.SOAPMessageHandler;
@@ -28,16 +29,19 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 		PROD ("https://ws.netdocs.com.pt/TradeHttp/CTMessageService.svc/ssl"),
 		TEST ("https://www-qa.netdocs.com.pt/TradeHttpQa/CTMessageService.svc/ssl");
 
-		public final String url;
+		public final HttpURLHandler url;
 
-		private ENDPOINTS(String url) {
-			this.url = url;
+		private ENDPOINTS(String urlname) {
+			this.url = new HttpURLHandler(urlname);
 		}
 
-		public boolean isSecure() {
-			return url.startsWith("https");
-		}
+	}
 
+	private final IMessageService service = new MessageService().getCustomBindingIMessageService();
+
+	private IMessageService getService() throws WebServiceException {
+		initialize((BindingProvider)service, endpoint.url);
+		return service;
 	}
 
 	private final ENDPOINTS endpoint;
@@ -48,24 +52,8 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	/** Instancia o servico e inicializa o handler */
-	private IMessageService getService() throws WebServiceException {
-
-		// cria um novo servico
-		IMessageService service = new MessageService().getCustomBindingIMessageService();
-
-		// inicializa handler
-		initializeHandler((BindingProvider)service, endpoint.url, endpoint.isSecure());
-
-		return service;
-
-	}
-
-
 	public ArrayOfMessageOutputData processMessage(byte[] message) throws WebServiceException {
-
 		return getService().processMessage(message);
-
 	}
 
 

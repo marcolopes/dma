@@ -35,6 +35,7 @@ import com.sun.xml.ws.developer.JAXWSProperties;
 
 import org.dma.java.cipher.MessageDigest;
 import org.dma.java.cipher.MessageDigest.ALGORITHMS;
+import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.ServiceCertificates;
 
 /**
@@ -74,47 +75,54 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	public void initializeHandler(BindingProvider provider, String endpoint, boolean secure) throws WebServiceException {
+	/*
+	 * https://stackoverflow.com/questions/2490737/how-to-change-webservice-url-endpoint
+	 */
+	public void initialize(BindingProvider provider, HttpURLHandler url) throws WebServiceException {
 
-		cert.validate();
-
-		// adiciona handler
 		Binding binding = provider.getBinding();
 		List<Handler> chain = binding.getHandlerChain();
-		chain.add(this);
-		binding.setHandlerChain(chain);
+		if (!chain.contains(this)){
 
-		//javax.xml.ws.service.endpoint.address
-		provider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
-		//com.sun.xml.internal.ws.connect.timeout
-		provider.getRequestContext().put(JAXWSProperties.CONNECT_TIMEOUT, DEFAULT_CONNECT_TIMEOUT);
-		//com.sun.xml.internal.ws.request.timeout
-		provider.getRequestContext().put(JAXWSProperties.REQUEST_TIMEOUT, DEFAULT_REQUEST_TIMEOUT);
+			// add handler
+			chain.add(this);
+			binding.setHandlerChain(chain);
 
-		if (secure) try{
+			//javax.xml.ws.service.endpoint.address
+			provider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url.toString());
+			//com.sun.xml.internal.ws.connect.timeout
+			provider.getRequestContext().put(JAXWSProperties.CONNECT_TIMEOUT, DEFAULT_CONNECT_TIMEOUT);
+			//com.sun.xml.internal.ws.request.timeout
+			provider.getRequestContext().put(JAXWSProperties.REQUEST_TIMEOUT, DEFAULT_REQUEST_TIMEOUT);
 
-			// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
-			KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-			kmf.init(cert.sw.getKeyStore(), cert.sw.password.toCharArray());
+			if (url.isSecure()) try{
 
-			SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // necessita JAVA 7
-			// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
-			sslContext.init(kmf.getKeyManagers(), cert.ts==null ?
-					// Trust Store que aceita ligacao SSL sem validar o certificado
-					new TrustManager[]{new PermissiveTrustStore()} : cert.ts.getTrustManagers(), null);
+				cert.validate();
 
-			/*Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
-			KeyStore ks = KeyStore.getInstance("JKS");
-			ks.load(this.getClass().getClassLoader().getResourceAsStream("trustStore"), "cliente".toCharArray());
-			TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-			tmf.init(ks);
-			SSLContext sslContext = SSLContext.getInstance("TLS");
-			sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);*/
+				// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
+				KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+				kmf.init(cert.sw.getKeyStore(), cert.sw.password.toCharArray());
 
-			provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
+				SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // necessita JAVA 7
+				// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
+				sslContext.init(kmf.getKeyManagers(), cert.ts==null ?
+						// Trust Store que aceita ligacao SSL sem validar o certificado
+						new TrustManager[]{new PermissiveTrustStore()} : cert.ts.getTrustManagers(), null);
 
-		}catch(Exception e){
-			throw new WebServiceException(e);
+				/*Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
+				KeyStore ks = KeyStore.getInstance("JKS");
+				ks.load(this.getClass().getClassLoader().getResourceAsStream("trustStore"), "cliente".toCharArray());
+				TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+				tmf.init(ks);
+				SSLContext sslContext = SSLContext.getInstance("TLS");
+				sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);*/
+
+				provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
+
+			}catch(Exception e){
+				throw new WebServiceException(e);
+			}
+
 		}
 
 	}
