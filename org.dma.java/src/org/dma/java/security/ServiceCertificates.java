@@ -8,8 +8,6 @@ package org.dma.java.security;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.xml.ws.WebServiceException;
-
 import org.dma.java.util.MessageList;
 
 public class ServiceCertificates {
@@ -40,13 +38,13 @@ public class ServiceCertificates {
 		this.ts = ts;
 	}
 
-	public void validate() throws WebServiceException {
+	public void validate() throws Exception {
 		Collection<JKSCertificate> col=new ArrayList();
 		for(JKSCertificate cert: new JKSCertificate[]{sa, sw, ts}){
 			if (cert!=null && !validate(cert)) col.add(cert);
 		}MessageList list=message(col);
 		list.print();
-		if (!list.isEmpty()) throw new WebServiceException("Invalid or expired certificates");
+		if (!list.isEmpty()) throw new Exception("Invalid or expired certificates");
 	}
 
 	private MessageList message(Collection<JKSCertificate> col) {

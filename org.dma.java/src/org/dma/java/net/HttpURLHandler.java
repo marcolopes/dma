@@ -100,7 +100,14 @@ public class HttpURLHandler extends URLHandler {
 	}
 
 
-	public boolean open() {
+	public boolean isSecure() {
+
+		return url.getProtocol().equals("https");
+
+	}
+
+
+	public boolean browse() {
 
 		if (Desktop.isDesktopSupported()) try{
 			Desktop.getDesktop().browse(url.toURI());
