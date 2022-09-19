@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.Status.Family;
 
 import org.dma.java.util.StringUtils;
 
@@ -72,6 +73,29 @@ public class Response<T> extends HashMap<String, Object> implements IResponse {
 
 	public void setEntity(T entity) {
 		this.entity = entity;
+	}
+
+	/*
+	 * Control
+	 */
+	public boolean isInformation() {
+		return status.getFamily()==Family.INFORMATIONAL;
+	}
+
+	public boolean isSuccess() {
+		return status.getFamily()==Family.SUCCESSFUL;
+	}
+
+	public boolean isRedirect() {
+		return status.getFamily()==Family.REDIRECTION;
+	}
+
+	public boolean isClientError() {
+		return status.getFamily()==Family.CLIENT_ERROR;
+	}
+
+	public boolean isServerError() {
+		return status.getFamily()==Family.SERVER_ERROR;
 	}
 
 	/*
