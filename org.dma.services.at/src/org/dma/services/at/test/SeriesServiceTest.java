@@ -5,6 +5,10 @@
  *******************************************************************************/
 package org.dma.services.at.test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
@@ -49,17 +53,6 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		super("599999993/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
 	}
 
-	public SeriesInfo registar() {
-
-		String serie=new RandomValue().numbers(SeriemaxLength);
-
-		RegistarSeriesType type=new RegistarSeriesType(serie, TipoSerie, TipoDoc,
-				1, TimeDateUtils.getCurrentDate(), NumCertSWFatur, MeioProcessamento);
-
-		return registar(type);
-
-	}
-
 	public SeriesInfo registar(RegistarSeriesType type) {
 
 		if (type!=null) try{
@@ -81,6 +74,8 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 		if (info!=null) try{
 
+			info("Registar série: " + info.getSerie());
+
 			RegistarSeriesType type=new RegistarSeriesType(info);
 
 			return registar(type);
@@ -88,6 +83,17 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		}catch(Exception e){
 			e.printStackTrace();
 		}return null;
+
+	}
+
+	public SeriesInfo registar() {
+
+		String serie=new RandomValue().numbers(SeriemaxLength);
+
+		RegistarSeriesType type=new RegistarSeriesType(serie, TipoSerie, TipoDoc,
+				1, TimeDateUtils.getCurrentDate(), NumCertSWFatur, MeioProcessamento);
+
+		return registar(type);
 
 	}
 
@@ -110,6 +116,20 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 	}
 
+	public void anular() {
+
+		info("Anular todas as séries ACTIVAS");
+
+		for(SeriesInfo info: consultar(EstadoSerieType.A).getInfoSerie()) try{
+
+			anular(info);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+
 	public SeriesInfo finalizar(SeriesInfo info) {
 
 		if (info!=null) try{
@@ -129,59 +149,6 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 	}
 
-
-	public ConsultarSeriesResp consultar(EstadoSerieType estado) {
-
-		if (estado!=null) try{
-
-			ConsultarSeriesType type=new ConsultarSeriesType(estado);
-
-			return consultarSeries(type);
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}return null;
-
-	}
-
-
-	public void consultar(PRINT print, EstadoSerieType...estados) {
-
-		for(EstadoSerieType estado: estados){
-
-			switch(estado){
-			case A: info("Consultar todas as séries ACTIVAS"); break;
-			case N: info("Consultar todas as séries ANULADAS"); break;
-			case F: info("Consultar todas as séries FINALIZADAS"); break;
-			}
-
-			ConsultarSeriesResp response=consultar(estado);
-
-			switch(print){
-			case NONE: break;
-			case INFO: print(response); break;
-			case ID: printID(response); break;
-			}
-		}
-
-	}
-
-
-	public void anular() {
-
-		info("Anular todas as séries ACTIVAS");
-
-		for(SeriesInfo info: consultar(EstadoSerieType.A).getInfoSerie()) try{
-
-			anular(info);
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-	}
-
-
 	public void finalizar() {
 
 		info("Finalizar todas as séries ACTIVAS");
@@ -196,6 +163,62 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 	}
 
+	public ConsultarSeriesResp consultar() {
+
+		try{
+			info("Consultar todas as séries");
+
+			ConsultarSeriesType type=new ConsultarSeriesType();
+
+			return consultarSeries(type);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}return null;
+
+	}
+
+	public ConsultarSeriesResp consultar(EstadoSerieType estado) {
+
+		if (estado!=null) try{
+
+			switch(estado){
+			case A: info("Consultar todas as séries ACTIVAS"); break;
+			case N: info("Consultar todas as séries ANULADAS"); break;
+			case F: info("Consultar todas as séries FINALIZADAS"); break;
+			}ConsultarSeriesType type=new ConsultarSeriesType(estado);
+
+			return consultarSeries(type);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}return consultar();
+
+	}
+
+	public Collection<ConsultarSeriesResp> consultar(EstadoSerieType...estados) {
+
+		if (estados.length==0) return Arrays.asList(consultar());
+
+		Collection<ConsultarSeriesResp> col=new ArrayList();
+		for(EstadoSerieType estado: estados){
+			col.add(consultar(estado));
+		}return col;
+
+	}
+
+	public void consultar(PRINT print, EstadoSerieType...estados) {
+
+		for(ConsultarSeriesResp response: consultar(estados)){
+
+			switch(print){
+			case NONE: break;
+			case INFO: print(response); break;
+			case ID: printID(response); break;
+			}
+		}
+
+	}
 
 	public void print(SeriesResp response) {
 
@@ -210,7 +233,6 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		}
 
 	}
-
 
 	public void print(ConsultarSeriesResp response) {
 
@@ -227,7 +249,6 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		}
 
 	}
-
 
 	public void printID(ConsultarSeriesResp response) {
 
@@ -246,7 +267,6 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 	}
 
-
 	public void print(OperationResultInfo info) {
 
 		if (info!=null) try{
@@ -261,7 +281,6 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		}
 
 	}
-
 
 	public void print(SeriesInfo info) {
 
@@ -293,7 +312,6 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 	}
 
-
 	public boolean printID(SeriesInfo info) {
 
 		if (info!=null) try{
@@ -311,7 +329,6 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		}return false;
 
 	}
-
 
 	public void info(String text) {
 
@@ -351,9 +368,10 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		service.anular(service.finalizar(service.registar()));
 
 		PRINT print=PRINT.ID;
-		//service.consultar(print, EstadoSerieType.A);
-		//service.consultar(print, EstadoSerieType.N);
-		//service.consultar(print, EstadoSerieType.F);
+		service.consultar(print);
+		service.consultar(print, EstadoSerieType.A);
+		service.consultar(print, EstadoSerieType.N);
+		service.consultar(print, EstadoSerieType.F);
 
 	}
 

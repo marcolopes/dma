@@ -3,6 +3,7 @@ echo ***************************************************************************
 echo * Marco Lopes (marcolopespt@gmail.com)
 echo * Importacao da chave publica para KEY STORE
 echo * DEPRECATED! Para efeitos didaticos apenas!
+echo * https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Faturacao/Paginas/default.aspx
 echo *******************************************************************************
 setlocal
 
