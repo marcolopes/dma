@@ -17,5 +17,6 @@
 	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/fontbox-1.8.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/pdfbox-1.8.16.jar" sourcepath="libraries/pdfbox/pdfbox-1.8.16-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/imgscalr-lib-4.2.jar" sourcepath="libraries/imgscalr-lib-4.2-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/icu4j-71.1.jar" sourcepath="libraries/icu4j-71.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

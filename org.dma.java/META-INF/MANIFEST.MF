@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Utils
 Bundle-SymbolicName: org.dma.java;singleton:=true
-Bundle-Version: 7.5.7.qualifier
+Bundle-Version: 7.6.0.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.java.Activator
 Bundle-ActivationPolicy: lazy
@@ -22,9 +22,27 @@ Bundle-ClassPath: .,
  libraries/itext/itext-2.1.7.jar,
  libraries/pdfbox/fontbox-1.8.16.jar,
  libraries/pdfbox/pdfbox-1.8.16.jar,
- libraries/imgscalr-lib-4.2.jar
+ libraries/imgscalr-lib-4.2.jar,
+ libraries/icu4j-71.1.jar
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2"
-Export-Package: com.lowagie.text,
+Export-Package: com.ibm.icu.impl,
+ com.ibm.icu.impl.breakiter,
+ com.ibm.icu.impl.coll,
+ com.ibm.icu.impl.data,
+ com.ibm.icu.impl.duration,
+ com.ibm.icu.impl.duration.impl,
+ com.ibm.icu.impl.locale,
+ com.ibm.icu.impl.number,
+ com.ibm.icu.impl.number.parse,
+ com.ibm.icu.impl.number.range,
+ com.ibm.icu.impl.text,
+ com.ibm.icu.impl.units,
+ com.ibm.icu.lang,
+ com.ibm.icu.math,
+ com.ibm.icu.number,
+ com.ibm.icu.text,
+ com.ibm.icu.util,
+ com.lowagie.text,
  com.lowagie.text.exceptions,
  com.lowagie.text.factories,
  com.lowagie.text.html,
@@ -261,6 +279,7 @@ Export-Package: com.lowagie.text,
  org.dma.java.io,
  org.dma.java.math,
  org.dma.java.net,
+ org.dma.java.numerals,
  org.dma.java.payment,
  org.dma.java.security,
  org.dma.java.snippets,
