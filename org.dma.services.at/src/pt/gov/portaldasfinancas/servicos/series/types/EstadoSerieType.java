@@ -5,6 +5,8 @@
  *******************************************************************************/
 package pt.gov.portaldasfinancas.servicos.series.types;
 
+import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+
 public enum EstadoSerieType {
 
 	/** Ativa */ A ("Ativa"),
@@ -17,8 +19,8 @@ public enum EstadoSerieType {
 		this.descricao=descricao;
 	}
 
-	public static EstadoSerieType get(String name) {
-		try{return valueOf(name);
+	public static EstadoSerieType get(SeriesInfo info) {
+		try{return valueOf(info.getEstado());
 		}catch(Exception e){}
 		return null;
 	}

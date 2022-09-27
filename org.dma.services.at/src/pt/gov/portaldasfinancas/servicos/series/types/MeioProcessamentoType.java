@@ -5,6 +5,8 @@
  *******************************************************************************/
 package pt.gov.portaldasfinancas.servicos.series.types;
 
+import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+
 public enum MeioProcessamentoType {
 
 	/** Programa Informático de Faturação */ PI ("Programa Informático de Faturação"),
@@ -17,8 +19,8 @@ public enum MeioProcessamentoType {
 		this.descricao=descricao;
 	}
 
-	public static MeioProcessamentoType get(String name) {
-		try{return valueOf(name);
+	public static MeioProcessamentoType get(SeriesInfo info) {
+		try{return valueOf(info.getMeioProcessamento());
 		}catch(Exception e){}
 		return null;
 	}

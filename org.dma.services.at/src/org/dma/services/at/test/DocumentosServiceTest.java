@@ -23,11 +23,15 @@ import pt.gov.portaldasfinancas.servicos.documentos.RegisterInvoiceRequest;
 import pt.gov.portaldasfinancas.servicos.documentos.ResponseType;
 import pt.gov.portaldasfinancas.servicos.documentos.Tax;
 import pt.gov.portaldasfinancas.servicos.documentos.TaxType;
+import pt.gov.portaldasfinancas.servicos.documentos.types.DeleteReasonType;
+import pt.gov.portaldasfinancas.servicos.documentos.types.InvoiceStatusType;
 
 /**
  * Teste de comunicacao de DOCUMENTOS
  */
 public class DocumentosServiceTest extends DocumentosServiceHandler {
+
+	public static final String EFaturaMDVersion = "0.0.1";
 
 	public static final Integer RequesterTaxID = 599999993;
 
@@ -47,16 +51,8 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 
 	public static RegisterInvoiceRequest build() throws Exception {
 
-		RegisterInvoiceRequest type = new RegisterInvoiceRequest();
-
-		type.setEFaturaMDVersion("0.0.1");
-		type.setAuditFileVersion("1.04_01");
-		type.setTaxRegistrationNumber(RequesterTaxID);
-		type.setTaxEntity("Global");
-		type.setSoftwareCertificateNumber(SoftwareCertificateNumber);
-
 		InvoiceStatus status = new InvoiceStatus();
-		status.setInvoiceStatus("N");
+		status.setInvoiceStatus(InvoiceStatusType.N.value());
 		status.setInvoiceStatusDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceStatusDate));
 
 		InvoiceDataType invoice = new InvoiceDataType();
@@ -90,12 +86,37 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 		documentTotals.setTaxPayable(new BigDecimal(23));
 		documentTotals.setNetTotal(new BigDecimal(100));
 		documentTotals.setGrossTotal(new BigDecimal(123));
-
 		invoice.setDocumentTotals(documentTotals);
 
-		type.setInvoiceData(invoice);
+		//--- REQUEST ---
+		RegisterInvoiceRequest request = new RegisterInvoiceRequest();
 
-		return type;
+		request.setEFaturaMDVersion(EFaturaMDVersion);
+		request.setAuditFileVersion("1.04_01");
+		request.setTaxRegistrationNumber(RequesterTaxID);
+		request.setTaxEntity("Global");
+		request.setSoftwareCertificateNumber(SoftwareCertificateNumber);
+		request.setInvoiceData(invoice);
+
+		return request;
+
+	}
+
+	/*
+	 * Print
+	 */
+	public static void print(ResponseType response) {
+
+		if (response!=null) try{
+
+			System.out.print(response.getCodigoResposta());
+			System.out.print(" - ");
+			System.out.print(response.getMensagem());
+			System.out.println();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
@@ -105,10 +126,11 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 		try{
 			DocumentosServiceTest service = new DocumentosServiceTest();
 
-			ResponseType response = service.register(build());
+			RegisterInvoiceRequest request = build();
 
-			System.out.println(response.getCodigoResposta());
-			System.out.println(response.getMensagem());
+			print(service.registerInvoice(request));
+			print(service.changeInvoiceStatus(request, InvoiceStatusType.A));
+			print(service.deleteInvoice(request, DeleteReasonType.ER));
 
 		}catch(Exception e){
 			e.printStackTrace();

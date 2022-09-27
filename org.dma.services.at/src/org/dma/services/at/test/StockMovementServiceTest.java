@@ -39,32 +39,33 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 	public static StockMovement build() throws Exception {
 
-		StockMovement type = new StockMovement();
-
-		type.setTaxRegistrationNumber(RequesterTaxID);
-		type.setCompanyName("Empresa");
-		type.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		type.setDocumentNumber("CGT 2013/"+new Random().nextInt(999999));
-		type.setMovementStatus(MovementStatus.N);
-		type.setMovementType(MovementType.GT);
-		type.setMovementDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
-		type.setCustomerTaxID("999999990");
-		type.setCustomerName("Cliente");
-		type.setCustomerAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		type.setAddressTo(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		type.setAddressFrom(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		type.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
-		type.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
-		type.setVehicleID("XX-YY-ZZ");
-
 		Line line = new Line();
 		line.setProductDescription("Artigo");
 		line.setQuantity(new BigDecimal(10));
 		line.setUnitOfMeasure("UN");
 		line.setUnitPrice(new BigDecimal(100));
-		type.getLine().add(line);
 
-		return type;
+		//--- REQUEST ---
+		StockMovement request = new StockMovement();
+
+		request.setTaxRegistrationNumber(RequesterTaxID);
+		request.setCompanyName("Empresa");
+		request.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
+		request.setDocumentNumber("CGT 2013/"+new Random().nextInt(999999));
+		request.setMovementStatus(MovementStatus.N);
+		request.setMovementType(MovementType.GT);
+		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
+		request.setCustomerTaxID("999999990");
+		request.setCustomerName("Cliente");
+		request.setCustomerAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
+		request.setAddressTo(createAdressStructure("Rua","Localidade","1000-001","PT"));
+		request.setAddressFrom(createAdressStructure("Rua","Localidade","1000-001","PT"));
+		request.setMovementEndTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
+		request.setMovementStartTime(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
+		request.setVehicleID("XX-YY-ZZ");
+		request.getLine().add(line);
+
+		return request;
 
 	}
 
@@ -80,20 +81,34 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 	}
 
+	/*
+	 * Print
+	 */
+	public static void print(StockMovementResponse response) {
+
+		if (response!=null) try{
+
+			System.out.println(response.getATDocCodeID());
+			System.out.println(response.getDocumentNumber());
+			for(ResponseStatus status: response.getResponseStatus()){
+				System.out.print(status.getReturnCode());
+				System.out.print(" - ");
+				System.out.print(status.getReturnMessage());
+				System.out.println();
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
 
 	public static void main(String[] argvs) {
 
 		try{
 			StockMovementServiceTest service = new StockMovementServiceTest();
 
-			StockMovementResponse response = service.register(build());
-
-			System.out.println(response.getATDocCodeID());
-			System.out.println(response.getDocumentNumber());
-			for(ResponseStatus status: response.getResponseStatus()){
-				System.out.println(status.getReturnCode());
-				System.out.println(status.getReturnMessage());
-			}
+			print(service.register(build()));
 
 		}catch(Exception e){
 			e.printStackTrace();

@@ -51,8 +51,8 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	public RegisterInvoiceResponseType register(RegisterInvoiceType type) throws WebServiceException {
-		return getService().registerInvoice(type);
+	public RegisterInvoiceResponseType register(RegisterInvoiceType request) throws WebServiceException {
+		return getService().registerInvoice(request);
 	}
 
 

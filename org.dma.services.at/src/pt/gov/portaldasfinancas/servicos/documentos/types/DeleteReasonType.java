@@ -3,28 +3,20 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package pt.gov.portaldasfinancas.servicos.series.types;
+package pt.gov.portaldasfinancas.servicos.documentos.types;
 
-import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
-
-public enum MotivoAnulacaoType {
+public enum DeleteReasonType {
 
 	/** Anulação por erro de registo */ ER ("Anulação por erro de registo");
 
 	public final String descricao;
 
-	private MotivoAnulacaoType(String descricao) {
+	private DeleteReasonType(String descricao) {
 		this.descricao=descricao;
 	}
 
-	public static MotivoAnulacaoType get(SeriesInfo info) {
-		try{return valueOf(info.getMotivoEstado());
-		}catch(Exception e){}
-		return null;
-	}
-
 	public String value() {
-		return name();
+		return descricao;
 	}
 
 	@Override

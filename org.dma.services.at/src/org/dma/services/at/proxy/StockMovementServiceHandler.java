@@ -51,8 +51,8 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 	}
 
 
-	public StockMovementResponse register(StockMovement type) throws WebServiceException {
-		return getService().envioDocumentoTransporte(type);
+	public StockMovementResponse register(StockMovement request) throws WebServiceException {
+		return getService().envioDocumentoTransporte(request);
 	}
 
 

@@ -3,11 +3,12 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package pt.gov.portaldasfinancas.servicos.series.types;
+package pt.gov.portaldasfinancas.servicos.series.types.requests;
 
 import java.math.BigInteger;
 
 import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+import pt.gov.portaldasfinancas.servicos.series.types.TipoDocType;
 
 public class FinalizarSerieType {
 

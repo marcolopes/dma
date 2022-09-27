@@ -3,22 +3,25 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package pt.gov.portaldasfinancas.servicos.series.types;
+package pt.gov.portaldasfinancas.servicos.documentos.types;
 
-import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+import pt.gov.portaldasfinancas.servicos.documentos.InvoiceStatus;
 
-public enum MotivoAnulacaoType {
+public enum InvoiceStatusType {
 
-	/** Anulação por erro de registo */ ER ("Anulação por erro de registo");
+	/** Normal */ N ("Normal"),
+	/** Anulado */ A ("Anulado"),
+	/** Faturado */ F ("Faturado"),
+	/** Autofaturado */ S ("Autofaturado");
 
 	public final String descricao;
 
-	private MotivoAnulacaoType(String descricao) {
+	private InvoiceStatusType(String descricao) {
 		this.descricao=descricao;
 	}
 
-	public static MotivoAnulacaoType get(SeriesInfo info) {
-		try{return valueOf(info.getMotivoEstado());
+	public static InvoiceStatusType get(InvoiceStatus status) {
+		try{return valueOf(status.getInvoiceStatus());
 		}catch(Exception e){}
 		return null;
 	}

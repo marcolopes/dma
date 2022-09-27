@@ -134,11 +134,12 @@ public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 		taxFree.setInvoices(invoices);
 
 		//--- REQUEST ---
-		TaxFreeSubmissionRequestType type = new TaxFreeSubmissionRequestType();
-		type.setRequestHeader(header);
-		type.setTaxFreeComm(taxFree);
+		TaxFreeSubmissionRequestType request = new TaxFreeSubmissionRequestType();
 
-		return type;
+		request.setRequestHeader(header);
+		request.setTaxFreeComm(taxFree);
+
+		return request;
 
 	}
 

@@ -5,6 +5,8 @@
  *******************************************************************************/
 package pt.gov.portaldasfinancas.servicos.series.types;
 
+import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+
 public enum TipoDocType {
 
 	/** Fatura */ FT (ClasseDocType.SI, "Fatura"),
@@ -41,8 +43,8 @@ public enum TipoDocType {
 		this.descricao=descricao;
 	}
 
-	public static TipoDocType get(String name) {
-		try{return valueOf(name);
+	public static TipoDocType get(SeriesInfo info) {
+		try{return valueOf(info.getTipoDoc());
 		}catch(Exception e){}
 		return null;
 	}

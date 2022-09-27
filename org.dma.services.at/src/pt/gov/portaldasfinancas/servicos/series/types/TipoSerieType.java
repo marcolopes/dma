@@ -5,6 +5,8 @@
  *******************************************************************************/
 package pt.gov.portaldasfinancas.servicos.series.types;
 
+import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+
 public enum TipoSerieType {
 
 	/** Normal */ N ("Normal"),
@@ -17,8 +19,8 @@ public enum TipoSerieType {
 		this.descricao=descricao;
 	}
 
-	public static TipoSerieType get(String name) {
-		try{return valueOf(name);
+	public static TipoSerieType get(SeriesInfo info) {
+		try{return valueOf(info.getTipoSerie());
 		}catch(Exception e){}
 		return null;
 	}

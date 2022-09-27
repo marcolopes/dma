@@ -35,15 +35,6 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 
 	public static RegisterInvoiceType build() throws Exception {
 
-		RegisterInvoiceType type = new RegisterInvoiceType();
-
-		type.setTaxRegistrationNumber(RequesterTaxID);
-		type.setInvoiceNo("CFA 2012/"+new RandomValue().integer(6));
-		type.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
-		type.setInvoiceType("FT");
-		type.setInvoiceStatus("N");
-		type.setCustomerTaxID(999999990);
-
 		Tax tax = new Tax();
 		tax.setTaxType("IVA");
 		tax.setTaxCountryRegion("PT");
@@ -52,16 +43,43 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 		Line line = new Line();
 		line.setDebitAmount(new BigDecimal(100));
 		line.setTax(tax);
-		type.getLine().add(line);
 
 		DocumentTotals documentTotals = new DocumentTotals();
 		documentTotals.setTaxPayable(new BigDecimal(23));
 		documentTotals.setNetTotal(new BigDecimal(100));
 		documentTotals.setGrossTotal(new BigDecimal(123));
 
-		type.setDocumentTotals(documentTotals);
+		//--- REQUEST ---
+		RegisterInvoiceType request = new RegisterInvoiceType();
 
-		return type;
+		request.setTaxRegistrationNumber(RequesterTaxID);
+		request.setInvoiceNo("CFA 2012/"+new RandomValue().integer(6));
+		request.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
+		request.setInvoiceType("FT");
+		request.setInvoiceStatus("N");
+		request.setCustomerTaxID(999999990);
+		request.getLine().add(line);
+		request.setDocumentTotals(documentTotals);
+
+		return request;
+
+	}
+
+	/*
+	 * Print
+	 */
+	public static void print(RegisterInvoiceResponseType response) {
+
+		if (response!=null) try{
+
+			System.out.print(response.getReturnCode());
+			System.out.print(" - ");
+			System.out.print(response.getReturnMessage());
+			System.out.println();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
@@ -71,10 +89,7 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 		try{
 			FaturasServiceTest service = new FaturasServiceTest();
 
-			RegisterInvoiceResponseType response = service.register(build());
-
-			System.out.println(response.getReturnCode());
-			System.out.println(response.getReturnMessage());
+			print(service.register(build()));
 
 		}catch(Exception e){
 			e.printStackTrace();

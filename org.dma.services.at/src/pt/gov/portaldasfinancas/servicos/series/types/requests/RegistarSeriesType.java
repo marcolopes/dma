@@ -3,7 +3,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package pt.gov.portaldasfinancas.servicos.series.types;
+package pt.gov.portaldasfinancas.servicos.series.types.requests;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -13,6 +13,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.dma.java.util.TimeDateUtils;
 
 import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+import pt.gov.portaldasfinancas.servicos.series.types.MeioProcessamentoType;
+import pt.gov.portaldasfinancas.servicos.series.types.TipoDocType;
+import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
 
 public class RegistarSeriesType {
 

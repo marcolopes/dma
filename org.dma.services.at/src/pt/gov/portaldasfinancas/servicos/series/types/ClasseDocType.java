@@ -5,6 +5,8 @@
  *******************************************************************************/
 package pt.gov.portaldasfinancas.servicos.series.types;
 
+import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+
 public enum ClasseDocType {
 
 	/** Faturas e documentos retificativos */ SI ("Faturas e documentos retificativos"),
@@ -18,8 +20,8 @@ public enum ClasseDocType {
 		this.descricao=descricao;
 	}
 
-	public static ClasseDocType get(String name) {
-		try{return valueOf(name);
+	public static ClasseDocType get(SeriesInfo info) {
+		try{return valueOf(info.getClasseDoc());
 		}catch(Exception e){}
 		return null;
 	}
