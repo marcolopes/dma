@@ -23,7 +23,7 @@ Bundle-ClassPath: .,
  libraries/jdbc/sqljdbc4.jar
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
  org.dma.log4j;bundle-version="1.2.16",
- org.dma.java;bundle-version="7.5.2"
+ org.dma.java;bundle-version="7.2.6"
 Export-Package: com.jolbox.bonecp,
  com.mchange.v2.c3p0,
  org.apache.commons.dbcp,
