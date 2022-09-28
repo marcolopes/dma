@@ -29,7 +29,7 @@ public class Datanucleus {
 		
 		Map<String,Object> map = new HashMap();
 
-		try {
+		try{
 			map.put("javax.jdo.PersistenceManagerFactoryClass",PMF_CLASS_NAME);
 			map.put("datanucleus.primaryClassLoader",Class.forName(DRIVER_NAME).getClassLoader());
 
@@ -80,11 +80,9 @@ public class Datanucleus {
 			 */
 			map.put("datanucleus.cache.level2.type","none");
 			
-		} catch (ClassNotFoundException e) {
+		}catch(ClassNotFoundException e){
 			e.printStackTrace();
-		}
-		
-		return map;
+		}return map;
 		
 	}
 
@@ -97,8 +95,7 @@ public class Datanucleus {
 			enhancer.addClasses(A.class.getName());
 			enhancer.enhance();
 
-			PersistenceManagerFactory pmf=JDOHelper.
-					getPersistenceManagerFactory(getJDOPropertiesMap());
+			PersistenceManagerFactory pmf=JDOHelper.getPersistenceManagerFactory(getJDOPropertiesMap());
 			System.out.println(pmf.getProperties());
 
 			//STORE
@@ -151,10 +148,8 @@ public class Datanucleus {
 
 		File db=new File(DATABASE_NAME).getAbsoluteFile();
 		
-		try {
-			Backup.execute(DATABASE_NAME+".zip", db.getParent(), db.getName(), false);
-			
-		} catch (Exception e) {
+		try{Backup.execute(DATABASE_NAME+".zip", db.getParent(), db.getName(), false);	
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 			
@@ -166,8 +161,7 @@ public class Datanucleus {
 		try{
 			executeBackup();
 
-			PersistenceManagerFactory pmf=JDOHelper.
-					getPersistenceManagerFactory(getJDOPropertiesMap());
+			PersistenceManagerFactory pmf=JDOHelper.getPersistenceManagerFactory(getJDOPropertiesMap());
 			System.out.println(pmf.getProperties());
 
 			//check lock
@@ -175,8 +169,7 @@ public class Datanucleus {
 			while(!lock.exists()){
 				System.out.println("WAITING FOR LOCK...");
 				Thread.sleep(1000);
-			}
-			System.out.println("LOCKED!");
+			}System.out.println("LOCKED!");
 
 			//close connection
 			System.out.println("CLOSED? "+pmf.isClosed());
@@ -189,8 +182,7 @@ public class Datanucleus {
 			while(lock.exists()){
 				System.out.println("WAITING FOR LOCK...");
 				Thread.sleep(1000);
-			}
-			System.out.println("UNLOCKED!");
+			}System.out.println("UNLOCKED!");
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -205,16 +197,14 @@ public class Datanucleus {
 			executeBackup();
 
 			Class.forName(DRIVER_NAME);
-			Connection conn = DriverManager.
-					getConnection("jdbc:h2:"+DATABASE_NAME+";DB_CLOSE_DELAY=0", "sa", "");
+			Connection conn = DriverManager.getConnection("jdbc:h2:"+DATABASE_NAME+";DB_CLOSE_DELAY=0", "sa", "");
 
 			//check lock
 			File lock=new File(DATABASE_NAME+Constants.SUFFIX_LOCK_FILE);
 			while(!lock.exists()){
 				System.out.println("WAITING FOR LOCK...");
 				Thread.sleep(1000);
-			}
-			System.out.println("LOCKED!");
+			}System.out.println("LOCKED!");
 
 			//close connection
 			System.out.println("CLOSED? "+conn.isClosed());
@@ -227,8 +217,7 @@ public class Datanucleus {
 			while(lock.exists()){
 				System.out.println("WAITING FOR LOCK...");
 				Thread.sleep(1000);
-			}
-			System.out.println("UNLOCKED!");
+			}System.out.println("UNLOCKED!");
 
 		}catch(Exception e){
 			e.printStackTrace();
