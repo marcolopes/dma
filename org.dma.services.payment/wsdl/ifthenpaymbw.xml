@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://www.ifthenpay.com/" xmlns:s1="https://www.ifthenpay.com/AbstractTypes" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="https://www.ifthenpay.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;font  size="4"&gt;&lt;strong&gt;WebService de Suporte ao Serviço &lt;br /&gt;&lt;font color="#008C8C"&gt;MBWay da Ifthenpay&lt;/font&gt;.&lt;/strong&gt;&lt;/font&gt; &lt;br /&gt;&lt;br /&gt;</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://www.ifthenpay.com/">
+      <s:element name="SetPedidoSync">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MbWayKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="canal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nrtlm" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="descricao" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPedidoSyncResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetPedidoSyncResult" type="tns:RespostaPedido" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespostaPedido">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="IdPedido" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CodigoMoeda" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DataHora" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MsgDescricao" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SetPedidoSyncJSON">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MbWayKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="canal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nrtlm" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="descricao" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPedidoSyncJSONResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="EstadoPedidosSyncJSON">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MbWayKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="canal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="idspagamento" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="EstadoPedidosSyncJSONResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="EstadoPedidos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MbWayKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="canal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="idspagamento" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EstadoPedidosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EstadoPedidosResult" type="tns:RespostaPedidoEstado" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespostaPedidoEstado">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="EstadoPedidos" type="tns:ArrayOfPedido" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DataHora" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MsgDescricao" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPedido">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Pedido" nillable="true" type="tns:Pedido" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Pedido">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="IdPedido" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DataHoraPedidoRegistado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DataHoraPedidoAtualizado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MsgDescricao" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="EstadoPedidosJSON">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MbWayKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="canal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="idspagamento" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EstadoPedidosJSONResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SetPedido">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MbWayKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="canal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nrtlm" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="descricao" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPedidoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetPedidoResult" type="tns:RespostaPedido" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPedidoJSON">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MbWayKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="canal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nrtlm" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="descricao" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPedidoJSONResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="RespostaPedido" nillable="true" type="tns:RespostaPedido" />
+      <s:element name="RespostaPedidoEstado" nillable="true" type="tns:RespostaPedidoEstado" />
+    </s:schema>
+    <s:schema targetNamespace="https://www.ifthenpay.com/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SetPedidoSyncSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPedidoSync" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPedidoSyncResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncJSONSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPedidoSyncJSON" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncJSONSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPedidoSyncJSONResponse" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosSyncJSONSoapIn">
+    <wsdl:part name="parameters" element="tns:EstadoPedidosSyncJSON" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosSyncJSONSoapOut">
+    <wsdl:part name="parameters" element="tns:EstadoPedidosSyncJSONResponse" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosSoapIn">
+    <wsdl:part name="parameters" element="tns:EstadoPedidos" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosSoapOut">
+    <wsdl:part name="parameters" element="tns:EstadoPedidosResponse" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosJSONSoapIn">
+    <wsdl:part name="parameters" element="tns:EstadoPedidosJSON" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosJSONSoapOut">
+    <wsdl:part name="parameters" element="tns:EstadoPedidosJSONResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPedido" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPedidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoJSONSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPedidoJSON" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoJSONSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPedidoJSONResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncHttpGetIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="nrtlm" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="descricao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncHttpGetOut">
+    <wsdl:part name="Body" element="tns:RespostaPedido" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncJSONHttpGetIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="nrtlm" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="descricao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncJSONHttpGetOut" />
+  <wsdl:message name="EstadoPedidosSyncJSONHttpGetIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="idspagamento" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosSyncJSONHttpGetOut" />
+  <wsdl:message name="EstadoPedidosHttpGetIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="idspagamento" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosHttpGetOut">
+    <wsdl:part name="Body" element="tns:RespostaPedidoEstado" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosJSONHttpGetIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="idspagamento" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosJSONHttpGetOut" />
+  <wsdl:message name="SetPedidoHttpGetIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="nrtlm" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="descricao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoHttpGetOut">
+    <wsdl:part name="Body" element="tns:RespostaPedido" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoJSONHttpGetIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="nrtlm" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="descricao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoJSONHttpGetOut" />
+  <wsdl:message name="SetPedidoSyncHttpPostIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="nrtlm" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="descricao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncHttpPostOut">
+    <wsdl:part name="Body" element="tns:RespostaPedido" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncJSONHttpPostIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="nrtlm" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="descricao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoSyncJSONHttpPostOut" />
+  <wsdl:message name="EstadoPedidosSyncJSONHttpPostIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="idspagamento" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosSyncJSONHttpPostOut" />
+  <wsdl:message name="EstadoPedidosHttpPostIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="idspagamento" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosHttpPostOut">
+    <wsdl:part name="Body" element="tns:RespostaPedidoEstado" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosJSONHttpPostIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="idspagamento" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="EstadoPedidosJSONHttpPostOut" />
+  <wsdl:message name="SetPedidoHttpPostIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="nrtlm" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="descricao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoHttpPostOut">
+    <wsdl:part name="Body" element="tns:RespostaPedido" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoJSONHttpPostIn">
+    <wsdl:part name="MbWayKey" type="s:string" />
+    <wsdl:part name="canal" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="nrtlm" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="descricao" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetPedidoJSONHttpPostOut" />
+  <wsdl:portType name="IfthenPayMBWSoap">
+    <wsdl:operation name="SetPedidoSync">
+      <wsdl:input message="tns:SetPedidoSyncSoapIn" />
+      <wsdl:output message="tns:SetPedidoSyncSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoSyncJSON">
+      <wsdl:input message="tns:SetPedidoSyncJSONSoapIn" />
+      <wsdl:output message="tns:SetPedidoSyncJSONSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosSyncJSON">
+      <wsdl:input message="tns:EstadoPedidosSyncJSONSoapIn" />
+      <wsdl:output message="tns:EstadoPedidosSyncJSONSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidos">
+      <wsdl:input message="tns:EstadoPedidosSoapIn" />
+      <wsdl:output message="tns:EstadoPedidosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosJSON">
+      <wsdl:input message="tns:EstadoPedidosJSONSoapIn" />
+      <wsdl:output message="tns:EstadoPedidosJSONSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedido">
+      <wsdl:input message="tns:SetPedidoSoapIn" />
+      <wsdl:output message="tns:SetPedidoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoJSON">
+      <wsdl:input message="tns:SetPedidoJSONSoapIn" />
+      <wsdl:output message="tns:SetPedidoJSONSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IfthenPayMBWHttpGet">
+    <wsdl:operation name="SetPedidoSync">
+      <wsdl:input message="tns:SetPedidoSyncHttpGetIn" />
+      <wsdl:output message="tns:SetPedidoSyncHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoSyncJSON">
+      <wsdl:input message="tns:SetPedidoSyncJSONHttpGetIn" />
+      <wsdl:output message="tns:SetPedidoSyncJSONHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosSyncJSON">
+      <wsdl:input message="tns:EstadoPedidosSyncJSONHttpGetIn" />
+      <wsdl:output message="tns:EstadoPedidosSyncJSONHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidos">
+      <wsdl:input message="tns:EstadoPedidosHttpGetIn" />
+      <wsdl:output message="tns:EstadoPedidosHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosJSON">
+      <wsdl:input message="tns:EstadoPedidosJSONHttpGetIn" />
+      <wsdl:output message="tns:EstadoPedidosJSONHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedido">
+      <wsdl:input message="tns:SetPedidoHttpGetIn" />
+      <wsdl:output message="tns:SetPedidoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoJSON">
+      <wsdl:input message="tns:SetPedidoJSONHttpGetIn" />
+      <wsdl:output message="tns:SetPedidoJSONHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IfthenPayMBWHttpPost">
+    <wsdl:operation name="SetPedidoSync">
+      <wsdl:input message="tns:SetPedidoSyncHttpPostIn" />
+      <wsdl:output message="tns:SetPedidoSyncHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoSyncJSON">
+      <wsdl:input message="tns:SetPedidoSyncJSONHttpPostIn" />
+      <wsdl:output message="tns:SetPedidoSyncJSONHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosSyncJSON">
+      <wsdl:input message="tns:EstadoPedidosSyncJSONHttpPostIn" />
+      <wsdl:output message="tns:EstadoPedidosSyncJSONHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidos">
+      <wsdl:input message="tns:EstadoPedidosHttpPostIn" />
+      <wsdl:output message="tns:EstadoPedidosHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosJSON">
+      <wsdl:input message="tns:EstadoPedidosJSONHttpPostIn" />
+      <wsdl:output message="tns:EstadoPedidosJSONHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedido">
+      <wsdl:input message="tns:SetPedidoHttpPostIn" />
+      <wsdl:output message="tns:SetPedidoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoJSON">
+      <wsdl:input message="tns:SetPedidoJSONHttpPostIn" />
+      <wsdl:output message="tns:SetPedidoJSONHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IfthenPayMBWSoap" type="tns:IfthenPayMBWSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SetPedidoSync">
+      <soap:operation soapAction="https://www.ifthenpay.com/SetPedidoSync" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoSyncJSON">
+      <soap:operation soapAction="https://www.ifthenpay.com/SetPedidoSyncJSON" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosSyncJSON">
+      <soap:operation soapAction="https://www.ifthenpay.com/EstadoPedidosSyncJSON" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidos">
+      <soap:operation soapAction="https://www.ifthenpay.com/EstadoPedidos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosJSON">
+      <soap:operation soapAction="https://www.ifthenpay.com/EstadoPedidosJSON" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedido">
+      <soap:operation soapAction="https://www.ifthenpay.com/SetPedido" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoJSON">
+      <soap:operation soapAction="https://www.ifthenpay.com/SetPedidoJSON" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IfthenPayMBWSoap12" type="tns:IfthenPayMBWSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SetPedidoSync">
+      <soap12:operation soapAction="https://www.ifthenpay.com/SetPedidoSync" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoSyncJSON">
+      <soap12:operation soapAction="https://www.ifthenpay.com/SetPedidoSyncJSON" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosSyncJSON">
+      <soap12:operation soapAction="https://www.ifthenpay.com/EstadoPedidosSyncJSON" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidos">
+      <soap12:operation soapAction="https://www.ifthenpay.com/EstadoPedidos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosJSON">
+      <soap12:operation soapAction="https://www.ifthenpay.com/EstadoPedidosJSON" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedido">
+      <soap12:operation soapAction="https://www.ifthenpay.com/SetPedido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoJSON">
+      <soap12:operation soapAction="https://www.ifthenpay.com/SetPedidoJSON" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IfthenPayMBWHttpGet" type="tns:IfthenPayMBWHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="SetPedidoSync">
+      <http:operation location="/SetPedidoSync" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoSyncJSON">
+      <http:operation location="/SetPedidoSyncJSON" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosSyncJSON">
+      <http:operation location="/EstadoPedidosSyncJSON" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidos">
+      <http:operation location="/EstadoPedidos" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosJSON">
+      <http:operation location="/EstadoPedidosJSON" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedido">
+      <http:operation location="/SetPedido" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoJSON">
+      <http:operation location="/SetPedidoJSON" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IfthenPayMBWHttpPost" type="tns:IfthenPayMBWHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="SetPedidoSync">
+      <http:operation location="/SetPedidoSync" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoSyncJSON">
+      <http:operation location="/SetPedidoSyncJSON" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosSyncJSON">
+      <http:operation location="/EstadoPedidosSyncJSON" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidos">
+      <http:operation location="/EstadoPedidos" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoPedidosJSON">
+      <http:operation location="/EstadoPedidosJSON" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="SetPedido">
+      <http:operation location="/SetPedido" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPedidoJSON">
+      <http:operation location="/SetPedidoJSON" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IfthenPayMBW">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;font  size="4"&gt;&lt;strong&gt;WebService de Suporte ao Serviço &lt;br /&gt;&lt;font color="#008C8C"&gt;MBWay da Ifthenpay&lt;/font&gt;.&lt;/strong&gt;&lt;/font&gt; &lt;br /&gt;&lt;br /&gt;</wsdl:documentation>
+    <wsdl:port name="IfthenPayMBWSoap" binding="tns:IfthenPayMBWSoap">
+      <soap:address location="https://mbway.ifthenpay.com/ifthenpaymbw.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IfthenPayMBWSoap12" binding="tns:IfthenPayMBWSoap12">
+      <soap12:address location="https://mbway.ifthenpay.com/ifthenpaymbw.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IfthenPayMBWHttpGet" binding="tns:IfthenPayMBWHttpGet">
+      <http:address location="https://mbway.ifthenpay.com/ifthenpaymbw.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IfthenPayMBWHttpPost" binding="tns:IfthenPayMBWHttpPost">
+      <http:address location="https://mbway.ifthenpay.com/ifthenpaymbw.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
