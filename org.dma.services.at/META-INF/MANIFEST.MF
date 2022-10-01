@@ -8,9 +8,9 @@ Bundle-Vendor: marcolopespt@gmail.com
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
- libraries/streambuffer-0.8.jar,
- libraries/jaxb-impl-2.1.4.jar,
  libraries/jaxws-rt-2.1.4.jar,
+ libraries/jaxb-impl-2.1.4.jar,
+ libraries/streambuffer-0.8.jar,
  libraries/stax-ex-1.2.jar
 Require-Bundle: org.dma.java;bundle-version="7.5.7"
 Export-Package: org.dma.services.at,
