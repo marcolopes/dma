@@ -3,9 +3,9 @@
 [Questões Frequentes](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs.aspx)<br/>
 
 #### Comunicação de Séries e ATCUD
-[Informação](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Faturacao/Comunicacao_Series_ATCUD/Paginas/default.aspx)<br/>
-[TESTES](https://github.com/marcolopes/dma/blob/master/org.dma.services.at/src/org/dma/services/at/test/SeriesServiceTest.java)<br/>
-[FAQ](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00883.aspx)<br/>
+[[Informação](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Faturacao/Comunicacao_Series_ATCUD/Paginas/default.aspx)]
+[[TESTES](https://github.com/marcolopes/dma/blob/master/org.dma.services.at/src/org/dma/services/at/test/SeriesServiceTest.java)]
+[[FAQ](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00883.aspx)]
 
 #### Comunicação dos Documentos de Transporte
 [Informação](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Documents/Comunicacao_Dados_Documentos_Transporte.pdf)<br/>
