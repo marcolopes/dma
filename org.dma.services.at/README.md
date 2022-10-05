@@ -3,8 +3,8 @@
 [Questões Frequentes](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs.aspx)
 
 [Comunicação de Séries e ATCUD](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Faturacao/Comunicacao_Series_ATCUD/Paginas/default.aspx)
-[Comunicação de Séries e ATCUD - TESTES] (https://github.com/marcolopes/dma/blob/master/org.dma.services.at/src/org/dma/services/at/test/SeriesServiceTest.java)
-[Outras Obrigações > Séries/ATCUD > Âmbito de Aplicação] (https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00883.aspx)
+[Comunicação de Séries e ATCUD - TESTES](https://github.com/marcolopes/dma/blob/master/org.dma.services.at/src/org/dma/services/at/test/SeriesServiceTest.java)
+[Outras Obrigações > Séries/ATCUD > Âmbito de Aplicação](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00883.aspx)
 
 [Comunicação dos Documentos de Transporte](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Documents/Comunicacao_Dados_Documentos_Transporte.pdf)
 [Comunicação dos Documentos de Transporte - TESTES](https://github.com/marcolopes/dma/blob/master/org.dma.services.at/src/org/dma/services/at/test/StockMovementServiceTest.java)
