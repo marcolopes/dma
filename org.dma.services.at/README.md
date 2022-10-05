@@ -17,6 +17,6 @@
 [[TESTES](https://github.com/marcolopes/dma/blob/master/org.dma.services.at/src/org/dma/services/at/test/DocumentosServiceTest.java)]
 [[FAQ](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs.aspx)]
 
-#### Comunicação das Faturas - DESCONTINUADO a partir de 01/2023
+#### Comunicação das Faturas (DESCONTINUADO a partir de 01/2023)
 [[Informação](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Faturacao/Documents/ComunicacaodosdadosdasfaturasaAT.pdf)]
 [[TESTES](https://github.com/marcolopes/dma/blob/master/org.dma.services.at/src/org/dma/services/at/test/FaturasServiceTest.java)]
