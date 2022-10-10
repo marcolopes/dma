@@ -35,7 +35,7 @@
 	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-util-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-webapp-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/jetty-xml-9.2.29.v20191105.jar" sourcepath="libraries/jetty-9.2.29/jetty.project-jetty-9.2.29.v20191105.zip"/>
-	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/servlet-api-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jetty-9.2.29/servlet-api-3.1.jar" sourcepath="libraries/jetty-9.2.29/javax.servlet-api-3.1.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/api/javax.ws.rs-api-2.0.1.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/aopalliance-repackaged-2.5.0-b32.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/hk2-api-2.5.0-b32.jar"/>
