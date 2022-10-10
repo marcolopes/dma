@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.dma.java.io.CustomFile;
+import org.dma.java.util.StringUtils;
 
 public class URLHandler {
 
@@ -33,9 +34,10 @@ public class URLHandler {
 	}
 
 	public static URL getURL(String urlname) {
-		try{return new URL(urlname);
+		if (!StringUtils.isEmpty(urlname)) try{
+			return new URL(urlname);
 		}catch(Exception e){
-			System.err.println(e);
+			System.err.println(e+urlname);
 		}return null;
 	}
 
