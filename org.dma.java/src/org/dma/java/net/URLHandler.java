@@ -58,6 +58,14 @@ public class URLHandler {
 	}
 
 
+	public boolean exists() {
+		try{url.openStream();
+			return true;
+		}catch(Exception e){}
+		return false;
+	}
+
+
 	/** @see URL#openConnection() */
 	public URLConnection openConnection() throws IOException {
 		return url.openConnection();
