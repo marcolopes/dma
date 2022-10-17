@@ -10,8 +10,7 @@ import java.lang.reflect.Method;
 public final class ClassUtils {
 
 	public static Class classForName(String className) {
-		try{
-			return Class.forName(className);
+		try{return Class.forName(className);
 		}catch(ClassNotFoundException e){
 			System.err.println(e);
 		}return null;
@@ -19,8 +18,7 @@ public final class ClassUtils {
 
 
 	public static Object getField(Class klass, String field) {
-		try{
-			return klass.getField(field).get(klass);
+		try{return klass.getField(field).get(klass);
 		}catch(NoClassDefFoundError e){
 			System.err.print("CLASS NOT FOUND "+klass.getCanonicalName()+"."+field);
 		}catch(NoSuchFieldException e){
@@ -80,9 +78,7 @@ public final class ClassUtils {
 		Class[] parameterTypes=new Class[args.length];
 		for(Object obj: args){
 			parameterTypes[index++]=obj.getClass();
-		}
-
-		return invoke(className, methodName, parameterTypes, args);
+		}return invoke(className, methodName, parameterTypes, args);
 
 	}
 
