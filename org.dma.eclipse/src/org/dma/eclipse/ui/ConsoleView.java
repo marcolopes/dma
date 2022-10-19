@@ -61,7 +61,7 @@ public class ConsoleView extends MessageConsole {
 
 	}
 
-	private final static IConsoleManager manager=ConsolePlugin.getDefault().getConsoleManager();
+	private static final IConsoleManager manager=ConsolePlugin.getDefault().getConsoleManager();
 
 	private final MessageStream consoleStream;
 

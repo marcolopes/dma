@@ -15,9 +15,9 @@ import org.dma.java.util.StringUtils;
 
 public class MultibancoRef {
 
-	public final static MultibancoRef DEFAULT = new MultibancoRef("999", "999999999", new BigDecimal("999999.99"));
+	public static final MultibancoRef DEFAULT = new MultibancoRef("999", "999999999", new BigDecimal("999999.99"));
 
-	public final static String DECIMAL_PATTERN = "###,##0.00";
+	public static final String DECIMAL_PATTERN = "###,##0.00";
 
 	private final String entity;
 	private final String ref9;

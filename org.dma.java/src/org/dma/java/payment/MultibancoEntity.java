@@ -31,7 +31,7 @@ import org.dma.java.util.StringUtils;
 public class MultibancoEntity {
 
 	/** Valor MAXIMO a pagar = 999999.99 */
-	public final static BigDecimal VALOR_MAX = new BigDecimal("999999.99");
+	public static final BigDecimal VALOR_MAX = new BigDecimal("999999.99");
 
 	public static String right(String string, int length) {
 		return string.substring(string.length()-length);

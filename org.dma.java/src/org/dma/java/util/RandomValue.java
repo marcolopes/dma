@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class RandomValue {
 
-	private final static Random RANDOM = new Random();
+	private static final Random RANDOM = new Random();
 
 	private final Random random;
 
