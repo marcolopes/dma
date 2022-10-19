@@ -1,5 +1,5 @@
 /*******************************************************************************
- * 2008-2020 Public Domain
+ * 2008-2022 Public Domain
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
@@ -12,7 +12,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.print.Doc;
 import javax.print.DocFlavor;
@@ -23,6 +22,8 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+
+import org.dma.java.util.Debug;
 
 public class PrinterHandler {
 
@@ -35,7 +36,6 @@ public class PrinterHandler {
 	public static PrintService lookupPrintService() {
 		return PrintServiceLookup.lookupDefaultPrintService();
 	}
-
 
 	public static String lookupDefaultPrinterName() {
 		PrintService ps=lookupPrintService();
@@ -61,74 +61,78 @@ public class PrinterHandler {
 
 
 	public void checkPrinter() throws PrinterException {
+		Debug.err("service", service);
 		if (service==null) throw new PrinterException("Invalid printer "+printerName);
 	}
 
 
-	public PrinterJob createPrinterJob() throws PrinterException {
-
-		checkPrinter();
-
-		PrinterJob job=PrinterJob.getPrinterJob();
-		job.setPrintService(service);
-		return job;
-
-	}
-
-
-	/** Prints STREAM DATA using java print */
-	public void print(InputStream in) throws PrinterException, PrintException {
-
-		checkPrinter();
-
-		DocPrintJob job=service.createPrintJob();
-		Doc document=new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
-		job.print(document, null);
-
-	}
-
-
 	/** Prints RAW DATA using java print */
-	public void print(byte[] data) throws PrinterException, PrintException {
+	public void print(byte[] data) throws PrinterException, PrintException, IOException {
 
-		print(new ByteArrayInputStream(data));
+		checkPrinter();
+
+		if (data!=null) try{
+
+			ByteArrayInputStream in=new ByteArrayInputStream(data);
+
+			try{
+				DocPrintJob job=service.createPrintJob();
+				Doc document=new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+				job.print(document, null);
+
+			}catch(PrintException e){
+				throw new PrintException("Error while printing");
+			}finally{
+				in.close();
+			}
+
+		}catch(IOException e){
+			throw new IOException("Error loading data");
+		}
 
 	}
 
 
 	/** Prints FILE DATA using java print */
-	public void print(File file) throws PrinterException, PrintException {
+	public void print(File file) throws PrinterException, PrintException, IOException {
+
+		checkPrinter();
 
 		if (file!=null) try{
 
 			FileInputStream in=new FileInputStream(file);
 
 			try{
-				print(in);
+				DocPrintJob job=service.createPrintJob();
+				Doc document=new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+				job.print(document, null);
 
+			}catch(PrintException e){
+				throw new PrintException("Error while printing");
 			}finally{
 				in.close();
 			}
 
 		}catch(IOException e){
-			throw new PrintException("Error loading file "+file);
+			throw new IOException("Error loading file "+file, e);
 		}
 
 	}
 
 
 	/** Prints a PDF using apache pdfbox */
-	public void printPdf(File file) throws PrinterException, PrintException {
+	public void printPdf(File file) throws PrinterException, PrintException, IOException {
 
-		PrinterJob job=createPrinterJob();
+		checkPrinter();
 
 		if (file!=null) try{
-
-			job.setJobName(file.getName());
 
 			PDDocument doc=PDDocument.load(file);
 
 			try{
+				PrinterJob job=PrinterJob.getPrinterJob();
+				job.setPrintService(service);
+				job.setJobName(file.getName());
 				doc.silentPrint(job);
 				/*
 				PDFPrinter printer=new PDFPrinter(doc, Scaling.ACTUAL_SIZE, Orientation.AUTO);
@@ -138,13 +142,13 @@ public class PrinterHandler {
 			}catch(PrinterAbortException e){
 				 //avoid abort exception
 			}catch(PrinterException e){
-				throw new PrinterException("Error while printing");
+				throw new PrintException("Error while printing", e);
 			}finally{
 				doc.close();
 			}
 
 		}catch(IOException e){
-			throw new PrintException("Error loading file "+file);
+			throw new IOException("Error loading file "+file, e);
 		}
 
 	}
