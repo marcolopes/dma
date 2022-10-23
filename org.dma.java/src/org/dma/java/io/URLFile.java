@@ -64,6 +64,7 @@ public class URLFile extends URLHandler {
 		}.to(dst);
 	}
 
+
 	public boolean upload(File src) {
 		return new AbstractURLFileCopy(this) {
 			@Override
@@ -74,17 +75,17 @@ public class URLFile extends URLHandler {
 	}
 
 
-	/** Returns LOCAL filename */
-	public String getFilename() {
-		return getFile().getName();
-	}
-
-
 	/** @see URLConnection#getLastModified() */
 	public long getLastModified() {
 		try{return openConnection().getLastModified();
 		}catch(Exception e){}
 		return 0;
+	}
+
+
+	/** Returns LOCAL filename */
+	public String getFilename() {
+		return getFile().getName();
 	}
 
 

@@ -69,14 +69,19 @@ public class CustomFile extends File {
 		return StringUtils.removeChars(plain, "<>:?*\"\n\r\t\f\0");
 	}
 
-	public CustomFile(String pathname, String...more) {
-		this(new File(pathname), more);
+	/** Ensures absolute path */
+	public CustomFile(File path, String...more) {
+		this(path.getPath(), more);
 	}
 
-	/** @see Paths#get(String, String...) */
-	public CustomFile(File path, String...more) {
-		super(more.length==0 ? path.getAbsolutePath() :
-			Paths.get(path.getAbsolutePath(), more).toFile().getAbsolutePath());
+	/** Ensures absolute path */
+	public CustomFile(String pathname, String...more) {
+		this(Paths.get(pathname, more).toFile());
+	}
+
+	/** Ensures absolute path */
+	public CustomFile(File path) {
+		super(path.getAbsolutePath());
 	}
 
 
@@ -210,10 +215,17 @@ public class CustomFile extends File {
 
 	public static void main(String[] args) {
 
+		System.out.println(Folder.current().toString());
 		System.out.println(new CustomFile(""));
-
-		System.out.println(new CustomFile("C:\\Users\\marcolopes\\Temp\\colibri\\colibri.rcp.win32.x86.exe").
-				execute(Folder.current().toString()));
+		System.out.println();
+		System.out.println(new CustomFile("C:\\Users\\marcolopes\\Temp"));
+		System.out.println(new CustomFile("C:\\Users\\marcolopes", "Temp"));
+		System.out.println(new CustomFile("C:\\Users", "marcolopes", "Temp"));
+		System.out.println(new CustomFile("C:", "Users", "marcolopes", "Temp"));
+		System.out.println();
+		System.out.println(new CustomFile("\\Users\\marcolopes\\Temp"));
+		System.out.println(new CustomFile("\\Users\\marcolopes", "Temp"));
+		System.out.println(new CustomFile("\\Users", "marcolopes", "Temp"));
 
 	}
 

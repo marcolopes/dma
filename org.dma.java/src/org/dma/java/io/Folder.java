@@ -39,14 +39,19 @@ public class Folder extends CustomFile {
 		}return null;
 	}
 
+	/** @see CustomFile#CustomFile(File, String...) */
+	public Folder(File path, String...more) {
+		super(path, more);
+	}
+
 	/** @see CustomFile#CustomFile(String, String...) */
 	public Folder(String pathname, String...more) {
 		super(pathname, more);
 	}
 
-	/** @see CustomFile#CustomFile(File, String...) */
-	public Folder(File path, String...more) {
-		super(path, more);
+	/** @see CustomFile#CustomFile(File) */
+	public Folder(File path) {
+		super(path);
 	}
 
 

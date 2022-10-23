@@ -31,14 +31,19 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipFile extends CustomFile {
 
+	/** @see CustomFile#CustomFile(File, String...) */
+	public ZipFile(File path, String...more) {
+		super(path, more);
+	}
+
 	/** @see CustomFile#CustomFile(String, String...) */
 	public ZipFile(String pathname, String...more) {
 		super(pathname, more);
 	}
 
-	/** @see CustomFile#CustomFile(File, String...) */
-	public ZipFile(File path, String...more) {
-		super(path, more);
+	/** @see CustomFile#CustomFile(File) */
+	public ZipFile(File path) {
+		super(path);
 	}
 
 

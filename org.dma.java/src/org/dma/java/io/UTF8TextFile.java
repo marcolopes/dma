@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,10 @@ package org.dma.java.io;
 import java.io.File;
 
 public class UTF8TextFile extends TextFile {
+
+	public UTF8TextFile(File file, String...more) {
+		super(UTF8_CHARSET, file, more);
+	}
 
 	public UTF8TextFile(String pathname, String...more) {
 		super(UTF8_CHARSET, pathname, more);

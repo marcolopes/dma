@@ -30,16 +30,20 @@ import org.apache.commons.codec.binary.Base64;
 
 public class ByteFile extends CustomFile {
 
-	/** @see CustomFile#CustomFile(String, String...) */
-	public ByteFile(String pathname, String...more) {
-		super(pathname, more);
-	}
-
 	/** @see CustomFile#CustomFile(File, String...) */
 	public ByteFile(File path, String...more) {
 		super(path, more);
 	}
 
+	/** @see CustomFile#CustomFile(String, String...) */
+	public ByteFile(String pathname, String...more) {
+		super(pathname, more);
+	}
+
+	/** @see CustomFile#CustomFile(File) */
+	public ByteFile(File path) {
+		super(path);
+	}
 
 
 	/*
