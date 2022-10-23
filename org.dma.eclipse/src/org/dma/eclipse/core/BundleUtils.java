@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2019 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,13 @@
  *******************************************************************************/
 package org.dma.eclipse.core;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
+import org.dma.java.io.CustomFile;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -41,7 +42,12 @@ public class BundleUtils {
 	/** Bundle PATH resolver */
 	public static String pathResolver(Bundle bundle, String relativePath) {
 
-		URL url=urlResolver(bundle, relativePath);
+		try{return new CustomFile(FileLocator.getBundleFile(bundle), relativePath).toString();
+		}catch(IOException e){
+			e.printStackTrace();
+		}return null;
+
+		/*URL url=urlResolver(bundle, relativePath);
 		if (url!=null) try{
 			//does not work on exported JAR
 			//FileLocator.resolve(url).getPath();
@@ -49,7 +55,7 @@ public class BundleUtils {
 			//normalize path
 			return new File(pathname).getCanonicalPath();
 		}catch(IOException e){
-		}return null;
+		}return null;*/
 
 	}
 

@@ -276,6 +276,11 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		return addElements(Arrays.asList(getNewObject()));
 	}
 
+	public int setElements(Collection<T> col) {
+		objectCollection.clear();
+		return addElements(col);
+	}
+
 	public int replaceElement(T element, int index) {
 		objectCollection.set(index, element);
 		return selectElement(index);

@@ -26,6 +26,7 @@ import org.dma.java.util.Debug;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Shell;
 
 public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
@@ -110,6 +111,9 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 				}
 			});
 
+		}catch(SWTException e){
+			e.printStackTrace();
+			return run(true);
 		}catch(InvocationTargetException e){
 			Debug.err("InvocationTargetException");
 			throw new Exception(e.getCause().getMessage(), e.getCause());
