@@ -22,8 +22,6 @@ package org.dma.jaxrs.services;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
@@ -32,14 +30,13 @@ import org.dma.jaxrs.responses.Response;
 
 public class Endpoint {
 
-	public static Client newClient() {
-		Thread.currentThread().setContextClassLoader(ClientBuilder.class.getClassLoader());
-		return ClientBuilder.newClient();
-	}
-
 	public static final int MAX_THREAD_POOL = 10;
 
-	public static ExecutorService executor = Executors.newFixedThreadPool(MAX_THREAD_POOL);
+	public static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(MAX_THREAD_POOL);
+
+	public static void run(EndpointRunnable runnable) {
+		EXECUTOR.execute(runnable);
+	}
 
 	public abstract class EndpointRunnable implements Runnable {
 
@@ -60,13 +57,6 @@ public class Endpoint {
 			}
 		}
 
-	}
-
-	/*
-	 * Run
-	 */
-	public static void run(EndpointRunnable runnable) {
-		executor.execute(runnable);
 	}
 
 }

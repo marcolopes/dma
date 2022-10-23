@@ -23,6 +23,9 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+/**
+ * https://restfulapi.net/http-methods
+ */
 public class Client {
 
 	public static javax.ws.rs.client.Client newClient() {
@@ -41,23 +44,40 @@ public class Client {
 	}
 
 
-	/*
-	 * Http Methods
+	/**
+	 * Use GET requests to retrieve resource representation/information only – and not modify it in any way.
+	 * As GET requests do not change the resource’s state, these are said to be safe methods.
 	 */
-	protected Response post(final String url, final Entity<?> entity) throws Exception {
-		return client.target(url).request().async().post(entity).get();
-	}
-
-	protected Response put(String url, Entity<?> entity) throws Exception {
-		return client.target(url).request().async().put(entity).get();
-	}
-
-	protected Response get(String url) throws Exception {
+	public Response get(String url) throws Exception {
+		System.out.println("[GET] "+url);
 		return client.target(url).request().async().get().get();
 	}
 
-	protected Response delete(String url) throws Exception {
+	/**
+	 * Use POST APIs to create new subordinate resources,
+	 * e.g., a file is subordinate to a directory containing it or a row is subordinate to a database table.
+	 */
+	public Response post(final String url, final Entity<?> entity) throws Exception {
+		System.out.println("[POST] "+url);
+		return client.target(url).request().async().post(entity).get();
+	}
+
+	/**
+	 * Use PUT APIs primarily to update an existing resource
+	 * (if the resource does not exist, then API may decide to create a new resource or not).
+	 */
+	public Response put(String url, Entity<?> entity) throws Exception {
+		System.out.println("[PUT] "+url);
+		return client.target(url).request().async().put(entity).get();
+	}
+
+	/**
+	 * As the name applies, DELETE APIs delete the resources (identified by the Request-URI).
+	 */
+	public Response delete(String url) throws Exception {
+		System.out.println("[DELETE] "+url);
 		return client.target(url).request().async().delete().get();
 	}
+
 
 }
