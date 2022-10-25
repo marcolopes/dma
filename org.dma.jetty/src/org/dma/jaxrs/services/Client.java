@@ -23,6 +23,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+import org.dma.jaxrs.services.QueryParameters.QueryParameterValue;
+
 /**
  * https://restfulapi.net/http-methods
  */
@@ -48,9 +50,14 @@ public class Client {
 	 * Use GET requests to retrieve resource representation/information only – and not modify it in any way.
 	 * As GET requests do not change the resource’s state, these are said to be safe methods.
 	 */
-	public Response get(String url) throws Exception {
-		System.out.println("[GET] "+url);
-		return client.target(url).request().async().get().get();
+	public Response get(String url, QueryParameterValue...parameters) throws Exception {
+		return get(url, new QueryParameters(parameters));
+	}
+
+	public Response get(String url, QueryParameters parameters) throws Exception {
+		String query=parameters.toString();
+		System.out.println("[GET] "+url+query);
+		return client.target(url+query).request().async().get().get();
 	}
 
 	/**

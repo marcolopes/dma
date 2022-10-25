@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Jetty Server" uid="colibri.jetty.product" id="org.dma.jetty.product" application="org.dma.jetty.application" version="1.4.4" useFeatures="false" includeLaunchers="true">
+<product name="Jetty Server" uid="colibri.jetty.product" id="org.dma.jetty.product" application="org.dma.jetty.application" version="1.4.5" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
