@@ -49,9 +49,9 @@ public class HugePdfFile extends AbstractPdfFile {
 	}
 
 
-	/** Only parts of the pdf are read as needed */
 	@Override
 	public PdfReader getPdfReader(byte[] ownerPassword) throws IOException {
+		//only parts of the pdf are read as needed
 		return new PdfReader(new RandomAccessFileOrArray(getAbsolutePath(), false, true), ownerPassword);
 	}
 
