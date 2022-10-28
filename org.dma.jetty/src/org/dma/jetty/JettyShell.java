@@ -148,7 +148,7 @@ public class JettyShell extends CustomShell {
 			@Override
 			public void mouseDown(MouseEvent event) {
 				if (server.isRunning()){
-					try{URI uri=new URI(server.getParameters().getURL());
+					try{URI uri=new URI(server.getParameters().path());
 						Desktop.getDesktop().browse(uri);
 					}catch(Exception e){
 						e.printStackTrace();
@@ -186,7 +186,7 @@ public class JettyShell extends CustomShell {
 			label_ip.setText(server.getParameters().host);
 			label_port.setText(String.valueOf(server.getParameters().port));
 			label_status.setText("Running");
-			label_link.setText("@"+server.getParameters().getURL());
+			label_link.setText("@"+server.getParameters().path());
 			button_server.setImage(Activator.getImage("icons/stop16.png"));
 			button_server.setText("Stop Server");
 		}else{

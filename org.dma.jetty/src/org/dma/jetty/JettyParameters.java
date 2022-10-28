@@ -19,13 +19,13 @@
  *******************************************************************************/
 package org.dma.jetty;
 
-import org.dma.java.net.ServerParameters;
+import org.dma.java.net.HttpServerHandler;
 import org.dma.java.util.MessageList;
 import org.dma.java.util.StringUtils;
 
 import org.eclipse.jetty.server.ServerConnector;
 
-public class JettyParameters extends ServerParameters {
+public class JettyParameters extends HttpServerHandler {
 
 	//Exceptions
 	public static final IllegalArgumentException HOST_NOT_DEFINED_EXCEPTION = new IllegalArgumentException("host is not defined");
