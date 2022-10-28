@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,49 +18,35 @@
  *******************************************************************************/
 package org.dma.java.net;
 
-import org.dma.java.util.ArrayUtils;
+public class HttpServerHandler extends HttpURLHandler {
 
-public class ServerParameters {
-
-	public static final String LOCALHOST = "localhost";
+	public static String getURL(boolean secure, String host, int port) {
+		StringBuilder sb=new StringBuilder(secure ? "https" : "http").
+			append("://").append(host);
+		if (port>0) sb.append(":"+port);
+		return sb.toString();
+	}
 
 	public final String host;
 	public final int port;
 
-	public ServerParameters(String host) {
+	public HttpServerHandler(String host) {
 		this(host, 0);
 	}
 
-	public ServerParameters(String host, int port) {
+	public HttpServerHandler(String host, int port) {
+		this(false, host, port);
+	}
+
+	public HttpServerHandler(boolean secure, String host) {
+		this(secure, host, 0);
+	}
+
+	public HttpServerHandler(boolean secure, String host, int port) {
+		super(getURL(secure, host, port));
+
 		this.host=host;
 		this.port=port;
-	}
-
-	public boolean hasPort() {
-		return port>0;
-	}
-
-	public boolean isPortValid() {
-		return port>0 && port<=65535;
-	}
-
-	public boolean isLocalhost() {
-		return host.toLowerCase().startsWith(LOCALHOST) || host.startsWith("127.0.0.1");
-	}
-
-	public String getURL() {
-		return port==0 ?
-				"http://" + host :
-				"http://" + host + ":" + port;
-	}
-
-	public String getURL(String...more) {
-		return getURL() + "/" + ArrayUtils.concat(more, "/");
-	}
-
-	@Override
-	public String toString() {
-		return getURL();
 	}
 
 }

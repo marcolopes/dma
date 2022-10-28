@@ -20,7 +20,6 @@ package org.dma.java.net;
 
 import java.awt.Desktop;
 import java.net.HttpURLConnection;
-import java.net.URL;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -30,9 +29,10 @@ public class HttpURLHandler extends URLHandler {
 		super(urlname);
 	}
 
-	public HttpURLHandler(URL url) {
-		super(url);
+	public boolean isSecure() {
+		return url.getProtocol().equals("https");
 	}
+
 
 	public boolean ping(int timeout) {
 
@@ -113,13 +113,6 @@ public class HttpURLHandler extends URLHandler {
 	}
 
 
-	public boolean isSecure() {
-
-		return url.getProtocol().equals("https");
-
-	}
-
-
 	public boolean browse() {
 
 		if (Desktop.isDesktopSupported()) try{
@@ -136,7 +129,7 @@ public class HttpURLHandler extends URLHandler {
 
 		HttpURLHandler handler=new HttpURLHandler("http://loja.projectocolibri.com/api");
 
-		System.err.println(handler);
+		System.err.println(handler.path());
 		System.err.println("Valid? " + handler.isValid());
 		System.err.println("HTTP? " + handler.check(HttpURLConnection.HTTP_OK));
 		System.err.println("Ping? " + handler.ping(3*1000));

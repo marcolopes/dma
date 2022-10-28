@@ -34,24 +34,18 @@ public class URLFile extends URLHandler {
 		return StringUtils.removeChars(plain, "\n\r\t\f\0");
 	}
 
-	/** Example: "www.ftp.com", "file.txt" */
-	public static URL getURL(String urlname, String...more) {
-		try{StringBuilder sb=new StringBuilder(urlname);
-			for(String element: more){
-				sb.append("/"+element);
-			}return new URL(sb.toString());
-		}catch(Exception e){
-			System.err.println(e);
-		}return null;
-	}
-
-	/** @see URLFile#getURL(String, String...) */
+	/** @see URLHandler#getURL(String, String...) */
 	public URLFile(String urlname, String...more) {
 		this(getURL(urlname, more));
 	}
 
 	public URLFile(URL url) {
 		super(url);
+	}
+
+
+	public boolean exists() {
+		return checkStream();
 	}
 
 

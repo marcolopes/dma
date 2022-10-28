@@ -30,9 +30,30 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.dma.java.io.CustomFile;
-import org.dma.java.util.StringUtils;
+import org.dma.java.util.ArrayUtils;
 
 public class URLHandler {
+
+	public enum LOCALHOST {
+
+		/** 127.0.0.1 */ IP ("127.0.0.1"),
+		/** localhost */ NAME ("localhost");
+
+		public final String value;
+
+		LOCALHOST(String value){
+			this.value=value;
+		}
+
+		public static boolean is(String host) {
+			return host.equals(IP.value) || host.equalsIgnoreCase(NAME.value);
+		}
+
+		public static boolean is(URL url) {
+			return is(url.getHost());
+		}
+
+	}
 
 	public static Pattern URL_PATTERN = Pattern.compile(
 			"^((((https?)://)|(mailto:|news:))" +
@@ -42,13 +63,14 @@ public class URLHandler {
 	public static String getLocalAddress() {
 		try{return InetAddress.getLocalHost().getHostAddress();
 		}catch(UnknownHostException e){
-			return "127.0.0.1"; //localhost
+			return LOCALHOST.IP.value;
 		}
 	}
 
-	public static URL getURL(String urlname) {
-		if (!StringUtils.isEmpty(urlname)) try{
-			return new URL(urlname);
+	/** Example: "www.ftp.com", "file.txt" */
+	public static URL getURL(String urlname, String...more) {
+		try{return more.length==0 ? new URL(urlname) :
+			new URL(urlname+"/"+ArrayUtils.concat(more, "/"));
 		}catch(Exception e){
 			System.err.println(e+urlname);
 		}return null;
@@ -67,11 +89,23 @@ public class URLHandler {
 
 
 	public boolean isValid() {
-		return url!=null && URL_PATTERN.matcher(toString()).matches();
+		return url!=null && URL_PATTERN.matcher(path()).matches();
+	}
+
+	public boolean isLocalhost() {
+		return LOCALHOST.is(url);
+	}
+
+	public boolean hasPort() {
+		return url.getPort()>0;
+	}
+
+	public boolean isPortValid() {
+		return url.getPort()>0 && url.getPort()<=65535;
 	}
 
 
-	public boolean exists() {
+	public boolean checkStream() {
 		try{url.openStream();
 			return true;
 		}catch(Exception e){}
@@ -130,11 +164,8 @@ public class URLHandler {
 		return new CustomFile(url.getFile());
 	}
 
-
-	/** @see URL#toString() */
-	@Override
-	public String toString() {
-		return url.toString();
+	public String path(String...more) {
+		return more.length==0 ? url.toString() : url+"/"+ArrayUtils.concat(more, "/");
 	}
 
 
