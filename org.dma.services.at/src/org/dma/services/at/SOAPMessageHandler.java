@@ -107,7 +107,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			binding.setHandlerChain(chain);
 
 			//javax.xml.ws.service.endpoint.address
-			provider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url.toString());
+			provider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url.path());
 			//com.sun.xml.internal.ws.connect.timeout
 			provider.getRequestContext().put(JAXWSProperties.CONNECT_TIMEOUT, DEFAULT_CONNECT_TIMEOUT);
 			//com.sun.xml.internal.ws.request.timeout
