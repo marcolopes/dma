@@ -35,7 +35,7 @@ import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.CustomFile;
 import org.dma.java.io.Folder;
 import org.dma.java.io.ZipFile;
-import org.dma.java.net.ServerParameters;
+import org.dma.java.net.HttpServerHandler;
 import org.dma.java.util.Debug;
 
 public class H2Manager extends AbstractManager implements IDatabaseManager {
@@ -66,7 +66,7 @@ public class H2Manager extends AbstractManager implements IDatabaseManager {
 
 	@Override
 	public boolean isH2Embedded(String host) {
-		return new ServerParameters(host).isLocalhost();
+		return new HttpServerHandler(host).isLocalhost();
 	}
 
 	@Override

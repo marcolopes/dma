@@ -21,7 +21,8 @@ package org.dma.drivers.jdbc;
 import java.sql.Connection;
 
 import org.dma.java.io.Folder;
-import org.dma.java.net.ServerParameters;
+import org.dma.java.net.HttpServerHandler;
+import org.dma.java.net.URLHandler.LOCALHOST;
 
 public class DatabaseParameters {
 
@@ -61,7 +62,7 @@ public class DatabaseParameters {
 	public DatabaseParameters(DRIVERS driver, String host, String database, Folder folder,
 			String properties, String username, String password, POOLMANAGERS pool, BackupParameters backup) {
 		this.driver=driver;
-		this.host=host.isEmpty() ? ServerParameters.LOCALHOST : host;
+		this.host=host.isEmpty() ? LOCALHOST.NAME.value : host;
 		this.database=database;
 		this.folder=folder==null ? Folder.current() : folder;
 		this.properties=properties;
@@ -72,7 +73,7 @@ public class DatabaseParameters {
 	}
 
 	public boolean isLocalhost() {
-		return new ServerParameters(host).isLocalhost();
+		return new HttpServerHandler(host).isLocalhost();
 	}
 
 	public boolean isH2Embedded() {
