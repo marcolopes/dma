@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +29,17 @@ import org.dma.java.time.Chronograph;
 
 public class StringUtils {
 
+	/** Numeric digits only [0-9] */
 	public static final Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+");
+	/** Numeric digits [0-9] and dot (.) */
 	public static final Pattern DECIMAL_PATTERN = Pattern.compile("[0-9[.]]+");
+	/** Letter digits [A-Z] and [a-z] */
 	public static final Pattern LETTERS_PATTERN = Pattern.compile("[A-Za-z]+");
+	/** Uppercase letter digits [A-Z] */
 	public static final Pattern UPPERCASE_PATTERN = Pattern.compile("[^a-z]+");
+	/** Lowercase letter digits [a-z] */
 	public static final Pattern LOWERCASE_PATTERN = Pattern.compile("[^A-Z]+");
+	/** Diacritical Marks */
 	public static final Pattern DIACRITICS_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
 
 	public static final String DECIMAL_NUMBERS = "0123456789";
@@ -45,9 +51,7 @@ public class StringUtils {
 	 */
 	public static int val(String string) {
 
-		try{
-			return Integer.valueOf(string);
-
+		try{return Integer.valueOf(string);
 		}catch(NumberFormatException e){}
 
 		return 0;
@@ -87,37 +91,9 @@ public class StringUtils {
 
 
 
-
-
-	/*
-	 * Creation
-	 */
-	public static String replicas(String string, int replicas) {
-
-		StringBuilder result=new StringBuilder(replicas);
-
-		for(int i=0; i<replicas; i++){
-			result.append(string);
-		}
-
-		return result.toString();
-
-	}
-
-
-
-
-
 	/*
 	 * Analysis
 	 */
-	public static int hashCode(String string) {
-
-		return string==null ? 0 : string.hashCode();
-
-	}
-
-
 	public static boolean isEmpty(String string) {
 
 		return string==null || string.trim().isEmpty();
@@ -167,52 +143,36 @@ public class StringUtils {
 	}
 
 
-	@Deprecated
-	public static int equals(String string, String...searchFor) {
+	public static boolean isQuoted(String string, char...quotes) {
 
-		for(int i=0; i<searchFor.length; i++){
-			if (string.equals(searchFor[i])) return i;
-		}return -1;
+		return !string.isEmpty() && string.charAt(0)==quotes[0] &&
+				string.charAt(string.length()-1)==quotes[1];
 
 	}
 
 
-	@Deprecated
-	public static int startsWith(String string, String...searchFor) {
+	public static boolean isQuoted(String string, char quote) {
 
-		for(int i=0; i<searchFor.length; i++){
-			if (string.startsWith(searchFor[i])) return i;
-		}return -1;
+		return isQuoted(string, quote, quote);
+
+	}
+
+	/** Returns true if surrounded with COMMA (") chars */
+	public static boolean isQuoted(String string) {
+
+		return isQuoted(string, '"');
 
 	}
 
 
 	public static Collection<Integer> indexOf(String string, String searchFor) {
 
-		Collection<Integer> result=new ArrayList();
-
+		Collection<Integer> col=new ArrayList();
 		int index=0;
 		while((index=string.indexOf(searchFor, index))!=-1) {
-			result.add(index);
+			col.add(index);
 			index+=searchFor.length();
-		}
-
-		return result;
-
-	}
-
-
-	public static int ocurrences(String string, char...searchFor) {
-
-		int count=0;
-
-		for(int i=0; i<string.length(); i++){
-			for(char c: searchFor){
-				if (string.charAt(i)==c) count++;
-			}
-		}
-
-		return count;
+		}return col;
 
 	}
 
@@ -220,6 +180,18 @@ public class StringUtils {
 	public static int ocurrences(String string, String searchFor) {
 
 		return indexOf(string, searchFor).size();
+
+	}
+
+
+	public static int ocurrences(String string, char...searchFor) {
+
+		int count=0;
+		for(int i=0; i<string.length(); i++){
+			for(char c: searchFor){
+				if(string.charAt(i)==c) count++;
+			}
+		}return count;
 
 	}
 
@@ -238,70 +210,16 @@ public class StringUtils {
 	}
 
 
-	public static boolean isQuoted(String string, char...quotes) {
-
-		return string.length()>=2 &&
-				string.charAt(0)==quotes[0] &&
-				string.charAt(string.length()-1)==quotes[1];
-
-	}
-
-
-	public static boolean isQuoted(String string, char quote) {
-
-		return isQuoted(string, quote, quote);
-
-	}
-
-
-
-
-
-	/*
-	 * Transformation
-	 */
 	public static String left(String string, int length) {
 
-		return string.length()<=length ?
-				string : string.substring(0, length);
+		return string.length()<=length ? string : string.substring(0, length);
 
 	}
 
 
 	public static String right(String string, int length) {
 
-		return string.length()<length ?
-				string : string.substring(string.length()-length);
-
-	}
-
-
-	public static String numbers(String string) {
-
-		StringBuilder result=new StringBuilder(string.length());
-
-		final char[] CHARS=string.toCharArray();
-		for(int i=0; i<CHARS.length; i++){
-			if (CHARS[i]>='0' && CHARS[i]<='9')
-				result.append(string.substring(i, i+1));
-		}
-
-		return result.toString();
-
-	}
-
-
-	public static String letters(String string) {
-
-		StringBuilder result=new StringBuilder(string.length());
-
-		final char[] CHARS=string.toCharArray();
-		for(int i=0; i<CHARS.length; i++){
-			if ((CHARS[i]>='A' && CHARS[i]<='Z') || (CHARS[i]>='a' && CHARS[i]<='z'))
-				result.append(string.substring(i, i+1));
-		}
-
-		return result.toString();
+		return string.length()<length ? string : string.substring(string.length()-length);
 
 	}
 
@@ -309,13 +227,197 @@ public class StringUtils {
 	public static String chars(String string, int...indices) {
 
 		StringBuilder result=new StringBuilder(string.length());
-
-		for (int i=0; i<indices.length; i++){
-			if (indices[i]<string.length())
+		for(int i=0; i<indices.length; i++){
+			if(indices[i]<string.length())
 				result.append(string.charAt(indices[i]));
-		}
+		}return result.toString();
 
-		return result.toString();
+	}
+
+
+	public static String numbers(String string) {
+
+		StringBuilder result=new StringBuilder(string.length());
+		final char[] CHARS=string.toCharArray();
+		for(int i=0; i<CHARS.length; i++){
+			if(CHARS[i]>='0' && CHARS[i]<='9') result.append(string.substring(i, i+1));
+		}return result.toString();
+
+	}
+
+
+	public static String letters(String string) {
+
+		StringBuilder result=new StringBuilder(string.length());
+		final char[] CHARS=string.toCharArray();
+		for(int i=0; i<CHARS.length; i++){
+			if((CHARS[i]>='A' && CHARS[i]<='Z') || (CHARS[i]>='a' && CHARS[i]<='z'))
+				result.append(string.substring(i, i+1));
+		}return result.toString();
+
+	}
+
+
+
+	/*
+	 * Creation
+	 */
+	public static String replicas(String string, int count) {
+
+		StringBuilder result=new StringBuilder(count);
+		for(int i=0; i<count; i++){
+			result.append(string);
+		}return result.toString();
+
+	}
+
+
+
+	/*
+	 * Transformation
+	 */
+	public static String capitalize(String string) {
+
+		return string.isEmpty() ? string : string.substring(0,1).toUpperCase() + string.substring(1);
+
+	}
+
+
+	public static String uncapitalize(String string) {
+
+		return string.isEmpty() ? string : string.substring(0,1).toLowerCase() + string.substring(1);
+
+	}
+
+
+	/** Replaces accented characters */
+	public static String unaccent(String string) {
+
+	    String normalized=Normalizer.normalize(string, Normalizer.Form.NFKD);
+	    if(!normalized.equals(string)) try{
+			return new String(DIACRITICS_PATTERN.matcher(normalized).replaceAll("").getBytes("ascii"), "ascii");
+			//return new String(normalized.replaceAll("\\p{M}", "").getBytes("ascii"), "ascii");
+		}catch(Exception e){}
+		return normalized;
+
+	}
+
+
+	/** ESCAPES all the chars */
+	public static String escapeChars(String string, char...searchFor) {
+
+		if(searchFor.length==0) return escapeChars(string, '\\');
+
+		if(ocurrences(string, searchFor)==0) return string;
+
+		StringBuilder result=new StringBuilder();
+		//escape
+		for(int i=0; i<string.length(); i++) {
+			char charAt=string.charAt(i);
+			for(char c: searchFor){
+				if(c==charAt) result.append('\\');
+			}result.append(charAt);
+		}return result.toString();
+
+	}
+
+
+	/** ESCAPES all the escape chars! */
+	public static String escape(String string) {
+		//ensure double backslash
+		//return string.replace("\\", "\\\\");
+		return escapeChars(string);
+	}
+
+
+	/** ESCAPES and surrounds with QUOTE chars */
+	public static String quote(String string, char...quote) {
+
+		return new StringBuilder().
+		//START quote
+		append(quote[0]).
+		//escape
+		append(escapeChars(string, '\\', '"')).
+		//END quote
+		append(quote[quote.length-1]).toString();
+
+	}
+
+
+	/** ESCAPES and surrounds with COMMA (") chars */
+	public static String quote(String string) {
+
+		return quote(string, '"');
+
+	}
+
+
+	/** Removes surrounded QUOTE chars */
+	public static String unquote(String string, char...quotes) {
+
+		return !isQuoted(string, quotes) ? string : string.substring(1, string.length()-1);
+
+	}
+
+
+	/** Removes surrounded QUOTE chars */
+	public static String unquote(String string, char quotes) {
+
+		return unquote(string, quotes, quotes);
+
+	}
+
+	/** Removes surrounded COMMA (") chars */
+	public static String unquote(String string) {
+
+		return unquote(string, '\"');
+
+	}
+
+
+	public static String indent(String text) {
+
+		StringBuilder result=new StringBuilder();
+		int count=0;
+		for(String line: text.split("\n")) {
+			if(line.contains("}")) count--;
+			result.append(replicas("\t", count) + line + "\n");
+			if(line.contains("{")) count++;
+		}return result.toString();
+
+	}
+
+
+	/** Inserts chars on the left */
+	public static String padLeft(String string, int length, char character) {
+
+		return string.length()>=length ? string :
+			replicas(String.valueOf(character), length-string.length()) + string;
+
+	}
+
+
+	/** Inserts chars on the right */
+	public static String padRight(String string, int length, char character) {
+
+		return string.length()>=length ? string :
+			string + replicas(String.valueOf(character), length-string.length());
+
+	}
+
+
+	public static String center(String string, int size, char character) {
+
+		int count=size-string.length();
+
+		return count>0 ? padRight(padLeft(string, string.length()+count/2, character), size, character) : string;
+
+	}
+
+
+	public static String center(String string, int size) {
+
+		return center(string, size, ' ');
 
 	}
 
@@ -324,7 +426,6 @@ public class StringUtils {
 	public static String replace(String string, String searchFor, String replaceWith, int count) {
 
 		StringBuilder result=new StringBuilder();
-
 		int index=0;
 		int beginIndex=index;
 		while((index=string.indexOf(searchFor, index))!=-1 && count!=0){
@@ -333,7 +434,6 @@ public class StringUtils {
 			beginIndex=index;
 			count--;
 		}result.append(string.substring(beginIndex, string.length()));
-
 		return result.toString();
 
 	}
@@ -362,7 +462,15 @@ public class StringUtils {
 
 	public static String removeAll(String string, String searchFor) {
 
-		return replace(string, searchFor, "", -1);
+		return replaceAll(string, searchFor, "");
+
+	}
+
+
+	/** Removes spaces from string */
+	public static String compact(String string) {
+
+		return removeAll(string, " ");
 
 	}
 
@@ -370,14 +478,11 @@ public class StringUtils {
 	public static String removeChars(String string, char...searchFor) {
 
 		StringBuilder result=new StringBuilder(string.length());
-
 		final String CHARS=new String(searchFor);
 		for(int i=0; i<string.length(); i++){
 			char at=string.charAt(i);
-			if (ocurrences(CHARS, at)==0) result.append(at);
-		}
-
-		return result.toString();
+			if(ocurrences(CHARS, at)==0) result.append(at);
+		}return result.toString();
 
 	}
 
@@ -389,229 +494,108 @@ public class StringUtils {
 	}
 
 
-	public static String compact(String string) {
+	/** Splits string (NO regex) */
+	public static StringList splitFirst(String string, String searchFor) {
 
-		return removeAll(string, " ");
-
-	}
-
-
-	@Deprecated
-	public static String appendIfEmpy(String string, String toAdd) {
-
-		return string.isEmpty() ? toAdd : string;
+		int index=string.indexOf(searchFor);
+		return index==-1 ? new StringList(string) :
+			new StringList(string.substring(0, index), string.substring(index+1));
 
 	}
 
 
-	@Deprecated
-	public static String appendIfNotEmpy(String string, String toAdd) {
+	/** Splits string (NO regex) */
+	public static StringList splitLast(String string, String searchFor) {
 
-		return string.isEmpty() ? string : string+toAdd;
-
-	}
-
-
-	public static String padLeft(String string, int length, char character) {
-
-		return string.length()>=length ? string :
-			replicas(String.valueOf(character), length-string.length())+string;
-
-	}
-
-
-	public static String padRight(String string, int length, char character) {
-
-		return string.length()>=length ? string :
-			string+replicas(String.valueOf(character), length-string.length());
-
-	}
-
-
-	public static String capitalize(String string) {
-
-		return string.isEmpty() ? string :
-			string.substring(0,1).toUpperCase() + string.substring(1);
-
-	}
-
-
-	public static String uncapitalize(String string) {
-
-		return string.isEmpty() ? string :
-			string.substring(0,1).toLowerCase() + string.substring(1);
-
-	}
-
-
-	/** Ensure the ESCAPE char is escaped! */
-	public static String escape(String string) {
-
-		//ensure double backslash
-		return string.replace("\\", "\\\\");
-
-	}
-
-
-	/** Escape and surround with QUOTE chars */
-	public static String quote(String string, char...quote) {
-
-		StringBuilder sb=new StringBuilder();
-
-		//start quote
-		sb.append(quote.length==0 ? '"' : quote[0]);
-		//escape DOUBLE QUOTES!
-		sb.append(escape(string).replace("\"", "\\\""));
-		//end quote
-		sb.append(quote.length==0 ? '"' : quote[quote.length-1]);
-
-		return sb.toString();
-
-	}
-
-
-	/** Remove surrounded QUOTE chars */
-	public static String unquote(String string, char...quotes) {
-
-		return !isQuoted(string, quotes) ? string : string.substring(1, string.length()-1);
-
-	}
-
-	/** Remove surrounded QUOTE chars */
-	public static String unquote(String string, char quote) {
-
-		return unquote(string, quote, quote);
-
-	}
-
-	/** Remove surrounded COMMA (") chars */
-	public static String unquote(String string) {
-
-		return unquote(string, '\"');
-
-	}
-
-
-	public static String indent(String text) {
-
-		StringBuilder result=new StringBuilder();
-
-		int count=0;
-		for(String line: text.split("\n")) {
-			if (line.contains("}")) count--;
-			result.append(replicas("\t", count) + line + "\n");
-			if (line.contains("{")) count++;
-		}
-
-		return result.toString();
-
-	}
-
-
-	/** Replaces accented characters */
-	public static String unaccent(String string) {
-
-	    String normalized=Normalizer.normalize(string, Normalizer.Form.NFKD);
-	    if (!normalized.equals(string)) try{
-			return new String(DIACRITICS_PATTERN.matcher(normalized).replaceAll("").getBytes("ascii"), "ascii");
-			//return new String(normalized.replaceAll("\\p{M}", "").getBytes("ascii"), "ascii");
-		}catch(Exception e){}
-		return normalized;
-
-	}
-
-
-	@Deprecated
-	public static String[] splitAndTrim(String string, String regex) {
-
-		return ArrayUtils.trim(string.split(regex));
-
-	}
-
-
-	public static String[] splitFirstIndex(String string, String separator) {
-
-		int index=string.indexOf(separator);
-
-		return index==-1 ? new String[]{string} :
-			new String[]{string.substring(0, index), string.substring(index+1)};
-
-	}
-
-
-	public static String[] splitLastIndex(String string, String separator) {
-
-		int index=string.lastIndexOf(separator);
-
-		return index==-1 ? new String[]{string} :
-			new String[]{string.substring(0, index), string.substring(index+1)};
+		int index=string.lastIndexOf(searchFor);
+		return index==-1 ? new StringList(string) :
+			new StringList(string.substring(0, index), string.substring(index+1));
 
 	}
 
 
 	/** Adapted from JAVA 7 (NO REGEX!) */
-	public static String[] split(String string, String searchFor) {
+	public static StringList split(String string, String searchFor) {
 
 		int beginIndex=0;
 		int endIndex=0;
 		List<String> list=new ArrayList();
-		while((endIndex=string.indexOf(searchFor, beginIndex))!=-1) {
+		while((endIndex=string.indexOf(searchFor, beginIndex))!=-1){
 		    list.add(string.substring(beginIndex, endIndex));
 		    beginIndex=endIndex+1;
 		}// If no match was found, return this
-		if (beginIndex==0) return new String[]{string};
+		if(beginIndex==0) return new StringList(string);
 		// Add remaining segment
 		list.add(string.substring(beginIndex, string.length()));
 		// Construct result
 		int resultSize=list.size();
 		// Avoid last empty element?
 		while(resultSize>0 && list.get(resultSize-1).length()==0) resultSize--;
-		return list.subList(0, resultSize).toArray(new String[resultSize]);
+		return new StringList(list.subList(0, resultSize));
+
+	}
+
+
+	/** Splits string into words */
+	public static StringList words(String string) {
+
+		return split(string, " ");
 
 	}
 
 
 	public static void main(String[] argvs) {
 
-		String format="%20s";
+		String format="%22s";
 
 		System.out.printf(format, "toHex: "); System.out.println(toHex((byte)255));
 		System.out.printf(format, "toHexString: "); System.out.println(toHexString((byte)255));
-		System.out.printf(format, "unaccent: "); System.out.println(unaccent("口水雞,hello,Ä,Ã,Â,À,Á,ã,â,à,á,č,ć,đ,š,ž"));
+		System.out.println();
 
-		StringBuilder sb=new StringBuilder(".");
+		/*StringBuilder sb=new StringBuilder(".");
 		for(char c='a'; c<='z'; c++) sb.append(new char[]{c,'.'});
-		String string=sb.toString();
-		System.out.printf(format, "STRING: "); System.out.println(string);
-		System.out.printf(format, "java7.split: "); System.out.println(Arrays.asList(split(string, ".")));
-		System.out.printf(format, "pattern.split: "); System.out.println(Arrays.asList(Pattern.compile("\\.").split(string)));
-		System.out.printf(format, "string.split: "); System.out.println(Arrays.asList(string.split("\\.")));
-		System.out.printf(format, "replaceAll: "); System.out.println(replaceAll(string, ".", "**"));
-		System.out.printf(format, "string.replaceAll: "); System.out.println(string.replaceAll("\\.", "**"));
-		System.out.printf(format, "replace: "); System.out.println(replace(string, ".", "**", 0));
-		System.out.printf(format, "replace: "); System.out.println(replace(string, ".", "**", 3));
-		System.out.printf(format, "replace: "); System.out.println(replace(string, ".", "**", -1));
-		System.out.printf(format, "string.replace: "); System.out.println(string.replace(".", "**"));
+		String string=sb.toString();*/
+
+		String string="口.水.雞.hello.Ä.Ã.Â.À.Á.ã.â.à.á.č.ć.đ.š.ž";
+		System.out.printf(format, "quote(): "); System.out.println(quote(string, '{','}'));
+		System.out.printf(format, "removeAccents(): "); System.out.println(unaccent(string));
+		System.out.println();
+		System.out.printf(format, "Pattern.split: "); System.out.println(Arrays.asList(Pattern.compile("\\.").split(string)));
+		System.out.printf(format, "String.split: "); System.out.println(Arrays.asList(string.split("\\.")));
+		System.out.printf(format, "splitFirst(): "); System.out.println(splitFirst(string, "."));
+		System.out.printf(format, "splitLast(): "); System.out.println(splitLast(string, "."));
+		System.out.printf(format, "split(): "); System.out.println(split(string, "."));
+		System.out.printf(format, "words(): "); System.out.println(words("The quick brown fox jumps over the lazy dog"));
+		System.out.println();
+		System.out.printf(format, "String.replaceAll: "); System.out.println(string.replaceAll("\\.", "**"));
+		System.out.printf(format, "String.replace: "); System.out.println(string.replace(".", "**"));
+		System.out.printf(format, "replaceAll(): "); System.out.println(replaceAll(string, ".", "**"));
+		System.out.printf(format, "replace(-2): "); System.out.println(replace(string, ".", "**", -1));
+		System.out.printf(format, "replace(2): "); System.out.println(replace(string, ".", "**", 2));
+		System.out.printf(format, "replace(0): "); System.out.println(replace(string, ".", "**", 0));
+		System.out.println();
 
 		int repeat=1000000;
 		Chronograph time=new Chronograph().start();
 		for(int i=0; i<repeat; i++) Pattern.compile("\\.").split(string);
-		System.out.printf(format, "pattern.split: "); System.out.println(time);
+		System.out.printf(format, "Pattern.split(): "); System.out.println(time);
 		time.reset();
 		for(int i=0; i<repeat; i++) string.split("\\.");
-		System.out.printf(format, "string.split: "); System.out.println(time);
+		System.out.printf(format, "String.split(): "); System.out.println(time);
 		time.reset();
 		for(int i=0; i<repeat; i++) split(string, ".");
-		System.out.printf(format, "java7.split: "); System.out.println(time);
+		System.out.printf(format, "split(): "); System.out.println(time);
+		time.reset();
+
+		System.out.println();
+		for(int i=0; i<repeat; i++) string.replaceAll("z", "**");
+		System.out.printf(format, "String.replaceAll(): "); System.out.println(time);
 		time.reset();
 		for(int i=0; i<repeat; i++) string.replace("z", "**");
-		System.out.printf(format, "string.replace: "); System.out.println(time);
-		time.reset();
-		for(int i=0; i<repeat; i++) string.replaceAll("z", "**");
-		System.out.printf(format, "string.replaceAll: "); System.out.println(time);
+		System.out.printf(format, "String.replace(): "); System.out.println(time);
 		time.reset();
 		for(int i=0; i<repeat; i++) replaceAll(string, "z", "**");
-		System.out.printf(format, "replaceAll: "); System.out.println(time);
+		System.out.printf(format, "replaceAll(): "); System.out.println(time);
 
 	}
 

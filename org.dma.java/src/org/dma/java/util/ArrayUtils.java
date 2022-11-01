@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,13 +30,10 @@ public class ArrayUtils {
 	public static String[] toHexArray(byte[] array) {
 
 		String[] result=new String[array.length];
-
 		int index=0;
 		for(byte b: array){
 			result[index++]=StringUtils.toHex(b);
-		}
-
-		return result;
+		}return result;
 
 	}
 
@@ -44,12 +41,9 @@ public class ArrayUtils {
 	public static String toHexString(byte[] array) {
 
 		StringBuilder result=new StringBuilder();
-
 		for(String s: toHexArray(array)){
 			result.append(s);
-		}
-
-		return result.toString();
+		}return result.toString();
 
 	}
 
@@ -57,13 +51,10 @@ public class ArrayUtils {
 	static String[] toStringArray(char[] array) {
 
 		String[] result=new String[array.length];
-
 		int index=0;
 		for(char c: array){
 			result[index++]=String.valueOf(c);
-		}
-
-		return result;
+		}return result;
 
 	}
 
@@ -72,13 +63,10 @@ public class ArrayUtils {
 	static String[] toStringArray(Enum[] array) {
 
 		String[] result=new String[array.length];
-
 		int index=0;
 		for(Enum element: array){
 			result[index++]=element.name();
-		}
-
-		return result;
+		}return result;
 
 	}
 
@@ -91,12 +79,9 @@ public class ArrayUtils {
 	public static <T> int length(T[]...array) {
 
 		int length=0;
-
 		for(T[] element: array){
 			length+=element.length;
-		}
-
-		return length;
+		}return length;
 
 	}
 
@@ -105,12 +90,9 @@ public class ArrayUtils {
 	public static int sum(int[] array) {
 
 		int result=0;
-
 		for(int value: array){
 			result+=value;
-		}
-
-		return result;
+		}return result;
 
 	}
 
@@ -121,12 +103,9 @@ public class ArrayUtils {
 		if (array.length==0) return -1;
 
 		int result=array[0];
-
 		for(int value: array){
 			if (value<result) result=value;
-		}
-
-		return result;
+		}return result;
 
 	}
 
@@ -137,28 +116,17 @@ public class ArrayUtils {
 		if (array.length==0) return -1;
 
 		int result=array[0];
-
 		for(int value: array){
 			if (value>result) result=value;
-		}
-
-		return result;
+		}return result;
 
 	}
 
 
-	/** Returns the larger string, or -1 if empty */
+	/** Returns the larger element, or null if empty */
 	public static String larger(String[] array) {
 
-		if (array.length==0) return "";
-
-		String result=array[0];
-
-		for(int i=1; i<array.length; i++){
-			if (array[i].length()>result.length()) result=array[i];
-		}
-
-		return result;
+		return new StringList(array).larger();
 
 	}
 
@@ -166,11 +134,7 @@ public class ArrayUtils {
 	/** Returns the index of the first element found, or -1 if none */
 	public static int startedWith(String[] array, String searchFor) {
 
-		if (searchFor!=null && !searchFor.isEmpty()){
-			for(int i=0; i<array.length; i++){
-				if (array[i].startsWith(searchFor)) return i;
-			}
-		}return -1;
+		return new StringList(array).startedWith(searchFor);
 
 	}
 
@@ -191,7 +155,7 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns the elements in the specified indices order */
+	/** Returns a new array with the specified indices order */
 	public static String[] indices(String[] array, int...indices) {
 
 		return new StringList(array).indices(indices).toArray();
@@ -200,12 +164,10 @@ public class ArrayUtils {
 
 
 
-
-
 	/*
 	 * Transformation
 	 */
-	/** Returns all elements capitalized */
+	/** Returns a new array with all elements capitalized */
 	public static String[] capitalize(String[] array) {
 
 		return new StringList(array).capitalize().toArray();
@@ -213,7 +175,7 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns all elements uncapitalized */
+	/** Returns a new array with all elements uncapitalized */
 	public static String[] uncapitalize(String[] array) {
 
 		return new StringList(array).uncapitalize().toArray();
@@ -221,7 +183,7 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns all elements with the added prefix */
+	/** Returns a new array with the prefix added to all elements */
 	public static String[] addPrefix(String[] array, String prefix) {
 
 		return new StringList(array).addPrefix(prefix).toArray();
@@ -229,7 +191,7 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns all elements with the added suffix */
+	/** Returns a new array with the suffix added to all elements */
 	public static String[] addSuffix(String[] array, String suffix) {
 
 		return new StringList(array).addSuffix(suffix).toArray();
@@ -237,57 +199,43 @@ public class ArrayUtils {
 	}
 
 
-	/** Inserts a new element into the specified index */
+	/** Returns a new array with all the elements inserted */
 	public static String[] insert(String[] array, int index, String...element) {
 
 		//ensure exact capacity
-		StringList result=new StringList(array.length+element.length, array);
-
-		result.addAll(index, Arrays.asList(element));
-
-		return result.toArray();
+		return new StringList(array.length+element.length, array).insert(index, element).toArray();
 
 	}
 
 
-	/** Appends a new element to the end of the array */
+	/** Returns a new array with all the elements appended */
 	public static String[] append(String[] array, String...element) {
 
 		//ensure exact capacity
-		StringList result=new StringList(array.length+element.length, array);
-
-		result.addAll(Arrays.asList(element));
-
-		return result.toArray();
+		return new StringList(array.length+element.length, array).append(element).toArray();
 
 	}
 
 
-	/** Returns the elements without the specified index */
+	/** Returns a new array without the specified index */
 	public static String[] remove(String[] array, int index) {
 
 		StringList result=new StringList(array);
-
 		result.remove(index);
-
 		return result.toArray();
 
 	}
 
 
-	/** Returns the elements without the specified indices */
+	/** Returns a new array without the specified indices */
 	static String[] remove(String[] array, int...indices) {
 
-		StringList result=new StringList(array);
-
-		result.remove(indices);
-
-		return result.toArray();
+		return new StringList(array).remove(indices).toArray();
 
 	}
 
 
-	/** Returns all elements trimmed */
+	/** Returns a new trimmed array (with all elements trimmed) */
 	public static String[] trim(String[] array) {
 
 		return new StringList(array).trim().toArray();
@@ -295,7 +243,7 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns only TRIMMED non empty elements */
+	/** Returns a new compacted array (without trimmed-empty elements) */
 	public static String[] compact(String[] array) {
 
 		return new StringList(array).compact().toArray();
@@ -303,15 +251,15 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns a string with TRIMMED non empty elements concatenated */
+	/** Returns compacted (trimmed-non empty) elements concatenated */
 	public static String concat(String[] array, String separator) {
 
-		return new StringList(array).concat(separator);
+		return new StringList(array).compact().concat(separator);
 
 	}
 
 
-	/** Returns a string with TRIMMED non empty elements concatenated */
+	/** Returns compacted (trimmed-non empty) elements concatenated */
 	public static String concat(String[] array) {
 
 		return concat(array, "");
@@ -319,15 +267,15 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns a string with TRIMMED non empty elements concatenated */
+	/** Returns compacted (trimmed-non empty) elements concatenated */
 	public static String concat(String[] array, int fromIndex, int toIndex, String separator) {
 
-		return new StringList(array).subList(fromIndex, toIndex).concat(separator);
+		return new StringList(array).subList(fromIndex, toIndex).compact().concat(separator);
 
 	}
 
 
-	/** Returns a string with TRIMMED non empty elements concatenated */
+	/** Returns compacted (trimmed-non empty) elements concatenated */
 	public static String concatFrom(String[] array, int fromIndex, String separator) {
 
 		return concat(array, fromIndex, array.length-1, separator);
@@ -335,7 +283,7 @@ public class ArrayUtils {
 	}
 
 
-	/** Returns a string with TRIMMED non empty elements concatenated */
+	/** Returns compacted (trimmed-non empty) elements concatenated */
 	public static String concatUpto(String[] array, int toIndex, String separator) {
 
 		return concat(array, 0, toIndex, separator);
@@ -347,12 +295,12 @@ public class ArrayUtils {
 
 		String format="%15s";
 
-		byte[] hexArray=new byte[]{0x01, 0x0f};
+		byte[] hexArray={0x01, 0x0f};
 		System.out.printf(format, "toHexArray: "); System.out.println(Arrays.asList(toHexArray(hexArray)));
 		System.out.printf(format, "toHexString: "); System.out.println(toHexString(hexArray));
 
-		String[] array=new String[]{"a=0", "b=1", "c=2"};
-		System.out.printf(format, "ARRAY: "); System.out.println(Arrays.asList(array));
+		String[] array={"a=0", "b=1", "c=2"};
+		System.out.printf(format, "array: "); System.out.println(Arrays.asList(array));
 		System.out.printf(format, "capitalize: "); System.out.println(Arrays.asList(array=capitalize(array)));
 		System.out.printf(format, "uncapitalize: "); System.out.println(Arrays.asList(array=uncapitalize(array)));
 		System.out.printf(format, "addPrefix: "); System.out.println(Arrays.asList(array=addPrefix(array, "<")));
@@ -360,9 +308,11 @@ public class ArrayUtils {
 		System.out.printf(format, "insert: "); System.out.println(Arrays.asList(array=insert(array, 0, " ")));
 		System.out.printf(format, "append: "); System.out.println(Arrays.asList(array=append(array, " ")));
 		System.out.printf(format, "remove: "); System.out.println(Arrays.asList(array=remove(array, 1)));
-		System.out.printf(format, "trim: "); System.out.println(Arrays.asList(array=trim(array)));
-		System.out.printf(format, "compact: "); System.out.println(Arrays.asList(array=compact(array)));
+		System.out.println();
+		System.out.printf(format, "trim: "); System.out.println(Arrays.asList(trim(array)));
+		System.out.printf(format, "compact: "); System.out.println(Arrays.asList(compact(array)));
 		System.out.printf(format, "concat: "); System.out.println(concat(array, ":"));
+		System.out.println();
 
 		int repeat=10000;
 		Chronograph time=new Chronograph().start();
@@ -374,7 +324,7 @@ public class ArrayUtils {
 		for(int i=0; i<repeat; i++) remove(array, 0);
 		System.out.printf(format, "remove: "); System.out.println(time);
 		time.reset();
-		for(int i=0; i<repeat; i++) remove(array, 0,1);
+		for(int i=0; i<repeat; i++) remove(array, 0, 1);
 		System.out.printf(format, "remove: "); System.out.println(time);
 
 

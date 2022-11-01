@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ public class RandomValue {
 
 	}
 
-	/** Integer number (started with 1) */
+	/** Integer number (positve) */
 	public String integer(int length) {
 
 		if (length==0) return "";
@@ -99,12 +99,12 @@ public class RandomValue {
 
 	}
 
+	/** Negative or positive */
 	public Integer Integer(int length) {
 
 		if (length!=0) try{
-			return new Integer((length<0 ? "-" : "") + integer(length));
+			return new Integer((length<0 ? "-" : "")+integer(length));
 		}catch(Exception e){
-			return Integer();
 		}return 0;
 
 	}
@@ -119,12 +119,12 @@ public class RandomValue {
 
 	}
 
+	/** Negative or positive */
 	public Long Long(int length) {
 
 		if (length!=0) try{
-			return new Long((length<0 ? "-" : "") + integer(length));
+			return new Long((length<0 ? "-" : "")+integer(length));
 		}catch(Exception e){
-			return Long();
 		}return 0l;
 
 	}
@@ -139,12 +139,12 @@ public class RandomValue {
 
 	}
 
+	/** Positive (0.x) */
 	public Float Float(int length) {
 
 		if (length>0) try{
-			return new Float(string(1,"01")+"."+integer(length));
+			return new Float("0"+"."+integer(length));
 		}catch(Exception e){
-			return Float();
 		}return 0f;
 
 	}
@@ -159,12 +159,12 @@ public class RandomValue {
 
 	}
 
+	/** Positive (0.x) */
 	public Double Double(int length) {
 
 		if (length>0) try{
-			return new Double(string(1,"01")+"."+integer(length));
+			return new Double("0"+"."+integer(length));
 		}catch(Exception e){
-			return Double();
 		}return 0d;
 
 	}
@@ -177,7 +177,7 @@ public class RandomValue {
 
 		if (length!=0) try{
 			return new BigDecimal(
-					(length<0 ? "-" : "") +
+					(length<0 ? "-" : "")+
 					integer(Math.abs(length))+
 					(decimals>0 ? "."+numbers(decimals) : ""));
 		}catch(Exception e){
@@ -237,16 +237,16 @@ public class RandomValue {
 		System.out.println();
 		System.out.printf(format, "Long: "); System.out.println(value.Long());
 		System.out.printf(format, "Long: "); System.out.println(value.Long(0));
-		System.out.printf(format, "Long: "); System.out.println(value.Long(19));
-		System.out.printf(format, "Long: "); System.out.println(value.Long(-19));
+		System.out.printf(format, "Long: "); System.out.println(value.Long(18));
+		System.out.printf(format, "Long: "); System.out.println(value.Long(-18));
 		System.out.println();
 		System.out.printf(format, "Float: "); System.out.println(value.Float());
 		System.out.printf(format, "Float: "); System.out.println(value.Float(0));
-		System.out.printf(format, "Float: "); System.out.println(value.Float(10));
+		System.out.printf(format, "Float: "); System.out.println(value.Float(7));
 		System.out.println();
 		System.out.printf(format, "Double: "); System.out.println(value.Double());
 		System.out.printf(format, "Double: "); System.out.println(value.Double(0));
-		System.out.printf(format, "Double: "); System.out.println(value.Double(10));
+		System.out.printf(format, "Double: "); System.out.println(value.Double(16));
 		System.out.println();
 		System.out.printf(format, "Decimal: "); System.out.println(value.Decimal(0));
 		System.out.printf(format, "Decimal: "); System.out.println(value.Decimal(12));

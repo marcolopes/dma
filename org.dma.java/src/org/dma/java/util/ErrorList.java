@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2020 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,10 @@ public class ErrorList {
 
 	public ErrorList() {}
 
-	public ErrorList(Exception e) {
+	@Deprecated
+	public ErrorList(Throwable e) {
 		addError(e.getMessage());
 	}
-
 
 	/** Clears ERRORS and WARNINGS */
 	public void clear() {
@@ -52,16 +52,20 @@ public class ErrorList {
 	/*
 	 * Errors
 	 */
-	public void addError(String prefix, String message) {
-		errors.add(prefix, message);
+	public MessageList addError(String prefix, String message) {
+		return errors.add(prefix, message);
+	}
+
+	public MessageList addError(String prefix, Throwable e) {
+		return errors.add(prefix, e);
+	}
+
+	public MessageList addError(Throwable e) {
+		return errors.add(e);
 	}
 
 	public void addError(String message) {
 		errors.add(message);
-	}
-
-	public void addError(Exception e) {
-		errors.add(e);
 	}
 
 	public MessageList errors() {
@@ -72,16 +76,20 @@ public class ErrorList {
 	/*
 	 * Warnings
 	 */
-	public void addWarning(String prefix, String message) {
-		warnings.add(prefix, message);
+	public MessageList addWarning(String prefix, String message) {
+		return warnings.add(prefix, message);
+	}
+
+	public MessageList add(String prefix, Throwable e) {
+		return warnings.add(prefix, e);
+	}
+
+	public MessageList addWarning(Throwable e) {
+		return warnings.add(e);
 	}
 
 	public void addWarning(String message) {
 		warnings.add(message);
-	}
-
-	public void addWarning(Exception e) {
-		warnings.add(e);
 	}
 
 	public MessageList warnings() {

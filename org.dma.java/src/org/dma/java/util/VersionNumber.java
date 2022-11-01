@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,11 @@ import org.osgi.framework.Version;
 public final class VersionNumber {
 
 	public static VersionNumber valueOf(String version) {
-		String[] array=StringUtils.split(version, ".");
-		int major=array.length>0 ? StringUtils.val(StringUtils.numbers(array[0])) : 0;
-		int minor=array.length>1 ? StringUtils.val(StringUtils.numbers(array[1])) : 0;
-		int micro=array.length>2 ? StringUtils.val(StringUtils.numbers(array[2])) : 0;
-		int build=array.length>3 ? StringUtils.val(StringUtils.numbers(array[3])) : 0;
-		return new VersionNumber(major, minor, micro, build);
+		int i=0;
+		int[] array={0,0,0,0};
+		for(String element: StringUtils.split(version, ".")){
+			array[i++]=StringUtils.val(StringUtils.numbers(element));
+		}return new VersionNumber(array[0], array[1], array[2], array[3]);
 	}
 
 	public final int major;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,15 +42,13 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Returns removed elements */
-	public Collection<T> remove(int...indices) {
+	public List<T> remove(int...indices) {
 
-		Collection<T> remove=new ArrayList(indices.length);
+		List<T> remove=new ArrayList(indices.length);
 
 		for(int index: indices){
 			remove.add(get(index));
-		}
-
-		removeAll(remove);
+		}removeAll(remove);
 
 		return remove;
 
@@ -58,16 +56,14 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Returns inserted elements */
-	public Collection<T> insert(List<T> list, int position, int...indices) {
+	public List<T> insert(List<T> list, int position, int...indices) {
 
-		Collection<T> insert=new ArrayList(indices.length);
+		List<T> insert=new ArrayList(indices.length);
 
 		Arrays.sort(indices);
 		for(int index: indices){
 			insert.add(list.get(index));
-		}
-
-		addAll(position, insert);
+		}addAll(position, insert);
 
 		return insert;
 
@@ -75,10 +71,11 @@ public class MovableList<T> extends LinkedList<T> {
 
 
 	/** Moves elements (ordered) */
-	public void moveTo(int position, int...indices) {
+	public boolean moveTo(int position, int...indices) {
 
 		Arrays.sort(indices);
-		addAll(position, remove(indices));
+
+		return addAll(position, remove(indices));
 
 	}
 

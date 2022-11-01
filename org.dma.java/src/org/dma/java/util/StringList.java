@@ -24,9 +24,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
-public class StringList extends ArrayList<String> {
+public class StringList extends ArrayList<String> implements List<String> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,10 +40,6 @@ public class StringList extends ArrayList<String> {
 		for(Object element: col){
 			list.add(element.toString());
 		}return list;
-	}
-
-	public StringList() {
-		super();
 	}
 
 	public StringList(String...array) {
@@ -61,6 +58,7 @@ public class StringList extends ArrayList<String> {
 	public StringList(Collection<String> col) {
 		super(col);
 	}
+
 
 
 	/*
@@ -85,56 +83,77 @@ public class StringList extends ArrayList<String> {
 	 */
 	/** Returns the size in BYTES */
 	public int byteSize() {
-		try{
-			ByteArrayOutputStream stream=new ByteArrayOutputStream();
-			ObjectOutputStream out=new ObjectOutputStream(stream);
+
+		try{ByteArrayOutputStream baos=new ByteArrayOutputStream();
+			ObjectOutputStream out=new ObjectOutputStream(baos);
 			out.writeObject(this);
 			out.close();
-			return stream.size();
-
+			return baos.size();
 		}catch(IOException e){
 			e.printStackTrace();
 		}return 0;
+
 	}
+
 
 	/** Returns the number of occurences */
 	public int occurences(String searchFor) {
 
 		int count=0;
-
 		for(String string: this){
 			if (string.contains(searchFor)) count++;
-		}
-
-		return count;
+		}return count;
 
 	}
+
 
 	/** Returns a random element */
 	public String random() {
 
 		int index=new Random().nextInt(size());
-
 		for(String string: this){
-			if (--index < 0) return string;
-		}
-
-		return null;
+			if (--index<0) return string;
+		}return null;
 
 	}
 
 
-	/** Returns a new list with the specified indices order */
+	/** Returns the larger element, or null if empty */
+	public String larger() {
+
+		if (isEmpty()) return null;
+
+		String result=get(0);
+		for(int i=1; i<size(); i++){
+			String string=get(i);
+			if (string.length()>result.length()) result=string;
+		}return result;
+
+	}
+
+
+	/** Returns the index of the first element found, or -1 if none */
+	public int startedWith(String searchFor) {
+
+		if (searchFor!=null && !searchFor.isEmpty()){
+			int i=0;
+			for(String string: this){
+				if (string.startsWith(searchFor)) return i;
+				i++;
+			}
+		}return -1;
+
+	}
+
+
+	/** Returns a new list with the specified indices */
 	public StringList indices(int...indices) {
 
 		//ensure exact capacity
 		StringList result=new StringList(indices.length);
-
 		for(int index: indices){
 			result.add(get(index));
-		}
-
-		return result;
+		}return result;
 
 	}
 
@@ -143,118 +162,131 @@ public class StringList extends ArrayList<String> {
 	/*
 	 * Transformation
 	 */
-	/** Returns a new list with all elements capitalized */
+	/** Capitalizes all elements */
 	public StringList capitalize() {
 
-		StringList result=new StringList(size());
-
+		int index=0;
 		for(String string: this){
-			result.add(StringUtils.capitalize(string));
-		}
-
-		return result;
+			set(index++, StringUtils.capitalize(string));
+		}return this;
 
 	}
 
 
-	/** Returns a new list with all elements uncapitalized */
+	/** Uncapitalizes all elements */
 	public StringList uncapitalize() {
 
-		StringList result=new StringList(size());
-
+		int index=0;
 		for(String string: this){
-			result.add(StringUtils.uncapitalize(string));
-		}
-
-		return result;
+			set(index++, StringUtils.uncapitalize(string));
+		}return this;
 
 	}
 
 
-	/** Returns a new list with all elements with the added prefix */
+	/** Adds the prefix to all elements */
 	public StringList addPrefix(String prefix) {
 
-		StringList result=new StringList(size());
-
+		int index=0;
 		for(String string: this){
-			result.add(prefix+string);
-		}
-
-		return result;
+			set(index++, prefix + string);
+		}return this;
 
 	}
 
 
-	/** Returns a new list with all elements with the added suffix */
+	/** Adds the suffix to all elements */
 	public StringList addSuffix(String suffix) {
 
-		StringList result=new StringList(size());
-
+		int index=0;
 		for(String string: this){
-			result.add(string+suffix);
-		}
-
-		return result;
+			set(index++, string + suffix);
+		}return this;
 
 	}
 
 
-	/** Removes and returns a new list with the removed elements */
+	/** Inserts all elements into this list */
+	public StringList insert(int index, String...element) {
+
+		addAll(index, Arrays.asList(element));
+		return this;
+
+	}
+
+
+	/** Adds all elements to this list */
+	public StringList append(String...element) {
+
+		addAll(Arrays.asList(element));
+		return this;
+
+	}
+
+
+	/** Removes all the indices from this list */
 	public StringList remove(int...indices) {
 
 		//ensure exact capacity
 		StringList remove=new StringList(indices.length);
-
 		for(int index: indices){
 			remove.add(get(index));
-		}
-
-		removeAll(remove);
-
-		return remove;
+		}removeAll(remove);
+		return this;
 
 	}
 
 
-	/** Returns a new list with all elements trimmed */
+	/** Trims all elements */
 	public StringList trim() {
 
-		StringList result=new StringList(size());
-
+		int index=0;
 		for(String string: this){
-			result.add(string.trim());
-		}
-
-		return result;
+			set(index++, string.trim());
+		}return this;
 
 	}
 
 
-	/** Returns a new list with only TRIMMED non empty elements */
+	/** Removes all trimmed-empty elements */
 	public StringList compact() {
 
-		StringList result=new StringList();
-
-		for(String string: trim()){
-			if (!string.isEmpty()) result.add(string);
-		}
-
-		return result;
+		StringList remove=new StringList();
+		for(String string: this){
+			if (string.trim().isEmpty()) remove.add(string);
+		}removeAll(remove);
+		return this;
 
 	}
 
 
-	/** Returns a string with TRIMMED non empty elements concatenated */
+	/** Returns all elements concatenated */
 	public String concat(String separator) {
 
 		StringBuilder result=new StringBuilder();
-
-		for(String string: compact()){
+		for(String string: this){
 			if (result.length()>0) result.append(separator);
 			result.append(string);
-		}
+		}return result.toString();
 
-		return result.toString();
+	}
+
+
+	public static void main(String[] argvs) {
+
+		String format="%22s";
+
+		StringList list=StringUtils.words("The quick brown fox jumps over the lazy dog");
+		System.out.printf(format, "capitalize: "); System.out.println(list.capitalize());
+		System.out.printf(format, "uncapitalize: "); System.out.println(list.uncapitalize());
+		System.out.printf(format, "addPrefix: "); System.out.println(list.addPrefix("*"));
+		System.out.printf(format, "addSuffix: "); System.out.println(list.addSuffix("*"));
+		System.out.printf(format, "remove: "); System.out.println(list.remove(1, 7));
+		System.out.printf(format, "insert: "); System.out.println(list.insert(0, " "));
+		System.out.printf(format, "append: "); System.out.println(list.append(" "));
+		System.out.printf(format, "trim: "); System.out.println(list.trim());
+		System.out.printf(format, "compact: "); System.out.println(list.compact());
+		System.out.printf(format, "concat: "); System.out.println(list.concat(":"));
 
 	}
 
