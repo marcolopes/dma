@@ -27,7 +27,7 @@ import org.dma.java.util.StringList;
 
 public class BackupParameters {
 
-	public static class Arguments extends ArrayList<String> {
+	public static class Arguments extends StringList {
 
 		private static final long serialVersionUID = 1L;
 
@@ -42,12 +42,7 @@ public class BackupParameters {
 		}
 
 		public Arguments(String...arguments) {
-			this();
 			for(String element: arguments) add(element);
-		}
-
-		public Arguments() {
-			super();
 		}
 
 		@Override
@@ -57,7 +52,7 @@ public class BackupParameters {
 
 		@Override
 		public String toString() {
-			return new StringList(this).concat(", ");
+			return trim().concat(", ");
 		}
 
 	}
