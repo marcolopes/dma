@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.lists;
-
-import java.util.Arrays;
 
 import org.apache.commons.lang.SystemUtils;
 
@@ -45,7 +43,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 	public void insert(String[] array, int index) {
 
 		StringList list=new StringList(getItems());
-		list.addAll(index, Arrays.asList(array));
+		list.insert(index, array);
 		setItems(list.toArray());
 		if (SystemUtils.IS_OS_MAC) deselectAll();
 		select(index, index+array.length-1);

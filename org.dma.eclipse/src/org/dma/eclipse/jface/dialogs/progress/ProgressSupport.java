@@ -116,7 +116,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			return run(true);
 		}catch(InvocationTargetException e){
 			Debug.err("InvocationTargetException");
-			throw new Exception(e.getCause().getMessage(), e.getCause());
+			throw new Exception(e.getCause());
 		}catch(InterruptedException e){
 			Debug.err("InterruptedException");
 			return false;
