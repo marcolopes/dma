@@ -49,8 +49,11 @@ public class ConsultarSeriesType {
 
 	public ConsultarSeriesType() {}
 
-	public ConsultarSeriesType(String serie) {
+	/** Parametros necessarios para garantir unicidade da resposta */
+	public ConsultarSeriesType(String serie, TipoSerieType tipoSerie, TipoDocType tipoDoc) {
 		this.serie=serie;
+		this.tipoSerie=tipoSerie;
+		this.tipoDoc=tipoDoc;
 	}
 
 	public ConsultarSeriesType(EstadoSerieType estado) {
