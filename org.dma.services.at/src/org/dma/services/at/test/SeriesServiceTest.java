@@ -385,9 +385,9 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 		PRINT print=PRINT.ID;
 		service.consultar(print);
-		service.consultar(print, EstadoSerieType.A);
-		service.consultar(print, EstadoSerieType.N);
 		service.consultar(print, EstadoSerieType.F);
+		service.consultar(print, EstadoSerieType.N);
+		service.consultar(print, EstadoSerieType.A);
 
 	}
 
