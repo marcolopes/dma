@@ -51,8 +51,8 @@ public class DocumentosServiceHandler extends SOAPMessageHandler {
 
 	public enum ENDPOINTS {
 
-		PROD ("https://servicos.portaldasfinancas.gov.pt:423/fatcorews/ws"),
-		TEST ("https://servicos.portaldasfinancas.gov.pt:723/fatcorews/ws");
+		PROD ("https://servicos.portaldasfinancas.gov.pt:423/fatcorews/ws/"),
+		TEST ("https://servicos.portaldasfinancas.gov.pt:723/fatcorews/ws/");
 
 		public final HttpURLHandler url;
 
