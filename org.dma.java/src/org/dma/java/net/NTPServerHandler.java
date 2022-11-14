@@ -127,19 +127,18 @@ public class NTPServerHandler {
 
 	public static void main(String[] args) {
 
-		NTPServerHandler handler=new NTPServerHandler(NTP_SERVERS.OAL);
-		//NTPTimeInfo time=handler.getTime(1000);
-		NTPTimeInfo time=NTP_SERVERS.queryAll(1000);
-		System.out.println("Reference TimeStamp: "+time.getMessage().getReferenceTimeStamp().getDate());
-		System.out.println("Originate TimeStamp: "+time.getMessage().getOriginateTimeStamp().getDate());
-		System.out.println("Transmit TimeStamp: "+time.getMessage().getTransmitTimeStamp().getDate());
-		System.out.println("Receive TimeStamp: "+time.getMessage().getReceiveTimeStamp().getDate());
-		System.out.println("Return Date: "+new Date(time.getReturnTime()));
-		System.out.println("Current Date: "+new Date());
-		System.out.println("Delay: "+time.getDelay());
+		NTPServerHandler handler=new NTPServerHandler(NTP_SERVERS.OAL.hosts);
+		NTPTimeInfo time=handler.getTime(1000);
 		System.out.println("Offset: "+time.getOffset());
+		System.out.println("Delay: "+time.getDelay());
 		System.out.println("Comments: "+time.getComments());
 		System.out.println("Server Date: "+time.getServerDate());
+		System.out.println("Return Date: "+new Date(time.getReturnTime()));
+		System.out.println("Current Date: "+new Date());
+		System.out.println("Receive TimeStamp: "+time.getMessage().getReceiveTimeStamp().getDate());
+		System.out.println("Transmit TimeStamp: "+time.getMessage().getTransmitTimeStamp().getDate());
+		System.out.println("Originate TimeStamp: "+time.getMessage().getOriginateTimeStamp().getDate());
+		System.out.println("Reference TimeStamp: "+time.getMessage().getReferenceTimeStamp().getDate());
 
 	}
 

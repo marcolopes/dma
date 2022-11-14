@@ -202,8 +202,7 @@ public class ArrayUtils {
 	/** Returns a new array with all the elements inserted */
 	public static String[] insert(String[] array, int index, String...element) {
 
-		//ensure exact capacity
-		return new StringList(array.length+element.length, array).insert(index, element).toArray();
+		return new StringList(array).insert(index, element).toArray();
 
 	}
 
@@ -211,8 +210,7 @@ public class ArrayUtils {
 	/** Returns a new array with all the elements appended */
 	public static String[] append(String[] array, String...element) {
 
-		//ensure exact capacity
-		return new StringList(array.length+element.length, array).append(element).toArray();
+		return new StringList(array).append(element).toArray();
 
 	}
 

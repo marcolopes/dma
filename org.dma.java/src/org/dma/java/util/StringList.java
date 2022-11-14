@@ -42,17 +42,12 @@ public class StringList extends ArrayList<String> implements List<String> {
 		}return list;
 	}
 
-	public StringList(String...array) {
-		this(array.length, array);
-	}
-
-	public StringList(int initialCapacity, String...array) {
-		this(initialCapacity);
-		addAll(Arrays.asList(array));
-	}
-
 	public StringList(int initialCapacity) {
 		super(initialCapacity);
+	}
+
+	public StringList(String...array) {
+		this(Arrays.asList(array));
 	}
 
 	public StringList(Collection<String> col) {

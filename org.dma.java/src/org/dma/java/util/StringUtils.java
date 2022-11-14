@@ -145,7 +145,7 @@ public class StringUtils {
 
 	public static boolean isQuoted(String string, char...quotes) {
 
-		return !string.isEmpty() && string.charAt(0)==quotes[0] &&
+		return string.length()>=2 && string.charAt(0)==quotes[0] &&
 				string.charAt(string.length()-1)==quotes[1];
 
 	}
