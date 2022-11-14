@@ -54,7 +54,7 @@ public class CustomCombo<T> extends Combo {
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				action.run();
+				action.runWithEvent(null);
 			}
 		});
 	}

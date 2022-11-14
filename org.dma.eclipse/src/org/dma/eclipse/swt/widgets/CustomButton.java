@@ -98,7 +98,7 @@ public class CustomButton extends Button {
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				action.run();
+				action.runWithEvent(null);
 			}
 		});
 	}

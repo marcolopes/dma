@@ -73,7 +73,7 @@ public class CustomMenuItem extends MenuItem {
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				action.run();
+				action.runWithEvent(null);
 			}
 		});
 	}

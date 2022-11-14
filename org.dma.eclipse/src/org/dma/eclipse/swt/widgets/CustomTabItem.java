@@ -70,7 +70,7 @@ public class CustomTabItem extends TabItem {
 		getParent().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (isSelected()) selectionAction.run();
+				if (isSelected()) selectionAction.runWithEvent(null);
 			}
 		});
 	}
