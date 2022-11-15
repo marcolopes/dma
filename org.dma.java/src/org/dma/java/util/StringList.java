@@ -46,6 +46,10 @@ public class StringList extends ArrayList<String> implements List<String> {
 		super(initialCapacity);
 	}
 
+	public StringList() {
+		super();
+	}
+
 	public StringList(String...array) {
 		this(Arrays.asList(array));
 	}
