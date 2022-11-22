@@ -51,9 +51,7 @@ public class RandomValue {
 
 		for (int i=0; i<result.length; i++){
 			result[i]=chars.charAt(random.nextInt(chars.length()));
-		}
-
-		return new String(result);
+		}return new String(result);
 
 	}
 
