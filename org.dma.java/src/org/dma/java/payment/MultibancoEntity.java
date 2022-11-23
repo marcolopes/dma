@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ public class MultibancoEntity {
 		if (entity.length()!=5) throw new IllegalArgumentException("Entidade "+entity+" não tem 5 dígitos");
 		if (!StringUtils.isNumeric(entity)) throw new IllegalArgumentException("Entidade "+entity+" não é numérica");
 
-		if (value.signum()<=0) throw new IllegalArgumentException("Valor "+value+" inferior ou igual a 0 (zero)");
+		if (value.signum()<0) throw new IllegalArgumentException("Valor "+value+" inferior a 0 (zero)");
 		if (value.compareTo(VALOR_MAX)>0) throw new IllegalArgumentException("Valor "+value+" superior a "+VALOR_MAX);
 		try{value.movePointRight(2).intValueExact();
 		}catch(Exception e){

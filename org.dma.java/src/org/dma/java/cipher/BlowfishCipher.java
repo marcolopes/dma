@@ -20,6 +20,9 @@ package org.dma.java.cipher;
 
 public class BlowfishCipher extends CryptoCipher {
 
+	/**
+	 * https://www.schneier.com/academic/blowfish/
+	 */
 	public BlowfishCipher(String key) {
 		super(key.getBytes(), CIPHERS.BLOWFISH);
 	}
