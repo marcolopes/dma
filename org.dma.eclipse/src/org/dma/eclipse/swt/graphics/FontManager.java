@@ -73,8 +73,7 @@ public class FontManager {
 	 * Returns the CACHED {@link Font}
 	 */
 	public static Font getFont(String symbolicName) {
-		try{
-			return REGISTRY.get(symbolicName);
+		try{return REGISTRY.get(symbolicName);
 		}catch(Exception e){
 			e.printStackTrace();
 		}return null;
