@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,25 +18,25 @@
  *******************************************************************************/
 package org.dma.eclipse.jface.dialogs.message;
 
-import org.dma.eclipse.jface.dialogs.message.CustomMessageDialog.TYPE;
+import org.dma.eclipse.jface.dialogs.message.CustomMessageDialog.DIALOG_TYPES;
 import org.dma.java.util.MessageList;
 
 public class QuestionDialog extends GenericDialog {
 
 	public static boolean open(MessageList message) {
-		return open(TYPE.QUESTION, message);
+		return open(DIALOG_TYPES.QUESTION, message);
 	}
 
 	public static boolean open(String message) {
-		return open(TYPE.QUESTION, message);
+		return open(DIALOG_TYPES.QUESTION, message);
 	}
 
 	public static boolean open(String header, MessageList message) {
-		return open(TYPE.QUESTION, header, message);
+		return open(DIALOG_TYPES.QUESTION, header, message);
 	}
 
 	public static boolean open(String header, String message) {
-		return open(TYPE.QUESTION, header, message);
+		return open(DIALOG_TYPES.QUESTION, header, message);
 	}
 
 }

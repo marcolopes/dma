@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -252,8 +252,8 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	}
 
 
-	public void setUrl(String url) {
-		this.url=url;
+	public void browse(String url) {
+		if (this.url==null) this.url=url;
 		Browser browser=getBrowser();
 		//browser may not exist!
 		if (browser!=null) browser.setUrl(url);
@@ -261,7 +261,7 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 
 
 	public void goHome() {
-		setUrl(url);
+		browse(url);
 	}
 
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,34 +18,34 @@
  *******************************************************************************/
 package org.dma.eclipse.jface.dialogs.message;
 
-import org.dma.eclipse.jface.dialogs.message.CustomMessageDialog.TYPE;
+import org.dma.eclipse.jface.dialogs.message.CustomMessageDialog.DIALOG_TYPES;
 import org.dma.java.util.ErrorList;
 import org.dma.java.util.MessageList;
 
 public class GenericDialog {
 
 	public static boolean open(ErrorList error) {
-		return open("", error);
+		return open(null, error);
 	}
 
 	public static boolean open(String header, ErrorList error) {
-		return open(TYPE.ERROR, header, error.errors()) ||
-				open(TYPE.INFORMATION, header, error.warnings());
+		return open(DIALOG_TYPES.ERROR, header, error.errors()) ||
+				open(DIALOG_TYPES.INFORMATION, header, error.warnings());
 	}
 
-	public static boolean open(TYPE type, MessageList message) {
+	public static boolean open(DIALOG_TYPES type, MessageList message) {
 		return open(type, message.toString());
 	}
 
-	public static boolean open(TYPE type, String message) {
-		return open(type, "", message);
+	public static boolean open(DIALOG_TYPES type, String message) {
+		return open(type, null, message);
 	}
 
-	public static boolean open(TYPE type, String header, MessageList message) {
+	public static boolean open(DIALOG_TYPES type, String header, MessageList message) {
 		return open(type, header, message.toString());
 	}
 
-	public static boolean open(TYPE type, String header, String message) {
+	public static boolean open(DIALOG_TYPES type, String header, String message) {
 		return type.open(header, message);
 	}
 
