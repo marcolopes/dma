@@ -102,7 +102,7 @@ public class XMLFile<T> extends CustomFile {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		XMLFile<String> handler=new XMLFile("XMLFileHandler.xml");
 		handler.write("The quick brown fox jumps over the lazy dog.");

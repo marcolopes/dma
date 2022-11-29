@@ -69,7 +69,7 @@ public class CaesarCiphers {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		String message="The quick brown fox jumps over the lazy dog.";
 		System.out.println("PLAIN: "+message);

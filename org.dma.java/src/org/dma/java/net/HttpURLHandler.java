@@ -125,7 +125,7 @@ public class HttpURLHandler extends URLHandler {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		HttpURLHandler handler=new HttpURLHandler("http://loja.projectocolibri.com/api");
 

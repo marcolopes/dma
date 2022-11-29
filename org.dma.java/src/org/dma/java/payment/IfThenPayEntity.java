@@ -90,7 +90,7 @@ public class IfThenPayEntity extends MultibancoEntity {
 	}
 
 
-	public static void main(String[] argvs) throws Exception {
+	public static void main(String[] args) throws Exception {
 
 		//GERACAO de NOVA referencia
 		System.out.println("generate (164262863): "+new IfThenPayEntity("11202", "164").

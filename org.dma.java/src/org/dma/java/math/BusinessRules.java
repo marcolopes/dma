@@ -234,7 +234,7 @@ public class BusinessRules {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		System.out.println("Proportional Value (50): "+proportionalValue(new BigDecimal("100"), new BigDecimal("25"), new BigDecimal("200")));
 		System.out.println("Average Price (15): "+averagePrice(new BigDecimal("100"), new BigDecimal("10"), new BigDecimal("100"), new BigDecimal("20")));

@@ -100,7 +100,7 @@ public class Command {
 	}
 
 
-	public static void main(String[] argvs) throws Exception {
+	public static void main(String[] args) throws Exception {
 
 		FileParameters parameters=new FileParameters("image", "jpg", Folder.temporary());
 		//create working folder

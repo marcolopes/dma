@@ -80,7 +80,7 @@ public class MovableList<T> extends LinkedList<T> {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		MovableList<Integer> list=new MovableList(Arrays.asList(1,2,3,4,5));
 		System.out.println(list);

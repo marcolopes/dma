@@ -101,7 +101,7 @@ public class MessageList extends LinkedHashSet<String> {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		MessageList list=new MessageList("dummy one", "dummy two");
 		list.add("prefix", "dummy");

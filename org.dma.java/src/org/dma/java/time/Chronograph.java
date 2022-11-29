@@ -59,7 +59,7 @@ public class Chronograph {
 	}
 
 
-	public static void main(String[] argvs) throws Exception {
+	public static void main(String[] args) throws Exception {
 
 		Chronograph timer=new Chronograph();
 		System.out.println("TIMER (0): "+timer);

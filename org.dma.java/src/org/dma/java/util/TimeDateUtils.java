@@ -846,7 +846,7 @@ public class TimeDateUtils {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));

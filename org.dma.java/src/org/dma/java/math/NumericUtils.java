@@ -151,7 +151,7 @@ public class NumericUtils {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		System.out.println("double");
 		double d=0d;

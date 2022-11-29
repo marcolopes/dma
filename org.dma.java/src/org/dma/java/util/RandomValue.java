@@ -211,7 +211,7 @@ public class RandomValue {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		String format="%10s";
 

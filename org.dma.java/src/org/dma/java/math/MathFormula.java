@@ -108,7 +108,7 @@ public class MathFormula {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		BigDecimal x = new BigDecimal("10.01");
 		BigDecimal y = new BigDecimal("10.02");

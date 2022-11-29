@@ -289,7 +289,7 @@ public class ArrayUtils {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		String format="%15s";
 

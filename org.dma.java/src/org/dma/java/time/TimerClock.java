@@ -102,7 +102,7 @@ public abstract class TimerClock {
 	}
 
 
-	public static void main(String[] argvs) throws Exception {
+	public static void main(String[] args) throws Exception {
 
 		new TimerClock() {
 			@Override

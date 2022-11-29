@@ -82,7 +82,7 @@ public class PdfFile extends AbstractPdfFile {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		CustomFile source=new CustomFile(Folder.temporary(), "source.pdf");
 		Chronograph time=new Chronograph().start();

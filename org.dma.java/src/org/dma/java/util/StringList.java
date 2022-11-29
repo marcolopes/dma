@@ -271,7 +271,7 @@ public class StringList extends ArrayList<String> implements List<String> {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		String format="%22s";
 

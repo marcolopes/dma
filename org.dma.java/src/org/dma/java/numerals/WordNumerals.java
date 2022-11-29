@@ -69,7 +69,7 @@ public class WordNumerals implements IWordNumerals {
 
 
 	/** Test Case */
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		//teste de "overflow"
 		BigDecimal overflow=new BigDecimal("123456789000000000000000000000000000");
