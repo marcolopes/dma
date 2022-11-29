@@ -356,7 +356,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		SeriesServiceTest service=new SeriesServiceTest();
 

@@ -97,7 +97,7 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		try{
 			FaturasServiceTest service = new FaturasServiceTest();

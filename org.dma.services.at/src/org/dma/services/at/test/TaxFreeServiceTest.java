@@ -157,7 +157,7 @@ public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		try{
 			TaxFreeServiceTest service=new TaxFreeServiceTest();

@@ -116,7 +116,7 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 	}
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		try{
 			StockMovementServiceTest service = new StockMovementServiceTest();

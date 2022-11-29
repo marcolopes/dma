@@ -134,7 +134,7 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		try{
 			DocumentosServiceTest service = new DocumentosServiceTest();
