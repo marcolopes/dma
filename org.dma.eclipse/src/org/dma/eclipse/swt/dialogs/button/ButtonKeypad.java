@@ -185,7 +185,7 @@ public abstract class ButtonKeypad extends CustomShell {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		new ButtonKeypad() {
 			@Override

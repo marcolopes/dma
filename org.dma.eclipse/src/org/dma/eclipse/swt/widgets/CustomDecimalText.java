@@ -75,7 +75,7 @@ public class CustomDecimalText extends CustomText {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		CustomShell shell=new CustomShell(CustomShell.STYLE_RESIZABLE);
 		shell.setGridLayout();

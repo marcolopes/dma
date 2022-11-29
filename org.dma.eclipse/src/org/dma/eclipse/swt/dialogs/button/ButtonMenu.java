@@ -112,7 +112,7 @@ public abstract class ButtonMenu extends CustomShell {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		new ButtonMenu("Zero", "One", "Two") {
 			@Override

@@ -117,7 +117,7 @@ public abstract class ButtonDialog extends CustomShell {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		new ButtonDialog() {
 			@Override

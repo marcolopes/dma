@@ -190,7 +190,7 @@ public class CustomMessageDialog extends MessageDialog {
 	}
 
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		System.out.println(DIALOG_TYPES.ERROR.open(""));
 		System.out.println(DIALOG_TYPES.WARNING.open(""));
