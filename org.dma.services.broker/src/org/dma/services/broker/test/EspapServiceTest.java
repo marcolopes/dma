@@ -35,7 +35,7 @@ public class EspapServiceTest extends EspapServiceHandler {
 
 	}
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		try{
 			EspapServiceTest service=new EspapServiceTest();

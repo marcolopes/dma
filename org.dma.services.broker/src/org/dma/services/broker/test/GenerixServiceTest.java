@@ -53,7 +53,7 @@ public class GenerixServiceTest extends GenerixServiceHandler {
 
 	}
 
-	public static void main(String[] argvs) {
+	public static void main(String[] args) {
 
 		try{
 			GenerixServiceTest service=new GenerixServiceTest();
