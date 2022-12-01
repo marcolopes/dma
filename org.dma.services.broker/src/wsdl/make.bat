@@ -6,11 +6,15 @@ echo * https://javaee.github.io/metro-jax-ws/
 echo * https://docs.oracle.com/javase/7/docs/technotes/tools/share/wsimport.html
 echo *****************************************************************************
 
-REM Necessario utilizar o parametro -extension para importar MessageService
+echo ESPAP CTMessageService
 REM [WARNING] Ignoring SOAP port "CustomBinding_IMessageService": it uses non-standard SOAP 1.2 binding
+REM Necessario utilizar o parametro -extension para importar CTMessageService
 wsimport CTMessageService.wsdl -extension -verbose -Xnocompile -s ..
-REM Generix Netix Messaging
+
+echo Generix NetixMessaging
 REM wsimport NetixMessaging-1.2.0.wsdl -verbose -Xnocompile -s ..
-REM Generix Invoice Manager
+
+echo Generix InvoiceManager
 wsimport InvoiceManager-1.2.0.wsdl -verbose -Xnocompile -s ..
+
 pause
