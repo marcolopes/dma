@@ -8,6 +8,6 @@ echo ***************************************************************************
 
 set JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 -Dhttps.protocols=TLSv1.2
 
-wsimport https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl -verbose -Xnocompile -s ..\src
+wsimport https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl -verbose -Xnocompile -s ..
 
 pause
