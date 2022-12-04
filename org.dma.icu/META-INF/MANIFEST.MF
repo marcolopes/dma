@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-Name: Java ICU
+Bundle-SymbolicName: org.dma.icu;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: marcolopespt@gmail.com
+Bundle-Activator: org.dma.icu.Activator
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ libraries/icu4j-71.1.jar
+Export-Package: org.dma.icu.numerals
+Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2"
