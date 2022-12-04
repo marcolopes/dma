@@ -44,7 +44,7 @@ public class RegistarSeriesType {
 
 	public RegistarSeriesType(SeriesInfo info) {
 		this(info.getSerie(), TipoSerieType.valueOf(info.getTipoSerie()), TipoDocType.valueOf(info.getTipoDoc()),
-				info.getNumInicialSeq(), info.getDataInicioPrevUtiliz(),  info.getNumCertSWFatur(),
+				info.getNumInicialSeq(), info.getDataInicioPrevUtiliz(), info.getNumCertSWFatur(),
 				MeioProcessamentoType.valueOf(info.getMeioProcessamento()));
 	}
 
