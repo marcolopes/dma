@@ -19,7 +19,6 @@
 package org.dma.java.security;
 
 import java.io.ByteArrayInputStream;
-import java.io.EOFException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -63,7 +62,7 @@ public class JKSCertificate {
 	 * @param alias - the alias to load (if empty, use first alias found)
 	 */
 	public JKSCertificate(CERTIFICATE_TYPE type, String pathname, String password, String...alias) {
-		this(type, new ByteFile(pathname).read(), password, alias);
+		this(type, new ByteFile(pathname).readFully(), password, alias);
 	}
 
 	/**
@@ -84,10 +83,7 @@ public class JKSCertificate {
 			this.keyStore=keyStore;
 			this.alias=alias[index];
 
-		}catch(EOFException e){
-		}catch(Exception e){
-			System.err.println(e);
-		}
+		}catch(Exception e){}
 
 	}
 
@@ -179,8 +175,8 @@ public class JKSCertificate {
 	 */
 	@Override
 	public String toString() {
-		return isValid() ? new StringBuilder("-----X509 CERTIFICATE-----").
-			append("\n").append("ALIAS: ").append(alias).
+		StringBuilder sb=new StringBuilder("-----X509 CERTIFICATE-----");
+		if (isValid())sb.append("\n").append("ALIAS: ").append(alias).
 			append("\n").append("USAGE: ").append(getKeyUsage()).
 			append("\n").append("SERIAL: ").append(X509Cert.getSerialNumber()).
 			append("\n").append("ISSUER: ").append(X509Cert.getIssuerX500Principal()).
@@ -188,7 +184,8 @@ public class JKSCertificate {
 			append("\n").append("ISSUED: ").append(X509Cert.getNotBefore()).
 			append("\n").append("EXPIRES: ").append(X509Cert.getNotAfter()).
 			append("\n").append("DAYS LEFT: ").append(daysToExpire()).
-			append("\n").append("HASH CODE: ").append(hashCode()).toString() : "INVALID";
+			append("\n").append("HASH CODE: ").append(hashCode()).toString();
+		return sb.toString();
 	}
 
 	@Override

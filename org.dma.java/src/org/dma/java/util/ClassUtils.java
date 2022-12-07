@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2019 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,16 @@
 package org.dma.java.util;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 public final class ClassUtils {
+
+	/** JAR is running inside ECLIPSE! */
+	public static boolean isFile(Class klass) {
+		String protocol=klass.getResource(klass.getSimpleName()+".class").getProtocol();
+		return Objects.equals(protocol, "file");
+	}
+
 
 	public static Class classForName(String className) {
 		try{return Class.forName(className);
@@ -46,53 +54,40 @@ public final class ClassUtils {
 
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(Class<? extends T> klass, Class<? extends T> subclass) {
-
 		if (klass!=null) try{
 			Class<? extends T> targetClass=klass.asSubclass(subclass);
 			return targetClass.newInstance();
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
-
 	}
 
 
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(Class<? extends T> klass) {
-
 		return newInstance(klass, klass);
-
 	}
 
 
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(String className) {
-
 		Class<T> klass=classForName(className);
-
 		return newInstance(klass, klass);
-
 	}
 
 
 	public static Object invoke(String className, String methodName, Class[] parameterTypes, Object...args) throws Exception {
-
 		Class klass=classForName(className);
-
 		Method method=klass.getDeclaredMethod(methodName, parameterTypes);
-
 		return method.invoke(klass, args);
-
 	}
 
 	public static Object invoke(String className, String methodName, Object...args) throws Exception {
-
 		int index=0;
 		Class[] parameterTypes=new Class[args.length];
 		for(Object obj: args){
 			parameterTypes[index++]=obj.getClass();
 		}return invoke(className, methodName, parameterTypes, args);
-
 	}
 
 

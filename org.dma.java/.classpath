@@ -3,6 +3,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-cli-1.5.0.jar" sourcepath="libraries/commons/commons-cli-1.5.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-codec-1.11.jar" sourcepath="libraries/commons/commons-codec-1.11-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-collections-3.2.2.jar" sourcepath="libraries/commons/commons-collections-3.2.2-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-configuration-1.10.jar" sourcepath="libraries/commons/commons-configuration-1.10-sources.jar"/>
@@ -18,6 +19,5 @@
 	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/pdfbox-1.8.16.jar" sourcepath="libraries/pdfbox/pdfbox-1.8.16-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/imgscalr-lib-4.2.jar" sourcepath="libraries/imgscalr-lib-4.2-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/javacsv-2.1.jar" sourcepath="libraries/javacsv-2.1-sources.zip"/>
-	<classpathentry exported="true" kind="lib" path="libraries/icu4j-71.1.jar" sourcepath="libraries/icu4j-71.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

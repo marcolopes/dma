@@ -18,9 +18,6 @@
  *******************************************************************************/
 package org.dma.java.security;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.dma.java.util.MessageList;
 
 public class ServiceCertificates {
@@ -52,23 +49,23 @@ public class ServiceCertificates {
 	}
 
 	public void validate() throws Exception {
-		Collection<JKSCertificate> col=new ArrayList();
-		for(JKSCertificate cert: new JKSCertificate[]{sa, sw, ts}){
-			if (cert!=null && !validate(cert)) col.add(cert);
-		}MessageList list=message(col);
-		list.print();
-		if (!list.isEmpty()) throw new Exception("Invalid or expired certificates");
-	}
-
-	private MessageList message(Collection<JKSCertificate> col) {
 		MessageList list=new MessageList();
-		for(JKSCertificate cert: col){
-			list.add(cert.toString());
-		}return list;
+		for(JKSCertificate cert: new JKSCertificate[]{sa, sw, ts}){
+			if (cert!=null && !validate(cert)) list.add(cert.toString());
+		}list.print();
+		if (!list.isEmpty()) throw new Exception("Invalid or expired certificates");
 	}
 
 	private boolean validate(JKSCertificate cert) {
 		return cert.isValid() && !cert.isExpired();
+	}
+
+	@Override
+	public String toString() {
+		MessageList list=new MessageList();
+		for(JKSCertificate cert: new JKSCertificate[]{sa, sw, ts}){
+			if (cert!=null) list.add(cert.toString());
+		}return list.toString();
 	}
 
 }
