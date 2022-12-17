@@ -32,10 +32,14 @@ public enum TipoSerieType {
 		this.descricao=descricao;
 	}
 
-	public static TipoSerieType get(SeriesInfo info) {
-		try{return valueOf(info.getTipoSerie());
+	public static TipoSerieType get(String name) {
+		try{return valueOf(name);
 		}catch(Exception e){}
 		return null;
+	}
+
+	public static TipoSerieType get(SeriesInfo info) {
+		return get(info.getTipoSerie());
 	}
 
 	public String value() {

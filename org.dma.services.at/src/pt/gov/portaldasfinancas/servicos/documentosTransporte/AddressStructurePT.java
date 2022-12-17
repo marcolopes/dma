@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Addressdetail" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax100Car" minOccurs="0"/>
+ *         &lt;element name="Addressdetail" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax210Car" minOccurs="0"/>
  *         &lt;element name="City" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax50Car" minOccurs="0"/>
  *         &lt;element name="PostalCode" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}PostalCodePT" minOccurs="0"/>
  *         &lt;element name="Country" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>

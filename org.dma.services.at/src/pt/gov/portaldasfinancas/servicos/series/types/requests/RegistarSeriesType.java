@@ -49,6 +49,11 @@ public class RegistarSeriesType {
 	}
 
 	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, TipoDocType tipoDoc,
+			int numInicialSeq, int numCertSWFatur, MeioProcessamentoType meioProcessamento) {
+		this(serie, tipoSerie, tipoDoc, numInicialSeq, TimeDateUtils.getCurrentDate(), numCertSWFatur, meioProcessamento);
+	}
+
+	public RegistarSeriesType(String serie, TipoSerieType tipoSerie, TipoDocType tipoDoc,
 			int numInicialSeq, Date dataInicioPrevUtiliz, int numCertSWFatur, MeioProcessamentoType meioProcessamento) {
 		this(serie, tipoSerie, tipoDoc, BigInteger.valueOf(numInicialSeq),
 				TimeDateUtils.getXMLGregorianCalendar(TimeDateUtils.getDateFormatted(dataInicioPrevUtiliz, DATE_PATTERN)),

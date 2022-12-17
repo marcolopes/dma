@@ -43,7 +43,11 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
 
 	public FaturasServiceTest() {
-		super(RequesterTaxID+"/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
+		this(RequesterTaxID+"/0037", "testes1234");
+	}
+
+	public FaturasServiceTest(String username, String password) {
+		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
 	}
 
 	public static RegisterInvoiceType build() throws Exception {

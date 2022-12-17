@@ -20,9 +20,9 @@ package org.dma.services.at.test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Random;
 
 import org.dma.java.security.ServiceCertificates;
-import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.DocumentosServiceHandler;
 
@@ -59,7 +59,11 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
 
 	public DocumentosServiceTest() {
-		super(RequesterTaxID+"/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
+		this(RequesterTaxID+"/0037", "testes1234");
+	}
+
+	public DocumentosServiceTest(String username, String password) {
+		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
 	}
 
 	public static RegisterInvoiceRequest build() throws Exception {
@@ -69,8 +73,9 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 		status.setInvoiceStatusDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceStatusDate));
 
 		InvoiceDataType invoice = new InvoiceDataType();
-		invoice.setInvoiceNo("CFA 2022/"+new RandomValue().integer(6));
-		invoice.setATCUD("0");
+		int numero=new Random().nextInt(999999);
+		invoice.setInvoiceNo("CFA 2022/"+numero);
+		invoice.setATCUD("AA23456789-"+numero);
 		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
 		invoice.setInvoiceType(InvoiceTypeType.FT);
 		invoice.setSelfBillingIndicator(BigInteger.ZERO);

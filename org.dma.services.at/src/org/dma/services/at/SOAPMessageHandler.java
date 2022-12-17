@@ -20,8 +20,7 @@
 package org.dma.services.at;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.PublicKey;
 import java.text.SimpleDateFormat;
@@ -29,7 +28,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.logging.Logger;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -75,11 +73,10 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	private static final String AUTH_NS = "http://schemas.xmlsoap.org/ws/2002/12/secext";
 	private static final String AUTH_PREFIX = "wss";
 
-	private static final Logger LOGGER = Logger.getLogger(SOAPMessageHandler.class.getSimpleName());
-
 	public final String username;
 	public final String password;
 	public final ServiceCertificates cert;
+	public final File output;
 
 	/**
 	 * @param username - Service Username
@@ -87,9 +84,20 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	 * @param cert - Service Certificates
 	 */
 	public SOAPMessageHandler(String username, String password, ServiceCertificates cert) {
+		this(username, password, cert, null);
+	}
+
+	/**
+	 * @param username - Service Username
+	 * @param password - Service Password
+	 * @param cert - Service Certificates
+	 * @param output - Result Output File
+	 */
+	public SOAPMessageHandler(String username, String password, ServiceCertificates cert, File output) {
 		this.username = username;
 		this.password = password;
 		this.cert = cert;
+		this.output = output;
 	}
 
 
@@ -114,6 +122,8 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 			provider.getRequestContext().put(JAXWSProperties.REQUEST_TIMEOUT, DEFAULT_REQUEST_TIMEOUT);
 
 			if (url.isSecure()) try{
+
+				if (cert==null) throw new Exception("No certificates found!");
 
 				cert.validate();
 
@@ -214,9 +224,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 				final SOAPHeader header = envelope.addHeader();
 				header.addChildElement(securityHeaderElem);
 
-			}
-
-			logSOAPMessage(smc);
+			}log(smc);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -227,7 +235,7 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	@Override
 	public boolean handleFault(SOAPMessageContext smc) {
-		logSOAPMessage(smc);
+		log(smc);
 		return true;
 	}
 
@@ -251,34 +259,42 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	}
 
 
-	private void logSOAPMessage(SOAPMessageContext smc) {
+	private void log(SOAPMessageContext smc) {
 
 		if (!smc.isEmpty())	try{
 
+			Source source = smc.getMessage().getSOAPPart().getContent();
 			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			LOGGER.info((direction ? "<!---SENT--->" : "<!---RECEIVED--->") + "\n" +
-					toXMLString(smc.getMessage().getSOAPPart().getContent()));
+			System.err.println((direction ? "<!---SENT--->" : "<!---RECEIVED--->") + "\n" + toXML(source));
+			if (output!=null && !direction) toXML(source, new StreamResult(output));
 
 		}catch(Exception e){
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			LOGGER.severe("Could not log SOAP message\n" + sw.toString());
+			e.printStackTrace();
 		}
 
 	}
 
 
-	private String toXMLString(Source source) throws Exception {
+	private String toXML(Source source) throws Exception {
 
-		TransformerFactory factory = TransformerFactory.newInstance();
-		Transformer transformer = factory.newTransformer();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		toXML(source, new StreamResult(out));
+
+		return out.toString("UTF-8");
+
+	}
+
+
+	private void toXML(Source source, StreamResult outputTarget) throws Exception {
+
+		Transformer transformer = TransformerFactory.newInstance().newTransformer();
+
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		transformer.transform(source, new StreamResult(out));
 
-		return out.toString("UTF-8");
+		transformer.transform(source, outputTarget);
 
 	}
 

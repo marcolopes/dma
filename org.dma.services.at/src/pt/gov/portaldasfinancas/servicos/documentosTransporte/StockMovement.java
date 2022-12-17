@@ -11,7 +11,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * Comunica��o de um Documentos de Transporte pelo Cliente
+ * Comunicação de um Documentos de Transporte pelo Cliente
  * 
  * <p>Java class for StockMovement complex type.
  * 
@@ -26,6 +26,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="CompanyName" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax100Car"/>
  *         &lt;element name="CompanyAddress" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}AddressStructurePT"/>
  *         &lt;element name="DocumentNumber" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax60Car"/>
+ *         &lt;element name="ATCUD" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax100Car"/>
  *         &lt;element name="ATDocCodeID" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax200Car" minOccurs="0"/>
  *         &lt;element name="MovementStatus" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}MovementStatus"/>
  *         &lt;element name="MovementDate" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFdateType"/>
@@ -56,6 +57,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "companyName",
     "companyAddress",
     "documentNumber",
+    "atcud",
     "atDocCodeID",
     "movementStatus",
     "movementDate",
@@ -81,6 +83,8 @@ public class StockMovement {
     protected AddressStructurePT companyAddress;
     @XmlElement(name = "DocumentNumber", required = true)
     protected String documentNumber;
+    @XmlElement(name = "ATCUD", required = true)
+    protected String atcud;
     @XmlElement(name = "ATDocCodeID")
     protected String atDocCodeID;
     @XmlElement(name = "MovementStatus", required = true)
@@ -196,6 +200,30 @@ public class StockMovement {
      */
     public void setDocumentNumber(String value) {
         this.documentNumber = value;
+    }
+
+    /**
+     * Gets the value of the atcud property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getATCUD() {
+        return atcud;
+    }
+
+    /**
+     * Sets the value of the atcud property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setATCUD(String value) {
+        this.atcud = value;
     }
 
     /**

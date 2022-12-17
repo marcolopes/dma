@@ -30,10 +30,14 @@ public enum MotivoAnulacaoType {
 		this.descricao=descricao;
 	}
 
-	public static MotivoAnulacaoType get(SeriesInfo info) {
-		try{return valueOf(info.getMotivoEstado());
+	public static MotivoAnulacaoType get(String name) {
+		try{return valueOf(name);
 		}catch(Exception e){}
 		return null;
+	}
+
+	public static MotivoAnulacaoType get(SeriesInfo info) {
+		return get(info.getMotivoEstado());
 	}
 
 	public String value() {

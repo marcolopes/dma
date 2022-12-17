@@ -18,6 +18,8 @@
  *******************************************************************************/
 package org.dma.services.at.proxy;
 
+import java.io.File;
+
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
@@ -62,7 +64,11 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	private final ENDPOINTS endpoint;
 
 	public SeriesServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
-		super(username, password, cert);
+		this(username, password, cert, endpoint, null);
+	}
+
+	public SeriesServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint, File output) {
+		super(username, password, cert, output);
 		this.endpoint = endpoint;
 	}
 
@@ -76,7 +82,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 		return getService().registarSerie(request.serie, request.tipoSerie.value(),
 				request.tipoDoc.classeDoc.value(), request.tipoDoc.value(),
 				request.numInicialSeq, request.dataInicioPrevUtiliz, request.numCertSWFatur,
-				request.meioProcessamento==null ? null : request.meioProcessamento.value());
+				request.meioProcessamento.value());
 	}
 
 	/**

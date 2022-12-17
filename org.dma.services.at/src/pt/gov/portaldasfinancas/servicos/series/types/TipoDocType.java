@@ -56,10 +56,14 @@ public enum TipoDocType {
 		this.descricao=descricao;
 	}
 
-	public static TipoDocType get(SeriesInfo info) {
-		try{return valueOf(info.getTipoDoc());
+	public static TipoDocType get(String name) {
+		try{return valueOf(name);
 		}catch(Exception e){}
 		return null;
+	}
+
+	public static TipoDocType get(SeriesInfo info) {
+		return get(info.getTipoDoc());
 	}
 
 	public String value() {

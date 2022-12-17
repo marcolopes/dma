@@ -63,7 +63,11 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 	private enum PRINT {NONE, INFO, ID}
 
 	public SeriesServiceTest() {
-		super("599999993/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
+		this("599999993/0037", "testes1234");
+	}
+
+	public SeriesServiceTest(String username, String password) {
+		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
 	}
 
 	public SeriesInfo registar(RegistarSeriesType request) {

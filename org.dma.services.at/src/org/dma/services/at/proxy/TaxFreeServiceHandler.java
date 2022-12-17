@@ -18,6 +18,8 @@
  *******************************************************************************/
 package org.dma.services.at.proxy;
 
+import java.io.File;
+
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
@@ -58,7 +60,11 @@ public class TaxFreeServiceHandler extends SOAPMessageHandler {
 	private final ENDPOINTS endpoint;
 
 	public TaxFreeServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
-		super(username, password, cert);
+		this(username, password, cert, endpoint, null);
+	}
+
+	public TaxFreeServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint, File output) {
+		super(username, password, cert, output);
 		this.endpoint = endpoint;
 	}
 

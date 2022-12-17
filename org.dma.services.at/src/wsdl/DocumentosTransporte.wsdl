@@ -23,6 +23,7 @@ targetNamespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTran
 					<xsd:element name="CompanyName" type="tns:SAFPTtextTypeMandatoryMax100Car"/>
 					<xsd:element name="CompanyAddress" type="tns:AddressStructurePT" />
 					<xsd:element name="DocumentNumber" type="tns:SAFPTtextTypeMandatoryMax60Car"/>
+					<xsd:element name="ATCUD" type="tns:SAFPTtextTypeMandatoryMax100Car"/>
 					<xsd:element name="ATDocCodeID" type="tns:SAFPTtextTypeMandatoryMax200Car" minOccurs="0"/>
 					<xsd:element name="MovementStatus" type="tns:MovementStatus"/>
 					<xsd:element name="MovementDate" type="tns:SAFdateType"/>
@@ -49,6 +50,7 @@ targetNamespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTran
 				<xsd:sequence>
 					<xsd:element name="ResponseStatus" type="tns:ResponseStatus" maxOccurs="unbounded" minOccurs="1"/>
 					<xsd:element name="DocumentNumber" type="tns:SAFPTtextTypeMandatoryMax60Car" minOccurs="0"/>
+					<xsd:element name="ATCUD" type="tns:SAFPTtextTypeMandatoryMax100Car" minOccurs="0"/>
 					<xsd:element name="ATDocCodeID" type="tns:SAFPTtextTypeMandatoryMax200Car" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:complexType>
@@ -86,7 +88,7 @@ targetNamespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTran
 			<!-- Tipos no SAF-T(PT) -->
 			<xsd:complexType name="AddressStructurePT">
 				<xsd:sequence>
-					<xsd:element name="Addressdetail" type="tns:SAFPTtextTypeMandatoryMax100Car" minOccurs="0"/>
+					<xsd:element name="Addressdetail" type="tns:SAFPTtextTypeMandatoryMax210Car" minOccurs="0"/>
 					<xsd:element name="City" type="tns:SAFPTtextTypeMandatoryMax50Car" minOccurs="0"/>
 					<xsd:element name="PostalCode" type="tns:PostalCodePT" minOccurs="0"/>
 					<xsd:element fixed="PT" name="Country" type="xsd:string" minOccurs="0"/>
@@ -105,6 +107,13 @@ targetNamespace="https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTran
 					<xsd:enumeration value="GA"/>
 					<xsd:enumeration value="GC"/>
 					<xsd:enumeration value="GD"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+
+			<xsd:simpleType name="SAFPTtextTypeMandatoryMax210Car">
+				<xsd:restriction base="xsd:string">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="210"/>
 				</xsd:restriction>
 			</xsd:simpleType>
 

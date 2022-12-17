@@ -32,10 +32,14 @@ public enum MeioProcessamentoType {
 		this.descricao=descricao;
 	}
 
-	public static MeioProcessamentoType get(SeriesInfo info) {
-		try{return valueOf(info.getMeioProcessamento());
+	public static MeioProcessamentoType get(String name) {
+		try{return valueOf(name);
 		}catch(Exception e){}
 		return null;
+	}
+
+	public static MeioProcessamentoType get(SeriesInfo info) {
+		return get(info.getMeioProcessamento());
 	}
 
 	public String value() {

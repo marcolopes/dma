@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="ResponseStatus" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}ResponseStatus" maxOccurs="unbounded"/>
  *         &lt;element name="DocumentNumber" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax60Car" minOccurs="0"/>
+ *         &lt;element name="ATCUD" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax100Car" minOccurs="0"/>
  *         &lt;element name="ATDocCodeID" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax200Car" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -36,6 +37,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "StockMovementResponse", propOrder = {
     "responseStatus",
     "documentNumber",
+    "atcud",
     "atDocCodeID"
 })
 public class StockMovementResponse {
@@ -44,6 +46,8 @@ public class StockMovementResponse {
     protected List<ResponseStatus> responseStatus;
     @XmlElement(name = "DocumentNumber")
     protected String documentNumber;
+    @XmlElement(name = "ATCUD")
+    protected String atcud;
     @XmlElement(name = "ATDocCodeID")
     protected String atDocCodeID;
 
@@ -98,6 +102,30 @@ public class StockMovementResponse {
      */
     public void setDocumentNumber(String value) {
         this.documentNumber = value;
+    }
+
+    /**
+     * Gets the value of the atcud property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getATCUD() {
+        return atcud;
+    }
+
+    /**
+     * Sets the value of the atcud property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setATCUD(String value) {
+        this.atcud = value;
     }
 
     /**

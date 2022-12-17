@@ -47,7 +47,11 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
 
 	public StockMovementServiceTest() {
-		super(RequesterTaxID+"/0037", "testes1234", ServiceCertificates, ENDPOINTS.TEST);
+		this(RequesterTaxID+"/0037", "testes1234");
+	}
+
+	public StockMovementServiceTest(String username, String password) {
+		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
 	}
 
 	public static StockMovement build() throws Exception {
@@ -64,7 +68,9 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 		request.setTaxRegistrationNumber(RequesterTaxID);
 		request.setCompanyName("Empresa");
 		request.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		request.setDocumentNumber("CGT 2013/"+new Random().nextInt(999999));
+		int numero=new Random().nextInt(999999);
+		request.setDocumentNumber("CGT 2013/"+numero);
+		request.setATCUD("AA23456789-"+numero);
 		request.setMovementStatus(MovementStatus.N);
 		request.setMovementType(MovementType.GT);
 		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));

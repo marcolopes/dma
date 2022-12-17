@@ -33,10 +33,14 @@ public enum ClasseDocType {
 		this.descricao=descricao;
 	}
 
-	public static ClasseDocType get(SeriesInfo info) {
-		try{return valueOf(info.getClasseDoc());
+	public static ClasseDocType get(String name) {
+		try{return valueOf(name);
 		}catch(Exception e){}
 		return null;
+	}
+
+	public static ClasseDocType get(SeriesInfo info) {
+		return get(info.getClasseDoc());
 	}
 
 	public String value() {

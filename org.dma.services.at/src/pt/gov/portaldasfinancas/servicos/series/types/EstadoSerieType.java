@@ -32,10 +32,14 @@ public enum EstadoSerieType {
 		this.descricao=descricao;
 	}
 
-	public static EstadoSerieType get(SeriesInfo info) {
-		try{return valueOf(info.getEstado());
+	public static EstadoSerieType get(String name) {
+		try{return valueOf(name);
 		}catch(Exception e){}
 		return null;
+	}
+
+	public static EstadoSerieType get(SeriesInfo info) {
+		return get(info.getEstado());
 	}
 
 	public String value() {
