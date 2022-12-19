@@ -23,10 +23,10 @@ import java.util.Objects;
 
 public final class ClassUtils {
 
-	/** JAR is running inside ECLIPSE! */
-	public static boolean isFile(Class klass) {
+	/** JAR is exported! */
+	public static boolean isExported(Class klass) {
 		String protocol=klass.getResource(klass.getSimpleName()+".class").getProtocol();
-		return Objects.equals(protocol, "file");
+		return !Objects.equals(protocol, "file");
 	}
 
 
