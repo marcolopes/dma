@@ -203,7 +203,10 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 			case A: info("Consultar todas as séries ACTIVAS"); break;
 			case N: info("Consultar todas as séries ANULADAS"); break;
 			case F: info("Consultar todas as séries FINALIZADAS"); break;
-			}ConsultarSeriesType request=new ConsultarSeriesType(estado);
+			}
+
+			ConsultarSeriesType request=new ConsultarSeriesType();
+			request.setEstado(estado);
 
 			return consultarSeries(request);
 

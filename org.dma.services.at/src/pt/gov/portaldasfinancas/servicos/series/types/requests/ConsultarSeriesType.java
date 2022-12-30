@@ -56,10 +56,6 @@ public class ConsultarSeriesType {
 		this.tipoDoc=tipoDoc;
 	}
 
-	public ConsultarSeriesType(EstadoSerieType estado) {
-		this.estado=estado;
-	}
-
 
 	public String getSerie() {
 		return serie;
