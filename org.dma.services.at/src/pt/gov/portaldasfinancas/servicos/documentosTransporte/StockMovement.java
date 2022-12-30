@@ -26,7 +26,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="CompanyName" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax100Car"/>
  *         &lt;element name="CompanyAddress" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}AddressStructurePT"/>
  *         &lt;element name="DocumentNumber" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax60Car"/>
- *         &lt;element name="ATCUD" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax100Car"/>
+ *         &lt;element name="ATCUD" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax100Car" minOccurs="0"/>
  *         &lt;element name="ATDocCodeID" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFPTtextTypeMandatoryMax200Car" minOccurs="0"/>
  *         &lt;element name="MovementStatus" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}MovementStatus"/>
  *         &lt;element name="MovementDate" type="{https://servicos.portaldasfinancas.gov.pt/sgdtws/documentosTransporte/}SAFdateType"/>
@@ -83,7 +83,7 @@ public class StockMovement {
     protected AddressStructurePT companyAddress;
     @XmlElement(name = "DocumentNumber", required = true)
     protected String documentNumber;
-    @XmlElement(name = "ATCUD", required = true)
+    @XmlElement(name = "ATCUD")
     protected String atcud;
     @XmlElement(name = "ATDocCodeID")
     protected String atDocCodeID;
