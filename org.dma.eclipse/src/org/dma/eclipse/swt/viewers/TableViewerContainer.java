@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -144,18 +144,28 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	/*
 	 * Viewer
 	 */
-	public void clearTable() {
-		objectCollection.clear();
-		refreshTable(false);
+	private void refreshViewer(boolean updateLabels) {
+		table.setRedraw(false);
+		viewer.refresh(updateLabels);
+		table.setRedraw(true);
+		if (SystemUtils.IS_OS_MAC) table.redraw();
 	}
 
 	public void refreshTable() {
-		refreshTable(true);
+		refreshViewer(true);
 	}
 
-	private void refreshTable(boolean updateLabels) {
-		viewer.refresh(updateLabels);
-		if (SystemUtils.IS_OS_MAC) table.redraw();
+	public void clearTable() {
+		objectCollection.clear();
+		refreshViewer(false);
+	}
+
+	/** Returns true if changed */
+	public void updateTable(int keycode) {
+		long size=objectCollection.size();
+		long objectsToLoad=getObjectsToLoad(keycode);
+		if (objectsToLoad!=0) objectCollection.addAll(retrieveObjects(size, size+objectsToLoad));
+		refreshViewer(keycode==SWT.DEFAULT);
 	}
 
 	/** Returns true if changed */
@@ -167,24 +177,12 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		objectCollection.clear();
 		objectCollection.addAll(retrieveObjects());
 		refreshTable();*/
+		long size=objectCollection.size();
+		objectCollection.clear();
 		int index=getSelectionIndex();
-		table.setRedraw(false);
-		clearTable();
-		boolean changed=updateTable(SWT.DEFAULT);
+		updateTable(SWT.DEFAULT);
 		selectElement(index);
-		table.setRedraw(true);
-		return changed;
-	}
-
-	/** Returns true if changed */
-	public boolean updateTable(int keycode) {
-		boolean changed=false;
-		long objectsToLoad=getObjectsToLoad(keycode);
-		if (objectsToLoad!=0) {
-			long topIndex=objectCollection.size();
-			changed=objectCollection.addAll(retrieveObjects(topIndex, topIndex+objectsToLoad));
-			refreshTable(keycode==SWT.DEFAULT);
-		}return changed;
+		return objectCollection.size()!=size;
 	}
 
 	/* Used for dynamic load */
