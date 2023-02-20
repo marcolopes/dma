@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package org.dma.drivers.jdbc.managers;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 
 import org.dma.drivers.jdbc.BackupParameters;
@@ -115,16 +114,17 @@ public abstract class AbstractManager implements IDatabaseManager {
 
 	@Override
 	public int executeSQLUpdate(Connection connection, String sql) throws SQLException {
+		int result=-1;
 		try{Statement st=connection.createStatement();
-			try{return st.executeUpdate(sql);
-			}catch(SQLTimeoutException e){
-				System.out.println(e);
-			}finally{st.close();
-			}connection.commit();
+			try{result=st.executeUpdate(sql);
+				connection.commit();
+			}finally{
+				st.close();
+			}
 		}catch(SQLException e){
 			connection.rollback();
 			throw new SQLException(e);
-		}return -1;
+		}return result;
 	}
 
 }
