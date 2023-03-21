@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2019 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ package org.dma.eclipse.swt.execution;
 import java.util.ArrayList;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 
 public class ExecutionEvent extends ArrayList<IAction> {
 
@@ -32,12 +33,12 @@ public class ExecutionEvent extends ArrayList<IAction> {
 		return this;
 	}
 
-	private final int[] keycode;
+	private final KeyStroke[] keycode;
 	private final IAction action;
 
 	private boolean executed=false;
 
-	public ExecutionEvent(int[] keycode, IAction action) {
+	public ExecutionEvent(KeyStroke[] keycode, IAction action) {
 		this.keycode=keycode;
 		this.action=action;
 	}
@@ -69,7 +70,7 @@ public class ExecutionEvent extends ArrayList<IAction> {
 	/*
 	 * Getters and setters
 	 */
-	public int[] getKeycode() {
+	public KeyStroke[] getKeycode() {
 		return keycode;
 	}
 

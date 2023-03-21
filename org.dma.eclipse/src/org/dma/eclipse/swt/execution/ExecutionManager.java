@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.Map;
 import org.dma.java.util.Debug;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Button;
@@ -46,15 +47,30 @@ public class ExecutionManager {
 	/*
 	 * Register
 	 */
-	public static ExecutionEvent register(Control control, IAction action, int...keycode) {
+	@Deprecated
+	public static ExecutionEvent register(Control control, IAction action, int keycode) {
+		return register(control, action, KeyStroke.getInstance(keycode));
+	}
+
+	@Deprecated
+	public static ExecutionEvent register(Control control, String id, IAction action, int keycode) {
+		return register(control, id, action, KeyStroke.getInstance(keycode));
+	}
+
+	@Deprecated
+	public static ExecutionEvent register(Control control, String id, String secondaryId, IAction action, int keycode) {
+		return register(control, id, secondaryId, action, KeyStroke.getInstance(keycode));
+	}
+
+	public static ExecutionEvent register(Control control, IAction action, KeyStroke...keycode) {
 		return register(control, null, action, keycode);
 	}
 
-	public static ExecutionEvent register(Control control, String id, IAction action, int...keycode) {
+	public static ExecutionEvent register(Control control, String id, IAction action, KeyStroke...keycode) {
 		return register(control, id, null, action, keycode);
 	}
 
-	public static ExecutionEvent register(Control control, String id, String secondaryId, IAction action, int...keycode) {
+	public static ExecutionEvent register(Control control, String id, String secondaryId, IAction action, KeyStroke...keycode) {
 		ExecutionDefinition execDefinition=new ExecutionDefinition(control, id, secondaryId);
 		ExecutionEvent execEvent=new ExecutionEvent(keycode, action);
 		return register(execDefinition, execEvent);
@@ -67,8 +83,10 @@ public class ExecutionManager {
 		execDefinition.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				for(int keyCode: execEvent.getKeycode()){
-					if(keyCode==e.keyCode) {
+				for(KeyStroke keyCode: execEvent.getKeycode()){
+					if(keyCode.getNaturalKey()==e.keyCode &&
+						(keyCode.getModifierKeys()==KeyStroke.NO_KEY ||
+						(e.stateMask & keyCode.getModifierKeys())==keyCode.getModifierKeys())){
 						Debug.out("EXECUTION");
 						execEvent.execute();
 						e.doit=false;
@@ -103,7 +121,7 @@ public class ExecutionManager {
 	 */
 	public static void unregister(Control control) {
 
-		for(Iterator<ExecutionDefinition> iterator=EVENTS.keySet().iterator(); iterator.hasNext();) {
+		for(Iterator<ExecutionDefinition> iterator=EVENTS.keySet().iterator(); iterator.hasNext();){
 
 			ExecutionDefinition execDefinition=iterator.next();
 
@@ -129,12 +147,11 @@ public class ExecutionManager {
 	 */
 	public static boolean notifyPendingExecutions(String id, String secondaryId) {
 
-		for(Iterator<ExecutionDefinition> iterator=new LinkedList(EVENTS.keySet()).descendingIterator(); iterator.hasNext();) {
+		for(Iterator<ExecutionDefinition> iterator=new LinkedList(EVENTS.keySet()).descendingIterator(); iterator.hasNext();){
 
 			ExecutionDefinition execDefinition=iterator.next();
 
-			if(equals(id, execDefinition.getId()) &&
-				equals(secondaryId, execDefinition.getSecondaryId())) {
+			if(equals(id, execDefinition.getId()) && equals(secondaryId, execDefinition.getSecondaryId())){
 
 				ExecutionEvent execEvent=EVENTS.get(execDefinition);
 
@@ -161,12 +178,11 @@ public class ExecutionManager {
 
 	public static boolean hasPendingExecutions(String id, String secondaryId) {
 
-		for(Iterator<ExecutionDefinition> iterator=new LinkedList(EVENTS.keySet()).descendingIterator(); iterator.hasNext();) {
+		for(Iterator<ExecutionDefinition> iterator=new LinkedList(EVENTS.keySet()).descendingIterator(); iterator.hasNext();){
 
 			ExecutionDefinition execDefinition=iterator.next();
 
-			if(equals(id, execDefinition.getId()) &&
-				equals(secondaryId, execDefinition.getSecondaryId())){
+			if(equals(id, execDefinition.getId()) && equals(secondaryId, execDefinition.getSecondaryId())){
 
 				ExecutionEvent execEvent=EVENTS.get(execDefinition);
 

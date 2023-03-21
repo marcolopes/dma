@@ -101,7 +101,11 @@ public class ConsoleView extends MessageConsole {
 			@Override
 			public void partOpened(IWorkbenchPart part) {}
 			@Override
+			public void partActivated(IWorkbenchPart part) {}
+			@Override
 			public void partDeactivated(IWorkbenchPart part) {}
+			@Override
+			public void partBroughtToTop(IWorkbenchPart part) {}
 			@Override
 			public void partClosed(IWorkbenchPart part) {
 				if(part instanceof IConsoleView){
@@ -111,10 +115,6 @@ public class ConsoleView extends MessageConsole {
 					}
 				}
 			}
-			@Override
-			public void partBroughtToTop(IWorkbenchPart part) {}
-			@Override
-			public void partActivated(IWorkbenchPart part) {}
 		});
 		activate();
 		if (captureOutputStream) captureOutputStream();
