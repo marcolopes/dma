@@ -193,7 +193,7 @@ public class CustomMessageDialog extends MessageDialog {
 	public static void main(String[] args) {
 
 		System.out.println(DIALOG_TYPES.ERROR.open(""));
-		System.out.println(DIALOG_TYPES.WARNING.open(""));
+		System.out.println(WarningDialog.open(""));
 		System.out.println(DIALOG_TYPES.INFORMATION.open(""));
 		System.out.println(DIALOG_TYPES.CONFIRM.open(""));
 		System.out.println(DIALOG_TYPES.QUESTION.open(""));
@@ -202,7 +202,7 @@ public class CustomMessageDialog extends MessageDialog {
 				" over" + StringUtils.replicas(" and over", 20) + "..." ;
 
 		System.out.println(DIALOG_TYPES.ERROR.open(message));
-		System.out.println(DIALOG_TYPES.WARNING.open(message));
+		System.out.println(WarningDialog.open(message));
 		System.out.println(DIALOG_TYPES.INFORMATION.open(message));
 		System.out.println(DIALOG_TYPES.CONFIRM.open(message));
 		System.out.println(DIALOG_TYPES.QUESTION.open(message));

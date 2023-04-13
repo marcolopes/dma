@@ -19,35 +19,24 @@
 package org.dma.eclipse.jface.dialogs.message;
 
 import org.dma.eclipse.jface.dialogs.message.CustomMessageDialog.DIALOG_TYPES;
-import org.dma.java.util.ErrorList;
 import org.dma.java.util.MessageList;
 
-public class GenericDialog {
+public class WarningDialog extends GenericDialog {
 
-	public static boolean open(ErrorList error) {
-		return open(null, error);
+	public static boolean open(MessageList message) {
+		return open(DIALOG_TYPES.WARNING, message);
 	}
 
-	public static boolean open(String header, ErrorList error) {
-		return open(DIALOG_TYPES.ERROR, header, error.errors()) ||
-				open(DIALOG_TYPES.WARNING, header, error.warnings());
+	public static boolean open(String message) {
+		return open(DIALOG_TYPES.WARNING, message);
 	}
 
-	public static boolean open(DIALOG_TYPES type, MessageList message) {
-		return open(type, message.toString());
+	public static boolean open(String header, MessageList message) {
+		return open(DIALOG_TYPES.WARNING, header, message);
 	}
 
-	public static boolean open(DIALOG_TYPES type, String message) {
-		return open(type, null, message);
+	public static boolean open(String header, String message) {
+		return open(DIALOG_TYPES.WARNING, header, message);
 	}
-
-	public static boolean open(DIALOG_TYPES type, String header, MessageList message) {
-		return open(type, header, message.toString());
-	}
-
-	public static boolean open(DIALOG_TYPES type, String header, String message) {
-		return type.open(header, message);
-	}
-
 
 }
