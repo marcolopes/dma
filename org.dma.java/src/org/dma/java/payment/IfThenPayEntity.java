@@ -47,8 +47,8 @@ public class IfThenPayEntity extends MultibancoEntity {
 	public final String subentity;
 
 	/**
-	 * @param entity - os 5 digitos da entidade (fornecida pela IF THEN)
-	 * @param subentity - os 3 digitos da subentidade (fornecida pela IF THEN)
+	 * @param entity Os 5 digitos da entidade (fornecida pela IF THEN)
+	 * @param subentity Os 3 digitos da subentidade (fornecida pela IF THEN)
 	 */
 	public IfThenPayEntity(String entity, String subentity) {
 		super(entity);
@@ -57,7 +57,7 @@ public class IfThenPayEntity extends MultibancoEntity {
 
 
 	/**
-	 * @param value - VALOR a pagar
+	 * @param value O VALOR a pagar
 	 *
 	 * @throws IllegalArgumentException caso a ENTIDADE seja invalida
 	 * @throws IllegalArgumentException caso a SUB-ENTIDADE seja invalida
@@ -73,7 +73,7 @@ public class IfThenPayEntity extends MultibancoEntity {
 
 
 	/**
-	 * @param id - 4 digitos que identificam o nº do documento
+	 * @param id Os 4 digitos que identificam o nº do documento
 	 * a pagar ou o nº do v/cliente (conforme prefiram associar o pagamento
 	 * a um documento ou a um cliente). Caso o ID tenha mais que 4 digitos
 	 * irao ser utilizados apenas os 4 mais a direita.
