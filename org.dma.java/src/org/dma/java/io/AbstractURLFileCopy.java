@@ -36,8 +36,8 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 	/**
 	 * Downloads the file to DESTINATION
 	 * @return
-	 * TRUE if download was completed;
-	 * FALSE if canceled or error
+	 * true if download was completed<br>
+	 * false if canceled or error
 	 */
 	public boolean to(File dst) {
 
@@ -67,8 +67,8 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 	/**
 	 * Uploads the file from SOURCE
 	 * @return
-	 * TRUE if download was completed;
-	 * FALSE if canceled or error
+	 * true if download was completed<br>
+	 * false if canceled or error
 	 */
 	public boolean from(File src) {
 

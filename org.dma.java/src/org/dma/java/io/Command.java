@@ -49,10 +49,10 @@ public class Command {
 	}
 
 	/**
-	 * @param directory - the WORKING directory (will be LOCKED under Windows!).
-	 * The argument may be null -- this means to use the working directory of the current Java process
-	 * @param program - the program to execute (may include full path)
-	 * @param args - the program arguments (as many as necessary)
+	 * @param directory The WORKING directory (will be LOCKED under Windows!)
+	 * The argument may be null (this means to use the working directory of the current Java process)
+	 * @param program The program to execute (may include full path)
+	 * @param args The program arguments (as many as necessary)
 	 */
 	public Command(File directory, String program, List<String> args) {
 		List<String> command=new ArrayList(args.size()+1);

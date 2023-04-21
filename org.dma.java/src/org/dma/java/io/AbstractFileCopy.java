@@ -38,8 +38,8 @@ public abstract class AbstractFileCopy extends AbstractStreamCopy {
 	/**
 	 * Copies SOURCE file to DESTINATION file
 	 * @return
-	 * TRUE if copy was completed;
-	 * FALSE if canceled or error
+	 * true if copy was completed<br>
+	 * false if canceled or error
 	 */
 	public boolean to(File dst) {
 
