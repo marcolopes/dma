@@ -82,9 +82,8 @@ public class CustomJob extends Job {
 	 * <b>setRule(null)</b> can be used to indicate that the job has no rule and
 	 * can be executed immediately
 	 *
-	 * @param name - The job name. <b>if NULL job will be silent!</b>
-	 * @param priority - One of INTERACTIVE, SHORT, LONG, BUILD, or DECORATE.
-	 *
+	 * @param name The job name (<b>if NULL job will be silent!</b>)
+	 * @param priority One of INTERACTIVE, SHORT, LONG, BUILD, or DECORATE
 	 */
 	public CustomJob(String name, int priority) {
 		super(name==null ? "" : name);
