@@ -56,20 +56,20 @@ public class JKSCertificate {
 	private String alias;
 
 	/**
-	 * @param type - the certificate type
-	 * @param pathname - the keystore pathname
-	 * @param password - the keystore password (null=no integrity checking)
-	 * @param alias - the alias to load (if empty, use first alias found)
+	 * @param type The certificate type
+	 * @param pathname The keystore pathname
+	 * @param password The keystore password (null=no integrity checking)
+	 * @param alias The alias to load (if empty, use first alias found)
 	 */
 	public JKSCertificate(CERTIFICATE_TYPE type, String pathname, String password, String...alias) {
 		this(type, new ByteFile(pathname).readFully(), password, alias);
 	}
 
 	/**
-	 * @param type - the certificate type
-	 * @param data - the keyStore data
-	 * @param password - the keyStore password (null=no integrity checking)
-	 * @param alias - the alias to load (if empty, use first alias found)
+	 * @param type The certificate type
+	 * @param data The keyStore data
+	 * @param password The keyStore password (null=no integrity checking)
+	 * @param alias The alias to load (if empty, use first alias found)
 	 */
 	public JKSCertificate(CERTIFICATE_TYPE type, byte[] data, String password, String...alias) {
 		this.password=password;
