@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,6 @@
 package org.dma.services.broker;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -46,10 +43,8 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import com.sun.xml.ws.developer.JAXWSProperties;
 
-import org.dma.java.cipher.MessageDigest;
-import org.dma.java.cipher.MessageDigest.ALGORITHMS;
 import org.dma.java.net.HttpURLHandler;
-import org.dma.java.security.ServiceCertificates;
+import org.dma.java.security.JKSCertificate;
 
 /**
  * SOAP Message Handler
@@ -66,22 +61,22 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	public final String username;
 	public final String password;
-	public final ServiceCertificates cert;
+	public final JKSCertificate cert;
 
 	/**
-	 * @param username - Service Username
-	 * @param password - Service Password
+	 * @param username Service username
+	 * @param password Service password
 	 */
 	public SOAPMessageHandler(String username, String password) {
 		this(username, password, null);
 	}
 
 	/**
-	 * @param username - Service Username
-	 * @param password - Service Password
-	 * @param cert - Service Certificates
+	 * @param username Service username
+	 * @param password Service password
+	 * @param cert Service certificate
 	 */
-	public SOAPMessageHandler(String username, String password, ServiceCertificates cert) {
+	public SOAPMessageHandler(String username, String password, JKSCertificate cert) {
 		this.username = username;
 		this.password = password;
 		this.cert = cert;
@@ -110,17 +105,13 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 			if (url.isSecure()) try{
 
-				cert.validate();
-
 				// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
 				KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-				kmf.init(cert.sw.getKeyStore(), cert.sw.password.toCharArray());
+				kmf.init(cert.getKeyStore(), cert.password.toCharArray());
 
 				SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // necessita JAVA 7
-				// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
-				sslContext.init(kmf.getKeyManagers(), cert.ts==null ?
-						// Trust Store que aceita ligacao SSL sem validar o certificado
-						new TrustManager[]{new PermissiveTrustStore()} : cert.ts.getTrustManagers(), null);
+				// Trust Store que aceita ligacao SSL sem validar o certificado
+				sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, null);
 
 				/*Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 				KeyStore ks = KeyStore.getInstance("JKS");
@@ -149,13 +140,13 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 	/** Adiciona header para autenticacao */
 	@Override
-	public boolean handleMessage(SOAPMessageContext smc) {
+	public boolean handleMessage(SOAPMessageContext context) {
 
 		try{
-			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+			boolean direction = (Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 			if (direction){/* Falta informacao tecnica */}
 
-			logSOAPMessage(smc);
+			log(context);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -165,59 +156,51 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 
 
 	@Override
-	public boolean handleFault(SOAPMessageContext smc) {
-		logSOAPMessage(smc);
+	public boolean handleFault(SOAPMessageContext context) {
+		log(context);
 		return true;
 	}
 
 
 	@Override
-	public void close(MessageContext messageContext) {}
+	public void close(MessageContext context) {}
 
 
-	private byte[] createPasswordDigest(byte[] simetricKey, String timestamp, String password) throws UnsupportedEncodingException {
+	private void log(SOAPMessageContext context) {
 
-		byte[] createdBytes = timestamp.getBytes("UTF8");
-		byte[] passwordBytes = password.getBytes("UTF8");
+		if (!context.isEmpty())	try{
 
-		byte[] message = new byte[simetricKey.length + createdBytes.length + passwordBytes.length];
-		System.arraycopy(simetricKey, 0, message, 0, simetricKey.length);
-		System.arraycopy(createdBytes, 0, message, simetricKey.length, createdBytes.length);
-		System.arraycopy(passwordBytes, 0, message, simetricKey.length + createdBytes.length, passwordBytes.length);
-
-		return new MessageDigest(ALGORITHMS.SHA1).digest(message);
-
-	}
-
-
-	private void logSOAPMessage(SOAPMessageContext smc) {
-
-		if (!smc.isEmpty())	try{
-
-			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-			LOGGER.info((direction ? "<!---SENT--->	" : "<!---RECEIVED--->") + "\n" +
-					toXMLString(smc.getMessage().getSOAPPart().getContent()));
+			Source source = context.getMessage().getSOAPPart().getContent();
+			boolean direction = (Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+			System.err.println((direction ? "<!---SENT--->" : "<!---RECEIVED--->") + "\n" + toXML(source));
 
 		}catch(Exception e){
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			LOGGER.severe("Could not log SOAP message\n" + sw.toString());
+			e.printStackTrace();
 		}
 
 	}
 
 
-	private String toXMLString(Source source) throws Exception {
+	private String toXML(Source source) throws Exception {
 
-		TransformerFactory factory = TransformerFactory.newInstance();
-		Transformer transformer = factory.newTransformer();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		toXML(source, new StreamResult(out));
+
+		return out.toString("UTF-8");
+
+	}
+
+
+	private void toXML(Source source, StreamResult outputTarget) throws Exception {
+
+		Transformer transformer = TransformerFactory.newInstance().newTransformer();
+
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		transformer.transform(source, new StreamResult(out));
 
-		return out.toString("UTF-8");
+		transformer.transform(source, outputTarget);
 
 	}
 

@@ -67,7 +67,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 
 
 	/**
-	 * @param transactionID Identificação do documento.
+	 * @param transactionID A identificação do documento.
 	 * Aconselha-se a que seja o nome do ficheiro original.
 	 * @param credentials Autenticação
 	 * @param info Informação sobre o emissor, receptor e tipo de mensagem

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import com.softlimits.clarinet.MessageService;
 
 import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.JKSCertificate;
-import org.dma.java.security.ServiceCertificates;
 import org.dma.services.broker.SOAPMessageHandler;
 
 /**
@@ -59,8 +58,8 @@ public class EspapServiceHandler extends SOAPMessageHandler {
 
 	private final ENDPOINTS endpoint;
 
-	public EspapServiceHandler(String username, String password, JKSCertificate swCertificate, ENDPOINTS endpoint) {
-		super(username, password, new ServiceCertificates(null, swCertificate));
+	public EspapServiceHandler(String username, String password, JKSCertificate cert, ENDPOINTS endpoint) {
+		super(username, password, cert);
 		this.endpoint = endpoint;
 	}
 
