@@ -102,7 +102,7 @@ public class CustomFile extends File {
 
 	/**
 	 * Copies the file to DESTINATION
-	 * @param dst can be file or directory
+	 * @param dst Can be file or directory
 	 */
 	public boolean copyTo(File dst, CopyOption...options) {
 		if (exists()) try{//destination can be a directory!
@@ -117,7 +117,7 @@ public class CustomFile extends File {
 
 	/**
 	 * Moves the file to DESTINATION
-	 * @param dst can be file or directory
+	 * @param dst Can be file or directory
 	 */
 	public boolean moveTo(File dst, CopyOption...options) {
 		if (exists()) try{//destination can be a directory!
