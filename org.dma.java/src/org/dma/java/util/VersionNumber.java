@@ -66,8 +66,8 @@ public final class VersionNumber {
 	/**
 	 * Checks if the current version is smaller
 	 * @return
-	 * TRUE if the current version is SMALLER;
-	 * FALSE if the current version is EQUAL of GREATER
+	 * true if the current version is SMALLER<br>
+	 * false if the current version is EQUAL of GREATER
 	 */
 	public boolean smallerThan(VersionNumber version) {
 		Debug.out(version);
