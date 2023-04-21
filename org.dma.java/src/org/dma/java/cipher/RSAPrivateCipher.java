@@ -89,7 +89,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 * - Encode Bytes to BASE64<br>
 	 * - Convert Bytes to String (UTF8 charset)<br>
 	 *
-	 * @param messageBytes - the message to sign.
+	 * @param messageBytes The message to sign
 	 */
 	public String BASE64signWithSHA1(byte[] messageBytes) throws SignatureException {
 
@@ -112,7 +112,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 * - Encode Bytes to BASE64<br>
 	 * - Convert Bytes to String (UTF8 charset)<br>
 	 *
-	 * @param message - the message to sign.
+	 * @param message The message to sign
 	 */
 	public String BASE64signWithSHA1(String message) throws SignatureException {
 

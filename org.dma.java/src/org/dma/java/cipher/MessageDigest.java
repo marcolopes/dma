@@ -76,8 +76,8 @@ public class MessageDigest {
 	 * - Convert String to Bytes (UTF8 charset)<br>
 	 * - Digest Bytes<br>
 	 *
-	 * @param message - the message to digest
-	 * @return digested message
+	 * @param message The message to digest
+	 * @return The digested message
 	 */
 	public byte[] digest(String message) {
 
@@ -100,8 +100,8 @@ public class MessageDigest {
 	 * - Encode Bytes to BASE64<br>
 	 * - Convert Bytes to String (UTF8 charset)<br>
 	 *
-	 * @param message - the message to digest
-	 * @return digested message encoded in BASE64
+	 * @param message The message to digest
+	 * @return The digested message encoded in BASE64
 	 */
 	public String BASE64digest(String message) {
 

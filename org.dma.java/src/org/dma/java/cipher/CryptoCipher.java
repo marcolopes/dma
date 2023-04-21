@@ -161,8 +161,8 @@ public class CryptoCipher {
 	 * - Encode Bytes to BASE64<br>
 	 * - Convert Bytes to String (UTF8 charset)<br>
 	 *
-	 * @param messageBytes - the message to encrypt.
-	 * @param lineLength - the length of each text line.
+	 * @param messageBytes The message to encrypt.
+	 * @param lineLength The length of each text line.
 	 * 0=no line break
 	 */
 	public String BASE64encrypt(byte[] messageBytes, int lineLength) {
@@ -188,8 +188,8 @@ public class CryptoCipher {
 	 * - Encode Bytes to BASE64<br>
 	 * - Convert Bytes to String (UTF8 charset)<br>
 	 *
-	 * @param message - the message to encrypt.
-	 * @param lineLength - the length of each text line.
+	 * @param message The message to encrypt.
+	 * @param lineLength The length of each text line.
 	 * 0=no line break
 	 */
 	public String BASE64encrypt(String message, int lineLength) {
@@ -225,7 +225,7 @@ public class CryptoCipher {
 	 * - Decrypt Bytes<br>
 	 * - Convert Bytes to String (UTF8 charset)
 	 *
-	 * @param messageBytes - the message to decrypt.
+	 * @param messageBytes The message to decrypt.
 	 * <b>Must be in BASE64</b>
 	 */
 	public String BASE64decrypt(byte[] messageBytes) {
@@ -251,7 +251,7 @@ public class CryptoCipher {
 	 * - Decrypt Bytes<br>
 	 * - Convert Bytes to String (UTF8 charset)
 	 *
-	 * @param message - the message to decrypt.
+	 * @param message The message to decrypt.
 	 * <b>Must be in BASE64</b>
 	 */
 	public String BASE64decrypt(String message) {
