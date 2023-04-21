@@ -82,17 +82,17 @@ public class FontManager {
 
 	/**
 	 * Create a <code>FontData</code> object which encapsulate
-	 * the essential data to create a swt font. The data is taken
-	 * from the provided awt Font.
+	 * the essential data to create a SWT font. The data is taken
+	 * from the provided AWT Font.
 	 * <p>When the object is no more used, the user must explicitely
 	 * call the dispose method on the returned font to free the
 	 * operating system resources (the garbage collector won't do it).
 	 *
-	 * @param device The swt device to draw on (display or gc device).
-	 * @param font The awt font from which to get the data.
+	 * @param device The SWT device to draw on (display or gc device).
+	 * @param font The AWT font from which to get the data.
 	 * @param ensureSameHeight A boolean used to enforce the same height
-	 * (in pixels) between the awt font and the newly created swt font.
-	 * @return a <code>FontData</code> object.
+	 * (in pixels) between the AWT font and the newly created SWT font.
+	 * @return The <code>FontData</code> object.
 	 */
 	public static FontData toSWTFontData(Device device, java.awt.Font font,	boolean ensureSameHeight) {
 		int style=SWT.NORMAL;
@@ -101,7 +101,7 @@ public class FontManager {
 			case java.awt.Font.BOLD: style |= SWT.BOLD; break;
 			case java.awt.Font.ITALIC: style |= SWT.ITALIC; break;
 			case java.awt.Font.ITALIC + java.awt.Font.BOLD: style |= SWT.ITALIC | SWT.BOLD; break;
-		}//convert the font size (in pt for awt) to height in pixels for swt
+		}//convert the font size (in pt for AWT) to height in pixels for SWT
 		int height=(int) Math.round(font.getSize() * 72.0 / device.getDPI().y);
 		return new FontData(font.getFamily(), height, style);
 	}
@@ -116,12 +116,12 @@ public class FontManager {
 	}
 
 	/**
-	 * Create an awt font by converting as much information
-	 * as possible from the provided swt <code>Font</code>.
+	 * Create a AWT font by converting as much information
+	 * as possible from the provided SWT <code>Font</code>
 	 *
-	 * @param device The swt device being drawn on (display or gc device).
-	 * @param font The swt font to convert.
-	 * @return An awt font converted from the provided swt font.
+	 * @param device The SWT device being drawn on (display or gc device)
+	 * @param font The SWT font to convert
+	 * @return The AWT font converted from the provided SWT font
 	 */
 	public static java.awt.Font toAWTFont(Device device, Font font) {
 		FontData fontData=font.getFontData()[0];

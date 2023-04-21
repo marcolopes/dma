@@ -42,7 +42,8 @@ public class LinkedSWTList<T> extends MovableList<T> {
 
 	/**
 	 * Move SELECTED elements to TOP
-	 * @param target - the destination list
+	 *
+	 * @param target The destination list
 	 */
 	public void moveToTop(LinkedSWTList target) {
 
@@ -58,7 +59,8 @@ public class LinkedSWTList<T> extends MovableList<T> {
 
 	/**
 	 * Move SELECTED elements to BOTTOM
-	 * @param target - the destination list
+	 *
+	 * @param target The destination list
 	 */
 	public void moveToBottom(LinkedSWTList target) {
 

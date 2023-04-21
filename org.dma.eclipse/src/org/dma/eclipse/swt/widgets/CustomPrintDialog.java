@@ -39,9 +39,8 @@ public class CustomPrintDialog extends PrintDialog {
 
 	/**
 	 * Opens the System Print Dialog
-	 * @return
-	 * Selected printer name<br>
-	 * null - if dialogue was canceled
+	 * @return The selected printer name
+	 * (or null if dialogue was canceled)
 	 */
 	public String openDialog() {
 

@@ -60,7 +60,7 @@ public class ColorManager {
 
 
 	/**
-	 * Returns the CACHED {@link Color}
+	 * Returns The CACHED {@link Color}
 	 * or a new one if not CACHED or is DISPOSED.
 	 */
 	public static Color getColor(RGB rgb) {
@@ -74,7 +74,7 @@ public class ColorManager {
 
 
 	/**
-	 * Returns the CACHED {@link Color}
+	 * Returns The CACHED {@link Color}
 	 * or a new one if not CACHED or is DISPOSED.
 	 */
 	public static Color getColor(int r, int g, int b) {
@@ -83,7 +83,7 @@ public class ColorManager {
 
 
 	/**
-	 * Returns the system {@link Color} matching the specific ID.
+	 * Returns The system {@link Color} matching the specific ID.
 	 */
 	public static Color getColor(int systemColorID) {
 		return DISPLAY.getSystemColor(systemColorID);
@@ -91,11 +91,11 @@ public class ColorManager {
 
 
 	/**
-	 * Creates an awt color instance to match the rgb values
-	 * of the specified swt color.
+	 * Creates a AWT color instance to match the RGB values
+	 * of the specified SWT color.
 	 *
-	 * @param color The swt color to match.
-	 * @return an awt color abject.
+	 * @param color The SWT color to match.
+	 * @return The AWT color abject.
 	 */
 	public static java.awt.Color toAWTColor(Color color) {
 		return new java.awt.Color(color.getRed(), color.getGreen(),
@@ -104,14 +104,14 @@ public class ColorManager {
 
 
 	/**
-	 * Creates a swt color instance to match the rgb values
-	 * of the specified awt paint. For now, this method test
+	 * Creates a SWT color instance to match the RGB values
+	 * of the specified AWT paint. For now, this method test
 	 * if the paint is a color and then return the adequate
-	 * swt color. Otherwise plain black is assumed.
+	 * SWT color. Otherwise plain black is assumed.
 	 *
 	 * @param device The swt device to draw on (display or gc device).
-	 * @param paint The awt color to match.
-	 * @return a swt color object.
+	 * @param paint The AWT color to match.
+	 * @return The SWT color object.
 	 */
 	public static Color toSWTColor(Device device, java.awt.Paint paint) {
 		java.awt.Color color;
@@ -129,14 +129,14 @@ public class ColorManager {
 
 
 	/**
-	 * Creates a swt color instance to match the rgb values
-	 * of the specified awt color. alpha channel is not supported.
+	 * Creates a SWT color instance to match the RGB values
+	 * of the specified AWT color. alpha channel is not supported.
 	 * Note that the dispose method will need to be called on the
 	 * returned object.
 	 *
-	 * @param device The swt device to draw on (display or gc device).
-	 * @param color The awt color to match.
-	 * @return a swt color object.
+	 * @param device The SWT device to draw on (display or gc device).
+	 * @param color The AWT color to match.
+	 * @return The SWT color object.
 	 */
 	public static Color toSWTColor(Device device, java.awt.Color color) {
 		return new org.eclipse.swt.graphics.Color(device,
