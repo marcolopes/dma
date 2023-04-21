@@ -53,7 +53,7 @@ public class MultibancoEntity {
 	private final String entity;
 
 	/**
-	 * @param entity - os 5 digitos da entidade (fornecida pelo provider)
+	 * @param entity Os 5 digitos da entidade (fornecida pelo provider)
 	 */
 	public MultibancoEntity(String entity) {
 		this.entity=entity;
@@ -61,7 +61,7 @@ public class MultibancoEntity {
 
 
 	/**
-	 * @param value - VALOR a pagar
+	 * @param value O VALOR a pagar
 	 *
 	 * @throws IllegalArgumentException caso a ENTIDADE seja invalida
 	 * @throws IllegalArgumentException caso o VALOR a pagar seja invalido
@@ -82,9 +82,9 @@ public class MultibancoEntity {
 
 
 	/**
-	 * @param id7 - ID a processar (primeiros 7 digitos da REFERENCIA)
-	 * @param value - VALOR a pagar (serao usados os 8 digitos da direita)
-	 * @return CHECK DIGITS (2 digitos de controle)
+	 * @param id7 O ID a processar (primeiros 7 digitos da REFERENCIA)
+	 * @param value O VALOR a pagar (serao usados os 8 digitos da direita)
+	 * @return Os CHECK DIGITS (2 digitos de controle)
 	 * <p>
 	 * Utiliza o algoritmo ISO 7064 Mod 97,10 check digit
 	 */
@@ -99,10 +99,10 @@ public class MultibancoEntity {
 
 
 	/**
-	 * @param id - ID de pagamento (serao usados os 7 digitos da direita)
-	 * @param value - VALOR a pagar (maximo = {@link #VALOR_MAX})
+	 * @param id O ID de pagamento (serao usados os 7 digitos da direita)
+	 * @param value O VALOR a pagar (maximo = {@link #VALOR_MAX})
 	 *
-	 * @return REFERENCIA MULTIBANCO formatada em grupos de 3 digitos
+	 * @return A REFERENCIA MULTIBANCO formatada em grupos de 3 digitos
 	 * obtida a partir de ID7 + CHECKDIGITS
 	 *
 	 * @throws IllegalArgumentException caso a ENTIDADE seja invalida
@@ -123,8 +123,8 @@ public class MultibancoEntity {
 
 
 	/**
-	 * @param ref - REFERENCIA MULTIBANCO (pode conter espacos)
-	 * @param value - VALOR a pagar
+	 * @param ref A REFERENCIA MULTIBANCO (pode conter espacos)
+	 * @param value O VALOR a pagar
 	 *
 	 * @return true caso a REFERENCIA MULTIBANCO seja valida
 	 *
@@ -144,7 +144,7 @@ public class MultibancoEntity {
 	}
 
 
-	public static void main(String[] argvs) throws Exception {
+	public static void main(String[] args) throws Exception {
 
 		//GERACAO de NOVA referencia
 		System.out.println(new MultibancoEntity("11604").
