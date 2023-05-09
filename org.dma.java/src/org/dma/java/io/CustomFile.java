@@ -73,11 +73,6 @@ public class CustomFile extends File {
 		return StringUtils.removeChars(plain, "<>:?*\"\n\r\t\f\0");
 	}
 
-	/** Surrounds with COMMA (") chars */
-	public static String quote(String string) {
-		return new StringBuilder().append('"').append(string).append('"').toString();
-	}
-
 	/** Ensures absolute path */
 	public CustomFile(File path, String...more) {
 		this(path.getPath(), more);
@@ -194,10 +189,10 @@ public class CustomFile extends File {
 	 */
 	public int executeWithCmd(String...args) throws IOException {
 		//START "title" [/D path] [options] "command" [parameters]
-		StringList list=new StringList("START", quote(getName()),
+		StringList list=new StringList("START", "\""+getName()+"\"",
 				//path already defined by WORKING directory parameter
-				//"/D "+quote(getParent()),
-				quote(getName()));
+				//"/D \""+getParent()+"\"",
+				"\""+getName()+"\"");
 		list.addAll(Arrays.asList(args));
 		//START "title" "program" parameters
 		String command=list.concat(" ");
