@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,6 @@
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java;
-
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -56,20 +51,6 @@ public class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		Debug.err();
-		//in JDK 1.4, defaultEncodingName will typically be "Cp1252"
-		System.out.println("FILE ENCODING: "+System.getProperty("file.encoding"));
-		//in JDK 1.5+, will typically be "windows-1252"
-		System.out.println("DEFAULT CHARSET: "+Charset.defaultCharset().name());
-		//Available Locales
-		List<String> languages=new ArrayList();
-		List<String> countries=new ArrayList();
-		for(Locale locale: Locale.getAvailableLocales()){
-			if (!locale.getLanguage().isEmpty()) languages.add(locale.getLanguage());
-			if (!locale.getCountry().isEmpty()) countries.add(locale.getCountry());
-		}
-		System.out.println("AVAILABLE languages: "+languages);
-		System.out.println("AVAILABLE countries: "+countries);
-
 	}
 
 	@Override

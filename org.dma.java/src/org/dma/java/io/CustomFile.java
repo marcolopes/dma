@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -30,8 +31,11 @@ import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.List;
 
+import org.dma.java.util.Debug;
+import org.dma.java.util.StringList;
 import org.dma.java.util.StringUtils;
 
 public class CustomFile extends File {
@@ -63,10 +67,15 @@ public class CustomFile extends File {
 	/** Replaces accented and illegal characters */
 	public static String normalize(String filename) {
 		String plain=StringUtils.unaccent(filename).
-				replace("  "," ").replace(" -","-").replace("- ","-").
-				replace('\\','-').replace('/','-').replace('|','-').replace("--","-").
-				replace(' ','_').replace("__","_");
+				replace('\\','-').replace('/','-').replace('|','-').
+				replace(" -","-").replace("- ","-").replace("--","-").
+				replace("  "," ").replace(' ','_').replace("__","_");
 		return StringUtils.removeChars(plain, "<>:?*\"\n\r\t\f\0");
+	}
+
+	/** Surrounds with COMMA (") chars */
+	public static String quote(String string) {
+		return new StringBuilder().append('"').append(string).append('"').toString();
 	}
 
 	/** Ensures absolute path */
@@ -156,22 +165,44 @@ public class CustomFile extends File {
 
 
 	/** @see Desktop#open(File) */
-	public boolean open() {
-		if (Desktop.isDesktopSupported()) try{
+	public boolean open() throws IOException {
+		if (Desktop.isDesktopSupported()){
 			Desktop.getDesktop().open(this);
 			return true;
-		}catch(Exception e){
-			System.err.println(e);
 		}return false;
 	}
 
 
-	/** @see Command#Command(File, String, List) */
-	public boolean execute(String...args) {
-		try{return new Command(getParentFile(), toString(), args).start().exitValue()==0;
-		}catch(Exception e){
-			System.err.println(e);
-		}return false;
+	/**
+	 * In Windows, use {@link CustomFile#executeWithCmd(String...)}
+	 * to avoid CreateProcess error=740
+	 * (The requested operation requires elevation)
+	 *
+	 * @see Command#Command(File, String, List)
+	 * @see Process#exitValue()
+	 */
+	public int execute(String...args) throws IOException {
+		return new Command(getParentFile(), toString(), args).start().exitValue();
+	}
+
+
+	/**
+	 * https://ss64.com/nt/start.html
+	 *
+	 * @see WindowsCommand#WindowsCommand(File, String)
+	 * @see Process#exitValue()
+	 */
+	public int executeWithCmd(String...args) throws IOException {
+		//START "title" [/D path] [options] "command" [parameters]
+		StringList list=new StringList("START", quote(getName()),
+				//path already defined by WORKING directory parameter
+				//"/D "+quote(getParent()),
+				quote(getName()));
+		list.addAll(Arrays.asList(args));
+		//START "title" "program" parameters
+		String command=list.concat(" ");
+		Debug.err(command);
+		return new WindowsCommand(getParentFile(), command).start().exitValue();
 	}
 
 
