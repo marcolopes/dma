@@ -18,9 +18,8 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.widgets;
 
-import org.apache.commons.lang.SystemUtils;
-
 import org.dma.eclipse.swt.graphics.ImageManager;
+import org.dma.java.util.SystemUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2014 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,10 @@
  *******************************************************************************/
 package org.dma.eclipse.jface.dialogs.progress;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 public interface IProgressAction {
 
-	public void run() throws Exception;
+	public void run(IProgressMonitor monitor) throws Exception;
 
 }

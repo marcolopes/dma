@@ -18,13 +18,12 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.lists;
 
-import org.apache.commons.lang.SystemUtils;
-
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.MovableList;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.StringList;
 import org.dma.java.util.StringUtils;
+import org.dma.java.util.SystemUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

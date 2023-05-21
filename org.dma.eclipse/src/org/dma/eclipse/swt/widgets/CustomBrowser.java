@@ -18,7 +18,7 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.widgets;
 
-import org.apache.commons.lang.SystemUtils;
+import org.dma.java.util.SystemUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
@@ -38,8 +38,7 @@ public final class CustomBrowser extends Browser {
 		if (SystemUtils.IS_OS_WINDOWS) return SWT.NONE;
 		//LINUX e MAC
 		for(int style: new int[]{SWT.MOZILLA, SWT.WEBKIT}){
-			try{
-				System.out.print("STYLE: "+style);
+			try{System.out.print("STYLE: "+style);
 				Browser b=new Browser(parent, style);
 				b.dispose();
 				return style;

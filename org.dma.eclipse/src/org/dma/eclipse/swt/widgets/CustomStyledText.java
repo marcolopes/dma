@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2020 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,17 +42,31 @@ public abstract class CustomStyledText extends StyledText {
 
 	public abstract void doUpdate();
 
-	//update timer
-	private Timer timer=new Timer(true);
-
 	/** @see StyledText#StyledText(Composite, int) */
 	public CustomStyledText(Composite parent, int style) {
 		super(parent, style);
 
 		addModifyListener(new ModifyListener() {
+			final Runnable runnable=new Runnable() {
+				@Override
+				public void run() {
+					if (isDisposed()) return;
+					setRedraw(false);
+					doUpdate();
+					setRedraw(true);
+				}
+			};
+			final Timer timer=new Timer(true);
+			TimerTask task;
 			@Override
 			public void modifyText(ModifyEvent e) {
-				resetTimer();
+				if (task!=null) task.cancel();
+				timer.schedule(task=new TimerTask() {
+					@Override
+					public void run() {//UI task
+						Display.getDefault().asyncExec(runnable);
+					}
+				}, 500);
 			}
 		});
 
@@ -66,37 +80,10 @@ public abstract class CustomStyledText extends StyledText {
 		});
 	}
 
-
-	@Override
-	public void dispose() {
-		timer.cancel();
-		super.dispose();
-	}
-
 	@Override
 	public void setText(String text) {
 		super.setText(text);
 		doUpdate();
-	}
-
-
-	public void resetTimer() {
-		timer.cancel();
-		timer=new Timer(true);
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				//UI task
-				Display.getDefault().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						setRedraw(false);
-						doUpdate();
-						setRedraw(true);
-					}
-				});
-			}
-		}, 500);
 	}
 
 

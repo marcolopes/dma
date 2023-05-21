@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,10 +73,16 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 	}
 
 
+	/** @see ProgressSupport#run(boolean) */
 	public boolean run() throws Exception {
 		return run(false);
 	}
 
+	/**
+	 * @param silent Run without progress dialog
+	 * @return false if canceled
+	 * @throws Exception propagated from action
+	 */
 	public boolean run(boolean silent) throws Exception {
 
 		if (silent){
@@ -85,7 +91,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 				//task name
 				String taskName=get(action);
 				Debug.out("TASK", taskName);
-				action.run();
+				action.run(null);
 			}
 
 		}else try{
@@ -100,10 +106,11 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 						String taskName=get(action);
 						Debug.out("TASK", taskName);
 						monitor.subTask(taskName);
-						action.run();
+						action.run(monitor);
 						monitor.worked(TOTAL_WORK/size());
 
 					}catch(Exception e){
+						//wrap inside InvocationTargetException
 						throw new InvocationTargetException(e);
 					}finally{
 						if (monitor.isCanceled()) throw new InterruptedException();

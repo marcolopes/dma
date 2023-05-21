@@ -177,8 +177,7 @@ public class CustomJob extends Job {
 				Debug.out("RUNNING TASK", action);
 				monitor.subTask(action.getText());
 
-				if(action instanceof UIAction){
-					//UI task
+				if(action instanceof UIAction){//UI task
 					Display.getDefault().syncExec(new Runnable() {
 						@Override
 						public void run() {

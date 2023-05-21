@@ -22,8 +22,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang.SystemUtils;
-
 import org.dma.eclipse.swt.graphics.FontManager;
 import org.dma.eclipse.swt.widgets.CustomTable.SORT_DIRECTION;
 import org.dma.java.util.ArrayUtils;
@@ -31,6 +29,7 @@ import org.dma.java.util.ClipboardManager;
 import org.dma.java.util.Debug;
 import org.dma.java.util.MessageList;
 import org.dma.java.util.MovableList;
+import org.dma.java.util.SystemUtils;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
