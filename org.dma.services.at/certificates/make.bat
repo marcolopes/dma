@@ -25,7 +25,7 @@ echo SET CODEPAGE UTF-8
 chcp 65001
 
 echo RENAME CERTIFICATES
-copy ChaveCifraPublicaAT2023.cer %OUTPUT_FOLDER%\ChavePublicaAT.cer
+copy ChaveCifraPublicaAT2025.cer %OUTPUT_FOLDER%\ChavePublicaAT.cer
 copy portaldasfinancas.pem %OUTPUT_FOLDER%\TrustStoreAT.cer
 
 echo EXTRAI A CHAVE PUBLICA DO CERTIFICADO AT (formato:PEM, encoding:BASE64)
