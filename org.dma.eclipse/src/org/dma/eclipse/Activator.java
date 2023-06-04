@@ -44,13 +44,13 @@ public class Activator implements BundleActivator {
 			PLUGIN_VERSION.getMajor(), PLUGIN_VERSION.getMinor(), PLUGIN_VERSION.getMicro());
 
 	/** plug-in relative path */
-	public static ImageHandler getBufferedImage(String imagePath) {
-		return new ImageHandler(Activator.class, imagePath);
+	public static BufferedImage getBufferedImage(String imagePath) {
+		return ImageHandler.createImage(Activator.class, imagePath);
 	}
 
 	/** plug-in relative path */
 	public static BufferedImage getBufferedImage(String imagePath, int size) {
-		return getBufferedImage(imagePath).resize(size);
+		return new ImageHandler(Activator.class, imagePath).resize(size);
 	}
 
 	public Activator() {
