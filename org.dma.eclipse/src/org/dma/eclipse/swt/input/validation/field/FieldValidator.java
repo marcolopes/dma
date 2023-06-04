@@ -148,7 +148,7 @@ public abstract class FieldValidator implements IValidator {
 	@Override
 	public void validateFields() {
 
-		Debug.err("VALIDATING", validatorMap.keySet());
+		Debug.out("VALIDATING", validatorMap.keySet());
 
 		resetBindings();
 		validateBindings();

@@ -48,7 +48,8 @@ import org.eclipse.swt.widgets.Table;
 
 public abstract class TableViewerContainer<T> extends TableContainer {
 
-	public static final int TABLE_DINAMIC_LOAD = Display.getDefault().getClientArea().height / FontManager.AVERAGE_ITEM_HEIGHT;
+	public static final int TABLE_DINAMIC_LOAD = FontManager.AVERAGE_ITEM_HEIGHT==0 ? 0 :
+		Display.getCurrent().getClientArea().height / FontManager.AVERAGE_ITEM_HEIGHT;
 
 	public abstract Collection<T> retrieveObjects(long topIndex, long bottomIndex);
 	public abstract MessageList insertObject();

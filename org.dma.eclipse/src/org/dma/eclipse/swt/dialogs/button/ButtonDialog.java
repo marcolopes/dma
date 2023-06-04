@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2017 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,6 @@ public abstract class ButtonDialog extends CustomShell {
 
 	private static final String OK = IDialogConstants.OK_LABEL;
 	private static final String CANCEL = IDialogConstants.CANCEL_LABEL;
-	private static final String[] LABELS = new String[]{OK, CANCEL};
 
 	private final int height;
 
@@ -83,7 +82,7 @@ public abstract class ButtonDialog extends CustomShell {
 		composite.setLayout(gridLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		for(String label: LABELS){
+		for(String label: new String[]{OK, CANCEL}){
 			final CustomButton button=new CustomButton(composite, SWT.PUSH);
 			GridData gridData=new GridData(SWT.FILL, SWT.FILL, true, true);
 			gridData.minimumWidth=height*2;

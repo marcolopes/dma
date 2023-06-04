@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import java.util.Arrays;
 
 import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
 import org.dma.java.awt.ImageUtils;
+import org.dma.java.util.Debug;
 
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -33,18 +33,14 @@ import org.eclipse.swt.widgets.Display;
 
 public class ImageManager {
 
-	public static final Display DISPLAY = Display.getDefault();
-
-	public static final ImageRegistry REGISTRY = new ImageRegistry(DISPLAY);
-
 	/** Returns the {@link Image} key based on image-size hash */
 	public static String getKey(Integer size) {
 		return "size:"+String.valueOf(size.hashCode());
 	}
 
 	/** Returns the {@link Image} key based on image-path string */
-	public static String getKey(String pathname) {
-		return "path:"+pathname;
+	public static String getKey(String imagePath) {
+		return "path:"+imagePath;
 	}
 
 	/** Returns the {@link Image} key based on image-bytes hash */
@@ -57,71 +53,114 @@ public class ImageManager {
 		return "pixels:"+String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(image)));
 	}
 
+	public interface IImageRegistry {
+		/** @see ImageRegistry#get(String) */
+		Image get(String key);
+		/** @see ImageRegistry#put(String, Image) */
+		void put(String key, Image image);
+		/** @see ImageRegistry#remove(String) */
+		void remove(String key);
+		/** Returns the CACHED {@link Image} or a new one if not CACHED */
+		Image getImage(Integer size);
+		/** Returns the CACHED {@link Image} or a new one if not CACHED */
+		Image getImage(String imagePath);
+		/** Returns the CACHED {@link Image} or a new one if not CACHED */
+		Image getImage(byte[] bytes);
+		/** Returns the CACHED {@link Image} or a new one if not CACHED */
+		Image getImage(BufferedImage bufferedImage);
+	}
+
+	private static class CustomImageRegistry implements IImageRegistry {
+		static{Debug.out();}
+		@Override
+		public Image get(String key) {return null;}
+		@Override
+		public void put(String key, Image image) {}
+		@Override
+		public void remove(String key) {}
+		@Override
+		public Image getImage(Integer size) {return null;}
+		@Override
+		public Image getImage(String imagePath) {return null;}
+		@Override
+		public Image getImage(byte[] bytes) {return null;}
+		@Override
+		public Image getImage(BufferedImage bufferedImage) {return null;}
+	}
+
+	public static class ImageRegistry extends org.eclipse.jface.resource.ImageRegistry implements IImageRegistry {
+		static{Debug.out();}
+		@Override
+		public Image getImage(Integer size) {
+			String key=getKey(size);
+			Image image=get(key);
+			if (image==null) try{
+				image=new Image(Display.getCurrent(), size, size);
+				put(key, image);
+				GC gc=new GC(image);
+				gc.setBackground(ColorManager.getColor(SWT.TRANSPARENT));
+				gc.fillRectangle(0, 0, size, size);
+				gc.dispose();
+			}catch(Exception e){
+				System.err.println(e);
+			}return image;
+		}
+		@Override
+		public Image getImage(String imagePath) {
+			String key=getKey(imagePath);
+			Image image=get(key);
+			if (image==null) try{
+				put(key, image=new CustomImageDescriptor(imagePath).createImage());
+			}catch(Exception e){
+				System.err.println(e);
+			}return image;
+		}
+		@Override
+		public Image getImage(byte[] bytes) {
+			String key=getKey(bytes);
+			Image image=get(key);
+			if (image==null) try{
+				put(key, image=new CustomImageDescriptor(bytes).createImage());
+			}catch(Exception e){
+				System.err.println(e);
+			}return image;
+		}
+		@Override
+		public Image getImage(BufferedImage bufferedImage) {
+			String key=getKey(bufferedImage);
+			Image image=get(key);
+			if (image==null) try{
+				put(key, image=new CustomImageDescriptor(bufferedImage).createImage());
+				bufferedImage.flush();
+			}catch(Exception e){
+				System.err.println(e);
+			}return image;
+		}
+	}
+
+	public static final IImageRegistry REGISTRY = Display.getCurrent()==null ? new CustomImageRegistry() : new ImageRegistry();
 
 	/**
-	 * Returns the CACHED {@link Image}
-	 * or a new one if not CACHED or is DISPOSED.
 	 * It can be used as placeholder for missing image.
+	 * @see ImageRegistry#getImage(Integer)
 	 */
 	public static Image getImage(Integer size) {
-		String key=getKey(size);
-		Image image=REGISTRY.get(key);
-		if (image==null) try{
-			image=new Image(DISPLAY, size, size);
-			REGISTRY.put(key, image);
-			GC gc=new GC(image);
-			gc.setBackground(DISPLAY.getSystemColor(SWT.TRANSPARENT));
-			gc.fillRectangle(0, 0, size, size);
-			gc.dispose();
-		}catch(Exception e){
-			System.err.println(e);
-		}return image;
+		return REGISTRY.getImage(size);
 	}
 
-
-	/**
-	 * Returns the CACHED {@link Image}
-	 * or a new one if not CACHED or is DISPOSED
-	 */
-	public static Image getImage(String pathname) {
-		String key=getKey(pathname);
-		Image image=REGISTRY.get(key);
-		if (image==null) try{
-			image=new CustomImageDescriptor(pathname).createImage();
-			REGISTRY.put(key, image);
-		}catch(Exception e){
-			System.err.println(e);
-		}return image;
+	/** @see ImageRegistry#getImage(String) */
+	public static Image getImage(String imagePath) {
+		return REGISTRY.getImage(imagePath);
 	}
 
-
-	/**
-	 * Returns the CACHED {@link Image}
-	 * or a new one if not CACHED or is DISPOSED
-	 */
+	/** @see ImageRegistry#getImage(byte[]) */
 	public static Image getImage(byte[] bytes) {
-		String key=getKey(bytes);
-		Image image=REGISTRY.get(key);
-		if (image==null){
-			image=new CustomImageDescriptor(bytes).createImage();
-			REGISTRY.put(key, image);
-		}return image;
+		return REGISTRY.getImage(bytes);
 	}
 
-
-	/**
-	 * Returns the CACHED {@link Image}
-	 * or a new one if not CACHED or is DISPOSED
-	 */
+	/** @see ImageRegistry#getImage(BufferedImage) */
 	public static Image getImage(BufferedImage bufferedImage) {
-		String key=getKey(bufferedImage);
-		Image image=REGISTRY.get(key);
-		if (image==null){
-			image=new CustomImageDescriptor(bufferedImage).createImage();
-			bufferedImage.flush();
-			REGISTRY.put(key, image);
-		}return image;
+		return REGISTRY.getImage(bufferedImage);
 	}
-
 
 }

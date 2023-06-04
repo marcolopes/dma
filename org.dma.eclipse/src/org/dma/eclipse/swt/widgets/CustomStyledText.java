@@ -33,7 +33,6 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 public abstract class CustomStyledText extends StyledText {
 
@@ -64,7 +63,7 @@ public abstract class CustomStyledText extends StyledText {
 				timer.schedule(task=new TimerTask() {
 					@Override
 					public void run() {//UI task
-						Display.getDefault().asyncExec(runnable);
+						getDisplay().asyncExec(runnable);
 					}
 				}, 500);
 			}

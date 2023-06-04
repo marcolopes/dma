@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2017 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,25 +36,25 @@ public abstract class ButtonMenu extends CustomShell {
 
 	public abstract void done(int index);
 
-	private final String[] labels;
+	private final String[] items;
 	private final int height;
 
-	public ButtonMenu(String...labels) {
-		this(Display.getDefault().getActiveShell(), labels);
+	public ButtonMenu(String...items) {
+		this(Display.getDefault().getActiveShell(), items);
 	}
 
-	public ButtonMenu(int height, String...labels) {
-		this(Display.getDefault().getActiveShell(), height, labels);
+	public ButtonMenu(int height, String...items) {
+		this(Display.getDefault().getActiveShell(), height, items);
 	}
 
-	public ButtonMenu(Shell parent, String...labels) {
-		this(parent, Display.getDefault().getClientArea().height / 10, labels);
+	public ButtonMenu(Shell parent, String...items) {
+		this(parent, Display.getDefault().getClientArea().height / 10, items);
 	}
 
-	public ButtonMenu(Shell parent, int height, String...labels) {
+	public ButtonMenu(Shell parent, int height, String...items) {
 		super(parent, STYLE_RESIZABLE);
 
-		this.labels=labels;
+		this.items=items;
 		this.height=height;
 
 		createContents();
@@ -80,14 +80,14 @@ public abstract class ButtonMenu extends CustomShell {
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		int index=0;
-		for(String label: labels){
+		for(String text: items){
 			CustomButton button=new CustomButton(composite, SWT.PUSH);
 			GridData gridData=new GridData(SWT.FILL, SWT.FILL, true, true);
 			gridData.minimumWidth=height*4;
 			gridData.minimumHeight=height;
 			button.setLayoutData(gridData);
 			button.setFontSize(15);
-			button.setText(label);
+			button.setText(text);
 			button.setData(index++);
 
 			button.addKeyListener(new KeyAdapter(){

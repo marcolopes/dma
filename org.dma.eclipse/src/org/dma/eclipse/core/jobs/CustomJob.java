@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,6 +53,13 @@ public class CustomJob extends Job {
 		while(!getJobManager().isIdle()) try{
 			Thread.sleep(sleep);
 		}catch(Exception e){}
+	}
+
+	public static void syncExec(Runnable runnable) {
+		try{Display.getDefault().syncExec(runnable);
+		}catch(Exception e){
+			runnable.run();
+		}
 	}
 
 	private final List<IAction> tasks=new ArrayList();
@@ -178,7 +185,7 @@ public class CustomJob extends Job {
 				monitor.subTask(action.getText());
 
 				if(action instanceof UIAction){//UI task
-					Display.getDefault().syncExec(new Runnable() {
+					syncExec(new Runnable() {
 						@Override
 						public void run() {
 							action.run();
@@ -194,7 +201,7 @@ public class CustomJob extends Job {
 			e.printStackTrace();
 		}finally{
 			if (doneAction!=null){
-				Display.getDefault().syncExec(new Runnable() {
+				syncExec(new Runnable() {
 					@Override
 					public void run() {
 						doneAction.run();

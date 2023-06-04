@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2020 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,8 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.graphics;
 
-import org.eclipse.jface.resource.FontRegistry;
+import org.dma.java.util.Debug;
+
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Device;
@@ -33,50 +34,86 @@ import org.eclipse.swt.widgets.Table;
 
 public class FontManager {
 
-	public static final Display DISPLAY = Display.getDefault();
+	public interface IFontRegistry {
+		/** @see FontRegistry#get(String) */
+		Font get(String symbolicName);
+		/** @see FontRegistry#getBold(String) */
+		Font getBold(String symbolicName);
+		/** @see FontRegistry#getItalic(String) */
+		Font getItalic(String symbolicName);
+	}
 
-	public static final FontRegistry REGISTRY = new FontRegistry(DISPLAY);
+	private static class CustomFontRegistry implements IFontRegistry {
+		static{Debug.out();}
+		@Override
+		public Font get(String symbolicName) {return null;}
+		@Override
+		public Font getBold(String symbolicName) {return null;}
+		@Override
+		public Font getItalic(String symbolicName) {return null;}
+	}
+
+	public static class FontRegistry extends org.eclipse.jface.resource.FontRegistry implements IFontRegistry {
+		static{Debug.out();}
+	}
+
+	public static final IFontRegistry REGISTRY = Display.getCurrent()==null ? new CustomFontRegistry() : new FontRegistry();
 
 	/*
 	 * Fonts
 	 */
-	public static final Font SYSTEM_FONT = DISPLAY.getSystemFont();
-	public static final Font TEXT_FONT = JFaceResources.getTextFont();
+	public static final Font TEXT_FONT = FONTS.TEXT.font;
+	public static final Font SYSTEM_FONT = FONTS.SYSTEM.font;
+	public static final Font SYSTEM_FONT_BOLD = FONTS.SYSTEM.bold;
+	public static final Font SYSTEM_FONT_ITALIC = FONTS.SYSTEM.italic;
 
-	public static final String SYSTEM_FONT_NAME = SYSTEM_FONT.getFontData()[0].getName();
-	public static final Font SYSTEM_FONT_BOLD = REGISTRY.getBold(SYSTEM_FONT_NAME);
-	public static final Font SYSTEM_FONT_ITALIC = REGISTRY.getItalic(SYSTEM_FONT_NAME);
+	public enum FONTS {
+
+		TEXT (Display.getCurrent()==null ? null : JFaceResources.getTextFont()),
+		SYSTEM (Display.getCurrent()==null ? null : Display.getCurrent().getSystemFont()),
+		DEFAULT (Display.getCurrent()==null ? null : JFaceResources.getDefaultFont());
+
+		public final Font font;
+		public final Font bold;
+		public final Font italic;
+
+		FONTS(Font font) {
+			this.font=font;
+			String symbolicName=font==null ? null : font.getFontData()[0].getName();
+			bold=font==null ? null : REGISTRY.getBold(symbolicName);
+			italic=font==null ? null : REGISTRY.getItalic(symbolicName);
+		}
+
+	}
 
 	/*
-	 * Chars
+	 * Metrics
 	 */
-	public static final int AVERAGE_CHAR_WIDTH = getAverageCharWidth();
-	public static final int AVERAGE_CHAR_HEIGHT = getAverageCharHeight();
-	public static final int AVERAGE_ITEM_HEIGHT = new Table(new Shell(), SWT.NONE).getItemHeight();
+	public static final int AVERAGE_ITEM_HEIGHT = Display.getCurrent()==null ? 0 : getAverageItemHeight();
 
-	private static int getAverageCharWidth() {
-		GC gc=new GC(new Shell(), SWT.NONE);
-		int width=gc.getFontMetrics().getAverageCharWidth();
-		gc.dispose(); //necessario em MAC
-		return width;
+	public static int getAverageItemHeight() {
+		Table table=new Table(new Shell(), SWT.NONE);
+		int value=table.getItemHeight();
+		table.dispose();
+		return value;
 	}
 
-	private static int getAverageCharHeight() {
+	public static final int AVERAGE_CHAR_HEIGHT = Display.getCurrent()==null ? 0 : getAverageCharHeight();
+
+	public static int getAverageCharHeight() {
 		GC gc=new GC(new Shell(), SWT.NONE);
-		int height=gc.getFontMetrics().getAscent();
+		int value=gc.getFontMetrics().getAscent();
 		gc.dispose(); //necessario em MAC
-		return height;
+		return value;
 	}
 
+	public static final int AVERAGE_CHAR_WIDTH = Display.getCurrent()==null ? 0 : getAverageCharWidth();
 
-	/**
-	 * Returns the CACHED {@link Font}
-	 */
-	public static Font getFont(String symbolicName) {
-		try{return REGISTRY.get(symbolicName);
-		}catch(Exception e){
-			e.printStackTrace();
-		}return null;
+	public static int getAverageCharWidth() {
+		GC gc=new GC(new Shell(), SWT.NONE);
+		int value=gc.getFontMetrics().getAverageCharWidth();
+		gc.dispose(); //necessario em MAC
+		return value;
 	}
 
 
@@ -106,7 +143,6 @@ public class FontManager {
 		return new FontData(font.getFamily(), height, style);
 	}
 
-
 	public static int toAWTStyle(int swtStyle) {
 		switch(swtStyle){
 			case SWT.NORMAL: return java.awt.Font.PLAIN;
@@ -129,6 +165,5 @@ public class FontManager {
 		int height=(int)Math.round(fontData.height * device.getDPI().y / 72.0);
 		return new java.awt.Font(fontData.getName(), style, height);
 	}
-
 
 }

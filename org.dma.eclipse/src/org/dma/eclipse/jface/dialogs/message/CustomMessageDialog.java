@@ -19,6 +19,7 @@
 package org.dma.eclipse.jface.dialogs.message;
 
 import org.dma.eclipse.swt.graphics.FontManager;
+import org.dma.eclipse.swt.graphics.FontManager.FONTS;
 import org.dma.java.util.StringList;
 import org.dma.java.util.StringUtils;
 
@@ -209,10 +210,14 @@ public class CustomMessageDialog extends MessageDialog {
 
 		String header="Happy forever" + StringUtils.replicas(" and ever", 20) + "...";
 
-		System.out.println(DIALOG_TYPES.ERROR.open(null, message));
-		System.out.println(DIALOG_TYPES.ERROR.open(null, message, FontManager.TEXT_FONT));
 		System.out.println(DIALOG_TYPES.ERROR.open(header, message));
-		System.out.println(DIALOG_TYPES.ERROR.open(header, message, FontManager.TEXT_FONT));
+		System.out.println(DIALOG_TYPES.ERROR.open(null, message));
+
+		for(FONTS font: FONTS.values()){
+			System.out.println(DIALOG_TYPES.ERROR.open(font.name(), message, font.font));
+			System.out.println(DIALOG_TYPES.ERROR.open(font.name(), message, font.bold));
+			System.out.println(DIALOG_TYPES.ERROR.open(font.name(), message, font.italic));
+		}
 
 	}
 

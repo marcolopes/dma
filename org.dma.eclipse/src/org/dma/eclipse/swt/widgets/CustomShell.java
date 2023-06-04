@@ -92,7 +92,7 @@ public class CustomShell extends Shell {
 
 
 	@Override
-	public void setLocation (int x, int y) {
+	public void setLocation(int x, int y) {
 		super.setLocation(
 			Math.max(x, getDisplay().getBounds().x),
 			Math.max(y, getDisplay().getBounds().y));
@@ -100,12 +100,12 @@ public class CustomShell extends Shell {
 
 
 	public void setCenteredLocation() {
-		Rectangle parentBounds = getParent()==null ?
+		Rectangle parentBounds=getParent()==null ?
 				getDisplay().getPrimaryMonitor().getBounds() :
 				getParent().getBounds();
-		Rectangle childBounds = getBounds();
-		int x = parentBounds.x + (parentBounds.width - childBounds.width) / 2;
-		int y = parentBounds.y + (parentBounds.height - childBounds.height) / 2;
+		Rectangle childBounds=getBounds();
+		int x=parentBounds.x + (parentBounds.width - childBounds.width) / 2;
+		int y=parentBounds.y + (parentBounds.height - childBounds.height) / 2;
 		setLocation(x, y);
 	}
 
