@@ -119,8 +119,8 @@ public class ImageUtils {
 
 
 	/** @see ImageUtils#resizeImage(BufferedImage, int) */
-	public static BufferedImage createImage(String path, int size) {
-		BufferedImage image=createImage(path);
+	public static BufferedImage createImage(String pathname, int size) {
+		BufferedImage image=createImage(pathname);
 		return size==0 ? image : resizeImage(image, size);
 	}
 
