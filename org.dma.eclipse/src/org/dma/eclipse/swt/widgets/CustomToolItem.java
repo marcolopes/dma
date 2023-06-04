@@ -21,7 +21,7 @@ package org.dma.eclipse.swt.widgets;
 import java.awt.image.BufferedImage;
 
 import org.dma.eclipse.swt.graphics.ImageManager;
-import org.dma.java.awt.ImageUtils;
+import org.dma.java.awt.ImageHandler;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -49,8 +49,8 @@ public class CustomToolItem extends ToolItem {
 	}
 
 	@Deprecated
-	void setImage(String imagePath, int imageSize) {
-		setImage(ImageUtils.createImage(imagePath, imageSize));
+	void setImage(String imagePath, int size) {
+		setImage(new ImageHandler(imagePath).resize(size));
 	}
 
 	public void setImage(BufferedImage image) {

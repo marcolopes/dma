@@ -23,7 +23,7 @@ import java.awt.image.RenderedImage;
 import java.util.Arrays;
 
 import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
-import org.dma.java.awt.ImageUtils;
+import org.dma.java.awt.RenderedImageHandler;
 import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
@@ -50,7 +50,7 @@ public class ImageManager {
 
 	/** Returns the {@link Image} key based on {@link RenderedImage} hash */
 	public static String getKey(RenderedImage image) {
-		return "pixels:"+String.valueOf(Arrays.hashCode(ImageUtils.getImagePixels(image)));
+		return "pixels:"+String.valueOf(Arrays.hashCode(new RenderedImageHandler(image).getPixels()));
 	}
 
 	public interface IImageRegistry {

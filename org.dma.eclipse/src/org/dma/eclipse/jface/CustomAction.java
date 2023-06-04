@@ -21,7 +21,7 @@ package org.dma.eclipse.jface;
 import java.awt.image.BufferedImage;
 
 import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
-import org.dma.java.awt.ImageUtils;
+import org.dma.java.awt.ImageHandler;
 import org.dma.java.util.Debug;
 
 import org.eclipse.jface.action.Action;
@@ -37,12 +37,12 @@ public abstract class CustomAction extends Action {
 	}
 
 	public void setImageDescriptor(String imagePath) {
-		setImageDescriptor(ImageUtils.createImage(imagePath));
+		setImageDescriptor(ImageHandler.createImage(imagePath));
 	}
 
 	@Deprecated
-	void setImageDescriptor(String imagePath, int imageSize) {
-		setImageDescriptor(ImageUtils.createImage(imagePath, imageSize));
+	void setImageDescriptor(String imagePath, int size) {
+		setImageDescriptor(new ImageHandler(imagePath).resize(size));
 	}
 
 	public void setImageDescriptor(BufferedImage image) {

@@ -24,9 +24,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
-import org.dma.eclipse.core.BundleUtils;
 import org.dma.eclipse.swt.graphics.ImageManager;
-import org.dma.java.awt.ImageUtils;
+import org.dma.java.awt.ImageHandler;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.swt.graphics.Image;
@@ -45,12 +44,8 @@ public class Activator extends Plugin {
 	public static final String PLUGIN_NAME = PLUGIN_ID+" "+new Version(
 			PLUGIN_VERSION.getMajor(), PLUGIN_VERSION.getMinor(), PLUGIN_VERSION.getMicro());
 
-	public static String pathResolver(String relativePath) {
-		return BundleUtils.pathResolver(PLUGIN_BUNDLE, relativePath);
-	}
-
 	public static BufferedImage getBufferedImage(String imagePath) {
-		return ImageUtils.createImage(Activator.class, imagePath);
+		return ImageHandler.createImage(Activator.class, imagePath);
 	}
 
 	public static Image getImage(String imagePath) {

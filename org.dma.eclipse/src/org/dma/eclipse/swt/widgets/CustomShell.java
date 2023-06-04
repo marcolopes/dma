@@ -21,7 +21,7 @@ package org.dma.eclipse.swt.widgets;
 import java.awt.image.BufferedImage;
 
 import org.dma.eclipse.swt.graphics.ImageManager;
-import org.dma.java.awt.ImageUtils;
+import org.dma.java.awt.ImageHandler;
 import org.dma.java.math.NumericUtils;
 
 import org.eclipse.swt.SWT;
@@ -56,7 +56,7 @@ public class CustomShell extends Shell {
 
 
 	public void setImage(String imagePath) {
-		setImage(ImageUtils.createImage(imagePath));
+		setImage(ImageHandler.createImage(imagePath));
 	}
 
 	public void setImage(BufferedImage image) {

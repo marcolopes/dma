@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2020 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,59 +18,137 @@
  *******************************************************************************/
 package org.dma.java.awt;
 
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
+import java.awt.Graphics2D;
+import java.awt.Transparency;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
 
-public class ImageHandler {
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Mode;
+import org.imgscalr.Scalr.Rotation;
 
-	public static final String IMAGE_BMP = "bmp";
-	public static final String IMAGE_GIF = "gif";
-	public static final String IMAGE_JPEG = "jpg";
-	public static final String IMAGE_PNG = "png";
-
-	private final RenderedImage image;
-
-	public ImageHandler(RenderedImage image) {
-		this.image=image;
-	}
+public class ImageHandler extends RenderedImageHandler {
 
 	/**
-	 * Writes the image using {@link ImageIO}
-	 * to array, in the specified format.
+	 * Redraws the source image.
+	 * <p>
+	 * Somehow a BufferedImage created using {@link ImageIO}
+	 * will not show when converted to SWT Image
 	 */
-	public byte[] getBytes(String formatName) {
-		try{ByteArrayOutputStream baos=new ByteArrayOutputStream();
-			try{ImageOutputStream ios=ImageIO.createImageOutputStream(baos);
-				try{ImageIO.write(image, formatName, ios);
-				}finally{
-					ios.flush();
-					ios.close();
-				}return baos.toByteArray();
-			}finally{
-				baos.close();
-			}
+	public static BufferedImage drawImage(BufferedImage image) {
+		try{//Setup the rendering resources to match the source image's
+			BufferedImage result=new BufferedImage(image.getWidth(), image.getHeight(),
+					image.getTransparency()==Transparency.OPAQUE ?
+					BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB);
+			//Scale the image to the new buffer using the specified rendering hint
+			Graphics2D g2d=result.createGraphics();
+			g2d.drawImage(image, 0, 0, null);
+			g2d.dispose();
+			//Return the scaled image to the caller
+			return result;
 
-		}catch(IOException e){
+		}catch(Exception e){
 			System.err.println(e);
 		}return null;
 	}
 
-
 	/**
-	 * Writes the image using {@link ImageIO}
-	 * to file, in the specified format.
+	 * Returns a {@link BufferedImage}
+	 * encoded by the specified buffer.
 	 */
-	public boolean save(File file, String formatName) {
-		try{return ImageIO.write(image, formatName, file);
-		}catch(IOException e){
+	public static BufferedImage createImage(byte[] bytes) {
+		try{return drawImage(ImageIO.read(new ByteArrayInputStream(bytes)));
+		}catch(Exception e){
 			System.err.println(e);
-		}return false;
+		}return null;
 	}
 
+	/**
+	 * Returns a {@link BufferedImage}
+	 * encoded by the specified file at the specified path.
+	 */
+	public static BufferedImage createImage(String pathname) {
+		try{return drawImage(ImageIO.read(new File(pathname)));
+		}catch(Exception e){
+			System.err.println(e);
+		}return null;
+	}
+
+	/**
+	 * Returns a {@link BufferedImage}
+	 * encoded by the specified resource at the specified location.
+	 */
+	public static BufferedImage createImage(Class location, String resource) {
+		try{InputStream stream=location.getClassLoader().getResourceAsStream(resource);
+			try{BufferedImage image=ImageIO.read(stream);
+				return drawImage(image);
+			}finally{
+				stream.close();
+			}
+		}catch(Exception e){
+			System.err.println(e);
+		}return null;
+	}
+
+	private final BufferedImage image;
+
+	/**
+	 * Creates a {@link BufferedImage}
+	 * encoded by the specified buffer.
+	 */
+	public ImageHandler(byte[] bytes) {
+		this(createImage(bytes));
+	}
+
+	/**
+	 * Creates a {@link BufferedImage}
+	 * encoded by the specified file at the specified path.
+	 */
+	public ImageHandler(String pathname) {
+		this(createImage(pathname));
+	}
+
+	/**
+	 * Creates a {@link BufferedImage}
+	 * encoded by the specified resource at the specified location.
+	 */
+	public ImageHandler(Class location, String resource) {
+		this(createImage(location, resource));
+	}
+
+	public ImageHandler(BufferedImage image) {
+		super(image);
+		this.image=image;
+	}
+
+
+	/** @see Scalr#resize(BufferedImage, int, BufferedImageOp...) */
+	public BufferedImage resize(int targetSize,	BufferedImageOp... ops) {
+		try{return targetSize==0 ? image : Scalr.resize(image, targetSize, ops);
+		}catch(Exception e){
+			System.err.println(e);
+		}return null;
+	}
+
+	/** @see Scalr#resize(BufferedImage, Mode, int, BufferedImageOp...) */
+	public BufferedImage resize(Mode resizeMode, int targetSize, BufferedImageOp... ops) {
+		try{return targetSize==0 ? image : Scalr.resize(image, resizeMode, targetSize, ops);
+		}catch(Exception e){
+			System.err.println(e);
+		}return null;
+	}
+
+	/** @see Scalr#rotate(BufferedImage, Rotation, BufferedImageOp...) */
+	public BufferedImage rotate(Rotation rotation, BufferedImageOp... ops) {
+		try{return Scalr.rotate(image, rotation, ops);
+		}catch(Exception e){
+			System.err.println(e);
+		}return null;
+	}
 
 }

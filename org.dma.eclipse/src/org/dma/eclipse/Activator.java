@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
-import org.dma.java.awt.ImageUtils;
+import org.dma.java.awt.ImageHandler;
 import org.dma.java.util.Debug;
 
 /**
@@ -44,13 +44,13 @@ public class Activator implements BundleActivator {
 			PLUGIN_VERSION.getMajor(), PLUGIN_VERSION.getMinor(), PLUGIN_VERSION.getMicro());
 
 	/** plug-in relative path */
-	public static BufferedImage getBufferedImage(String imagePath) {
-		return ImageUtils.createImage(Activator.class, imagePath);
+	public static ImageHandler getBufferedImage(String imagePath) {
+		return new ImageHandler(Activator.class, imagePath);
 	}
 
 	/** plug-in relative path */
-	public static BufferedImage getBufferedImage(String imagePath, int iconSize) {
-		return ImageUtils.createImage(Activator.class, imagePath, iconSize);
+	public static BufferedImage getBufferedImage(String imagePath, int size) {
+		return getBufferedImage(imagePath).resize(size);
 	}
 
 	public Activator() {
