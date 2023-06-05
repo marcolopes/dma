@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,12 +44,12 @@ public class Activator extends Plugin {
 	public static final String PLUGIN_NAME = PLUGIN_ID+" "+new Version(
 			PLUGIN_VERSION.getMajor(), PLUGIN_VERSION.getMinor(), PLUGIN_VERSION.getMicro());
 
-	public static BufferedImage getBufferedImage(String imagePath) {
-		return ImageHandler.createImage(Activator.class, imagePath);
+	public static BufferedImage getBufferedImage(String resource) {
+		return ImageHandler.createImage(Activator.class, resource);
 	}
 
-	public static Image getImage(String imagePath) {
-		return ImageManager.getImage(getBufferedImage(imagePath));
+	public static Image getImage(String resource) {
+		return ImageManager.getImage(getBufferedImage(resource));
 	}
 
 	public Activator() {
