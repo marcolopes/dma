@@ -26,8 +26,13 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
+import org.dma.eclipse.core.BundleUtils;
+import org.dma.eclipse.jface.preferences.PreferenceStore;
+import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageHandler;
 import org.dma.java.util.Debug;
+
+import org.eclipse.swt.graphics.Image;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -43,14 +48,30 @@ public class Activator implements BundleActivator {
 	public static final String PLUGIN_NAME = PLUGIN_ID+" "+new Version(
 			PLUGIN_VERSION.getMajor(), PLUGIN_VERSION.getMinor(), PLUGIN_VERSION.getMicro());
 
-	/** plug-in relative path */
-	public static BufferedImage getBufferedImage(String imagePath) {
-		return ImageHandler.createImage(Activator.class, imagePath);
+	public static final PreferenceStore PLUGIN_STORE = new PreferenceStore(PLUGIN_ID+".prefs");
+
+	public static String pathResolver(String relativePath) {
+		return BundleUtils.pathResolver(PLUGIN_ID, relativePath);
 	}
 
 	/** plug-in relative path */
-	public static BufferedImage getBufferedImage(String imagePath, int size) {
-		return new ImageHandler(Activator.class, imagePath).resize(size);
+	public static BufferedImage getBufferedImage(String resource) {
+		return ImageHandler.createImage(Activator.class, resource);
+	}
+
+	/** plug-in relative path */
+	public static BufferedImage getBufferedImage(String resource, int size) {
+		return new ImageHandler(Activator.class, resource).resize(size);
+	}
+
+	/** plug-in relative path */
+	public static Image getImage(String resource) {
+		return ImageManager.getImage(getBufferedImage(resource));
+	}
+
+	/** plug-in relative path */
+	public static Image getImage(String resource, int size) {
+		return ImageManager.getImage(getBufferedImage(resource, size));
 	}
 
 	public Activator() {
