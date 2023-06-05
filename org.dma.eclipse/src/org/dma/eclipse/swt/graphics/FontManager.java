@@ -22,6 +22,7 @@ package org.dma.eclipse.swt.graphics;
 
 import org.dma.java.util.Debug;
 
+import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Device;
@@ -43,7 +44,7 @@ public class FontManager {
 		Font getItalic(String symbolicName);
 	}
 
-	private static class CustomFontRegistry implements IFontRegistry {
+	private static class HeadlessFontRegistry implements IFontRegistry {
 		static{Debug.out();}
 		@Override
 		public Font get(String symbolicName) {return null;}
@@ -53,11 +54,11 @@ public class FontManager {
 		public Font getItalic(String symbolicName) {return null;}
 	}
 
-	public static class FontRegistry extends org.eclipse.jface.resource.FontRegistry implements IFontRegistry {
+	public static class CustomFontRegistry extends FontRegistry implements IFontRegistry {
 		static{Debug.out();}
 	}
 
-	public static final IFontRegistry REGISTRY = Display.getCurrent()==null ? new CustomFontRegistry() : new FontRegistry();
+	public static final IFontRegistry REGISTRY = Display.getCurrent()==null ? new HeadlessFontRegistry() : new CustomFontRegistry();
 
 	/*
 	 * Fonts

@@ -20,6 +20,7 @@ package org.dma.eclipse.swt.graphics;
 
 import org.dma.java.util.Debug;
 
+import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
@@ -46,7 +47,7 @@ public class ColorManager {
 		Color getColor(RGB rgb);
 	}
 
-	private static class CustomColorRegistry implements IColorRegistry {
+	private static class HeadlessColorRegistry implements IColorRegistry {
 		static{Debug.out();}
 		@Override
 		public Color get(String symbolicName) {return null;}
@@ -60,7 +61,7 @@ public class ColorManager {
 		public Color getColor(RGB rgb) {return null;}
 	}
 
-	public static class ColorRegistry extends org.eclipse.jface.resource.ColorRegistry implements IColorRegistry {
+	public static class CustomColorRegistry extends ColorRegistry implements IColorRegistry {
 		static{Debug.out();}
 		@Override
 		public Color getColor(int systemColorID) {
@@ -78,19 +79,19 @@ public class ColorManager {
 		}
 	}
 
-	public static final IColorRegistry REGISTRY = Display.getCurrent()==null ? new CustomColorRegistry() : new ColorRegistry();
+	public static final IColorRegistry REGISTRY = Display.getCurrent()==null ? new HeadlessColorRegistry() : new CustomColorRegistry();
 
-	/** @see ColorRegistry#getColor(int) */
+	/** @see IColorRegistry#getColor(int) */
 	public static Color getColor(int systemColorID) {
 		return REGISTRY.getColor(systemColorID);
 	}
 
-	/** @see ColorRegistry#getColor(int, int, int) */
+	/** @see IColorRegistry#getColor(int, int, int) */
 	public static Color getColor(int red, int green, int blue) {
 		return REGISTRY.getColor(red, green, blue);
 	}
 
-	/** @see ColorRegistry#getColor(RGB) */
+	/** @see IColorRegistry#getColor(RGB) */
 	public static Color getColor(RGB rgb) {
 		return REGISTRY.getColor(rgb);
 	}

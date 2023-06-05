@@ -26,6 +26,7 @@ import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
 import org.dma.java.awt.RenderedImageHandler;
 import org.dma.java.util.Debug;
 
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -39,8 +40,8 @@ public class ImageManager {
 	}
 
 	/** Returns the {@link Image} key based on image-path string */
-	public static String getKey(String imagePath) {
-		return "path:"+imagePath;
+	public static String getKey(String pathname) {
+		return "path:"+pathname;
 	}
 
 	/** Returns the {@link Image} key based on image-bytes hash */
@@ -63,14 +64,14 @@ public class ImageManager {
 		/** Returns the CACHED {@link Image} or a new one if not CACHED */
 		Image getImage(Integer size);
 		/** Returns the CACHED {@link Image} or a new one if not CACHED */
-		Image getImage(String imagePath);
+		Image getImage(String pathname);
 		/** Returns the CACHED {@link Image} or a new one if not CACHED */
 		Image getImage(byte[] bytes);
 		/** Returns the CACHED {@link Image} or a new one if not CACHED */
 		Image getImage(BufferedImage bufferedImage);
 	}
 
-	private static class CustomImageRegistry implements IImageRegistry {
+	private static class HeadlessImageRegistry implements IImageRegistry {
 		static{Debug.out();}
 		@Override
 		public Image get(String key) {return null;}
@@ -81,14 +82,14 @@ public class ImageManager {
 		@Override
 		public Image getImage(Integer size) {return null;}
 		@Override
-		public Image getImage(String imagePath) {return null;}
+		public Image getImage(String pathname) {return null;}
 		@Override
 		public Image getImage(byte[] bytes) {return null;}
 		@Override
 		public Image getImage(BufferedImage bufferedImage) {return null;}
 	}
 
-	public static class ImageRegistry extends org.eclipse.jface.resource.ImageRegistry implements IImageRegistry {
+	public static class CustomImageRegistry extends ImageRegistry implements IImageRegistry {
 		static{Debug.out();}
 		@Override
 		public Image getImage(Integer size) {
@@ -106,11 +107,11 @@ public class ImageManager {
 			}return image;
 		}
 		@Override
-		public Image getImage(String imagePath) {
-			String key=getKey(imagePath);
+		public Image getImage(String pathname) {
+			String key=getKey(pathname);
 			Image image=get(key);
 			if (image==null) try{
-				put(key, image=new CustomImageDescriptor(imagePath).createImage());
+				put(key, image=new CustomImageDescriptor(pathname).createImage());
 			}catch(Exception e){
 				System.err.println(e);
 			}return image;
@@ -138,27 +139,27 @@ public class ImageManager {
 		}
 	}
 
-	public static final IImageRegistry REGISTRY = Display.getCurrent()==null ? new CustomImageRegistry() : new ImageRegistry();
+	public static final IImageRegistry REGISTRY = Display.getCurrent()==null ? new HeadlessImageRegistry() : new CustomImageRegistry();
 
 	/**
 	 * It can be used as placeholder for missing image.
-	 * @see ImageRegistry#getImage(Integer)
+	 * @see IImageRegistry#getImage(Integer)
 	 */
 	public static Image getImage(Integer size) {
 		return REGISTRY.getImage(size);
 	}
 
-	/** @see ImageRegistry#getImage(String) */
-	public static Image getImage(String imagePath) {
-		return REGISTRY.getImage(imagePath);
+	/** @see IImageRegistry#getImage(String) */
+	public static Image getImage(String pathname) {
+		return REGISTRY.getImage(pathname);
 	}
 
-	/** @see ImageRegistry#getImage(byte[]) */
+	/** @see IImageRegistry#getImage(byte[]) */
 	public static Image getImage(byte[] bytes) {
 		return REGISTRY.getImage(bytes);
 	}
 
-	/** @see ImageRegistry#getImage(BufferedImage) */
+	/** @see IImageRegistry#getImage(BufferedImage) */
 	public static Image getImage(BufferedImage bufferedImage) {
 		return REGISTRY.getImage(bufferedImage);
 	}

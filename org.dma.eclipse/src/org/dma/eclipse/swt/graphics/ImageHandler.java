@@ -41,10 +41,10 @@ public class ImageHandler {
 	 * Saves an {@link Image}
 	 * to file in the specified {@link SWT} format.
 	 */
-	public boolean save(String imagePath, int format) {
+	public boolean save(String filename, int format) {
 		try{ImageLoader saver=new ImageLoader();
 			saver.data=new ImageData[]{image.getImageData()};
-			saver.save(imagePath, format);
+			saver.save(filename, format);
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;

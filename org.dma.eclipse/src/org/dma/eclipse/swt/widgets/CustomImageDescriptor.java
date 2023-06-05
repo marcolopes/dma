@@ -110,8 +110,8 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the the file at the specified path.
 	 */
-	public CustomImageDescriptor(String imagePath) throws FileNotFoundException {
-		this(getImageData(new CustomFile(imagePath).asInputStream()));
+	public CustomImageDescriptor(String pathname) throws FileNotFoundException {
+		this(getImageData(new CustomFile(pathname).asInputStream()));
 	}
 
 	/**

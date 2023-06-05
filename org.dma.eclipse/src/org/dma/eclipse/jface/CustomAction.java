@@ -36,13 +36,13 @@ public abstract class CustomAction extends Action {
 		setId(ID);
 	}
 
-	public void setImageDescriptor(String imagePath) {
-		setImageDescriptor(ImageHandler.createImage(imagePath));
+	public void setImageDescriptor(String pathname) {
+		setImageDescriptor(ImageHandler.createImage(pathname));
 	}
 
 	@Deprecated
-	void setImageDescriptor(String imagePath, int size) {
-		setImageDescriptor(new ImageHandler(imagePath).resize(size));
+	void setImageDescriptor(String pathname, int size) {
+		setImageDescriptor(new ImageHandler(pathname).resize(size));
 	}
 
 	public void setImageDescriptor(BufferedImage image) {

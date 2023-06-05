@@ -55,8 +55,8 @@ public class CustomShell extends Shell {
 	}
 
 
-	public void setImage(String imagePath) {
-		setImage(ImageHandler.createImage(imagePath));
+	public void setImage(String pathname) {
+		setImage(ImageHandler.createImage(pathname));
 	}
 
 	public void setImage(BufferedImage image) {

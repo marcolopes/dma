@@ -47,11 +47,11 @@ public class CustomTrayItem extends TrayItem {
 	private final Shell parent;
 
 	/** @see TrayItem#TrayItem(org.eclipse.swt.widgets.Tray, int) */
-	public CustomTrayItem(Shell parent, String name, String imagePath, boolean visible) {
+	public CustomTrayItem(Shell parent, String name, String pathname, boolean visible) {
 		super(parent.getDisplay().getSystemTray(), SWT.NONE);
 		this.parent=parent;
 		setToolTipText(name);
-		setImage(ImageManager.getImage(imagePath));
+		setImage(ImageManager.getImage(pathname));
 		addListener(SWT.Selection, maximizeListener);
 		setVisible(visible);
 	}

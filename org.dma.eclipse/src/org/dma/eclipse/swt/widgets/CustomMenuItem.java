@@ -44,13 +44,13 @@ public class CustomMenuItem extends MenuItem {
 	}
 
 
-	public void setImage(String imagePath) {
-		setImage(ImageManager.getImage(imagePath));
+	public void setImage(String pathname) {
+		setImage(ImageManager.getImage(pathname));
 	}
 
 	@Deprecated
-	void setImage(String imagePath, int size) {
-		setImage(new ImageHandler(imagePath).resize(size));
+	void setImage(String pathname, int size) {
+		setImage(new ImageHandler(pathname).resize(size));
 	}
 
 	public void setImage(BufferedImage image) {
