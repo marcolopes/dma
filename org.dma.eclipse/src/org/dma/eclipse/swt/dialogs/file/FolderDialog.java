@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package org.dma.eclipse.swt.dialogs.file;
 import java.io.File;
 import java.util.Arrays;
 
+import org.dma.java.io.Folder;
 import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
@@ -39,24 +40,23 @@ public class FolderDialog extends DirectoryDialog {
 
 	public FolderDialog(Shell parent, String...extensions) {
 		super(parent, SWT.SAVE);
-		Debug.out("extensions: "+Arrays.asList(extensions));
+		Debug.out("extensions", Arrays.asList(extensions));
 	}
 
 
 	/** @see DirectoryDialog#setFilterPath(String) */
-	public File folderPicker(String defaultPath) {
+	public File folderPicker(Folder defaultPath) {
 
 		try{
 			// FileDialog SWT 3.7 BUG
 			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
 			// OSX 10.9 workaround
 			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
-			setFilterPath(defaultPath==null ? "." : defaultPath);
+			setFilterPath(defaultPath==null ? "." : defaultPath.getAbsolutePath());
 
 			return new File(open());
 
 		}catch(Exception e){}
-
 		return null;
 
 	}

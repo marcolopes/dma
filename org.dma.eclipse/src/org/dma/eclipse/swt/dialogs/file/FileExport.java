@@ -44,8 +44,8 @@ public class FileExport extends FileDialog {
 	/** @see FileDialog#setFilterExtensions(String[]) */
 	public FileExport(Shell parent, String...extensions) {
 		super(parent, SWT.SAVE);
+		Debug.out("extensions", Arrays.asList(extensions));
 		setFilterExtensions(extensions);
-		Debug.out("extensions: "+Arrays.asList(extensions));
 	}
 
 
@@ -63,7 +63,6 @@ public class FileExport extends FileDialog {
 			return new File(open());
 
 		}catch(Exception e){}
-
 		return null;
 
 	}
