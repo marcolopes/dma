@@ -27,7 +27,6 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
 import org.dma.eclipse.core.BundleUtils;
-import org.dma.eclipse.jface.preferences.PreferenceStore;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageHandler;
 import org.dma.java.util.Debug;
@@ -47,8 +46,6 @@ public class Activator implements BundleActivator {
 
 	public static final String PLUGIN_NAME = PLUGIN_ID+" "+new Version(
 			PLUGIN_VERSION.getMajor(), PLUGIN_VERSION.getMinor(), PLUGIN_VERSION.getMicro());
-
-	public static final PreferenceStore PLUGIN_STORE = new PreferenceStore(PLUGIN_ID+".prefs");
 
 	public static String pathResolver(String relativePath) {
 		return BundleUtils.pathResolver(PLUGIN_ID, relativePath);
