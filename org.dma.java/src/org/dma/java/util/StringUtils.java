@@ -541,7 +541,7 @@ public class StringUtils {
 	/** @see WordUtils#wrap(String, int, String, boolean) */
 	public static StringList wrap(String string, int wrapLength, String newLineStr) {
 
-		return StringUtils.split(WordUtils.wrap(string, wrapLength, newLineStr, true), newLineStr);
+		return split(WordUtils.wrap(string, wrapLength, newLineStr, true), newLineStr);
 
 	}
 
