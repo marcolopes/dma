@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.WordUtils;
+
 import org.dma.java.time.Chronograph;
 
 public class StringUtils {
@@ -532,6 +534,14 @@ public class StringUtils {
 		// Avoid last empty element?
 		while(resultSize>0 && list.get(resultSize-1).length()==0) resultSize--;
 		return new StringList(list.subList(0, resultSize));
+
+	}
+
+
+	/** @see WordUtils#wrap(String, int, String, boolean) */
+	public static StringList wrap(String string, int wrapLength, String newLineStr) {
+
+		return StringUtils.split(WordUtils.wrap(string, wrapLength, newLineStr, false), newLineStr);
 
 	}
 
