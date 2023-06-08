@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.WordUtils;
@@ -521,7 +520,7 @@ public class StringUtils {
 
 		int beginIndex=0;
 		int endIndex=0;
-		List<String> list=new ArrayList();
+		StringList list=new StringList();
 		while((endIndex=string.indexOf(searchFor, beginIndex))!=-1){
 		    list.add(string.substring(beginIndex, endIndex));
 		    beginIndex=endIndex+1;
@@ -533,7 +532,7 @@ public class StringUtils {
 		int resultSize=list.size();
 		// Avoid last empty element?
 		while(resultSize>0 && list.get(resultSize-1).length()==0) resultSize--;
-		return new StringList(list.subList(0, resultSize));
+		return list.subList(0, resultSize);
 
 	}
 
