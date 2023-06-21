@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.Random;
 
 import org.dma.java.security.ServiceCertificates;
+import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.StockMovementServiceHandler;
 
@@ -32,6 +33,11 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.MovementType;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.ResponseStatus;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovement;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementResponse;
+import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+import pt.gov.portaldasfinancas.servicos.series.types.MeioProcessamentoType;
+import pt.gov.portaldasfinancas.servicos.series.types.TipoDocType;
+import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
+import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesType;
 
 /**
  * Teste de comunicacao de DOCUMENTOS TRANSPORTE
@@ -54,7 +60,7 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
 	}
 
-	public static StockMovement build() throws Exception {
+	public static StockMovement build(SeriesInfo info) throws Exception {
 
 		Line line = new Line();
 		line.setProductDescription("Artigo");
@@ -69,8 +75,8 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 		request.setCompanyName("Empresa");
 		request.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
 		int numero=new Random().nextInt(999999);
-		request.setDocumentNumber("CGT 2013/"+numero);
-		request.setATCUD("AA23456789-"+numero);
+		request.setDocumentNumber(info.getTipoDoc()+" "+info.getSerie()+"/"+numero);
+		request.setATCUD(info.getCodValidacaoSerie()+"-"+numero);
 		request.setMovementStatus(MovementStatus.N);
 		request.setMovementType(MovementType.GT);
 		request.setMovementDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
@@ -127,7 +133,11 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 		try{
 			StockMovementServiceTest service = new StockMovementServiceTest();
 
-			print(service.register(build()));
+			print(service.register(build(new SeriesServiceTest().registar(
+					new RegistarSeriesType(
+							new RandomValue().numbers(SeriesServiceTest.SeriemaxLength),
+							TipoSerieType.N, TipoDocType.GT, 1, TimeDateUtils.getCurrentDate(),
+							SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)))));
 
 		}catch(Exception e){
 			e.printStackTrace();
