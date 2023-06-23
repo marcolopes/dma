@@ -60,7 +60,7 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
 	}
 
-	public static StockMovement build(SeriesInfo info) throws Exception {
+	public static StockMovement build(int numero, SeriesInfo info) throws Exception {
 
 		Line line = new Line();
 		line.setProductDescription("Artigo");
@@ -74,7 +74,6 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 		request.setTaxRegistrationNumber(RequesterTaxID);
 		request.setCompanyName("Empresa");
 		request.setCompanyAddress(createAdressStructure("Rua","Localidade","1000-001","PT"));
-		int numero=new Random().nextInt(999999);
 		request.setDocumentNumber(info.getTipoDoc()+" "+info.getSerie()+"/"+numero);
 		request.setATCUD(info.getCodValidacaoSerie()+"-"+numero);
 		request.setMovementStatus(MovementStatus.N);
@@ -113,8 +112,8 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 		if (response!=null) try{
 
-			System.out.println(response.getATDocCodeID());
-			System.out.println(response.getDocumentNumber());
+			System.out.println("Document Code: "+response.getATDocCodeID());
+			System.out.println("Document Number: "+response.getDocumentNumber());
 			for(ResponseStatus status: response.getResponseStatus()){
 				System.out.print(status.getReturnCode());
 				System.out.print(" - ");
@@ -131,13 +130,15 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 	public static void main(String[] args) {
 
 		try{
-			StockMovementServiceTest service = new StockMovementServiceTest();
-
-			print(service.register(build(new SeriesServiceTest().registar(
-					new RegistarSeriesType(
+			StockMovement request=build(new Random().nextInt(999999),
+					new SeriesServiceTest().registar(new RegistarSeriesType(
 							new RandomValue().numbers(SeriesServiceTest.SeriemaxLength),
 							TipoSerieType.N, TipoDocType.GT, 1, TimeDateUtils.getCurrentDate(),
-							SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)))));
+							SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)));
+
+			StockMovementServiceTest service=new StockMovementServiceTest();
+
+			print(service.register(request));
 
 		}catch(Exception e){
 			e.printStackTrace();

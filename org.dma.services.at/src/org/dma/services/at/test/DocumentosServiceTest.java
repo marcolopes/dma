@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.math.BigInteger;
 import java.util.Random;
 
 import org.dma.java.security.ServiceCertificates;
+import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.proxy.DocumentosServiceHandler;
 
@@ -38,6 +39,11 @@ import pt.gov.portaldasfinancas.servicos.documentos.Tax;
 import pt.gov.portaldasfinancas.servicos.documentos.TaxType;
 import pt.gov.portaldasfinancas.servicos.documentos.types.DeleteReasonType;
 import pt.gov.portaldasfinancas.servicos.documentos.types.InvoiceStatusType;
+import pt.gov.portaldasfinancas.servicos.series.SeriesInfo;
+import pt.gov.portaldasfinancas.servicos.series.types.MeioProcessamentoType;
+import pt.gov.portaldasfinancas.servicos.series.types.TipoDocType;
+import pt.gov.portaldasfinancas.servicos.series.types.TipoSerieType;
+import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesType;
 
 /**
  * Teste de comunicacao de DOCUMENTOS
@@ -66,16 +72,15 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
 	}
 
-	public static RegisterInvoiceRequest build() throws Exception {
+	public static RegisterInvoiceRequest build(int numero, SeriesInfo info) throws Exception {
 
 		InvoiceStatus status = new InvoiceStatus();
 		status.setInvoiceStatus(InvoiceStatusType.N.value());
 		status.setInvoiceStatusDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceStatusDate));
 
 		InvoiceDataType invoice = new InvoiceDataType();
-		int numero=new Random().nextInt(999999);
-		invoice.setInvoiceNo("CFA 2022/"+numero);
-		invoice.setATCUD("AA23456789-"+numero);
+		invoice.setInvoiceNo(info.getTipoDoc()+" "+info.getSerie()+"/"+numero);
+		invoice.setATCUD(info.getCodValidacaoSerie()+"-"+numero);
 		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
 		invoice.setInvoiceType(InvoiceTypeType.FT);
 		invoice.setSelfBillingIndicator(BigInteger.ZERO);
@@ -142,9 +147,13 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 	public static void main(String[] args) {
 
 		try{
-			DocumentosServiceTest service = new DocumentosServiceTest();
+			RegisterInvoiceRequest request=build(new Random().nextInt(999999),
+					new SeriesServiceTest().registar(new RegistarSeriesType(
+							new RandomValue().numbers(SeriesServiceTest.SeriemaxLength),
+							TipoSerieType.N, TipoDocType.FT, 1, TimeDateUtils.getCurrentDate(),
+							SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)));
 
-			RegisterInvoiceRequest request = build();
+			DocumentosServiceTest service=new DocumentosServiceTest();
 
 			print(service.registerInvoice(request));
 			print(service.changeInvoiceStatus(request, InvoiceStatusType.A));
