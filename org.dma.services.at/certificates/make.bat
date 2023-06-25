@@ -2,7 +2,6 @@
 echo *******************************************************************************
 echo * Marco Lopes (marcolopespt@gmail.com)
 echo * Importacao da chave publica para KEY STORE
-echo * DEPRECATED! Para efeitos didaticos apenas!
 echo * https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Faturacao/Paginas/default.aspx
 echo *******************************************************************************
 setlocal
@@ -38,7 +37,7 @@ echo IMPORTA A CHAVE PUBLICA DO CERTIFICADO AT (formato:JKS, alias:sapubkey)
 del %OUTPUT_FOLDER%\ChavePublicaAT.jks
 keytool -importcert -noprompt -alias "sapubkey" -file %OUTPUT_FOLDER%\ChavePublicaAT.cer -keystore %OUTPUT_FOLDER%\ChavePublicaAT.jks -storepass 123456
 
-echo IMPORTA A TRUST STORE (formato:JKS)
+echo IMPORTA A TRUST STORE (formato:JKS, alias:portaldasfinancas)
 del %OUTPUT_FOLDER%\TrustStoreAT.jks
 keytool -importcert -noprompt -alias "portaldasfinancas" -file %OUTPUT_FOLDER%\TrustStoreAT.cer -keystore %OUTPUT_FOLDER%\TrustStoreAT.jks -storepass 123456
 
