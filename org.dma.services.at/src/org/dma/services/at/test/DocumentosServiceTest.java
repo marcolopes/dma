@@ -50,6 +50,8 @@ import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesTyp
  */
 public class DocumentosServiceTest extends DocumentosServiceHandler {
 
+	public static final int DocumentNumberMax = 999999;
+
 	public static final String EFaturaMDVersion = "0.0.1";
 
 	public static final Integer RequesterTaxID = 599999993;
@@ -147,9 +149,9 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 	public static void main(String[] args) {
 
 		try{
-			RegisterInvoiceRequest request=build(new Random().nextInt(999999),
+			RegisterInvoiceRequest request=build(new Random().nextInt(DocumentNumberMax)+1,
 					new SeriesServiceTest().registar(new RegistarSeriesType(
-							new RandomValue().numbers(SeriesServiceTest.SeriemaxLength),
+							new RandomValue().numbers(SeriesServiceTest.SerieMaxLength),
 							TipoSerieType.N, TipoDocType.FT, 1, TimeDateUtils.getCurrentDate(),
 							SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)));
 

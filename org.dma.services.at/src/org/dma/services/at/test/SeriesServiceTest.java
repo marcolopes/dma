@@ -46,7 +46,7 @@ import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesTyp
  */
 public class SeriesServiceTest extends SeriesServiceHandler {
 
-	public static final int SeriemaxLength = 35;
+	public static final int SerieMaxLength = 35;
 
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
 
@@ -114,7 +114,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 	public SeriesInfo registar() {
 
-		return registar(new RandomValue().numbers(SeriemaxLength));
+		return registar(new RandomValue().numbers(SerieMaxLength));
 
 	}
 

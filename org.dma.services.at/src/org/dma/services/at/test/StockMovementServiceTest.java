@@ -44,6 +44,8 @@ import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesTyp
  */
 public class StockMovementServiceTest extends StockMovementServiceHandler {
 
+	public static final int DocumentNumberMax = 999999;
+
 	public static final Integer RequesterTaxID = 599999993;
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
@@ -130,9 +132,9 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 	public static void main(String[] args) {
 
 		try{
-			StockMovement request=build(new Random().nextInt(999999),
+			StockMovement request=build(new Random().nextInt(DocumentNumberMax)+1,
 					new SeriesServiceTest().registar(new RegistarSeriesType(
-							new RandomValue().numbers(SeriesServiceTest.SeriemaxLength),
+							new RandomValue().numbers(SeriesServiceTest.SerieMaxLength),
 							TipoSerieType.N, TipoDocType.GT, 1, TimeDateUtils.getCurrentDate(),
 							SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)));
 
