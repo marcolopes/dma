@@ -27,7 +27,7 @@ import org.eclipse.jetty.server.ServerConnector;
 
 public class JettyParameters extends HttpServerHandler {
 
-	//Exceptions
+	//EXCEPTIONS
 	public static final IllegalArgumentException HOST_NOT_DEFINED_EXCEPTION = new IllegalArgumentException("host is not defined");
 	public static final IllegalArgumentException INVALID_PORT_EXCEPTION = new IllegalArgumentException("port is invalid");
 
