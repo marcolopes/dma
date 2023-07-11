@@ -55,8 +55,8 @@ public class SystemUtils {
 
 	/** @see org.apache.commons.lang.SystemUtils#JAVA_VERSION */
 	public static final String JAVA_VERSION = org.apache.commons.lang.SystemUtils.JAVA_VERSION;
-	/** Java runtime name (ARCH + VERSION) */
-	public static final String JAVA_NAME = "Java "+JAVA_VERSION+" "+OS_NAME;
+	/** Java runtime name */
+	public static final String JAVA_NAME = "Java "+JAVA_VERSION;
 
 	/** Java runtime architecture */
 	public static final String JAVA_ARCH = System.getProperty("sun.arch.data.model");
