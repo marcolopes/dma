@@ -476,7 +476,7 @@ public class StringUtils {
 	}
 
 
-	public static String removeChars(String string, char...searchFor) {
+	public static String removeAll(String string, char...searchFor) {
 
 		StringBuilder result=new StringBuilder(string.length());
 		final String CHARS=new String(searchFor);
@@ -484,13 +484,6 @@ public class StringUtils {
 			char at=string.charAt(i);
 			if(ocurrences(CHARS, at)==0) result.append(at);
 		}return result.toString();
-
-	}
-
-
-	public static String removeChars(String string, String searchFor) {
-
-		return removeChars(string, searchFor.toCharArray());
 
 	}
 

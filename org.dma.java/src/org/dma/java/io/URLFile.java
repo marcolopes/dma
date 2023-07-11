@@ -31,7 +31,7 @@ public class URLFile extends URLHandler {
 	public static String normalize(String string) {
 		//http://www.w3.org/Addressing/URL/uri-spec.html
 		String plain=StringUtils.replaceAll(StringUtils.unaccent(string), " ", "+");
-		return StringUtils.removeChars(plain, "\n\r\t\f\0");
+		return StringUtils.removeAll(plain, "\n\r\t\f\0");
 	}
 
 	/** @see URLHandler#getURL(String, String...) */
