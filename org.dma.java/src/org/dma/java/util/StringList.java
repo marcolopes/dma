@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,11 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class StringList extends ArrayList<String> implements List<String> {
+public class StringList extends ArrayList<String> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -73,6 +74,11 @@ public class StringList extends ArrayList<String> implements List<String> {
 	public StringList subList(int fromIndex, int toIndex) {
 		return fromIndex<0 || toIndex>size() || fromIndex>toIndex ?
 				new StringList(0) : new StringList(super.subList(fromIndex, toIndex));
+	}
+
+
+	public List<String> unmodifiable() {
+		return Collections.unmodifiableList(this);
 	}
 
 
@@ -232,6 +238,16 @@ public class StringList extends ArrayList<String> implements List<String> {
 			remove.add(get(index));
 		}removeAll(remove);
 		return this;
+
+	}
+
+
+	/** Removes all element occurences from this list */
+	public StringList remove(String element) {
+
+		while(contains(element)){
+			super.remove(element);
+		}return this;
 
 	}
 
