@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,10 @@ public class CheckVatAddress {
 	private final String street;
 	private final String zipcode;
 	private final String city;
+
+	public CheckVatAddress() {
+		this("");
+	}
 
 	public CheckVatAddress(String street) {
 		this(street, "", "");
