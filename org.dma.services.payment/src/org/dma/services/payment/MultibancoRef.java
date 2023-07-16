@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-import org.dma.java.input.FieldFormat.SEPARATOR;
-import org.dma.java.util.StringList;
+import org.dma.java.util.MessageList;
 import org.dma.java.util.StringUtils;
 
 public class MultibancoRef {
@@ -76,14 +75,13 @@ public class MultibancoRef {
 	}
 
 	public String toText() {
-		StringList list=new StringList();
-		list.add("PAGAMENTO MULTIBANCO");
-		list.add(StringUtils.replicas("─", 10+13));
-		list.add(StringUtils.padRight("ENTIDADE",10,' ') + StringUtils.padLeft(getEntityToText(),13,' '));
-		list.add(StringUtils.padRight("REFERENCIA",10,' ') + StringUtils.padLeft(getRef9ToText(),13,' '));
-		list.add(StringUtils.padRight("MONTANTE",10,' ') + StringUtils.padLeft(getValueToText(),13,' '));
-		list.add(StringUtils.replicas("─", 10+13));
-		return list.concat(SEPARATOR.LINE.value);
+		return new MessageList(
+				"PAGAMENTO MULTIBANCO",
+				StringUtils.replicas("─", 10+13),
+				StringUtils.padRight("ENTIDADE",10,' ') + StringUtils.padLeft(getEntityToText(),13,' '),
+				StringUtils.padRight("REFERENCIA",10,' ') + StringUtils.padLeft(getRef9ToText(),13,' '),
+				StringUtils.padRight("MONTANTE",10,' ') + StringUtils.padLeft(getValueToText(),13,' '),
+				StringUtils.replicas("─", 10+13)).toString();
 	}
 
 	@Override

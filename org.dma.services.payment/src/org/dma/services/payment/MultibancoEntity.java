@@ -135,7 +135,7 @@ public class MultibancoEntity {
 
 		validate(value);
 
-		String ref9=StringUtils.removeChars(ref, ' ');
+		String ref9=StringUtils.removeAll(ref, ' ');
 		String id7=ref9.substring(0, 7);
 		String checkDigits=ref9.substring(7, 9);
 
