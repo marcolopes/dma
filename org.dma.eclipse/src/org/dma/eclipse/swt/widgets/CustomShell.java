@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 public class CustomShell extends Shell {
@@ -45,6 +47,12 @@ public class CustomShell extends Shell {
 	/** MODAL (block) + TITLE + CLOSE + RESIZE + MIN + MAX */
 	public static final int STYLE_RESIZABLE = STYLE_DEFAULT | SWT.RESIZE | SWT.MIN | SWT.MAX;
 
+	private final Listener traverseListener=new Listener() {
+		public void handleEvent(Event e) {
+			e.doit=e.detail!=SWT.TRAVERSE_ESCAPE;
+		}
+	};
+
 	public CustomShell(int style) {
 		this(null, style);
 	}
@@ -55,39 +63,23 @@ public class CustomShell extends Shell {
 	}
 
 
+	/**
+	 * Allow shell to be closed with ESCcape key
+	 *
+	 * @param allow true (default) or false
+	 */
+	public void allowEscape(boolean allow) {
+		if (allow) removeListener(SWT.Traverse, traverseListener);
+		else addListener(SWT.Traverse, traverseListener);
+	}
+
+
 	public void setImage(String pathname) {
 		setImage(ImageHandler.createImage(pathname));
 	}
 
 	public void setImage(BufferedImage image) {
 		setImage(ImageManager.getImage(image));
-	}
-
-
-	@Override
-	public void open() {
-		super.open();
-		setFocus();
-	}
-
-
-	public void sleep() {
-		while(!isDisposed()){
-			if (!getDisplay().readAndDispatch()) getDisplay().sleep();
-		}
-	}
-
-
-	public void openAndSleep() {
-		open();
-		sleep();
-	}
-
-
-	@Override
-	public void pack() {
-		super.pack();
-		setMinimumSize();
 	}
 
 
@@ -127,6 +119,33 @@ public class CustomShell extends Shell {
 		GridLayout layout=new GridLayout();
 		setLayout(layout);
 		return layout;
+	}
+
+
+	@Override
+	public void pack() {
+		super.pack();
+		setMinimumSize();
+	}
+
+
+	@Override
+	public void open() {
+		super.open();
+		setFocus();
+	}
+
+
+	public void sleep() {
+		while(!isDisposed()){
+			if (!getDisplay().readAndDispatch()) getDisplay().sleep();
+		}
+	}
+
+
+	public void openAndSleep() {
+		open();
+		sleep();
 	}
 
 

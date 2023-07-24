@@ -85,8 +85,7 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 				case SEVERITY_WARNING: System.out.print("WARNING"); break;
 				case SEVERITY_ERROR: System.out.print("ERROR"); break;
 				case SEVERITY_CANCEL: System.out.print("CANCEL"); break;
-				}
-				System.out.println(") = "+get(key));
+				}System.out.println(") = "+get(key));
 			}
 
 		}

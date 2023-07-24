@@ -67,7 +67,7 @@ public class KeyboardSupport implements KeyListener {
 	private void addSupport(CellEditor editor, final int column) {
 
 		/* Editor key listener */
-		editor.getControl().addKeyListener(new KeyAdapter(){
+		editor.getControl().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {}
 			@Override
@@ -75,7 +75,7 @@ public class KeyboardSupport implements KeyListener {
 		});
 
 		/* Editor traverse listener */
-		editor.getControl().addTraverseListener(new TraverseListener(){
+		editor.getControl().addTraverseListener(new TraverseListener() {
 			@Override
 			public void keyTraversed(TraverseEvent e) {
 				switch(e.detail) {

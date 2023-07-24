@@ -22,21 +22,18 @@ package org.dma.eclipse.swt.input.support;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Control;
 
 public class FocusSupport {
 
-	private final FocusListener focusListener = new FocusListener() {
+	private final FocusListener focusListener = new FocusAdapter() {
 		@Override
 		public void focusGained(FocusEvent e) {
-			if(e.widget instanceof Control) {
-				control=(Control)e.widget;
-			}
+			if(e.widget instanceof Control) control=(Control)e.widget;
 		}
-		@Override
-		public void focusLost(FocusEvent e) {}
 	};
 
 	private final List<Control> controlList = new ArrayList();

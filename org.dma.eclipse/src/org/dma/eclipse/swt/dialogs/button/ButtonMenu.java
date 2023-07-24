@@ -90,7 +90,7 @@ public abstract class ButtonMenu extends CustomShell {
 			button.setText(text);
 			button.setData(index++);
 
-			button.addKeyListener(new KeyAdapter(){
+			button.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
 					switch(e.keyCode){

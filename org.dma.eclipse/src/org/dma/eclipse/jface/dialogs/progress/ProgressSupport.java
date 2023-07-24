@@ -119,7 +119,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			});
 
 		}catch(SWTException e){
-			e.printStackTrace();
+			System.err.println(e);
 			return run(true);
 		}catch(InvocationTargetException e){
 			Debug.err("InvocationTargetException");

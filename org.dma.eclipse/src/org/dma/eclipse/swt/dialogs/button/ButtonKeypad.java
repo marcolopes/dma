@@ -125,7 +125,7 @@ public abstract class ButtonKeypad extends CustomShell {
 		display.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		display.setForeground(ColorManager.getColor(SWT.COLOR_RED));
 		display.setFontSize(20);
-		display.addKeyListener(new KeyAdapter(){
+		display.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				switch(e.keyCode){

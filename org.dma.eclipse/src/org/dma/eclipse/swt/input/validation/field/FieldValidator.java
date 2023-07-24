@@ -27,8 +27,8 @@ import org.dma.eclipse.swt.input.validation.ValidationManager;
 import org.dma.java.util.Debug;
 import org.dma.java.util.SystemUtils;
 
+import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -56,14 +56,10 @@ public abstract class FieldValidator implements IValidator {
 		}binding.update();
 
 		//listeners
-		binding.addFocusListener(new FocusListener() {
+		binding.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				Debug.out(manager.validateAll());
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				//Debug.out(manager.validateAll());
 			}
 		});
 

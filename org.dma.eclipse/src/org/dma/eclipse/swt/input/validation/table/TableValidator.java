@@ -27,8 +27,10 @@ import org.dma.eclipse.swt.input.validation.ValidationManager;
 import org.dma.java.util.Debug;
 
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Table;
@@ -38,19 +40,15 @@ public abstract class TableValidator<T> implements IValidator {
 
 	public abstract void validateLine(T element);
 
-	private final SelectionListener selectionListener=new SelectionListener() {
+	private final SelectionListener selectionListener=new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			Debug.err("TABLE");
 			if (!viewer.isCellEditorActive()) validateTable();
 		}
-		@Override
-		public void widgetDefaultSelected(SelectionEvent e) {}
 	};
 
-	private final FocusListener focusListener=new FocusListener(){
-		@Override
-		public void focusGained(FocusEvent e) {}
+	private final FocusListener focusListener=new FocusAdapter() {
 		@Override
 		public void focusLost(FocusEvent e) {
 			Debug.out("TABLE");

@@ -37,8 +37,8 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolder2Adapter;
 import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
@@ -164,17 +164,13 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 				dispose(tabItem);
 			}
 		});
-		tabFolder.addSelectionListener(new SelectionListener(){
+		tabFolder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				CTabItem tabItem=(CTabItem)e.item;
 				Debug.out("SELECTED", tabItem);
 				updateToolBar();
 				setFocus();
-			}
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				Debug.out("DEFAULT SELECTED");
 			}
 		});
 

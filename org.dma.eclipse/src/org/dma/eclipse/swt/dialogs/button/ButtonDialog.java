@@ -92,7 +92,7 @@ public abstract class ButtonDialog extends CustomShell {
 			button.setText(label);
 			button.setData(label);
 
-			button.addKeyListener(new KeyAdapter(){
+			button.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
 					switch(e.keyCode){

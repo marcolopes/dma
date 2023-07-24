@@ -84,7 +84,7 @@ public class CustomDecimalText extends CustomText {
 		text.setForeground(ColorManager.getColor(SWT.COLOR_RED));
 		text.setFontSize(30);
 		text.setValue("100.001");
-		text.addKeyListener(new KeyAdapter(){
+		text.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				switch(e.keyCode){
