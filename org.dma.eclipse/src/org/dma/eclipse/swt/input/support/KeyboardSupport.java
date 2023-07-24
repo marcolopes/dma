@@ -69,9 +69,9 @@ public class KeyboardSupport implements KeyListener {
 		/* Editor key listener */
 		editor.getControl().addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {}
-			@Override
 			public void keyPressed(KeyEvent e) {}
+			@Override
+			public void keyReleased(KeyEvent e) {}
 		});
 
 		/* Editor traverse listener */
