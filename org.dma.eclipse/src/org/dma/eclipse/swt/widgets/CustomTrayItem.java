@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2020 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.widgets;
 
-import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.util.SystemUtils;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -47,11 +47,11 @@ public class CustomTrayItem extends TrayItem {
 	private final Shell parent;
 
 	/** @see TrayItem#TrayItem(org.eclipse.swt.widgets.Tray, int) */
-	public CustomTrayItem(Shell parent, String name, String pathname, boolean visible) {
+	public CustomTrayItem(Shell parent, String name, Image image, boolean visible) {
 		super(parent.getDisplay().getSystemTray(), SWT.NONE);
 		this.parent=parent;
 		setToolTipText(name);
-		setImage(ImageManager.getImage(pathname));
+		setImage(image);
 		addListener(SWT.Selection, maximizeListener);
 		setVisible(visible);
 	}
