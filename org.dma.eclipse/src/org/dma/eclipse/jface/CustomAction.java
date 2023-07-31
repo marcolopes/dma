@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,13 @@ public abstract class CustomAction extends Action {
 
 	/** @see Action */
 	public CustomAction() {
+		this(null);
+	}
+
+	/** @see Action */
+	public CustomAction(String text) {
 		Debug.out("ID", ID);
+		setText(text);
 		setId(ID);
 	}
 
