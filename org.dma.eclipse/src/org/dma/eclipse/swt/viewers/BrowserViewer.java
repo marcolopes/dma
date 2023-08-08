@@ -101,25 +101,25 @@ public abstract class BrowserViewer extends LinkedHashMap<CustomCTabItem, Custom
 	private void createToolBar(int iconSize) {
 
 		button_home=new BrowserAction("Home", "browser_home.png", iconSize){
-			public final void run(){
+			public void run(){
 				goHome();
 			}
 		};
 
 		button_stop=new BrowserAction("Stop", "browser_stop.png", iconSize){
-			public final void run(){
+			public void run(){
 				getBrowser().stop();
 			}
 		};
 
 		button_back=new BrowserAction("Back", "browser_back.png", iconSize){
-			public final void run(){
+			public void run(){
 				getBrowser().back();
 			}
 		};
 
 		button_forward=new BrowserAction("Forward", "browser_forward.png", iconSize){
-			public final void run(){
+			public void run(){
 				getBrowser().forward();
 			}
 		};
