@@ -142,8 +142,8 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	@Override
 	public boolean handleMessage(SOAPMessageContext context) {
 
-		try{
-			boolean direction = (Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+		try{boolean direction = (Boolean)context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+
 			if (direction){/* Falta informacao tecnica */}
 
 			log(context);

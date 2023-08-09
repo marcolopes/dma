@@ -88,8 +88,7 @@ public class PrinterHandler {
 
 			ByteArrayInputStream in=new ByteArrayInputStream(data);
 
-			try{
-				DocPrintJob job=service.createPrintJob();
+			try{DocPrintJob job=service.createPrintJob();
 				Doc document=new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 				job.print(document, null);
 
@@ -115,8 +114,7 @@ public class PrinterHandler {
 
 			FileInputStream in=new FileInputStream(file);
 
-			try{
-				DocPrintJob job=service.createPrintJob();
+			try{DocPrintJob job=service.createPrintJob();
 				Doc document=new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 				job.print(document, null);
 
@@ -142,16 +140,14 @@ public class PrinterHandler {
 
 			PDDocument doc=PDDocument.load(file);
 
-			try{
-				PrinterJob job=PrinterJob.getPrinterJob();
+			try{PrinterJob job=PrinterJob.getPrinterJob();
 				job.setPrintService(service);
 				job.setJobName(file.getName());
 				doc.silentPrint(job);
-				/*
-				PDFPrinter printer=new PDFPrinter(doc, Scaling.ACTUAL_SIZE, Orientation.AUTO);
+				/*PDFPrinter printer=new PDFPrinter(doc, Scaling.ACTUAL_SIZE, Orientation.AUTO);
 				job.setPageable(printer.getPageable());
-				job.print();
-				*/
+				job.print();*/
+
 			}catch(PrinterAbortException e){
 				 //avoid abort exception
 			}catch(PrinterException e){

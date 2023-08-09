@@ -166,8 +166,8 @@ public class SOAPMessageHandler implements SOAPHandler<SOAPMessageContext> {
 	@Override
 	public boolean handleMessage(SOAPMessageContext smc) {
 
-		try{
-			boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+		try{boolean direction = (Boolean)smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+
 			if (direction){
 
 				// Generate simetric key used for this request!

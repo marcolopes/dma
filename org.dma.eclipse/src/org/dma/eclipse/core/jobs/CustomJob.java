@@ -172,8 +172,7 @@ public class CustomJob extends Job {
 
 		Chronograph time = new Chronograph().start();
 
-		try{
-			lock.acquire();
+		try{lock.acquire();
 			monitor.beginTask("", IProgressMonitor.UNKNOWN);
 			Debug.out("STARTED JOB", this);
 
