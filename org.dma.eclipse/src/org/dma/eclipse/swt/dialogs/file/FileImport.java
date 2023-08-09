@@ -53,17 +53,20 @@ public class FileImport extends FileDialog {
 	/** @see FileDialog#setFilterPath(String) */
 	public File filePicker(Folder defaultPath, String filename) {
 
-		try{
-			// FileDialog SWT 3.7 BUG
-			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
-			// OSX 10.9 workaround
-			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+		try{/*
+			 * FileDialog SWT 3.7 BUG
+			 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
+			 * OSX 10.9 workaround
+			 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+			 */
 			setFilterPath(defaultPath==null ? "." : defaultPath.getAbsolutePath());
 			setFileName(filename);
 
 			File file=new File(open());
-			// The name could be entered manually in the dialog
-			// so we must check if the file really exists
+			/*
+			 * The name could be entered manually in the dialog
+			 * so we must check if the file really exists
+			 */
 			return file.exists() ? file : null;
 
 		}catch(Exception e){

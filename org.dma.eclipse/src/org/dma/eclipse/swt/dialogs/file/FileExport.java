@@ -52,11 +52,12 @@ public class FileExport extends FileDialog {
 	/** @see FileDialog#setFilterPath(String) */
 	public File filePicker(Folder defaultPath, String filename) {
 
-		try{
-			// FileDialog SWT 3.7 BUG
-			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
-			// OSX 10.9 workaround
-			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+		try{/*
+			 * FileDialog SWT 3.7 BUG
+			 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
+			 * OSX 10.9 workaround
+			 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+			 */
 			setFilterPath(defaultPath==null ? "." : defaultPath.getAbsolutePath());
 			setFileName(filename);
 

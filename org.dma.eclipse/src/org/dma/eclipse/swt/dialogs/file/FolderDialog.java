@@ -47,11 +47,12 @@ public class FolderDialog extends DirectoryDialog {
 	/** @see DirectoryDialog#setFilterPath(String) */
 	public File folderPicker(Folder defaultPath) {
 
-		try{
-			// FileDialog SWT 3.7 BUG
-			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
-			// OSX 10.9 workaround
-			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+		try{/*
+			 * FileDialog SWT 3.7 BUG
+			 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=364116
+			 * OSX 10.9 workaround
+			 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
+			 */
 			setFilterPath(defaultPath==null ? "." : defaultPath.getAbsolutePath());
 
 			return new File(open());
