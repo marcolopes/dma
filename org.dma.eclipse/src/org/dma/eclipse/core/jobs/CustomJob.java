@@ -27,6 +27,7 @@ import org.dma.java.util.Debug;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.ILock;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
@@ -45,12 +46,20 @@ public class CustomJob extends Job {
 	/** Global family to identify {@link CustomJob} */
 	public static final Object FAMILY = MUTEX_RULE;
 
-	/** Tries to cancel all jobs from this {@link CustomJob#FAMILY}
+	/** @see IJobManager#find(Object) */
+	public static boolean isIdle() {
+		return Job.getJobManager().find(FAMILY).length==0;
+	}
+
+	/**
+	 * Tries to cancel all jobs from this {@link CustomJob#FAMILY}
 	 * and executes {@link Thread#sleep(long)} repeatedly
-	 * to allow non-cancelable RUNNING jobs to terminate */
+	 * to allow non-cancelable RUNNING jobs to terminate
+	 */
 	public static void cancelAll(long sleep) {
 		Job.getJobManager().cancel(FAMILY);
-		while(!getJobManager().isIdle()) try{
+		while(!isIdle()) try{
+			System.out.println("Waiting for jobs...");
 			Thread.sleep(sleep);
 		}catch(Exception e){}
 	}
@@ -168,9 +177,9 @@ public class CustomJob extends Job {
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 
-		ILock lock = getJobManager().newLock();
-
 		Chronograph time = new Chronograph().start();
+
+		ILock lock = getJobManager().newLock();
 
 		try{lock.acquire();
 			monitor.beginTask("", IProgressMonitor.UNKNOWN);

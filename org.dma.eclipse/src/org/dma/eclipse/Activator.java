@@ -27,6 +27,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
 import org.dma.eclipse.core.BundleUtils;
+import org.dma.eclipse.core.jobs.CustomJob;
 import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageHandler;
 import org.dma.java.util.Debug;
@@ -87,6 +88,7 @@ public class Activator implements BundleActivator {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		Debug.err();
+		CustomJob.cancelAll(100);
 	}
 
 }

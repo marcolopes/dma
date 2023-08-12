@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.dma.eclipse.jface.dialogs.message;
 
+import org.dma.eclipse.core.jobs.CustomJob;
 import org.dma.eclipse.swt.graphics.FontManager;
 import org.dma.eclipse.swt.graphics.FontManager.FONTS;
 import org.dma.java.util.StringList;
@@ -107,7 +108,7 @@ public class CustomMessageDialog extends MessageDialog {
 
 		public boolean open(final String header, final String message, final Font messageFont) {
 			if (message!=null && !message.isEmpty()) try{
-				Display.getDefault().syncExec(new Runnable() {
+				CustomJob.syncExec(new Runnable() {
 					public void run() {
 						MessageDialog dialog=new CustomMessageDialog(
 								Display.getDefault().getActiveShell(), title, header, message, type, messageFont);
