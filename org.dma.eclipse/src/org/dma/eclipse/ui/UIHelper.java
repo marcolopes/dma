@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,6 +94,16 @@ public class UIHelper {
 	/** @see IWorkbench#isClosing */
 	public static boolean isWorkbenchClosing() {
 		return getWorkbench().isClosing();
+	}
+
+	/** @see IWorkbench#close() */
+	public static void closeWorkbench() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (!isWorkbenchClosing()) getWorkbench().close();
+			}
+		});
 	}
 
 	/** @see BusyIndicator */
