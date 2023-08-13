@@ -51,19 +51,6 @@ public class CustomJob extends Job {
 		return Job.getJobManager().find(FAMILY).length==0;
 	}
 
-	/**
-	 * Tries to cancel all jobs from this {@link CustomJob#FAMILY}
-	 * and executes {@link Thread#sleep(long)} repeatedly
-	 * to allow non-cancelable RUNNING jobs to terminate
-	 */
-	public static void cancelAll(long sleep) {
-		Job.getJobManager().cancel(FAMILY);
-		while(!isIdle()) try{
-			System.out.println("Waiting for jobs...");
-			Thread.sleep(sleep);
-		}catch(Exception e){}
-	}
-
 	public static void syncExec(Runnable runnable) {
 		try{Display.getDefault().syncExec(runnable);
 		}catch(Exception e){

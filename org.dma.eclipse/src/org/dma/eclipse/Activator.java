@@ -32,6 +32,7 @@ import org.dma.eclipse.swt.graphics.ImageManager;
 import org.dma.java.awt.ImageHandler;
 import org.dma.java.util.Debug;
 
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -88,7 +89,13 @@ public class Activator implements BundleActivator {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		Debug.err();
-		CustomJob.cancelAll(100);
+		int seconds=0;
+		Job.getJobManager().cancel(CustomJob.FAMILY);
+		while(!CustomJob.isIdle() && seconds<10) try{
+			if (seconds==0) System.out.println("Waiting for jobs...");
+			Thread.sleep(1000);
+			seconds++;
+		}catch(Exception e){}
 	}
 
 }
