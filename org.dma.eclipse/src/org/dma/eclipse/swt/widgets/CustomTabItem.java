@@ -55,7 +55,6 @@ public class CustomTabItem extends TabItem {
 	public void select() {
 		if (isDisposed()) return;
 		getParent().setSelection(this);
-		getParent().forceFocus();
 		setFocus();
 	}
 

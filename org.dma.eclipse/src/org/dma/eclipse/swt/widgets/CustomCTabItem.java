@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,21 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.widgets;
 
+import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 
 public class CustomCTabItem extends CTabItem {
 
+
 	@Override //subclassing
 	protected void checkSubclass() {}
+
+	private IAction selectionAction;
 
 	/** @see CTabItem#CTabItem(CTabFolder, int) */
 	public CustomCTabItem(CTabFolder parent, int style) {
@@ -41,12 +47,14 @@ public class CustomCTabItem extends CTabItem {
 	/** Override */
 	public void setFocus() {}
 
+	/** Update and focus */
 	public void update() {
 		if (isDisposed()) return;
 		getControl().update();
 		setFocus();
 	}
 
+	/** Select and focus */
 	public void select() {
 		if (isDisposed()) return;
 		getParent().setSelection(this);
@@ -57,6 +65,20 @@ public class CustomCTabItem extends CTabItem {
 		if (isDisposed()) return false;
 		CTabItem selection=getParent().getSelection();
 		return selection!=null && selection.equals(this);
+	}
+
+	public void setSelectionAction(IAction action) {
+		this.selectionAction=action;
+		getParent().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (isSelected()) selectionAction.runWithEvent(null);
+			}
+		});
+	}
+
+	public IAction getSelectionAction() {
+		return selectionAction;
 	}
 
 	public void setFontStyle(int style) {

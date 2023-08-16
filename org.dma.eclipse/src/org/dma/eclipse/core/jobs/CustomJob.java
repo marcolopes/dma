@@ -121,6 +121,11 @@ public class CustomJob extends Job {
 		return !tasks.isEmpty();
 	}
 
+	public CustomJob clear() {
+		tasks.clear();
+		return this;
+	}
+
 	/** @see ExclusiveJobList */
 	@Deprecated
 	public CustomJob setDoneAction(IAction doneAction) {
