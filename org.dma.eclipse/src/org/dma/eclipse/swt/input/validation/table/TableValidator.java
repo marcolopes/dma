@@ -84,7 +84,7 @@ public abstract class TableValidator<T> implements IValidator {
 
 	public ColumnBinding register(String property, ColumnBinding binding) {
 
-		if (validatorMap.containsKey(property))	throw new RuntimeException("VALIDATOR ALREADY REGISTERED :"+property);
+		if (validatorMap.containsKey(property))	throw new RuntimeException("VALIDATOR ALREADY REGISTERED: "+property);
 
 		validatorMap.put(property, binding);
 
