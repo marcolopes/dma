@@ -33,7 +33,7 @@ import org.eclipse.ui.console.IConsoleView;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
-public class ConsoleView extends MessageConsole {
+public class MessageConsoleView extends MessageConsole {
 
 	public static final String ID = IConsoleConstants.ID_CONSOLE_VIEW;
 
@@ -80,16 +80,16 @@ public class ConsoleView extends MessageConsole {
 
 	private SystemStream systemStream;
 
-	public ConsoleView() {
+	public MessageConsoleView() {
 		this("", null);
 	}
 
 	@Deprecated
-	public ConsoleView(String name) {
+	public MessageConsoleView(String name) {
 		this(name, null);
 	}
 
-	public ConsoleView(String name, ImageDescriptor imageDescriptor) {
+	public MessageConsoleView(String name, ImageDescriptor imageDescriptor) {
 		super(name, imageDescriptor);
 		consoleStream=new MessageStream(this);
 		manager.addConsoles(new IConsole[]{this});
