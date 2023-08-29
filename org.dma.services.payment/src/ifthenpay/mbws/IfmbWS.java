@@ -19,14 +19,14 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "IfmbWS", targetNamespace = "https://www.ifthensoftware.com/", wsdlLocation = "file:/C:/workspace/dev/org.dma.services.payment/wsdl/IfmbWS.xml")
+@WebServiceClient(name = "IfmbWS", targetNamespace = "https://www.ifthenpay.com/", wsdlLocation = "file:/C:/workspace/dev/org.dma.services.payment/wsdl/IfmbWS.xml")
 public class IfmbWS
     extends Service
 {
 
     private final static URL IFMBWS_WSDL_LOCATION;
     private final static WebServiceException IFMBWS_EXCEPTION;
-    private final static QName IFMBWS_QNAME = new QName("https://www.ifthensoftware.com/", "IfmbWS");
+    private final static QName IFMBWS_QNAME = new QName("https://www.ifthenpay.com/", "IfmbWS");
 
     static {
         URL url = null;
@@ -71,7 +71,7 @@ public class IfmbWS
      */
     @WebEndpoint(name = "IfmbWSSoap")
     public IfmbWSSoap getIfmbWSSoap() {
-        return super.getPort(new QName("https://www.ifthensoftware.com/", "IfmbWSSoap"), IfmbWSSoap.class);
+        return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSSoap"), IfmbWSSoap.class);
     }
 
     /**
@@ -83,7 +83,7 @@ public class IfmbWS
      */
     @WebEndpoint(name = "IfmbWSSoap")
     public IfmbWSSoap getIfmbWSSoap(WebServiceFeature... features) {
-        return super.getPort(new QName("https://www.ifthensoftware.com/", "IfmbWSSoap"), IfmbWSSoap.class, features);
+        return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSSoap"), IfmbWSSoap.class, features);
     }
 
     private static URL __getWsdlLocation() {

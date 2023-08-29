@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="getPaymentsResult" type="{https://www.ifthensoftware.com/}ArrayOfIfmb" minOccurs="0"/>
+ *         &lt;element name="getPaymentsResult" type="{https://www.ifthenpay.com/}ArrayOfIfmb" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

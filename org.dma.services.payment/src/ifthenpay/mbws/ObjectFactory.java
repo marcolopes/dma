@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the https.www_ifthensoftware package. 
+ * generated in the https.www_ifthenpay package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -24,11 +24,11 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ArrayOfIfmb_QNAME = new QName("https://www.ifthensoftware.com/", "ArrayOfIfmb");
-    private final static QName _String_QNAME = new QName("https://www.ifthensoftware.com/", "string");
+    private final static QName _ArrayOfIfmb_QNAME = new QName("https://www.ifthenpay.com/", "ArrayOfIfmb");
+    private final static QName _String_QNAME = new QName("https://www.ifthenpay.com/", "string");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: https.www_ifthensoftware
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: https.www_ifthenpay
      * 
      */
     public ObjectFactory() {
@@ -190,7 +190,7 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link ArrayOfIfmb }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "https://www.ifthensoftware.com/", name = "ArrayOfIfmb")
+    @XmlElementDecl(namespace = "https://www.ifthenpay.com/", name = "ArrayOfIfmb")
     public JAXBElement<ArrayOfIfmb> createArrayOfIfmb(ArrayOfIfmb value) {
         return new JAXBElement<ArrayOfIfmb>(_ArrayOfIfmb_QNAME, ArrayOfIfmb.class, null, value);
     }
@@ -199,7 +199,7 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "https://www.ifthensoftware.com/", name = "string")
+    @XmlElementDecl(namespace = "https://www.ifthenpay.com/", name = "string")
     public JAXBElement<String> createString(String value) {
         return new JAXBElement<String>(_String_QNAME, String.class, null, value);
     }
