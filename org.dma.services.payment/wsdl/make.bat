@@ -9,6 +9,6 @@ echo ***************************************************************************
 wsimport IfmbWS.xml -B-XautoNameResolution -verbose -Xnocompile -s ..\src
 
 REM https://stackoverflow.com/questions/2401661/clickatell-soap-wsdl-to-jaxb-java-classes
-REM wsimport ifthenpaymbw.xml -catalog catalog.txt -extension -verbose -Xnocompile -s ..\src
+wsimport ifthenpaymbw.xml -catalog catalog.txt -extension -verbose -Xnocompile -s ..\src
 
 pause
