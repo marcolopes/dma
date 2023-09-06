@@ -61,6 +61,7 @@ public abstract class AbstractViewAction extends CustomAction {
 					else UIHelper.showView(view);
 					view.setFocus();
 				}catch(Exception e){
+					e.printStackTrace();
 					ErrorDialog.open(new MessageList(e));
 				}
 			}
