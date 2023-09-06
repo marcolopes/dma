@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,407 +19,309 @@
  *******************************************************************************/
 package org.dma.jaxrs.responses;
 
-import java.io.File;
-import java.util.HashMap;
-
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.Status.Family;
 
-import org.dma.java.util.StringUtils;
-
-public class Response<T> extends HashMap<String, Object> implements IResponse {
-
-	private Status status;
-	private T entity;
-
-	public Response(Status status) {
-		this(status, null);
-	}
-
-	public Response(Status status, T entity) {
-		this.status=status;
-		this.entity=entity;
-	}
-
-	public Response(javax.ws.rs.core.Response response) {
-		this.status=Status.fromStatusCode(response.getStatus());
-		this.entity=(T)response.getEntity();
-		for(String header : response.getHeaders().keySet()){
-			setHeader(header, response.getHeaders().get(header));
-		}
-	}
+public class Response {
 
 	/*
-	 * Build
+	 * Builders
 	 */
-	public javax.ws.rs.core.Response build() {
-		ResponseBuilder builder=javax.ws.rs.core.Response.status(status).entity(entity);
-		for(String key : keySet()){
-			builder.header(key, get(key));
-		}return builder.build();
-	}
-
-	public Response<T> setHeader(File file) {
-		return setHeader("Content-Disposition", "attachment; filename="+StringUtils.quote(file.getName()));
-	}
-
-	public Response<T> setHeader(String header, Object value) {
-		put(header, value);
-		return this;
-	}
-
-	/*
-	 * Getters & Setters
-	 */
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public T getEntity() {
-		return entity;
-	}
-
-	public void setEntity(T entity) {
-		this.entity = entity;
-	}
-
-	/*
-	 * Control
-	 */
-	public boolean isInformation() {
-		return status.getFamily()==Family.INFORMATIONAL;
-	}
-
-	public boolean isSuccess() {
-		return status.getFamily()==Family.SUCCESSFUL;
-	}
-
-	public boolean isRedirect() {
-		return status.getFamily()==Family.REDIRECTION;
-	}
-
-	public boolean isClientError() {
-		return status.getFamily()==Family.CLIENT_ERROR;
-	}
-
-	public boolean isServerError() {
-		return status.getFamily()==Family.SERVER_ERROR;
-	}
-
-	/*
-	 * To
-	 */
-	@Override
-	public String toString() {
-		return Response.class.getCanonicalName() +
-				" [status=" + status +
-				", entity=" + entity + "]";
-	}
-
-	/*
-	 * Static Builders
-	 */
-	public static Response build(Status status) {
+	public static ResponseBuilder build(Status status) {
 		return build(status, null);
 	}
 
-	public static <T> Response<T> build(Status status, T entity) {
-		return new Response(status, entity);
+	public static <T> ResponseBuilder<T> build(Status status, T entity) {
+		return new ResponseBuilder(status, entity);
 	}
 
 	/*
-	 * Static Builders Shortcuts
+	 * Builders Shortcuts
 	 */
-	public static Response ok() {
+	public static ResponseBuilder ok() {
 		return ok(null);
 	}
 
-	public static <T> Response<T> ok(T entity) {
+	public static <T> ResponseBuilder<T> ok(T entity) {
 		return build(Status.OK, entity);
 	}
 
-	public static Response created() {
+	public static ResponseBuilder created() {
 		return created(null);
 	}
 
-	public static <T> Response<T> created(T entity) {
+	public static <T> ResponseBuilder<T> created(T entity) {
 		return build(Status.CREATED, entity);
 	}
 
-	public static Response accepted() {
+	public static ResponseBuilder accepted() {
 		return accepted(null);
 	}
 
-	public static <T> Response<T> accepted(T entity) {
+	public static <T> ResponseBuilder<T> accepted(T entity) {
 		return build(Status.ACCEPTED, entity);
 	}
 
-	public static Response noContent() {
+	public static ResponseBuilder noContent() {
 		return noContent(null);
 	}
 
-	public static <T> Response<T> noContent(T entity) {
+	public static <T> ResponseBuilder<T> noContent(T entity) {
 		return build(Status.NO_CONTENT, entity);
 	}
 
-	public static Response resetContent() {
+	public static ResponseBuilder resetContent() {
 		return resetContent(null);
 	}
 
-	public static <T> Response<T> resetContent(T entity) {
+	public static <T> ResponseBuilder<T> resetContent(T entity) {
 		return build(Status.RESET_CONTENT, entity);
 	}
 
-	public static Response partialContent() {
+	public static ResponseBuilder partialContent() {
 		return partialContent(null);
 	}
 
-	public static <T> Response<T> partialContent(T entity) {
+	public static <T> ResponseBuilder<T> partialContent(T entity) {
 		return build(Status.PARTIAL_CONTENT, entity);
 	}
 
-	public static Response movedPermanently() {
+	public static ResponseBuilder movedPermanently() {
 		return movedPermanently(null);
 	}
 
-	public static <T> Response<T> movedPermanently(T entity) {
+	public static <T> ResponseBuilder<T> movedPermanently(T entity) {
 		return build(Status.MOVED_PERMANENTLY, entity);
 	}
 
-	public static Response found() {
+	public static ResponseBuilder found() {
 		return found(null);
 	}
 
-	public static <T> Response<T> found(T entity) {
+	public static <T> ResponseBuilder<T> found(T entity) {
 		return build(Status.FOUND, entity);
 	}
 
-	public static Response seeOther() {
+	public static ResponseBuilder seeOther() {
 		return seeOther(null);
 	}
 
-	public static <T> Response<T> seeOther(T entity) {
+	public static <T> ResponseBuilder<T> seeOther(T entity) {
 		return build(Status.SEE_OTHER, entity);
 	}
 
-	public static Response notModified() {
+	public static ResponseBuilder notModified() {
 		return notModified(null);
 	}
 
-	public static <T> Response<T> notModified(T entity) {
+	public static <T> ResponseBuilder<T> notModified(T entity) {
 		return build(Status.NOT_MODIFIED, entity);
 	}
 
-	public static Response useProxy() {
+	public static ResponseBuilder useProxy() {
 		return useProxy(null);
 	}
 
-	public static <T> Response<T> useProxy(T entity) {
+	public static <T> ResponseBuilder<T> useProxy(T entity) {
 		return build(Status.USE_PROXY, entity);
 	}
 
-	public static Response temporaryRedirect() {
+	public static ResponseBuilder temporaryRedirect() {
 		return temporaryRedirect(null);
 	}
 
-	public static <T> Response<T> temporaryRedirect(T entity) {
+	public static <T> ResponseBuilder<T> temporaryRedirect(T entity) {
 		return build(Status.TEMPORARY_REDIRECT, entity);
 	}
 
-	public static Response badRequest() {
+	public static ResponseBuilder badRequest() {
 		return badRequest(null);
 	}
 
-	public static <T> Response<T> badRequest(T entity) {
+	public static <T> ResponseBuilder<T> badRequest(T entity) {
 		return build(Status.BAD_REQUEST, entity);
 	}
 
-	public static Response unauthorized() {
+	public static ResponseBuilder unauthorized() {
 		return unauthorized(null);
 	}
 
-	public static <T> Response<T> unauthorized(T entity) {
+	public static <T> ResponseBuilder<T> unauthorized(T entity) {
 		return build(Status.UNAUTHORIZED, entity);
 	}
 
-	public static Response paymentRequired() {
+	public static ResponseBuilder paymentRequired() {
 		return paymentRequired(null);
 	}
 
-	public static <T> Response<T> paymentRequired(T entity) {
+	public static <T> ResponseBuilder<T> paymentRequired(T entity) {
 		return build(Status.PAYMENT_REQUIRED, entity);
 	}
 
-	public static Response forbidden() {
+	public static ResponseBuilder forbidden() {
 		return forbidden(null);
 	}
 
-	public static <T> Response<T> forbidden(T entity) {
+	public static <T> ResponseBuilder<T> forbidden(T entity) {
 		return build(Status.FORBIDDEN, entity);
 	}
 
-	public static Response notFound() {
+	public static ResponseBuilder notFound() {
 		return notFound(null);
 	}
 
-	public static <T> Response<T> notFound(T entity) {
+	public static <T> ResponseBuilder<T> notFound(T entity) {
 		return build(Status.NOT_FOUND, entity);
 	}
 
-	public static Response methodNotAllowed() {
+	public static ResponseBuilder methodNotAllowed() {
 		return methodNotAllowed(null);
 	}
 
-	public static <T> Response<T> methodNotAllowed(T entity) {
+	public static <T> ResponseBuilder<T> methodNotAllowed(T entity) {
 		return build(Status.METHOD_NOT_ALLOWED, entity);
 	}
 
-	public static Response notAcceptable() {
+	public static ResponseBuilder notAcceptable() {
 		return notAcceptable(null);
 	}
 
-	public static <T> Response<T> notAcceptable(T entity) {
+	public static <T> ResponseBuilder<T> notAcceptable(T entity) {
 		return build(Status.NOT_ACCEPTABLE, entity);
 	}
 
-	public static Response proxyAuthenticationRequired() {
+	public static ResponseBuilder proxyAuthenticationRequired() {
 		return proxyAuthenticationRequired(null);
 	}
 
-	public static <T> Response<T> proxyAuthenticationRequired(T entity) {
+	public static <T> ResponseBuilder<T> proxyAuthenticationRequired(T entity) {
 		return build(Status.PROXY_AUTHENTICATION_REQUIRED, entity);
 	}
 
-	public static Response requestTimeout() {
+	public static ResponseBuilder requestTimeout() {
 		return requestTimeout(null);
 	}
 
-	public static <T> Response<T> requestTimeout(T entity) {
+	public static <T> ResponseBuilder<T> requestTimeout(T entity) {
 		return build(Status.REQUEST_TIMEOUT, entity);
 	}
 
-	public static Response conflict() {
+	public static ResponseBuilder conflict() {
 		return conflict(null);
 	}
 
-	public static <T> Response<T> conflict(T entity) {
+	public static <T> ResponseBuilder<T> conflict(T entity) {
 		return build(Status.CONFLICT, entity);
 	}
 
-	public static Response gone() {
+	public static ResponseBuilder gone() {
 		return gone(null);
 	}
 
-	public static <T> Response<T> gone(T entity) {
+	public static <T> ResponseBuilder<T> gone(T entity) {
 		return build(Status.GONE, entity);
 	}
 
-	public static Response lengthRequired() {
+	public static ResponseBuilder lengthRequired() {
 		return lengthRequired(null);
 	}
 
-	public static <T> Response<T> lengthRequired(T entity) {
+	public static <T> ResponseBuilder<T> lengthRequired(T entity) {
 		return build(Status.LENGTH_REQUIRED, entity);
 	}
 
-	public static Response preconditionFailed() {
+	public static ResponseBuilder preconditionFailed() {
 		return preconditionFailed(null);
 	}
 
-	public static <T> Response<T> preconditionFailed(T entity) {
+	public static <T> ResponseBuilder<T> preconditionFailed(T entity) {
 		return build(Status.PRECONDITION_FAILED, entity);
 	}
 
-	public static Response requestEntityTooLarge() {
+	public static ResponseBuilder requestEntityTooLarge() {
 		return requestEntityTooLarge(null);
 	}
 
-	public static <T> Response<T> requestEntityTooLarge(T entity) {
+	public static <T> ResponseBuilder<T> requestEntityTooLarge(T entity) {
 		return build(Status.REQUEST_ENTITY_TOO_LARGE, entity);
 	}
 
-	public static Response requestURITooLong() {
+	public static ResponseBuilder requestURITooLong() {
 		return requestURITooLong(null);
 	}
 
-	public static <T> Response<T> requestURITooLong(T entity) {
+	public static <T> ResponseBuilder<T> requestURITooLong(T entity) {
 		return build(Status.REQUEST_URI_TOO_LONG, entity);
 	}
 
-	public static Response unsupportedMediaType() {
+	public static ResponseBuilder unsupportedMediaType() {
 		return unsupportedMediaType(null);
 	}
 
-	public static <T> Response<T> unsupportedMediaType(T entity) {
+	public static <T> ResponseBuilder<T> unsupportedMediaType(T entity) {
 		return build(Status.UNSUPPORTED_MEDIA_TYPE, entity);
 	}
 
-	public static Response requestedRangeNotSatisfiable() {
+	public static ResponseBuilder requestedRangeNotSatisfiable() {
 		return requestedRangeNotSatisfiable(null);
 	}
 
-	public static <T> Response<T> requestedRangeNotSatisfiable(T entity) {
+	public static <T> ResponseBuilder<T> requestedRangeNotSatisfiable(T entity) {
 		return build(Status.REQUESTED_RANGE_NOT_SATISFIABLE, entity);
 	}
 
-	public static Response expectationFailed() {
+	public static ResponseBuilder expectationFailed() {
 		return expectationFailed(null);
 	}
 
-	public static <T> Response<T> expectationFailed(T entity) {
+	public static <T> ResponseBuilder<T> expectationFailed(T entity) {
 		return build(Status.EXPECTATION_FAILED, entity);
 	}
 
-	public static Response internalServerError() {
+	public static ResponseBuilder internalServerError() {
 		return internalServerError(null);
 	}
 
-	public static <T> Response<T> internalServerError(T entity) {
+	public static <T> ResponseBuilder<T> internalServerError(T entity) {
 		return build(Status.INTERNAL_SERVER_ERROR, entity);
 	}
 
-	public static Response notImplemented() {
+	public static ResponseBuilder notImplemented() {
 		return notImplemented(null);
 	}
 
-	public static <T> Response<T> notImplemented(T entity) {
+	public static <T> ResponseBuilder<T> notImplemented(T entity) {
 		return build(Status.NOT_IMPLEMENTED, entity);
 	}
 
-	public static Response badGateway() {
+	public static ResponseBuilder badGateway() {
 		return badGateway(null);
 	}
 
-	public static <T> Response<T> badGateway(T entity) {
+	public static <T> ResponseBuilder<T> badGateway(T entity) {
 		return build(Status.BAD_GATEWAY, entity);
 	}
 
-	public static Response serviceUnavailable() {
+	public static ResponseBuilder serviceUnavailable() {
 		return serviceUnavailable(null);
 	}
 
-	public static <T> Response<T> serviceUnavailable(T entity) {
+	public static <T> ResponseBuilder<T> serviceUnavailable(T entity) {
 		return build(Status.SERVICE_UNAVAILABLE, entity);
 	}
 
-	public static Response gatewayTimeout() {
+	public static ResponseBuilder gatewayTimeout() {
 		return gatewayTimeout(null);
 	}
 
-	public static <T> Response<T> gatewayTimeout(T entity) {
+	public static <T> ResponseBuilder<T> gatewayTimeout(T entity) {
 		return build(Status.GATEWAY_TIMEOUT, entity);
 	}
 
-	public static Response httpVersionNotSupported() {
+	public static ResponseBuilder httpVersionNotSupported() {
 		return httpVersionNotSupported(null);
 	}
 
-	public static <T> Response<T> httpVersionNotSupported(T entity) {
+	public static <T> ResponseBuilder<T> httpVersionNotSupported(T entity) {
 		return build(Status.HTTP_VERSION_NOT_SUPPORTED, entity);
 	}
 

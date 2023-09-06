@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,18 +45,16 @@ public class Client {
 		this.client=client;
 	}
 
+	public void close() {
+		client.close();
+	}
 
 	/**
 	 * Use GET requests to retrieve resource representation/information only – and not modify it in any way.
 	 * As GET requests do not change the resource’s state, these are said to be safe methods.
 	 */
 	public Response get(String url, QueryParameterValue...parameters) throws Exception {
-		return get(url, new QueryParameters(parameters));
-	}
-
-	public Response get(String url, QueryParameters parameters) throws Exception {
-		String query=parameters.toString();
-		System.out.println("[GET] "+url+query);
+		String query=new QueryParameters(parameters).toString();
 		return client.target(url+query).request().async().get().get();
 	}
 
@@ -65,7 +63,6 @@ public class Client {
 	 * e.g., a file is subordinate to a directory containing it or a row is subordinate to a database table.
 	 */
 	public Response post(final String url, final Entity<?> entity) throws Exception {
-		System.out.println("[POST] "+url);
 		return client.target(url).request().async().post(entity).get();
 	}
 
@@ -74,7 +71,6 @@ public class Client {
 	 * (if the resource does not exist, then API may decide to create a new resource or not).
 	 */
 	public Response put(String url, Entity<?> entity) throws Exception {
-		System.out.println("[PUT] "+url);
 		return client.target(url).request().async().put(entity).get();
 	}
 
@@ -82,7 +78,6 @@ public class Client {
 	 * As the name applies, DELETE APIs delete the resources (identified by the Request-URI).
 	 */
 	public Response delete(String url) throws Exception {
-		System.out.println("[DELETE] "+url);
 		return client.target(url).request().async().delete().get();
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,13 @@ import java.util.concurrent.Executors;
 
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.Response;
 
 import org.dma.jaxrs.responses.IResponse;
-import org.dma.jaxrs.responses.Response;
 
-public class Endpoint {
+public class Endpoint extends org.dma.jaxrs.responses.Response {
 
-	public static final int MAX_THREAD_POOL = 10;
-
-	public static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(MAX_THREAD_POOL);
+	public static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
 	public static void run(EndpointRunnable runnable) {
 		EXECUTOR.execute(runnable);
@@ -40,7 +38,7 @@ public class Endpoint {
 
 	public abstract class EndpointRunnable implements Runnable {
 
-		protected abstract IResponse process();
+		public abstract IResponse process();
 
 		private final AsyncResponse ar;
 
@@ -50,10 +48,12 @@ public class Endpoint {
 
 		@Override
 		public void run() {
-			try{ar.resume(process().build());
+			try{Response response=process().build();
+				System.out.println(response);
+				ar.resume(response);
 			}catch(Exception e){
 				e.printStackTrace();
-				ar.resume(Response.internalServerError().build());
+				ar.resume(internalServerError().build());
 			}
 		}
 
