@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,25 +50,14 @@ public class RegexMatcher implements Listener {
 
 	@Override
 	public void handleEvent(Event event) {
-		if (regex.isUppercase()){
-			event.text=event.text.toUpperCase();
-		}else if (regex.isLowercase()){
-			event.text=event.text.toLowerCase();
-		}
-
-		StringBuffer newText=new StringBuffer(getText()).
+		if (regex.isUppercase()) event.text=event.text.toUpperCase();
+		else if (regex.isLowercase()) event.text=event.text.toLowerCase();
+		//construct the future text from the event fields
+		StringBuilder sb=new StringBuilder(getText()).
 			replace(event.start, event.end, "").
 			insert(event.start, event.text);
-
-		/*
-		Debug.out("text", event.text);
-		Debug.out("start", event.start);
-		Debug.out("end", event.end);
-		Debug.out("newText", newText);
-		*/
-
-		event.doit=pattern.matcher(newText.toString()).matches();
-
+		//match the future text against the regex pattern
+		event.doit=pattern.matcher(sb.toString()).matches();
 	}
 
 	public String getText() {
