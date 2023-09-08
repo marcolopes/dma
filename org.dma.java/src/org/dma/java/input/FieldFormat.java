@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 package org.dma.java.input;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -117,34 +116,32 @@ public class FieldFormat extends FieldRegex {
 			case DOUBLE:
 			case DECIMAL:
 			case INTEGER:
-			case BOOLEAN:
-				String pattern="";
+				StringBuilder pattern=new StringBuilder();
 				//#,###,##
 				for(int i=size.size; i>1; i--){
-					pattern+="#";
-					if (i%3==1) pattern+=",";
+					pattern.append("#");
+					if (i%3==1) pattern.append(",");
 				}//#,###,##0
-				pattern+="0";
+				pattern.append("0");
 				//#,###,##0.000
-				if (size.scale>0) pattern+="."+StringUtils.replicas("0", size.scale);
-				return pattern;
+				if (size.scale>0) pattern.append("."+StringUtils.replicas("0", size.scale));
+				return pattern.toString();
 
+			case BOOLEAN:
 			case STRING: break;
 			}return null;
 		}
 
 	}
 
-	private final TYPES type;
-	private final FieldSize size;
 	private final String pattern;
 
-	public FieldFormat(TYPES type, String pattern) {
-		this(type, pattern, NONE);
+	public FieldFormat(TYPES type, String pattern, char...exclude) {
+		this(type, pattern, NONE, exclude);
 	}
 
-	public FieldFormat(TYPES type, String pattern, int properties) {
-		this(type, new FieldSize(pattern.length()), pattern, properties);
+	public FieldFormat(TYPES type, String pattern, int properties, char...exclude) {
+		this(type, new FieldSize(pattern.length()), pattern, properties, exclude);
 	}
 
 	public FieldFormat(TYPES type, int size, char...exclude) {
@@ -152,7 +149,7 @@ public class FieldFormat extends FieldRegex {
 	}
 
 	public FieldFormat(TYPES type, int size, int properties, char...exclude) {
-		this(type, new FieldSize(size), NONE, exclude);
+		this(type, new FieldSize(size), properties, exclude);
 	}
 
 	public FieldFormat(TYPES type, FieldSize size, int properties, char...exclude) {
@@ -161,11 +158,8 @@ public class FieldFormat extends FieldRegex {
 
 	public FieldFormat(TYPES type, FieldSize size, String pattern, int properties, char...exclude) {
 		super(type, size, properties, exclude);
-		this.type=type;
-		this.size=size;
 		this.pattern=pattern==null ? type.buildPattern(size) : pattern;
 	}
-
 
 
 	/*
@@ -176,7 +170,7 @@ public class FieldFormat extends FieldRegex {
 	}
 
 	public String getEditPattern() {
-		switch(type){
+		switch(getType()){
 		case TIME:
 		case DATE: break;
 		case LONG:
@@ -189,7 +183,7 @@ public class FieldFormat extends FieldRegex {
 	}
 
 	public String format(Object value, DecimalFormatSymbols symbols) {
-		switch(type){
+		switch(getType()){
 		case TIME: return TimeDateUtils.getTimeFormatted((Time)value, pattern);
 		case DATE: return TimeDateUtils.getDateFormatted((Date)value, pattern);
 		case LONG:
@@ -202,7 +196,7 @@ public class FieldFormat extends FieldRegex {
 	}
 
 	public Object parse(String text) {
-		try{switch(type){
+		try{switch(getType()){
 			case TIME: return TimeDateUtils.getTime(text, pattern);
 			case DATE: return TimeDateUtils.getDate(text, pattern);
 			case LONG: return new Long(text);
@@ -214,44 +208,6 @@ public class FieldFormat extends FieldRegex {
 			}return text;
 		}catch(Exception e){}
 		return null;
-	}
-
-
-
-	/*
-	 * Validation
-	 */
-	public boolean isValid(BigDecimal number) {
-		return isValid(number.toBigInteger());
-	}
-
-	public boolean isValid(BigInteger number) {
-		return number!=null && (!isPositive() || number.signum()>=0) &&
-				(number.toString().length()<=size.size+(number.signum()<0 ? 1 : 0));
-	}
-
-	public boolean isValid(Integer number) {
-		return number!=null && (!isPositive() || number>=0) &&
-				(number.toString().length()<=size.size+(number<0 ? 1 : 0));
-	}
-
-	public boolean isValid(String string) {
-		return string!=null && string.length()<=size.size &&
-				(!isUppercase() || StringUtils.isUppercase(string)) &&
-				(!isLowercase() || StringUtils.isLowercase(string)) &&
-				getPattern().matcher(string).matches();
-	}
-
-
-	/*
-	 * Getters and setters
-	 */
-	public TYPES getType() {
-		return type;
-	}
-
-	public FieldSize getSize() {
-		return size;
 	}
 
 }
