@@ -28,7 +28,7 @@ import org.eclipse.jetty.server.ServerConnector;
 public class JettyParameters extends HttpServerHandler {
 
 	//DEFAULTS
-	public static final String DEFAULT_HOST = "127.0.0.1";
+	public static final String DEFAULT_HOST = LOCALHOST.IP.value;
 	public static final int DEFAULT_PORT = 8087;
 
 	//EXCEPTIONS
