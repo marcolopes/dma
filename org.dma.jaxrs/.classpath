@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/api/javax.ws.rs-api-2.0.1.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/aopalliance-repackaged-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/hk2-api-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/hk2-locator-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/hk2-utils-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/javassist-3.20.0-GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/javax.annotation-api-1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/javax.inject-2.5.0-b32.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/jaxb-api-2.2.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/jersey-guava-2.25.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/org.osgi.core-4.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/osgi-resource-locator-1.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/persistence-api-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/validation-api-1.1.0.Final.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/ext/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-client.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-common.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-container-servlet-core.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-container-servlet.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-media-jaxb.jar" sourcepath="libraries/jaxrs-ri-2.25.1/lib/jersey-media-jaxb-2.25.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jaxrs-ri-2.25.1/lib/jersey-server.jar" sourcepath="libraries/jaxrs-ri-2.25.1/jaxrs-ri-2.25.1-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
