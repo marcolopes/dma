@@ -40,6 +40,13 @@ public class Activator implements BundleActivator {
 	public static final String PLUGIN_NAME = PLUGIN_ID+" "+new Version(
 			PLUGIN_VERSION.getMajor(), PLUGIN_VERSION.getMinor(), PLUGIN_VERSION.getMicro());
 
+	public static Class classForName(String className) {
+		try{return Class.forName(className);
+		}catch(ClassNotFoundException e){
+			System.err.println(e);
+		}return null;
+	}
+
 	public Activator() {
 		System.err.println(PLUGIN_NAME+" "+getClass().getSimpleName());
 	}
@@ -54,13 +61,6 @@ public class Activator implements BundleActivator {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		POOLMANAGERS.shutdown();
-	}
-
-	public static Class classForName(String className) {
-		try{return Class.forName(className);
-		}catch(ClassNotFoundException e){
-			System.err.println(e);
-		}return null;
 	}
 
 }
