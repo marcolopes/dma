@@ -25,7 +25,6 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
 import org.dma.drivers.jdbc.POOLMANAGERS;
-import org.dma.java.util.Debug;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -50,13 +49,10 @@ public class Activator implements BundleActivator {
 	 * @see org.osgi.framework.BundleActivator
 	 */
 	@Override
-	public void start(BundleContext context) throws Exception {
-		Debug.err();
-	}
+	public void start(BundleContext context) throws Exception {}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		Debug.err();
 		POOLMANAGERS.shutdown();
 	}
 
