@@ -30,19 +30,11 @@ import org.dma.jaxrs.services.QueryParameters.QueryParameterValue;
  */
 public class Client {
 
-	public static javax.ws.rs.client.Client newClient() {
-		Thread.currentThread().setContextClassLoader(ClientBuilder.class.getClassLoader());
-		return ClientBuilder.newClient();
-	}
-
-	private final javax.ws.rs.client.Client client;
+	public final javax.ws.rs.client.Client client;
 
 	public Client() {
-		this(newClient());
-	}
-
-	public Client(javax.ws.rs.client.Client client) {
-		this.client=client;
+		Thread.currentThread().setContextClassLoader(ClientBuilder.class.getClassLoader());
+		this.client=ClientBuilder.newClient();
 	}
 
 	public void close() {

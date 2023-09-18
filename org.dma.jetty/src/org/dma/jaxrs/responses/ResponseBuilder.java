@@ -20,24 +20,26 @@
 package org.dma.jaxrs.responses;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.Response.Status.Family;
+import javax.ws.rs.core.Response.StatusType;
 
 import org.dma.java.util.StringUtils;
 
 public class ResponseBuilder<T> extends HashMap<String, Object> implements IResponse {
 
-	private Status status;
+	private StatusType status;
 	private T entity;
 
 	public ResponseBuilder(Status status) {
 		this(status, null);
 	}
 
-	public ResponseBuilder(Status status, T entity) {
+	public ResponseBuilder(StatusType status, T entity) {
 		this.status=status;
 		this.entity=entity;
 	}
@@ -61,7 +63,11 @@ public class ResponseBuilder<T> extends HashMap<String, Object> implements IResp
 		}return builder.build();
 	}
 
-	public ResponseBuilder<T> setHeader(File file) {
+	public ResponseBuilder<T> text(Charset charset) {
+		return setHeader("Content-Type", "text/html; charset="+charset.name());
+	}
+
+	public ResponseBuilder<T> attachment(File file) {
 		return setHeader("Content-Disposition", "attachment; filename="+StringUtils.quote(file.getName()));
 	}
 
@@ -73,11 +79,11 @@ public class ResponseBuilder<T> extends HashMap<String, Object> implements IResp
 	/*
 	 * Getters & Setters
 	 */
-	public Status getStatus() {
+	public StatusType getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(StatusType status) {
 		this.status = status;
 	}
 

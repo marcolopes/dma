@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,9 +103,12 @@ public class JettyServer implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.println(this);
 		try{server.start();
 			server.join();
-		}catch(Exception e){}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public JettyServer start() {
@@ -113,14 +116,16 @@ public class JettyServer implements Runnable {
 		new Thread(this).start();
 		while(busy)try{
 			Thread.sleep(50);
-		}catch(Exception e){}
-		return this;
+		}catch(Exception e){
+			e.printStackTrace();
+		}return this;
 	}
 
 	public JettyServer stop() {
 		try{server.stop();
-		}catch(Exception e){}
-		return this;
+		}catch(Exception e){
+			e.printStackTrace();
+		}return this;
 	}
 
 	public boolean startStop() {
@@ -141,16 +146,21 @@ public class JettyServer implements Runnable {
 		return server;
 	}
 
+	public Collection<EndPoint> getConnectedEndPoints() {
+		for(Connector connector: server.getConnectors()){
+			System.out.println(connector);
+			for(EndPoint endpoint: connector.getConnectedEndPoints()){
+				System.out.println(endpoint);
+			}
+		}return server.getConnectors()[0].getConnectedEndPoints();
+	}
+
 	public JettyParameters getParameters() {
 		return parameters;
 	}
 
 	public Handler getHandler() {
 		return handler;
-	}
-
-	public Collection<EndPoint> getConnectedEndPoints() {
-		return server.getConnectors()[0].getConnectedEndPoints();
 	}
 
 	@Override

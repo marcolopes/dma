@@ -204,7 +204,7 @@ public class JettyShell extends CustomShell {
 
 		list_connections.removeAll();
 		for(EndPoint endPoint: server.getConnectedEndPoints()){
-			list_connections.add("IP: "+endPoint.getRemoteAddress().getHostString());
+			list_connections.add(endPoint.toString());
 		}list_connections.update();
 
 	}

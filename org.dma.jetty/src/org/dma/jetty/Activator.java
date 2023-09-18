@@ -21,7 +21,6 @@ package org.dma.jetty;
 import java.awt.image.BufferedImage;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
@@ -55,20 +54,6 @@ public class Activator extends Plugin {
 
 	public Activator() {
 		System.err.println(PLUGIN_NAME+" "+getClass().getSimpleName());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator
-	 */
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-	}
-
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		super.stop(context);
 	}
 
 }

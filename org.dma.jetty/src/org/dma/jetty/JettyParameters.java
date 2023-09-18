@@ -27,16 +27,12 @@ import org.eclipse.jetty.server.ServerConnector;
 
 public class JettyParameters extends HttpServerHandler {
 
-	//DEFAULTS
-	public static final String DEFAULT_HOST = LOCALHOST.IP.value;
-	public static final int DEFAULT_PORT = 8087;
-
 	//EXCEPTIONS
 	public static final IllegalArgumentException HOST_NOT_DEFINED_EXCEPTION = new IllegalArgumentException("host is not defined");
 	public static final IllegalArgumentException INVALID_PORT_EXCEPTION = new IllegalArgumentException("port is invalid");
 
 	public JettyParameters() {
-		this(DEFAULT_HOST, DEFAULT_PORT);
+		this("127.0.0.1", 8087);
 	}
 
 	public JettyParameters(String host, int port) {
