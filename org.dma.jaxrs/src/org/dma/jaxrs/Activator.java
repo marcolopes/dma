@@ -24,6 +24,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
+import org.dma.java.util.Debug;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -47,9 +49,13 @@ public class Activator implements BundleActivator {
 	 * @see org.osgi.framework.BundleActivator
 	 */
 	@Override
-	public void start(BundleContext context) throws Exception {}
+	public void start(BundleContext context) throws Exception {
+		Debug.err();
+	}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {}
+	public void stop(BundleContext context) throws Exception {
+		Debug.err();
+	}
 
 }
