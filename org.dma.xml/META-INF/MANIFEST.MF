@@ -5,6 +5,8 @@ Bundle-Name: XML Libraries
 Bundle-SymbolicName: org.dma.xml;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
+Bundle-Activator: org.dma.xml.Activator
+Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
  xmlbeans/xmlbeans-3.1.0.jar,
@@ -17,7 +19,8 @@ Bundle-ClassPath: .,
  libraries/Stock_1_01.jar,
  libraries/Stock_1_02.jar,
  libraries/Stock_2_01.jar
-Require-Bundle: org.dma.java;bundle-version="7.0.0"
+Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
+ org.dma.java;bundle-version="7.0.0"
 Export-Package: oasisNamesSpecificationUblSchemaXsdCommonAggregateComponents2,
  oasisNamesSpecificationUblSchemaXsdCommonAggregateComponents2.impl,
  oasisNamesSpecificationUblSchemaXsdCommonBasicComponents2,

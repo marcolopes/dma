@@ -16,7 +16,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.log4j;
+package org.dma.services.broker;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
