@@ -33,10 +33,12 @@ public class Activator implements BundleActivator {
 
 	public static final String PLUGIN_ID = PLUGIN_BUNDLE.getSymbolicName();
 
-	public static final Version PLUGIN_VERSION = PLUGIN_BUNDLE.getVersion();
+	public static final Version PLUGIN_VERSION = new Version(
+			PLUGIN_BUNDLE.getVersion().getMajor(),
+			PLUGIN_BUNDLE.getVersion().getMinor(),
+			PLUGIN_BUNDLE.getVersion().getMicro());
 
-	public static final String PLUGIN_NAME = PLUGIN_ID+" "+new Version(
-			PLUGIN_VERSION.getMajor(), PLUGIN_VERSION.getMinor(), PLUGIN_VERSION.getMicro());
+	public static final String PLUGIN_NAME = PLUGIN_ID+" "+PLUGIN_VERSION;
 
 	public Activator() {
 		System.err.println(PLUGIN_NAME+" "+getClass().getSimpleName());
