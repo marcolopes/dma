@@ -126,9 +126,10 @@ public class CheckVatHandler {
 		/** Parses VIES address */
 		public CheckVatAddress parse(String address) {
 
-			try{Matcher matcher=zipcode.matcher(address);
-				matcher.find();
+			if (zipcode!=null) try{
+				Matcher matcher=zipcode.matcher(address);
 
+				matcher.find();
 				/* STREET (before ZIPCODE) */
 				String street=address.substring(0, matcher.start());
 				/* ZIPCODE */
