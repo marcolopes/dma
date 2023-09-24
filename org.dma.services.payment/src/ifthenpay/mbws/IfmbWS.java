@@ -19,7 +19,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  *
  */
-@WebServiceClient(name = "IfmbWS", targetNamespace = "https://www.ifthenpay.com/", wsdlLocation = "file:/C:/workspace/beta/org.dma.services.payment/wsdl/ifmbws.xml")
+@WebServiceClient(name = "IfmbWS", targetNamespace = "https://www.ifthenpay.com/", wsdlLocation = "file:wsdl/ifmbws.xml")
 public class IfmbWS
     extends Service
 {
