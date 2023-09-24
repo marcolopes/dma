@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,10 +49,12 @@ import org.dma.java.time.DatePeriod;
  */
 public class IfThenPayService {
 
-	private static Collection<IfThenPayServiceResponseType> convert(ArrayOfIfmb response) {
+	private static Collection<IfThenPayServiceResponseType> convert(ArrayOfIfmb array) throws Exception {
 		Collection<IfThenPayServiceResponseType> col=new ArrayList();
-		for(Ifmb element: response.getIfmb()){
-			col.add(new IfThenPayServiceResponseType(element));
+		for(Ifmb element: array.getIfmb()){
+			IfThenPayServiceResponseType response=new IfThenPayServiceResponseType(element);
+			if (response.codigoErro!=0) throw new Exception(response.mensagemErro);
+			col.add(response);
 		}return col;
 	}
 
@@ -76,8 +78,17 @@ public class IfThenPayService {
 
 	public Collection<IfThenPayServiceResponseType> getPayments(DatePeriod periodo) throws Exception {
 		return convert(new IfmbWS().getIfmbWSSoap().getPayments(chavebackoffice, entidade, subentidade,
-				periodo.getStartDate("dd-MM-yyyy")+" 00:00:00",
-				periodo.getEndDate("dd-MM-yyyy")+" 23:59:59", null, null));
+				periodo.getStartDate("dd-MM-yyyy").concat(" ").concat("00:00:00"),
+				periodo.getEndDate("dd-MM-yyyy").concat(" ").concat("23:59:59"), null, null));
+	}
+
+	public static void main(String[] args) throws Exception {
+
+		System.out.println("Getting Payments...");
+		for(IfThenPayServiceResponseType response: new IfThenPayService("11604", "999", "0000-0000-0000-0000").getPayments()){
+			System.out.println(response);
+		}
+
 	}
 
 }
