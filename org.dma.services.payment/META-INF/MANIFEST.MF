@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Payment Services
 Bundle-SymbolicName: org.dma.services.payment;singleton:=true
-Bundle-Version: 0.0.2.qualifier
+Bundle-Version: 0.0.3.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
