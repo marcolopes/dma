@@ -102,11 +102,11 @@ public interface IfmbWSSoap {
      * @return
      *     returns https.www_ifthenpay.ArrayOfIfmb
      */
-    @WebMethod(action = "https://www.ifthenpay.com/getPaymentsXML")
-    @WebResult(name = "getPaymentsXMLResult", targetNamespace = "https://www.ifthenpay.com/")
-    @RequestWrapper(localName = "getPaymentsXML", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsXML")
-    @ResponseWrapper(localName = "getPaymentsXMLResponse", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsXMLResponse")
-    public ArrayOfIfmb getPaymentsXML(
+    @WebMethod(action = "https://www.ifthenpay.com/getPaymentsXml")
+    @WebResult(name = "getPaymentsXmlResult", targetNamespace = "https://www.ifthenpay.com/")
+    @RequestWrapper(localName = "getPaymentsXml", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsXml")
+    @ResponseWrapper(localName = "getPaymentsXmlResponse", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsXmlResponse")
+    public ArrayOfIfmb getPaymentsXml(
         @WebParam(name = "chavebackoffice", targetNamespace = "https://www.ifthenpay.com/")
         String chavebackoffice,
         @WebParam(name = "entidade", targetNamespace = "https://www.ifthenpay.com/")
@@ -127,6 +127,41 @@ public interface IfmbWSSoap {
      * @param chavebackoffice
      * @param dtHrInicio
      * @param valor
+     * @param sandbox
+     * @param dtHrFim
+     * @param subentidade
+     * @param entidade
+     * @param referencia
+     * @return
+     *     returns https.www_ifthenpay.ArrayOfIfmb
+     */
+    @WebMethod(action = "https://www.ifthenpay.com/getPaymentsXmlWithSandBox")
+    @WebResult(name = "getPaymentsXmlWithSandBoxResult", targetNamespace = "https://www.ifthenpay.com/")
+    @RequestWrapper(localName = "getPaymentsXmlWithSandBox", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsXmlWithSandBox")
+    @ResponseWrapper(localName = "getPaymentsXmlWithSandBoxResponse", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsXmlWithSandBoxResponse")
+    public ArrayOfIfmb getPaymentsXmlWithSandBox(
+        @WebParam(name = "chavebackoffice", targetNamespace = "https://www.ifthenpay.com/")
+        String chavebackoffice,
+        @WebParam(name = "entidade", targetNamespace = "https://www.ifthenpay.com/")
+        String entidade,
+        @WebParam(name = "subentidade", targetNamespace = "https://www.ifthenpay.com/")
+        String subentidade,
+        @WebParam(name = "dtHrInicio", targetNamespace = "https://www.ifthenpay.com/")
+        String dtHrInicio,
+        @WebParam(name = "dtHrFim", targetNamespace = "https://www.ifthenpay.com/")
+        String dtHrFim,
+        @WebParam(name = "referencia", targetNamespace = "https://www.ifthenpay.com/")
+        String referencia,
+        @WebParam(name = "valor", targetNamespace = "https://www.ifthenpay.com/")
+        String valor,
+        @WebParam(name = "sandbox", targetNamespace = "https://www.ifthenpay.com/")
+        int sandbox);
+
+    /**
+     * 
+     * @param chavebackoffice
+     * @param dtHrInicio
+     * @param valor
      * @param dtHrFim
      * @param subentidade
      * @param entidade
@@ -134,11 +169,11 @@ public interface IfmbWSSoap {
      * @return
      *     returns java.lang.String
      */
-    @WebMethod(action = "https://www.ifthenpay.com/getPaymentsJSON")
-    @WebResult(name = "getPaymentsJSONResult", targetNamespace = "https://www.ifthenpay.com/")
-    @RequestWrapper(localName = "getPaymentsJSON", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJSON")
-    @ResponseWrapper(localName = "getPaymentsJSONResponse", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJSONResponse")
-    public String getPaymentsJSON(
+    @WebMethod(action = "https://www.ifthenpay.com/getPaymentsJson")
+    @WebResult(name = "getPaymentsJsonResult", targetNamespace = "https://www.ifthenpay.com/")
+    @RequestWrapper(localName = "getPaymentsJson", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJson")
+    @ResponseWrapper(localName = "getPaymentsJsonResponse", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJsonResponse")
+    public String getPaymentsJson(
         @WebParam(name = "chavebackoffice", targetNamespace = "https://www.ifthenpay.com/")
         String chavebackoffice,
         @WebParam(name = "entidade", targetNamespace = "https://www.ifthenpay.com/")
@@ -153,6 +188,41 @@ public interface IfmbWSSoap {
         String referencia,
         @WebParam(name = "valor", targetNamespace = "https://www.ifthenpay.com/")
         String valor);
+
+    /**
+     * 
+     * @param chavebackoffice
+     * @param dtHrInicio
+     * @param valor
+     * @param sandbox
+     * @param dtHrFim
+     * @param subentidade
+     * @param entidade
+     * @param referencia
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(action = "https://www.ifthenpay.com/getPaymentsJsonWithSandBox")
+    @WebResult(name = "getPaymentsJsonWithSandBoxResult", targetNamespace = "https://www.ifthenpay.com/")
+    @RequestWrapper(localName = "getPaymentsJsonWithSandBox", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJsonWithSandBox")
+    @ResponseWrapper(localName = "getPaymentsJsonWithSandBoxResponse", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJsonWithSandBoxResponse")
+    public String getPaymentsJsonWithSandBox(
+        @WebParam(name = "chavebackoffice", targetNamespace = "https://www.ifthenpay.com/")
+        String chavebackoffice,
+        @WebParam(name = "entidade", targetNamespace = "https://www.ifthenpay.com/")
+        String entidade,
+        @WebParam(name = "subentidade", targetNamespace = "https://www.ifthenpay.com/")
+        String subentidade,
+        @WebParam(name = "dtHrInicio", targetNamespace = "https://www.ifthenpay.com/")
+        String dtHrInicio,
+        @WebParam(name = "dtHrFim", targetNamespace = "https://www.ifthenpay.com/")
+        String dtHrFim,
+        @WebParam(name = "referencia", targetNamespace = "https://www.ifthenpay.com/")
+        String referencia,
+        @WebParam(name = "valor", targetNamespace = "https://www.ifthenpay.com/")
+        String valor,
+        @WebParam(name = "sandbox", targetNamespace = "https://www.ifthenpay.com/")
+        int sandbox);
 
     /**
      * 
@@ -206,5 +276,69 @@ public interface IfmbWSSoap {
     public void getEntidadeSubentidadeJsonV2(
         @WebParam(name = "chavebackoffice", targetNamespace = "https://www.ifthenpay.com/")
         String chavebackoffice);
+
+    /**
+     * 
+     * @param chavebackoffice
+     * @param dtHrInicio
+     * @param valor
+     * @param sandbox
+     * @param dtHrFim
+     * @param subentidade
+     * @param entidade
+     * @param referencia
+     */
+    @WebMethod(action = "https://www.ifthenpay.com/getPaymentsJsonV2")
+    @RequestWrapper(localName = "getPaymentsJsonV2", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJsonV2")
+    @ResponseWrapper(localName = "getPaymentsJsonV2Response", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJsonV2Response")
+    public void getPaymentsJsonV2(
+        @WebParam(name = "chavebackoffice", targetNamespace = "https://www.ifthenpay.com/")
+        String chavebackoffice,
+        @WebParam(name = "entidade", targetNamespace = "https://www.ifthenpay.com/")
+        String entidade,
+        @WebParam(name = "subentidade", targetNamespace = "https://www.ifthenpay.com/")
+        String subentidade,
+        @WebParam(name = "dtHrInicio", targetNamespace = "https://www.ifthenpay.com/")
+        String dtHrInicio,
+        @WebParam(name = "dtHrFim", targetNamespace = "https://www.ifthenpay.com/")
+        String dtHrFim,
+        @WebParam(name = "referencia", targetNamespace = "https://www.ifthenpay.com/")
+        String referencia,
+        @WebParam(name = "valor", targetNamespace = "https://www.ifthenpay.com/")
+        String valor,
+        @WebParam(name = "sandbox", targetNamespace = "https://www.ifthenpay.com/")
+        int sandbox);
+
+    /**
+     * 
+     * @param chavebackoffice
+     * @param dtHrInicio
+     * @param valor
+     * @param sandbox
+     * @param dtHrFim
+     * @param subentidade
+     * @param entidade
+     * @param referencia
+     */
+    @WebMethod(action = "https://www.ifthenpay.com/getPaymentsJsonWithSandBoxV2")
+    @RequestWrapper(localName = "getPaymentsJsonWithSandBoxV2", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJsonWithSandBoxV2")
+    @ResponseWrapper(localName = "getPaymentsJsonWithSandBoxV2Response", targetNamespace = "https://www.ifthenpay.com/", className = "https.www_ifthenpay.GetPaymentsJsonWithSandBoxV2Response")
+    public void getPaymentsJsonWithSandBoxV2(
+        @WebParam(name = "chavebackoffice", targetNamespace = "https://www.ifthenpay.com/")
+        String chavebackoffice,
+        @WebParam(name = "entidade", targetNamespace = "https://www.ifthenpay.com/")
+        String entidade,
+        @WebParam(name = "subentidade", targetNamespace = "https://www.ifthenpay.com/")
+        String subentidade,
+        @WebParam(name = "dtHrInicio", targetNamespace = "https://www.ifthenpay.com/")
+        String dtHrInicio,
+        @WebParam(name = "dtHrFim", targetNamespace = "https://www.ifthenpay.com/")
+        String dtHrFim,
+        @WebParam(name = "referencia", targetNamespace = "https://www.ifthenpay.com/")
+        String referencia,
+        @WebParam(name = "valor", targetNamespace = "https://www.ifthenpay.com/")
+        String valor,
+        @WebParam(name = "sandbox", targetNamespace = "https://www.ifthenpay.com/")
+        int sandbox);
 
 }

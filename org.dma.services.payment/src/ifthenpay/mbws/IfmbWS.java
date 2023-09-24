@@ -19,7 +19,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "IfmbWS", targetNamespace = "https://www.ifthenpay.com/", wsdlLocation = "file:/C:/workspace/dev/org.dma.services.payment/wsdl/IfmbWS.xml")
+@WebServiceClient(name = "IfmbWS", targetNamespace = "https://www.ifthenpay.com/", wsdlLocation = "file:/C:/workspace/beta/org.dma.services.payment/wsdl/ifmbws.xml")
 public class IfmbWS
     extends Service
 {
@@ -32,7 +32,7 @@ public class IfmbWS
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/C:/workspace/dev/org.dma.services.payment/wsdl/IfmbWS.xml");
+            url = new URL("file:/C:/workspace/beta/org.dma.services.payment/wsdl/ifmbws.xml");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -84,6 +84,72 @@ public class IfmbWS
     @WebEndpoint(name = "IfmbWSSoap")
     public IfmbWSSoap getIfmbWSSoap(WebServiceFeature... features) {
         return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSSoap"), IfmbWSSoap.class, features);
+    }
+
+    /**
+     * 
+     * @return
+     *     returns IfmbWSSoap
+     */
+    @WebEndpoint(name = "IfmbWSSoap12")
+    public IfmbWSSoap getIfmbWSSoap12() {
+        return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSSoap12"), IfmbWSSoap.class);
+    }
+
+    /**
+     * 
+     * @param features
+     *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
+     * @return
+     *     returns IfmbWSSoap
+     */
+    @WebEndpoint(name = "IfmbWSSoap12")
+    public IfmbWSSoap getIfmbWSSoap12(WebServiceFeature... features) {
+        return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSSoap12"), IfmbWSSoap.class, features);
+    }
+
+    /**
+     * 
+     * @return
+     *     returns IfmbWSHttpGet
+     */
+    @WebEndpoint(name = "IfmbWSHttpGet")
+    public IfmbWSHttpGet getIfmbWSHttpGet() {
+        return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSHttpGet"), IfmbWSHttpGet.class);
+    }
+
+    /**
+     * 
+     * @param features
+     *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
+     * @return
+     *     returns IfmbWSHttpGet
+     */
+    @WebEndpoint(name = "IfmbWSHttpGet")
+    public IfmbWSHttpGet getIfmbWSHttpGet(WebServiceFeature... features) {
+        return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSHttpGet"), IfmbWSHttpGet.class, features);
+    }
+
+    /**
+     * 
+     * @return
+     *     returns IfmbWSHttpPost
+     */
+    @WebEndpoint(name = "IfmbWSHttpPost")
+    public IfmbWSHttpPost getIfmbWSHttpPost() {
+        return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSHttpPost"), IfmbWSHttpPost.class);
+    }
+
+    /**
+     * 
+     * @param features
+     *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
+     * @return
+     *     returns IfmbWSHttpPost
+     */
+    @WebEndpoint(name = "IfmbWSHttpPost")
+    public IfmbWSHttpPost getIfmbWSHttpPost(WebServiceFeature... features) {
+        return super.getPort(new QName("https://www.ifthenpay.com/", "IfmbWSHttpPost"), IfmbWSHttpPost.class, features);
     }
 
     private static URL __getWsdlLocation() {

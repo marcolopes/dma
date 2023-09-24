@@ -35,35 +35,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetPaymentsJSON }
+     * Create an instance of {@link GetPaymentsXml }
      * 
      */
-    public GetPaymentsJSON createGetPaymentsJSON() {
-        return new GetPaymentsJSON();
+    public GetPaymentsXml createGetPaymentsXml() {
+        return new GetPaymentsXml();
     }
 
     /**
-     * Create an instance of {@link GetPaymentsJSONResponse }
+     * Create an instance of {@link GetPaymentsJsonResponse }
      * 
      */
-    public GetPaymentsJSONResponse createGetPaymentsJSONResponse() {
-        return new GetPaymentsJSONResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetEntidadeSubentidadeJson }
-     * 
-     */
-    public GetEntidadeSubentidadeJson createGetEntidadeSubentidadeJson() {
-        return new GetEntidadeSubentidadeJson();
-    }
-
-    /**
-     * Create an instance of {@link ArrayOfIfmb }
-     * 
-     */
-    public ArrayOfIfmb createArrayOfIfmb() {
-        return new ArrayOfIfmb();
+    public GetPaymentsJsonResponse createGetPaymentsJsonResponse() {
+        return new GetPaymentsJsonResponse();
     }
 
     /**
@@ -75,6 +59,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetPaymentsJsonV2 }
+     * 
+     */
+    public GetPaymentsJsonV2 createGetPaymentsJsonV2() {
+        return new GetPaymentsJsonV2();
+    }
+
+    /**
+     * Create an instance of {@link GetPaymentsJsonWithSandBoxResponse }
+     * 
+     */
+    public GetPaymentsJsonWithSandBoxResponse createGetPaymentsJsonWithSandBoxResponse() {
+        return new GetPaymentsJsonWithSandBoxResponse();
+    }
+
+    /**
      * Create an instance of {@link GetPaymentsWithSandBoxResponse }
      * 
      */
@@ -83,11 +83,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetPaymentsXML }
+     * Create an instance of {@link ArrayOfIfmb }
      * 
      */
-    public GetPaymentsXML createGetPaymentsXML() {
-        return new GetPaymentsXML();
+    public ArrayOfIfmb createArrayOfIfmb() {
+        return new ArrayOfIfmb();
     }
 
     /**
@@ -99,11 +99,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetEntidadeSubentidadeXml }
+     * Create an instance of {@link GetPaymentsXmlResponse }
      * 
      */
-    public GetEntidadeSubentidadeXml createGetEntidadeSubentidadeXml() {
-        return new GetEntidadeSubentidadeXml();
+    public GetPaymentsXmlResponse createGetPaymentsXmlResponse() {
+        return new GetPaymentsXmlResponse();
     }
 
     /**
@@ -112,6 +112,62 @@ public class ObjectFactory {
      */
     public GetEntidadeSubentidadeResponse createGetEntidadeSubentidadeResponse() {
         return new GetEntidadeSubentidadeResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetPaymentsJson }
+     * 
+     */
+    public GetPaymentsJson createGetPaymentsJson() {
+        return new GetPaymentsJson();
+    }
+
+    /**
+     * Create an instance of {@link GetPaymentsResponse }
+     * 
+     */
+    public GetPaymentsResponse createGetPaymentsResponse() {
+        return new GetPaymentsResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetEntidadeSubentidadeXmlResponse }
+     * 
+     */
+    public GetEntidadeSubentidadeXmlResponse createGetEntidadeSubentidadeXmlResponse() {
+        return new GetEntidadeSubentidadeXmlResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetPaymentsJsonWithSandBoxV2Response }
+     * 
+     */
+    public GetPaymentsJsonWithSandBoxV2Response createGetPaymentsJsonWithSandBoxV2Response() {
+        return new GetPaymentsJsonWithSandBoxV2Response();
+    }
+
+    /**
+     * Create an instance of {@link GetEntidadeSubentidade }
+     * 
+     */
+    public GetEntidadeSubentidade createGetEntidadeSubentidade() {
+        return new GetEntidadeSubentidade();
+    }
+
+    /**
+     * Create an instance of {@link GetEntidadeSubentidadeJson }
+     * 
+     */
+    public GetEntidadeSubentidadeJson createGetEntidadeSubentidadeJson() {
+        return new GetEntidadeSubentidadeJson();
+    }
+
+    /**
+     * Create an instance of {@link GetEntidadeSubentidadeXml }
+     * 
+     */
+    public GetEntidadeSubentidadeXml createGetEntidadeSubentidadeXml() {
+        return new GetEntidadeSubentidadeXml();
     }
 
     /**
@@ -139,35 +195,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetPaymentsResponse }
+     * Create an instance of {@link GetPaymentsJsonWithSandBoxV2 }
      * 
      */
-    public GetPaymentsResponse createGetPaymentsResponse() {
-        return new GetPaymentsResponse();
+    public GetPaymentsJsonWithSandBoxV2 createGetPaymentsJsonWithSandBoxV2() {
+        return new GetPaymentsJsonWithSandBoxV2();
     }
 
     /**
-     * Create an instance of {@link GetEntidadeSubentidadeXmlResponse }
+     * Create an instance of {@link GetPaymentsXmlWithSandBoxResponse }
      * 
      */
-    public GetEntidadeSubentidadeXmlResponse createGetEntidadeSubentidadeXmlResponse() {
-        return new GetEntidadeSubentidadeXmlResponse();
+    public GetPaymentsXmlWithSandBoxResponse createGetPaymentsXmlWithSandBoxResponse() {
+        return new GetPaymentsXmlWithSandBoxResponse();
     }
 
     /**
-     * Create an instance of {@link GetPaymentsXMLResponse }
+     * Create an instance of {@link GetPaymentsXmlWithSandBox }
      * 
      */
-    public GetPaymentsXMLResponse createGetPaymentsXMLResponse() {
-        return new GetPaymentsXMLResponse();
+    public GetPaymentsXmlWithSandBox createGetPaymentsXmlWithSandBox() {
+        return new GetPaymentsXmlWithSandBox();
     }
 
     /**
-     * Create an instance of {@link GetEntidadeSubentidade }
+     * Create an instance of {@link GetPaymentsJsonWithSandBox }
      * 
      */
-    public GetEntidadeSubentidade createGetEntidadeSubentidade() {
-        return new GetEntidadeSubentidade();
+    public GetPaymentsJsonWithSandBox createGetPaymentsJsonWithSandBox() {
+        return new GetPaymentsJsonWithSandBox();
+    }
+
+    /**
+     * Create an instance of {@link GetPaymentsJsonV2Response }
+     * 
+     */
+    public GetPaymentsJsonV2Response createGetPaymentsJsonV2Response() {
+        return new GetPaymentsJsonV2Response();
     }
 
     /**
