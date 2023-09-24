@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://www.ifthensoftware.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="https://www.ifthensoftware.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://www.ifthenpay.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="https://www.ifthenpay.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;font  size="4"&gt;&lt;strong&gt;WebService de Suporte ao Serviço &lt;br /&gt;&lt;font color="#008C8C"&gt;IFMB - Pagamentos por Referência Multibanco&lt;/font&gt;.&lt;/strong&gt;&lt;/font&gt; &lt;br /&gt;&lt;br /&gt;</wsdl:documentation>
   <wsdl:types>
-    <s:schema elementFormDefault="qualified" targetNamespace="https://www.ifthensoftware.com/">
+    <s:schema elementFormDefault="qualified" targetNamespace="https://www.ifthenpay.com/">
       <s:element name="getPayments">
         <s:complexType>
           <s:sequence>
@@ -70,7 +70,7 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="getPaymentsXML">
+      <s:element name="getPaymentsXml">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="chavebackoffice" type="s:string" />
@@ -83,14 +83,35 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="getPaymentsXMLResponse">
+      <s:element name="getPaymentsXmlResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getPaymentsXMLResult" type="tns:ArrayOfIfmb" />
+            <s:element minOccurs="0" maxOccurs="1" name="getPaymentsXmlResult" type="tns:ArrayOfIfmb" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="getPaymentsJSON">
+      <s:element name="getPaymentsXmlWithSandBox">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="chavebackoffice" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="entidade" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subentidade" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dtHrInicio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dtHrFim" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valor" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sandbox" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPaymentsXmlWithSandBoxResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPaymentsXmlWithSandBoxResult" type="tns:ArrayOfIfmb" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPaymentsJson">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="chavebackoffice" type="s:string" />
@@ -103,10 +124,31 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="getPaymentsJSONResponse">
+      <s:element name="getPaymentsJsonResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getPaymentsJSONResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="getPaymentsJsonResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPaymentsJsonWithSandBox">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="chavebackoffice" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="entidade" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subentidade" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dtHrInicio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dtHrFim" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valor" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sandbox" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPaymentsJsonWithSandBoxResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPaymentsJsonWithSandBoxResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -162,6 +204,40 @@
       <s:element name="getEntidadeSubentidadeJsonV2Response">
         <s:complexType />
       </s:element>
+      <s:element name="getPaymentsJsonV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="chavebackoffice" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="entidade" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subentidade" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dtHrInicio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dtHrFim" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valor" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sandbox" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPaymentsJsonV2Response">
+        <s:complexType />
+      </s:element>
+      <s:element name="getPaymentsJsonWithSandBoxV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="chavebackoffice" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="entidade" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subentidade" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dtHrInicio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dtHrFim" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valor" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sandbox" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPaymentsJsonWithSandBoxV2Response">
+        <s:complexType />
+      </s:element>
       <s:element name="ArrayOfIfmb" nillable="true" type="tns:ArrayOfIfmb" />
       <s:element name="string" nillable="true" type="s:string" />
     </s:schema>
@@ -178,17 +254,29 @@
   <wsdl:message name="getPaymentsWithSandBoxSoapOut">
     <wsdl:part name="parameters" element="tns:getPaymentsWithSandBoxResponse" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsXMLSoapIn">
-    <wsdl:part name="parameters" element="tns:getPaymentsXML" />
+  <wsdl:message name="getPaymentsXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:getPaymentsXml" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsXMLSoapOut">
-    <wsdl:part name="parameters" element="tns:getPaymentsXMLResponse" />
+  <wsdl:message name="getPaymentsXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:getPaymentsXmlResponse" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsJSONSoapIn">
-    <wsdl:part name="parameters" element="tns:getPaymentsJSON" />
+  <wsdl:message name="getPaymentsXmlWithSandBoxSoapIn">
+    <wsdl:part name="parameters" element="tns:getPaymentsXmlWithSandBox" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsJSONSoapOut">
-    <wsdl:part name="parameters" element="tns:getPaymentsJSONResponse" />
+  <wsdl:message name="getPaymentsXmlWithSandBoxSoapOut">
+    <wsdl:part name="parameters" element="tns:getPaymentsXmlWithSandBoxResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonSoapIn">
+    <wsdl:part name="parameters" element="tns:getPaymentsJson" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonSoapOut">
+    <wsdl:part name="parameters" element="tns:getPaymentsJsonResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxSoapIn">
+    <wsdl:part name="parameters" element="tns:getPaymentsJsonWithSandBox" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxSoapOut">
+    <wsdl:part name="parameters" element="tns:getPaymentsJsonWithSandBoxResponse" />
   </wsdl:message>
   <wsdl:message name="getEntidadeSubentidadeSoapIn">
     <wsdl:part name="parameters" element="tns:getEntidadeSubentidade" />
@@ -213,6 +301,18 @@
   </wsdl:message>
   <wsdl:message name="getEntidadeSubentidadeJsonV2SoapOut">
     <wsdl:part name="parameters" element="tns:getEntidadeSubentidadeJsonV2Response" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonV2SoapIn">
+    <wsdl:part name="parameters" element="tns:getPaymentsJsonV2" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonV2SoapOut">
+    <wsdl:part name="parameters" element="tns:getPaymentsJsonV2Response" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxV2SoapIn">
+    <wsdl:part name="parameters" element="tns:getPaymentsJsonWithSandBoxV2" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxV2SoapOut">
+    <wsdl:part name="parameters" element="tns:getPaymentsJsonWithSandBoxV2Response" />
   </wsdl:message>
   <wsdl:message name="getPaymentsHttpGetIn">
     <wsdl:part name="chavebackoffice" type="s:string" />
@@ -239,7 +339,7 @@
   <wsdl:message name="getPaymentsWithSandBoxHttpGetOut">
     <wsdl:part name="Body" element="tns:ArrayOfIfmb" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsXMLHttpGetIn">
+  <wsdl:message name="getPaymentsXmlHttpGetIn">
     <wsdl:part name="chavebackoffice" type="s:string" />
     <wsdl:part name="entidade" type="s:string" />
     <wsdl:part name="subentidade" type="s:string" />
@@ -248,10 +348,23 @@
     <wsdl:part name="referencia" type="s:string" />
     <wsdl:part name="valor" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsXMLHttpGetOut">
+  <wsdl:message name="getPaymentsXmlHttpGetOut">
     <wsdl:part name="Body" element="tns:ArrayOfIfmb" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsJSONHttpGetIn">
+  <wsdl:message name="getPaymentsXmlWithSandBoxHttpGetIn">
+    <wsdl:part name="chavebackoffice" type="s:string" />
+    <wsdl:part name="entidade" type="s:string" />
+    <wsdl:part name="subentidade" type="s:string" />
+    <wsdl:part name="dtHrInicio" type="s:string" />
+    <wsdl:part name="dtHrFim" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="sandbox" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsXmlWithSandBoxHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfIfmb" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonHttpGetIn">
     <wsdl:part name="chavebackoffice" type="s:string" />
     <wsdl:part name="entidade" type="s:string" />
     <wsdl:part name="subentidade" type="s:string" />
@@ -260,7 +373,20 @@
     <wsdl:part name="referencia" type="s:string" />
     <wsdl:part name="valor" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsJSONHttpGetOut">
+  <wsdl:message name="getPaymentsJsonHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxHttpGetIn">
+    <wsdl:part name="chavebackoffice" type="s:string" />
+    <wsdl:part name="entidade" type="s:string" />
+    <wsdl:part name="subentidade" type="s:string" />
+    <wsdl:part name="dtHrInicio" type="s:string" />
+    <wsdl:part name="dtHrFim" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="sandbox" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="getEntidadeSubentidadeHttpGetIn">
@@ -285,6 +411,28 @@
     <wsdl:part name="chavebackoffice" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getEntidadeSubentidadeJsonV2HttpGetOut" />
+  <wsdl:message name="getPaymentsJsonV2HttpGetIn">
+    <wsdl:part name="chavebackoffice" type="s:string" />
+    <wsdl:part name="entidade" type="s:string" />
+    <wsdl:part name="subentidade" type="s:string" />
+    <wsdl:part name="dtHrInicio" type="s:string" />
+    <wsdl:part name="dtHrFim" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="sandbox" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonV2HttpGetOut" />
+  <wsdl:message name="getPaymentsJsonWithSandBoxV2HttpGetIn">
+    <wsdl:part name="chavebackoffice" type="s:string" />
+    <wsdl:part name="entidade" type="s:string" />
+    <wsdl:part name="subentidade" type="s:string" />
+    <wsdl:part name="dtHrInicio" type="s:string" />
+    <wsdl:part name="dtHrFim" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="sandbox" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxV2HttpGetOut" />
   <wsdl:message name="getPaymentsHttpPostIn">
     <wsdl:part name="chavebackoffice" type="s:string" />
     <wsdl:part name="entidade" type="s:string" />
@@ -310,7 +458,7 @@
   <wsdl:message name="getPaymentsWithSandBoxHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfIfmb" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsXMLHttpPostIn">
+  <wsdl:message name="getPaymentsXmlHttpPostIn">
     <wsdl:part name="chavebackoffice" type="s:string" />
     <wsdl:part name="entidade" type="s:string" />
     <wsdl:part name="subentidade" type="s:string" />
@@ -319,10 +467,23 @@
     <wsdl:part name="referencia" type="s:string" />
     <wsdl:part name="valor" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsXMLHttpPostOut">
+  <wsdl:message name="getPaymentsXmlHttpPostOut">
     <wsdl:part name="Body" element="tns:ArrayOfIfmb" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsJSONHttpPostIn">
+  <wsdl:message name="getPaymentsXmlWithSandBoxHttpPostIn">
+    <wsdl:part name="chavebackoffice" type="s:string" />
+    <wsdl:part name="entidade" type="s:string" />
+    <wsdl:part name="subentidade" type="s:string" />
+    <wsdl:part name="dtHrInicio" type="s:string" />
+    <wsdl:part name="dtHrFim" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="sandbox" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsXmlWithSandBoxHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfIfmb" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonHttpPostIn">
     <wsdl:part name="chavebackoffice" type="s:string" />
     <wsdl:part name="entidade" type="s:string" />
     <wsdl:part name="subentidade" type="s:string" />
@@ -331,7 +492,20 @@
     <wsdl:part name="referencia" type="s:string" />
     <wsdl:part name="valor" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="getPaymentsJSONHttpPostOut">
+  <wsdl:message name="getPaymentsJsonHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxHttpPostIn">
+    <wsdl:part name="chavebackoffice" type="s:string" />
+    <wsdl:part name="entidade" type="s:string" />
+    <wsdl:part name="subentidade" type="s:string" />
+    <wsdl:part name="dtHrInicio" type="s:string" />
+    <wsdl:part name="dtHrFim" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="sandbox" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="getEntidadeSubentidadeHttpPostIn">
@@ -356,6 +530,28 @@
     <wsdl:part name="chavebackoffice" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getEntidadeSubentidadeJsonV2HttpPostOut" />
+  <wsdl:message name="getPaymentsJsonV2HttpPostIn">
+    <wsdl:part name="chavebackoffice" type="s:string" />
+    <wsdl:part name="entidade" type="s:string" />
+    <wsdl:part name="subentidade" type="s:string" />
+    <wsdl:part name="dtHrInicio" type="s:string" />
+    <wsdl:part name="dtHrFim" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="sandbox" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonV2HttpPostOut" />
+  <wsdl:message name="getPaymentsJsonWithSandBoxV2HttpPostIn">
+    <wsdl:part name="chavebackoffice" type="s:string" />
+    <wsdl:part name="entidade" type="s:string" />
+    <wsdl:part name="subentidade" type="s:string" />
+    <wsdl:part name="dtHrInicio" type="s:string" />
+    <wsdl:part name="dtHrFim" type="s:string" />
+    <wsdl:part name="referencia" type="s:string" />
+    <wsdl:part name="valor" type="s:string" />
+    <wsdl:part name="sandbox" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPaymentsJsonWithSandBoxV2HttpPostOut" />
   <wsdl:portType name="IfmbWSSoap">
     <wsdl:operation name="getPayments">
       <wsdl:input message="tns:getPaymentsSoapIn" />
@@ -365,13 +561,21 @@
       <wsdl:input message="tns:getPaymentsWithSandBoxSoapIn" />
       <wsdl:output message="tns:getPaymentsWithSandBoxSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsXML">
-      <wsdl:input message="tns:getPaymentsXMLSoapIn" />
-      <wsdl:output message="tns:getPaymentsXMLSoapOut" />
+    <wsdl:operation name="getPaymentsXml">
+      <wsdl:input message="tns:getPaymentsXmlSoapIn" />
+      <wsdl:output message="tns:getPaymentsXmlSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsJSON">
-      <wsdl:input message="tns:getPaymentsJSONSoapIn" />
-      <wsdl:output message="tns:getPaymentsJSONSoapOut" />
+    <wsdl:operation name="getPaymentsXmlWithSandBox">
+      <wsdl:input message="tns:getPaymentsXmlWithSandBoxSoapIn" />
+      <wsdl:output message="tns:getPaymentsXmlWithSandBoxSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJson">
+      <wsdl:input message="tns:getPaymentsJsonSoapIn" />
+      <wsdl:output message="tns:getPaymentsJsonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBox">
+      <wsdl:input message="tns:getPaymentsJsonWithSandBoxSoapIn" />
+      <wsdl:output message="tns:getPaymentsJsonWithSandBoxSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidade">
       <wsdl:input message="tns:getEntidadeSubentidadeSoapIn" />
@@ -389,6 +593,14 @@
       <wsdl:input message="tns:getEntidadeSubentidadeJsonV2SoapIn" />
       <wsdl:output message="tns:getEntidadeSubentidadeJsonV2SoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonV2">
+      <wsdl:input message="tns:getPaymentsJsonV2SoapIn" />
+      <wsdl:output message="tns:getPaymentsJsonV2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBoxV2">
+      <wsdl:input message="tns:getPaymentsJsonWithSandBoxV2SoapIn" />
+      <wsdl:output message="tns:getPaymentsJsonWithSandBoxV2SoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IfmbWSHttpGet">
     <wsdl:operation name="getPayments">
@@ -399,13 +611,21 @@
       <wsdl:input message="tns:getPaymentsWithSandBoxHttpGetIn" />
       <wsdl:output message="tns:getPaymentsWithSandBoxHttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsXML">
-      <wsdl:input message="tns:getPaymentsXMLHttpGetIn" />
-      <wsdl:output message="tns:getPaymentsXMLHttpGetOut" />
+    <wsdl:operation name="getPaymentsXml">
+      <wsdl:input message="tns:getPaymentsXmlHttpGetIn" />
+      <wsdl:output message="tns:getPaymentsXmlHttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsJSON">
-      <wsdl:input message="tns:getPaymentsJSONHttpGetIn" />
-      <wsdl:output message="tns:getPaymentsJSONHttpGetOut" />
+    <wsdl:operation name="getPaymentsXmlWithSandBox">
+      <wsdl:input message="tns:getPaymentsXmlWithSandBoxHttpGetIn" />
+      <wsdl:output message="tns:getPaymentsXmlWithSandBoxHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJson">
+      <wsdl:input message="tns:getPaymentsJsonHttpGetIn" />
+      <wsdl:output message="tns:getPaymentsJsonHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBox">
+      <wsdl:input message="tns:getPaymentsJsonWithSandBoxHttpGetIn" />
+      <wsdl:output message="tns:getPaymentsJsonWithSandBoxHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidade">
       <wsdl:input message="tns:getEntidadeSubentidadeHttpGetIn" />
@@ -423,6 +643,14 @@
       <wsdl:input message="tns:getEntidadeSubentidadeJsonV2HttpGetIn" />
       <wsdl:output message="tns:getEntidadeSubentidadeJsonV2HttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonV2">
+      <wsdl:input message="tns:getPaymentsJsonV2HttpGetIn" />
+      <wsdl:output message="tns:getPaymentsJsonV2HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBoxV2">
+      <wsdl:input message="tns:getPaymentsJsonWithSandBoxV2HttpGetIn" />
+      <wsdl:output message="tns:getPaymentsJsonWithSandBoxV2HttpGetOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IfmbWSHttpPost">
     <wsdl:operation name="getPayments">
@@ -433,13 +661,21 @@
       <wsdl:input message="tns:getPaymentsWithSandBoxHttpPostIn" />
       <wsdl:output message="tns:getPaymentsWithSandBoxHttpPostOut" />
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsXML">
-      <wsdl:input message="tns:getPaymentsXMLHttpPostIn" />
-      <wsdl:output message="tns:getPaymentsXMLHttpPostOut" />
+    <wsdl:operation name="getPaymentsXml">
+      <wsdl:input message="tns:getPaymentsXmlHttpPostIn" />
+      <wsdl:output message="tns:getPaymentsXmlHttpPostOut" />
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsJSON">
-      <wsdl:input message="tns:getPaymentsJSONHttpPostIn" />
-      <wsdl:output message="tns:getPaymentsJSONHttpPostOut" />
+    <wsdl:operation name="getPaymentsXmlWithSandBox">
+      <wsdl:input message="tns:getPaymentsXmlWithSandBoxHttpPostIn" />
+      <wsdl:output message="tns:getPaymentsXmlWithSandBoxHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJson">
+      <wsdl:input message="tns:getPaymentsJsonHttpPostIn" />
+      <wsdl:output message="tns:getPaymentsJsonHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBox">
+      <wsdl:input message="tns:getPaymentsJsonWithSandBoxHttpPostIn" />
+      <wsdl:output message="tns:getPaymentsJsonWithSandBoxHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidade">
       <wsdl:input message="tns:getEntidadeSubentidadeHttpPostIn" />
@@ -457,11 +693,19 @@
       <wsdl:input message="tns:getEntidadeSubentidadeJsonV2HttpPostIn" />
       <wsdl:output message="tns:getEntidadeSubentidadeJsonV2HttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonV2">
+      <wsdl:input message="tns:getPaymentsJsonV2HttpPostIn" />
+      <wsdl:output message="tns:getPaymentsJsonV2HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBoxV2">
+      <wsdl:input message="tns:getPaymentsJsonWithSandBoxV2HttpPostIn" />
+      <wsdl:output message="tns:getPaymentsJsonWithSandBoxV2HttpPostOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="IfmbWSSoap" type="tns:IfmbWSSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="getPayments">
-      <soap:operation soapAction="https://www.ifthensoftware.com/getPayments" style="document" />
+      <soap:operation soapAction="https://www.ifthenpay.com/getPayments" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -470,7 +714,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getPaymentsWithSandBox">
-      <soap:operation soapAction="https://www.ifthensoftware.com/getPaymentsWithSandBox" style="document" />
+      <soap:operation soapAction="https://www.ifthenpay.com/getPaymentsWithSandBox" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -478,8 +722,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsXML">
-      <soap:operation soapAction="https://www.ifthensoftware.com/getPaymentsXML" style="document" />
+    <wsdl:operation name="getPaymentsXml">
+      <soap:operation soapAction="https://www.ifthenpay.com/getPaymentsXml" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -487,8 +731,26 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsJSON">
-      <soap:operation soapAction="https://www.ifthensoftware.com/getPaymentsJSON" style="document" />
+    <wsdl:operation name="getPaymentsXmlWithSandBox">
+      <soap:operation soapAction="https://www.ifthenpay.com/getPaymentsXmlWithSandBox" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJson">
+      <soap:operation soapAction="https://www.ifthenpay.com/getPaymentsJson" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBox">
+      <soap:operation soapAction="https://www.ifthenpay.com/getPaymentsJsonWithSandBox" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -497,7 +759,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidade">
-      <soap:operation soapAction="https://www.ifthensoftware.com/getEntidadeSubentidade" style="document" />
+      <soap:operation soapAction="https://www.ifthenpay.com/getEntidadeSubentidade" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -506,7 +768,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidadeXml">
-      <soap:operation soapAction="https://www.ifthensoftware.com/getEntidadeSubentidadeXml" style="document" />
+      <soap:operation soapAction="https://www.ifthenpay.com/getEntidadeSubentidadeXml" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -515,7 +777,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidadeJson">
-      <soap:operation soapAction="https://www.ifthensoftware.com/getEntidadeSubentidadeJson" style="document" />
+      <soap:operation soapAction="https://www.ifthenpay.com/getEntidadeSubentidadeJson" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -524,7 +786,25 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidadeJsonV2">
-      <soap:operation soapAction="https://www.ifthensoftware.com/getEntidadeSubentidadeJsonV2" style="document" />
+      <soap:operation soapAction="https://www.ifthenpay.com/getEntidadeSubentidadeJsonV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonV2">
+      <soap:operation soapAction="https://www.ifthenpay.com/getPaymentsJsonV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBoxV2">
+      <soap:operation soapAction="https://www.ifthenpay.com/getPaymentsJsonWithSandBoxV2" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -536,7 +816,7 @@
   <wsdl:binding name="IfmbWSSoap12" type="tns:IfmbWSSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="getPayments">
-      <soap12:operation soapAction="https://www.ifthensoftware.com/getPayments" style="document" />
+      <soap12:operation soapAction="https://www.ifthenpay.com/getPayments" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -545,7 +825,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getPaymentsWithSandBox">
-      <soap12:operation soapAction="https://www.ifthensoftware.com/getPaymentsWithSandBox" style="document" />
+      <soap12:operation soapAction="https://www.ifthenpay.com/getPaymentsWithSandBox" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -553,8 +833,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsXML">
-      <soap12:operation soapAction="https://www.ifthensoftware.com/getPaymentsXML" style="document" />
+    <wsdl:operation name="getPaymentsXml">
+      <soap12:operation soapAction="https://www.ifthenpay.com/getPaymentsXml" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -562,8 +842,26 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsJSON">
-      <soap12:operation soapAction="https://www.ifthensoftware.com/getPaymentsJSON" style="document" />
+    <wsdl:operation name="getPaymentsXmlWithSandBox">
+      <soap12:operation soapAction="https://www.ifthenpay.com/getPaymentsXmlWithSandBox" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJson">
+      <soap12:operation soapAction="https://www.ifthenpay.com/getPaymentsJson" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBox">
+      <soap12:operation soapAction="https://www.ifthenpay.com/getPaymentsJsonWithSandBox" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -572,7 +870,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidade">
-      <soap12:operation soapAction="https://www.ifthensoftware.com/getEntidadeSubentidade" style="document" />
+      <soap12:operation soapAction="https://www.ifthenpay.com/getEntidadeSubentidade" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -581,7 +879,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidadeXml">
-      <soap12:operation soapAction="https://www.ifthensoftware.com/getEntidadeSubentidadeXml" style="document" />
+      <soap12:operation soapAction="https://www.ifthenpay.com/getEntidadeSubentidadeXml" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -590,7 +888,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidadeJson">
-      <soap12:operation soapAction="https://www.ifthensoftware.com/getEntidadeSubentidadeJson" style="document" />
+      <soap12:operation soapAction="https://www.ifthenpay.com/getEntidadeSubentidadeJson" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -599,7 +897,25 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidadeJsonV2">
-      <soap12:operation soapAction="https://www.ifthensoftware.com/getEntidadeSubentidadeJsonV2" style="document" />
+      <soap12:operation soapAction="https://www.ifthenpay.com/getEntidadeSubentidadeJsonV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonV2">
+      <soap12:operation soapAction="https://www.ifthenpay.com/getPaymentsJsonV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBoxV2">
+      <soap12:operation soapAction="https://www.ifthenpay.com/getPaymentsJsonWithSandBoxV2" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -628,8 +944,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsXML">
-      <http:operation location="/getPaymentsXML" />
+    <wsdl:operation name="getPaymentsXml">
+      <http:operation location="/getPaymentsXml" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -637,8 +953,26 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsJSON">
-      <http:operation location="/getPaymentsJSON" />
+    <wsdl:operation name="getPaymentsXmlWithSandBox">
+      <http:operation location="/getPaymentsXmlWithSandBox" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJson">
+      <http:operation location="/getPaymentsJson" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBox">
+      <http:operation location="/getPaymentsJsonWithSandBox" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -675,6 +1009,20 @@
     </wsdl:operation>
     <wsdl:operation name="getEntidadeSubentidadeJsonV2">
       <http:operation location="/getEntidadeSubentidadeJsonV2" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonV2">
+      <http:operation location="/getPaymentsJsonV2" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBoxV2">
+      <http:operation location="/getPaymentsJsonWithSandBoxV2" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -701,8 +1049,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsXML">
-      <http:operation location="/getPaymentsXML" />
+    <wsdl:operation name="getPaymentsXml">
+      <http:operation location="/getPaymentsXml" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -710,8 +1058,26 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getPaymentsJSON">
-      <http:operation location="/getPaymentsJSON" />
+    <wsdl:operation name="getPaymentsXmlWithSandBox">
+      <http:operation location="/getPaymentsXmlWithSandBox" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJson">
+      <http:operation location="/getPaymentsJson" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBox">
+      <http:operation location="/getPaymentsJsonWithSandBox" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -753,20 +1119,34 @@
       </wsdl:input>
       <wsdl:output />
     </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonV2">
+      <http:operation location="/getPaymentsJsonV2" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="getPaymentsJsonWithSandBoxV2">
+      <http:operation location="/getPaymentsJsonWithSandBoxV2" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="IfmbWS">
     <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;font  size="4"&gt;&lt;strong&gt;WebService de Suporte ao Serviço &lt;br /&gt;&lt;font color="#008C8C"&gt;IFMB - Pagamentos por Referência Multibanco&lt;/font&gt;.&lt;/strong&gt;&lt;/font&gt; &lt;br /&gt;&lt;br /&gt;</wsdl:documentation>
     <wsdl:port name="IfmbWSSoap" binding="tns:IfmbWSSoap">
-      <soap:address location="https://www.ifthensoftware.com/IfmbWS/IfmbWS.asmx" />
+      <soap:address location="https://ifthenpay.com/ifmbws/ifmbws.asmx" />
     </wsdl:port>
     <wsdl:port name="IfmbWSSoap12" binding="tns:IfmbWSSoap12">
-      <soap12:address location="https://www.ifthensoftware.com/IfmbWS/IfmbWS.asmx" />
+      <soap12:address location="https://ifthenpay.com/ifmbws/ifmbws.asmx" />
     </wsdl:port>
     <wsdl:port name="IfmbWSHttpGet" binding="tns:IfmbWSHttpGet">
-      <http:address location="https://www.ifthensoftware.com/IfmbWS/IfmbWS.asmx" />
+      <http:address location="https://ifthenpay.com/ifmbws/ifmbws.asmx" />
     </wsdl:port>
     <wsdl:port name="IfmbWSHttpPost" binding="tns:IfmbWSHttpPost">
-      <http:address location="https://www.ifthensoftware.com/IfmbWS/IfmbWS.asmx" />
+      <http:address location="https://ifthenpay.com/ifmbws/ifmbws.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
