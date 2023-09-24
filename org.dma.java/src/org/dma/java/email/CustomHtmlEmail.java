@@ -28,14 +28,11 @@ import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.MultiPartEmail;
 
 import org.dma.java.email.ServerParameters.SECURITY;
-import org.dma.java.util.Debug;
 
 public class CustomHtmlEmail extends HtmlEmail {
 
 	/** Charset UTF-8 */
 	public CustomHtmlEmail(ServerParameters server, boolean debug) {
-		Debug.err(server);
-
 		setDebug(debug);
 		setCharset(EmailConstants.UTF_8);
 
@@ -105,7 +102,6 @@ public class CustomHtmlEmail extends HtmlEmail {
 	/** see {@link MultiPartEmail#attach} */
 	public void attach(Collection<EmailAttachment> attachment) throws EmailException {
 		for (EmailAttachment element: attachment){
-			Debug.err(element);
 			super.attach(element);
 		}setBoolHasAttachments(true);
 	}
