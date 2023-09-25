@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -147,15 +147,16 @@ public class URLHandler {
 
 	/** @see URLConnection#getHeaderFields() */
 	public void printHeaderFields() {
-		try{Map<String, List<String>> map=getHeaderFields();
+		if (url!=null) try{
 			System.err.println(url);
+			Map<String, List<String>> map=getHeaderFields();
 			for(String key: map.keySet()){
-				if (key!=null){
-					System.out.print(key);
-					System.out.print("=");
-				}System.out.println(map.get(key));
+				if (key!=null) System.out.print(key+"=");
+				System.out.println(map.get(key));
 			}
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.err.println(e);
+		}
 	}
 
 

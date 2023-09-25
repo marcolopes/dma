@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,8 +49,8 @@ public class URLFile extends URLHandler {
 	}
 
 
-	public boolean download(File dst) {
-		return new AbstractURLFileCopy(this) {
+	public void download(File dst) throws Exception {
+		new AbstractURLFileCopy(this) {
 			@Override
 			public boolean cancel() {
 				return false;
@@ -59,8 +59,8 @@ public class URLFile extends URLHandler {
 	}
 
 
-	public boolean upload(File src) {
-		return new AbstractURLFileCopy(this) {
+	public void upload(File src) throws Exception {
+		new AbstractURLFileCopy(this) {
 			@Override
 			public boolean cancel() {
 				return false;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
@@ -35,58 +36,44 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
 	/**
 	 * Downloads the file to DESTINATION
-	 * @return
-	 * true if download was completed<br>
-	 * false if canceled or error
+	 *
+	 * @throws InterruptedException if canceled
 	 */
-	public boolean to(File dst) {
+	public void to(File dst) throws IOException, InterruptedException {
 
-		try{File output=new File(dst+".tmp");
+		File output=new File(dst+".tmp");
 
-			BufferedInputStream in=new BufferedInputStream(file.asInputStream());
+		BufferedInputStream in=new BufferedInputStream(file.asInputStream());
 
-			OutputStream out=new BufferedOutputStream(new FileOutputStream(output));
+		OutputStream out=new BufferedOutputStream(new FileOutputStream(output));
 
-			try{copy(in, out);
-			}finally{
-				out.close();
-				in.close();
-			}dst.delete();
+		try{copy(in, out);
+		}finally{
+			out.close();
+			in.close();
+		}dst.delete();
 
-			return output.renameTo(dst);
-
-		}catch(InterruptedException e){
-			System.out.println(e);
-		}catch(Exception e){
-			System.err.println(e);
-		}return false;
+		if (!output.renameTo(dst)) throw new IOException();
 
 	}
 
 
 	/**
 	 * Uploads the file from SOURCE
-	 * @return
-	 * true if download was completed<br>
-	 * false if canceled or error
+	 *
+	 * @throws InterruptedException if canceled
 	 */
-	public boolean from(File src) {
+	public void from(File src) throws IOException, InterruptedException {
 
-		try{BufferedInputStream in=new BufferedInputStream(new FileInputStream(src));
+		BufferedInputStream in=new BufferedInputStream(new FileInputStream(src));
 
-			OutputStream out=new BufferedOutputStream(file.asOutputStream());
+		OutputStream out=new BufferedOutputStream(file.asOutputStream());
 
-			try{copy(in, out);
-			}finally{
-				out.close();
-				in.close();
-			}return true;
-
-		}catch(InterruptedException e){
-			System.out.println(e);
-		}catch(Exception e){
-			System.err.println(e);
-		}return false;
+		try{copy(in, out);
+		}finally{
+			out.close();
+			in.close();
+		}
 
 	}
 
