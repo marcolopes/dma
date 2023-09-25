@@ -108,8 +108,9 @@ public class URLHandler {
 	public boolean checkStream() {
 		try{url.openStream();
 			return true;
-		}catch(Exception e){}
-		return false;
+		}catch(Exception e){
+			e.printStackTrace();
+		}return false;
 	}
 
 
