@@ -104,7 +104,7 @@ public class XMLFile<T> extends CustomFile {
 
 	public static void main(String[] args) {
 
-		XMLFile<String> handler=new XMLFile("XMLFileHandler.xml");
+		XMLFile<String> handler=new XMLFile("Example.xml");
 		handler.write("The quick brown fox jumps over the lazy dog.");
 		System.out.println(handler.read());
 
