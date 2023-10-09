@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import org.glassfish.jersey.server.model.Resource;
-import org.glassfish.jersey.server.model.Resource.Builder;
 import org.glassfish.jersey.server.model.ResourceMethod;
 
 public class ResourceInfoMap extends LinkedHashMap<String, Collection<ResourceInfo>> {
@@ -33,8 +32,11 @@ public class ResourceInfoMap extends LinkedHashMap<String, Collection<ResourceIn
 	private final Resource resource;
 
 	public ResourceInfoMap(Class resourceClass) {
-		Builder builder=Resource.builder(resourceClass);
-		resource=builder==null ? null : builder.build();
+		this(Resource.from(resourceClass));
+	}
+
+	public ResourceInfoMap(Resource resource) {
+		this.resource=resource;
 		if (resource!=null) process(resource);
 	}
 
