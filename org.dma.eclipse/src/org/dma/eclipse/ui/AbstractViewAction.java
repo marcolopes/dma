@@ -20,7 +20,7 @@ package org.dma.eclipse.ui;
 
 import org.dma.eclipse.jface.CustomAction;
 import org.dma.eclipse.jface.dialogs.message.ErrorDialog;
-import org.dma.eclipse.ui.internal.UIHelper;
+import org.dma.eclipse.ui.internal.UIHelper2;
 import org.dma.java.util.Debug;
 import org.dma.java.util.MessageList;
 
@@ -50,14 +50,13 @@ public abstract class AbstractViewAction extends CustomAction {
 		run(false);
 	}
 
-	@SuppressWarnings("static-access")
 	public IViewPart run(final boolean detach) {
 		UIHelper.showBusyWhile(new Runnable() {
 			@Override
 			public void run() {
 				Debug.err(viewId, secondaryId);
 				try{initialize(view=UIHelper.openView(viewId, secondaryId));
-					if (detach) UIHelper.detachView(view);
+					if (detach) UIHelper2.detachView(view);
 					else UIHelper.showView(view);
 					view.setFocus();
 				}catch(Exception e){
@@ -69,7 +68,6 @@ public abstract class AbstractViewAction extends CustomAction {
 	}
 
 
-	@SuppressWarnings("static-access")
 	public void closeView() {
 		if (view==null) throw new UnsupportedOperationException("View is closed!");
 		UIHelper.hideView(view);

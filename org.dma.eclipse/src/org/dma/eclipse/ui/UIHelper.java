@@ -73,7 +73,7 @@ public class UIHelper {
 	/*
 	 * IWorkbench
 	 */
-	/** @see PlatformUI#getWorkbench */
+	/** @see PlatformUI#getWorkbench() */
 	public static IWorkbench getWorkbench() {
 		try{return PlatformUI.getWorkbench();
 		}catch(Exception e){
@@ -81,17 +81,17 @@ public class UIHelper {
 		}return null;
 	}
 
-	/** @see IWorkbench#getDisplay */
+	/** @see IWorkbench#getDisplay() */
 	public static Display getDisplay() {
 		return getWorkbench().getDisplay();
 	}
 
-	/** @see IWorkbench#getHelpSystem */
+	/** @see IWorkbench#getHelpSystem() */
 	public static IWorkbenchHelpSystem getHelpSystem() {
 		return getWorkbench().getHelpSystem();
 	}
 
-	/** @see IWorkbench#isClosing */
+	/** @see IWorkbench#isClosing() */
 	public static boolean isWorkbenchClosing() {
 		return getWorkbench().isClosing();
 	}
@@ -130,10 +130,16 @@ public class UIHelper {
 		return getWorkbench().getActiveWorkbenchWindow();
 	}
 
+	public static boolean isWorkbenchWindowActive() {
+		return getActiveWorkbenchWindow()!=null;
+	}
+
+	/** @see IWorkbenchWindow#getActivePage() */
 	public static IWorkbenchPage getActivePage() {
 		return getActiveWorkbenchWindow().getActivePage();
 	}
 
+	/** @see IWorkbenchWindow#getShell() */
 	public static Shell getWorkbenchShell() {
 		return getActiveWorkbenchWindow().getShell();
 	}
