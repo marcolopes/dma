@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.dma.eclipse.ui.internal;
 
+import org.dma.eclipse.ui.UIHelper;
 import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
@@ -30,29 +31,34 @@ import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.internal.presentations.defaultpresentation.DefaultTabItem;
 
+/**
+ * Discouraged access!
+ */
 @SuppressWarnings("restriction")
-public class UIHelper extends org.dma.eclipse.ui.UIHelper {
+public class UIHelper2 extends UIHelper {
 
-	public static void removeDefaultTabItemPrefix() {
-		DefaultTabItem.DIRTY_PREFIX="";
-	}
-
+	/*
+	 * ECLIPSE BUG: https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
+	 */
 	public static ToolBar getPerspectiveToolBar() {
-		try{WorkbenchWindow workbenchWindow=(WorkbenchWindow)getActiveWorkbenchWindow();
-			PerspectiveBarManager manager=workbenchWindow.getPerspectiveBar();
+		try{WorkbenchWindow window=(WorkbenchWindow)getActiveWorkbenchWindow();
+			PerspectiveBarManager manager=window.getPerspectiveBar();
 			return manager.getControl();
 		}catch(Exception e){
 			e.printStackTrace();
 		}return null;
 	}
 
-	//ECLIPSE BUG: https://bugs.eclipse.org/bugs/show_bug.cgi?id=341030
 	public static void disablePerspectiveToolBarMenu() {
 		ToolBar toolBar=getPerspectiveToolBar();
 		if (toolBar!=null) for (Listener listener: toolBar.getListeners(SWT.MenuDetect)){
 			toolBar.removeListener(SWT.MenuDetect, listener);
 			Debug.out("REMOVED", listener.toString());
 		}
+	}
+
+	public static void removeDefaultTabItemPrefix() {
+		DefaultTabItem.DIRTY_PREFIX="";
 	}
 
 	public static void detachView(IViewPart view) {
