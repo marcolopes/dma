@@ -16,7 +16,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.eclipse.jface.preferences;
+package org.dma.eclipse.jface.preference;
 
 public interface IPreferenceValue {
 
