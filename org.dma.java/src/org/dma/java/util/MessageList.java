@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,18 +86,22 @@ public class MessageList extends LinkedHashSet<String> {
 	}
 
 
+	public StringList toList() {
+		return StringList.valueOf(this);
+	}
+
 	@Override
 	public String[] toArray() {
-		return StringList.valueOf(this).toArray();
+		return toList().toArray();
+	}
+
+	public String toString(String separator) {
+		return toList().concat(separator);
 	}
 
 	@Override
 	public String toString() {
 		return toString(SEPARATOR.LINE.value);
-	}
-
-	public String toString(String separator) {
-		return ArrayUtils.concat(toArray(), separator);
 	}
 
 
