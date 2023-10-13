@@ -22,6 +22,7 @@ import org.dma.java.util.SystemUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -35,21 +36,21 @@ public class CustomTrayItem extends TrayItem {
 	private final Listener maximizeListener=new Listener() {
 		@Override
 		public void handleEvent(Event event) {
-			if (!parent.isVisible()){
-				parent.setMinimized(false);
-				parent.setVisible(true);
+			if (!shell.isVisible()){
+				shell.setMinimized(false);
+				shell.setVisible(true);
 			}
 		}
 	};
 
 	private CustomToolTip toolTip;
 
-	private final Shell parent;
+	private final Shell shell;
 
 	/** @see TrayItem#TrayItem(org.eclipse.swt.widgets.Tray, int) */
-	public CustomTrayItem(Shell parent, String name, Image image, boolean visible) {
-		super(parent.getDisplay().getSystemTray(), SWT.NONE);
-		this.parent=parent;
+	public CustomTrayItem(Display display, String name, Image image, boolean visible) {
+		super(display.getSystemTray(), SWT.NONE);
+		shell=display.getActiveShell();
 		setToolTipText(name);
 		setImage(image);
 		addListener(SWT.Selection, maximizeListener);
@@ -67,7 +68,7 @@ public class CustomTrayItem extends TrayItem {
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (toolTip!=null) toolTip.dispose();
-		toolTip=new CustomToolTip(parent);
+		toolTip=new CustomToolTip(shell);
 		//BUG: Tip does not show in windows 7 tray
 		setToolTip(visible && !SystemUtils.IS_OS_WINDOWS_7 ? toolTip : null);
 	}

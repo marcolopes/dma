@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,11 @@ public class CustomTable extends Table {
 	protected void checkSubclass() {}
 
 	private boolean busy=false;
+
+	private synchronized void setBusy(boolean busy) {
+		this.busy=busy;
+		setRedraw(!busy);
+	}
 
 	/** @see Table#Table(Composite, int) */
 	public CustomTable(Composite parent, int style) {
@@ -86,8 +91,7 @@ public class CustomTable extends Table {
 
 	public void resizeColumns(int minWidth) {
 		if (busy) return;
-		busy=true;
-		setRedraw(false);
+		setBusy(true);
 		int totalPercentage=0;
 		int tableWidth=Math.max(getClientArea().width, minWidth);
 		//columns with undefined WIDTH
@@ -112,9 +116,7 @@ public class CustomTable extends Table {
 				int width=remainingWidth / columns.size();
 				for(TableColumn column: columns) column.setWidth(width);
 			}
-		}
-		setRedraw(true);
-		busy=false;
+		}setBusy(false);
 	}
 
 
