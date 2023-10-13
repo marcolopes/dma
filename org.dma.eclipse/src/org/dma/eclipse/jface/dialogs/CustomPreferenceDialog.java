@@ -16,8 +16,11 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.eclipse.swt.widgets;
+package org.dma.eclipse.jface.dialogs;
 
+import org.dma.eclipse.jface.dialogs.message.CustomMessageDialog.DIALOG_BUTTON_LABELS;
+
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
@@ -33,8 +36,10 @@ public class CustomPreferenceDialog extends PreferenceDialog {
 
 	public CustomPreferenceDialog(Shell parentShell, PreferenceManager manager) {
 		super(parentShell, manager);
-		//setBlockOnOpen(false);
 		super.create();
+		getButton(IDialogConstants.OK_ID).setText(DIALOG_BUTTON_LABELS.OK.toString());
+		getButton(IDialogConstants.CANCEL_ID).setText(DIALOG_BUTTON_LABELS.CANCEL.toString());
+		//setBlockOnOpen(false);
 		shell=getShell();
 	}
 
@@ -59,10 +64,10 @@ public class CustomPreferenceDialog extends PreferenceDialog {
 		}return null;
 	}
 
-	/** Removes DefaultButton ENTER */
+	/** Disables the default button */
 	public void disableDefaultButton() {
 		if (!shell.isDisposed()){
-			Button button=new Button(getShell(), SWT.PUSH);
+			Button button=new Button(shell, SWT.PUSH);
 			button.setVisible(false); // hide & avoid focus
 			shell.setDefaultButton(button);
 		}
