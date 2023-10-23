@@ -55,8 +55,6 @@ public class NTPServerHandler {
 		XS2ALL ("ntp.xs4all.nl"),
 		WINDOWS ("time.windows.com");
 
-		private static NTPTimeInfo info;
-
 		public String[] hosts;
 
 		private NTP_SERVERS(String...hosts) {
@@ -65,8 +63,7 @@ public class NTPServerHandler {
 
 		/** @see NTPServerHandler#getTime(int) */
 		public NTPTimeInfo query(int timeout) {
-			if (info==null) info=new NTPServerHandler(this).getTime(timeout);
-			return info;
+			return new NTPServerHandler(this).getTime(timeout);
 		}
 
 		/** @see NTP_SERVERS#query(int) */
