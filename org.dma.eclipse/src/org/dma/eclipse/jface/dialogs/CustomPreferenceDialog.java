@@ -18,7 +18,7 @@
  *******************************************************************************/
 package org.dma.eclipse.jface.dialogs;
 
-import org.dma.eclipse.jface.dialogs.message.CustomMessageDialog.DIALOG_BUTTON_LABELS;
+import org.dma.eclipse.jface.dialogs.message.CustomMessageDialog.DIALOG_BUTTONS;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.IPreferenceNode;
@@ -37,8 +37,8 @@ public class CustomPreferenceDialog extends PreferenceDialog {
 	public CustomPreferenceDialog(Shell parentShell, PreferenceManager manager) {
 		super(parentShell, manager);
 		super.create();
-		getButton(IDialogConstants.OK_ID).setText(DIALOG_BUTTON_LABELS.OK.toString());
-		getButton(IDialogConstants.CANCEL_ID).setText(DIALOG_BUTTON_LABELS.CANCEL.toString());
+		getButton(IDialogConstants.OK_ID).setText(DIALOG_BUTTONS.OK.label());
+		getButton(IDialogConstants.CANCEL_ID).setText(DIALOG_BUTTONS.CANCEL.label());
 		//setBlockOnOpen(false);
 		shell=getShell();
 	}
