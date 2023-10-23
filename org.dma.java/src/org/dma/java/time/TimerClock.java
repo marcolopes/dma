@@ -24,17 +24,16 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
-public abstract class TimerClock {
-
-	public abstract void event();
+public abstract class TimerClock implements Runnable {
 
 	public enum CLOCK_FORMAT {
 
 		/** 23:59 */
-		TIME ("HH:mm", 60*1000),
+		TIME ("HH:mm", TimeUnit.MINUTES.toMillis(1)),
 		/** 23:59:59 */
-		TIME_SECONDS ("HH:mm:ss", 1000),
+		TIME_SECONDS ("HH:mm:ss", TimeUnit.SECONDS.toMillis(1)),
 		/** 1 Jan 2020 - 23:59 */
 		DATE_TIME ("dd MMM yyyy - HH:mm", TIME.period),
 		/** 1 Jan 2020 - 23:59:59 */
@@ -45,9 +44,9 @@ public abstract class TimerClock {
 		DAY_DATE_TIME_SECONDS ("EEEE, dd MMMM yyyy - HH:mm:ss", TIME_SECONDS.period);
 
 		public String pattern;
-		public int period;
+		public long period;
 
-		CLOCK_FORMAT(String pattern, int period) {
+		CLOCK_FORMAT(String pattern, long period) {
 			this.pattern=pattern;
 			this.period=period;
 		}
@@ -83,13 +82,13 @@ public abstract class TimerClock {
 		timer.schedule(new TimerTask(){
 			@Override
 			public void run() {
-				event();
+				TimerClock.this.run();
 			}
 		},//remaining milliseconds to next period
 		format.period-(System.currentTimeMillis() % format.period),
 		//milliseconds period between executions
 		format.period);
-		event(); //force event
+		run(); //initialize
 		return this;
 	}
 
@@ -112,7 +111,7 @@ public abstract class TimerClock {
 
 		new TimerClock(CLOCK_FORMAT.DAY_DATE_TIME_SECONDS) {
 			@Override
-			public void event() {
+			public void run() {
 				System.out.println(toString());
 			}
 		}.start();
