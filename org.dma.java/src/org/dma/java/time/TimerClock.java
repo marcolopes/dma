@@ -81,6 +81,7 @@ public abstract class TimerClock {
 
 	public TimerClock start() {
 		timer.schedule(new TimerTask(){
+			@Override
 			public void run() {
 				event();
 			}
