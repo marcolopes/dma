@@ -26,6 +26,7 @@ import org.apache.commons.net.ntp.NtpV3Packet;
 import org.apache.commons.net.ntp.TimeInfo;
 
 import org.dma.java.time.Chronograph;
+import org.dma.java.util.MessageList;
 
 /** Network Time Protocol */
 public class NTPServerHandler {
@@ -45,6 +46,15 @@ public class NTPServerHandler {
 		/** Returns CURRENT DATE with SERVER OFFSET */
 		public Date getServerDate() {
 			return new Date(getServerTime());
+		}
+
+		public String toText() {
+			return new MessageList(
+					getServerDate()+" (Server Date)",
+					new Date()+" (System Date)",
+					"Offset needed to adjust local clock: "+getOffset(),
+					"Round-trip network delay: "+getDelay(),
+					"Comments: "+getComments()).toString();
 		}
 
 	}

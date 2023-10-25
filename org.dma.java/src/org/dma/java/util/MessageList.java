@@ -86,6 +86,7 @@ public class MessageList extends LinkedHashSet<String> {
 	}
 
 
+	@Deprecated
 	public StringList toList() {
 		return StringList.valueOf(this);
 	}
