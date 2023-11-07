@@ -83,7 +83,9 @@ public class JKSCertificate {
 			this.keyStore=keyStore;
 			this.alias=alias[index];
 
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.err.println(e);
+		}
 
 	}
 
@@ -176,7 +178,7 @@ public class JKSCertificate {
 	@Override
 	public String toString() {
 		StringBuilder sb=new StringBuilder("-----X509 CERTIFICATE-----");
-		if (isValid())sb.append("\n").append("ALIAS: ").append(alias).
+		if (isValid()) sb.append("\n").append("ALIAS: ").append(alias).
 			append("\n").append("USAGE: ").append(getKeyUsage()).
 			append("\n").append("SERIAL: ").append(X509Cert.getSerialNumber()).
 			append("\n").append("ISSUER: ").append(X509Cert.getIssuerX500Principal()).
