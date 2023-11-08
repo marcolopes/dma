@@ -24,7 +24,9 @@ import java.util.concurrent.Executors;
 
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.dma.jaxrs.responses.IResponse;
 
@@ -34,6 +36,12 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 	public static void run(EndpointRunnable runnable) {
 		EXECUTOR.execute(runnable);
+	}
+
+	@Context private UriInfo info;
+
+	public String getPathParameter(String key) {
+		return info.getPathParameters().getFirst(key);
 	}
 
 	public abstract class EndpointRunnable implements Runnable {
