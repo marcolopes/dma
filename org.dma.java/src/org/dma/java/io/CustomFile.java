@@ -189,10 +189,10 @@ public class CustomFile extends File {
 	 */
 	public int executeWithCmd(String...args) throws IOException {
 		//START "title" [/D path] [options] "command" [parameters]
-		StringList list=new StringList("START", "\""+getName()+"\"",
-				//path already defined by WORKING directory parameter
-				//"/D \""+getParent()+"\"",
-				"\""+getName()+"\"");
+		StringList list=new StringList("START", StringUtils.quote(getName()),
+				/*path defined by Command WORKING directory parameter
+				"/D "+StringUtils.quote(getParent())),*/
+				StringUtils.quote(getName()));
 		list.addAll(Arrays.asList(args));
 		//START "title" "program" parameters
 		String command=list.concat(" ");

@@ -102,13 +102,6 @@ public class StringUtils {
 	}
 
 
-	public static boolean isLogical(String string) {
-
-		return string.equals("0") || string.equals("1");
-
-	}
-
-
 	public static boolean isNumeric(String string) {
 
 		return NUMERIC_PATTERN.matcher(string).matches();
@@ -144,24 +137,14 @@ public class StringUtils {
 	}
 
 
-	public static boolean isQuoted(String string, char...quotes) {
+	/** Returns true if surrounded with QUOTE chars (default=COMMA) */
+	public static boolean isQuoted(String string, char...quote) {
 
-		return string.length()>=2 && string.charAt(0)==quotes[0] &&
-				string.charAt(string.length()-1)==quotes[1];
+		if(quote.length==0) return isQuoted(string, '"');
 
-	}
-
-
-	public static boolean isQuoted(String string, char quote) {
-
-		return isQuoted(string, quote, quote);
-
-	}
-
-	/** Returns true if surrounded with COMMA (") chars */
-	public static boolean isQuoted(String string) {
-
-		return isQuoted(string, '"');
+		return string.length()>=2 &&
+				string.charAt(0)==quote[0] &&
+				string.charAt(string.length()-1)==quote[quote.length-1];
 
 	}
 
@@ -304,15 +287,14 @@ public class StringUtils {
 	}
 
 
-	/** ESCAPES all the chars */
-	public static String escapeChars(String string, char...searchFor) {
+	/** Adds "escapes" to all the chars (default=BACKSLASH) */
+	public static String escape(String string, char...searchFor) {
 
-		if(searchFor.length==0) return escapeChars(string, '\\');
+		if(searchFor.length==0) return escape(string, '\\');
 
 		if(ocurrences(string, searchFor)==0) return string;
 
 		StringBuilder result=new StringBuilder();
-		//escape
 		for(int i=0; i<string.length(); i++) {
 			char charAt=string.charAt(i);
 			for(char c: searchFor){
@@ -323,55 +305,39 @@ public class StringUtils {
 	}
 
 
-	/** ESCAPES all the escape chars! */
-	public static String escape(String string) {
-		//ensure double backslash
-		//return string.replace("\\", "\\\\");
-		return escapeChars(string);
+	/** Removes "escapes" from all the chars (default=BACKSLASH) */
+	public static String unescape(String string, char...searchFor) {
+
+		if(searchFor.length==0) return unescape(string, '\\');
+
+		if(ocurrences(string, searchFor)==0) return string;
+
+		for(char c: searchFor){
+			string=replaceAll(string, "\\"+c, String.valueOf(c));
+		}return string;
+
 	}
 
 
-	/** ESCAPES and surrounds with QUOTE chars */
+	/** Surrounds with QUOTE chars (default=COMMA) */
 	public static String quote(String string, char...quote) {
 
+		if(quote.length==0) return quote(string, '"');
+
 		return new StringBuilder().
-		//START quote
-		append(quote[0]).
-		//escape
-		append(escapeChars(string, '\\', '"')).
-		//END quote
-		append(quote[quote.length-1]).toString();
+				append(quote[0]).
+				append(string).
+				append(quote[quote.length-1]).toString();
 
 	}
 
 
-	/** ESCAPES and surrounds with COMMA (") chars */
-	public static String quote(String string) {
+	/** Removes surrounded QUOTE chars (default=COMMA) */
+	public static String unquote(String string, char...quote) {
 
-		return quote(string, '"');
+		if(quote.length==0) return unquote(string, '"');
 
-	}
-
-
-	/** Removes surrounded QUOTE chars */
-	public static String unquote(String string, char...quotes) {
-
-		return !isQuoted(string, quotes) ? string : string.substring(1, string.length()-1);
-
-	}
-
-
-	/** Removes surrounded QUOTE chars */
-	public static String unquote(String string, char quotes) {
-
-		return unquote(string, quotes, quotes);
-
-	}
-
-	/** Removes surrounded COMMA (") chars */
-	public static String unquote(String string) {
-
-		return unquote(string, '\"');
+		return !isQuoted(string, quote) ? string : string.substring(1, string.length()-1);
 
 	}
 
