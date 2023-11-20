@@ -43,9 +43,9 @@ public class FieldRegex extends FieldProperties {
 	private final char[] exclude;
 	private final String regex;
 
-	public Pattern getPattern() {
-		return getPattern(regex);
-	}
+	public TYPES getType() {return type;}
+	public FieldSize getSize() {return size;}
+	public Pattern getPattern() {return getPattern(regex);}
 
 	public FieldRegex(TYPES type, FieldSize size, int properties, char...exclude) {
 		super(properties);
@@ -147,18 +147,6 @@ public class FieldRegex extends FieldProperties {
 				(!isUppercase() || StringUtils.isUppercase(string)) &&
 				(!isLowercase() || StringUtils.isLowercase(string)) &&
 				getPattern().matcher(string).matches();
-	}
-
-
-	/*
-	 * Getters and setters
-	 */
-	public TYPES getType() {
-		return type;
-	}
-
-	public FieldSize getSize() {
-		return size;
 	}
 
 }

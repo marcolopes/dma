@@ -57,6 +57,10 @@ public class RSACipher {
 	private final RSAPublicCipher publicCipher;
 	private final RSAPrivateCipher privateCipher;
 
+	public KeyPair getKeyPair() {return keyPair;}
+	public RSAPublicCipher getPublicCipher() {return publicCipher;}
+	public RSAPrivateCipher getPrivateCipher() {return privateCipher;}
+
 	public RSACipher(int keysize) {
 		this(generateKeyPair(keysize));
 	}
@@ -69,23 +73,6 @@ public class RSACipher {
 		this.keyPair=new KeyPair(publicKey, privateKey);
 		this.publicCipher=new RSAPublicCipher(publicKey);
 		this.privateCipher=new RSAPrivateCipher(privateKey);
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public KeyPair getKeyPair() {
-		return keyPair;
-	}
-
-	public RSAPublicCipher getPublicCipher() {
-		return publicCipher;
-	}
-
-	public RSAPrivateCipher getPrivateCipher() {
-		return privateCipher;
 	}
 
 

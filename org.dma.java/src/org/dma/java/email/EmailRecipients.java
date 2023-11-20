@@ -27,6 +27,9 @@ public class EmailRecipients extends ArrayList<EmailAddress> {
 	private final Collection<EmailAddress> cc=new ArrayList();
 	private final Collection<EmailAddress> bcc=new ArrayList();
 
+	public Collection<EmailAddress> getCc() {return cc;}
+	public Collection<EmailAddress> getBcc() {return bcc;}
+
 	public EmailRecipients() {}
 
 	public EmailRecipients(EmailAddress to) {
@@ -61,10 +64,6 @@ public class EmailRecipients extends ArrayList<EmailAddress> {
 	/*
 	 * Carbon Copy
 	 */
-	public Collection<EmailAddress> getCc() {
-		return cc;
-	}
-
 	public EmailRecipients addCc(EmailAddress...address) {
 		return addCc(Arrays.asList(address));
 	}
@@ -78,10 +77,6 @@ public class EmailRecipients extends ArrayList<EmailAddress> {
 	/*
 	 * Blind Carbon Copy
 	 */
-	public Collection<EmailAddress> getBcc() {
-		return bcc;
-	}
-
 	public EmailRecipients addBcc(EmailAddress...address) {
 		return addBcc(Arrays.asList(address));
 	}

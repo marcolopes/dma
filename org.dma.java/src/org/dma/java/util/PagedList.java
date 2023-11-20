@@ -25,49 +25,27 @@ public class PagedList<T> extends ArrayList<T> {
 	private static final long serialVersionUID = 1L;
 
 	private int index=0;
+
+	public int getIndex() {return index;}
+	public void setIndex(int index) {this.index=index;}
+	public void home() {index=0;}
+
 	private int count=0;
 
-	public void home() {
-		index=0;
-	}
+	public int getCount() {return count;}
+	public void setCount(int count) {this.count=count;}
 
-	public void next() {
-		int index=this.index+count;
-		this.index=index>=size() ? size() : index;
-	}
+	public boolean hasPrevious() {return count>0 && index>0;}
+	public boolean hasNext() {return count>0 && index+count<size();}
 
 	public void previous() {
 		int index=this.index-count;
 		this.index=index<=0 ? 0 : index;
 	}
 
-	public boolean hasNext() {
-		return count>0 && index+count<size();
-	}
-
-	public boolean hasPrevious() {
-		return count>0 && index>0;
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index=index;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count=count;
+	public void next() {
+		int index=this.index+count;
+		this.index=index>=size() ? size() : index;
 	}
 
 

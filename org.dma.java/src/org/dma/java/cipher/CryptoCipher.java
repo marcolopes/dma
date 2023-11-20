@@ -89,9 +89,10 @@ public class CryptoCipher {
 	}
 
 	private final Key key;
-
 	private Cipher cipher;
 	private Cipher decipher;
+
+	public Key getKey() {return key;}
 
 	/** Uses algorithm as transformation */
 	public CryptoCipher(byte[] key, String algorithm) {
@@ -265,14 +266,6 @@ public class CryptoCipher {
 			System.err.println(e);
 		}return "";
 
-	}
-
-
-	/*
-	 * Getters and setters
-	 */
-	public Key getKey() {
-		return key;
 	}
 
 

@@ -48,13 +48,36 @@ public class ImageOverlay {
 	public static final int OUTLINE = 1;
 	public static final int SHADOW = 2;
 
-	private Color textColor = Color.BLACK;
-	private Color outlineColor = Color.WHITE;
+	/*
+	 * Margin
+	 */
 	private int margin = 5;
+
+	public int getMargin() {return margin;}
+	public void setMargin(int margin) {this.margin=margin;}
+
+	/*
+	 * Text Color
+	 */
+	private Color textColor = Color.BLACK;
+
+	public Color getTextColor() {return textColor;}
+	public void setTextColor(Color textColor) {this.textColor=textColor;}
+
+	/*
+	 * Outline Color
+	 */
+	private Color outlineColor = Color.WHITE;
+
+	public Color getOutlineColor() {return outlineColor;}
+	public void setOutlineColor(Color outlineColor) {this.outlineColor=outlineColor;}
 
 	private final BufferedImage image;
 	private final Graphics2D g2d;
 	private Font font;
+
+	public Font getFont() {return font;}
+	public void setFont(Font font) {this.font=font;}
 
 	public ImageOverlay(BufferedImage image) {
 		this(image, null);
@@ -127,46 +150,6 @@ public class ImageOverlay {
 		g2d.setColor(textColor);
 		g2d.drawString(text, x, y);
 
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public Color getTextColor() {
-		return textColor;
-	}
-
-	public void setTextColor(Color textColor) {
-		this.textColor=textColor;
-	}
-
-
-	public Color getOutlineColor() {
-		return outlineColor;
-	}
-
-	public void setOutlineColor(Color outlineColor) {
-		this.outlineColor=outlineColor;
-	}
-
-
-	public int getMargin() {
-		return margin;
-	}
-
-	public void setMargin(int margin) {
-		this.margin=margin;
-	}
-
-
-	public Font getFont() {
-		return font;
-	}
-
-	public void setFont(Font font) {
-		this.font=font;
 	}
 
 

@@ -56,6 +56,11 @@ public class ServerParameters {
 	private final SECURITY security;
 	private final PasswordAuthentication authentication;
 
+	public String getHostName() {return hostName;}
+	public int getSmtpPort() {return smtpPort;}
+	public SECURITY getSecurity() {return security;}
+	public PasswordAuthentication getAuthentication() {return authentication;}
+
 	@Deprecated
 	public ServerParameters(String hostName, int smtpPort, int security) {
 		this(hostName, smtpPort, security, null);
@@ -75,26 +80,6 @@ public class ServerParameters {
 		this.smtpPort=smtpPort;
 		this.security=security;
 		this.authentication=authentication;
-	}
-
-
-	/*
-	 * Getters and setters
-	 */
-	public String getHostName() {
-		return hostName;
-	}
-
-	public int getSmtpPort() {
-		return smtpPort;
-	}
-
-	public SECURITY getSecurity() {
-		return security;
-	}
-
-	public PasswordAuthentication getAuthentication() {
-		return authentication;
 	}
 
 

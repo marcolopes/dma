@@ -27,6 +27,10 @@ public class EmailAddress {
 	private final String name;
 	private InternetAddress address;
 
+	public String getEmail() {return email;}
+	public String getName() {return name;}
+	public InternetAddress getAddress() {return address;}
+
 	public EmailAddress(String email) {
 		this(email, "");
 	}
@@ -45,23 +49,6 @@ public class EmailAddress {
 			return true;
 		}catch(AddressException e){
 		}return false;
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public InternetAddress getAddress() {
-		return address;
 	}
 
 

@@ -28,6 +28,8 @@ public class EmailParameters extends EmailRecipients {
 	private final ServerParameters server;
 	private final EmailAddress from;
 
+	public EmailAddress getFrom() {return from;}
+
 	public EmailParameters(ServerParameters server, EmailAddress from, EmailAddress...to) {
 		this(server, from, Arrays.asList(to));
 	}
@@ -51,14 +53,6 @@ public class EmailParameters extends EmailRecipients {
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
-	}
-
-
-	/*
-	 * Getters and setters
-	 */
-	public EmailAddress getFrom() {
-		return from;
 	}
 
 
