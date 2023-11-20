@@ -35,8 +35,12 @@ public class ExecutionEvent extends ArrayList<IAction> {
 
 	private final KeyStroke[] keycode;
 	private final IAction action;
-
 	private boolean executed=false;
+
+	public boolean isExecuted() {return executed;}
+
+	public KeyStroke[] getKeycode() {return keycode;}
+	public IAction getAction() {return action;}
 
 	public ExecutionEvent(KeyStroke[] keycode, IAction action) {
 		this.keycode=keycode;
@@ -63,23 +67,6 @@ public class ExecutionEvent extends ArrayList<IAction> {
 	@Override
 	public String toString() {
 		return action.getId();
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public KeyStroke[] getKeycode() {
-		return keycode;
-	}
-
-	public IAction getAction() {
-		return action;
-	}
-
-	public boolean isExecuted() {
-		return executed;
 	}
 
 

@@ -59,6 +59,8 @@ public abstract class TableValidator<T> implements IValidator {
 	/** Insertion-ordered KEYS */
 	private final Map<String, ColumnBinding> validatorMap=new LinkedHashMap();
 
+	public ColumnBinding getProperty(String property) {return validatorMap.get(property);}
+
 	private IValidationManager manager=new ValidationManager(this){
 		@Override
 		public void postError(String message) {}
@@ -182,15 +184,6 @@ public abstract class TableValidator<T> implements IValidator {
 			}
 		}return result.toString();
 
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public ColumnBinding getProperty(String property) {
-		return validatorMap.get(property);
 	}
 
 

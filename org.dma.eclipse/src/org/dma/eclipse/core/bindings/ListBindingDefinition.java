@@ -30,6 +30,12 @@ public class ListBindingDefinition {
 	private final UpdateListStrategy targetToModelUpdate=new UpdateListStrategy();
 	private final UpdateListStrategy modelToTargetUpdate=new UpdateListStrategy();
 
+	public IObservableList getTargetObservableList() {return targetObservableList;}
+	public IObservableList getModelObservableList() {return modelObservableList;}
+
+	public UpdateListStrategy getTargetToModelUpdate() {return targetToModelUpdate;}
+	public UpdateListStrategy getModelToTargetUpdate() {return modelToTargetUpdate;}
+
 	/** NO convertion */
 	public ListBindingDefinition(IObservableList targetObservableList, IObservableList modelObservableList) {
 
@@ -55,28 +61,6 @@ public class ListBindingDefinition {
 		this.targetToModelUpdate.setConverter(targetToModelConverter);
 		this.modelToTargetUpdate.setConverter(modelToTargetConverter);
 
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public IObservableList getTargetObservableList() {
-		return targetObservableList;
-	}
-
-	public IObservableList getModelObservableList() {
-		return modelObservableList;
-	}
-
-
-	public UpdateListStrategy getTargetToModelUpdate() {
-		return targetToModelUpdate;
-	}
-
-	public UpdateListStrategy getModelToTargetUpdate() {
-		return modelToTargetUpdate;
 	}
 
 

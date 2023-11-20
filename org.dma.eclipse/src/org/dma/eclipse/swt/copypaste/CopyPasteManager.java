@@ -45,9 +45,7 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 				key.executeCopy();
 			}
 
-		}
-
-		header.executeCopy();
+		}header.executeCopy();
 
 	}
 
@@ -63,9 +61,7 @@ public class CopyPasteManager extends LinkedHashMap<ICopyPaste, TabItem> {
 				key.executePaste();
 			}
 
-		}
-
-		header.executePaste();
+		}header.executePaste();
 
 	}
 

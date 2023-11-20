@@ -40,10 +40,14 @@ public abstract class FieldValidator implements IValidator {
 	/** Insertion-ordered KEYS */
 	private final Map<String, FieldBinding> validatorMap=new LinkedHashMap();
 
+	public FieldBinding getProperty(String property) {return validatorMap.get(property);}
+
 	private IValidationManager manager=new ValidationManager(this){
 		@Override
 		public void postError(String message) {}
 	};
+
+	public IValidationManager getManager() {return manager;}
 
 	public FieldBinding register(String property, FieldBinding binding) {
 
@@ -185,20 +189,6 @@ public abstract class FieldValidator implements IValidator {
 			}
 		}return result.toString();
 
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public FieldBinding getProperty(String property) {
-		return validatorMap.get(property);
-	}
-
-
-	public IValidationManager getManager() {
-		return manager;
 	}
 
 

@@ -30,6 +30,10 @@ public class ExecutionDefinition {
 	private final String id;
 	private final String secondaryId;
 
+	public Control getControl() {return control;}
+	public String getId() {return id;}
+	public String getSecondaryId() {return secondaryId;}
+
 	private Listener selectionListener;
 	private KeyListener keyListener;
 
@@ -57,23 +61,6 @@ public class ExecutionDefinition {
 	public void removeListeners() {
 		if(selectionListener!=null) control.removeListener(SWT.Selection, selectionListener);
 		if(keyListener!=null) control.removeKeyListener(keyListener);
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public Control getControl() {
-		return control;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public String getSecondaryId() {
-		return secondaryId;
 	}
 
 

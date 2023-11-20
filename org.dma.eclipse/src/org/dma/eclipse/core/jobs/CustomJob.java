@@ -64,6 +64,8 @@ public class CustomJob extends Job {
 
 	private boolean canceled=false;
 
+	public boolean isCanceled() {return canceled;}
+
 	public CustomJob() {
 		this(null);
 	}
@@ -149,10 +151,6 @@ public class CustomJob extends Job {
 		Debug.err("JOB "+this+" STATE is "+getStateName());
 		int state=getState();
 		return state==Job.RUNNING || state==Job.WAITING || state==Job.SLEEPING;
-	}
-
-	public boolean isCanceled() {
-		return canceled;
 	}
 
 	@Override

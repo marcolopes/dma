@@ -93,6 +93,12 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	protected final TableViewer viewer;
 	protected final long dynamicLoad;
 
+	@Deprecated
+	public long getNumberOfObjects() {return Integer.MAX_VALUE;}
+	public Collection<T> getCollection() {return objectCollection;}
+	public boolean isEmpty() {return objectCollection.isEmpty();}
+	public TableViewer getViewer() {return viewer;}
+
 	public TableViewerContainer(TableViewer viewer) {
 		this(viewer, 0);
 	}
@@ -358,28 +364,6 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 
 	public int moveSelectedElementsDown() {
 		return moveElementsDown(getSelectionIndices());
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public boolean isEmpty() {
-		return objectCollection.isEmpty();
-	}
-
-	public Collection<T> getCollection() {
-		return objectCollection;
-	}
-
-	@Deprecated
-	public long getNumberOfObjects() {
-		return Integer.MAX_VALUE;
-	}
-
-	public TableViewer getViewer() {
-		return viewer;
 	}
 
 

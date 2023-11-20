@@ -34,6 +34,9 @@ public abstract class FieldError  {
 	private String message;
 	private ERRORS error;
 
+	public boolean hasError() {return error!=ERRORS.NO_ERROR;}
+	public void setError(ERRORS error) {this.error=error;}
+
 	protected final FieldLabel label;
 
 	public FieldError(FieldLabel label) {
@@ -60,19 +63,6 @@ public abstract class FieldError  {
 
 	public void clearError() {
 		setError(ERRORS.NO_ERROR);
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public boolean hasError() {
-		return error!=ERRORS.NO_ERROR;
-	}
-
-	public void setError(ERRORS error) {
-		this.error=error;
 	}
 
 

@@ -29,6 +29,8 @@ public class LinkedSWTList<T> extends MovableList<T> {
 
 	private final CustomSWTList SWTList;
 
+	public CustomSWTList getSWTList() {return SWTList;}
+
 	public LinkedSWTList(CustomSWTList SWTList) {
 		super();
 		this.SWTList=SWTList;
@@ -94,15 +96,6 @@ public class LinkedSWTList<T> extends MovableList<T> {
 		moveTo(selectionIndex+1, selectionIndices);
 		SWTList.moveDown(selectionIndices, selectionIndex+1);
 
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public CustomSWTList getSWTList() {
-		return SWTList;
 	}
 
 

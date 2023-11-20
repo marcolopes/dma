@@ -30,6 +30,12 @@ public class ValueBindingDefinition {
 	private final UpdateValueStrategy targetToModelUpdate=new UpdateValueStrategy();
 	private final UpdateValueStrategy modelToTargetUpdate=new UpdateValueStrategy();
 
+	public IObservableValue getTargetObservableValue() {return targetObservableValue;}
+	public IObservableValue getModelObservableValue() {return modelObservableValue;}
+
+	public UpdateValueStrategy getTargetToModelUpdate() {return targetToModelUpdate;}
+	public UpdateValueStrategy getModelToTargetUpdate() {return modelToTargetUpdate;}
+
 	/** NO convertion */
 	public ValueBindingDefinition(IObservableValue targetObservableValue, IObservableValue modelObservableValue) {
 
@@ -55,28 +61,6 @@ public class ValueBindingDefinition {
 		this.targetToModelUpdate.setConverter(targetToModelConverter);
 		this.modelToTargetUpdate.setConverter(modelToTargetConverter);
 
-	}
-
-
-
-	/*
-	 * Getters and setters
-	 */
-	public IObservableValue getTargetObservableValue() {
-		return targetObservableValue;
-	}
-
-	public IObservableValue getModelObservableValue() {
-		return modelObservableValue;
-	}
-
-
-	public UpdateValueStrategy getTargetToModelUpdate() {
-		return targetToModelUpdate;
-	}
-
-	public UpdateValueStrategy getModelToTargetUpdate() {
-		return modelToTargetUpdate;
 	}
 
 
