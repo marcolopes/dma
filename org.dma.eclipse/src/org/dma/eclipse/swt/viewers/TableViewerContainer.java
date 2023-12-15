@@ -191,6 +191,16 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		return objectCollection.size()!=size;
 	}
 
+	public MessageList updateTable(boolean update) {
+		if (update) updateTable();
+		return new MessageList();
+	}
+
+	public MessageList updateTable(MessageList error) {
+		updateTable(error.isEmpty());
+		return error;
+	}
+
 	/* Used for dynamic load */
 	private long getObjectsToLoad(int keycode) {
 		switch(keycode){
