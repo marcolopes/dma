@@ -93,8 +93,6 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	protected final TableViewer viewer;
 	protected final long dynamicLoad;
 
-	@Deprecated
-	public long getNumberOfObjects() {return Integer.MAX_VALUE;}
 	public Collection<T> getCollection() {return objectCollection;}
 	public boolean isEmpty() {return objectCollection.isEmpty();}
 	public TableViewer getViewer() {return viewer;}
@@ -205,7 +203,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	private long getObjectsToLoad(int keycode) {
 		switch(keycode){
 		default: //reset
-		case SWT.DEFAULT: return dynamicLoad==0 ? getNumberOfObjects() : dynamicLoad;
+		case SWT.DEFAULT: return dynamicLoad==0 ? Integer.MAX_VALUE : dynamicLoad;
 		case SWT.ARROW_UP: break; //nothing
 		case SWT.PAGE_UP: break; //nothing
 		case SWT.ARROW_DOWN: if (getSelectionIndex()+1>=objectCollection.size()) return dynamicLoad; break;
