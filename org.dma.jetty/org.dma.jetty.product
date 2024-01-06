@@ -26,6 +26,7 @@
       <plugin id="com.ibm.icu"/>
       <plugin id="org.dma.eclipse"/>
       <plugin id="org.dma.java"/>
+      <plugin id="org.dma.jaxrs"/>
       <plugin id="org.dma.jetty"/>
       <plugin id="org.eclipse.birt.jetty.overlay" fragment="true"/>
       <plugin id="org.eclipse.compare.core"/>
