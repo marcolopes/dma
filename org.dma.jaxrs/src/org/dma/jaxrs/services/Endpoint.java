@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,9 @@ import java.util.concurrent.Executors;
 
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.dma.jaxrs.responses.IResponse;
 
@@ -34,6 +36,12 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 	public static void run(EndpointRunnable runnable) {
 		EXECUTOR.execute(runnable);
+	}
+
+	@Context private UriInfo info;
+
+	public String getPathParameter(String key) {
+		return info.getPathParameters().getFirst(key);
 	}
 
 	public abstract class EndpointRunnable implements Runnable {
