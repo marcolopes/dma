@@ -38,6 +38,8 @@ public class CustomMenuItem extends MenuItem {
 
 	private IAction selectionAction;
 
+	public IAction getSelectionAction() {return selectionAction;}
+
 	/** @see MenuItem#MenuItem(Menu, int) */
 	public CustomMenuItem(Menu parent, int style) {
 		super(parent, style);
@@ -82,10 +84,6 @@ public class CustomMenuItem extends MenuItem {
 	public void setEnabled(boolean enabled) {
 		if (selectionAction!=null) selectionAction.setEnabled(enabled);
 		super.setEnabled(enabled);
-	}
-
-	public IAction getSelectionAction() {
-		return selectionAction;
 	}
 
 

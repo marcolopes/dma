@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,6 @@ public class FieldLabel {
 
 	private final Control control;
 	private final String text;
-
-	public FieldLabel() {
-		this(null, null);
-	}
 
 	public FieldLabel(String text) {
 		this(null, text);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,8 +32,13 @@ import org.dma.java.util.StringUtils;
 
 public class ResponseBuilder<T> extends HashMap<String, Object> implements IResponse {
 
-	private StatusType status;
-	private T entity;
+	private static final long serialVersionUID = 1L;
+
+	private final StatusType status;
+	private final T entity;
+
+	public StatusType getStatus() {return status;}
+	public T getEntity() {return entity;}
 
 	public ResponseBuilder(Status status) {
 		this(status, null);
@@ -74,25 +79,6 @@ public class ResponseBuilder<T> extends HashMap<String, Object> implements IResp
 	public ResponseBuilder<T> setHeader(String header, Object value) {
 		put(header, value);
 		return this;
-	}
-
-	/*
-	 * Getters & Setters
-	 */
-	public StatusType getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusType status) {
-		this.status = status;
-	}
-
-	public T getEntity() {
-		return entity;
-	}
-
-	public void setEntity(T entity) {
-		this.entity = entity;
 	}
 
 	/*

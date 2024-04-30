@@ -28,18 +28,12 @@ public class CustomTableColumn extends TableColumn {
 
 	private int widthPercentage=0;
 
+	public int getWidthPercentage() {return widthPercentage;}
+	public void setWidthPercentage(int widthPercentage) {this.widthPercentage=widthPercentage;}
+
 	/** @see TableColumn#TableColumn(Table, int) */
 	public CustomTableColumn(Table parent, int style) {
 		super(parent, style);
-	}
-
-
-	public int getWidthPercentage() {
-		return widthPercentage;
-	}
-
-	public void setWidthPercentage(int widthPercentage) {
-		this.widthPercentage=widthPercentage;
 	}
 
 

@@ -33,6 +33,9 @@ public class CustomTrayItem extends TrayItem {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
+	/** @see TrayItem#getVisible */
+	public boolean isVisible() {return getVisible();}
+
 	private final Listener maximizeListener=new Listener() {
 		@Override
 		public void handleEvent(Event event) {
@@ -71,11 +74,6 @@ public class CustomTrayItem extends TrayItem {
 		toolTip=new CustomToolTip(shell);
 		//BUG: Tip does not show in windows 7 tray
 		setToolTip(visible && !SystemUtils.IS_OS_WINDOWS_7 ? toolTip : null);
-	}
-
-	/** @see TrayItem#getVisible */
-	public boolean isVisible() {
-		return getVisible();
 	}
 
 	public void showTip(String text, String message) {

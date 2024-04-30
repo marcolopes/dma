@@ -33,6 +33,8 @@ public class CustomCombo<T> extends Combo {
 
 	private IAction selectionAction;
 
+	public IAction getSelectionAction() {return selectionAction;}
+
 	/** @see Combo#Combo(Composite, int) */
 	public CustomCombo(Composite parent, int style) {
 		super(parent, style);
@@ -63,10 +65,6 @@ public class CustomCombo<T> extends Combo {
 	public void setEnabled(boolean enabled) {
 		if (selectionAction!=null) selectionAction.setEnabled(enabled);
 		super.setEnabled(enabled);
-	}
-
-	public IAction getSelectionAction() {
-		return selectionAction;
 	}
 
 

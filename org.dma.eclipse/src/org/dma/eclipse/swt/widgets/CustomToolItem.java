@@ -38,6 +38,8 @@ public class CustomToolItem extends ToolItem {
 
 	private IAction selectionAction;
 
+	public IAction getSelectionAction() {return selectionAction;}
+
 	/** @see ToolItem#ToolItem(ToolBar, int) */
 	public CustomToolItem(ToolBar parent, int style) {
 		super(parent, style);
@@ -82,10 +84,6 @@ public class CustomToolItem extends ToolItem {
 	public void setEnabled(boolean enabled) {
 		if (selectionAction!=null) selectionAction.setEnabled(enabled);
 		super.setEnabled(enabled);
-	}
-
-	public IAction getSelectionAction() {
-		return selectionAction;
 	}
 
 

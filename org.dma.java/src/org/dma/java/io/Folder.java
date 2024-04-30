@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.regex.Pattern;
 
+import org.dma.java.input.FieldRegex;
+
 public class Folder extends CustomFile {
 
 	public static Folder current(String...more) {
@@ -40,8 +42,8 @@ public class Folder extends CustomFile {
 	}
 
 	/** @see CustomFile#CustomFile(File, String...) */
-	public Folder(File path, String...more) {
-		super(path, more);
+	public Folder(File file, String...more) {
+		super(file, more);
 	}
 
 	/** @see CustomFile#CustomFile(String, String...) */
@@ -50,8 +52,8 @@ public class Folder extends CustomFile {
 	}
 
 	/** @see CustomFile#CustomFile(File) */
-	public Folder(File path) {
-		super(path);
+	public Folder(File file) {
+		super(file);
 	}
 
 
@@ -63,7 +65,7 @@ public class Folder extends CustomFile {
 		FileFilter filter=new FileFilter() {
 			//convert to regex
 			String regex=wildcards.replace("*", ".*").replace("?", ".");
-			Pattern pattern=Pattern.compile(regex);
+			Pattern pattern=FieldRegex.getPattern(regex);
 			@Override
 			public boolean accept(File file) {
 				return file.isDirectory() && pattern.matcher(file.getName()).find();
@@ -103,7 +105,7 @@ public class Folder extends CustomFile {
 		FileFilter filter=new FileFilter() {
 			//convert to regex
 			String regex=wildcards.replace("*", ".*").replace("?", ".");
-			Pattern pattern=Pattern.compile(regex);
+			Pattern pattern=FieldRegex.getPattern(regex);
 			@Override
 			public boolean accept(File file) {
 				return file.isFile() &&	pattern.matcher(file.getName()).find();

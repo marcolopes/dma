@@ -31,14 +31,10 @@ public class CustomText extends Text {
 	protected void checkSubclass() {}
 
 	public enum FUNCTIONS {
-		/** Move cursor 1 position back */
-		BACK,
-		/** Move cursor 1 position forward */
-		FORWARD,
-		/** Delete selected / before cursor chars */
-		DELETE,
-		/** Clear all chars */
-		CLEAR;
+		/** Move cursor 1 position back */ BACK,
+		/** Move cursor 1 position forward */ FORWARD,
+		/** Delete selected / before cursor chars */ DELETE,
+		/** Clear all chars */ CLEAR;
 	}
 
 	/** @see Text#Text(Composite, int) */

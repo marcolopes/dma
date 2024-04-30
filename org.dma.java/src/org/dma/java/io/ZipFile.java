@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,8 +32,8 @@ import java.util.zip.ZipOutputStream;
 public class ZipFile extends CustomFile {
 
 	/** @see CustomFile#CustomFile(File, String...) */
-	public ZipFile(File path, String...more) {
-		super(path, more);
+	public ZipFile(File file, String...more) {
+		super(file, more);
 	}
 
 	/** @see CustomFile#CustomFile(String, String...) */
@@ -42,8 +42,8 @@ public class ZipFile extends CustomFile {
 	}
 
 	/** @see CustomFile#CustomFile(File) */
-	public ZipFile(File path) {
-		super(path);
+	public ZipFile(File file) {
+		super(file);
 	}
 
 

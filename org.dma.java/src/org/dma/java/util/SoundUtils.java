@@ -30,8 +30,7 @@ public class SoundUtils {
 	public static void beep(double freq, final double millis) throws InterruptedException, LineUnavailableException {
 
 		final Clip clip = AudioSystem.getClip();
-		try{
-			/*
+		try{/*
 			 * AudioFormat of the reclieved clip. Probably you can alter it
 			 * someway choosing proper Line.
 			 */

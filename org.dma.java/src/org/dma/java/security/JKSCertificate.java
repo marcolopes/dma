@@ -86,7 +86,6 @@ public class JKSCertificate {
 		}catch(Exception e){
 			System.err.println(e);
 		}
-
 	}
 
 

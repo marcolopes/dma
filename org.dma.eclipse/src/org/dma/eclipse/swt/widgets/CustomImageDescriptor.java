@@ -98,6 +98,10 @@ public class CustomImageDescriptor extends ImageDescriptor {
 
 	private final ImageData data;
 
+	@Override
+	public ImageData getImageData() {return data;}
+
+
 	/**
 	 * Creates and returns a new {@link ImageDescriptor}
 	 * stored by the resource at the specified location.
@@ -132,16 +136,6 @@ public class CustomImageDescriptor extends ImageDescriptor {
 
 	public CustomImageDescriptor(ImageData data) {
 		this.data=data;
-	}
-
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.resource.ImageDescriptor
-	 */
-	@Override
-	public ImageData getImageData() {
-		return data;
 	}
 
 

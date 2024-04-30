@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,9 +51,8 @@ public class TraverseSupport implements TraverseListener {
 				if (NumericUtils.bit(text.getStyle(), SWT.MULTI)){
 					Debug.out("SWT.MULTI");
 					//TAB key pressed?
-					if (event.keyCode==SWT.TAB){
-						event.doit=true; // traverse
-					}//control KEYPAD return?
+					if (event.keyCode==SWT.TAB) event.doit=true; // traverse
+					//control KEYPAD return?
 					else if (keypadReturn) switch(event.keyCode){
 					case SWT.KEYPAD_CR:
 						event.doit=false; // do not traverse
@@ -111,9 +110,9 @@ public class TraverseSupport implements TraverseListener {
 	public Control getNext(Control control) {
 		int index=controlList.indexOf(control);
 		int index2=index;
-		do{index=index+1==controlList.size() ? 0 : index+1;
-		}while(index!=index2 && !controlList.get(index).isEnabled());
-		return controlList.get(index);
+		do{index=index+1==controlList.size() ? 0 : index+1; control=controlList.get(index);
+		}while(index!=index2 && (!control.isEnabled() || !control.isVisible()));
+		return control;
 	}
 
 	public void select(Control control) {
@@ -136,7 +135,7 @@ public class TraverseSupport implements TraverseListener {
 	public void selectFirst() {
 		if (controlList.isEmpty()) return;
 		Control control=controlList.get(0);
-		if (control.isEnabled()){
+		if (control.isEnabled() && control.isVisible()){
 			select(control);
 		}else{
 			selectNext(control);

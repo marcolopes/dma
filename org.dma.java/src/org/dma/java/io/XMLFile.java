@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import java.io.File;
 public class XMLFile<T> extends CustomFile {
 
 	/** @see CustomFile#CustomFile(File, String...) */
-	public XMLFile(File path, String...more) {
-		super(path, more);
+	public XMLFile(File file, String...more) {
+		super(file, more);
 	}
 
 	/** @see CustomFile#CustomFile(String, String...) */
@@ -37,8 +37,8 @@ public class XMLFile<T> extends CustomFile {
 	}
 
 	/** @see CustomFile#CustomFile(File) */
-	public XMLFile(File path) {
-		super(path);
+	public XMLFile(File file) {
+		super(file);
 	}
 
 

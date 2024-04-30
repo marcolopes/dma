@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,13 +35,13 @@ public class TextFile extends CustomFile {
 	public final Charset charset;
 
 	/** Uses JAVA DEFAULT charset */
-	public TextFile(File path, String...more) {
-		this(Charset.defaultCharset(), path, more);
+	public TextFile(File file, String...more) {
+		this(Charset.defaultCharset(), file, more);
 	}
 
 	/** @see CustomFile#CustomFile(File, String...) */
-	public TextFile(Charset charset, File path, String...more) {
-		super(path, more);
+	public TextFile(Charset charset, File file, String...more) {
+		super(file, more);
 		this.charset=charset;
 	}
 
@@ -57,13 +57,13 @@ public class TextFile extends CustomFile {
 	}
 
 	/** Uses JAVA DEFAULT charset */
-	public TextFile(File path) {
-		this(Charset.defaultCharset(), path);
+	public TextFile(File file) {
+		this(Charset.defaultCharset(), file);
 	}
 
 	/** @see CustomFile#CustomFile(File) */
-	public TextFile(Charset charset, File path) {
-		super(path);
+	public TextFile(Charset charset, File file) {
+		super(file);
 		this.charset=charset;
 	}
 

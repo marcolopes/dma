@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 
-import org.dma.java.util.Debug;
 import org.dma.java.util.StringList;
 import org.dma.java.util.StringUtils;
 
@@ -74,8 +73,8 @@ public class CustomFile extends File {
 	}
 
 	/** Ensures absolute path */
-	public CustomFile(File path, String...more) {
-		this(path.getPath(), more);
+	public CustomFile(File file, String...more) {
+		this(file.getPath(), more);
 	}
 
 	/** Ensures absolute path */
@@ -84,8 +83,8 @@ public class CustomFile extends File {
 	}
 
 	/** Ensures absolute path */
-	public CustomFile(File path) {
-		super(path.getAbsolutePath());
+	public CustomFile(File file) {
+		super(file.getAbsolutePath());
 	}
 
 
@@ -95,7 +94,7 @@ public class CustomFile extends File {
 	 */
 	@Deprecated
 	public AbstractFileCopy copy() {
-		return new AbstractFileCopy(this){
+		return new AbstractFileCopy(this) {
 			@Override
 			public boolean cancel() {
 				return false;
@@ -196,7 +195,6 @@ public class CustomFile extends File {
 		list.addAll(Arrays.asList(args));
 		//START "title" "program" parameters
 		String command=list.concat(" ");
-		Debug.err(command);
 		return new WindowsCommand(getParentFile(), command).start().exitValue();
 	}
 

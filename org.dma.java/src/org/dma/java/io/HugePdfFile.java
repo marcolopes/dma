@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ import com.lowagie.text.pdf.RandomAccessFileOrArray;
 public class HugePdfFile extends AbstractPdfFile {
 
 	/** @see AbstractPdfFile#AbstractPdfFile(File, String...) */
-	public HugePdfFile(File path, String...more) {
-		super(path, more);
+	public HugePdfFile(File file, String...more) {
+		super(file, more);
 	}
 
 	/** @see AbstractPdfFile#AbstractPdfFile(String, String...) */
@@ -44,8 +44,8 @@ public class HugePdfFile extends AbstractPdfFile {
 	}
 
 	/** @see AbstractPdfFile#AbstractPdfFile(File) */
-	public HugePdfFile(File path) {
-		super(path);
+	public HugePdfFile(File file) {
+		super(file);
 	}
 
 

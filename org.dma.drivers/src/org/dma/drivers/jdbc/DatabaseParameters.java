@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,18 +49,17 @@ public class DatabaseParameters {
 	}
 
 	/**
-	 * @param driver - database driver {@link DRIVERS}
-	 * @param host - connetion host; EMPTY=H2 Embedded mode
-	 * @param database - database name
-	 * @param folder - database folder (ex: H2); NULL=current folder
-	 * @param properties - connection properties; USUALLY property=value&property=value...
-	 * @param username - database username
-	 * @param password - database password
-	 * @param pool - poolmanager {@link POOLMANAGERS}
-	 * @param backup - backup parameters
+	 * @param driver Database driver {@link DRIVERS}
+	 * @param host Connetion host (EMPTY=H2 Embedded mode)
+	 * @param database Database name
+	 * @param folder Database folder (ex: H2; NULL=current folder)
+	 * @param properties Connection properties (USUALLY property=value&property=value...)
+	 * @param username Database username
+	 * @param password Database password
+	 * @param pool Poolmanager {@link POOLMANAGERS}
+	 * @param backup Backup parameters
 	 */
-	public DatabaseParameters(DRIVERS driver, String host, String database, Folder folder,
-			String properties, String username, String password, POOLMANAGERS pool, BackupParameters backup) {
+	public DatabaseParameters(DRIVERS driver, String host, String database, Folder folder, String properties, String username, String password, POOLMANAGERS pool, BackupParameters backup) {
 		this.driver=driver;
 		this.host=host.isEmpty() ? LOCALHOST.NAME.value : host;
 		this.database=database;

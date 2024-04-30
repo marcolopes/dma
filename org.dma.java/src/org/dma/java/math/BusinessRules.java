@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2014 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,8 +48,9 @@ public class BusinessRules {
 	public static BigDecimal averagePrice(BigDecimal stock, BigDecimal price1, BigDecimal entries, BigDecimal price2) {
 
 		return entries.signum()<=0 ? price1 :
-			(stock.abs().multiply(price1).add(entries.multiply(price2))).
-				divide(stock.abs().add(entries), MathContext.DECIMAL64);
+			stock.signum()<=0 ? price2 :
+				(stock.multiply(price1).add(entries.multiply(price2))).
+				divide(stock.add(entries), MathContext.DECIMAL64);
 
 	}
 

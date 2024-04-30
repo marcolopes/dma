@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2013 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,16 +44,11 @@ public class PrintRawData {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		try{
-			DocPrintJob job=PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
-			Doc doc=new SimpleDoc(ESCAPE.EPSON.sequence, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
-			job.print(doc, null);
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		DocPrintJob job=PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
+		Doc doc=new SimpleDoc(ESCAPE.EPSON.sequence, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
+		job.print(doc, null);
 
 	}
 

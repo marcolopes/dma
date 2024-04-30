@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,14 +89,20 @@ public class URLFile extends URLHandler {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		URLFile handler=new URLFile("https://faturas.portaldasfinancas.gov.pt" ,"factemipf_static", "java", "certificados.zip");
+		URLFile file=new URLFile("https://info.portaldasfinancas.gov.pt", "pt", "apoio_contribuinte", "Faturacao", "Documents", "TesteWebservices.zip");
 
-		System.out.println(handler);
-		System.out.println(handler.url.getHost());
-		System.out.println(handler.url.getFile());
-		System.out.println(handler.getFilename());
+		System.out.println(file);
+		System.out.println(file.url.getFile());
+		System.out.println(file.url.getHost());
+		System.out.println(file.getFilename());
+
+		if (file.exists()){
+			File dst=new CustomFile(Folder.temporary(), file.getFilename());
+			System.out.println(dst);
+			file.download(dst);
+		}
 
 	}
 

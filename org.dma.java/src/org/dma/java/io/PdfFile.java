@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ import org.dma.java.time.Chronograph;
 public class PdfFile extends AbstractPdfFile {
 
 	/** @see AbstractPdfFile#AbstractPdfFile(File, String...) */
-	public PdfFile(File path, String...more) {
-		super(path, more);
+	public PdfFile(File file, String...more) {
+		super(file, more);
 	}
 
 	/** @see AbstractPdfFile#AbstractPdfFile(String, String...) */
@@ -44,8 +44,8 @@ public class PdfFile extends AbstractPdfFile {
 	}
 
 	/** @see AbstractPdfFile#AbstractPdfFile(File) */
-	public PdfFile(File path) {
-		super(path);
+	public PdfFile(File file) {
+		super(file);
 	}
 
 
@@ -63,8 +63,7 @@ public class PdfFile extends AbstractPdfFile {
 		if (files.isEmpty()) return;
 
 		FileOutputStream out=asOutputStream();
-		try{
-			Document document=new Document();
+		try{Document document=new Document();
 			PdfCopy copy=new PdfCopy(document, out);
 			document.open();
 			for(File file: files){

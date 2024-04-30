@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,11 +51,6 @@ public abstract class FieldBinding extends FieldError {
 	private final FieldFormat format;
 	private final RegexMatcher matcher;
 	private final FieldRules rules;
-
-	/** Without regex matcher */
-	public FieldBinding(Control control, FieldRules rules) {
-		this(new FieldLabel(), control, rules);
-	}
 
 	/** Without regex matcher */
 	public FieldBinding(FieldLabel label, Control control, FieldRules rules) {

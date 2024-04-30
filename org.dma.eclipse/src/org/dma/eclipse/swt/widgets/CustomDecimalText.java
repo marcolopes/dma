@@ -35,6 +35,8 @@ public class CustomDecimalText extends CustomText {
 
 	private String value="";
 
+	public String getValue() {return value;}
+
 	/** @see Text#Text(Composite, int) */
 	public CustomDecimalText(Composite parent, int style) {
 		super(parent, style);
@@ -68,10 +70,6 @@ public class CustomDecimalText extends CustomText {
 		this.value=value;
 		setText(value);
 		selectAll();
-	}
-
-	public String getValue() {
-		return value;
 	}
 
 

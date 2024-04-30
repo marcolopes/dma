@@ -42,6 +42,8 @@ public class CustomButton extends Button {
 
 	private IAction selectionAction;
 
+	public IAction getSelectionAction() {return selectionAction;}
+
 	/** @see CustomButton#CustomButton(Composite, int) */
 	public CustomButton(Composite parent, int style) {
 		super(parent, style);
@@ -107,10 +109,6 @@ public class CustomButton extends Button {
 	public void setEnabled(boolean enabled) {
 		if (selectionAction!=null) selectionAction.setEnabled(enabled);
 		super.setEnabled(enabled);
-	}
-
-	public IAction getSelectionAction() {
-		return selectionAction;
 	}
 
 

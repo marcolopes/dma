@@ -31,6 +31,8 @@ public class CustomTabItem extends TabItem {
 
 	private IAction selectionAction;
 
+	public IAction getSelectionAction() {return selectionAction;}
+
 	/** @see TabItem#TabItem(TabFolder, int) */
 	public CustomTabItem(TabFolder parent, int style) {
 		super(parent, style);
@@ -72,10 +74,6 @@ public class CustomTabItem extends TabItem {
 				if (isSelected()) selectionAction.runWithEvent(null);
 			}
 		});
-	}
-
-	public IAction getSelectionAction() {
-		return selectionAction;
 	}
 
 

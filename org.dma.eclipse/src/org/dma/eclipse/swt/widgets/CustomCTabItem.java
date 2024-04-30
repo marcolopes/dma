@@ -28,11 +28,12 @@ import org.eclipse.swt.graphics.FontData;
 
 public class CustomCTabItem extends CTabItem {
 
-
 	@Override //subclassing
 	protected void checkSubclass() {}
 
 	private IAction selectionAction;
+
+	public IAction getSelectionAction() {return selectionAction;}
 
 	/** @see CTabItem#CTabItem(CTabFolder, int) */
 	public CustomCTabItem(CTabFolder parent, int style) {
@@ -75,10 +76,6 @@ public class CustomCTabItem extends CTabItem {
 				if (isSelected()) selectionAction.runWithEvent(null);
 			}
 		});
-	}
-
-	public IAction getSelectionAction() {
-		return selectionAction;
 	}
 
 	public void setFontStyle(int style) {
