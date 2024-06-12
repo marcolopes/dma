@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  * Contributors
- * Marco Lopes (marcolopes@projectocolibri.com)
+ * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.jaxrs.resources;
 
