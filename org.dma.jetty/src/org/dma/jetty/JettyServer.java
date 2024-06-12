@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  * Contributors
- * Marco Lopes (marcolopes@projectocolibri.com)
+ * Marco Lopes (marcolopespt@gmail.com)
  * Filipe Santos (filipesantos__12@hotmail.com)
  * Sergio Gomes (s.miguelgomes@gmail.com)
  *******************************************************************************/
