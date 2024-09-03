@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,9 @@ import org.dma.java.security.JKSCertificate;
 import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
 
 public class Certificates {
+
+	@Deprecated
+	JKSCertificate saPubKey = new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod");
 
 	@Deprecated
 	/** Trusted Store Certificate */

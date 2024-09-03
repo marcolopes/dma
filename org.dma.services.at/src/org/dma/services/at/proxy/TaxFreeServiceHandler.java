@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,9 @@ package org.dma.services.at.proxy;
 
 import java.io.File;
 
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.net.HttpURLHandler;
-import org.dma.java.security.ServiceCertificates;
-import org.dma.services.at.SOAPMessageHandler;
+import org.dma.services.at.ServiceCertificates;
 
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeService;
 import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeServiceImpl;
@@ -35,37 +32,27 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
-public class TaxFreeServiceHandler extends SOAPMessageHandler {
+public class TaxFreeServiceHandler extends ServiceHandler<TaxFreeService> {
 
 	public enum ENDPOINTS {
 
 		PROD ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:715/TaxFreeServiceImplService");
 
-		public final HttpURLHandler url;
+		public final String name;
 
-		private ENDPOINTS(String urlname) {
-			this.url = new HttpURLHandler(urlname);
+		private ENDPOINTS(String name) {
+			this.name = name;
 		}
 
 	}
 
-	private final TaxFreeService service = new TaxFreeServiceImpl().getTaxFreeServicePort();
-
-	private TaxFreeService getService() throws WebServiceException {
-		initialize((BindingProvider)service, endpoint.url);
-		return service;
+	public TaxFreeServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert) {
+		this(endpoint, username, password, cert, null);
 	}
 
-	private final ENDPOINTS endpoint;
-
-	public TaxFreeServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
-		this(username, password, cert, endpoint, null);
-	}
-
-	public TaxFreeServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint, File output) {
-		super(username, password, cert, output);
-		this.endpoint = endpoint;
+	public TaxFreeServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert, File output) {
+		super(new TaxFreeServiceImpl().getTaxFreeServicePort(), endpoint.name, username, password, cert, output);
 	}
 
 

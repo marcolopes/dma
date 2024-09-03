@@ -27,6 +27,8 @@ public enum ClasseDocType {
 	/** Documentos de Conferência */ WD ("Documentos de Conferência"),
 	/** Recibos */ PY ("Recibos");
 
+	public String value() {return name();}
+
 	public final String descricao;
 
 	private ClasseDocType(String descricao) {
@@ -41,10 +43,6 @@ public enum ClasseDocType {
 
 	public static ClasseDocType get(SeriesInfo info) {
 		return get(info.getClasseDoc());
-	}
-
-	public String value() {
-		return name();
 	}
 
 	@Override

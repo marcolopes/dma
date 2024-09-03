@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,10 @@ package org.dma.services.at.proxy;
 
 import java.io.File;
 
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.net.HttpURLHandler;
-import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.TimeDateUtils;
-import org.dma.services.at.SOAPMessageHandler;
+import org.dma.services.at.ServiceCertificates;
 
 import pt.gov.portaldasfinancas.servicos.documentos.ChangeInvoiceStatusRequest;
 import pt.gov.portaldasfinancas.servicos.documentos.ChangePaymentStatusRequest;
@@ -49,37 +46,27 @@ import pt.gov.portaldasfinancas.servicos.documentos.types.InvoiceStatusType;
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
-public class DocumentosServiceHandler extends SOAPMessageHandler {
+public class DocumentosServiceHandler extends ServiceHandler<FatcorewsPort> {
 
 	public enum ENDPOINTS {
 
 		PROD ("https://servicos.portaldasfinancas.gov.pt:423/fatcorews/ws/"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:723/fatcorews/ws/");
 
-		public final HttpURLHandler url;
+		public final String name;
 
-		private ENDPOINTS(String urlname) {
-			this.url = new HttpURLHandler(urlname);
+		private ENDPOINTS(String name) {
+			this.name = name;
 		}
 
 	}
 
-	private final FatcorewsPort service = new FatcorewsPortService().getFatcorewsPortSoap11();
-
-	private FatcorewsPort getService() throws WebServiceException {
-		initialize((BindingProvider)service, endpoint.url);
-		return service;
+	public DocumentosServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert) {
+		this(endpoint, username, password, cert, null);
 	}
 
-	private final ENDPOINTS endpoint;
-
-	public DocumentosServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
-		this(username, password, cert, endpoint, null);
-	}
-
-	public DocumentosServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint, File output) {
-		super(username, password, cert, output);
-		this.endpoint = endpoint;
+	public DocumentosServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert, File output) {
+		super(new FatcorewsPortService().getFatcorewsPortSoap11(), endpoint.name, username, password, cert, output);
 	}
 
 

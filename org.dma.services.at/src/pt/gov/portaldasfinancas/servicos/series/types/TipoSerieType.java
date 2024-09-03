@@ -26,6 +26,8 @@ public enum TipoSerieType {
 	/** Formação */ F ("Formação"),
 	/** Recuperação */ R ("Recuperação");
 
+	public String value() {return name();}
+
 	public final String descricao;
 
 	private TipoSerieType(String descricao) {
@@ -40,10 +42,6 @@ public enum TipoSerieType {
 
 	public static TipoSerieType get(SeriesInfo info) {
 		return get(info.getTipoSerie());
-	}
-
-	public String value() {
-		return name();
 	}
 
 	@Override

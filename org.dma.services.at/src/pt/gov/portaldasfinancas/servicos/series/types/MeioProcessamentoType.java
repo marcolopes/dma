@@ -26,6 +26,8 @@ public enum MeioProcessamentoType {
 	/** Portal das Finanças */ PF ("Portal das Finanças"),
 	/** Outros Meios Eletrónicos */ OM ("Outros Meios Eletrónicos");
 
+	public String value() {return name();}
+
 	public final String descricao;
 
 	private MeioProcessamentoType(String descricao) {
@@ -40,10 +42,6 @@ public enum MeioProcessamentoType {
 
 	public static MeioProcessamentoType get(SeriesInfo info) {
 		return get(info.getMeioProcessamento());
-	}
-
-	public String value() {
-		return name();
 	}
 
 	@Override

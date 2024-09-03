@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ package org.dma.services.at.test;
 import java.math.BigDecimal;
 import java.util.Random;
 
-import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.TimeDateUtils;
+import org.dma.services.at.ServiceCertificates;
 import org.dma.services.at.proxy.FaturasServiceHandler;
 
 import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceResponseType;
@@ -47,7 +47,7 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 	}
 
 	public FaturasServiceTest(String username, String password) {
-		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
+		super(ENDPOINTS.TEST, username, password, ServiceCertificates);
 	}
 
 	public static RegisterInvoiceType build(int numero) throws Exception {

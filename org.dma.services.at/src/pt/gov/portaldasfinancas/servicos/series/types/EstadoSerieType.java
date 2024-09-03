@@ -26,6 +26,8 @@ public enum EstadoSerieType {
 	/** Anulada */ N ("Anulada"),
 	/** Finalizada */ F ("Finalizada");
 
+	public String value() {return name();}
+
 	public final String descricao;
 
 	private EstadoSerieType(String descricao) {
@@ -40,10 +42,6 @@ public enum EstadoSerieType {
 
 	public static EstadoSerieType get(SeriesInfo info) {
 		return get(info.getEstado());
-	}
-
-	public String value() {
-		return name();
 	}
 
 	@Override

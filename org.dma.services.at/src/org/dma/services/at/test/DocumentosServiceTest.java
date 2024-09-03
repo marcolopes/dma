@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
 
-import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
+import org.dma.services.at.ServiceCertificates;
 import org.dma.services.at.proxy.DocumentosServiceHandler;
 
 import pt.gov.portaldasfinancas.servicos.documentos.DebitCreditIndicator;
@@ -71,7 +71,7 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 	}
 
 	public DocumentosServiceTest(String username, String password) {
-		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
+		super(ENDPOINTS.TEST, username, password, ServiceCertificates);
 	}
 
 	public static RegisterInvoiceRequest build(int numero, SeriesInfo info) throws Exception {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,9 @@ package org.dma.services.at.proxy;
 
 import java.io.File;
 
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.net.HttpURLHandler;
-import org.dma.java.security.ServiceCertificates;
-import org.dma.services.at.SOAPMessageHandler;
+import org.dma.services.at.ServiceCertificates;
 
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporte;
 import pt.gov.portaldasfinancas.servicos.documentosTransporte.DocumentosTransporteService;
@@ -35,7 +32,7 @@ import pt.gov.portaldasfinancas.servicos.documentosTransporte.StockMovementRespo
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
-public class StockMovementServiceHandler extends SOAPMessageHandler {
+public class StockMovementServiceHandler extends ServiceHandler<DocumentosTransporte> {
 
 	public enum ENDPOINTS {
 
@@ -43,30 +40,20 @@ public class StockMovementServiceHandler extends SOAPMessageHandler {
 		PROD ("https://servicos.portaldasfinancas.gov.pt:401/sgdtws/documentosTransporte"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:701/sgdtws/documentosTransporte");
 
-		public final HttpURLHandler url;
+		public final String name;
 
-		private ENDPOINTS(String urlname) {
-			this.url = new HttpURLHandler(urlname);
+		private ENDPOINTS(String name) {
+			this.name = name;
 		}
 
 	}
 
-	private final DocumentosTransporte service = new DocumentosTransporteService().getDocumentosTransporteSOAP();
-
-	private DocumentosTransporte getService() throws WebServiceException {
-		initialize((BindingProvider)service, endpoint.url);
-		return service;
+	public StockMovementServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert) {
+		this(endpoint, username, password, cert, null);
 	}
 
-	private final ENDPOINTS endpoint;
-
-	public StockMovementServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
-		this(username, password, cert, endpoint, null);
-	}
-
-	public StockMovementServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint, File output) {
-		super(username, password, cert, output);
-		this.endpoint = endpoint;
+	public StockMovementServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert, File output) {
+		super(new DocumentosTransporteService().getDocumentosTransporteSOAP(), endpoint.name, username, password, cert, output);
 	}
 
 

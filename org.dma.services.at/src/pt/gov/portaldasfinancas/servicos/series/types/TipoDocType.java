@@ -48,6 +48,8 @@ public enum TipoDocType {
 	/** Recibo emitido no âmbito do regime de IVA de Caixa */ RC (ClasseDocType.PY, "Recibo regime de IVA de Caixa"),
 	/** Outros recibos emitidos */ RG (ClasseDocType.PY, "Outros recibos emitidos");
 
+	public String value() {return name();}
+
 	public final ClasseDocType classeDoc;
 	public final String descricao;
 
@@ -64,10 +66,6 @@ public enum TipoDocType {
 
 	public static TipoDocType get(SeriesInfo info) {
 		return get(info.getTipoDoc());
-	}
-
-	public String value() {
-		return name();
 	}
 
 	@Override

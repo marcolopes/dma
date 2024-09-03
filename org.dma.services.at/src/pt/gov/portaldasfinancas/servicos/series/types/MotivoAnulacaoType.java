@@ -24,6 +24,8 @@ public enum MotivoAnulacaoType {
 
 	/** Anulação por erro de registo */ ER ("Anulação por erro de registo");
 
+	public String value() {return name();}
+
 	public final String descricao;
 
 	private MotivoAnulacaoType(String descricao) {
@@ -38,10 +40,6 @@ public enum MotivoAnulacaoType {
 
 	public static MotivoAnulacaoType get(SeriesInfo info) {
 		return get(info.getMotivoEstado());
-	}
-
-	public String value() {
-		return name();
 	}
 
 	@Override

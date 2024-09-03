@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,9 @@ package org.dma.services.at.proxy;
 
 import java.io.File;
 
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.net.HttpURLHandler;
-import org.dma.java.security.ServiceCertificates;
-import org.dma.services.at.SOAPMessageHandler;
+import org.dma.services.at.ServiceCertificates;
 
 import pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResp;
 import pt.gov.portaldasfinancas.servicos.series.SeriesResp;
@@ -39,44 +36,33 @@ import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesTyp
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
-public class SeriesServiceHandler extends SOAPMessageHandler {
+public class SeriesServiceHandler extends ServiceHandler<SeriesWS> {
 
 	public enum ENDPOINTS {
 
 		PROD ("https://servicos.portaldasfinancas.gov.pt:422/SeriesWSService"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:722/SeriesWSService");
 
-		public final HttpURLHandler url;
+		public final String name;
 
-		private ENDPOINTS(String urlname) {
-			this.url = new HttpURLHandler(urlname);
+		private ENDPOINTS(String name) {
+			this.name = name;
 		}
 
 	}
 
-	private final SeriesWS service = new SeriesWSService().getSeriesWSPort();
-
-	private SeriesWS getService() throws WebServiceException {
-		initialize((BindingProvider)service, endpoint.url);
-		return service;
+	public SeriesServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert) {
+		this(endpoint, username, password, cert, null);
 	}
 
-	private final ENDPOINTS endpoint;
-
-	public SeriesServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
-		this(username, password, cert, endpoint, null);
-	}
-
-	public SeriesServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint, File output) {
-		super(username, password, cert, output);
-		this.endpoint = endpoint;
+	public SeriesServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert, File output) {
+		super(new SeriesWSService().getSeriesWSPort(), endpoint.name, username, password, cert, output);
 	}
 
 
 	/**
-	 * Esta funcionalidade tem como objetivo permitir a comunicação das Séries à AT,
-	 * através do registo das mesmas, de modo a que seja atribuído um
-	 * código único de validação da Série.
+	 * Esta funcionalidade tem como objetivo, permitir a comunicação das séries à AT, através do
+     * registo das mesmas, de modo a que seja atribuído um código único de validação da série.
 	 */
 	public SeriesResp registarSerie(RegistarSeriesType request) throws WebServiceException {
 		return getService().registarSerie(request.serie, request.tipoSerie.value(),
@@ -86,8 +72,8 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	}
 
 	/**
-	 * Esta funcionalidade tem como objetivo disponibilizar a ação de anular
-	 * a comunicação de uma Série anteriormente comunicada, por erro.
+	 * Esta funcionalidade tem como objetivo, disponibilizar a ação de anular a comunicação
+     * de uma série anteriormente comunicada, por erro.
 	 */
 	public SeriesResp anularSerie(AnularSerieType request) throws WebServiceException {
 		return getService().anularSerie(request.serie,
@@ -96,9 +82,8 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	}
 
 	/**
-	 * Esta funcionalidade tem como objetivo indicar que uma Série foi válida
-	 * para um conjunto de documentos, mas que a mesma já não será usada a partir
-	 * do último documento comunicado.
+	 * Esta funcionalidade tem como objetivo, indicar que uma série foi válida para um conjunto
+     * de documentos, mas que a mesma já não será usada a partir do último documento comunicado.
 	 */
 	public SeriesResp finalizarSerie(FinalizarSerieType request) throws WebServiceException {
 		return getService().finalizarSerie(request.serie,
@@ -107,7 +92,7 @@ public class SeriesServiceHandler extends SOAPMessageHandler {
 	}
 
 	/**
-	 * Esta funcionalidade tem como objetivo disponibilizar a consulta das Séries comunicadas.
+	 * Esta funcionalidade tem como objetivo, disponibilizar a consulta das séries comunicadas.
 	 */
 	public ConsultarSeriesResp consultarSeries(ConsultarSeriesType request) throws WebServiceException {
 		return getService().consultarSeries(request.getSerie(),

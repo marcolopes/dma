@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,9 @@ package org.dma.services.at.proxy;
 
 import java.io.File;
 
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
-import org.dma.java.net.HttpURLHandler;
-import org.dma.java.security.ServiceCertificates;
-import org.dma.services.at.SOAPMessageHandler;
+import org.dma.services.at.ServiceCertificates;
 
 import pt.gov.portaldasfinancas.servicos.faturas.Faturas;
 import pt.gov.portaldasfinancas.servicos.faturas.FaturasService;
@@ -35,7 +32,7 @@ import pt.gov.portaldasfinancas.servicos.faturas.RegisterInvoiceType;
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
-public class FaturasServiceHandler extends SOAPMessageHandler {
+public class FaturasServiceHandler extends ServiceHandler<Faturas> {
 
 	public enum ENDPOINTS {
 
@@ -43,30 +40,20 @@ public class FaturasServiceHandler extends SOAPMessageHandler {
 		PROD ("https://servicos.portaldasfinancas.gov.pt:400/fews/faturas"),
 		TEST ("https://servicos.portaldasfinancas.gov.pt:700/fews/faturas");
 
-		public final HttpURLHandler url;
+		public final String name;
 
-		private ENDPOINTS(String urlname) {
-			this.url = new HttpURLHandler(urlname);
+		private ENDPOINTS(String name) {
+			this.name = name;
 		}
 
 	}
 
-	private final Faturas service = new FaturasService().getFaturasSOAP();
-
-	private Faturas getService() throws WebServiceException {
-		initialize((BindingProvider)service, endpoint.url);
-		return service;
+	public FaturasServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert) {
+		this(endpoint, username, password, cert, null);
 	}
 
-	private final ENDPOINTS endpoint;
-
-	public FaturasServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint) {
-		this(username, password, cert, endpoint, null);
-	}
-
-	public FaturasServiceHandler(String username, String password, ServiceCertificates cert, ENDPOINTS endpoint, File output) {
-		super(username, password, cert, output);
-		this.endpoint = endpoint;
+	public FaturasServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert, File output) {
+		super(new FaturasService().getFaturasSOAP(), endpoint.name, username, password, cert, output);
 	}
 
 

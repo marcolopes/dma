@@ -47,6 +47,35 @@ public class ConsultarSeriesType {
 	private EstadoSerieType estado;
 	private MeioProcessamentoType meioProcessamento;
 
+	public String getSerie() {return serie;}
+	public void setSerie(String serie) {this.serie=serie;}
+
+	public TipoSerieType getTipoSerie() {return tipoSerie;}
+	public void setTipoSerie(TipoSerieType tipoSerie) {this.tipoSerie=tipoSerie;}
+
+	public ClasseDocType getClasseDoc() {return classeDoc;}
+	public void setClasseDoc(ClasseDocType classeDoc) {this.classeDoc=classeDoc;}
+
+	public TipoDocType getTipoDoc() {return tipoDoc;}
+	public void setTipoDoc(TipoDocType tipoDoc) {this.tipoDoc=tipoDoc;}
+
+	public String getCodValidacaoSerie() {return codValidacaoSerie;}
+	public void setCodValidacaoSerie(String codValidacaoSerie) {this.codValidacaoSerie=codValidacaoSerie;}
+
+	public XMLGregorianCalendar getDataRegistoDe() {return dataRegistoDe;}
+	public void setDataRegistoDe(Date dataRegistoDe) {this.dataRegistoDe=TimeDateUtils.
+			getXMLGregorianCalendar(TimeDateUtils.getDateFormatted(dataRegistoDe, DATE_PATTERN));}
+
+	public XMLGregorianCalendar getDataRegistoAte() {return dataRegistoAte;}
+	public void setDataRegistoAte(Date dataRegistoAte) {this.dataRegistoAte=TimeDateUtils.
+			getXMLGregorianCalendar(TimeDateUtils.getDateFormatted(dataRegistoAte, DATE_PATTERN));}
+
+	public EstadoSerieType getEstado() {return estado;}
+	public void setEstado(EstadoSerieType estado) {this.estado=estado;}
+
+	public MeioProcessamentoType getMeioProcessamento() {return meioProcessamento;}
+	public void setMeioProcessamento(MeioProcessamentoType meioProcessamento) {this.meioProcessamento=meioProcessamento;}
+
 	public ConsultarSeriesType() {}
 
 	/** Parametros necessarios para garantir unicidade da resposta */
@@ -54,89 +83,6 @@ public class ConsultarSeriesType {
 		this.serie=serie;
 		this.tipoSerie=tipoSerie;
 		this.tipoDoc=tipoDoc;
-	}
-
-
-	public String getSerie() {
-		return serie;
-	}
-
-	public void setSerie(String serie) {
-		this.serie=serie;
-	}
-
-
-	public TipoSerieType getTipoSerie() {
-		return tipoSerie;
-	}
-
-	public void setTipoSerie(TipoSerieType tipoSerie) {
-		this.tipoSerie=tipoSerie;
-	}
-
-
-	public ClasseDocType getClasseDoc() {
-		return classeDoc;
-	}
-
-	public void setClasseDoc(ClasseDocType classeDoc) {
-		this.classeDoc=classeDoc;
-	}
-
-
-	public TipoDocType getTipoDoc() {
-		return tipoDoc;
-	}
-
-	public void setTipoDoc(TipoDocType tipoDoc) {
-		this.tipoDoc=tipoDoc;
-	}
-
-
-	public String getCodValidacaoSerie() {
-		return codValidacaoSerie;
-	}
-
-	public void setCodValidacaoSerie(String codValidacaoSerie) {
-		this.codValidacaoSerie=codValidacaoSerie;
-	}
-
-
-	public XMLGregorianCalendar getDataRegistoDe() {
-		return dataRegistoDe;
-	}
-
-	public void setDataRegistoDe(Date dataRegistoDe) {
-		this.dataRegistoDe=TimeDateUtils.getXMLGregorianCalendar(
-				TimeDateUtils.getDateFormatted(dataRegistoDe, DATE_PATTERN));
-	}
-
-
-	public XMLGregorianCalendar getDataRegistoAte() {
-		return dataRegistoAte;
-	}
-
-	public void setDataRegistoAte(Date dataRegistoAte) {
-		this.dataRegistoAte=TimeDateUtils.getXMLGregorianCalendar(
-				TimeDateUtils.getDateFormatted(dataRegistoAte, DATE_PATTERN));
-	}
-
-
-	public EstadoSerieType getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EstadoSerieType estado) {
-		this.estado=estado;
-	}
-
-
-	public MeioProcessamentoType getMeioProcessamento() {
-		return meioProcessamento;
-	}
-
-	public void setMeioProcessamento(MeioProcessamentoType meioProcessamento) {
-		this.meioProcessamento=meioProcessamento;
 	}
 
 }

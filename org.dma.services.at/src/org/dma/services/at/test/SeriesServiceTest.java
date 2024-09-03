@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.dma.java.security.ServiceCertificates;
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
+import org.dma.services.at.ServiceCertificates;
 import org.dma.services.at.proxy.SeriesServiceHandler;
 
 import pt.gov.portaldasfinancas.servicos.series.ConsultarSeriesResp;
@@ -67,7 +67,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 	}
 
 	public SeriesServiceTest(String username, String password) {
-		super(username, password, ServiceCertificates, ENDPOINTS.TEST);
+		super(ENDPOINTS.TEST, username, password, ServiceCertificates);
 	}
 
 	public SeriesInfo registar(RegistarSeriesType request) {
@@ -76,8 +76,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 			info("Registar série: " + request.serie);
 
-			SeriesResp response=registarSerie(request);
-			print(response);
+			SeriesResp response=print(registarSerie(request));
 
 			return response.getInfoSerie();
 
@@ -126,8 +125,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 			AnularSerieType request=new AnularSerieType(info, MotivoAnulacao, true);
 
-			SeriesResp response=anularSerie(request);
-			print(response);
+			SeriesResp response=print(anularSerie(request));
 
 			return response.getInfoSerie();
 
@@ -159,8 +157,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 			FinalizarSerieType request=new FinalizarSerieType(info);
 
-			SeriesResp response=finalizarSerie(request);
-			print(response);
+			SeriesResp response=print(finalizarSerie(request));
 
 			return response.getInfoSerie();
 
@@ -196,6 +193,12 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		}catch(Exception e){
 			e.printStackTrace();
 		}return null;
+
+	}
+
+	public ConsultarSeriesResp consultar(SeriesInfo info) {
+
+		return consultarSeries(new ConsultarSeriesType(info.getSerie(), TipoSerieType.get(info), TipoDocType.get(info)));
 
 	}
 
@@ -247,7 +250,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 	/*
 	 * Print
 	 */
-	public static void print(SeriesResp response) {
+	public static SeriesResp print(SeriesResp response) {
 
 		if (response!=null) try{
 
@@ -257,11 +260,11 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}
+		}return response;
 
 	}
 
-	public static void print(ConsultarSeriesResp response) {
+	public static ConsultarSeriesResp print(ConsultarSeriesResp response) {
 
 		if (response!=null) try{
 
@@ -273,28 +276,11 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}
+		}return response;
 
 	}
 
-	public static void printID(ConsultarSeriesResp response) {
-
-		if (response!=null) try{
-
-			print(response.getInfoResultOper());
-
-			for(SeriesInfo info: response.getInfoSerie()){
-				printID(info);
-			}System.out.println();
-
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void print(OperationResultInfo info) {
+	public static OperationResultInfo print(OperationResultInfo info) {
 
 		if (info!=null) try{
 
@@ -305,11 +291,11 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}
+		}return info;
 
 	}
 
-	public static void print(SeriesInfo info) {
+	public static SeriesInfo print(SeriesInfo info) {
 
 		if (printID(info)) System.out.println();
 
@@ -332,6 +318,23 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 			System.out.print("Meio Processamento: "); System.out.println(info.getMeioProcessamento());
 			System.out.print("Número Certificado Software: "); System.out.println(info.getNumCertSWFatur());
 			System.out.println();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}return info;
+
+	}
+
+	public static void printID(ConsultarSeriesResp response) {
+
+		if (response!=null) try{
+
+			print(response.getInfoResultOper());
+
+			for(SeriesInfo info: response.getInfoSerie()){
+				printID(info);
+			}System.out.println();
+
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -367,7 +370,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 	}
 
 
-	public static void main(String[] args) {
+	public static void run() {
 
 		SeriesServiceTest service=new SeriesServiceTest();
 
@@ -395,10 +398,22 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 		service.anular(service.finalizar(service.registar()));
 
 		PRINT print=PRINT.ID;
-		//service.consultar(print);
+		service.consultar(print);
 		service.consultar(print, EstadoSerieType.F);
 		service.consultar(print, EstadoSerieType.N);
 		service.consultar(print, EstadoSerieType.A);
+
+	}
+
+
+	public static void main(String[] args) {
+
+		SeriesServiceTest service=new SeriesServiceTest();
+
+		service.consultar(
+		service.anular(
+		service.consultar(
+		service.registar()).getInfoSerie().get(0)));
 
 	}
 
