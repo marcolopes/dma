@@ -28,13 +28,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import org.dma.jaxrs.responses.IResponse;
 
 public class Endpoint extends org.dma.jaxrs.responses.Response {
+
+	@Context private UriInfo info;
+
+	public String getPathParameter(String key) {
+		return info.getPathParameters().getFirst(key);
+	}
 
 	public static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
@@ -63,23 +65,6 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 			}
 		}
 
-	}
-
-	@Context private UriInfo info;
-
-	public String getPathParameter(String key) {
-		return info.getPathParameters().getFirst(key);
-	}
-
-	/*
-	 * Json
-	 */
-	public JsonObject toJsonObject(String json) {
-		return new Gson().fromJson(json, JsonObject.class);
-	}
-
-	public JsonArray toJsonArray(String json) {
-		return new Gson().fromJson(json, JsonArray.class);
 	}
 
 }
