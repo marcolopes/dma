@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,12 @@
  *******************************************************************************/
 package org.dma.services.broker.proxy;
 
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
 import com.softlimits.clarinet.ArrayOfMessageOutputData;
 import com.softlimits.clarinet.IMessageService;
 import com.softlimits.clarinet.MessageService;
 
-import org.dma.java.net.HttpURLHandler;
 import org.dma.java.security.JKSCertificate;
 import org.dma.services.broker.SOAPMessageHandler;
 
@@ -34,32 +32,29 @@ import org.dma.services.broker.SOAPMessageHandler;
  *
  * https://www.espap.gov.pt/spfin/Paginas/spfin.aspx#maintab5
  */
-public class EspapServiceHandler extends SOAPMessageHandler {
+public class EspapServiceHandler extends SOAPMessageHandler<IMessageService> {
 
 	public enum ENDPOINTS {
 
 		PROD ("https://ws.netdocs.com.pt/TradeHttp/CTMessageService.svc/ssl"),
 		TEST ("https://www-qa.netdocs.com.pt/TradeHttpQa/CTMessageService.svc/ssl");
 
-		public final HttpURLHandler url;
+		public final String name;
 
-		private ENDPOINTS(String urlname) {
-			this.url = new HttpURLHandler(urlname);
+		private ENDPOINTS(String name) {
+			this.name = name;
 		}
 
 	}
 
-	private final IMessageService service = new MessageService().getCustomBindingIMessageService();
-
-	private IMessageService getService() throws WebServiceException {
-		initialize((BindingProvider)service, endpoint.url);
-		return service;
-	}
-
 	private final ENDPOINTS endpoint;
 
-	public EspapServiceHandler(String username, String password, JKSCertificate cert, ENDPOINTS endpoint) {
-		super(username, password, cert);
+	public IMessageService getService() throws WebServiceException {
+		return getService(endpoint.name);
+	}
+
+	public EspapServiceHandler(ENDPOINTS endpoint, JKSCertificate cert, String username, String password) {
+		super(new MessageService().getCustomBindingIMessageService(), cert, username, password);
 		this.endpoint = endpoint;
 	}
 

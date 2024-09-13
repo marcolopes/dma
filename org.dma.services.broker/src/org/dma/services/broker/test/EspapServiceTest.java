@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import org.dma.services.broker.proxy.EspapServiceHandler;
 public class EspapServiceTest extends EspapServiceHandler {
 
 	public EspapServiceTest() {
-		super("Username", "Password", Certificates.SaphetyDoc, ENDPOINTS.TEST);
+		super(ENDPOINTS.TEST, Certificates.SaphetyDoc, "Username", "Password");
 	}
 
 	public ArrayOfMessageOutputData processMessage() throws Exception {

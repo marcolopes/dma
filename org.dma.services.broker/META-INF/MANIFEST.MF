@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Fatura Eletronica Broker Services
 Bundle-SymbolicName: org.dma.services.broker;singleton:=true
-Bundle-Version: 0.3.4.qualifier
+Bundle-Version: 0.4.0.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.services.broker.Activator
 Bundle-ActivationPolicy: lazy

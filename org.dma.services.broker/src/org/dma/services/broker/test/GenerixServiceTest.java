@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import org.dma.services.broker.proxy.GenerixServiceHandler;
 public class GenerixServiceTest extends GenerixServiceHandler {
 
 	public GenerixServiceTest() {
-		super("USER", "PASS", ENDPOINTS.TEST);
+		super(ENDPOINTS.TEST, "USER", "PASS");
 	}
 
 	public UploadDocResponse uploadDocument() throws Exception {

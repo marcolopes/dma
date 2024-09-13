@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
  *******************************************************************************/
 package org.dma.services.broker.proxy;
 
-import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
 import com.generixgroup.pt.messaging.webservice.Credentials;
@@ -29,13 +28,12 @@ import com.generixgroup.pt.messaging.webservice.UploadDocResponse;
 import com.generixgroup.pt.messaging.webservice.Webservice;
 import com.generixgroup.pt.messaging.webservice.WebserviceService;
 
-import org.dma.java.net.HttpURLHandler;
 import org.dma.services.broker.SOAPMessageHandler;
 
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
-public class GenerixServiceHandler extends SOAPMessageHandler {
+public class GenerixServiceHandler extends SOAPMessageHandler<Webservice> {
 
 	/** Invoice Manager */
 	public enum ENDPOINTS {
@@ -43,25 +41,22 @@ public class GenerixServiceHandler extends SOAPMessageHandler {
 		PROD ("http://85.158.120.184:9090/einvoice_webservice/WebservicePort"),
 		TEST ("http://85.158.120.184:9090/einvoice_webservice/WebservicePort");
 
-		public final HttpURLHandler url;
+		public final String name;
 
-		private ENDPOINTS(String urlname) {
-			this.url = new HttpURLHandler(urlname);
+		private ENDPOINTS(String name) {
+			this.name = name;
 		}
 
 	}
 
-	private final Webservice service = new WebserviceService().getWebservicePort();
-
-	private Webservice getService() throws WebServiceException {
-		initialize((BindingProvider)service, endpoint.url);
-		return service;
-	}
-
 	private final ENDPOINTS endpoint;
 
-	public GenerixServiceHandler(String username, String password, ENDPOINTS endpoint) {
-		super(username, password);
+	public Webservice getService() throws WebServiceException {
+		return getService(endpoint.name);
+	}
+
+	public GenerixServiceHandler(ENDPOINTS endpoint, String username, String password) {
+		super(new WebserviceService().getWebservicePort(), null, username, password);
 		this.endpoint = endpoint;
 	}
 
