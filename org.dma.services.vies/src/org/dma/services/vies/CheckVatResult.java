@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,10 @@ public class CheckVatResult {
 	private final String name;
 	private final CheckVatAddress address;
 
+	public boolean isValid() {return valid && !name.equals("---");}
+	public String getName() {return name;}
+	public CheckVatAddress getAddress() {return address;}
+
 	public CheckVatResult() {
 		this(false, "", new CheckVatAddress());
 	}
@@ -32,19 +36,6 @@ public class CheckVatResult {
 		this.valid=valid;
 		this.name=name.trim();
 		this.address=address;
-	}
-
-
-	public boolean isValid() {
-		return valid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public CheckVatAddress getAddress() {
-		return address;
 	}
 
 

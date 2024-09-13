@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,10 @@ public class CheckVatAddress {
 	private final String zipcode;
 	private final String city;
 
+	public String getStreet() {return street;}
+	public String getZipcode() {return zipcode;}
+	public String getCity() {return city;}
+
 	public CheckVatAddress() {
 		this("");
 	}
@@ -36,19 +40,6 @@ public class CheckVatAddress {
 		this.street=street.trim();
 		this.zipcode=zipcode.trim();
 		this.city=city.trim();
-	}
-
-
-	public String getStreet() {
-		return street;
-	}
-
-	public String getZipcode() {
-		return zipcode;
-	}
-
-	public String getCity() {
-		return city;
 	}
 
 

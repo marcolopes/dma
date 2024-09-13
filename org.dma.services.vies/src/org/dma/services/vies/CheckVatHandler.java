@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,10 @@
  *******************************************************************************/
 package org.dma.services.vies;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -102,11 +106,10 @@ public class CheckVatHandler {
 
 			CheckVatService service=new CheckVatService();
 
-			System.out.println("Please read disclaimer from service provider at:");
+			System.out.print("Please read disclaimer from service provider at: ");
 			System.out.println(service.getWSDLDocumentLocation());
-			System.out.println("Querying VAT Information Exchange System (VIES) via web service...");
-			System.out.println("Country: "+this);
-			System.out.println("Vat Number: "+vatNumber);
+			System.out.print("Querying VAT Information Exchange System: ");
+			System.out.println(vatNumber);
 
 			Holder<Boolean> valid=new Holder(new Boolean(true));
 			Holder<String> name=new Holder(new String());
@@ -183,55 +186,39 @@ public class CheckVatHandler {
 
 		System.setProperty("https.protocols", "SSLv3,TLSv1,TLSv1.1,TLSv1.2");
 
-		COUNTRIES.PT.queryVatNumber("505636700");
+		Map<COUNTRIES, Collection<String>> map=new LinkedHashMap();
+		map.put(COUNTRIES.ES, Arrays.asList("A39000013", "A-39000013", "A28015865", "A-28015865"));
+		map.put(COUNTRIES.PT, Arrays.asList("505636700", "502011475"));
+		map.put(COUNTRIES.FR, Arrays.asList("20410409460", "63775661390"));
+		map.put(COUNTRIES.IT, Arrays.asList("01459531214", "05023760969"));
+		map.put(COUNTRIES.AT, Arrays.asList("U15447005", "U65711802"));
+		map.put(COUNTRIES.DK, Arrays.asList("27215556", "47458714"));
+		map.put(COUNTRIES.EL, Arrays.asList("094543092"));
+		//MS_UNAVAILABLE
+		map.put(COUNTRIES.DE, Arrays.asList("115055014", "129274202", "136563568", "258071573"));
+		//INVALID_INPUT
+		map.put(COUNTRIES.GB, Arrays.asList("157577371", "180982579", "239354938", "644307352", "924049335"));
 
-		CheckVatHandler handler=new CheckVatHandler(COUNTRIES.PT);
-		System.out.println(handler.query("502011475"));
-		System.out.println(handler.query("505636700"));
+		for(COUNTRIES country: map.keySet()){
+			System.out.println("==============");
+			System.out.println(country.name);
+			System.out.println("==============");
+			for(String vatNumber: map.get(country)) try{
+				CheckVatResult result=country.queryVatNumber(vatNumber);
+				if (result.isValid()) System.out.println(result);
+				System.out.println();
+			}catch(Exception e){
+				System.err.println(e);
+			}
+		}
 
-		handler=new CheckVatHandler(COUNTRIES.ES);
-		System.out.println(handler.query("A28250777"));
-		System.out.println(handler.query("A39000013"));
-		System.out.println(handler.query("B94123908"));
-		System.out.println(handler.query("J98725286"));
-
-		handler=new CheckVatHandler(COUNTRIES.DE);
-		System.out.println(handler.query("115055014"));
-		System.out.println(handler.query("129274202"));
-		System.out.println(handler.query("136563568"));
-		System.out.println(handler.query("258071573"));
-
-		handler=new CheckVatHandler(COUNTRIES.FR);
-		System.out.println(handler.query("20410409460"));
-		System.out.println(handler.query("63775661390"));
-
-		handler=new CheckVatHandler(COUNTRIES.IT);
-		System.out.println(handler.query("01459531214"));
-		System.out.println(handler.query("05023760969"));
-
-		handler=new CheckVatHandler(COUNTRIES.AT);
-		System.out.println(handler.query("U15447005"));
-		System.out.println(handler.query("U65711802"));
-
-		handler=new CheckVatHandler(COUNTRIES.DK);
-		System.out.println(handler.query("27215556"));
-		System.out.println(handler.query("47458714"));
-
-		/*Greece*/
-		System.out.println(COUNTRIES.EL.queryVatNumber("094543092"));
 		/*Greece ISO 3166*/
-		System.out.println(new CheckVatHandler("GR").query("064806395"));
+		System.out.println(new CheckVatHandler("GR").query("094543092"));
+		System.out.println();
 
 		/*Invalid Country*/
 		System.out.println(new CheckVatHandler("XX").query("1234567890"));
 
-		/*INVALID_INPUT*/
-		handler=new CheckVatHandler(COUNTRIES.GB);
-		System.out.println(handler.query("157577371"));
-		System.out.println(handler.query("180982579"));
-		System.out.println(handler.query("239354938"));
-		System.out.println(handler.query("644307352"));
-		System.out.println(handler.query("924049335"));
 
 	}
 
