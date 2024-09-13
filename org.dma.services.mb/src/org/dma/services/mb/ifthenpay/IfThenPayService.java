@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.services.ifthenpay;
+package org.dma.services.mb.ifthenpay;
 
 import ifthenpay.mbws.ArrayOfIfmb;
 import ifthenpay.mbws.Ifmb;
@@ -49,7 +49,7 @@ import org.dma.java.time.DatePeriod;
  */
 public class IfThenPayService {
 
-	private static Collection<IfThenPayServiceResponseType> convert(ArrayOfIfmb array) throws Exception {
+	private static Collection<IfThenPayServiceResponseType> get(ArrayOfIfmb array) throws Exception {
 		Collection<IfThenPayServiceResponseType> col=new ArrayList();
 		for(Ifmb element: array.getIfmb()){
 			IfThenPayServiceResponseType response=new IfThenPayServiceResponseType(element);
@@ -69,15 +69,15 @@ public class IfThenPayService {
 	}
 
 	public Collection<IfThenPayServiceResponseType> getPayments() throws Exception {
-		return convert(new IfmbWS().getIfmbWSSoap().getPayments(chavebackoffice, entidade, subentidade, null, null, null, null));
+		return get(new IfmbWS().getIfmbWSSoap().getPayments(chavebackoffice, entidade, subentidade, null, null, null, null));
 	}
 
 	public Collection<IfThenPayServiceResponseType> getPayments(String referencia, String valor) throws Exception {
-		return convert(new IfmbWS().getIfmbWSSoap().getPayments(chavebackoffice, entidade, subentidade, null, null, referencia, valor));
+		return get(new IfmbWS().getIfmbWSSoap().getPayments(chavebackoffice, entidade, subentidade, null, null, referencia, valor));
 	}
 
 	public Collection<IfThenPayServiceResponseType> getPayments(DatePeriod periodo) throws Exception {
-		return convert(new IfmbWS().getIfmbWSSoap().getPayments(chavebackoffice, entidade, subentidade,
+		return get(new IfmbWS().getIfmbWSSoap().getPayments(chavebackoffice, entidade, subentidade,
 				periodo.getStartDate("dd-MM-yyyy").concat(" ").concat("00:00:00"),
 				periodo.getEndDate("dd-MM-yyyy").concat(" ").concat("23:59:59"), null, null));
 	}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.services.ifthenpay;
+package org.dma.services.mb.ifthenpay;
 
 import ifthenpay.mbws.Ifmb;
 
@@ -32,7 +32,7 @@ import org.dma.java.util.TimeDateUtils;
  * Referencia – referencia multibanco paga (9 digitos)
  * Valor – valor pago em euros
  * Id – id utilizado na geracao da referencia multibanco (4 digitos)
- * DtHrPagamento – data/hora do pagamento em formato dd/MM/yyyy HH:mm:ss
+ * DtHrPagamento – data/hora do pagamento em formato dd-MM-yyyy HH:mm:ss
  * Processamento – data de processamento yyyyMMdd
  * Terminal – terminal utilizado no pagamento
  * Tarifa – tarifa do servico
@@ -88,7 +88,7 @@ public class IfThenPayServiceResponseType {
 		this(entidade, referencia,
 				valor.isEmpty() ? BigDecimal.ZERO : new BigDecimal(valor.replace(',','.')),
 				id.isEmpty() ? 0 : Integer.valueOf(id),
-				TimeDateUtils.getDate(dtHrPagamento, "dd/MM/yyyy HH:mm:ss"),
+				TimeDateUtils.getDate(dtHrPagamento, "dd-MM-yyyy HH:mm:ss"),
 				TimeDateUtils.getDate(processamento, "yyyyMMdd"), terminal,
 				tarifa.isEmpty() ? BigDecimal.ZERO : new BigDecimal(tarifa.replace(',','.')),
 				valorLiquido.isEmpty() ? BigDecimal.ZERO : new BigDecimal(valorLiquido.replace(',','.')),

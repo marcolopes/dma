@@ -16,7 +16,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.services.payment;
+package org.dma.services.mb;
 
 import java.math.BigDecimal;
 
@@ -50,7 +50,7 @@ public class MultibancoEntity {
 		return string.substring(string.length()-length);
 	}
 
-	private final String entity;
+	public final String entity;
 
 	/**
 	 * @param entity Os 5 digitos da entidade (fornecida pelo provider)

@@ -16,12 +16,12 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.services.ifthenpay;
+package org.dma.services.mb.ifthenpay;
 
 import java.math.BigDecimal;
 
-import org.dma.services.payment.MultibancoEntity;
-import org.dma.services.payment.MultibancoRef;
+import org.dma.services.mb.MultibancoEntity;
+import org.dma.services.mb.MultibancoRef;
 
 /**
  * IF THEN PAY

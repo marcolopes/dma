@@ -1,13 +1,15 @@
 Manifest-Version: 1.0
 Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
-Bundle-Name: Payment Services
-Bundle-SymbolicName: org.dma.services.payment;singleton:=true
-Bundle-Version: 0.0.3.qualifier
+Bundle-Name: Multibanco Services
+Bundle-SymbolicName: org.dma.services.mb;singleton:=true
+Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
+Bundle-Activator: org.dma.services.mb.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .
-Export-Package: org.dma.services.ifthenpay,
- org.dma.services.payment
-Require-Bundle: org.dma.java;bundle-version="7.7.0"
+Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
+ org.dma.java;bundle-version="7.7.0"
+Export-Package: org.dma.services.mb,
+ org.dma.services.mb.ifthenpay
