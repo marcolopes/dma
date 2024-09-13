@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ package org.dma.java.util;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
-public final class ClassUtils {
+public final class ClassUtils extends org.apache.commons.lang.ClassUtils {
 
 	/** JAR is exported! */
 	public static boolean isExported(Class klass) {
@@ -62,12 +62,10 @@ public final class ClassUtils {
 		}return null;
 	}
 
-
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(Class<? extends T> klass) {
 		return newInstance(klass, klass);
 	}
-
 
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(String className) {
@@ -97,6 +95,5 @@ public final class ClassUtils {
 		System.out.println(invoke("java.lang.Integer", "valueOf", "10"));
 
 	}
-
 
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -717,6 +717,11 @@ public class TimeDateUtils {
 	/*
 	 * Time
 	 */
+	/** SECOND precision ONLY */
+	public static Time getCurrentTime() {
+		return getTime(getCalendar());
+	}
+
 	/** Time formatted with {@link #DEFAULT_TIME_PATTERN} */
 	public static String getTimeFormatted() {
 		return getTimeFormatted(getCurrentTime());
@@ -747,8 +752,9 @@ public class TimeDateUtils {
 		return getTime(time, DEFAULT_TIME_PATTERN);
 	}
 
+	/** SECOND precision ONLY */
 	public static Time getTime(String time, String pattern) {
-		try{return new Time(getDate(time, pattern).getTime());
+		try{return getTime(getDate(time, pattern));
 		}catch(Exception e){}
 		return null;
 	}
@@ -762,37 +768,40 @@ public class TimeDateUtils {
 	}
 
 	/** SECOND precision ONLY */
-	public static Time getCurrentTime() {
-		GregorianCalendar calendar=getCalendar();
-		calendar.set(Calendar.MILLISECOND, 0);
-		return getTime(calendar);
+	public static Time getTime(Calendar calendar) {
+		Calendar clone=getClone(calendar);
+		clone.set(Calendar.YEAR, 1970);
+		clone.set(Calendar.MONTH, 1);
+		clone.set(Calendar.DAY_OF_MONTH, 1);
+		clone.set(Calendar.MILLISECOND, 0);
+		return new Time(clone.getTimeInMillis());
 	}
 
-	public static Time getTime(int hour, int minute) {
-		return getTime(hour, minute, 0);
+	/** SECOND precision ONLY */
+	public static Time getTime(Date date) {
+		return getTime(getCalendar(date));
 	}
 
+	/** SECOND precision ONLY */
 	public static Time getTime(int hour, int minute, int second) {
 		GregorianCalendar calendar=getCalendar();
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
 		calendar.set(Calendar.MINUTE, minute);
 		calendar.set(Calendar.SECOND, second);
-		calendar.set(Calendar.MILLISECOND, 0);
 		return getTime(calendar);
 	}
 
-	public static Time getTime(Date date) {
-		return new Time(date.getTime());
+	/** MINUTE precision ONLY */
+	public static Time getTime(int hour, int minute) {
+		return getTime(hour, minute, 0);
 	}
 
-	public static Time getTime(Calendar calendar) {
-		return new Time(calendar.getTimeInMillis());
-	}
-
+	/** MINUTE precision ONLY */
 	public static Time getTimeWithoutSeconds() {
 		return getTimeWithoutSeconds(getCurrentTime());
 	}
 
+	/** MINUTE precision ONLY */
 	public static Time getTimeWithoutSeconds(Date date) {
 		return getTimeWithoutSeconds(getTime(date));
 	}
@@ -801,7 +810,6 @@ public class TimeDateUtils {
 	public static Time getTimeWithoutSeconds(Time time) {
 		GregorianCalendar calendar=getCalendar(time);
 		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
 		return getTime(calendar);
 	}
 

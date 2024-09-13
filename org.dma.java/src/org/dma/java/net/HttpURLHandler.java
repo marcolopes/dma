@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,7 +85,27 @@ public class HttpURLHandler extends URLHandler {
 						return new PasswordAuthentication(key, new char[0]);
 					}
 				});*/
-				return connection;
+				/*
+				 * https://stackoverflow.com/questions/6932369/inputstream-from-a-url
+				 *
+				 * By default the connection will follow redirects. The following
+				 * block is only entered if the implementation of HttpURLConnection
+				 * does not perform the redirect. The exact behavior depends to
+				 * the actual implementation (e.g. sun.net).
+				 * !!! Attention: This block allows the connection to
+				 * switch protocols (e.g. HTTP to HTTPS), which is <b>not</b>
+				 * default behavior. See: https://stackoverflow.com/questions/1884230
+				 * for more info!!!
+				 */
+				//connection.connect();
+				int responseCode=connection.getResponseCode();
+				if (responseCode>=HttpURLConnection.HTTP_MULT_CHOICE &&
+					responseCode<HttpURLConnection.HTTP_BAD_REQUEST){
+					String location=connection.getHeaderField("Location");
+					HttpURLHandler handler=new HttpURLHandler(location);
+					return handler.isValid() ? handler.getConnection(key) :
+						new HttpURLHandler(url.getProtocol()+"://"+url.getHost()+location).getConnection(key);
+				}return connection;
 			}catch(Exception e){
 				System.err.println(e);
 			}finally{

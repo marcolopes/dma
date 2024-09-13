@@ -37,10 +37,9 @@ public final class PublicServerTime {
 		// We want to timeout if a response takes longer than 5 seconds
 		client.setDefaultTimeout(5000);
 
-		for (String host : hosts) {
+		for(String host : hosts){
 
-			try{
-				InetAddress hostAddr = InetAddress.getByName(host);
+			try{InetAddress hostAddr = InetAddress.getByName(host);
 				Debug.out("> " + hostAddr.getHostName() + "/" + hostAddr.getHostAddress());
 				TimeInfo info = client.getTime(hostAddr);
 				Date date = new Date(info.getReturnTime());
@@ -49,9 +48,7 @@ public final class PublicServerTime {
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
-		}
-
-		client.close();
+		}client.close();
 
 		return null;
 

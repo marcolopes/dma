@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,10 @@ import org.dma.java.time.Chronograph;
 
 public class StringUtils {
 
-	/** Numeric digits only [0-9] */
-	public static final Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+");
 	/** Numeric digits [0-9] and dot (.) */
 	public static final Pattern DECIMAL_PATTERN = Pattern.compile("[0-9[.]]+");
+	/** Numeric digits only [0-9] */
+	public static final Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+");
 	/** Letter digits [A-Z] and [a-z] */
 	public static final Pattern LETTERS_PATTERN = Pattern.compile("[A-Za-z]+");
 	/** Uppercase letter digits [A-Z] */
@@ -46,6 +46,7 @@ public class StringUtils {
 	public static final String DECIMAL_NUMBERS = "0123456789";
 	public static final String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
 	public static final String UPPERCASE_LETTERS = LOWERCASE_LETTERS.toUpperCase();
+	public static final char[] HEX_DIGITS = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
 	/*
 	 * Conversion
@@ -70,13 +71,7 @@ public class StringUtils {
 
 	public static String toHex(byte b) {
 
-		final char[] HEX_DIGITS={
-			'0', '1', '2', '3', '4', '5', '6', '7',
-			'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-
-		return new String(new char[]{
-			HEX_DIGITS[(b>>4) & 0x0f],
-			HEX_DIGITS[b & 0x0f]});
+		return new String(new char[]{HEX_DIGITS[(b>>4) & 0x0f], HEX_DIGITS[b & 0x0f]});
 
 	}
 
@@ -102,42 +97,68 @@ public class StringUtils {
 	}
 
 
-	public static boolean isNumeric(String string) {
+	/** Is a 0 or a 1 */
+	public static boolean isLogical(String string) {
 
-		return NUMERIC_PATTERN.matcher(string).matches();
+		return string.equals("0") || string.equals("1");
 
 	}
 
 
+	/** Is a DECIMAL value (ex: "1.23") */
 	public static boolean isDecimal(String string) {
 
-		return DECIMAL_PATTERN.matcher(string).matches();
+		return !isEmpty(string) && ocurrences(string, '.')<=1 &&
+				DECIMAL_PATTERN.matcher(string).matches();
 
 	}
 
 
+	/** Contains only DIGIT characters */
+	public static boolean isNumeric(String string) {
+
+		for(int i=0; i<string.length(); i++){
+			if (!Character.isDigit(string.charAt(i))) return false;
+		}return !isEmpty(string);
+		//return NUMERIC_PATTERN.matcher(string).matches();
+
+	}
+
+
+	/** Contains only LETTER characters */
 	public static boolean isLetters(String string) {
 
-		return LETTERS_PATTERN.matcher(string).matches();
+		for(int i=0; i<string.length(); i++){
+			if (!Character.isLetter(string.charAt(i))) return false;
+		}return !isEmpty(string);
+		//return LETTERS_PATTERN.matcher(string).matches();
 
 	}
 
 
+	/** Does NOT contain LOWERcase characters */
 	public static boolean isUppercase(String string) {
 
-		return UPPERCASE_PATTERN.matcher(string).matches();
+		for(int i=0; i<string.length(); i++){
+			if (Character.isLowerCase(string.charAt(i))) return false;
+		}return !isEmpty(string);
+		//return UPPERCASE_PATTERN.matcher(string).matches();
 
 	}
 
 
+	/** Does NOT contain UPPERcase characters */
 	public static boolean isLowercase(String string) {
 
-		return LOWERCASE_PATTERN.matcher(string).matches();
+		for(int i=0; i<string.length(); i++){
+			if (Character.isUpperCase(string.charAt(i))) return false;
+		}return !isEmpty(string);
+		//return LOWERCASE_PATTERN.matcher(string).matches();
 
 	}
 
 
-	/** Returns true if surrounded with QUOTE chars (default=COMMA) */
+	/** Is surrounded with QUOTE chars (default=COMMA) */
 	public static boolean isQuoted(String string, char...quote) {
 
 		if(quote.length==0) return isQuoted(string, '"');

@@ -16,33 +16,28 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.io;
+package org.dma.java.net;
 
-import java.io.File;
+import java.security.cert.X509Certificate;
 
-import com.csvreader.CsvReader;
+import javax.net.ssl.X509TrustManager;
 
-public abstract class AbstractCSVReader {
+public class PermissiveTrustStore implements X509TrustManager {
 
-	/** Executed after each record read */
-	public abstract void postRead(CsvReader reader) throws Exception;
-
-	private final File file;
-
-	public AbstractCSVReader(File file) {
-		this.file=file;
+	@Override
+	public void checkClientTrusted(X509Certificate[] chain, String authType) {
+		//do nothing, you're the client
 	}
 
-	public void readRecords() throws Exception {
-		CsvReader reader=new CsvReader(file.getAbsolutePath());
-		try{reader.readHeaders();
-			while(reader.readRecord()){
-				postRead(reader);
-			}
-		}finally{
-			reader.close();
-		}
+	@Override
+	public X509Certificate[] getAcceptedIssuers() {
+		//also only relevant for servers
+		return null;
 	}
 
+	@Override
+	public void checkServerTrusted(X509Certificate[] chain, String authType) {
+		//do nothing, accept all
+	}
 
 }

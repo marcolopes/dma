@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,11 +27,14 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.dma.java.io.CustomFile;
 import org.dma.java.util.ArrayUtils;
+import org.dma.java.util.StringUtils;
 
+/**
+ * https://docs.oracle.com/javase/tutorial/networking/urls/urlInfo.html
+ */
 public class URLHandler {
 
 	public enum LOCALHOST {
@@ -55,11 +58,6 @@ public class URLHandler {
 
 	}
 
-	public static Pattern URL_PATTERN = Pattern.compile(
-			"^((((https?)://)|(mailto:|news:))" +
-			"(%[0-9A-Fa-f]{2}|[-()_.!~*';/?:@&=+$,A-Za-z0-9])+)" +
-			"([).!';/?:,][[:blank:]])?$");
-
 	public static String getLocalAddress() {
 		try{return InetAddress.getLocalHost().getHostAddress();
 		}catch(UnknownHostException e){
@@ -68,16 +66,20 @@ public class URLHandler {
 	}
 
 	/** Example: "www.ftp.com", "file.txt" */
-	public static URL getURL(String urlname, String...more) {
-		try{return more.length==0 ? new URL(urlname) :
-			new URL(urlname+"/"+ArrayUtils.concat(more, "/"));
+	public static URL getURL(String spec, String...more) {
+		if (!StringUtils.isEmpty(spec)) try{
+			return more.length==0 ? new URL(spec) :
+			new URL(spec+"/"+ArrayUtils.concat(more, "/"));
 		}catch(Exception e){
-			System.err.println(e+urlname);
+			System.err.println(e);
 		}return null;
 	}
 
 	/** Workaround for EXTENDS URL */
 	public final URL url;
+
+	/** Example: www.ftp.com:21 */
+	public String getName() {return url.getAuthority()+url.getPath();}
 
 	public URLHandler(String urlname) {
 		this(getURL(urlname));
@@ -88,8 +90,12 @@ public class URLHandler {
 	}
 
 
+	/** @see URL#toURI() */
 	public boolean isValid() {
-		return url!=null && URL_PATTERN.matcher(path()).matches();
+		try{url.toURI();
+		}catch(Exception e){
+			return false;
+		}return true;
 	}
 
 	public boolean isLocalhost() {
@@ -167,7 +173,8 @@ public class URLHandler {
 	}
 
 	public String path(String...more) {
-		return more.length==0 ? url.toString() : url+"/"+ArrayUtils.concat(more, "/");
+		String spec=url==null ? "" : url.toString();
+		return more.length==0 ? spec : spec+"/"+ArrayUtils.concat(more, "/");
 	}
 
 

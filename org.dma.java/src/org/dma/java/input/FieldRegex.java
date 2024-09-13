@@ -45,6 +45,7 @@ public class FieldRegex extends FieldProperties {
 
 	public TYPES getType() {return type;}
 	public FieldSize getSize() {return size;}
+	public char[] getExclude() {return exclude;}
 	public Pattern getPattern() {return getPattern(regex);}
 
 	public FieldRegex(TYPES type, FieldSize size, int properties, char...exclude) {

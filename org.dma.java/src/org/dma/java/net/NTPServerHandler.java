@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import org.apache.commons.net.ntp.TimeInfo;
 import org.dma.java.time.Chronograph;
 import org.dma.java.util.MessageList;
 
-/** Network Time Protocol */
+/** http://www.ntp.org */
 public class NTPServerHandler {
 
 	public class NTPTimeInfo extends TimeInfo {
@@ -61,11 +61,12 @@ public class NTPServerHandler {
 
 	public enum NTP_SERVERS {
 
+		/** https://oal.ul.pt/hora-legal/como-acertar */
 		OAL ("ntp02.oal.ul.pt", "ntp04.oal.ul.pt"),
-		XS2ALL ("ntp.xs4all.nl"),
+		/** https://www.ntppool.org/en/use.html */
+		NTP_POOL ("pool.ntp.org", "0.pool.ntp.org", "1.pool.ntp.org", "2.pool.ntp.org", "3.pool.ntp.org"),
+		/** https://support.ntp.org/Support/WindowsTimeService */
 		WINDOWS ("time.windows.com");
-
-		private static NTPTimeInfo info;
 
 		public String[] hosts;
 
@@ -75,8 +76,7 @@ public class NTPServerHandler {
 
 		/** @see NTPServerHandler#getTime(int) */
 		public NTPTimeInfo query(int timeout) {
-			if (info==null) info=new NTPServerHandler(this).getTime(timeout);
-			return info;
+			return new NTPServerHandler(this).getTime(timeout);
 		}
 
 		/** @see NTP_SERVERS#query(int) */
@@ -145,17 +145,20 @@ public class NTPServerHandler {
 		System.out.println("Elapsed Time: "+time.stop());
 
 		if (info!=null) try{
+
 			/*System.out.println("Receive TimeStamp: "+info.getMessage().getReceiveTimeStamp().toDateString());
 			System.out.println("Transmit TimeStamp: "+info.getMessage().getTransmitTimeStamp().toDateString());
 			System.out.println("Originate TimeStamp: "+info.getMessage().getOriginateTimeStamp().toDateString());
 			System.out.println("Reference TimeStamp: "+info.getMessage().getReferenceTimeStamp().toDateString());
 			System.out.println("Return Date: "+new Date(info.getReturnTime()));*/
-			System.out.println("Server Date: "+info.getServerDate());
+
+			/*System.out.println("Server Date: "+info.getServerDate());
 			System.out.println("System Date: "+new Date());
 			System.out.println("Offset needed to adjust local clock: "+info.getOffset());
 			System.out.println("Round-trip network delay: "+info.getDelay());
-			System.out.println("Comments: "+info.getComments());
-			System.out.println();
+			System.out.println("Comments: "+info.getComments());*/
+
+			System.out.println(info.toText());
 
 		}catch(Exception e){
 			e.printStackTrace();

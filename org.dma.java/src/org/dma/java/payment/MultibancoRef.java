@@ -35,36 +35,16 @@ public class MultibancoRef {
 	private final String ref9;
 	private final BigDecimal value;
 
-	public MultibancoRef(String entity, String ref9, BigDecimal value) {
-		this.entity=entity;
-		this.ref9=ref9;
-		this.value=value;
-	}
-
-	public String getEntity() {
-		return entity;
-	}
-
 	/** 123 */
-	public String getEntityToText() {
-		return entity;
-	}
-
-
-	public String getRef9() {
-		return ref9;
-	}
-
+	public String getEntity() {return entity;}
+	/** 123 */
+	public String getEntityToText() {return entity;}
+	/** 123456789 */
+	public String getRef9() {return ref9;}
 	/** 123 456 789 */
-	public String getRef9ToText() {
-		return ref9.substring(0,3)+" "+ref9.substring(3,6)+" "+ref9.substring(6,9);
-	}
-
-
-	public BigDecimal getValue() {
-		return value;
-	}
-
+	public String getRef9ToText() {return ref9.substring(0,3)+" "+ref9.substring(3,6)+" "+ref9.substring(6,9);}
+	/** 123456.78 */
+	public BigDecimal getValue() {return value;}
 	/** 123.456,78€ */
 	public String getValueToText() {
 		DecimalFormatSymbols symbols=new DecimalFormatSymbols();
@@ -72,6 +52,12 @@ public class MultibancoRef {
 		symbols.setGroupingSeparator('.');
 		DecimalFormat df=new DecimalFormat(DECIMAL_PATTERN, symbols);
 		return df.format(value)+"€";
+	}
+
+	public MultibancoRef(String entity, String ref9, BigDecimal value) {
+		this.entity=entity;
+		this.ref9=ref9;
+		this.value=value;
 	}
 
 	public String toText() {

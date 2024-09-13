@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
 import org.dma.java.io.ByteFile;
+import org.dma.java.util.MessageList;
 import org.dma.java.util.TimeDateUtils;
 
 public class JKSCertificate {
@@ -84,7 +85,7 @@ public class JKSCertificate {
 			this.alias=alias[index];
 
 		}catch(Exception e){
-			System.err.println(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -176,17 +177,19 @@ public class JKSCertificate {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb=new StringBuilder("-----X509 CERTIFICATE-----");
-		if (isValid()) sb.append("\n").append("ALIAS: ").append(alias).
-			append("\n").append("USAGE: ").append(getKeyUsage()).
-			append("\n").append("SERIAL: ").append(X509Cert.getSerialNumber()).
-			append("\n").append("ISSUER: ").append(X509Cert.getIssuerX500Principal()).
-			append("\n").append("SUBJECT: ").append(X509Cert.getSubjectX500Principal()).
-			append("\n").append("ISSUED: ").append(X509Cert.getNotBefore()).
-			append("\n").append("EXPIRES: ").append(X509Cert.getNotAfter()).
-			append("\n").append("DAYS LEFT: ").append(daysToExpire()).
-			append("\n").append("HASH CODE: ").append(hashCode()).toString();
-		return sb.toString();
+		return isValid() ? new MessageList(
+				"-----BEGIN X509 CERTIFICATE-----",
+				"ALIAS: " + alias,
+				"USAGE: " + getKeyUsage(),
+				"SERIAL: " + X509Cert.getSerialNumber(),
+				"ISSUER: " + X509Cert.getIssuerX500Principal(),
+				"SUBJECT: " + X509Cert.getSubjectX500Principal(),
+				"ISSUED: " + X509Cert.getNotBefore(),
+				"EXPIRES: " + X509Cert.getNotAfter(),
+				"DAYS LEFT: " + daysToExpire(),
+				"HASH CODE: " + hashCode(),
+				"-----END X509 CERTIFICATE-----").toString() :
+				"INVALID X509 CERTIFICATE";
 	}
 
 	@Override
