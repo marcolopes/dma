@@ -15,8 +15,8 @@
  *
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
- * Filipe Santos (filipesantos__12@hotmail.com)
  * Sergio Gomes (s.miguelgomes@gmail.com)
+ * Filipe Santos (filipesantos__12@hotmail.com)
  *******************************************************************************/
 package org.dma.jetty;
 
@@ -32,6 +32,9 @@ import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle.Listener;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
+/**
+ * https://jetty.org/download.html
+ */
 public class JettyServer implements Runnable {
 
 	//Exceptions

@@ -22,6 +22,7 @@ import org.dma.java.io.Folder;
 
 import org.eclipse.jetty.webapp.WebAppContext;
 
+@Deprecated
 public class JettyWebServer extends JettyServer {
 
 	public static final String SERVLET_DEFAULT_DIRALLOWED = "org.eclipse.jetty.servlet.Default.dirAllowed";
