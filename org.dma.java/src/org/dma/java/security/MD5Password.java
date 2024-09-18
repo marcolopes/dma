@@ -18,8 +18,6 @@
  *******************************************************************************/
 package org.dma.java.security;
 
-import org.dma.java.cipher.MessageDigest;
-
 public class MD5Password extends MessageDigest {
 
 	private final String password;
@@ -38,6 +36,15 @@ public class MD5Password extends MessageDigest {
 
 	public boolean test(String password) {
 		return password.equals(encode());
+	}
+
+
+	public static void main(String[] args) {
+
+		MD5Password password=new MD5Password("password");
+
+		System.out.println(password.encode());
+
 	}
 
 
