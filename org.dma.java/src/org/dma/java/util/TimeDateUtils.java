@@ -69,7 +69,7 @@ public class TimeDateUtils {
 	 * Date
 	 */
 	/** yyyy */
-	public static final String DATE_YEAR_PATTERN = String.valueOf(new char[]{JAVA_YEAR, JAVA_YEAR, JAVA_YEAR,JAVA_YEAR});
+	public static final String DATE_YEAR_PATTERN = String.valueOf(new char[]{JAVA_YEAR, JAVA_YEAR, JAVA_YEAR, JAVA_YEAR});
 	/** MM */
 	public static final String DATE_MONTH_PATTERN = String.valueOf(new char[]{JAVA_MONTH, JAVA_MONTH});
 	/** dd */
@@ -819,7 +819,7 @@ public class TimeDateUtils {
 	 * Timestamp
 	 */
 	public static Timestamp getCurrentTimestamp() {
-		return new Timestamp(getCurrentDate().getTime());
+		return new Timestamp(System.currentTimeMillis());
 	}
 
 	/** Timestamp formatted with {@link #DEFAULT_TIMESTAMP_PATTERN} */
