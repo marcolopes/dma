@@ -31,7 +31,9 @@ import org.dma.java.util.VersionNumber;
 public enum DRIVERS {
 
 	/*
-	 * https://javadocs.com/docs/com.h2database/h2/1.3.169/org/h2/constant/SysProperties.html#STORE_LOCAL_TIME
+	 * https://javadoc.io/static/com.h2database/h2/1.3.169/org/h2/constant/SysProperties.html#STORE_LOCAL_TIME
+	 * System property h2.storeLocalTime (default: false)
+	 * Store the local time. If disabled, the daylight saving offset is not taken into account.
 	 */
 	H2 (new H2Manager(), new SystemProperty("h2.storeLocalTime", "true")),
 
