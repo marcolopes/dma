@@ -45,6 +45,7 @@ import org.dma.java.util.TimeDateUtils;
  * 3 - Chave invalida.
  * 9 - Erro desconhecido.
  */
+@Deprecated
 public class IfThenPayServiceResponseType {
 
 	public final String entidade;
