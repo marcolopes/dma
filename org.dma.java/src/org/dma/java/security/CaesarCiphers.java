@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,14 +35,11 @@ public class CaesarCiphers {
 	public String rot13() {
 
 		StringBuilder result=new StringBuilder() ;
-
-		for(char c: message.toCharArray()) {
+		for(char c: message.toCharArray()){
 			char lc = Character.toLowerCase(c);
 			result.append(c += //avoids cast to char
 					(lc >= 'a' && lc <= 'm' ? 13 : (lc >= 'n' && lc <= 'z' ? -13 : 0)));
-		}
-
-		return result.toString();
+		}return result.toString();
 
 	}
 
@@ -58,13 +55,10 @@ public class CaesarCiphers {
 	public String rot47() {
 
 		StringBuilder result=new StringBuilder() ;
-
 		for(char c: message.toCharArray()){
 			result.append(c += //avoids cast to char
 					(c >= '!' && c <= 'O' ? 47 : (c >= 'P' && c <= '~' ? -47 : 0)));
-		}
-
-		return result.toString();
+		}return result.toString();
 
 	}
 
