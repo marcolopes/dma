@@ -42,6 +42,7 @@ import java.math.BigDecimal;
  * CC: CHECKDIGITS - 2 digitos de controlo que servem para o terminal
  * validar se a informacao esta' correta.
  */
+@Deprecated
 public class IfThenPayEntity extends MultibancoEntity {
 
 	public final String subentity;
