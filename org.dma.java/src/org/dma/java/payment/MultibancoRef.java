@@ -25,6 +25,7 @@ import java.text.DecimalFormatSymbols;
 import org.dma.java.util.MessageList;
 import org.dma.java.util.StringUtils;
 
+@Deprecated
 public class MultibancoRef {
 
 	public static final MultibancoRef DEFAULT = new MultibancoRef("999", "999999999", new BigDecimal("999999.99"));
