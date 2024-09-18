@@ -53,6 +53,7 @@ import org.dma.java.util.Debug;
  * Sandbox: Devem indicar 1 ou 0 no caso de utilizarem ou nao a plataforma de testes.
  * Obrigatorio.
  */
+@Deprecated
 public class IfThenPayService {
 
 	public static final String URL = "https://www.ifthenpay.com/IfmbWS/WsIfmb.asmx/GetPaymentsXml";
