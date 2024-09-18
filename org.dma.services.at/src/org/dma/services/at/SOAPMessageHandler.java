@@ -52,13 +52,13 @@ import com.sun.xml.ws.developer.JAXWSProperties;
 
 import org.dma.java.cipher.CryptoCipher;
 import org.dma.java.cipher.CryptoCipher.CIPHERS;
-import org.dma.java.cipher.MessageDigest;
-import org.dma.java.cipher.MessageDigest.ALGORITHMS;
 import org.dma.java.cipher.RSAPublicCipher;
 import org.dma.java.net.HttpURLHandler;
 import org.dma.java.net.NTPServerHandler.NTPTimeInfo;
 import org.dma.java.net.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.net.PermissiveTrustStore;
+import org.dma.java.security.MessageDigest;
+import org.dma.java.security.MessageDigest.ALGORITHMS;
 
 /**
  * SOAP Message Handler
