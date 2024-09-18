@@ -16,7 +16,7 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.cipher;
+package org.dma.java.security;
 
 import org.apache.commons.codec.binary.Base64;
 
