@@ -144,6 +144,7 @@ public class RSACipher {
 		System.out.println("decrypted: " + decrypted);
 
 		System.out.println("equal? " + decrypted.equals(message));
+
 	}
 
 
