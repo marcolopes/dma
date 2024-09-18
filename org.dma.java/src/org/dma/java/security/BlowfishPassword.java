@@ -44,4 +44,19 @@ public class BlowfishPassword extends BlowfishCipher {
 	}
 
 
+	public static void main(String[] args) {
+
+		String password = "password";
+		System.out.println(password);
+
+		BlowfishPassword cipher=new BlowfishPassword("password");
+
+		String encoded=cipher.encode(password);
+		System.out.println(encoded);
+
+		System.out.println(cipher.decode(encoded).equals(password));
+
+	}
+
+
 }
