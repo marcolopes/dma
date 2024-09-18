@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2019 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,20 +20,31 @@ package org.dma.eclipse.core;
 
 import java.util.LinkedHashMap;
 
+import org.dma.eclipse.core.DebugLogger.SEVERITY;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 
-public class DebugLogger extends LinkedHashMap<Integer, Integer> {
+public class DebugLogger extends LinkedHashMap<SEVERITY, Integer> {
 
 	private static final long serialVersionUID = 1L;
 
-	// Severity
-	public static final int SEVERITY_OK = IStatus.OK;
-	public static final int SEVERITY_INFO = IStatus.INFO;
-	public static final int SEVERITY_WARNING = IStatus.WARNING;
-	public static final int SEVERITY_ERROR = IStatus.ERROR;
-	public static final int SEVERITY_CANCEL = IStatus.CANCEL;
+	public enum SEVERITY {
+
+		OK (IStatus.OK),
+		INFO (IStatus.INFO),
+		WARNING (IStatus.WARNING),
+		ERROR (IStatus.ERROR),
+		CANCEL (IStatus.CANCEL);
+
+		public final int type;
+
+		private SEVERITY(int type) {
+			this.type=type;
+		}
+
+	}
 
 	private final Plugin plugin;
 
@@ -43,48 +54,43 @@ public class DebugLogger extends LinkedHashMap<Integer, Integer> {
 
 
 	public void log(String message) {
-		log(SEVERITY_INFO, message, null);
+		log(SEVERITY.INFO, message, null);
 	}
 
-	public void log(int severity, String message) {
+	public void log(SEVERITY severity, String message) {
 		log(severity, message, null);
 	}
 
-	public void log(int severity, Throwable exception) {
+	public void log(SEVERITY severity, Throwable exception) {
 		log(severity, "", exception);
 	}
 
-	public void log(int severity, String message, Throwable exception) {
+	public void log(SEVERITY severity, String message, Throwable exception) {
 		//log entry
-		Status status=new Status(severity, plugin.getBundle().getSymbolicName(), message, exception);
+		Status status=new Status(severity.type, plugin.getBundle().getSymbolicName(), message, exception);
 		plugin.getLog().log(status);
 		//add to exceptions
-		if (exception!=null && severity!=SEVERITY_OK){
+		if (exception!=null && severity!=SEVERITY.OK){
 			Integer n=get(severity);
 			put(severity, n==null ? 1 : n+1);
 		}
 	}
 
 
-	public boolean hasExceptions() {
-		return !isEmpty();
-	}
-
-
 	public void report() {
 
-		if (hasExceptions()){
+		if (!isEmpty()){
 
 			System.out.println(size()+" Exception(s) BY SEVERITY");
 
-			for(Integer key: keySet()){
+			for(SEVERITY key: keySet()){
 				System.out.print("Type "+key+" (");
 				switch(key){
-				case SEVERITY_OK: System.out.print("OK"); break;
-				case SEVERITY_INFO: System.out.print("INFO"); break;
-				case SEVERITY_WARNING: System.out.print("WARNING"); break;
-				case SEVERITY_ERROR: System.out.print("ERROR"); break;
-				case SEVERITY_CANCEL: System.out.print("CANCEL"); break;
+				case OK: System.out.print("OK"); break;
+				case INFO: System.out.print("INFO"); break;
+				case WARNING: System.out.print("WARNING"); break;
+				case ERROR: System.out.print("ERROR"); break;
+				case CANCEL: System.out.print("CANCEL"); break;
 				}System.out.println(") = "+get(key));
 			}
 

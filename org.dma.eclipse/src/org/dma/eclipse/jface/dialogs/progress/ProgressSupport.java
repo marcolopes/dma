@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,7 +123,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			return run(true);
 		}catch(InvocationTargetException e){
 			Debug.err("InvocationTargetException");
-			throw new Exception(e.getCause());
+			throw new Exception(e.getCause()==null ? e.getMessage() : e.getCause().getMessage());
 		}catch(InterruptedException e){
 			Debug.err("InterruptedException");
 			return false;

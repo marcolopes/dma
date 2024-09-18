@@ -66,7 +66,7 @@ public class TraverseSupport implements TraverseListener {
 			}//next control
 			if (event.doit) selectNext(control);
 
-		}catch(Exception e) {
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}

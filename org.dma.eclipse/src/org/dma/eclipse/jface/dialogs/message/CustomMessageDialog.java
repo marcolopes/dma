@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,44 +43,62 @@ public class CustomMessageDialog extends MessageDialog {
 	@SuppressWarnings("hiding")
 	public enum DIALOG_BUTTONS {
 
-		OK (IDialogConstants.OK_LABEL),
-		CANCEL (IDialogConstants.CANCEL_LABEL),
-		YES (IDialogConstants.YES_LABEL),
-		NO (IDialogConstants.NO_LABEL);
+		OK, CANCEL, YES, NO;
 
 		private String label;
 
-		DIALOG_BUTTONS(String label) {this.label=label;}
-
-		public String label() {return label;}
 		public void setLabel(String label) {this.label=label;}
+
 		@Override
-		public String toString() {return label;}
+		public String toString() {return label();}
+
+		public String label() {
+			if (label==null) switch(this){
+			case OK: return IDialogConstants.OK_LABEL;
+			case CANCEL: return IDialogConstants.CANCEL_LABEL;
+			case YES: return IDialogConstants.YES_LABEL;
+			case NO: return IDialogConstants.NO_LABEL;
+			}return label;
+		}
 
 	}
 
 	@SuppressWarnings("hiding")
 	public enum DIALOG_TYPES {
 
-		ERROR (MessageDialog.ERROR, null, DIALOG_BUTTONS.OK),
-		WARNING (MessageDialog.WARNING, "Warning", DIALOG_BUTTONS.OK),
-		INFORMATION (MessageDialog.INFORMATION, "Information", DIALOG_BUTTONS.OK),
-		QUESTION (MessageDialog.QUESTION, "Attention", DIALOG_BUTTONS.YES, DIALOG_BUTTONS.NO),
-		CONFIRM (MessageDialog.CONFIRM, "Confirmation", DIALOG_BUTTONS.OK, DIALOG_BUTTONS.CANCEL);
+		ERROR (null, DIALOG_BUTTONS.OK),
+		INFORMATION ("Information", DIALOG_BUTTONS.OK),
+		WARNING ("Warning", DIALOG_BUTTONS.OK),
+		QUESTION ("Attention", DIALOG_BUTTONS.YES, DIALOG_BUTTONS.NO),
+		CONFIRM ("Confirmation", DIALOG_BUTTONS.OK, DIALOG_BUTTONS.CANCEL);
 
-		private final int type;
 		private String title;
+
+		public String title() {return title;}
+		public void setTitle(String title) {this.title=title;}
+
 		private DIALOG_BUTTONS[] buttons;
 
-		DIALOG_TYPES(int type, String title, DIALOG_BUTTONS...buttons) {
-			this.type=type;
+		public static String[] buttonLabels(int dialogType) {
+			for(DIALOG_TYPES dialog: values()){
+				if (dialog.type()==dialogType) return StringList.valueOf(dialog.buttons).toArray();
+			}return new String[0];
+		}
+
+		DIALOG_TYPES(String title, DIALOG_BUTTONS...buttons) {
 			this.title=title;
 			this.buttons=buttons;
 		}
 
-		public String title() {return title;}
-		public void setTitle(String title) {this.title=title;}
-		public String[] buttonLabels() {return StringList.valueOf(buttons).toArray();}
+		public int type() {
+			switch(this){
+			case ERROR: return MessageDialog.ERROR;
+			case INFORMATION: return MessageDialog.INFORMATION;
+			case WARNING: return MessageDialog.WARNING;
+			case QUESTION: return MessageDialog.QUESTION;
+			case CONFIRM: return MessageDialog.CONFIRM;
+			}return MessageDialog.NONE;
+		}
 
 		private boolean result; //false
 
@@ -101,12 +119,12 @@ public class CustomMessageDialog extends MessageDialog {
 				CustomJob.syncExec(new Runnable() {
 					public void run() {
 						MessageDialog dialog=new CustomMessageDialog(Display.getDefault().
-								getActiveShell(), title, header, message, type, messageFont);
+								getActiveShell(), title, header, message, type(), messageFont);
 						int code=dialog.open(); //button index OR -1 (manual close)
 						switch(DIALOG_TYPES.this){ //control manual close
 						case ERROR:
-						case WARNING:
-						case INFORMATION: result=code<=0; break;
+						case INFORMATION:
+						case WARNING: result=code<=0; break;
 						case QUESTION:
 						case CONFIRM: result=code>=0 &&
 							(buttons[code]==DIALOG_BUTTONS.OK ||
@@ -121,12 +139,6 @@ public class CustomMessageDialog extends MessageDialog {
 
 	}
 
-	private static String[] dialogButtonLabels(int dialogType) {
-		for(DIALOG_TYPES dialog: DIALOG_TYPES.values()){
-			if (dialog.type==dialogType) return dialog.buttonLabels();
-		}return new String[0];
-	}
-
 	protected final String dialogHeader;
 	protected final Font messageFont;
 
@@ -135,7 +147,7 @@ public class CustomMessageDialog extends MessageDialog {
 	}
 
 	public CustomMessageDialog(Shell parentShell, String dialogTitle, String dialogHeader, String dialogMessage, int dialogType, Font messageFont) {
-		this(parentShell, dialogTitle, null, dialogHeader, dialogMessage, dialogType, dialogButtonLabels(dialogType), 0, messageFont);
+		this(parentShell, dialogTitle, null, dialogHeader, dialogMessage, dialogType, DIALOG_TYPES.buttonLabels(dialogType), 0, messageFont);
 	}
 
 	public CustomMessageDialog(Shell parentShell, String dialogTitle, Image dialogTitleImage, String dialogHeader,
@@ -183,8 +195,8 @@ public class CustomMessageDialog extends MessageDialog {
 	public static void main(String[] args) {
 
 		System.out.println(ErrorDialog.open("")==DIALOG_TYPES.ERROR.open(""));
-		System.out.println(WarningDialog.open("")==DIALOG_TYPES.WARNING.open(""));
 		System.out.println(InformationDialog.open("")==DIALOG_TYPES.INFORMATION.open(""));
+		System.out.println(WarningDialog.open("")==DIALOG_TYPES.WARNING.open(""));
 		System.out.println(QuestionDialog.open("")==DIALOG_TYPES.QUESTION.open(""));
 		System.out.println(ConfirmationDialog.open("")==DIALOG_TYPES.CONFIRM.open(""));
 
@@ -192,8 +204,8 @@ public class CustomMessageDialog extends MessageDialog {
 				" over" + StringUtils.replicas(" and over", 20) + "..." ;
 
 		System.out.println(DIALOG_TYPES.ERROR.open(message));
-		System.out.println(DIALOG_TYPES.WARNING.open(message));
 		System.out.println(DIALOG_TYPES.INFORMATION.open(message));
+		System.out.println(DIALOG_TYPES.WARNING.open(message));
 		System.out.println(DIALOG_TYPES.QUESTION.open(message));
 		System.out.println(DIALOG_TYPES.CONFIRM.open(message));
 

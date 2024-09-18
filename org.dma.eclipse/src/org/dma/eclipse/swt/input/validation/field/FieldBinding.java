@@ -40,7 +40,9 @@ import org.eclipse.swt.widgets.Text;
 
 public abstract class FieldBinding extends FieldError {
 
-	private static final DecimalFormatSymbols FORMAT_SYMBOLS = DecimalFormatSymbols.getInstance();
+	private static final DecimalFormatSymbols DEFAULT_SYMBOLS = DecimalFormatSymbols.getInstance();
+
+	private static final FieldFormat DEFAULT_FORMAT = new FieldFormat(TYPES.STRING, 0);
 
 	private Listener selectionListener;
 	private FocusListener focusListener;
@@ -54,7 +56,7 @@ public abstract class FieldBinding extends FieldError {
 
 	/** Without regex matcher */
 	public FieldBinding(FieldLabel label, Control control, FieldRules rules) {
-		this(label, control, new FieldFormat(TYPES.STRING, -1), null, rules);
+		this(label, control, DEFAULT_FORMAT, null, rules);
 	}
 
 	/** With regex matcher */
@@ -195,7 +197,7 @@ public abstract class FieldBinding extends FieldError {
 		if (control instanceof Button) return getButton().getText();
 		if (control instanceof Text) return ((Text)control).getText();
 		if (control instanceof DateTime) return format.format(TimeDateUtils.getCalendar(
-				getDatetime().getYear(), getDatetime().getMonth(), getDatetime().getDay()).getTime(), FORMAT_SYMBOLS);
+				getDatetime().getYear(), getDatetime().getMonth(), getDatetime().getDay()).getTime(), DEFAULT_SYMBOLS);
 		return "";
 	}
 

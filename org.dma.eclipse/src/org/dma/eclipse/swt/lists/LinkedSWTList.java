@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ public class LinkedSWTList<T> extends MovableList<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	private final CustomSWTList SWTList;
+	protected final CustomSWTList SWTList;
 
 	public CustomSWTList getSWTList() {return SWTList;}
 
@@ -50,10 +50,10 @@ public class LinkedSWTList<T> extends MovableList<T> {
 	public void moveToTop(LinkedSWTList target) {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
-		//target.insert(this, 0, selectionIndices);
-		//remove(selectionIndices);
+		/*target.insert(this, 0, selectionIndices);
+		remove(selectionIndices);*/
 		removeAll(target.insert(this, 0, selectionIndices));
-		target.getSWTList().insert(SWTList.getSelection(), 0);
+		target.SWTList.insert(SWTList.getSelection(), 0);
 		SWTList.remove(selectionIndices);
 
 	}
@@ -67,11 +67,11 @@ public class LinkedSWTList<T> extends MovableList<T> {
 	public void moveToBottom(LinkedSWTList target) {
 
 		int[] selectionIndices = SWTList.getSelectionIndices();
-		int itemCount = target.getSWTList().getItemCount();
-		//target.insert(this, itemCount, selectionIndices);
-		//remove(selectionIndices);
+		int itemCount = target.SWTList.getItemCount();
+		/*target.insert(this, itemCount, selectionIndices);
+		remove(selectionIndices);*/
 		removeAll(target.insert(this, itemCount, selectionIndices));
-		target.getSWTList().insert(SWTList.getSelection(), itemCount);
+		target.SWTList.insert(SWTList.getSelection(), itemCount);
 		SWTList.remove(selectionIndices);
 
 	}
