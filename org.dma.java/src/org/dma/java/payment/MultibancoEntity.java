@@ -41,6 +41,7 @@ import org.dma.java.util.StringUtils;
  * CC: CHECKDIGITS - 2 digitos de controlo que servem para o terminal
  * validar se a informacao esta' correta.
  */
+@Deprecated
 public class MultibancoEntity {
 
 	/** Valor MAXIMO a pagar = 999999.99 */
