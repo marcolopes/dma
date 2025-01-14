@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,8 @@ import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesTyp
  */
 public class SeriesServiceTest extends SeriesServiceHandler {
 
+	public static final Integer RequesterTaxID = 599999993;
+
 	public static final int SerieMaxLength = 35;
 
 	public static final TipoSerieType TipoSerie = TipoSerieType.N;
@@ -58,16 +60,14 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 
 	public static final MotivoAnulacaoType MotivoAnulacao = MotivoAnulacaoType.ER;
 
-	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
-
 	private enum PRINT {NONE, INFO, ID}
 
 	public SeriesServiceTest() {
-		this("599999993/0037", "testes1234");
+		this(RequesterTaxID+"/0037", "testes1234");
 	}
 
 	public SeriesServiceTest(String username, String password) {
-		super(ENDPOINTS.TEST, username, password, ServiceCertificates);
+		super(ENDPOINTS.TEST, username, password, ServiceCertificates.getInstance());
 	}
 
 	public SeriesInfo registar(RegistarSeriesType request) {

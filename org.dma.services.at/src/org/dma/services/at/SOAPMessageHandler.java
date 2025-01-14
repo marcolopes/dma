@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package org.dma.services.at;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,7 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import com.sun.xml.ws.developer.JAXWSProperties;
 
+import org.dma.bouncycastle.PROVIDERS;
 import org.dma.java.cipher.CryptoCipher;
 import org.dma.java.cipher.CryptoCipher.CIPHERS;
 import org.dma.java.cipher.RSAPublicCipher;
@@ -59,6 +61,8 @@ import org.dma.java.net.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.net.PermissiveTrustStore;
 import org.dma.java.security.MessageDigest;
 import org.dma.java.security.MessageDigest.ALGORITHMS;
+import org.dma.java.util.Debug;
+import org.dma.java.util.SystemUtils;
 
 /**
  * SOAP Message Handler
@@ -107,14 +111,15 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 	 */
 	public T getService(String endpoint) throws WebServiceException {
 
-		if (cert==null) throw new WebServiceException("No certificates found!");
-		cert.validate();
-
 		BindingProvider provider = (BindingProvider)service;
 
 		Binding binding = provider.getBinding();
 		List<Handler> chain = binding.getHandlerChain();
 		if (!chain.contains(this)) try{
+
+			if (cert==null) throw new WebServiceException("No certificates found!");
+			if (Debug.STATUS) System.out.println(cert);
+			cert.validate();
 
 			HttpURLHandler url = new HttpURLHandler(endpoint);
 			if (!url.isValid()) throw new Exception("Invalid URL: "+endpoint);
@@ -132,24 +137,26 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 			if (url.isSecure()){
 
-				// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
+				SSLContext sslContext = SystemUtils.IS_JAVA_1_7 ?
+						SSLContext.getInstance("TLSv1.2", PROVIDERS.JSSE.provider) :
+						SSLContext.getInstance("TLS");
+
+				if (Debug.STATUS) System.setProperty("javax.net.debug", "ssl:handshake");
+				// Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 				KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 				kmf.init(cert.sw.getKeyStore(), cert.sw.password.toCharArray());
-
-				SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // JAVA 7
-				// indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 				sslContext.init(kmf.getKeyManagers(), cert.ts==null ?
 						// Trust Store que aceita ligacao SSL sem validar o certificado
-						new TrustManager[]{new PermissiveTrustStore()} : cert.ts.getTrustManagers(), null);
+						new TrustManager[]{new PermissiveTrustStore()} : cert.ts.getTrustManagers(), new SecureRandom());
 
-				/*Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
-				KeyStore ks = KeyStore.getInstance("JKS");
+				/*KeyStore ks = KeyStore.getInstance("JKS");
 				ks.load(this.getClass().getClassLoader().getResourceAsStream("trustStore"), "cliente".toCharArray());
 				TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
 				tmf.init(ks);
 				SSLContext sslContext = SSLContext.getInstance("TLS");
 				sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);*/
 
+				// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
 				provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
 
 			}
@@ -265,7 +272,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 	private boolean log(SOAPMessageContext smc) {
 
-		if (!smc.isEmpty())	try{
+		if (!smc.isEmpty()) try{
 
 			Source source = smc.getMessage().getSOAPPart().getContent();
 			switch(DIRECTION.get(smc)){
@@ -275,7 +282,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}return true;
+		}return false;
 
 	}
 

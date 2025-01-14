@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,22 +44,20 @@ import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesTyp
  */
 public class StockMovementServiceTest extends StockMovementServiceHandler {
 
-	public static final int DocumentNumberMax = 999999;
-
 	public static final Integer RequesterTaxID = 599999993;
+
+	public static final int DocumentNumberMax = 999999;
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
 	public static final String SystemEntryDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd'T'HH:mm:ss");
-
-	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
 
 	public StockMovementServiceTest() {
 		this(RequesterTaxID+"/0037", "testes1234");
 	}
 
 	public StockMovementServiceTest(String username, String password) {
-		super(ENDPOINTS.TEST, username, password, ServiceCertificates);
+		super(ENDPOINTS.TEST, username, password, ServiceCertificates.getInstance());
 	}
 
 	public static StockMovement build(int numero, SeriesInfo info) throws Exception {

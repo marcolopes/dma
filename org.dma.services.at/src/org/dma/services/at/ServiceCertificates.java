@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,21 @@ package org.dma.services.at;
 import javax.xml.ws.WebServiceException;
 
 import org.dma.java.security.JKSCertificate;
+import org.dma.java.util.Debug;
 import org.dma.java.util.MessageList;
+import org.dma.services.at.test.Certificates;
 
 public class ServiceCertificates {
+
+	private static ServiceCertificates instance;
+
+	public static ServiceCertificates getInstance() {
+		if (instance==null) instance=new ServiceCertificates(
+				Certificates.ChavePublicaAT,
+				Certificates.TesteWebservices,
+				Debug.STATUS ? Certificates.TrustStoreAT : null);
+		return instance;
+	}
 
 	/** Scheme Administrator certificate */
 	public final JKSCertificate sa;

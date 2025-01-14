@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,14 +51,12 @@ public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
-	public static final ServiceCertificates ServiceCertificates = new ServiceCertificates(Certificates.ChavePublicaAT, Certificates.TesteWebservices);
-
 	public TaxFreeServiceTest() {
 		this(RequesterTaxID+"/0037", "testes1234");
 	}
 
 	public TaxFreeServiceTest(String username, String password) {
-		super(ENDPOINTS.TEST, username, password, ServiceCertificates);
+		super(ENDPOINTS.TEST, username, password, ServiceCertificates.getInstance());
 	}
 
 	public static TaxFreeSubmissionRequestType build() throws Exception {
