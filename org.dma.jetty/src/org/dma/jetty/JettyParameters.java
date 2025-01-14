@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,11 @@ import org.eclipse.jetty.server.ServerConnector;
 
 public class JettyParameters extends HttpServerHandler {
 
+	public enum FIELDS {HOST, PORT}
+
 	//EXCEPTIONS
-	public static final IllegalArgumentException HOST_NOT_DEFINED_EXCEPTION = new IllegalArgumentException("host is not defined");
-	public static final IllegalArgumentException INVALID_PORT_EXCEPTION = new IllegalArgumentException("port is invalid");
+	public static final IllegalArgumentException HOST_NOT_DEFINED_EXCEPTION = new IllegalArgumentException(FIELDS.HOST + " is not defined");
+	public static final IllegalArgumentException INVALID_PORT_EXCEPTION = new IllegalArgumentException(FIELDS.PORT + " is invalid");
 
 	public JettyParameters() {
 		this("127.0.0.1", 8087);

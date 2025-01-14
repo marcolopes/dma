@@ -56,4 +56,5 @@ Export-Package: org.dma.jetty,
  org.eclipse.jetty.server.handler,
  org.eclipse.jetty.servlet,
  org.eclipse.jetty.servlets,
+ org.eclipse.jetty.util.ssl,
  org.eclipse.jetty.webapp
