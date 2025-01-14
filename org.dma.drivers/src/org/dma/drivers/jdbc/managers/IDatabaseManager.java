@@ -55,7 +55,7 @@ public interface IDatabaseManager {
 
 	public void executeDropForeignKeys(Connection connection, String tableName, String columnName) throws SQLException;
 
-	public void executeDropIndices(Connection connection, String tableName, String columnName) throws SQLException ;
+	public void executeDropIndices(Connection connection, String tableName, String columnName) throws SQLException;
 
 	public void executeDropColumn(Connection connection, String tableName, String columnName) throws SQLException;
 
