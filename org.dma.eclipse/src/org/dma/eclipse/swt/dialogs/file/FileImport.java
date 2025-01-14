@@ -51,7 +51,7 @@ public class FileImport extends FileDialog {
 
 
 	/** @see FileDialog#setFilterPath(String) */
-	public File filePicker(Folder defaultPath, String filename) {
+	public File filePicker(Folder folder, String filename) {
 
 		try{/*
 			 * FileDialog SWT 3.7 BUG
@@ -59,7 +59,7 @@ public class FileImport extends FileDialog {
 			 * OSX 10.9 workaround
 			 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=361530#c2
 			 */
-			setFilterPath(defaultPath==null ? "." : defaultPath.getAbsolutePath());
+			setFilterPath(folder==null ? "." : folder.getAbsolutePath());
 			setFileName(filename);
 
 			File file=new File(open());

@@ -201,7 +201,7 @@ public class CustomMessageDialog extends MessageDialog {
 		System.out.println(ConfirmationDialog.open("")==DIALOG_TYPES.CONFIRM.open(""));
 
 		String message="The quick brown fox jumps over the lazy dog"+
-				" over" + StringUtils.replicas(" and over", 20) + "..." ;
+				" over" + StringUtils.replicas(" and over", 20) + "...";
 
 		System.out.println(DIALOG_TYPES.ERROR.open(message));
 		System.out.println(DIALOG_TYPES.INFORMATION.open(message));
