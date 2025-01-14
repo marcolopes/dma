@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,22 +110,15 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 			if (url.isSecure()) try{
 
-				// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
+				SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // JAVA 7
+
+				// Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 				KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 				kmf.init(cert.getKeyStore(), cert.password.toCharArray());
-
-				SSLContext sslContext = SSLContext.getInstance("TLSv1.2"); // JAVA 7
 				// Trust Store que aceita ligacao SSL sem validar o certificado
 				sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, null);
 
-				/*Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
-				KeyStore ks = KeyStore.getInstance("JKS");
-				ks.load(this.getClass().getClassLoader().getResourceAsStream("trustStore"), "cliente".toCharArray());
-				TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-				tmf.init(ks);
-				SSLContext sslContext = SSLContext.getInstance("TLS");
-				sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);*/
-
+				// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
 				provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
 
 			}catch(Exception e){
@@ -187,7 +180,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}return true;
+		}return false;
 
 	}
 
