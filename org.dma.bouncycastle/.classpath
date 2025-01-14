@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libraries/bcprov-jdk15to18-1.79.jar" sourcepath="libraries/bcprov-jdk15to18-1.79-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/bcutil-jdk15to18-1.79.jar" sourcepath="libraries/bcutil-jdk15to18-1.79-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/bcpkix-jdk15to18-1.79.jar" sourcepath="libraries/bcpkix-jdk15to18-1.79-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/bcmail-jdk15to18-1.79.jar" sourcepath="libraries/bcmail-jdk15to18-1.79-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/bcjmail-jdk15to18-1.79.jar" sourcepath="libraries/bcjmail-jdk15to18-1.79-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/bcpg-jdk15to18-1.79.jar" sourcepath="libraries/bcpg-jdk15to18-1.79-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/bctls-jdk15to18-1.79.jar" sourcepath="libraries/bctls-jdk15to18-1.79-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
