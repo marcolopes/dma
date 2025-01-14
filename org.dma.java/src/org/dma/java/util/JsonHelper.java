@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,11 +39,11 @@ public class JsonHelper {
 	/*
 	 * To
 	 */
-	public JsonObject toJsonObject(String json) {
+	public static JsonObject toJsonObject(String json) {
 		return new Gson().fromJson(json, JsonObject.class);
 	}
 
-	public JsonArray toJsonArray(String json) {
+	public static JsonArray toJsonArray(String json) {
 		return new Gson().fromJson(json, JsonArray.class);
 	}
 

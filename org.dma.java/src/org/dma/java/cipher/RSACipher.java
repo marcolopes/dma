@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,74 +76,85 @@ public class RSACipher {
 	}
 
 
-	public static void debug(KeyPair keyPair) {
+	public static void keyPairTest(int keysize, String message) throws Exception {
 
-		String message="The quick brown fox jumps over the lazy dog.";
-		System.out.println("message: " + message);
+		System.out.println("Generating Key Pair: " + keysize);
+		KeyPair keyPair=generateKeyPair(keysize);
+		if (keyPair!=null){
 
-		RSAPublicCipher publicCipher=new RSAPublicCipher(keyPair.getPublic());
-		String encrypted=publicCipher.BASE64encrypt(message,0);
-		System.out.println("encrypted: " + encrypted);
+			System.out.println();
+			PublicKey publicKey=keyPair.getPublic();
+			System.out.println("-----BEGIN PUBLIC KEY-----");
+			System.out.print(new Base64(CustomFile.BASE64_LINE_LENGTH).encodeToString(publicKey.getEncoded()));
+			System.out.println("-----END PUBLIC KEY-----");
+			System.out.println();
+			RSAPublicCipher publicCipher=new RSAPublicCipher(publicKey);
+			String BASE64encrypt=publicCipher.BASE64encrypt(message, 0);
+			System.out.println("BASE64encrypt: " + BASE64encrypt);
+			// The bytes can be converted back to public and private key objects
+			System.out.println("Public Key format (X.509): " + publicKey.getFormat());
+			KeyFactory factory=KeyFactory.getInstance(publicKey.getAlgorithm());
+			System.out.println("Public Key algorithm: " + factory.getAlgorithm());
+			EncodedKeySpec keySpec=new X509EncodedKeySpec(publicKey.getEncoded());
+			System.out.println("Public keys equal? " + publicKey.equals(factory.generatePublic(keySpec)));
+			System.out.println();
 
-		RSAPrivateCipher privateCipher=new RSAPrivateCipher(keyPair.getPrivate());
-		String decrypted=privateCipher.BASE64decrypt(encrypted);
-		System.out.println("decrypted: " + decrypted);
+			PrivateKey privateKey=keyPair.getPrivate();
+			System.out.println("-----BEGIN PRIVATE KEY-----");
+			System.out.print(new Base64(CustomFile.BASE64_LINE_LENGTH).encodeToString(privateKey.getEncoded()));
+			System.out.println("-----END PRIVATE KEY-----");
+			System.out.println();
+			RSAPrivateCipher privateCipher=new RSAPrivateCipher(privateKey);
+			String BASE64decrypt=privateCipher.BASE64decrypt(BASE64encrypt);
+			System.out.println("BASE64decrypt: " + BASE64decrypt);
+			// The bytes can be converted back to public and private key objects
+			System.out.println("Private Key format (PKCS#8): " + privateKey.getFormat());
+			factory=KeyFactory.getInstance(privateKey.getAlgorithm());
+			System.out.println("Private Key algorithm: " + factory.getAlgorithm());
+			factory=KeyFactory.getInstance(privateKey.getAlgorithm());
+			keySpec=new PKCS8EncodedKeySpec(privateKey.getEncoded());
+			System.out.println("Private keys equal? " + privateKey.equals(factory.generatePrivate(keySpec)));
+			System.out.println();
 
-		// Get the formats of the encoded bytes
-		System.out.println("Private Key format: " + keyPair.getPrivate().getFormat()); // PKCS#8
-		System.out.println("Public Key format: " + keyPair.getPublic().getFormat()); // X.509
-		System.out.println();
-
-		// Get the bytes of the public and private keys
-		System.out.println("-----BEGIN PRIVATE KEY-----");
-		System.out.print(new Base64(CustomFile.BASE64_LINE_LENGTH).encodeToString(keyPair.getPrivate().getEncoded()));
-		System.out.println("-----END PRIVATE KEY-----");
-		System.out.println();
-
-		System.out.println("-----BEGIN PUBLIC KEY-----");
-		System.out.print(new Base64(CustomFile.BASE64_LINE_LENGTH).encodeToString(keyPair.getPublic().getEncoded()));
-		System.out.println("-----END PUBLIC KEY-----");
-		System.out.println();
-
-		try{// The bytes can be converted back to public and private key objects
-			KeyFactory keyFactory=KeyFactory.getInstance(keyPair.getPrivate().getAlgorithm());
-			EncodedKeySpec privateKeySpec=new PKCS8EncodedKeySpec(keyPair.getPrivate().getEncoded());
-			PrivateKey privateKey=keyFactory.generatePrivate(privateKeySpec);
-			System.out.println("Are both private keys equal? " + keyPair.getPrivate().equals(privateKey));
-
-			EncodedKeySpec publicKeySpec=new X509EncodedKeySpec(keyPair.getPublic().getEncoded());
-			PublicKey publicKey=keyFactory.generatePublic(publicKeySpec);
-			System.out.println("Are both public keys equal? " + keyPair.getPublic().equals(publicKey));
-
-		}catch(Exception e){
-			System.err.println(e);
 		}
 
 	}
 
 
-	public static void main(String[] args) {
-
-		for(int size: new int[]{256, 512, 1024, 2048, 4096}) try{
-			System.out.println("KEY SIZE: "+size);
-			debug(generateKeyPair(size));
-			System.out.println();
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-
-		String message="The quick brown fox jumps over the lazy dog.";
-		System.out.println("message: " + message);
+	public static void main(String[] args) throws Exception {
 
 		RSACipher rsa=new RSACipher(1024);
 
-		String encrypted=rsa.getPublicCipher().BASE64encrypt(message, 0);
-		System.out.println("encrypted: " + encrypted);
-		String decrypted=rsa.getPrivateCipher().BASE64decrypt(encrypted);
-		System.out.println("decrypted: " + decrypted);
+		String message = "The quick brown fox jumps over the lazy dog.";
+		System.out.println(message);
+		System.out.println();
 
-		System.out.println("equal? " + decrypted.equals(message));
+		System.out.println("-----PUBLIC KEY-----");
+		String BASE64encrypt=rsa.getPublicCipher().BASE64encrypt(message, 0);
+		System.out.println("BASE64encrypt: " + BASE64encrypt);
+		//
+		String BASE64decrypt=rsa.getPrivateCipher().BASE64decrypt(BASE64encrypt);
+		System.out.println("BASE64decrypt: " + BASE64decrypt);
+		System.out.println("Valid result? " + message.equals(BASE64decrypt));
+		System.out.println();
+
+		System.out.println("-----PRIVATE KEY-----");
+		String BASE64signWithSHA1=rsa.getPrivateCipher().BASE64signWithSHA1(message);
+		System.out.println("BASE64signWithSHA1: " + BASE64signWithSHA1);
+		System.out.println("verifySHA1Signature: " + rsa.getPublicCipher().verifySHA1Signature(BASE64signWithSHA1, message));
+		//
+		BASE64encrypt=rsa.getPrivateCipher().BASE64encrypt(message, 0);
+		System.out.println("BASE64encrypt: " + BASE64encrypt);
+		BASE64decrypt=rsa.getPublicCipher().BASE64decrypt(BASE64encrypt);
+		//
+		System.out.println("BASE64decrypt: " + BASE64decrypt);
+		System.out.println("Valid result? " + message.equals(BASE64decrypt));
+		System.out.println();
+
+		for(int size=256;; size*=2){
+			keyPairTest(size, message);
+			System.out.print("");
+		}
 
 	}
 

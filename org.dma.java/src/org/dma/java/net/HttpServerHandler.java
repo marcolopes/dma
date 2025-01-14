@@ -20,7 +20,7 @@ package org.dma.java.net;
 
 public class HttpServerHandler extends HttpURLHandler {
 
-	public static String getURL(boolean secure, String host, int port) {
+	public static String getUrl(boolean secure, String host, int port) {
 		StringBuilder sb=new StringBuilder(secure ? "https" : "http").
 			append("://").append(host);
 		if (port>0) sb.append(":"+port);
@@ -43,7 +43,7 @@ public class HttpServerHandler extends HttpURLHandler {
 	}
 
 	public HttpServerHandler(boolean secure, String host, int port) {
-		super(getURL(secure, host, port));
+		super(getUrl(secure, host, port));
 
 		this.host=host;
 		this.port=port;

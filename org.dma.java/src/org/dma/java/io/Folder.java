@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ public class Folder extends CustomFile {
 	}
 
 	public static Folder temporary(String...more) {
-		try{File tmpdir=new File(System.getProperty("java.io.tmpdir")).getCanonicalFile();
-			return new Folder(tmpdir, more);
+		try{File file=new File(System.getProperty("java.io.tmpdir")).getCanonicalFile();
+			return new Folder(file, more);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;

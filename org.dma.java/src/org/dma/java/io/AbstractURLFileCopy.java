@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
@@ -41,11 +40,11 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 	 */
 	public void to(File dst) throws IOException, InterruptedException {
 
-		File output=new File(dst+".tmp");
+		File file=new File(dst+".tmp");
 
-		BufferedInputStream in=new BufferedInputStream(file.asInputStream());
+		BufferedInputStream in=new BufferedInputStream(this.file.asInputStream());
 
-		OutputStream out=new BufferedOutputStream(new FileOutputStream(output));
+		BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(file));
 
 		try{copy(in, out);
 		}finally{
@@ -53,7 +52,7 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 			in.close();
 		}dst.delete();
 
-		if (!output.renameTo(dst)) throw new IOException();
+		if (!file.renameTo(dst)) throw new IOException();
 
 	}
 
@@ -67,7 +66,7 @@ public abstract class AbstractURLFileCopy extends AbstractStreamCopy {
 
 		BufferedInputStream in=new BufferedInputStream(new FileInputStream(src));
 
-		OutputStream out=new BufferedOutputStream(file.asOutputStream());
+		BufferedOutputStream out=new BufferedOutputStream(file.asOutputStream());
 
 		try{copy(in, out);
 		}finally{

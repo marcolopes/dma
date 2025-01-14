@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.UnrecoverableKeyException;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfReader;
@@ -62,8 +59,7 @@ public abstract class AbstractPdfFile extends ByteFile {
 
 
 	@Deprecated
-	public void sign(KeyStore keyStore, String password, String reason, String location, String contact)
-			throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, DocumentException, IOException {
+	public void sign(KeyStore keyStore, String password, String reason, String location, String contact) throws Exception {
 
 		String alias=keyStore.aliases().nextElement();
 		PrivateKey privateKey=(PrivateKey)keyStore.getKey(alias, password.toCharArray());
@@ -82,7 +78,7 @@ public abstract class AbstractPdfFile extends ByteFile {
 	 * <a href=http://itextpdf.sourceforge.net/howtosign.html>
 	 * How to sign a PDF using iText</a>
 	 */
-	public void stamp(PdfSignature signature) throws DocumentException, IOException {
+	public void stamp(PdfSignature signature) throws Exception {
 
 		CustomFile output=new CustomFile(this+".tmp");
 

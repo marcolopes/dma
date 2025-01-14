@@ -92,7 +92,8 @@ public class URLFile extends URLHandler {
 
 
 	/** Returns LOCAL filename */
-	public String getFilename() {
+	@Override
+	public String getName() {
 		return getFile().getName();
 	}
 
@@ -105,17 +106,29 @@ public class URLFile extends URLHandler {
 
 	public static void main(String[] args) throws Exception {
 
-		URLFile file=new URLFile("https://info.portaldasfinancas.gov.pt", "pt", "apoio_contribuinte", "Faturacao", "Documents", "TesteWebservices.zip");
+		//AVOID "Received fatal alert: protocol_version"
+		System.setProperty("https.protocols", "SSLv3,TLSv1,TLSv1.1,TLSv1.2");
 
-		System.out.println(file);
-		System.out.println(file.url.getFile());
-		System.out.println(file.url.getHost());
-		System.out.println(file.getFilename());
+		for(URLFile file: new URLFile[]{
+			new URLFile("https://ind.millenniumbcp.pt", "pt", "Articles", "Documents", "precario", "FCD.pdf"),
+			new URLFile("https://amagovpt.github.io", "docs.autenticacao.gov", "Manual_de_Utilizacao_v3.pdf"),
+			new URLFile("https://info.portaldasfinancas.gov.pt", "pt", "apoio_contribuinte", "Faturacao", "Documents", "TesteWebservices.zip")}) try{
 
-		if (file.exists()){
-			File dst=new CustomFile(Folder.temporary(), file.getFilename());
-			System.out.println(dst);
-			file.download(dst);
+			System.out.println(file.getName());
+			System.out.println(file.url.getHost());
+			System.out.println(file.url.getFile());
+			System.out.println(file);
+
+			if (file.exists()){
+				File dst=new CustomFile(Folder.temporary(), file.getName());
+				file.download(dst);
+				System.err.print(dst.length());
+				System.err.print(" Bytes downloaded to ");
+				System.err.println(dst);
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 	}

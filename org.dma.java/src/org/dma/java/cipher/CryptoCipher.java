@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2020 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,26 +34,37 @@ public class CryptoCipher {
 	 */
 	public enum CIPHERS {
 
-		BLOWFISH ("Blowfish"),
+		/*
+		 * Advanced Encryption Standard as specified by NIST in FIPS 197.
+		 */
 		AES_CBC ("AES", "CBC", "NoPadding", 128),
 		AES_CBC_PKCS5 ("AES", "CBC", "PKCS5Padding", 128),
 		AES_ECB ("AES", "ECB", "NoPadding", 128),
 		AES_ECB_PKCS5 ("AES", "ECB", "PKCS5Padding", 128),
+		/*
+		 * The Digital Encryption Standard as described in FIPS PUB 46-3.
+		 */
 		DES_CBC ("DES", "CBC", "NoPadding", 56),
 		DES_CBC_PKCS5 ("DES", "CBC", "PKCS5Padding", 56),
 		DES_ECB ("DES", "ECB", "NoPadding", 56),
 		DES_ECB_PKCS5 ("DES", "ECB", "PKCS5Padding", 56),
+		/*
+		 * Triple DES Encryption (also known as DES-EDE, 3DES, or Triple-DES).
+		 */
 		DESede_CBC ("DESede", "CBC", "NoPadding", 168),
 		DESede_CBC_PKCS5 ("DESede", "CBC", "PKCS5Padding", 168),
 		DESede_ECB ("DESede", "ECB", "NoPadding", 168),
 		DESede_ECB_PKCS5 ("DESede", "ECB", "PKCS5Padding", 168),
-		RSA_ECB_PKCS1 ("RSA", "ECB", "PKCS1Padding", 1024, 2048),
-		RSA_ECB_OAEPWithSHA_1AndMGF1 ("RSA", "ECB", "OAEPWithSHA-1AndMGF1Padding", 1024, 2048),
-		RSA_ECB_OAEPWithSHA_256AndMGF1 ("RSA", "ECB", "OAEPWithSHA-256AndMGF1Padding", 1024, 2048);
+		/*
+		 * The RSA encryption algorithm as defined in PKCS #1
+		 */
+		RSA_ECB_PKCS1 ("RSA", "ECB", "PKCS1Padding", 2048, 1024),
+		RSA_ECB_OAEPWithSHA_1AndMGF1 ("RSA", "ECB", "OAEPWithSHA-1AndMGF1Padding", 2048, 1024),
+		RSA_ECB_OAEPWithSHA_256AndMGF1 ("RSA", "ECB", "OAEPWithSHA-256AndMGF1Padding", 2048, 1024);
 
 		public final String algorithm;
 		public final String transformation;
-		public final int[] keysize;
+		public final int keysize;
 
 		/** transformation = algorithm */
 		private CIPHERS(String algorithm) {
@@ -68,12 +79,7 @@ public class CryptoCipher {
 		private CIPHERS(String algorithm, String transformation, int...keysize) {
 			this.algorithm=algorithm;
 			this.transformation=transformation;
-			this.keysize=keysize;
-		}
-
-		/** MAX key size */
-		public int keySize() {
-			return keysize[keysize.length-1];
+			this.keysize=keysize[0];
 		}
 
 		public SecretKey generateKey(int keySize) {
@@ -120,7 +126,7 @@ public class CryptoCipher {
 
 	/** Uses {@link CIPHERS#transformation} */
 	public CryptoCipher(CIPHERS cipher) {
-		this(cipher, cipher.keySize());
+		this(cipher, cipher.keysize);
 	}
 
 	/** Uses {@link CIPHERS#transformation} */
@@ -151,7 +157,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}return new byte[0];
+		}return null;
 
 	}
 
@@ -177,7 +183,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}return "";
+		}return null;
 
 	}
 
@@ -202,7 +208,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}return "";
+		}return null;
 
 	}
 
@@ -215,7 +221,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}return new byte[0];
+		}return null;
 
 	}
 
@@ -240,7 +246,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}return "";
+		}return null;
 
 	}
 
@@ -264,7 +270,7 @@ public class CryptoCipher {
 
 		}catch(Exception e){
 			System.err.println(e);
-		}return "";
+		}return null;
 
 	}
 

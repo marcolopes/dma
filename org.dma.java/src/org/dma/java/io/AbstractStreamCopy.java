@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,16 @@
  *******************************************************************************/
 package org.dma.java.io;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public abstract class AbstractStreamCopy {
 
 	public abstract boolean cancel();
 
 	/** Streams must be closed by caller */
-	public void copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
+	public void copy(BufferedInputStream in, BufferedOutputStream out) throws IOException, InterruptedException {
 
 		byte[] buffer=new byte[1024];
 

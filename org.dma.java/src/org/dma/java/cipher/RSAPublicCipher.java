@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2017 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,9 +43,9 @@ public class RSAPublicCipher extends CryptoCipher {
 	 * attribute certificates, and a certification path validation algorithm.
 	 */
 	public static PublicKey decode(byte[] encodedKey) {
-		try{KeyFactory kf=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
+		try{KeyFactory factory=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
 			X509EncodedKeySpec spec=new X509EncodedKeySpec(encodedKey);
-			return kf.generatePublic(spec);
+			return factory.generatePublic(spec);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -64,6 +64,12 @@ public class RSAPublicCipher extends CryptoCipher {
 
 	public RSAPublicCipher(PublicKey key) {
 		super(key);
+	}
+
+
+	@Override
+	public PublicKey getKey() {
+		return (PublicKey)super.getKey();
 	}
 
 
@@ -94,28 +100,6 @@ public class RSAPublicCipher extends CryptoCipher {
 			System.err.println(e);
 		}return false;
 
-	}
-
-
-	@Override
-	public PublicKey getKey() {
-		return (PublicKey)super.getKey();
-	}
-
-
-	@Override
-	public byte[] decrypt(byte[] messageBytes) {
-		throw new UnsupportedOperationException("Decrypt not possible with PublicKey");
-	}
-
-	@Override
-	public String BASE64decrypt(byte[] messageBytes) {
-		throw new UnsupportedOperationException("Decrypt not possible with PublicKey");
-	}
-
-	@Override
-	public String BASE64decrypt(String message) {
-		throw new UnsupportedOperationException("Decrypt not possible with PublicKey");
 	}
 
 

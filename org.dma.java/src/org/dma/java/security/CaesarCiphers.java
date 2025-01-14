@@ -34,7 +34,7 @@ public class CaesarCiphers {
 	 */
 	public String rot13() {
 
-		StringBuilder result=new StringBuilder() ;
+		StringBuilder result=new StringBuilder();
 		for(char c: message.toCharArray()){
 			char lc = Character.toLowerCase(c);
 			result.append(c += //avoids cast to char
@@ -54,7 +54,7 @@ public class CaesarCiphers {
 	 */
 	public String rot47() {
 
-		StringBuilder result=new StringBuilder() ;
+		StringBuilder result=new StringBuilder();
 		for(char c: message.toCharArray()){
 			result.append(c += //avoids cast to char
 					(c >= '!' && c <= 'O' ? 47 : (c >= 'P' && c <= '~' ? -47 : 0)));

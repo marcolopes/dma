@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2019 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ public class BlowfishCipher extends CryptoCipher {
 	 * https://www.schneier.com/academic/blowfish/
 	 */
 	public BlowfishCipher(String key) {
-		super(key.getBytes(), CIPHERS.BLOWFISH);
+		super(key.getBytes(), "Blowfish");
 	}
 
 }

@@ -13,10 +13,6 @@
 	<classpathentry exported="true" kind="lib" path="libraries/commons/commons-net-3.6.jar" sourcepath="libraries/commons/commons-net-3.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/javax.mail-1.6.2.jar" sourcepath="libraries/commons/javax.mail-1.6.2-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons/activation-1.1.1.jar" sourcepath="libraries/commons/activation-1.1.1-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/itext/bcprov-jdk14-138.jar" sourcepath="libraries/itext/bcprov-jdk14-138-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/itext/itext-2.1.7.jar" sourcepath="libraries/itext/itext-2.1.7-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/fontbox-1.8.16.jar"/>
-	<classpathentry exported="true" kind="lib" path="libraries/pdfbox/pdfbox-1.8.16.jar" sourcepath="libraries/pdfbox/pdfbox-1.8.16-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/imgscalr-lib-4.2.jar" sourcepath="libraries/imgscalr-lib-4.2-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/javacsv-2.1.jar" sourcepath="libraries/javacsv-2.1-sources.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/gson-2.11.0.jar" sourcepath="libraries/gson-2.11.0-sources.jar"/>

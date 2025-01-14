@@ -23,7 +23,6 @@ import java.util.Date;
 
 import org.dma.java.util.TimeDateUtils;
 
-
 public class CalendarPeriod {
 
 	private final Calendar startDate;

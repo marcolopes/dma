@@ -18,6 +18,13 @@
  *******************************************************************************/
 package org.dma.java.security;
 
+/**
+ * https://spycloud.com/blog/how-long-would-it-take-to-crack-your-password
+ * </p>
+ * (MD5) 12 minutes and 22 seconds</br>
+ * (MD5-Salted): 17 minutes and 54 seconds</br>
+ * (Bcrypt): 22 years
+ */
 public class MD5Password extends MessageDigest {
 
 	private final String password;
@@ -44,6 +51,7 @@ public class MD5Password extends MessageDigest {
 		MD5Password password=new MD5Password("password");
 
 		System.out.println(password.encode());
+		System.out.println(password.test("password"));
 
 	}
 

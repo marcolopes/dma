@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,6 +57,8 @@ public class SystemUtils {
 	public static final String JAVA_VERSION = org.apache.commons.lang.SystemUtils.JAVA_VERSION;
 	/** Java runtime name */
 	public static final String JAVA_NAME = "Java "+JAVA_VERSION;
+	/** @see org.apache.commons.lang.SystemUtils#IS_JAVA_1_7 */
+	public static final boolean IS_JAVA_1_7 = org.apache.commons.lang.SystemUtils.IS_JAVA_1_7;
 
 	/** Java runtime architecture */
 	public static final String JAVA_ARCH = System.getProperty("sun.arch.data.model");

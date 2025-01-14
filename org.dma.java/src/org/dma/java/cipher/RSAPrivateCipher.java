@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,9 +43,9 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 * PKCS#8 is mainly used to encode private keys.
 	 */
 	public static PrivateKey decode(byte[] encodedKey) {
-		try{KeyFactory kf=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
+		try{KeyFactory factory=KeyFactory.getInstance(CIPHERS.RSA_ECB_PKCS1.algorithm);
 			PKCS8EncodedKeySpec spec=new PKCS8EncodedKeySpec(encodedKey);
-			return kf.generatePrivate(spec);
+			return factory.generatePrivate(spec);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -64,6 +64,12 @@ public class RSAPrivateCipher extends CryptoCipher {
 
 	public RSAPrivateCipher(PrivateKey key) {
 		super(key);
+	}
+
+
+	@Override
+	public PrivateKey getKey() {
+		return (PrivateKey)super.getKey();
 	}
 
 
@@ -124,28 +130,6 @@ public class RSAPrivateCipher extends CryptoCipher {
 			throw new SignatureException(e);
 		}
 
-	}
-
-
-	@Override
-	public PrivateKey getKey() {
-		return (PrivateKey)super.getKey();
-	}
-
-
-	@Override
-	public byte[] encrypt(byte[] messageBytes) {
-		throw new UnsupportedOperationException("Encrypt not possible with PrivateKey");
-	}
-
-	@Override
-	public String BASE64encrypt(byte[] messageBytes, int lineLength) {
-		throw new UnsupportedOperationException("Encrypt not possible with PrivateKey");
-	}
-
-	@Override
-	public String BASE64encrypt(String message, int lineLength) {
-		throw new UnsupportedOperationException("Encrypt not possible with PrivateKey");
 	}
 
 

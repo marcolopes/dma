@@ -21,6 +21,17 @@ package org.dma.java.email;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.mail.PasswordAuthentication;
+
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+
+import org.dma.java.email.ServerParameters.SECURITY;
+import org.dma.java.io.FileParameters;
+import org.dma.java.io.UTF8TextFile;
+import org.dma.java.util.Debug;
+import org.dma.java.util.ErrorList;
+
 public class EmailParameters extends EmailRecipients {
 
 	private static final long serialVersionUID = 1L;
@@ -36,24 +47,47 @@ public class EmailParameters extends EmailRecipients {
 	}
 
 	public EmailParameters(ServerParameters server, EmailAddress from, Collection<EmailAddress> to) {
+		this(server, from, new EmailRecipients());
+	}
+
+	public EmailParameters(ServerParameters server, EmailAddress from, EmailRecipients recipients) {
 		this.server=server;
 		this.from=from;
-		addAll(to);
+		addAll(recipients);
 	}
 
 
-	public MailSender sender() {
-		return new MailSender(server);
+	/** @see Email#send() */
+	public String send(EmailMessage message, EmailAttachment...attachment) throws EmailException {
+
+		CustomHtmlEmail email=new CustomHtmlEmail(server, Debug.STATUS);
+
+		email.setSubject(message.getSubject());
+		if (message.isHtml()) email.setHtmlMsg(message.getBody());
+		else email.setTextMsg(message.getBody());
+
+		email.setFrom(from);
+		email.addTo(getTo());
+		email.addCc(getCc());
+		email.addBcc(getBcc());
+
+		email.attach(attachment);
+
+		return email.send();
+
 	}
 
-	public boolean send(int retries, EmailMessage message, EmailAttachment...attachment) {
-		MailSender sender=sender();
-		for(int i=0; i<=retries; i++) try{
-			sender.send(message, from, this, attachment);
-			return true;
+	public ErrorList send(int retries, EmailMessage message, EmailAttachment...attachment) {
+
+		ErrorList error=new ErrorList();
+
+		while(error.warnings().isEmpty() && retries-->=0) try{
+			error.addWarning(send(message, attachment));
+
 		}catch(Exception e){
-			System.err.println(e);
-		}return false;
+			error.addError(e);
+		}return error;
+
 	}
 
 
@@ -67,6 +101,34 @@ public class EmailParameters extends EmailRecipients {
 				" [server=" + server +
 				", from=" + from +
 				", to=" + super.toString() + "]";
+	}
+
+
+	public static void main(String arg[]) {
+
+		ServerParameters server=new ServerParameters("mail.xxxxxx.com", 25,
+				SECURITY.NONE, new PasswordAuthentication("marcolopes@xxxxxx.com", "***"));
+		EmailAddress from=new EmailAddress("suporte@xxxxxx.com", "FROM: xxxxxx");
+		EmailRecipients recipients=new EmailRecipients(new EmailAddress("marcolopes@xxxxxx.com", "TO: Marco Lopes"));
+
+		//attachment file
+		UTF8TextFile file=new UTF8TextFile(new FileParameters("attachment", "txt").createTempFile());
+		file.write("The quick brown fox jumps over the lazy dog");
+
+		for(EmailMessage message: Arrays.asList(
+				new EmailMessage("SUBJECT: Simple Mail Test", "BODY: http://marcolopes.eu"),
+				new HtmlEmailMessage("SUBJECT: HTML Mail Test", "BODY: <a href=\"http://marcolopes.eu\">HTML Link</a>"))) try{
+
+			EmailParameters email=new EmailParameters(server, from, recipients.
+					addBcc(new EmailAddress("bcc1@xxxxxx.com", "TO: First Last"),
+							new EmailAddress("bcc2@xxxxxx.com", "TO: First Last")));
+
+			email.send(message, new EmailAttachment(file, "Attachment Description"));
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
 	}
 
 
