@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libraries/pdfbox-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/fontbox-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jempbox-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/xmpbox-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/preflight-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-logging-1.1.1.jar" sourcepath="libraries/commons-logging-1.1.1-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
