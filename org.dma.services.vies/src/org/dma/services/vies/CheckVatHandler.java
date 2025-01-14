@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,6 +104,8 @@ public class CheckVatHandler {
 		/** Queries VIES service */
 		public CheckVatResult queryVatNumber(String vatNumber) throws Exception {
 
+			if (SystemUtils.IS_JAVA_1_7) System.setProperty("https.protocols", "TLSv1.2");
+
 			CheckVatService service=new CheckVatService();
 
 			System.out.print("Please read disclaimer from service provider at: ");
@@ -183,8 +185,6 @@ public class CheckVatHandler {
 
 
 	public static void main(String[] args) throws Exception {
-
-		System.setProperty("https.protocols", "SSLv3,TLSv1,TLSv1.1,TLSv1.2");
 
 		Map<COUNTRIES, Collection<String>> map=new LinkedHashMap();
 		map.put(COUNTRIES.ES, Arrays.asList("A39000013", "A-39000013", "A28015865", "A-28015865"));

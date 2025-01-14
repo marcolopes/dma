@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,11 +88,11 @@ public class VatNumber {
 
 	public static void main(String[] args) throws Exception {
 
-		VatNumber number=new VatNumber(COUNTRIES.PT, "509922716");
+		VatNumber number=new VatNumber(COUNTRIES.PT, "PT 501591109");
 		System.out.println("VALID: " + number.isValid());
 		System.out.println(number.query());
 
-		number=new VatNumber(COUNTRIES.PT, "PT 501591109");
+		number=new VatNumber(COUNTRIES.PT, "509922716");
 		System.out.println("VALID: " + number.isValid());
 		System.out.println(number.query());
 
