@@ -19,9 +19,11 @@
  *******************************************************************************/
 package org.dma.jaxrs.services;
 
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
@@ -34,9 +36,12 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 	@Context private UriInfo info;
 
-	public String getPathParameter(String key) {
-		return info.getPathParameters().getFirst(key);
-	}
+	public String getPathParameter(String key) {return info.getPathParameters().getFirst(key);}
+
+	@Context private HttpServletRequest request;
+
+	public String getRemoteAddr() {return request.getRemoteAddr();}
+	public String getHeader(String name) {return request.getHeader(name);}
 
 	public static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
@@ -56,7 +61,10 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 		@Override
 		public void run() {
-			try{Response response=process().build();
+			try{System.out.println("------>["+new Date(request.getSession().getLastAccessedTime())+"]");
+				System.out.println("Session["+request.getSession().getId()+"]");
+				System.out.println(request);
+				Response response=process().build();
 				System.out.println(response);
 				ar.resume(response);
 			}catch(Exception e){
