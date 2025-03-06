@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
  *******************************************************************************/
 package org.dma.jaxrs.services;
 
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
@@ -35,8 +34,15 @@ public class Client {
 	public final javax.ws.rs.client.Client client;
 
 	public Client() {
-		Thread.currentThread().setContextClassLoader(ClientBuilder.class.getClassLoader());
-		this.client=ClientBuilder.newClient();
+		this(new ClientBuilder().builder);
+	}
+
+	public Client(javax.ws.rs.client.ClientBuilder builder) {
+		this(builder.build());
+	}
+
+	public Client(javax.ws.rs.client.Client client) {
+		this.client=client;
 	}
 
 	public void close() {

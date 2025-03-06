@@ -15,24 +15,17 @@
  *
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
+ * Filipe Santos (filipesantos__12@hotmail.com)
  *******************************************************************************/
-package org.dma.jaxrs.resources;
+package org.dma.jaxrs.services;
 
-import org.glassfish.jersey.server.model.ResourceMethod;
+public class ClientBuilder {
 
-public class ResourceInfo {
+	public final javax.ws.rs.client.ClientBuilder builder;
 
-	public final ResourceMethod method;
-	public final String path;
-
-	public ResourceInfo(ResourceMethod method, String path) {
-		this.method=method;
-		this.path=path;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("%-8s %s", method.getHttpMethod(), path);
+	public ClientBuilder() {
+		Thread.currentThread().setContextClassLoader(ClientBuilder.class.getClassLoader());
+		this.builder=javax.ws.rs.client.ClientBuilder.newBuilder();
 	}
 
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,12 +36,11 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 	@Context private UriInfo info;
 
-	public String getPathParameter(String key) {return info.getPathParameters().getFirst(key);}
+	public UriInfo getInfo() {return info;}
 
 	@Context private HttpServletRequest request;
 
-	public String getRemoteAddr() {return request.getRemoteAddr();}
-	public String getHeader(String name) {return request.getHeader(name);}
+	public HttpServletRequest getRequest() {return request;}
 
 	public static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
@@ -61,9 +60,9 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 		@Override
 		public void run() {
-			try{System.out.println("------>["+new Date(request.getSession().getLastAccessedTime())+"]");
+			try{System.out.println(new Date(request.getSession().getLastAccessedTime()));
 				System.out.println("Session["+request.getSession().getId()+"]");
-				System.out.println(request);
+				System.out.println(request.getPathInfo()+request.getParameterMap());
 				Response response=process().build();
 				System.out.println(response);
 				ar.resume(response);
