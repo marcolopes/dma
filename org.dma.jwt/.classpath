@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jackson/jackson-annotations-2.10.3.jar" sourcepath="libraries/jackson/jackson-annotations-2.10.3-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jackson/jackson-databind-2.10.3.jar" sourcepath="libraries/jackson/jackson-databind-2.10.3-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jackson/jackson-core-2.10.3.jar" sourcepath="libraries/jackson/jackson-core-2.10.3-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-codec-1.14.jar" sourcepath="libraries/commons-codec-1.14-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/java-jwt-3.10.3.jar" sourcepath="libraries/java-jwt-3.10.3-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

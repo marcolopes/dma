@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Eclipse-BundleShape: jar
+Bundle-ManifestVersion: 2
+Bundle-Name: iText PDF
+Bundle-SymbolicName: org.dma.jwt;singleton:=true
+Bundle-Version: 3.10.3.qualifier
+Bundle-Vendor: https://github.com/auth0/java-jwt
+Bundle-Activator: org.dma.jwt.Activator
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: .,
+ libraries/jackson/jackson-annotations-2.10.3.jar,
+ libraries/jackson/jackson-databind-2.10.3.jar,
+ libraries/jackson/jackson-core-2.10.3.jar,
+ libraries/commons-codec-1.14.jar,
+ libraries/java-jwt-3.10.3.jar
+Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2"
+Export-Package: com.auth0.jwt,
+ com.auth0.jwt.algorithms,
+ com.auth0.jwt.exceptions,
+ com.auth0.jwt.interfaces
