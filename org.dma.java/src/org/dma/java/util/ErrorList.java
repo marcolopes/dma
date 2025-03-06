@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,10 @@ public class ErrorList {
 	private final MessageList errors=new MessageList();
 	private final MessageList warnings=new MessageList();
 
-	public ErrorList() {}
+	public MessageList errors() {return errors;}
+	public MessageList warnings() {return warnings;}
 
-	@Deprecated
-	public ErrorList(Throwable e) {
-		addError(e.getMessage());
-	}
+	public ErrorList() {}
 
 	/** Clears ERRORS and WARNINGS */
 	public void clear() {
@@ -37,63 +35,24 @@ public class ErrorList {
 	}
 
 	/** Prints ERRORS and WARNINGS */
-	public void print() {
+	public ErrorList print() {
 		errors.print();
 		warnings.print();
+		return this;
 	}
 
 	/** Adds ERRORS and WARNINGS */
-	public void add(ErrorList list) {
+	public ErrorList add(ErrorList list) {
 		errors.addAll(list.errors);
 		warnings.addAll(list.warnings);
+		return this;
 	}
 
-
-	/*
-	 * Errors
-	 */
-	public MessageList addError(String prefix, String message) {
-		return errors.add(prefix, message);
-	}
-
-	public MessageList addError(String prefix, Throwable e) {
-		return errors.add(prefix, e);
-	}
-
-	public MessageList addError(Throwable e) {
-		return errors.add(e);
-	}
-
-	public void addError(String message) {
-		errors.add(message);
-	}
-
-	public MessageList errors() {
-		return errors;
-	}
-
-
-	/*
-	 * Warnings
-	 */
-	public MessageList addWarning(String prefix, String message) {
-		return warnings.add(prefix, message);
-	}
-
-	public MessageList add(String prefix, Throwable e) {
-		return warnings.add(prefix, e);
-	}
-
-	public MessageList addWarning(Throwable e) {
-		return warnings.add(e);
-	}
-
-	public void addWarning(String message) {
-		warnings.add(message);
-	}
-
-	public MessageList warnings() {
-		return warnings;
+	public ErrorList prefix(String prefix) {
+		ErrorList list=new ErrorList();
+		list.errors.addAll(errors.prefix(prefix));
+		list.warnings.addAll(warnings.prefix(prefix));
+		return list;
 	}
 
 

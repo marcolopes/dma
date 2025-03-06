@@ -28,17 +28,9 @@ public class MovableList<T> extends LinkedList<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	public MovableList() {
-		super();
-	}
-
-	public MovableList(T[] array) {
-		this(Arrays.asList(array));
-	}
-
-	public MovableList(Collection<T> list) {
-		super(list);
-	}
+	public MovableList() {super();}
+	public MovableList(T[] array) {this(Arrays.asList(array));}
+	public MovableList(Collection<T> list) {super(list);}
 
 
 	/** Returns removed elements */

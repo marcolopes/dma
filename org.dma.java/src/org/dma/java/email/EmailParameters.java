@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,10 +82,10 @@ public class EmailParameters extends EmailRecipients {
 		ErrorList error=new ErrorList();
 
 		while(error.warnings().isEmpty() && retries-->=0) try{
-			error.addWarning(send(message, attachment));
+			error.warnings().add(send(message, attachment));
 
 		}catch(Exception e){
-			error.addError(e);
+			error.errors().add(e);
 		}return error;
 
 	}

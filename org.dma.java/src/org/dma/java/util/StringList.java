@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import org.dma.java.input.FieldFormat.SEPARATOR;
+
 public class StringList extends ArrayList<String> {
 
 	private static final long serialVersionUID = 1L;
@@ -43,23 +45,10 @@ public class StringList extends ArrayList<String> {
 		}return list;
 	}
 
-	public StringList(int initialCapacity) {
-		super(initialCapacity);
-	}
-
-	public StringList() {
-		super();
-	}
-
-	public StringList(String...array) {
-		this(Arrays.asList(array));
-	}
-
-	public StringList(Collection<String> col) {
-		super(col);
-	}
-
-
+	public StringList() {super();}
+	public StringList(Collection<String> col) {super(col);}
+	public StringList(int initialCapacity) {super(initialCapacity);}
+	public StringList(String...array) {this(Arrays.asList(array));}
 
 	/*
 	 * Conversion
@@ -284,6 +273,12 @@ public class StringList extends ArrayList<String> {
 			result.append(string);
 		}return result.toString();
 
+	}
+
+
+	@Override
+	public String toString() {
+		return concat(SEPARATOR.LINE.value);
 	}
 
 

@@ -76,7 +76,8 @@ public class RSAPrivateCipher extends CryptoCipher {
 	/** Compute signature */
 	public byte[] signWithSHA1(byte[] messageBytes) throws SignatureException {
 
-		try{Signature signature=Signature.getInstance("SHA1withRSA");
+		if (messageBytes!=null) try{
+			Signature signature=Signature.getInstance("SHA1withRSA");
 			signature.initSign(getKey());
 			signature.update(messageBytes);
 
@@ -84,7 +85,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 
 		}catch(Exception e){
 			throw new SignatureException(e);
-		}
+		}throw new SignatureException("Invalid message");
 
 	}
 
@@ -99,14 +100,15 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 */
 	public String BASE64signWithSHA1(byte[] messageBytes) throws SignatureException {
 
-		try{byte[] signatureBytes=signWithSHA1(messageBytes);
+		if (messageBytes!=null) try{
+			byte[] signatureBytes=signWithSHA1(messageBytes);
 			byte[] base64Bytes=new Base64().encode(signatureBytes);
 
 			return new String(base64Bytes, "UTF8");
 
 		}catch(Exception e){
 			throw new SignatureException(e);
-		}
+		}throw new SignatureException("Invalid message");
 
 	}
 
@@ -122,13 +124,14 @@ public class RSAPrivateCipher extends CryptoCipher {
 	 */
 	public String BASE64signWithSHA1(String message) throws SignatureException {
 
-		try{byte[] messageBytes=message.getBytes("UTF8");
+		if (message!=null) try{
+			byte[] messageBytes=message.getBytes("UTF8");
 
 			return BASE64signWithSHA1(messageBytes);
 
 		}catch(Exception e){
 			throw new SignatureException(e);
-		}
+		}throw new SignatureException("Invalid message");
 
 	}
 

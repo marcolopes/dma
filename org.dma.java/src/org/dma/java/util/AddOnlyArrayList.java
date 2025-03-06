@@ -25,17 +25,9 @@ public class AddOnlyArrayList<T> extends ArrayList<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	public AddOnlyArrayList(int initialCapacity) {
-		super(initialCapacity);
-	}
-
-	public AddOnlyArrayList() {
-		super();
-	}
-
-	public AddOnlyArrayList(Collection<? extends T> col) {
-		super(col);
-	}
+	public AddOnlyArrayList() {super();}
+	public AddOnlyArrayList(int initialCapacity) {super(initialCapacity);}
+	public AddOnlyArrayList(Collection<? extends T> col) {super(col);}
 
 	@Override
 	public T remove(int index) {

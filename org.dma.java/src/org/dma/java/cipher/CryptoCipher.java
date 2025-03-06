@@ -152,7 +152,8 @@ public class CryptoCipher {
 	/** @see Cipher#doFinal(byte[]) */
 	public byte[] encrypt(byte[] messageBytes) {
 
-		try{// Encrypt Bytes
+		if (messageBytes!=null) try{
+			// Encrypt Bytes
 			return cipher.doFinal(messageBytes);
 
 		}catch(Exception e){
@@ -174,7 +175,8 @@ public class CryptoCipher {
 	 */
 	public String BASE64encrypt(byte[] messageBytes, int lineLength) {
 
-		try{// Encrypt Bytes
+		if (messageBytes!=null) try{
+			// Encrypt Bytes
 			byte[] encrypted=encrypt(messageBytes);
 			// Encode Bytes to BASE64
 			byte[] base64Bytes=new Base64(lineLength).encode(encrypted);
@@ -201,7 +203,8 @@ public class CryptoCipher {
 	 */
 	public String BASE64encrypt(String message, int lineLength) {
 
-		try{// Convert String to Bytes
+		if (message!=null) try{
+			// Convert String to Bytes
 			byte[] messageBytes=message.getBytes("UTF8");
 			// Encrypt Bytes
 			return BASE64encrypt(messageBytes, lineLength);
@@ -216,7 +219,8 @@ public class CryptoCipher {
 	/** @see Cipher#doFinal(byte[]) */
 	public byte[] decrypt(byte[] messageBytes) {
 
-		try{// Decrypt Bytes
+		if (messageBytes!=null) try{
+			// Decrypt Bytes
 			return decipher.doFinal(messageBytes);
 
 		}catch(Exception e){
@@ -237,7 +241,8 @@ public class CryptoCipher {
 	 */
 	public String BASE64decrypt(byte[] messageBytes) {
 
-		try{// Decode Bytes from BASE64
+		if (messageBytes!=null) try{
+			// Decode Bytes from BASE64
 			byte[] base64Bytes=new Base64().decode(messageBytes);
 			// Decrypt Bytes
 			byte[] decrypted=decrypt(base64Bytes);
@@ -263,7 +268,8 @@ public class CryptoCipher {
 	 */
 	public String BASE64decrypt(String message) {
 
-		try{// Convert String to Bytes
+		if (message!=null) try{
+			// Convert String to Bytes
 			byte[] messageBytes=message.getBytes("UTF8");
 			// Decrypt Bytes
 			return BASE64decrypt(messageBytes);

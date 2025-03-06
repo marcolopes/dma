@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,10 +38,16 @@ public class EmailAddress {
 	public EmailAddress(String email, String name) {
 		this.email=email;
 		this.name=name;
-		try{address=new InternetAddress(email);
+		try{address=new InternetAddress(email, name);
 		}catch(Exception e){}
 	}
 
+
+	public String getUser() {
+		try{return email.substring(0, email.indexOf('@'));
+		}catch(Exception e){}
+		return "";
+	}
 
 	public boolean isValid() {
 		if (address!=null) try{

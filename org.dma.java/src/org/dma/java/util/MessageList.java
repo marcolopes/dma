@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,32 +18,47 @@
  *******************************************************************************/
 package org.dma.java.util;
 
-import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.dma.java.input.FieldFormat.SEPARATOR;
 
-public class MessageList extends LinkedHashSet<String> {
+public class MessageList extends ArrayList<MessageLine> {
 
 	private static final long serialVersionUID = 1L;
 
-	public MessageList(Throwable e) {
-		this(e.getMessage()==null ? e.toString() : e.getMessage());
+	public void print() {print(System.out);}
+
+	public void print(OutputStream out) {
+		if (!isEmpty()) try{
+			out.write(toString().concat(SEPARATOR.LINE.value).getBytes());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
-	public MessageList(String...message) {
-		this(Arrays.asList(message));
+	public MessageList() {}
+	public MessageList(Throwable t) {add(t);}
+	public MessageList(String...array) {this(new StringList(array));}
+	public MessageList(StringList list) {for(String string: list) add(string);}
+
+	private MessageList append(Object obj) {
+		add(new MessageLine(obj));
+		return this;
 	}
 
-	public MessageList(Collection<String> message) {
-		super(message);
-	}
+	public MessageList add(Throwable t) {return append(t);}
+	public MessageList add(String string) {return append(string);}
+	public boolean add(MessageList list) {return addAll(list);}
 
-	public MessageList() {
-		super();
+	/** Returns a new list */
+	public MessageList prefix(String prefix) {
+		MessageList list=new MessageList();
+		for(MessageLine line: this){
+			list.append(new MessageLine(line).addPrefix(": ").addPrefix(prefix));
+		}return list;
 	}
 
 
@@ -52,52 +67,11 @@ public class MessageList extends LinkedHashSet<String> {
 		if (!isEmpty()) throw new Exception(toString());
 	}
 
-	public void print() {
-		print(System.out);
-	}
-
-	public void print(OutputStream out) {
-		if (!isEmpty()) try{
-			out.write(toString().concat(SEPARATOR.LINE.value).getBytes());
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-	}
-
-
-	/** @see Collection#addAll(Collection) */
-	public boolean add(Collection<? extends String> col) {
-		return addAll(col);
-	}
-
-	public MessageList add(String prefix, String message) {
-		add(prefix+": "+message);
-		return this;
-	}
-
-	/** @see MessageList#add(String, String) */
-	public MessageList add(String prefix, Throwable e) {
-		return add(prefix, e.getMessage()==null ? e.toString() : e.getMessage());
-	}
-
-	public MessageList add(Throwable e) {
-		add(e.getMessage()==null ? e.toString() : e.getMessage());
-		return this;
-	}
-
-
-	@Deprecated
-	public StringList toList() {
-		return StringList.valueOf(this);
-	}
-
-	@Override
-	public String[] toArray() {
-		return toList().toArray();
-	}
-
 	public String toString(String separator) {
-		return toList().concat(separator);
+		Set<String> col=new LinkedHashSet(size());
+		for(MessageLine line: this){
+			col.add(line.toString());
+		}return new StringList(col).concat(separator);
 	}
 
 	@Override
@@ -109,7 +83,7 @@ public class MessageList extends LinkedHashSet<String> {
 	public static void main(String[] args) {
 
 		MessageList list=new MessageList("dummy one", "dummy two");
-		list.add("prefix", "dummy");
+		list.prefix("prefix").print();
 		list.print();
 
 	}

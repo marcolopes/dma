@@ -28,18 +28,9 @@ public class RandomValue {
 
 	private final Random random;
 
-	public RandomValue() {
-		this(RANDOM);
-	}
-
-	/** Random seed */
-	public RandomValue(long seed) {
-		this(new Random(seed));
-	}
-
-	public RandomValue(Random random) {
-		this.random=random;
-	}
+	public RandomValue() {this(RANDOM);}
+	public RandomValue(long seed) {this(new Random(seed));}
+	public RandomValue(Random random) {this.random=random;}
 
 
 	/*

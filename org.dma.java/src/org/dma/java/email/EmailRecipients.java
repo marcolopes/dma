@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.dma.java.util.StringList;
+
 public class EmailRecipients extends ArrayList<EmailAddress> {
 
 	private final Collection<EmailAddress> cc=new ArrayList();
 	private final Collection<EmailAddress> bcc=new ArrayList();
 
+	public Collection<EmailAddress> getTo() {return this;}
 	public Collection<EmailAddress> getCc() {return cc;}
 	public Collection<EmailAddress> getBcc() {return bcc;}
+	public StringList toStringList() {return StringList.valueOf(this);}
 
 	public EmailRecipients() {}
 
@@ -52,10 +56,6 @@ public class EmailRecipients extends ArrayList<EmailAddress> {
 	/*
 	 * To
 	 */
-	public Collection<EmailAddress> getTo() {
-		return this;
-	}
-
 	public EmailRecipients addTo(EmailAddress...address) {
 		return addTo(Arrays.asList(address));
 	}

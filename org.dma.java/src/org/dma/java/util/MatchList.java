@@ -37,17 +37,9 @@ public class MatchList extends UniqueArrayList<String> {
 		}return result;
 	}
 
-	public MatchList() {
-		super();
-	}
-
-	public MatchList(String[] array) {
-		this(Arrays.asList(array));
-	}
-
-	public MatchList(Collection<? extends String> col) {
-		addAll(col);
-	}
+	public MatchList() {super();}
+	public MatchList(String[] array) {this(Arrays.asList(array));}
+	public MatchList(Collection<? extends String> col) {addAll(col);}
 
 
 	@Override

@@ -20,13 +20,15 @@ package org.dma.java.util;
 
 public class SystemUtils {
 
-	/** @see org.apache.commons.lang.SystemUtils#OS_VERSION */
-	public static final String OS_VERSION = org.apache.commons.lang.SystemUtils.OS_VERSION;
 	/** @see org.apache.commons.lang.SystemUtils#OS_NAME */
 	public static final String OS_NAME = org.apache.commons.lang.SystemUtils.OS_NAME;
-
 	/** @see org.apache.commons.lang.SystemUtils#OS_ARCH */
 	public static final String OS_ARCH = org.apache.commons.lang.SystemUtils.OS_ARCH;
+	/** @see org.apache.commons.lang.SystemUtils#OS_VERSION */
+	public static final String OS_VERSION = org.apache.commons.lang.SystemUtils.OS_VERSION;
+	/** @see org.apache.commons.lang.SystemUtils#USER_LANGUAGE */
+	public static final String USER_LANGUAGE = org.apache.commons.lang.SystemUtils.USER_LANGUAGE;
+
 	/** Is true if this is a 64 bits Operating System */
 	public static final boolean IS_OS_ARCH_64 = IS_OS_ARCH_64();
 
