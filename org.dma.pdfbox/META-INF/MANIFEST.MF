@@ -7,7 +7,7 @@ Bundle-Version: 1.8.16.qualifier
 Bundle-Vendor: https://pdfbox.apache.org
 Bundle-Activator: org.dma.pdfbox.Activator
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .,
  libraries/pdfbox-1.8.16.jar,
  libraries/fontbox-1.8.16.jar,
