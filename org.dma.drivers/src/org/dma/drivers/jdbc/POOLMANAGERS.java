@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2020 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,11 +50,19 @@ public enum POOLMANAGERS {
 	private IPoolManager create(final String url, final String username, final String password) {
 		switch(this){
 		case NONE: return new IPoolManager() {
-			@Override
-			public void shutdown() {}
+			private Connection connection;
 			@Override
 			public Connection getConnection() throws SQLException {
-				return DriverManager.getConnection(url, username, password);
+				return connection==null || connection.isClosed() ?
+						connection=DriverManager.getConnection(url, username, password) : connection;
+			}
+			@Override
+			public void shutdown() {
+				if (connection!=null) try{
+					connection.close();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 		};
 		case DBCP: return new DBCPManager(url, username, password);

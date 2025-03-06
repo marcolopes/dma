@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Drivers
 Bundle-SymbolicName: org.dma.drivers;singleton:=true
-Bundle-Version: 1.4.6.qualifier
+Bundle-Version: 1.4.7.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.drivers.Activator
 Bundle-ActivationPolicy: lazy
@@ -27,13 +27,8 @@ Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
 Export-Package: com.jolbox.bonecp,
  com.mchange.v2.c3p0,
  org.apache.commons.dbcp,
- org.apache.commons.logging,
- org.apache.commons.logging.impl,
  org.apache.commons.pool,
  org.apache.commons.pool.impl,
  org.dma.drivers.jdbc,
  org.dma.drivers.jdbc.managers,
- org.dma.drivers.jdbc.pool,
- org.h2.constant,
- org.h2.engine,
- org.h2.tools
+ org.dma.drivers.jdbc.pool
