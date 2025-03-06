@@ -151,11 +151,9 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 			/* Falta informacao tecnica */
 
-			return log(smc);
-
 		}catch(Exception e){
 			e.printStackTrace();
-		}return false;
+		}return log(smc);
 
 	}
 
@@ -170,7 +168,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 	private boolean log(SOAPMessageContext smc) {
 
-		if (!smc.isEmpty())	try{
+		if (!smc.isEmpty()) try{
 
 			Source source = smc.getMessage().getSOAPPart().getContent();
 			switch(DIRECTION.get(smc)){
