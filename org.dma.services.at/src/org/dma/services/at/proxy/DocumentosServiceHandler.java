@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,12 +61,17 @@ public class DocumentosServiceHandler extends ServiceHandler<FatcorewsPort> {
 
 	}
 
+	private static FatcorewsPort getFatcorewsPortSoap11() {
+		Thread.currentThread().setContextClassLoader(ServiceHandler.class.getClassLoader());
+		return new FatcorewsPortService().getFatcorewsPortSoap11();
+	}
+
 	public DocumentosServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert) {
 		this(endpoint, username, password, cert, null);
 	}
 
 	public DocumentosServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert, File output) {
-		super(new FatcorewsPortService().getFatcorewsPortSoap11(), endpoint.name, username, password, cert, output);
+		super(getFatcorewsPortSoap11(), endpoint.name, username, password, cert, output);
 	}
 
 

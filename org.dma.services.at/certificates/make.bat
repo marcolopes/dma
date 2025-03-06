@@ -44,7 +44,8 @@ keytool -importcert -noprompt -alias "portaldasfinancas" -file portaldasfinancas
 echo CONVERTE O CERTIFICADO DE TESTES (compatibilidade com JAVA 7)
 del %OUTPUT_FOLDER%\TesteWebservices.pfx
 openssl pkcs12 -nodes -in TesteWebservices.pfx -out %OUTPUT_FOLDER%\TesteWebservices.pem -nodes -passin pass:TESTEwebservice
-openssl pkcs12 -legacy -keypbe PBE-SHA1-3DES -certpbe PBE-SHA1-3DES -export -in %OUTPUT_FOLDER%\TesteWebservices.pem -out %OUTPUT_FOLDER%\TesteWebservices.pfx -passout pass:TESTEwebservice
+copy TesteWebservices.pfx %OUTPUT_FOLDER%\TesteWebservices.pfx
+REM openssl pkcs12 -legacy -keypbe PBE-SHA1-3DES -certpbe PBE-SHA1-3DES -export -in %OUTPUT_FOLDER%\TesteWebservices.pem -out %OUTPUT_FOLDER%\TesteWebservices.pfx -passout pass:TESTEwebservice
 
 :END
 pause

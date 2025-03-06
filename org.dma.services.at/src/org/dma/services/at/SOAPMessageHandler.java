@@ -229,11 +229,9 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 			if (envelope.getHeader()==null) envelope.addHeader(); // JAVA 8
 			envelope.getHeader().addChildElement(securityHeader);
 
-			return log(smc);
-
 		}catch(Exception e){
 			e.printStackTrace();
-		}return false;
+		}return log(smc);
 
 	}
 

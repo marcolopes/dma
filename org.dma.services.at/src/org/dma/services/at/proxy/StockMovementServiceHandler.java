@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,12 +48,17 @@ public class StockMovementServiceHandler extends ServiceHandler<DocumentosTransp
 
 	}
 
+	private static DocumentosTransporte getDocumentosTransporteSOAP() {
+		Thread.currentThread().setContextClassLoader(ServiceHandler.class.getClassLoader());
+		return new DocumentosTransporteService().getDocumentosTransporteSOAP();
+	}
+
 	public StockMovementServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert) {
 		this(endpoint, username, password, cert, null);
 	}
 
 	public StockMovementServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert, File output) {
-		super(new DocumentosTransporteService().getDocumentosTransporteSOAP(), endpoint.name, username, password, cert, output);
+		super(getDocumentosTransporteSOAP(), endpoint.name, username, password, cert, output);
 	}
 
 

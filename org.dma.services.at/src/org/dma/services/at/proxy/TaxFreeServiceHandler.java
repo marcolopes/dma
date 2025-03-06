@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,12 +47,17 @@ public class TaxFreeServiceHandler extends ServiceHandler<TaxFreeService> {
 
 	}
 
+	private static TaxFreeService getTaxFreeServicePort() {
+		Thread.currentThread().setContextClassLoader(ServiceHandler.class.getClassLoader());
+		return new TaxFreeServiceImpl().getTaxFreeServicePort();
+	}
+
 	public TaxFreeServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert) {
 		this(endpoint, username, password, cert, null);
 	}
 
 	public TaxFreeServiceHandler(ENDPOINTS endpoint, String username, String password, ServiceCertificates cert, File output) {
-		super(new TaxFreeServiceImpl().getTaxFreeServicePort(), endpoint.name, username, password, cert, output);
+		super(getTaxFreeServicePort(), endpoint.name, username, password, cert, output);
 	}
 
 
