@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.input.support;
+
+import org.dma.java.util.SystemUtils;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -112,7 +114,11 @@ public class KeyboardSupport implements KeyListener {
 	}
 
 	public void selectControlText(int column) {
-		CellEditor editor=viewer.getCellEditors()[column];
+		if (SystemUtils.IS_OS_MAC){
+			Object element=getSelectedElement();
+			viewer.cancelEditing();
+			viewer.editElement(element, column);
+		}CellEditor editor=viewer.getCellEditors()[column];
 		if (editor.getControl() instanceof Text){
 			Text text=(Text)editor.getControl();
 			text.selectAll();
@@ -121,40 +127,39 @@ public class KeyboardSupport implements KeyListener {
 
 	public void editColumnOrNext(int column) {
 
-		Object selectedElement=getSelectedElement();
-		if (selectedElement==null) return;
+		int currentColumn=column;
 
-		Integer currentColumn=column;
-		do{//table.setFocus();
-			viewer.editElement(selectedElement, currentColumn);
-			//select cell text
-			selectControlText(currentColumn);
+		do try{
+			viewer.editElement(getSelectedElement(), currentColumn);
 			//is editor active?
-			if (viewer.isCellEditorActive()) return;
+			if (viewer.isCellEditorActive()) column=currentColumn;
+			else currentColumn=getNextColumn(currentColumn);
 
-			currentColumn=getNextColumn(currentColumn);
-
+		}catch(Exception e){
+			e.printStackTrace();
 		}while(currentColumn!=column);
-		//viewer.cancelEditing();
+
+		//select cell text
+		selectControlText(currentColumn);
 
 	}
 
 	public void editColumnOrPrevious(int column) {
 
-		Object selectedElement=getSelectedElement();
-		if (selectedElement==null) return;
-
 		int currentColumn=column;
-		do{//table.setFocus();
-			viewer.editElement(selectedElement, currentColumn);
-			//select cell text
-			selectControlText(currentColumn);
+
+		do try{
+			viewer.editElement(getSelectedElement(), currentColumn);
 			//is editor active?
-			if(viewer.isCellEditorActive()) return;
+			if (viewer.isCellEditorActive()) column=currentColumn;
+			else currentColumn=getPreviousColumn(currentColumn);
 
-			currentColumn=getPreviousColumn(currentColumn);
-
+		}catch(Exception e){
+			e.printStackTrace();
 		}while(currentColumn!=column);
+
+		//select cell text
+		selectControlText(currentColumn);
 
 	}
 

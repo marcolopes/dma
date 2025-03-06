@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2019 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,7 +85,11 @@ public class FocusSupport {
 	}
 
 	public boolean forceFocus() {
-		return control==null ? false : control.forceFocus();
+		if (control!=null){
+			Control parent=control.getShell();
+			if (parent!=null) parent.setFocus();
+			return control.forceFocus();
+		}return false;
 	}
 
 

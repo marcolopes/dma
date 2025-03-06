@@ -21,7 +21,7 @@ package org.dma.eclipse.swt.input.validation.field;
 import org.dma.eclipse.swt.graphics.ColorManager;
 import org.dma.java.util.StringUtils;
 
-public abstract class FieldError  {
+public abstract class FieldError {
 
 	public abstract String formatLabel(ERRORS error, String message, String label);
 
