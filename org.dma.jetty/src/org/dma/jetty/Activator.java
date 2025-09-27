@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,8 @@ import org.eclipse.swt.graphics.Image;
  */
 public class Activator extends Plugin {
 
+	public static final int PLUGIN_REVISION = 2;
+
 	public static final Bundle PLUGIN_BUNDLE = FrameworkUtil.getBundle(Activator.class);
 
 	public static final String PLUGIN_ID = PLUGIN_BUNDLE.getSymbolicName();
@@ -43,7 +45,8 @@ public class Activator extends Plugin {
 	public static final Version PLUGIN_VERSION = new Version(
 			PLUGIN_BUNDLE.getVersion().getMajor(),
 			PLUGIN_BUNDLE.getVersion().getMinor(),
-			PLUGIN_BUNDLE.getVersion().getMicro());
+			PLUGIN_BUNDLE.getVersion().getMicro(),
+			String.valueOf(PLUGIN_REVISION));
 
 	public static final String PLUGIN_NAME = PLUGIN_ID+" "+PLUGIN_VERSION;
 

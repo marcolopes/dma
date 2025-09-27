@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ package org.dma.jetty;
 import java.util.Collection;
 
 import org.eclipse.jetty.io.EndPoint;
+import org.eclipse.jetty.server.ConnectionFactory;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -61,23 +62,17 @@ public class JettyServer implements Runnable {
 	}
 
 	public JettyServer(JettyParameters parameters, Handler handler) {
-		this(parameters, handler, null);
-	}
-
-	public JettyServer(JettyParameters parameters, Handler handler, SslContextFactory sslContextFactory) {
 		if (parameters==null) throw PARAMETERS_NOT_DEFINED_EXCEPTION;
 		if (handler==null) throw HANDLER_NOT_DEFINED_EXCEPTION;
 		this.parameters=parameters;
 		this.handler=handler;
-		configure(sslContextFactory);
+		configure();
 	}
 
-	private void configure(SslContextFactory sslContextFactory) {
-		server.setStopAtShutdown(true);
+	private void configure() {
+		configure(new ConnectionFactory[]{});
 		server.setHandler(handler);
-		ServerConnector connector=sslContextFactory==null ? createConnector() : createConnector(sslContextFactory);
-		connector.close();
-		server.setConnectors(new Connector[]{connector});
+		server.setStopAtShutdown(true);
 		server.addLifeCycleListener(new Listener() {
 			@Override
 			public void lifeCycleStarting(LifeCycle event) {busy=true;}
@@ -92,16 +87,18 @@ public class JettyServer implements Runnable {
 		});
 	}
 
-	private ServerConnector createConnector() {
-		ServerConnector connector=new ServerConnector(server);
-		parameters.configure(connector);
-		return connector;
+	public void configure(ConnectionFactory...factories) {
+		configure(null, factories);
 	}
 
-	private ServerConnector createConnector(SslContextFactory sslContextFactory) {
-		ServerConnector connector=new ServerConnector(server, sslContextFactory);
+	//https://dzone.com/articles/adding-ssl-support-embedded
+	public void configure(SslContextFactory sslContextFactory, ConnectionFactory...factories) {
+		ServerConnector connector=sslContextFactory==null ?
+				factories.length==0 ? new ServerConnector(server) : new ServerConnector(server, factories) :
+				factories.length==0 ? new ServerConnector(server, sslContextFactory) : new ServerConnector(server, sslContextFactory, factories);
 		parameters.configure(connector);
-		return connector;
+		connector.close();
+		server.setConnectors(new Connector[]{connector});
 	}
 
 	@Override
@@ -170,9 +167,7 @@ public class JettyServer implements Runnable {
 	public String toString() {
 		return getClass().getSimpleName() +
 				" [version=" + Server.getVersion() +
-				", server=" + server +
-				", parameters=" + parameters +
-				", handler=" + handler + "]";
+				", " + parameters + "]";
 	}
 
 }

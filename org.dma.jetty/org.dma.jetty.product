@@ -24,11 +24,13 @@
 
    <plugins>
       <plugin id="com.ibm.icu"/>
+      <plugin id="org.dma.bouncycastle"/>
       <plugin id="org.dma.eclipse"/>
       <plugin id="org.dma.itext"/>
       <plugin id="org.dma.java"/>
       <plugin id="org.dma.jaxrs"/>
       <plugin id="org.dma.jetty"/>
+      <plugin id="org.dma.log4j"/>
       <plugin id="org.dma.pdfbox"/>
       <plugin id="org.eclipse.birt.jetty.overlay" fragment="true"/>
       <plugin id="org.eclipse.core.commands"/>

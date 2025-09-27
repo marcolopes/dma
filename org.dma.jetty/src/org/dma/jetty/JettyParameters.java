@@ -56,7 +56,7 @@ public class JettyParameters extends HttpServerHandler {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() +
-				" [server=" + super.toString() + "]";
+				" [" + super.toString() + "]";
 	}
 
 }
