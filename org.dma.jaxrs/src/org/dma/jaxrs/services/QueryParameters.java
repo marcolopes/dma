@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,13 +44,13 @@ public class QueryParameters extends ArrayList<QueryParameterValue> {
 
 	}
 
-	public QueryParameters(QueryParameterValue...parameters) {
-		super(Arrays.asList(parameters));
+	public QueryParameters(QueryParameterValue...value) {
+		super(Arrays.asList(value));
 	}
 
 	@Override
 	public String toString() {
-		return isEmpty() ? "" : "?"+StringList.valueOf(this).concat("&");
+		return StringList.valueOf(this).concat("&");
 	}
 
 }

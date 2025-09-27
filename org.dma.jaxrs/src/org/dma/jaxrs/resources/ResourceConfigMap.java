@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,24 +18,30 @@
  *******************************************************************************/
 package org.dma.jaxrs.resources;
 
-import java.util.LinkedHashMap;
+import java.util.Comparator;
+import java.util.TreeMap;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
-public class ResourceConfigMap extends LinkedHashMap<Class, ResourceInfoMap> {
+public class ResourceConfigMap extends TreeMap<Class, ResourceInfoMap> {
 
 	private static final long serialVersionUID = 1L;
 
 	public ResourceConfigMap(ResourceConfig config) {
+		super(new Comparator<Class>() {
+			@Override
+			public int compare(Class o1, Class o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 		for(Class resourceClass: config.getClasses()){
 			put(resourceClass, new ResourceInfoMap(resourceClass));
 		}
 	}
 
 	public void print(String basePath) {
-		for(Class key: keySet()){
-			System.out.println(key);
-			get(key).print(basePath);
+		for(Class klass: keySet()){
+			get(klass).print(basePath);
 		}
 	}
 

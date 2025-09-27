@@ -18,9 +18,14 @@
  *******************************************************************************/
 package org.dma.jaxrs.resources;
 
+import java.util.ArrayList;
+
+import javax.ws.rs.QueryParam;
+
+import org.glassfish.jersey.server.model.Parameter;
 import org.glassfish.jersey.server.model.ResourceMethod;
 
-public class ResourceInfo {
+public class ResourceInfo extends ArrayList<Parameter> {
 
 	public final ResourceMethod method;
 	public final String path;
@@ -28,11 +33,22 @@ public class ResourceInfo {
 	public ResourceInfo(ResourceMethod method, String path) {
 		this.method=method;
 		this.path=path;
+		for(Parameter parameter: method.getInvocable().getParameters()){
+			if (parameter.getSourceAnnotation()!=null &&
+				parameter.getSourceAnnotation().annotationType()==QueryParam.class) add(parameter);
+		}
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%-8s %s", method.getHttpMethod(), path);
+		StringBuilder sb=new StringBuilder();
+		sb.append(path);
+		for(Parameter parameter: this){
+			sb.append("&");
+			sb.append(parameter.getSourceName());
+			sb.append("=");
+			sb.append(parameter.getRawType().getSimpleName());
+		}return String.format("%-8s %s", method.getHttpMethod(), sb.toString());
 	}
 
 }

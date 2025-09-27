@@ -56,7 +56,7 @@ public class ResourceInfoMap extends LinkedHashMap<String, Collection<ResourceIn
 	}
 
 	public void print(String basePath) {
-		if (resource!=null) System.out.println("[" + basePath + resource.getPath() + "]");
+		if (resource!=null) System.out.println("[" + basePath + resource.getPath() + "]"+resource.getName());
 		for(String key: keySet()){
 			for(ResourceInfo info: get(key)){
 				System.out.println(info);

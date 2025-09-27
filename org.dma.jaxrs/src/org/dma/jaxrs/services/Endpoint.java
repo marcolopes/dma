@@ -30,6 +30,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.dma.java.util.MessageLine;
+import org.dma.java.util.TimeDateUtils;
 import org.dma.jaxrs.responses.IResponse;
 
 public class Endpoint extends org.dma.jaxrs.responses.Response {
@@ -39,6 +41,14 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 	public UriInfo getInfo() {return info;}
 
 	@Context private HttpServletRequest request;
+
+	@Override
+	public String toString() {
+		//2025-04-04;23:59:99:999(Endpoint)[127.0.0.1 -> 127.0.0.1/url]
+		return new MessageLine(TimeDateUtils.getDateFormatted(new Date(request.getSession().getLastAccessedTime()), TimeDateUtils.DEFAULT_TIMESTAMP_PATTERN)).
+				parentheses(getClass().getSimpleName()).
+				brackets(request.getRemoteAddr() + " -> " + request.getLocalAddr()+request.getPathInfo()).toString("");
+	}
 
 	public HttpServletRequest getRequest() {return request;}
 
@@ -60,10 +70,8 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 		@Override
 		public void run() {
-			try{System.out.println(new Date(request.getSession().getLastAccessedTime()));
-				System.out.println("Session["+request.getSession().getId()+"]");
-				System.out.println(request.getPathInfo()+request.getParameterMap());
-				Response response=process().build();
+			try{Response response=process().build();
+				System.out.println(Endpoint.this.toString());
 				System.out.println(response);
 				ar.resume(response);
 			}catch(Exception e){
