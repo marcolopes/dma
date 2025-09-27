@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ package org.dma.java.security;
  * (MD5-Salted): 17 minutes and 54 seconds</br>
  * (Bcrypt): 22 years
  */
+@Deprecated
 public class MD5Password extends MessageDigest {
 
 	private final String password;
@@ -41,17 +42,18 @@ public class MD5Password extends MessageDigest {
 	}
 
 
-	public boolean test(String password) {
-		return password.equals(encode());
+	public boolean test(String encoded) {
+		return encode().equals(encoded);
 	}
 
 
 	public static void main(String[] args) {
 
-		MD5Password password=new MD5Password("password");
+		MD5Password digest=new MD5Password("password");
 
-		System.out.println(password.encode());
-		System.out.println(password.test("password"));
+		String encoded=digest.encode();
+		System.out.println(encoded);
+		System.out.println(digest.test(encoded));
 
 	}
 

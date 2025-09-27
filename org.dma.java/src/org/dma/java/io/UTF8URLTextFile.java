@@ -20,8 +20,8 @@ package org.dma.java.io;
 
 public class UTF8URLTextFile extends URLTextFile {
 
-	public UTF8URLTextFile(String urlname, String...more) {
-		super(CustomFile.UTF8_CHARSET, urlname, more);
+	public UTF8URLTextFile(String url, String...more) {
+		super(CustomFile.UTF8_CHARSET, url, more);
 	}
 
 

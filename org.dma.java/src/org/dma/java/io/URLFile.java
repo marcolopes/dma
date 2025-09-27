@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,14 @@
 package org.dma.java.io;
 
 import java.io.File;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.dma.java.net.HttpURLHandler;
 import org.dma.java.net.URLHandler;
 import org.dma.java.util.StringUtils;
 
@@ -49,8 +51,8 @@ public class URLFile extends URLHandler {
 	}
 
 	/** @see URLHandler#getURL(String, String...) */
-	public URLFile(String urlname, String...more) {
-		this(getURL(urlname, more));
+	public URLFile(String url, String...more) {
+		this(getURL(url, more));
 	}
 
 	public URLFile(URL url) {
@@ -59,7 +61,10 @@ public class URLFile extends URLHandler {
 
 
 	public boolean exists() {
-		return checkStream();
+		try{return new File(url.toURI()).exists();
+		}catch(Exception e){
+			return new HttpURLHandler(url).check(HttpURLConnection.HTTP_OK);
+		}
 	}
 
 
@@ -104,27 +109,30 @@ public class URLFile extends URLHandler {
 	}
 
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
 		//AVOID "Received fatal alert: protocol_version"
 		System.setProperty("https.protocols", "SSLv3,TLSv1,TLSv1.1,TLSv1.2");
 
 		for(URLFile file: new URLFile[]{
+			new URLFile("https://ind.millenniumbcp.pt", "pt", "Articles", "Documents", "precario"),
 			new URLFile("https://ind.millenniumbcp.pt", "pt", "Articles", "Documents", "precario", "FCD.pdf"),
 			new URLFile("https://amagovpt.github.io", "docs.autenticacao.gov", "Manual_de_Utilizacao_v3.pdf"),
 			new URLFile("https://info.portaldasfinancas.gov.pt", "pt", "apoio_contribuinte", "Faturacao", "Documents", "TesteWebservices.zip")}) try{
 
-			System.out.println(file.getName());
-			System.out.println(file.url.getHost());
-			System.out.println(file.url.getFile());
 			System.out.println(file);
+			System.out.println(file.getParent());
+			System.out.println(file.getHost());
 
 			if (file.exists()){
+				System.out.println(file.getName());
 				File dst=new CustomFile(Folder.temporary(), file.getName());
 				file.download(dst);
 				System.err.print(dst.length());
 				System.err.print(" Bytes downloaded to ");
 				System.err.println(dst);
+			}else{
+				System.err.println(file.getName());
 			}
 
 		}catch(Exception e){

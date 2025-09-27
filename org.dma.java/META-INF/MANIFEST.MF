@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Utils
 Bundle-SymbolicName: org.dma.java;singleton:=true
-Bundle-Version: 7.14.1.qualifier
+Bundle-Version: 7.14.2.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.java.Activator
 Bundle-ActivationPolicy: lazy
@@ -23,7 +23,7 @@ Bundle-ClassPath: .,
  libraries/javacsv-2.1.jar,
  libraries/gson-2.11.0.jar
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
- org.dma.pdfbox;bundle-version="1.8.16",
+ org.dma.pdfbox;bundle-version="2.0.33",
  org.dma.itext;bundle-version="2.1.7"
 Export-Package: com.csvreader,
  com.google.gson,

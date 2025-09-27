@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
 
 import org.dma.java.util.Debug;
 
@@ -93,13 +94,13 @@ public class PrinterHandler {
 				job.print(document, null);
 
 			}catch(PrintException e){
-				throw new PrintException("Error while printing");
+				throw new PrintException("Error while printing", e);
 			}finally{
 				in.close();
 			}
 
 		}catch(IOException e){
-			throw new IOException("Error loading data");
+			throw new IOException("Error loading data", e);
 		}
 
 	}
@@ -119,7 +120,7 @@ public class PrinterHandler {
 				job.print(document, null);
 
 			}catch(PrintException e){
-				throw new PrintException("Error while printing");
+				throw new PrintException("Error while printing", e);
 			}finally{
 				in.close();
 			}
@@ -143,14 +144,13 @@ public class PrinterHandler {
 			try{PrinterJob job=PrinterJob.getPrinterJob();
 				job.setPrintService(service);
 				job.setJobName(file.getName());
-				doc.silentPrint(job);
-				/*PDFPrinter printer=new PDFPrinter(doc, Scaling.ACTUAL_SIZE, Orientation.AUTO);
-				job.setPageable(printer.getPageable());
-				job.print();*/
+				job.setPageable(new PDFPageable(doc));
+				job.print();
 
 			}catch(PrinterAbortException e){
 				 //avoid abort exception
 			}catch(PrinterException e){
+				e.printStackTrace();
 				throw new PrintException("Error while printing", e);
 			}finally{
 				doc.close();

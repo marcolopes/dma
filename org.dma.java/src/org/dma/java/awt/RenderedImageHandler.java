@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,15 +42,14 @@ public class RenderedImageHandler {
 
 	/** @see Raster#getPixels(int, int, int, int, int[])*/
 	public int[] getPixels() {
-		return image.getData().getPixels(0, 0, image.getWidth(), image.getHeight(), (int[])null);
+		return image==null ? new int[0] :
+			image.getData().getPixels(0, 0, image.getWidth(), image.getHeight(), (int[])null);
 	}
 
-	/**
-	 * Writes the image using {@link ImageIO}
-	 * to array, in the specified format.
-	 */
+	/** @see ImageIO#write(RenderedImage, String, File) */
 	public byte[] getBytes(String formatName) {
-		try{ByteArrayOutputStream baos=new ByteArrayOutputStream();
+		if (image!=null) try{
+			ByteArrayOutputStream baos=new ByteArrayOutputStream();
 			try{ImageOutputStream ios=ImageIO.createImageOutputStream(baos);
 				try{ImageIO.write(image, formatName, ios);
 				}finally{
@@ -67,12 +66,10 @@ public class RenderedImageHandler {
 	}
 
 
-	/**
-	 * Writes the image using {@link ImageIO}
-	 * to file, in the specified format.
-	 */
+	/** @see ImageIO#write(RenderedImage, String, File) */
 	public boolean save(File file, String formatName) {
-		try{return ImageIO.write(image, formatName, file);
+		if (image!=null) try{
+			return ImageIO.write(image, formatName, file);
 		}catch(IOException e){
 			System.err.println(e);
 		}return false;

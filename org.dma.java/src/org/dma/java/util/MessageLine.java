@@ -29,8 +29,8 @@ public class MessageLine extends StringList {
 		if (obj instanceof Date) return TimeDateUtils.getDateFormatted((Date)obj);
 		if (obj instanceof Time) return TimeDateUtils.getTimeFormatted((Time)obj);
 		if (obj instanceof Throwable){
-			Throwable t=(Throwable)obj;
-			return t.getMessage()==null ? t.toString() : t.getMessage();
+			Throwable e=(Throwable)obj;
+			return e.getMessage()==null ? e.toString() : e.getMessage();
 		}return obj.toString();
 	}
 
@@ -41,12 +41,20 @@ public class MessageLine extends StringList {
 		return this;
 	}
 
+	public MessageLine parentheses(Object obj) {
+		return append("("+parse(obj)+")");
+	}
+
 	public MessageLine brackets(Object obj) {
 		return append("["+parse(obj)+"]");
 	}
 
 	public MessageLine colon(Object obj) {
 		return append(":").append(parse(obj));
+	}
+
+	public MessageLine dash(Object obj) {
+		return append("-").append(parse(obj));
 	}
 
 	public MessageLine equal(Object obj) {

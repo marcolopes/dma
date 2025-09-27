@@ -18,13 +18,27 @@
  *******************************************************************************/
 package org.dma.java.cipher;
 
+import org.dma.java.util.RandomValue;
+
+/**
+ * https://www.schneier.com/academic/blowfish/
+ */
 public class BlowfishCipher extends CryptoCipher {
 
-	/**
-	 * https://www.schneier.com/academic/blowfish/
-	 */
 	public BlowfishCipher(String key) {
-		super(key.getBytes(), "Blowfish");
+		super(key.getBytes(), CIPHERS.Blowfish);
+	}
+
+
+	public static void main(String[] args) throws Exception {
+
+		BlowfishCipher cipher=new BlowfishCipher(new RandomValue().string(16));
+
+		String message="The quick brown fox jumps over the lazy dog.";
+		String encrypted=cipher.BASE64encrypt(message, 0);
+		System.out.println(encrypted);
+		System.out.println(cipher.BASE64decrypt(encrypted));
+
 	}
 
 }

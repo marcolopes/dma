@@ -30,12 +30,12 @@ public class URLTextFile extends URLFile {
 	public final Charset charset;
 
 	/** Uses JAVA DEFAULT charset */
-	public URLTextFile(String urlname, String...more) {
-		this(Charset.defaultCharset(), urlname, more);
+	public URLTextFile(String url, String...more) {
+		this(Charset.defaultCharset(), url, more);
 	}
 
-	public URLTextFile(Charset charset, String urlname, String...more) {
-		this(charset, getURL(urlname, more));
+	public URLTextFile(Charset charset, String url, String...more) {
+		this(charset, getURL(url, more));
 	}
 
 	public URLTextFile(Charset charset, URL url) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,8 @@ import org.dma.java.util.TimeDateUtils;
 
 public class JKSCertificate {
 
-	public enum CERTIFICATE_TYPE {
+	//https://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#KeyStore
+	public enum KEYSTORE_TYPE {
 		/** The proprietary keystore implementation provided by the SUN provider */
 		JKS,
 		/** The proprietary keystore implementation provided by the SunJCE provider */
@@ -57,22 +58,22 @@ public class JKSCertificate {
 	private String alias;
 
 	/**
-	 * @param type The certificate type
+	 * @param type The keystore type
 	 * @param pathname The keystore pathname
 	 * @param password The keystore password (null=no integrity checking)
 	 * @param alias The alias to load (if empty, use first alias found)
 	 */
-	public JKSCertificate(CERTIFICATE_TYPE type, String pathname, String password, String...alias) {
+	public JKSCertificate(KEYSTORE_TYPE type, String pathname, String password, String...alias) {
 		this(type, new ByteFile(pathname).readFully(), password, alias);
 	}
 
 	/**
 	 * @param type The certificate type
-	 * @param data The keyStore data
-	 * @param password The keyStore password (null=no integrity checking)
+	 * @param data The keystore data
+	 * @param password The keystore password (null=no integrity checking)
 	 * @param alias The alias to load (if empty, use first alias found)
 	 */
-	public JKSCertificate(CERTIFICATE_TYPE type, byte[] data, String password, String...alias) {
+	public JKSCertificate(KEYSTORE_TYPE type, byte[] data, String password, String...alias) {
 		this.password=password;
 		try{KeyStore keyStore=KeyStore.getInstance(type.name());
 			keyStore.load(new ByteArrayInputStream(data), password==null ? null : password.toCharArray());

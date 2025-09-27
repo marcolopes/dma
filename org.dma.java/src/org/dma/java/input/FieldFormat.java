@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.lang.SystemUtils;
-
 import org.dma.java.util.StringUtils;
 import org.dma.java.util.TimeDateUtils;
 
@@ -45,7 +43,8 @@ public class FieldFormat extends FieldRegex {
 	public enum SEPARATOR {
 
 		/** JAVA line separator */
-		LINE (SystemUtils.LINE_SEPARATOR),
+		@Deprecated
+		LINE ("\n"),
 		COMMA (","),
 		HYPHEN ("-"),
 		SEMICOLON (";");
@@ -76,6 +75,11 @@ public class FieldFormat extends FieldRegex {
 		KEYBOARD(int code) {
 			this.code=(char)code;
 			this.value=String.valueOf(this.code);
+		}
+
+		/** Append keyboard CODE */
+		public String append(String string) {
+			return string+code;
 		}
 
 		@Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,23 @@
  *******************************************************************************/
 package org.dma.java.net;
 
+import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 public class PermissiveTrustStore implements X509TrustManager {
+
+	public static SSLContext createSSLContext() {
+		try{SSLContext sslContext=SSLContext.getInstance("TLS"); // JAVA 8
+			sslContext.init(null, new TrustManager[]{new PermissiveTrustStore()}, new SecureRandom());
+			return sslContext;
+		}catch(Exception e){
+			e.printStackTrace();
+		}return null;
+	}
 
 	@Override
 	public void checkClientTrusted(X509Certificate[] chain, String authType) {
@@ -30,14 +42,14 @@ public class PermissiveTrustStore implements X509TrustManager {
 	}
 
 	@Override
-	public X509Certificate[] getAcceptedIssuers() {
-		//also only relevant for servers
-		return null;
+	public void checkServerTrusted(X509Certificate[] chain, String authType) {
+		//do nothing, accept all
 	}
 
 	@Override
-	public void checkServerTrusted(X509Certificate[] chain, String authType) {
-		//do nothing, accept all
+	public X509Certificate[] getAcceptedIssuers() {
+		//also only relevant for servers
+		return null;
 	}
 
 }

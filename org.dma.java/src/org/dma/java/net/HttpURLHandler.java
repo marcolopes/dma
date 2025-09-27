@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,24 @@ package org.dma.java.net;
 
 import java.awt.Desktop;
 import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 
 import org.apache.commons.codec.binary.Base64;
 
 public class HttpURLHandler extends URLHandler {
 
-	public HttpURLHandler(String urlname) {
-		super(urlname);
+	public HttpURLHandler(String url, String...more) {
+		this(getURL(url, more));
 	}
+
+	public HttpURLHandler(URL url) {
+		super(url);
+	}
+
 
 	public boolean isSecure() {
 		return url.getProtocol().equals("https");
@@ -60,7 +70,15 @@ public class HttpURLHandler extends URLHandler {
 			if (connection!=null) try{
 				connection.setRequestMethod("HEAD");
 				connection.setInstanceFollowRedirects(false);
-				return connection.getResponseCode()==status;
+				if (connection instanceof HttpsURLConnection){
+					HttpsURLConnection httpsConnection=(HttpsURLConnection)connection;
+					httpsConnection.setSSLSocketFactory(PermissiveTrustStore.createSSLContext()	.getSocketFactory());
+					httpsConnection.setHostnameVerifier(new HostnameVerifier(){
+						public boolean verify(String hostname, SSLSession session) {
+							return true;
+						}
+					});
+				}return connection.getResponseCode()==status;
 			}catch(Exception e){
 				System.err.println(e);
 			}finally{
@@ -147,7 +165,9 @@ public class HttpURLHandler extends URLHandler {
 
 	public static void main(String[] args) {
 
-		HttpURLHandler handler=new HttpURLHandler("http://loja.projectocolibri.com/api");
+		System.setProperty("https.protocols", "TLSv1.2");
+
+		HttpURLHandler handler=new HttpURLHandler("https://web.projectocolibri.com");
 
 		System.err.println(handler.path());
 		System.err.println("Valid? " + handler.isValid());

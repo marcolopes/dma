@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -145,6 +145,7 @@ public class TimeDateUtils {
 		return null;
 	}
 
+	/** yyyy-mm-dd */
 	public static XMLGregorianCalendar getXMLGregorianCalendar(String date) {
 		try{return DatatypeFactory.newInstance().newXMLGregorianCalendar(date);
 		}catch(DatatypeConfigurationException e){
@@ -185,13 +186,17 @@ public class TimeDateUtils {
 		return new GregorianCalendar();
 	}
 
+	public static GregorianCalendar getCalendar(TimeZone zone) {
+		return new GregorianCalendar(zone);
+	}
+
 	public static Calendar getClone(Calendar calendar) {
 		return (Calendar)calendar.clone();
 	}
 
 	/** FIRST day of YEAR */
 	public static GregorianCalendar getCalendar(int year) {
-		return getCalendar(year, 0);
+		return getCalendar(year, Calendar.JANUARY);
 	}
 
 	/** FIRST day of MONTH */
@@ -505,7 +510,13 @@ public class TimeDateUtils {
 		return new Date();
 	}
 
+	public static Date getCurrentDate(TimeZone zone) {
+		Calendar calendar=getCalendar(zone);
+		return calendar.getTime();
+	}
+
 	/** Date formatted with {@link #DEFAULT_DATE_PATTERN} */
+	@Deprecated
 	public static String getDateFormatted() {
 		return getDateFormatted(getCurrentDate());
 	}
@@ -722,7 +733,12 @@ public class TimeDateUtils {
 		return getTime(getCalendar());
 	}
 
+	public static Time getCurrentTime(TimeZone zone) {
+		return getTime(getCalendar(zone));
+	}
+
 	/** Time formatted with {@link #DEFAULT_TIME_PATTERN} */
+	@Deprecated
 	public static String getTimeFormatted() {
 		return getTimeFormatted(getCurrentTime());
 	}
@@ -823,6 +839,7 @@ public class TimeDateUtils {
 	}
 
 	/** Timestamp formatted with {@link #DEFAULT_TIMESTAMP_PATTERN} */
+	@Deprecated
 	public static String getTimestampFormatted() {
 		return getTimestampFormatted(getCurrentTimestamp());
 	}
@@ -878,8 +895,8 @@ public class TimeDateUtils {
 		System.out.println("getCalendarWithYear (1971): "+getCalendarWithYear(calendar, 1971));
 		System.out.println("getCalendarWithMonth (9): "+getCalendarWithMonth(calendar, Calendar.SEPTEMBER));
 		System.out.println("getCalendarWithDay (11): "+getCalendarWithDay(calendar, 11));
-		System.out.println("getDaysBetween (30): "+getDaysBetween(getCalendar(2014,0,1), getCalendar(2014,0,31)));
-		System.out.println("getDaysBetween (31): "+getDaysBetween(getCalendar(2014,0,1), getCalendar(2014,1,1)));
+		System.out.println("getDaysBetween (30): "+getDaysBetween(getCalendar(2014,Calendar.JANUARY,1), getCalendar(2014,Calendar.JANUARY,31)));
+		System.out.println("getDaysBetween (31): "+getDaysBetween(getCalendar(2014,Calendar.JANUARY,1), getCalendar(2014,Calendar.FEBRUARY,1)));
 
 	}
 

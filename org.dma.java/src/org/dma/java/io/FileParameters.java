@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,30 +29,21 @@ public class FileParameters {
 	public final String filename;
 	public final String wildcards;
 
-	/** folder = "." (always reflects current system folder)*/
+	/** @see FileParameters#FileParameters(String, String, Folder) */
 	public FileParameters(String prefix, String suffix) {
-		this(prefix, suffix, ".");
+		this(prefix, suffix, Folder.current());
 	}
 
 	/** suffix CAN be null, or may or may not start with DOT (.) */
-	public FileParameters(String prefix, String suffix, String foldername) {
-		this(prefix, suffix, new File(foldername));
-	}
-
-	/** suffix CAN be null, or may or may not start with DOT (.) */
-	public FileParameters(String prefix, String suffix, File folder) {
+	public FileParameters(String prefix, String suffix, Folder folder) {
 		this.prefix=prefix;
 		this.suffix=suffix==null || suffix.startsWith(".") ? suffix : "."+suffix;
-		this.folder=new Folder(folder);
+		this.folder=folder;
 		this.filename=prefix + (suffix==null ? "" : this.suffix);
 		this.wildcards="*" + (suffix==null ? "" : this.suffix);
 	}
 
-	public FileParameters cloneCopy(String foldername) {
-		return cloneCopy(new File(foldername));
-	}
-
-	public FileParameters cloneCopy(File folder) {
+	public FileParameters cloneCopy(Folder folder) {
 		return new FileParameters(prefix, suffix, folder);
 	}
 

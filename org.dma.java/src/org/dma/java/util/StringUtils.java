@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -363,6 +363,7 @@ public class StringUtils {
 	}
 
 
+	@Deprecated
 	public static String indent(String text) {
 
 		StringBuilder result=new StringBuilder();
@@ -551,10 +552,10 @@ public class StringUtils {
 		System.out.println();
 		System.out.printf(format, "Pattern.split: "); System.out.println(Arrays.asList(Pattern.compile("\\.").split(string)));
 		System.out.printf(format, "String.split: "); System.out.println(Arrays.asList(string.split("\\.")));
-		System.out.printf(format, "splitFirst(): "); System.out.println(splitFirst(string, "."));
-		System.out.printf(format, "splitLast(): "); System.out.println(splitLast(string, "."));
-		System.out.printf(format, "split(): "); System.out.println(split(string, "."));
-		System.out.printf(format, "words(): "); System.out.println(words("The quick brown fox jumps over the lazy dog"));
+		System.out.printf(format, "splitFirst(): "); System.out.println(splitFirst(string, ".").concat(" "));
+		System.out.printf(format, "splitLast(): "); System.out.println(splitLast(string, ".").concat(" "));
+		System.out.printf(format, "split(): "); System.out.println(split(string, ".").concat(" "));
+		System.out.printf(format, "words(): "); System.out.println(words("The quick brown fox jumps over the lazy dog").concat(" "));
 		System.out.println();
 		System.out.printf(format, "String.replaceAll: "); System.out.println(string.replaceAll("\\.", "**"));
 		System.out.printf(format, "String.replace: "); System.out.println(string.replace(".", "**"));

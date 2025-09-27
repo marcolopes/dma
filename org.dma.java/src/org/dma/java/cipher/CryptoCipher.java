@@ -27,6 +27,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
+import org.dma.java.util.RandomValue;
+
 public class CryptoCipher {
 
 	/**
@@ -34,6 +36,7 @@ public class CryptoCipher {
 	 */
 	public enum CIPHERS {
 
+		Blowfish ("Blowfish", "ECB", "PKCS5Padding", 32),
 		/*
 		 * Advanced Encryption Standard as specified by NIST in FIPS 197.
 		 */
@@ -67,8 +70,9 @@ public class CryptoCipher {
 		public final int keysize;
 
 		/** transformation = algorithm */
-		private CIPHERS(String algorithm) {
-			this(algorithm, algorithm);
+		@Deprecated
+		private CIPHERS(String algorithm, int...keysize) {
+			this(algorithm, algorithm, keysize);
 		}
 
 		/** transformation = algorithm/mode/padding */
@@ -181,7 +185,7 @@ public class CryptoCipher {
 			// Encode Bytes to BASE64
 			byte[] base64Bytes=new Base64(lineLength).encode(encrypted);
 			// Convert Bytes to String
-			return new String(base64Bytes, "UTF8");
+			return base64Bytes==null ? null : new String(base64Bytes, "UTF8");
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -247,7 +251,7 @@ public class CryptoCipher {
 			// Decrypt Bytes
 			byte[] decrypted=decrypt(base64Bytes);
 			// Convert Bytes to String
-			return new String(decrypted, "UTF8");
+			return decrypted==null ? null : new String(decrypted, "UTF8");
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -277,6 +281,22 @@ public class CryptoCipher {
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
+
+	}
+
+
+	public static void main(String[] args) throws Exception {
+
+		String key=new RandomValue().string(16);
+		CryptoCipher cipher=new CryptoCipher(key.getBytes(), "Blowfish");
+
+		String message="The quick brown fox jumps over the lazy dog.";
+		String encrypted=cipher.BASE64encrypt(message, 0);
+		System.out.println(encrypted);
+		System.out.println(cipher.BASE64decrypt(encrypted));
+
+		cipher=new CryptoCipher(key.getBytes(), CIPHERS.Blowfish);
+		System.out.println(cipher.BASE64decrypt(encrypted));
 
 	}
 

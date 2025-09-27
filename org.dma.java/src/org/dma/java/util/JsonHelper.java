@@ -29,26 +29,35 @@ import org.apache.commons.codec.binary.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /*
  * https://repo1.maven.org/maven2/com/google/code/gson/gson
  */
 public class JsonHelper {
 
+	public static JsonObject parse(String json) {
+		JsonElement jsonElement=JsonParser.parseString(json);
+		return jsonElement.isJsonObject() ? jsonElement.getAsJsonObject() : null;
+	}
+
 	/*
 	 * To
 	 */
+	private static final Gson GSON = new Gson();
+
 	public static JsonObject toJsonObject(String json) {
-		return new Gson().fromJson(json, JsonObject.class);
+		return GSON.fromJson(json, JsonObject.class);
 	}
 
 	public static JsonArray toJsonArray(String json) {
-		return new Gson().fromJson(json, JsonArray.class);
+		return GSON.fromJson(json, JsonArray.class);
 	}
 
 	public static String toJsonString(JsonObject jsonObject) {
-		return new Gson().toJson(jsonObject);
+		return GSON.toJson(jsonObject);
 	}
 
 	/*

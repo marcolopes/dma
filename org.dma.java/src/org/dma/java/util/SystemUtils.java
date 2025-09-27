@@ -77,4 +77,25 @@ public class SystemUtils {
 				ARCHITEW6432!=null && ARCHITEW6432.endsWith("64") || OS_ARCH.endsWith("64");
 	}
 
+	public static class SystemProperty {
+
+		public final String key;
+
+		public String getValue() {return System.getProperty(key);}
+		public int getIntValue() {return StringUtils.val(getValue());}
+
+		/** @see SystemProperty */
+		public SystemProperty(String key, int value) {
+			this(key, String.valueOf(value));
+		}
+
+		/** @see System#setProperty(String, String) */
+		public SystemProperty(String key, String value) {
+			this.key=key;
+			System.setProperty(key, value);
+			System.out.println(key+": "+value);
+		}
+
+	}
+
 }

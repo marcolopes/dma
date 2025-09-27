@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,17 +134,20 @@ public class FieldRegex extends FieldProperties {
 	}
 
 	public boolean isValid(BigInteger number) {
-		return number!=null && (!isPositive() || number.signum()>=0) &&
+		return number!=null &&
+				(!isPositive() || number.signum()>=0) &&
 				(number.toString().length()<=getSize().size+(number.signum()<0 ? 1 : 0));
 	}
 
 	public boolean isValid(Integer number) {
-		return number!=null && (!isPositive() || number>=0) &&
+		return number!=null &&
+				(!isPositive() || number>=0) &&
 				(number.toString().length()<=getSize().size+(number<0 ? 1 : 0));
 	}
 
 	public boolean isValid(String string) {
-		return string!=null && string.length()<=getSize().size &&
+		return string!=null &&
+				(getSize().size==0 || string.length()<=getSize().size) &&
 				(!isUppercase() || StringUtils.isUppercase(string)) &&
 				(!isLowercase() || StringUtils.isLowercase(string)) &&
 				getPattern().matcher(string).matches();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
@@ -65,6 +66,18 @@ public class URLHandler {
 		}
 	}
 
+	/**
+	 * Generates a Base64 URL-safe encoded string from the given base64 String.
+	 * This method uses the URL and Filename Safe Base64 alphabet, replacing '+' with '-' and '/' with '_'.
+	 * Padding characters ('=') are omitted for conciseness and to ensure URL safety.
+	 *
+	 * @param base64 The base64 string to be converted.
+	 * @return A Base64 URL-safe encoded string.
+	 */
+	public static String normalizeBase64URL(String base64) {
+		return base64.replace('+', '-').replace('/', '_').replace("=", "");
+	}
+
 	/** Example: "www.ftp.com", "file.txt" */
 	public static URL getURL(String spec, String...more) {
 		if (!StringUtils.isEmpty(spec)) try{
@@ -81,8 +94,8 @@ public class URLHandler {
 	/** Example: www.ftp.com:21 */
 	public String getName() {return url.getAuthority()+url.getPath();}
 
-	public URLHandler(String urlname) {
-		this(getURL(urlname));
+	public URLHandler(String url, String...more) {
+		this(getURL(url, more));
 	}
 
 	public URLHandler(URL url) {
@@ -92,27 +105,30 @@ public class URLHandler {
 
 	/** @see URL#toURI() */
 	public boolean isValid() {
-		try{url.toURI();
+		if (url!=null) try{
+			url.toURI();
+			return true;
 		}catch(Exception e){
-			return false;
-		}return true;
+		}return false;
 	}
 
 	public boolean isLocalhost() {
-		return LOCALHOST.is(url);
+		return url!=null && LOCALHOST.is(url);
 	}
 
 	public boolean hasPort() {
-		return url.getPort()>0;
+		return url!=null && url.getPort()>0;
 	}
 
 	public boolean isPortValid() {
-		return url.getPort()>0 && url.getPort()<=65535;
+		return url!=null && url.getPort()>0 && url.getPort()<=65535;
 	}
 
 
-	public boolean checkStream() {
-		try{url.openStream().close();
+	@Deprecated
+	private boolean checkStream() {
+		if (url!=null) try{
+			url.openStream().close();
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -122,6 +138,7 @@ public class URLHandler {
 
 	/** @see URL#openConnection() */
 	public URLConnection openConnection() throws IOException {
+		if (url==null) throw new IOException("URL cannot be null");
 		return url.openConnection();
 	}
 
@@ -167,14 +184,41 @@ public class URLHandler {
 	}
 
 
+	/** @see URL#getHost() */
+	public String getHost() {
+		if (url!=null) try{
+			return url.getHost();
+		}catch(Exception e){}
+		return null;
+	}
+
+
 	/** @see URL#getFile() */
 	public CustomFile getFile() {
-		return new CustomFile(url.getFile());
+		if (url!=null) try{
+			return new CustomFile(url.getFile());
+		}catch(Exception e){}
+		return null;
 	}
+
+
+	/** @see URI#resolve(String) */
+	public String getParent() {
+		if (url!=null) try{
+			return url.toURI().resolve(toString().endsWith("/") ? ".." : "").toString();
+		}catch(Exception e){}
+		return null;
+	}
+
 
 	public String path(String...more) {
 		String spec=url==null ? "" : url.toString();
 		return more.length==0 ? spec : spec+"/"+ArrayUtils.concat(more, "/");
+	}
+
+	@Override
+	public String toString() {
+		return path();
 	}
 
 

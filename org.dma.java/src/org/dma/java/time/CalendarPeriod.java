@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,13 @@ import org.dma.java.util.TimeDateUtils;
 
 public class CalendarPeriod {
 
-	private final Calendar startDate;
-	private final Calendar endDate;
+	protected final Calendar startDate;
+	protected final Calendar endDate;
 
-	/** 01-01-1999, TODAY */
+	public Calendar getStartDate() {return startDate;}
+	public Calendar getEndDate() {return endDate;}
+
+	/** 1999-01-01 */
 	public CalendarPeriod() {
 		this(TimeDateUtils.getCalendar(1999), TimeDateUtils.getCalendar());
 	}
@@ -42,14 +45,6 @@ public class CalendarPeriod {
 		this.endDate=endDate;
 	}
 
-	public Calendar getStartDate() {
-		return startDate;
-	}
-
-	public Calendar getEndDate() {
-		return endDate;
-	}
-
 	public String getStartDate(String pattern) {
 		return TimeDateUtils.getDateFormatted(startDate, pattern);
 	}
@@ -58,12 +53,28 @@ public class CalendarPeriod {
 		return TimeDateUtils.getDateFormatted(endDate, pattern);
 	}
 
-	public Calendar[] toArray() {
-		return new Calendar[]{getStartDate(), getEndDate()};
-	}
-
 	public String[] toArray(String pattern) {
 		return new String[]{getStartDate(pattern), getEndDate(pattern)};
+	}
+
+	public Calendar[] toArray() {
+		return new Calendar[]{startDate, endDate};
+	}
+
+	public DatePeriod toDatePeriod() {
+		return new DatePeriod(startDate, endDate);
+	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() +
+				" [startDate=" + startDate +
+				", endDate=" + endDate + "]";
 	}
 
 }

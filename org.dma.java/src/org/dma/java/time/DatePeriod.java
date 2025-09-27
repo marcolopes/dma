@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,13 @@ import org.dma.java.util.TimeDateUtils;
 
 public class DatePeriod {
 
-	private final Date startDate;
-	private final Date endDate;
+	protected final Date startDate;
+	protected final Date endDate;
 
-	/** 01-01-1999, TODAY */
+	public Date getStartDate() {return startDate;}
+	public Date getEndDate() {return endDate;}
+
+	/** 1999-01-01 */
 	public DatePeriod() {
 		this(TimeDateUtils.getCalendar(1999), TimeDateUtils.getCalendar());
 	}
@@ -42,14 +45,6 @@ public class DatePeriod {
 		this.endDate=endDate;
 	}
 
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
 	public String getStartDate(String pattern) {
 		return TimeDateUtils.getDateFormatted(startDate, pattern);
 	}
@@ -58,12 +53,12 @@ public class DatePeriod {
 		return TimeDateUtils.getDateFormatted(endDate, pattern);
 	}
 
-	public Date[] toArray() {
-		return new Date[]{getStartDate(), getEndDate()};
-	}
-
 	public String[] toArray(String pattern) {
 		return new String[]{getStartDate(pattern), getEndDate(pattern)};
+	}
+
+	public Date[] toArray() {
+		return new Date[]{startDate, endDate};
 	}
 
 

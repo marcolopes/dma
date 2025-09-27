@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 package org.dma.java.security;
 
 import org.dma.java.cipher.BlowfishCipher;
+import org.dma.java.util.RandomValue;
 
 public class BlowfishPassword extends BlowfishCipher {
 
@@ -39,22 +40,26 @@ public class BlowfishPassword extends BlowfishCipher {
 	 * BASE64decrypt alias! (pair with encode)
 	 * @see BlowfishCipher#BASE64decrypt(String)
 	 */
-	public String decode(String password) {
-		return BASE64decrypt(password);
+	public String decode(String encoded) {
+		return BASE64decrypt(encoded);
+	}
+
+
+	public boolean test(String encoded, String password) {
+		return decode(encoded).equals(password);
 	}
 
 
 	public static void main(String[] args) {
 
-		String password = "password";
+		String password="password";
 		System.out.println(password);
 
-		BlowfishPassword cipher=new BlowfishPassword("password");
+		BlowfishPassword cipher=new BlowfishPassword(new RandomValue().string(16));
 
 		String encoded=cipher.encode(password);
 		System.out.println(encoded);
-
-		System.out.println(cipher.decode(encoded).equals(password));
+		System.out.println(cipher.test(encoded, password));
 
 	}
 

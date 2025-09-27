@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ public class ImageHandler extends RenderedImageHandler {
 	 * encoded by the specified buffer.
 	 */
 	public static BufferedImage createImage(byte[] bytes) {
-		try{return drawImage(ImageIO.read(new ByteArrayInputStream(bytes)));
+		if (bytes!=null) try{return drawImage(ImageIO.read(new ByteArrayInputStream(bytes)));
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -85,8 +85,7 @@ public class ImageHandler extends RenderedImageHandler {
 	 */
 	public static BufferedImage createImage(Class location, String resource) {
 		try{InputStream stream=location.getClassLoader().getResourceAsStream(resource);
-			try{BufferedImage image=ImageIO.read(stream);
-				return drawImage(image);
+			try{return drawImage(ImageIO.read(stream));
 			}finally{
 				stream.close();
 			}
@@ -97,26 +96,17 @@ public class ImageHandler extends RenderedImageHandler {
 
 	private final BufferedImage image;
 
-	/**
-	 * Creates a {@link BufferedImage}
-	 * encoded by the specified buffer.
-	 */
+	/** @see ImageHandler#createImage(byte[]) */
 	public ImageHandler(byte[] bytes) {
 		this(createImage(bytes));
 	}
 
-	/**
-	 * Creates a {@link BufferedImage}
-	 * encoded by the specified file at the specified path.
-	 */
+	/** @see ImageHandler#createImage(String) */
 	public ImageHandler(String pathname) {
 		this(createImage(pathname));
 	}
 
-	/**
-	 * Creates a {@link BufferedImage}
-	 * encoded by the specified resource at the specified location.
-	 */
+	/** @see ImageHandler#createImage(Class, String) */
 	public ImageHandler(Class location, String resource) {
 		this(createImage(location, resource));
 	}
@@ -129,7 +119,8 @@ public class ImageHandler extends RenderedImageHandler {
 
 	/** @see Scalr#resize(BufferedImage, int, BufferedImageOp...) */
 	public BufferedImage resize(int targetSize,	BufferedImageOp... ops) {
-		try{return targetSize==0 ? image : Scalr.resize(image, targetSize, ops);
+		if (image!=null) try{
+			return targetSize==0 ? image : Scalr.resize(image, targetSize, ops);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -137,7 +128,8 @@ public class ImageHandler extends RenderedImageHandler {
 
 	/** @see Scalr#resize(BufferedImage, Mode, int, BufferedImageOp...) */
 	public BufferedImage resize(Mode resizeMode, int targetSize, BufferedImageOp... ops) {
-		try{return targetSize==0 ? image : Scalr.resize(image, resizeMode, targetSize, ops);
+		if (image!=null) try{
+			return targetSize==0 ? image : Scalr.resize(image, resizeMode, targetSize, ops);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
@@ -145,7 +137,8 @@ public class ImageHandler extends RenderedImageHandler {
 
 	/** @see Scalr#rotate(BufferedImage, Rotation, BufferedImageOp...) */
 	public BufferedImage rotate(Rotation rotation, BufferedImageOp... ops) {
-		try{return Scalr.rotate(image, rotation, ops);
+		if (image!=null) try{
+			return Scalr.rotate(image, rotation, ops);
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;

@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import org.dma.java.input.FieldFormat.SEPARATOR;
 
@@ -55,14 +54,20 @@ public class StringList extends ArrayList<String> {
 	 */
 	@Override
 	public String[] toArray() {
-		return super.toArray(new String[size()]);
+		return toArray(new String[size()]);
 	}
 
 
 	@Override
 	public StringList subList(int fromIndex, int toIndex) {
-		return fromIndex<0 || toIndex>size() || fromIndex>toIndex ?
-				new StringList(0) : new StringList(super.subList(fromIndex, toIndex));
+		return fromIndex<0 || fromIndex>toIndex ?
+				new StringList(0) : new StringList(super.subList(
+						fromIndex, toIndex>size() ? size() : toIndex));
+	}
+
+
+	public StringList subList(int fromIndex) {
+		return subList(fromIndex, size());
 	}
 
 
@@ -78,11 +83,12 @@ public class StringList extends ArrayList<String> {
 	/** Returns the size in BYTES */
 	public int byteSize() {
 
-		try{ByteArrayOutputStream baos=new ByteArrayOutputStream();
-			ObjectOutputStream out=new ObjectOutputStream(baos);
-			out.writeObject(this);
-			out.close();
-			return baos.size();
+		try{ByteArrayOutputStream out=new ByteArrayOutputStream();
+			ObjectOutputStream oos=new ObjectOutputStream(out);
+			try{oos.writeObject(this);
+			}finally{
+				oos.close();
+			}return out.size();
 		}catch(IOException e){
 			e.printStackTrace();
 		}return 0;
@@ -104,7 +110,7 @@ public class StringList extends ArrayList<String> {
 	/** Returns a random element */
 	public String random() {
 
-		int index=new Random().nextInt(size());
+		int index=new RandomValue().nextInt(size());
 		for(String string: this){
 			if (--index<0) return string;
 		}return null;
@@ -118,8 +124,8 @@ public class StringList extends ArrayList<String> {
 		if (isEmpty()) return null;
 
 		String result=get(0);
-		for(int i=1; i<size(); i++){
-			String string=get(i);
+		for(int index=1; index<size(); index++){
+			String string=get(index);
 			if (string.length()>result.length()) result=string;
 		}return result;
 
@@ -203,16 +209,18 @@ public class StringList extends ArrayList<String> {
 	/** Inserts all elements into this list */
 	public StringList insert(int index, String...element) {
 
-		addAll(index, Arrays.asList(element));
+		if (element.length==1) add(index, element[0]);
+		else addAll(index, Arrays.asList(element));
 		return this;
 
 	}
 
 
-	/** Adds all elements to this list */
+	/** Appends all elements to this list */
 	public StringList append(String...element) {
 
-		addAll(Arrays.asList(element));
+		if (element.length==1) add(element[0]);
+		else addAll(Arrays.asList(element));
 		return this;
 
 	}
@@ -268,35 +276,48 @@ public class StringList extends ArrayList<String> {
 	public String concat(String separator) {
 
 		StringBuilder result=new StringBuilder();
-		for(String string: this){
-			if (result.length()>0) result.append(separator);
-			result.append(string);
+		for(int index=0; index<size(); index++){
+			if (index>0) result.append(separator);
+			result.append(get(index));
 		}return result.toString();
 
 	}
 
 
+	public String toString(String separator) {
+		return concat(separator);
+	}
+
 	@Override
 	public String toString() {
-		return concat(SEPARATOR.LINE.value);
+		return toString(SEPARATOR.LINE.value);
 	}
 
 
 	public static void main(String[] args) {
 
-		String format="%22s";
+		StringList list=new StringList(StringUtils.words("The quick brown fox jumps over the lazy dog")){
+			@Override
+			public String toString() {
+				return "["+toString("|")+"]";
+			}
+		};
 
-		StringList list=StringUtils.words("The quick brown fox jumps over the lazy dog");
+		String format="%15s";
+
+		System.out.printf(format, "byteSize: "); System.out.println(list.byteSize());
+		System.out.printf(format, "string: "); System.out.println(list);
 		System.out.printf(format, "capitalize: "); System.out.println(list.capitalize());
 		System.out.printf(format, "uncapitalize: "); System.out.println(list.uncapitalize());
 		System.out.printf(format, "addPrefix: "); System.out.println(list.addPrefix("*"));
 		System.out.printf(format, "addSuffix: "); System.out.println(list.addSuffix("*"));
 		System.out.printf(format, "remove: "); System.out.println(list.remove(1, 7));
-		System.out.printf(format, "insert: "); System.out.println(list.insert(0, " "));
+		System.out.printf(format, "insert: "); System.out.println(list.insert(1, " quick ", " lazy ").insert(0, " "));
 		System.out.printf(format, "append: "); System.out.println(list.append(" "));
 		System.out.printf(format, "trim: "); System.out.println(list.trim());
 		System.out.printf(format, "compact: "); System.out.println(list.compact());
 		System.out.printf(format, "concat: "); System.out.println(list.concat(":"));
+		System.out.printf(format, "byteSize: "); System.out.println(list.byteSize());
 
 	}
 

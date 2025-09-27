@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2015 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ public class PagedList<T> extends ArrayList<T> {
 
 	public int getIndex() {return index;}
 	public void setIndex(int index) {this.index=index;}
-	public void home() {index=0;}
+	public void home() {setIndex(0);}
 
 	private int count=0;
 
@@ -40,12 +40,12 @@ public class PagedList<T> extends ArrayList<T> {
 
 	public void previous() {
 		int index=this.index-count;
-		this.index=index<=0 ? 0 : index;
+		setIndex(index<=0 ? 0 : index);
 	}
 
 	public void next() {
 		int index=this.index+count;
-		this.index=index>=size() ? size() : index;
+		setIndex(index>=size() ? size() : index);
 	}
 
 
