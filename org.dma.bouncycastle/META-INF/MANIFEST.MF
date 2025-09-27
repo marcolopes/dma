@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Bouncy Castle for Java
 Bundle-SymbolicName: org.dma.bouncycastle;singleton:=true
-Bundle-Version: 1.70.0.qualifier
+Bundle-Version: 1.79.0.qualifier
 Bundle-Vendor: bouncycastle
 Bundle-Activator: org.dma.bouncycastle.Activator
 Bundle-ActivationPolicy: lazy
