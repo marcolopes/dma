@@ -7,7 +7,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.icu.Activator
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .,
  libraries/icu4j-71.1.jar
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2"
