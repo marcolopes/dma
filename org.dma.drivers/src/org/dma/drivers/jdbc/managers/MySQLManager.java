@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.mysql.jdbc.MySQLConnection;
+
 import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.Folder;
 
-public class MySQLManager extends AbstractManager implements IDatabaseManager {
+public class MySQLManager extends AbstractManager {
 
-	public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+	public static MySQLConnection unwrap(Connection connection) throws SQLException {
+		return connection.unwrap(MySQLConnection.class);
+	}
+
+	public MySQLManager(POOLMANAGERS pool) {
+		super(pool);
+	}
 
 	@Override
 	public String getName() {
@@ -38,23 +46,26 @@ public class MySQLManager extends AbstractManager implements IDatabaseManager {
 	}
 
 	@Override
-	public String getDriverName() {
-		return DRIVER_NAME;
-	}
-
-	@Override
 	public void compact(String host, String database, Folder folder, String username, String password) throws Exception {}
 
 	@Override
-	public String getConnectionUrl(String host, String database, Folder folder, String properties, POOLMANAGERS pool) {
-		//URL?property=value[&property=value]
-		return new StringBuilder(getDatabaseUrl(host, database, folder)).
+	public String getConnectionUrl(String host, String database, Folder folder, String properties) {
+		//jdbc:mysql://<host>:<port>/<database>
+		return new StringBuilder("jdbc:mysql://").append(host).append("/").append(database).
+				//URL?property=value[&property=value]
 				append(properties.isEmpty() ? "" : "?"+properties).toString();
 	}
 
-	private String getDatabaseUrl(String host, String database, Folder folder) {
-		//jdbc:mysql://<host>:<port>/<database>
-		return new StringBuilder("jdbc:mysql://").append(host).append("/").append(database).toString();
+	@Override
+	public long getConnectionId(Connection connection) {
+		try{return unwrap(connection).getId();
+		}catch(Exception e){}
+		return 0;
+	}
+
+	@Override
+	public void closeConnection(Connection connection) throws SQLException {
+		unwrap(connection).close();
 	}
 
 	/*

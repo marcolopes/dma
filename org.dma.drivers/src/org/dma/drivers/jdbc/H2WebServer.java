@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@ public class H2WebServer extends Server {
 	public H2WebServer(Folder properties, Folder database) throws SQLException {
 		super(new WebServer(),
 				//PROPERTIES file folder
-				"-properties", properties.getAbsolutePath(),
+				"-properties", properties.getPath(),
 				//DATABASE file folder
-				"-baseDir", database.getAbsolutePath());
+				"-baseDir", database.getPath());
 
 		server=(WebServer)getService();
 		server.setShutdownHandler(this);

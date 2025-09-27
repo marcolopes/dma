@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@
  *******************************************************************************/
 package org.dma.drivers.jdbc.managers;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 
 import org.dma.drivers.jdbc.BackupParameters;
-import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.Folder;
 
 public interface IDatabaseManager {
@@ -31,22 +31,27 @@ public interface IDatabaseManager {
 	/** Simple name */
 	public String getName();
 
-	/** Driver class name */
-	public String getDriverName();
-
-	public boolean isH2Embedded(String host);
-
 	/** Only for H2 database */
 	public void compact(String host, String database, Folder folder, String username, String password) throws Exception;
 
-	public void executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception;
+	public File executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception;
 
-	public String getConnectionUrl(String host, String database, Folder folder, String properties, POOLMANAGERS pool);
+	public String getConnectionUrl(String host, String database, Folder folder, String properties);
 
 	/** Should NOT be used to check the connection! */
-	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException;
+	public Connection getConnection(String url, String username, String password) throws SQLException;
 
+	/** Checks conectivity through the pool */
 	public void checkConnection(String url, String username, String password) throws SQLException;
+
+	/** Shuts down the pool manager */
+	public void shutdown(String url, String username, String password) throws SQLException;
+
+	/** Returns the native connection ID */
+	public long getConnectionId(Connection connection);
+
+	/** Closes the native connection */
+	public void closeConnection(Connection connection) throws SQLException;
 
 	/*
 	 *  SQL updates

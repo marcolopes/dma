@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,24 @@
 package org.dma.drivers.jdbc.managers;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import com.microsoft.sqlserver.jdbc.ISQLServerConnection;
 
 import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.Folder;
 
-public class SQLServerManager extends AbstractManager implements IDatabaseManager {
+public class SQLServerManager extends AbstractManager {
 
-	public static final String DRIVER_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+	public static ISQLServerConnection unwrap(Connection connection) throws SQLException {
+		return connection.unwrap(ISQLServerConnection.class);
+	}
+
+	public SQLServerManager(POOLMANAGERS pool) {
+		super(pool);
+	}
 
 	@Override
 	public String getName() {
@@ -35,24 +44,27 @@ public class SQLServerManager extends AbstractManager implements IDatabaseManage
 	}
 
 	@Override
-	public String getDriverName() {
-		return DRIVER_NAME;
-	}
-
-	@Override
 	public void compact(String host, String database, Folder folder, String username, String password) throws Exception {}
 
 	@Override
-	public String getConnectionUrl(String host, String database, Folder folder, String properties, POOLMANAGERS pool) {
-		//URL;property=value[;property=value]
-		return new StringBuilder(getDatabaseUrl(host, database, folder)).
+	public String getConnectionUrl(String host, String database, Folder folder, String properties) {
+		//jdbc:sqlserver://[serverName[\instanceName][:portNumber]]
+		return new StringBuilder("jdbc:sqlserver://").append(host).append(";databaseName=").append(database).
+				//URL;property=value[;property=value]
 				append(properties.isEmpty() ? "" : ";"+properties).
 				append(";SelectMethod=cursor").toString();
 	}
 
-	private String getDatabaseUrl(String host, String database, Folder folder) {
-		// jdbc:sqlserver://[serverName[\instanceName][:portNumber]]
-		return new StringBuilder("jdbc:sqlserver://").append(host).append(";databaseName=").append(database).toString();
+	@Override
+	public long getConnectionId(Connection connection) {
+		try{return unwrap(connection).getClientConnectionId().hashCode();
+		}catch(Exception e){}
+		return 0;
+	}
+
+	@Override
+	public void closeConnection(Connection connection) throws SQLException {
+		unwrap(connection).close();
 	}
 
 	/*

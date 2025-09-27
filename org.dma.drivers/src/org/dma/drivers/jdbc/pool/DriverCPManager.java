@@ -19,18 +19,41 @@
 package org.dma.drivers.jdbc.pool;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
-import org.dma.java.util.SystemUtils.SystemProperty;
+public class DriverCPManager implements IPoolManager {
 
-public interface IPoolManager {
+	private Connection connection;
 
-	/** Maximum wait time (millis) for a connection from the pool */
-	public static final SystemProperty MAX_WAIT_PROPERTY = new SystemProperty("org.dma.drivers.jdbc.pool.MaxWait", (int)TimeUnit.SECONDS.toMillis(3));
+	private final String url, username, password;
 
-	public Connection getConnection() throws SQLException;
+	public DriverCPManager(String url, String username, String password) {
+		this.url=url;
+		this.username=username;
+		this.password=password;
+		/*
+		 * The DriverManager itself doesn't do anything with the loginTimeout.
+		 * It is up to individual JDBC driver to implement timeout handling
+		 * and use the value of this property of DriverManager.
+		 */
+		DriverManager.setLoginTimeout((int)TimeUnit.MILLISECONDS.toSeconds(MAX_WAIT_PROPERTY.getIntValue()));
+	}
 
-	public void shutdown();
+	@Override
+	public Connection getConnection() throws SQLException {
+		return connection==null || connection.isClosed() ?
+				connection=DriverManager.getConnection(url, username, password) : connection;
+	}
+	@Override
+	public void shutdown() {
+		if (connection!=null) try{
+			connection.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 
 }

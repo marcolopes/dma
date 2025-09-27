@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,12 @@ package org.dma.drivers.jdbc.managers;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.h2.engine.Constants;
+import org.h2.jdbc.JdbcConnection;
 import org.h2.message.TraceSystem;
 import org.h2.store.FileLock;
 import org.h2.tools.DeleteDbFiles;
@@ -38,20 +40,36 @@ import org.dma.java.io.ZipFile;
 import org.dma.java.net.HttpServerHandler;
 import org.dma.java.util.Debug;
 
-public class H2Manager extends AbstractManager implements IDatabaseManager {
+public class H2Manager extends AbstractManager {
 
-	public static final String DRIVER_NAME = "org.h2.Driver";
+	public static JdbcConnection unwrap(Connection connection) throws SQLException {
+		return connection.unwrap(JdbcConnection.class);
+	}
 
-	public static void checkLock(String database) throws Exception {
-		String filename=database+Constants.SUFFIX_LOCK_FILE;
-		Debug.out("DATABASE LOCK: "+filename);
-		try{//catch RuntimeException
-			FileLock lock=new FileLock(new TraceSystem(null), filename, 0);
-			lock.lock(FileLock.LOCK_FILE);
-			lock.unlock();
-		}catch(Exception e){
-			throw new Exception(e);
-		}
+	public static boolean isEmbedded(String host) {
+		return new HttpServerHandler(host).isLocalhost();
+	}
+
+	public static String getConnectionUrl(String host, String database, Folder folder) {
+		CustomFile file=new CustomFile(folder.getPath(), database);
+		return isEmbedded(host) ?
+				//jdbc:h2:[file:][<path>]<database>
+				new StringBuilder("jdbc:h2:file:").append(file).toString() :
+				//jdbc:h2:tcp://<server>[:<port>]/[<path>]<database>
+				new StringBuilder("jdbc:h2:tcp://").
+					append(host).append("/").append(file).toString();
+	}
+
+	public static void checkLock(Folder folder, String database) throws Exception {
+		File file=new CustomFile(folder.getPath(), database+Constants.SUFFIX_LOCK_FILE);
+		Debug.out("DATABASE LOCK: "+file);
+		FileLock lock=new FileLock(new TraceSystem(null), file.getPath(), 0);
+		lock.lock(FileLock.LOCK_FILE);
+		lock.unlock();
+	}
+
+	public H2Manager(POOLMANAGERS pool) {
+		super(pool);
 	}
 
 	@Override
@@ -60,38 +78,27 @@ public class H2Manager extends AbstractManager implements IDatabaseManager {
 	}
 
 	@Override
-	public String getDriverName() {
-		return DRIVER_NAME;
-	}
-
-	@Override
-	public boolean isH2Embedded(String host) {
-		return new HttpServerHandler(host).isLocalhost();
-	}
-
-	@Override
 	public void compact(String host, String database, Folder folder, String username, String password) throws Exception {
-		String url=getDatabaseUrl(host, database, folder);
+		String url=getConnectionUrl(host, database, folder);
 		//SQL script file
-		File file=new CustomFile(Folder.temporary().getAbsolutePath(), database+".sql");
+		File file=new CustomFile(Folder.temporary(), database+".sql");
 		//Backup the database to the SQL script file
-		Script.execute(url, username, password, file.getAbsolutePath());
+		Script.execute(url, username, password, file.getPath());
 		//Delete the database file
-		DeleteDbFiles.execute(folder.getAbsolutePath(), database, true);
+		DeleteDbFiles.execute(folder.getPath(), database, true);
 		//Recreate the database from the SQL script file
-		RunScript.execute(url, username, password, file.getAbsolutePath(), null, false);
+		RunScript.execute(url, username, password, file.getPath(), null, false);
 		//Delete the SQL script file
 		file.delete();
 	}
 
 	@Override
-	public void executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception {
+	public File executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception {
 		String prefix=getUniqueId(database);
 		//[folder]/[prefix].zip
 		ZipFile zip=new ZipFile(backup.folder, prefix+".zip");
 		Debug.out("BACKUP ZIP: "+zip);
-		//H2 Embedded
-		if (isH2Embedded(host)){
+		if (isEmbedded(host)){
 			/*
 			 * H2 Driver v1.3.169
 			 * Backup.execute does not work with eclipse exported product on MAC!
@@ -99,24 +106,24 @@ public class H2Manager extends AbstractManager implements IDatabaseManager {
 			 * File db=new File(database).getAbsoluteFile();
 			 * Backup.execute(dump.toString(), db.getParent(), db.getName(), false);
 			 */
-			File file=new CustomFile(folder.getAbsolutePath(), database+Constants.SUFFIX_PAGE_FILE);
+			File file=new CustomFile(folder.getPath(), database+Constants.SUFFIX_PAGE_FILE);
 			Debug.out("DATABASE FILE: "+file);
-			checkLock(database); //locked?
+			checkLock(folder, database); //locked?
 			if (file.length()>0) new ZipFile(zip).deflate(file); //ZIP file
 		}else{
-			CustomFile dump=new CustomFile(backup.folder, prefix+".sql");
+			File dump=new CustomFile(backup.folder, prefix+".sql");
 			Debug.out("BACKUP DUMP: "+dump);
-			executeBackup(backup.buildCommand(getDatabaseUrl(host, database, folder), username, password, dump), password);
+			executeBackup(backup.buildCommand(getConnectionUrl(host, database, folder), username, password, dump), password);
 			//ZIP & delete dump
 			zip.deflate(dump);
 			dump.delete();
-		}
+		}return zip;
 	}
 
 	@Override
-	public String getConnectionUrl(String host, String database, Folder folder, String properties, POOLMANAGERS pool) {
-		StringBuilder sb=new StringBuilder(getDatabaseUrl(host, database, folder));
-		if (isH2Embedded(host)){
+	public String getConnectionUrl(String host, String database, Folder folder, String properties) {
+		StringBuilder sb=new StringBuilder(getConnectionUrl(host, database, folder));
+		if (isEmbedded(host)){
 			//Multiple processes can access the same database
 			sb.append(";AUTO_SERVER=TRUE");
 		}else{
@@ -124,19 +131,21 @@ public class H2Manager extends AbstractManager implements IDatabaseManager {
 			sb.append(properties.isEmpty() ? "" : ";"+properties);
 			//The connection only succeeds when the database already exists
 			sb.append(";IFEXISTS=TRUE");
-		}//needed when there is NO POOL
+		}//Needed when there is NO POOL
 		if (pool==POOLMANAGERS.NONE) sb.append(";DB_CLOSE_DELAY=10");
 		return sb.toString();
 	}
 
-	private String getDatabaseUrl(String host, String database, Folder folder) {
-		CustomFile file=new CustomFile(folder.getAbsolutePath(), database);
-		return isH2Embedded(host) ?
-				//jdbc:h2:[file:][<path>]<database>
-				new StringBuilder("jdbc:h2:file:").append(file).toString() :
-				//jdbc:h2:tcp://<server>[:<port>]/[<path>]<database>
-				new StringBuilder("jdbc:h2:tcp://").
-					append(host).append("/").append(file).toString();
+	@Override
+	public long getConnectionId(Connection connection) {
+		try{return unwrap(connection).getTraceId();
+		}catch(Exception e){}
+		return 0;
+	}
+
+	@Override
+	public void closeConnection(Connection connection) throws SQLException {
+		unwrap(connection).close();
 	}
 
 	/*

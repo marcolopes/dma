@@ -21,43 +21,41 @@ package org.dma.drivers.jdbc.pool;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-public class BoneCPManager implements IPoolManager {
+/*
+ * https://github.com/brettwooldridge/HikariCP/blob/dev/CHANGES
+ */
+public class HikariCPManager implements IPoolManager {
 
-	private final BoneCP pool;
+	private final HikariDataSource pool;
 
-	public BoneCPManager(String url, String username, String password) {
+	public HikariCPManager(String url, String username, String password) {
 		/*
-		 * https://github.com/wwadge/bonecp/blob/master/bonecp/src/main/resources/bonecp-default-config.xml
+		 * https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#gear-configuration-knobs-baby
 		 */
-		BoneCPConfig config=new BoneCPConfig();
+		HikariConfig config=new HikariConfig();
 		config.setJdbcUrl(url);
 		config.setUsername(username);
 		config.setPassword(password);
 		/*
-		 * Sets the maximum time (in milliseconds) to wait before a call
-		 * to getConnection is timed out. Setting this to zero is similar
-		 * to setting it to Long.MAX_VALUE  Default: 0 ( = wait forever )
+		 * Set the maximum number of milliseconds that a client will wait
+		 * for a connection from the pool. If this time is exceeded without
+		 * a connection becoming available, a SQLException will be thrown
+		 * from javax.sql.DataSource.getConnection().
 		 */
-		config.setConnectionTimeoutInMs(MAX_WAIT_PROPERTY.getIntValue());
+		config.setConnectionTimeout(MAX_WAIT_PROPERTY.getIntValue());
 		/*
-		 * Default: Use metadata request
-		 *
-		 * The query to send to the DB to maintain keep-alives and test for
-		 * dead connections. This is database specific and should be set to
-		 * a query that consumes the minimal amount of load on the server.
-		 * Examples: MySQL: "/* ping *\/ SELECT 1", PostgreSQL: "SELECT NOW()".
-		 * If you do not set this, then BoneCP will issue a metadata request
-		 * instead that should work on all databases but is probably slower.
+		 * HikariCP validates connections that have been idle for a certain period.
+		 * This helps prevent issues with connections that might have been dropped
+		 * by the database server while sitting idle in the pool.
 		 */
-		//config.setConnectionTestStatement();
 		pool=createPool(config);
 	}
 
-	private BoneCP createPool(BoneCPConfig config) {
-		try{return new BoneCP(config);
+	private HikariDataSource createPool(HikariConfig config) {
+		try{return new HikariDataSource(config);
 		}catch(Exception e){
 			e.printStackTrace();
 		}return null;
@@ -70,7 +68,7 @@ public class BoneCPManager implements IPoolManager {
 
 	@Override
 	public void shutdown() {
-		pool.shutdown();
+		pool.close();
 	}
 
 

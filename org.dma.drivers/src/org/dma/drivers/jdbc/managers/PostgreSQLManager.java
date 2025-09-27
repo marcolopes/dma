@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,26 +19,30 @@
 package org.dma.drivers.jdbc.managers;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.postgresql.jdbc.PgConnection;
 
 import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.Command;
 import org.dma.java.io.Folder;
 import org.dma.java.util.StringUtils;
 
-public class PostgreSQLManager extends AbstractManager implements IDatabaseManager {
+public class PostgreSQLManager extends AbstractManager {
 
-	public static final String DRIVER_NAME = "org.postgresql.Driver";
+	public static PgConnection unwrap(Connection connection) throws SQLException {
+		return connection.unwrap(PgConnection.class);
+	}
+
+	public PostgreSQLManager(POOLMANAGERS pool) {
+		super(pool);
+	}
 
 	@Override
 	public String getName() {
 		return "PostgreSQL";
-	}
-
-	@Override
-	public String getDriverName() {
-		return DRIVER_NAME;
 	}
 
 	@Override
@@ -52,15 +56,23 @@ public class PostgreSQLManager extends AbstractManager implements IDatabaseManag
 	}
 
 	@Override
-	public String getConnectionUrl(String host, String database, Folder folder, String properties, POOLMANAGERS pool) {
-		//URL?property=value[&property=value]
-		return new StringBuilder(getDatabaseUrl(host, database, folder)).
+	public String getConnectionUrl(String host, String database, Folder folder, String properties) {
+		//jdbc:postgresql://<host>:<port>/<database>
+		return new StringBuilder("jdbc:postgresql://").append(host).append("/").append(database).
+				//URL?property=value[&property=value]
 				append(properties.isEmpty() ? "" : "?"+properties).toString();
 	}
 
-	private String getDatabaseUrl(String host, String database, Folder folder) {
-		//jdbc:postgresql://<host>:<port>/<database>
-		return new StringBuilder("jdbc:postgresql://").append(host).append("/").append(database).toString();
+	@Override
+	public long getConnectionId(Connection connection) {
+		try{return unwrap(connection).getBackendPID();
+		}catch(Exception e){}
+		return 0;
+	}
+
+	@Override
+	public void closeConnection(Connection connection) throws SQLException {
+		unwrap(connection).close();
 	}
 
 	/*

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,11 +21,7 @@ package org.dma.drivers.jdbc;
 import org.h2.engine.Constants;
 
 import org.dma.drivers.Activator;
-import org.dma.drivers.jdbc.managers.H2Manager;
-import org.dma.drivers.jdbc.managers.IDatabaseManager;
-import org.dma.drivers.jdbc.managers.MySQLManager;
-import org.dma.drivers.jdbc.managers.PostgreSQLManager;
-import org.dma.drivers.jdbc.managers.SQLServerManager;
+import org.dma.java.util.SystemUtils.SystemProperty;
 import org.dma.java.util.VersionNumber;
 
 public enum DRIVERS {
@@ -35,31 +31,20 @@ public enum DRIVERS {
 	 * System property h2.storeLocalTime (default: false)
 	 * Store the local time. If disabled, the daylight saving offset is not taken into account.
 	 */
-	H2 (new H2Manager(), new SystemProperty("h2.storeLocalTime", "true")),
-
-	MySQL (new MySQLManager()),
-
-	PostgreSQL (new PostgreSQLManager()),
-
-	SQLServer (new SQLServerManager());
+	/** SystemProperty processed BEFORE driver is loaded! */
+	H2 ("org.h2.Driver", new SystemProperty("h2.storeLocalTime", "true")),
+	MySQL ("com.mysql.jdbc.Driver"),
+	PostgreSQL ("org.postgresql.Driver"),
+	SQLServer ("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
 	public static final VersionNumber H2_VERSION = new VersionNumber(
 			Constants.VERSION_MAJOR, Constants.VERSION_MINOR, Constants.BUILD_ID);
 
-	//processed BEFORE driver is loaded!
-	private static class SystemProperty {
-		public SystemProperty(String key, String value) {
-			System.setProperty(key, value);
-		}
-	}
-
-	public final IDatabaseManager manager;
 	public final String name;
 	public final Class klass;
 
-	DRIVERS(IDatabaseManager manager, SystemProperty...prop) {
-		this.manager=manager;
-		this.name=manager.getDriverName();
+	DRIVERS(String name, SystemProperty...prop) {
+		this.name=name;
 		this.klass=Activator.classForName(name);
 	}
 

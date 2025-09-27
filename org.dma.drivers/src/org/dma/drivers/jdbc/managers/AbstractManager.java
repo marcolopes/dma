@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.dma.drivers.jdbc.managers;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,9 +34,10 @@ import org.dma.java.util.TimeDateUtils;
 
 public abstract class AbstractManager implements IDatabaseManager {
 
-	@Override
-	public boolean isH2Embedded(String host) {
-		return false;
+	protected final POOLMANAGERS pool;
+
+	public AbstractManager(POOLMANAGERS pool) {
+		this.pool=pool;
 	}
 
 	public String getUniqueId(String database) {
@@ -45,7 +47,7 @@ public abstract class AbstractManager implements IDatabaseManager {
 	}
 
 	@Override
-	public void executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception {
+	public File executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception {
 		String prefix=getUniqueId(database);
 		CustomFile dump=new CustomFile(backup.folder, prefix+".sql");
 		Debug.out("BACKUP DUMP: "+dump);
@@ -55,6 +57,7 @@ public abstract class AbstractManager implements IDatabaseManager {
 		Debug.out("BACKUP ZIP: "+zip);
 		zip.deflate(dump);
 		dump.delete();
+		return zip;
 	}
 
 	public void executeBackup(Command cmd, String password) throws Exception {
@@ -62,15 +65,28 @@ public abstract class AbstractManager implements IDatabaseManager {
 		if (cmd.startAndWait()!=0) throw new Exception(cmd.toString());
 	}
 
+	/** Release the connection from the pool */
+	@Deprecated
+	public void releaseConnection(Connection connection) throws SQLException {
+		closeConnection(connection); // If we close the native connection
+		connection.close(); // It should then be released from the pool
+	}
+
 	@Override
-	public Connection getConnection(String url, String username, String password, POOLMANAGERS pool) throws SQLException {
-		return pool.get(url, username, password).getConnection();
+	public Connection getConnection(String url, String username, String password) throws SQLException {
+		Connection connection=pool.getConnection(url, username, password);
+		Debug.out(pool.name(), getConnectionId(connection));
+		return connection;
 	}
 
 	@Override
 	public void checkConnection(String url, String username, String password) throws SQLException {
-		Debug.err(username, url);
-		getConnection(url, username, password, POOLMANAGERS.NONE).close();
+		pool.checkConnection(url, username, password);
+	}
+
+	@Override
+	public void shutdown(String url, String username, String password) {
+		pool.shutdown(url, username, password);
 	}
 
 	/*
@@ -115,12 +131,9 @@ public abstract class AbstractManager implements IDatabaseManager {
 	@Override
 	public int executeSQLUpdate(Connection connection, String sql) throws SQLException {
 		int result=-1;
-		try{Statement st=connection.createStatement();
-			try{result=st.executeUpdate(sql);
-				connection.commit();
-			}finally{
-				st.close();
-			}
+		try(Statement st=connection.createStatement()){
+			result=st.executeUpdate(sql);
+			connection.commit();
 		}catch(SQLException e){
 			connection.rollback();
 			throw new SQLException(e);
