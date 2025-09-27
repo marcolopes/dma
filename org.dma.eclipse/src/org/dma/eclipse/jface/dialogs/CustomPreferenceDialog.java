@@ -25,6 +25,7 @@ import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
@@ -79,6 +80,7 @@ public class CustomPreferenceDialog extends PreferenceDialog {
 		//showPage(node);
 	}
 
+	/** @see Window#getReturnCode() */
 	public int open(IPreferenceNode node) {
 		if (!shell.isDisposed()){
 			getTreeViewer().expandAll();

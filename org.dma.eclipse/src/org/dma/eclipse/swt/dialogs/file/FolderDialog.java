@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
  *******************************************************************************/
 package org.dma.eclipse.swt.dialogs.file;
 
-import java.io.File;
 import java.util.Arrays;
 
 import org.dma.java.io.Folder;
@@ -45,7 +44,7 @@ public class FolderDialog extends DirectoryDialog {
 
 
 	/** @see DirectoryDialog#setFilterPath(String) */
-	public File folderPicker(Folder folder) {
+	public Folder folderPicker(Folder folder) {
 
 		try{/*
 			 * FileDialog SWT 3.7 BUG
@@ -55,7 +54,7 @@ public class FolderDialog extends DirectoryDialog {
 			 */
 			setFilterPath(folder==null ? "." : folder.getAbsolutePath());
 
-			return new File(open());
+			return new Folder(open());
 
 		}catch(Exception e){}
 		return null;
@@ -63,7 +62,7 @@ public class FolderDialog extends DirectoryDialog {
 	}
 
 
-	public File folderPicker() {
+	public Folder folderPicker() {
 		return folderPicker(null);
 	}
 
