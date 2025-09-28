@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import org.apache.xmlbeans.XmlOptions;
 
 import org.dma.java.io.CustomFile;
 import org.dma.java.io.FileParameters;
+import org.dma.java.io.Folder;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.xml.IXMLExport;
 
@@ -76,7 +77,7 @@ public class Stocks201Export implements IXMLExport {
 		this.endDate=endDate;
 	}
 
-	public FileParameters getFileParameters(File folder) {
+	public FileParameters getFileParameters(Folder folder) {
 		String prefix = NIF + "_STOCKS_" + TimeDateUtils.getDateFormatted(endDate, "yyyy-MM-dd");
 		return new FileParameters(prefix, "xml", folder);
 	}
@@ -95,7 +96,7 @@ public class Stocks201Export implements IXMLExport {
 
 		}catch(Exception e){
 			e.printStackTrace();
-		}else return save(getFileParameters(file).toFile());
+		}else return save(getFileParameters(new Folder(file)).toFile());
 
 		return false;
 
