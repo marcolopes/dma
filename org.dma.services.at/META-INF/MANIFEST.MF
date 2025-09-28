@@ -14,7 +14,7 @@ Bundle-ClassPath: .,
  libraries/streambuffer-0.8.jar,
  libraries/stax-ex-1.2.jar
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
- org.dma.bouncycastle;bundle-version="1.70.0",
+ org.dma.bouncycastle;bundle-version="1.79.0",
  org.dma.java;bundle-version="7.9.0"
 Export-Package: org.dma.services.at,
  org.dma.services.at.proxy,

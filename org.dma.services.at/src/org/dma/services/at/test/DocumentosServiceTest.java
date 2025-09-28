@@ -20,7 +20,6 @@ package org.dma.services.at.test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Random;
 
 import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
@@ -147,7 +146,7 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 	public static void main(String[] args) {
 
 		try{
-			RegisterInvoiceRequest request=build(new Random().nextInt(DocumentNumberMax)+1,
+			RegisterInvoiceRequest request=build(new RandomValue().nextInt(DocumentNumberMax)+1,
 					new SeriesServiceTest().registar(new RegistarSeriesType(
 							new RandomValue().numbers(SeriesServiceTest.SerieMaxLength),
 							TipoSerieType.N, TipoDocType.FT, 1, TimeDateUtils.getCurrentDate(),

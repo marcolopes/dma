@@ -19,8 +19,8 @@
 package org.dma.services.at.test;
 
 import java.math.BigDecimal;
-import java.util.Random;
 
+import org.dma.java.util.RandomValue;
 import org.dma.java.util.TimeDateUtils;
 import org.dma.services.at.ServiceCertificates;
 import org.dma.services.at.proxy.FaturasServiceHandler;
@@ -102,7 +102,7 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 	public static void main(String[] args) {
 
 		try{
-			RegisterInvoiceType request=build(new Random().nextInt(999999));
+			RegisterInvoiceType request=build(new RandomValue().nextInt(999999));
 
 			FaturasServiceTest service=new FaturasServiceTest();
 

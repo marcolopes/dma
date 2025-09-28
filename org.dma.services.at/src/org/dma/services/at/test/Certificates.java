@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,22 +19,22 @@
 package org.dma.services.at.test;
 
 import org.dma.java.security.JKSCertificate;
-import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
+import org.dma.java.security.JKSCertificate.KEYSTORE_TYPE;
 
 public class Certificates {
 
 	@Deprecated
-	JKSCertificate saPubKey = new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod");
+	JKSCertificate saPubKey = new JKSCertificate(KEYSTORE_TYPE.JKS, "certificates/saPubKey.jks", "saKeyPubPass", "sapubkey.prod");
 
 	@Deprecated
 	/** Trusted Store Certificate */
-	public static final JKSCertificate TrustStoreAT = new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas");
+	public static final JKSCertificate TrustStoreAT = new JKSCertificate(KEYSTORE_TYPE.JKS, "certificates/output/TrustStoreAT.jks", "123456", "portaldasfinancas");
 
 	/** Tax Authority Public KEY */
-	public static final JKSCertificate ChavePublicaAT = new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey");
+	public static final JKSCertificate ChavePublicaAT = new JKSCertificate(KEYSTORE_TYPE.JKS, "certificates/output/ChavePublicaAT.jks", "123456", "sapubkey");
 
 	/** Webservices TEST Certificate */
-	public static final JKSCertificate TesteWebservices = new JKSCertificate(CERTIFICATE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice");
+	public static final JKSCertificate TesteWebservices = new JKSCertificate(KEYSTORE_TYPE.PKCS12, "certificates/output/TesteWebservices.pfx", "TESTEwebservice");
 
 
 }

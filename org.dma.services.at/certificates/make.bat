@@ -27,7 +27,7 @@ chcp 65001
 
 echo EXTRAI A CHAVE PUBLICA DO CERTIFICADO AT (formato:PEM, encoding:BASE64)
 del %OUTPUT_FOLDER%\ChavePublicaAT.pem
-openssl x509 -in ChaveCifraPublicaAT2025.cer -pubkey -noout > %OUTPUT_FOLDER%\ChavePublicaAT.pem
+openssl x509 -in ChaveCifraPublicaAT2027.cer -pubkey -noout > %OUTPUT_FOLDER%\ChavePublicaAT.pem
 
 echo CONVERTE A CHAVE PUBLICA (formato:DER)
 del %OUTPUT_FOLDER%\ChavePublicaAT.der
@@ -35,7 +35,7 @@ openssl enc -base64 -d -in %OUTPUT_FOLDER%\ChavePublicaAT.pem > %OUTPUT_FOLDER%\
 
 echo IMPORTA A CHAVE PUBLICA DO CERTIFICADO AT (formato:JKS, alias:sapubkey)
 del %OUTPUT_FOLDER%\ChavePublicaAT.jks
-keytool -importcert -noprompt -alias "sapubkey" -file ChaveCifraPublicaAT2025.cer -keystore %OUTPUT_FOLDER%\ChavePublicaAT.jks -storepass 123456
+keytool -importcert -noprompt -alias "sapubkey" -file ChaveCifraPublicaAT2027.cer -keystore %OUTPUT_FOLDER%\ChavePublicaAT.jks -storepass 123456
 
 echo IMPORTA A TRUST STORE (formato:JKS, alias:portaldasfinancas)
 del %OUTPUT_FOLDER%\TrustStoreAT.jks
