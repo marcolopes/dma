@@ -75,8 +75,8 @@ public class VatNumber {
 	}
 
 	public boolean isValid() {
-		if (country!=null) switch(country){
-		default: return true;
+		if (country!=null && number!=null) switch(country){
+		default: return !number.isEmpty();
 		case PT: return CheckDigit.PT(number);
 		}return false;
 	}
