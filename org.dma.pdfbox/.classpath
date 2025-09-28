@@ -3,11 +3,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="libraries/pdfbox-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
-	<classpathentry exported="true" kind="lib" path="libraries/fontbox-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
-	<classpathentry exported="true" kind="lib" path="libraries/jempbox-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
-	<classpathentry exported="true" kind="lib" path="libraries/xmpbox-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
-	<classpathentry exported="true" kind="lib" path="libraries/preflight-1.8.16.jar" sourcepath="libraries/pdfbox-1.8.16-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/pdfbox-2.0.33.jar" sourcepath="libraries/pdfbox-2.0.33-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/fontbox-2.0.33.jar" sourcepath="libraries/pdfbox-2.0.33-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/preflight-2.0.33.jar" sourcepath="libraries/pdfbox-2.0.33-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/xmpbox-2.0.33.jar" sourcepath="libraries/pdfbox-2.0.33-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jbig2-imageio-3.0.4.jar" sourcepath="libraries/jbig2-imageio-3.0.4-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="libraries/commons-logging-1.1.1.jar" sourcepath="libraries/commons-logging-1.1.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

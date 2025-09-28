@@ -29,6 +29,8 @@ import org.osgi.framework.Version;
  */
 public class Activator implements BundleActivator {
 
+	public static final int PLUGIN_REVISION = 1;
+
 	public static final Bundle PLUGIN_BUNDLE = FrameworkUtil.getBundle(Activator.class);
 
 	public static final String PLUGIN_ID = PLUGIN_BUNDLE.getSymbolicName();
@@ -36,12 +38,15 @@ public class Activator implements BundleActivator {
 	public static final Version PLUGIN_VERSION = new Version(
 			PLUGIN_BUNDLE.getVersion().getMajor(),
 			PLUGIN_BUNDLE.getVersion().getMinor(),
-			PLUGIN_BUNDLE.getVersion().getMicro());
+			PLUGIN_BUNDLE.getVersion().getMicro(),
+			String.valueOf(PLUGIN_REVISION));
 
 	public static final String PLUGIN_NAME = PLUGIN_ID+" "+PLUGIN_VERSION;
 
 	public Activator() {
 		System.err.println(PLUGIN_NAME+" "+getClass().getSimpleName());
+		//https://pdfbox.apache.org/2.0/migration.html#pdf-printing
+		//System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
 	}
 
 	/*
