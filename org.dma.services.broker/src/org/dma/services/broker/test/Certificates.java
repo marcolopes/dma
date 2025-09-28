@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,16 @@
 package org.dma.services.broker.test;
 
 import org.dma.java.security.JKSCertificate;
-import org.dma.java.security.JKSCertificate.CERTIFICATE_TYPE;
+import org.dma.java.security.JKSCertificate.KEYSTORE_TYPE;
 
 public class Certificates {
 
 	@Deprecated
 	/** Trusted Store Certificate */
-	public static final JKSCertificate TrustStoreAT = new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/TrustStoreAT.jks", "123456", "portaldasfinancas");
+	public static final JKSCertificate TrustStoreAT = new JKSCertificate(KEYSTORE_TYPE.JKS, "certificates/TrustStoreAT.jks", "123456", "portaldasfinancas");
 
 	/** Saphety Doc Certificate */
-	public static final JKSCertificate SaphetyDoc = new JKSCertificate(CERTIFICATE_TYPE.JKS, "certificates/saphetydoc.jks", "123456");
+	public static final JKSCertificate SaphetyDoc = new JKSCertificate(KEYSTORE_TYPE.JKS, "certificates/saphetydoc.jks", "123456");
 
 
 }
