@@ -298,8 +298,8 @@ public class StringUtils {
 	/** Replaces accented characters */
 	public static String unaccent(String string) {
 
-	    String normalized=Normalizer.normalize(string, Normalizer.Form.NFKD);
-	    if(!normalized.equals(string)) try{
+		String normalized=Normalizer.normalize(string, Normalizer.Form.NFKD);
+		if(!normalized.equals(string)) try{
 			return new String(DIACRITICS_PATTERN.matcher(normalized).replaceAll("").getBytes("ascii"), "ascii");
 			//return new String(normalized.replaceAll("\\p{M}", "").getBytes("ascii"), "ascii");
 		}catch(Exception e){}
@@ -503,8 +503,8 @@ public class StringUtils {
 		int endIndex=0;
 		StringList list=new StringList();
 		while((endIndex=string.indexOf(searchFor, beginIndex))!=-1){
-		    list.add(string.substring(beginIndex, endIndex));
-		    beginIndex=endIndex+1;
+			list.add(string.substring(beginIndex, endIndex));
+			beginIndex=endIndex+1;
 		}// If no match was found, return this
 		if(beginIndex==0) return new StringList(string);
 		// Add remaining segment

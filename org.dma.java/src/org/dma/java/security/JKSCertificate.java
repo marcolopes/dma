@@ -154,15 +154,15 @@ public class JKSCertificate {
 	/** Returns X509 Certificate usage */
 	public Collection<String> getKeyUsage() {
 		String[] purposes={
-		     "digitalSignature",
-		     "nonRepudiation",
-		     "keyEncipherment",
-		     "dataEncipherment",
-		     "keyAgreement",
-		     "keyCertSign",
-		     "cRLSign",
-		     "encipherOnly",
-		     "decipherOnly"};
+			"digitalSignature",
+			"nonRepudiation",
+			"keyEncipherment",
+			"dataEncipherment",
+			"keyAgreement",
+			"keyCertSign",
+			"cRLSign",
+			"encipherOnly",
+			"decipherOnly"};
 
 		Collection<String> col=new ArrayList();
 		boolean[] usage=X509Cert.getKeyUsage();

@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import org.dma.java.input.FieldFormat.SEPARATOR;
 
@@ -110,11 +111,7 @@ public class StringList extends ArrayList<String> {
 	/** Returns a random element */
 	public String random() {
 
-		int index=new RandomValue().nextInt(size());
-		for(String string: this){
-			if (--index<0) return string;
-		}return null;
-
+		return isEmpty() ? null : get(new Random().nextInt(size()));
 	}
 
 

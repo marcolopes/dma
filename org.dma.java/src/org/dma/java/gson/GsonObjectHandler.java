@@ -17,7 +17,7 @@
  * Marco Lopes (marcolopespt@gmail.com)
  * Filipe Santos (filipesantos__12@hotmail.com)
  *******************************************************************************/
-package org.dma.java.util;
+package org.dma.java.gson;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -27,61 +27,12 @@ import java.util.Date;
 
 import org.apache.commons.codec.binary.Base64;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-/*
- * https://repo1.maven.org/maven2/com/google/code/gson/gson
- */
-public class JsonHelper {
+import org.dma.java.util.TimeDateUtils;
 
-	public static JsonObject parse(String json) {
-		JsonElement jsonElement=JsonParser.parseString(json);
-		return jsonElement.isJsonObject() ? jsonElement.getAsJsonObject() : null;
-	}
-
-	/*
-	 * To
-	 */
-	private static final Gson GSON = new Gson();
-
-	public static JsonObject toJsonObject(String json) {
-		return GSON.fromJson(json, JsonObject.class);
-	}
-
-	public static JsonArray toJsonArray(String json) {
-		return GSON.fromJson(json, JsonArray.class);
-	}
-
-	public static String toJsonString(JsonObject jsonObject) {
-		return GSON.toJson(jsonObject);
-	}
-
-	/*
-	 * Check
-	 */
-	public static boolean hasProperty(JsonObject jsonObject, String property) {
-		return jsonObject!=null && jsonObject.has(property);
-	}
-
-	public static boolean isArray(JsonObject jsonObject, String property) {
-		return hasProperty(jsonObject, property) && jsonObject.get(property).isJsonArray();
-	}
-
-	public static boolean isObject(JsonObject jsonObject, String property) {
-		return hasProperty(jsonObject, property) && jsonObject.get(property).isJsonObject();
-	}
-
-	public static boolean isPrimitive(JsonObject jsonObject, String property) {
-		return hasProperty(jsonObject, property) && jsonObject.get(property).isJsonPrimitive();
-	}
-
-	public static boolean isNull(JsonObject jsonObject, String property) {
-		return hasProperty(jsonObject, property) && jsonObject.get(property).isJsonNull();
-	}
+public class GsonObjectHandler extends GsonObjectChecker {
 
 	/*
 	 * Object

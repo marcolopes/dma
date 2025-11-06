@@ -27,7 +27,7 @@ import org.apache.commons.net.ntp.TimeInfo;
 
 import org.dma.java.util.Debug;
 
-public final class PublicServerTime {
+public final class NetworkTimeProtocol {
 
 	public static Date getNTPDate() {
 

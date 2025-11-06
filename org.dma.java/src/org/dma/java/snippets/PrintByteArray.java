@@ -24,7 +24,7 @@ import javax.print.DocPrintJob;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
-public class PrintRawData {
+public class PrintByteArray {
 
 	public enum ESCAPE {
 
