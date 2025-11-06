@@ -67,7 +67,7 @@ public class SeriesServiceHandler extends ServiceHandler<SeriesWS> {
 
 	/**
 	 * Esta funcionalidade tem como objetivo, permitir a comunicação das séries à AT, através do
-     * registo das mesmas, de modo a que seja atribuído um código único de validação da série.
+	 * registo das mesmas, de modo a que seja atribuído um código único de validação da série.
 	 */
 	public SeriesResp registarSerie(RegistarSeriesType request) throws WebServiceException {
 		return getService().registarSerie(request.serie, request.tipoSerie.value(),
@@ -78,7 +78,7 @@ public class SeriesServiceHandler extends ServiceHandler<SeriesWS> {
 
 	/**
 	 * Esta funcionalidade tem como objetivo, disponibilizar a ação de anular a comunicação
-     * de uma série anteriormente comunicada, por erro.
+	 * de uma série anteriormente comunicada, por erro.
 	 */
 	public SeriesResp anularSerie(AnularSerieType request) throws WebServiceException {
 		return getService().anularSerie(request.serie,
@@ -88,7 +88,7 @@ public class SeriesServiceHandler extends ServiceHandler<SeriesWS> {
 
 	/**
 	 * Esta funcionalidade tem como objetivo, indicar que uma série foi válida para um conjunto
-     * de documentos, mas que a mesma já não será usada a partir do último documento comunicado.
+	 * de documentos, mas que a mesma já não será usada a partir do último documento comunicado.
 	 */
 	public SeriesResp finalizarSerie(FinalizarSerieType request) throws WebServiceException {
 		return getService().finalizarSerie(request.serie,
