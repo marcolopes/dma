@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,17 +54,9 @@ public class CustomJob extends Job {
 	public static void syncExec(Runnable runnable) {
 		try{Display.getDefault().syncExec(runnable);
 		}catch(Exception e){
-			runnable.run();
+			e.printStackTrace();
 		}
 	}
-
-	private final List<IAction> tasks=new ArrayList();
-	@Deprecated
-	private IAction doneAction;
-
-	private boolean canceled=false;
-
-	public boolean isCanceled() {return canceled;}
 
 	public CustomJob() {
 		this(null);
@@ -109,6 +101,8 @@ public class CustomJob extends Job {
 	/*
 	 * Tasks
 	 */
+	private final List<IAction> tasks=new ArrayList();
+
 	public CustomJob addTask(IAction action) {
 		tasks.add(action);
 		return this;
@@ -128,23 +122,28 @@ public class CustomJob extends Job {
 		return this;
 	}
 
-	/** @see ExclusiveJobList */
-	@Deprecated
-	public CustomJob setDoneAction(IAction doneAction) {
-		this.doneAction=doneAction;
-		return this;
-	}
-
 
 
 	/*
 	 * Execution
 	 */
-	/** Execute jobs with rule (null=immediately) */
-	public void schedule(ISchedulingRule rule) {
-		Debug.err("SCHEDULING JOB", this);
-		setRule(rule);
-		schedule();
+	private boolean canceled=false;
+
+	public boolean isCanceled() {return canceled;}
+
+	@Override
+	public void canceling() {
+		Debug.err("CANCELING JOB", this);
+		canceled=true;
+	}
+
+	public String getStateName() {
+		switch(getState()){
+		case Job.RUNNING: return "RUNNING";
+		case Job.WAITING: return "WAITING";
+		case Job.SLEEPING: return "SLEEPING";
+		case Job.NONE: return "NONE";
+		}return "UNKNOWN";
 	}
 
 	public boolean isBusy() {
@@ -153,10 +152,14 @@ public class CustomJob extends Job {
 		return state==Job.RUNNING || state==Job.WAITING || state==Job.SLEEPING;
 	}
 
-	@Override
-	public void canceling() {
-		Debug.err("CANCELING JOB", this);
-		canceled=true;
+	/** Called when it's about to finish! */
+	public void finishing() {/*nothing*/}
+
+	/** Execute jobs with rule (null=immediately) */
+	public void schedule(ISchedulingRule rule) {
+		Debug.err("SCHEDULING JOB", this);
+		setRule(rule);
+		schedule();
 	}
 
 
@@ -198,30 +201,12 @@ public class CustomJob extends Job {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			if (doneAction!=null){
-				syncExec(new Runnable() {
-					@Override
-					public void run() {
-						doneAction.run();
-					}
-				});
-			}
+			finishing();
 			lock.release();
 			monitor.done();
 			Debug.out("FINISHED JOB ("+time.stop()+")", this);
 
 		}return Status.CANCEL_STATUS;
-
-	}
-
-
-	public String getStateName() {
-
-		switch(getState()){
-		case Job.RUNNING: return "RUNNING";
-		case Job.WAITING: return "WAITING";
-		case Job.SLEEPING: return "SLEEPING";
-		}return "NONE";
 
 	}
 

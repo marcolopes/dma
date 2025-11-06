@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public abstract class ButtonMenu extends CustomShell {
@@ -40,22 +39,22 @@ public abstract class ButtonMenu extends CustomShell {
 	private final int height;
 
 	public ButtonMenu(String...items) {
-		this(Display.getDefault().getActiveShell(), items);
+		this(0, items);
 	}
 
 	public ButtonMenu(int height, String...items) {
-		this(Display.getDefault().getActiveShell(), height, items);
+		this(null, height, items);
 	}
 
 	public ButtonMenu(Shell parent, String...items) {
-		this(parent, Display.getDefault().getClientArea().height / 10, items);
+		this(parent, 0);
 	}
 
 	public ButtonMenu(Shell parent, int height, String...items) {
 		super(parent, STYLE_RESIZABLE);
 
 		this.items=items;
-		this.height=height;
+		this.height=height==0 ? getDisplay().getClientArea().height / 10 : height;
 
 		createContents();
 		setGridLayout();

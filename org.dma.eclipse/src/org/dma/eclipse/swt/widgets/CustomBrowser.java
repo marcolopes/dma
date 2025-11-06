@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2015 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import org.eclipse.swt.SWTError;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public final class CustomBrowser extends Browser {
@@ -59,20 +58,20 @@ public final class CustomBrowser extends Browser {
 	 * A new shell is created with style SWT.NONE and
 	 * bounds are set to 0 to make it invisible.
 	 *
-	 * @see CustomBrowser#CustomBrowser(Display)
+	 * @see CustomBrowser#CustomBrowser(Composite, int)
 	 */
-	public CustomBrowser(Display display) {
-		this(new Shell(display,SWT.NONE));
+	public CustomBrowser() {
+		this(null);
 		getShell().setBounds(0, 0, 0, 0);
 	}
 
 	/**
 	 * Creates a platform dependant browser
 	 *
-	 * @see CustomBrowser#CustomBrowser(Composite)
+	 * @see CustomBrowser#CustomBrowser(Composite, int)
 	 */
 	public CustomBrowser(Composite parent) {
-		this(parent, detectStyle(parent));
+		this(parent==null ? new Shell() : parent, detectStyle(parent));
 	}
 
 	/**

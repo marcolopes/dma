@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import org.dma.java.io.XMLFile;
 import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -38,12 +37,12 @@ public class FileExport extends FileDialog {
 	protected void checkSubclass() {}
 
 	public FileExport(String...extensions) {
-		this(Display.getDefault().getActiveShell(), extensions);
+		this(null, extensions);
 	}
 
 	/** @see FileDialog#setFilterExtensions(String[]) */
 	public FileExport(Shell parent, String...extensions) {
-		super(parent, SWT.SAVE);
+		super(parent==null ? new Shell() : parent, SWT.SAVE);
 		Debug.out("extensions", Arrays.asList(extensions));
 		setFilterExtensions(extensions);
 	}
@@ -80,14 +79,19 @@ public class FileExport extends FileDialog {
 
 
 	public void writeText(String text, String filename, Charset charset) {
-		setFileName(filename);
-		if (open()!=null) new TextFile(charset, getFilterPath(), getFileName()).write(text);
+		if (filePicker(filename)!=null) new TextFile(charset, getFilterPath(), getFileName()).write(text);
 	}
 
 
 	public void writeXML(Object obj, String filename) {
-		setFileName(filename);
-		if (open()!=null) new XMLFile(getFilterPath(), getFileName()).write(obj);
+		if (filePicker(filename)!=null) new XMLFile(getFilterPath(), getFileName()).write(obj);
+	}
+
+
+	public static void main(String[] args) {
+
+		System.out.println(new FileExport().filePicker());
+
 	}
 
 

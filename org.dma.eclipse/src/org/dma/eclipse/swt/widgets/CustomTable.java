@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public class CustomTable extends Table {
 	@Override //subclassing
 	protected void checkSubclass() {}
 
-	private boolean busy=false;
+	private volatile boolean busy=false;
 
 	private synchronized void setBusy(boolean busy) {
 		this.busy=busy;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2016 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package org.dma.eclipse.swt.widgets;
 
 import org.eclipse.swt.printing.PrintDialog;
 import org.eclipse.swt.printing.PrinterData;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class CustomPrintDialog extends PrintDialog {
@@ -29,12 +28,12 @@ public class CustomPrintDialog extends PrintDialog {
 	protected void checkSubclass() {}
 
 	public CustomPrintDialog() {
-		this(Display.getDefault().getActiveShell());
+		this(null);
 	}
 
 	/** @see PrintDialog#PrintDialog(Shell) */
 	public CustomPrintDialog(Shell parent){
-		super(parent);
+		super(parent==null ? new Shell() : parent);
 	}
 
 	/**
@@ -47,6 +46,13 @@ public class CustomPrintDialog extends PrintDialog {
 		PrinterData pd=open();
 
 		return pd==null ? null : pd.name;
+
+	}
+
+
+	public static void main(String[] args) {
+
+		System.out.println(new CustomPrintDialog().openDialog());
 
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ import org.dma.java.io.XMLFile;
 import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -39,12 +38,12 @@ public class FileImport extends FileDialog {
 	protected void checkSubclass() {}
 
 	public FileImport(String...extensions) {
-		this(Display.getDefault().getActiveShell(), extensions);
+		this(null, extensions);
 	}
 
 	/** @see FileDialog#setFilterExtensions(String[]) */
 	public FileImport(Shell parent, String...extensions) {
-		super(parent, SWT.OPEN | SWT.MULTI);
+		super(parent==null ? new Shell() : parent, SWT.OPEN | SWT.MULTI);
 		Debug.out("extensions", Arrays.asList(extensions));
 		setFilterExtensions(extensions);
 	}
@@ -86,20 +85,27 @@ public class FileImport extends FileDialog {
 
 
 	public String readText(Charset charset) {
-		String filename=open();
-		return filename==null ? "" : new TextFile(charset, filename).read();
+		File file=filePicker();
+		return file==null ? "" : new TextFile(charset, file).read();
 	}
 
 
 	public byte[] readBytes() {
-		String filename=open();
-		return filename==null ? null : new ByteFile(filename).read();
+		File file=filePicker();
+		return file==null ? null : new ByteFile(file).read();
 	}
 
 
 	public Object readXML() {
-		String filename=open();
-		return filename==null ? null : new XMLFile(filename).read();
+		File file=filePicker();
+		return file==null ? null : new XMLFile(file).read();
+	}
+
+
+	public static void main(String[] args) {
+
+		System.out.println(new FileImport().filePicker());
+
 	}
 
 

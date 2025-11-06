@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2017 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public abstract class ButtonKeypad extends CustomShell {
@@ -67,21 +66,21 @@ public abstract class ButtonKeypad extends CustomShell {
 	private final CustomDecimalText display;
 
 	public ButtonKeypad() {
-		this(Display.getDefault().getActiveShell());
+		this(0);
 	}
 
 	public ButtonKeypad(int height) {
-		this(Display.getDefault().getActiveShell(), height);
+		this(null, height);
 	}
 
 	public ButtonKeypad(Shell parent) {
-		this(parent, Display.getDefault().getClientArea().height / 10);
+		this(parent, 0);
 	}
 
 	public ButtonKeypad(Shell parent, int height) {
 		super(parent, STYLE_RESIZABLE);
 
-		this.height=height;
+		this.height=height==0 ? getDisplay().getClientArea().height / 10 : height;
 
 		display=createCompositeDisplay();
 		createCompositeButtons();

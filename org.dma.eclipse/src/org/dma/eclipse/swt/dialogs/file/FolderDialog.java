@@ -25,7 +25,6 @@ import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class FolderDialog extends DirectoryDialog {
@@ -34,11 +33,11 @@ public class FolderDialog extends DirectoryDialog {
 	protected void checkSubclass() {}
 
 	public FolderDialog(String...extensions) {
-		this(Display.getDefault().getActiveShell(), extensions);
+		this(null, extensions);
 	}
 
 	public FolderDialog(Shell parent, String...extensions) {
-		super(parent, SWT.SAVE);
+		super(parent==null ? new Shell() : parent, SWT.SAVE);
 		Debug.out("extensions", Arrays.asList(extensions));
 	}
 
@@ -64,6 +63,13 @@ public class FolderDialog extends DirectoryDialog {
 
 	public Folder folderPicker() {
 		return folderPicker(null);
+	}
+
+
+	public static void main(String[] args) {
+
+		System.out.println(new FolderDialog().folderPicker());
+
 	}
 
 
