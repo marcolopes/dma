@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.dynamichelpers.IExtensionChangeHandler;
 import org.eclipse.swt.custom.BusyIndicator;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
@@ -81,11 +80,6 @@ public class UIHelper {
 		}return null;
 	}
 
-	/** @see IWorkbench#getDisplay() */
-	public static Display getDisplay() {
-		return getWorkbench().getDisplay();
-	}
-
 	/** @see IWorkbench#getHelpSystem() */
 	public static IWorkbenchHelpSystem getHelpSystem() {
 		return getWorkbench().getHelpSystem();
@@ -98,7 +92,7 @@ public class UIHelper {
 
 	/** @see IWorkbench#close() */
 	public static void closeWorkbench() {
-		Display.getDefault().asyncExec(new Runnable() {
+		getWorkbench().getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (!isWorkbenchClosing()) getWorkbench().close();
@@ -108,7 +102,7 @@ public class UIHelper {
 
 	/** @see BusyIndicator */
 	public static void showBusyWhile(Runnable runnable) {
-		BusyIndicator.showWhile(getDisplay(), runnable);
+		BusyIndicator.showWhile(getWorkbench().getDisplay(), runnable);
 	}
 
 	public static boolean openWorkbenchBrowser(URL url) {
@@ -128,10 +122,6 @@ public class UIHelper {
 	 */
 	public static IWorkbenchWindow getActiveWorkbenchWindow() {
 		return getWorkbench().getActiveWorkbenchWindow();
-	}
-
-	public static boolean isWorkbenchWindowActive() {
-		return getActiveWorkbenchWindow()!=null;
 	}
 
 	/** @see IWorkbenchWindow#getActivePage() */
