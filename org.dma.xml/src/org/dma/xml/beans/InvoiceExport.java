@@ -312,7 +312,7 @@ public class InvoiceExport implements IXMLExport {
 		 * Tamanho: 13 digitos e 3 casas decimais;
 		 * Cardinalidade: 1..1;
 		 * Designação: Montante da linha (s/imposto).
-		 * 			   O valor deve incluir os respetivos encargos ou descontos aplicados à linha, desprovidos de imposto e outras taxas (que não sejam de IVA).
+		 *			   O valor deve incluir os respetivos encargos ou descontos aplicados à linha, desprovidos de imposto e outras taxas (que não sejam de IVA).
 		 * Regras:
 		 * - o valor pode ser negativo.
 		 * - o montante é um numérico (13,8), respeitando o seguinte formato (regex): /^(-?\d{1,13}\.\d{2,8})$/
