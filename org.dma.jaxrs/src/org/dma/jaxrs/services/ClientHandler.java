@@ -23,7 +23,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
-import org.dma.java.util.JsonHelper;
+import org.dma.java.gson.GsonConverter;
 import org.dma.jaxrs.services.QueryParameters.QueryParameterValue;
 
 /**
@@ -31,7 +31,7 @@ import org.dma.jaxrs.services.QueryParameters.QueryParameterValue;
  * https://eclipse-ee4j.github.io/jersey/download.html
  * https://repo1.maven.org/maven2/org/glassfish/jersey/bundles/jaxrs-ri/
  */
-public class ClientHandler extends JsonHelper {
+public class ClientHandler extends GsonConverter {
 
 	public final Client client;
 

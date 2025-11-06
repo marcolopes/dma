@@ -31,7 +31,7 @@ Bundle-ClassPath: .,
  libraries/jaxrs-ri-2.25.1/lib/jersey-media-jaxb.jar,
  libraries/jaxrs-ri-2.25.1/lib/jersey-server.jar
 Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
- org.dma.java;bundle-version="7.12.10"
+ org.dma.java;bundle-version="7.15.0"
 Export-Package: javax.annotation,
  javax.annotation.security,
  javax.servlet,

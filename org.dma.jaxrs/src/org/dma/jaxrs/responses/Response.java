@@ -21,9 +21,9 @@ package org.dma.jaxrs.responses;
 
 import javax.ws.rs.core.Response.Status;
 
-import org.dma.java.util.JsonHelper;
+import org.dma.java.gson.GsonConverter;
 
-public class Response extends JsonHelper {
+public class Response extends GsonConverter {
 
 	/*
 	 * Builders
