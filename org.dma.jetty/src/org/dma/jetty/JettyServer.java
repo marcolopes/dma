@@ -47,7 +47,7 @@ public class JettyServer implements Runnable {
 	private final JettyParameters parameters;
 	private final Handler handler;
 
-	private boolean busy=false;
+	private volatile boolean busy=false;
 
 	public JettyServer() {
 		this(new HandlerWrapper());
