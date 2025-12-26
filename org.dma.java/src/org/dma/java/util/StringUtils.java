@@ -26,22 +26,23 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.WordUtils;
 
+import org.dma.java.input.FieldRegex;
 import org.dma.java.time.Chronograph;
 
 public class StringUtils {
 
 	/** Numeric digits [0-9] and dot (.) */
-	public static final Pattern DECIMAL_PATTERN = Pattern.compile("[0-9[.]]+");
+	public static final Pattern DECIMAL_PATTERN = FieldRegex.getPattern("[0-9[.]]+");
 	/** Numeric digits only [0-9] */
-	public static final Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]+");
+	public static final Pattern NUMERIC_PATTERN = FieldRegex.getPattern("[0-9]+");
 	/** Letter digits [A-Z] and [a-z] */
-	public static final Pattern LETTERS_PATTERN = Pattern.compile("[A-Za-z]+");
+	public static final Pattern LETTERS_PATTERN = FieldRegex.getPattern("[A-Za-z]+");
 	/** Uppercase letter digits [A-Z] */
-	public static final Pattern UPPERCASE_PATTERN = Pattern.compile("[^a-z]+");
+	public static final Pattern UPPERCASE_PATTERN = FieldRegex.getPattern("[^a-z]+");
 	/** Lowercase letter digits [a-z] */
-	public static final Pattern LOWERCASE_PATTERN = Pattern.compile("[^A-Z]+");
+	public static final Pattern LOWERCASE_PATTERN = FieldRegex.getPattern("[^A-Z]+");
 	/** Diacritical Marks */
-	public static final Pattern DIACRITICS_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+	public static final Pattern DIACRITICS_PATTERN = FieldRegex.getPattern("\\p{InCombiningDiacriticalMarks}+");
 
 	public static final String DECIMAL_NUMBERS = "0123456789";
 	public static final String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
@@ -550,7 +551,7 @@ public class StringUtils {
 		System.out.printf(format, "quote(): "); System.out.println(quote(string, '{','}'));
 		System.out.printf(format, "removeAccents(): "); System.out.println(unaccent(string));
 		System.out.println();
-		System.out.printf(format, "Pattern.split: "); System.out.println(Arrays.asList(Pattern.compile("\\.").split(string)));
+		System.out.printf(format, "Pattern.split: "); System.out.println(Arrays.asList(FieldRegex.getPattern("\\.").split(string)));
 		System.out.printf(format, "String.split: "); System.out.println(Arrays.asList(string.split("\\.")));
 		System.out.printf(format, "splitFirst(): "); System.out.println(splitFirst(string, ".").concat(" "));
 		System.out.printf(format, "splitLast(): "); System.out.println(splitLast(string, ".").concat(" "));
@@ -567,7 +568,7 @@ public class StringUtils {
 
 		int repeat=1000000;
 		Chronograph time=new Chronograph().start();
-		for(int i=0; i<repeat; i++) Pattern.compile("\\.").split(string);
+		for(int i=0; i<repeat; i++) FieldRegex.getPattern("\\.").split(string);
 		System.out.printf(format, "Pattern.split(): "); System.out.println(time);
 		time.reset();
 		for(int i=0; i<repeat; i++) string.split("\\.");

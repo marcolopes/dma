@@ -49,14 +49,6 @@ public class MessageLine extends StringList {
 		return append("["+parse(obj)+"]");
 	}
 
-	public MessageLine colon(Object obj) {
-		return append(":").append(parse(obj));
-	}
-
-	public MessageLine dash(Object obj) {
-		return append("-").append(parse(obj));
-	}
-
 	public MessageLine equal(Object obj) {
 		return append("=").append(parse(obj));
 	}
@@ -71,6 +63,22 @@ public class MessageLine extends StringList {
 
 	public MessageLine smallerThan(Object obj) {
 		return append("<").append(parse(obj));
+	}
+
+	public MessageLine colon() {
+		return append(":");
+	}
+
+	public MessageLine dash() {
+		return append("-");
+	}
+
+	public MessageLine forward() {
+		return append("->");
+	}
+
+	public MessageLine back() {
+		return append("<-");
 	}
 
 	public String toString(String separator) {

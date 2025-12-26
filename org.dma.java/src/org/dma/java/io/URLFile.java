@@ -118,7 +118,7 @@ public class URLFile extends URLHandler {
 			new URLFile("https://ind.millenniumbcp.pt", "pt", "Articles", "Documents", "precario"),
 			new URLFile("https://ind.millenniumbcp.pt", "pt", "Articles", "Documents", "precario", "FCD.pdf"),
 			new URLFile("https://amagovpt.github.io", "docs.autenticacao.gov", "Manual_de_Utilizacao_v3.pdf"),
-			new URLFile("https://info.portaldasfinancas.gov.pt", "pt", "apoio_contribuinte", "Faturacao", "Documents", "TesteWebservices.zip")}) try{
+			new URLFile("https://info.portaldasfinancas.gov.pt", "pt", "apoio_ao_contribuinte", "Faturacao", "Documents", "TesteWebservices.zip")}) try{
 
 			System.out.println(file);
 			System.out.println(file.getParent());

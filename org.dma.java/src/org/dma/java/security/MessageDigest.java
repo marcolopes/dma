@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2020 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,10 +59,11 @@ public class MessageDigest {
 
 
 	/** @see java.security.MessageDigest#digest(byte[]) */
-	public byte[] digest(byte[] message) {
+	public byte[] digest(byte[] messageBytes) {
 
-		try{// Digest Bytes
-			return md.digest(message);
+		if (messageBytes!=null) try{
+			// Digest Bytes
+			return md.digest(messageBytes);
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -81,7 +82,8 @@ public class MessageDigest {
 	 */
 	public byte[] digest(String message) {
 
-		try{// Convert String to Bytes
+		if (message!=null) try{
+			// Convert String to Bytes
 			byte[] messageBytes=message.getBytes("UTF8");
 			// Digest Bytes
 			return digest(messageBytes);
@@ -105,7 +107,8 @@ public class MessageDigest {
 	 */
 	public String BASE64digest(String message) {
 
-		try{// Encode Bytes to BASE64
+		if (message!=null) try{
+			// Encode Bytes to BASE64
 			byte[] base64Bytes=new Base64().encode(digest(message));
 			// Convert Bytes to String
 			return new String(base64Bytes, "UTF8");

@@ -76,7 +76,8 @@ public class RSAPublicCipher extends CryptoCipher {
 	/** Verify signature */
 	public boolean verifySHA1Signature(byte[] signatureBytes, byte[] messageBytes) {
 
-		try{Signature signature=Signature.getInstance("SHA1withRSA");
+		if (signatureBytes!=null && messageBytes!=null) try{
+			Signature signature=Signature.getInstance("SHA1withRSA");
 			signature.initVerify(getKey());
 			signature.update(messageBytes);
 
@@ -92,7 +93,8 @@ public class RSAPublicCipher extends CryptoCipher {
 	/** Verify signature */
 	public boolean verifySHA1Signature(String base64signature, String message) {
 
-		try{byte[] base64Bytes=new Base64().decode(base64signature);
+		if (base64signature!=null && message!=null) try{
+			byte[] base64Bytes=new Base64().decode(base64signature);
 
 			return verifySHA1Signature(base64Bytes, message.getBytes("UTF8"));
 
