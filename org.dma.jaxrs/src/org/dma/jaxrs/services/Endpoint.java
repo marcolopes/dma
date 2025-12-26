@@ -44,10 +44,13 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 	@Override
 	public String toString() {
-		//2025-04-04;23:59:99:999(Endpoint)[127.0.0.1 -> 127.0.0.1/url]
+		//2025-04-04;23:59:99:999(Endpoint)[127.0.0.1]->[127.0.0.1]/url
 		return new MessageLine(TimeDateUtils.getDateFormatted(new Date(request.getSession().getLastAccessedTime()), TimeDateUtils.DEFAULT_TIMESTAMP_PATTERN)).
 				parentheses(getClass().getSimpleName()).
-				brackets(request.getRemoteAddr() + " -> " + request.getLocalAddr()+request.getPathInfo()).toString("");
+				brackets(request.getRemoteAddr()).
+				forward().
+				brackets(request.getLocalAddr()).
+				append(request.getPathInfo()).toString("");
 	}
 
 	public HttpServletRequest getRequest() {return request;}
