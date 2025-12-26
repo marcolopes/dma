@@ -29,7 +29,7 @@ import org.osgi.framework.Version;
  */
 public class Activator implements BundleActivator {
 
-	public static final int PLUGIN_REVISION = 3;
+	public static final int PLUGIN_REVISION = 4;
 
 	public static final Bundle PLUGIN_BUNDLE = FrameworkUtil.getBundle(Activator.class);
 

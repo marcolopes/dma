@@ -56,7 +56,7 @@ public class VatNumber {
 
 	/** Returns the VAT NUMBER without spaces and country prefix */
 	public static String parse(COUNTRIES country, String vatNumber) {
-		String compacted=vatNumber.replace(" ","").toUpperCase();
+		String compacted=vatNumber==null ? "" : vatNumber.replace(" ","").toUpperCase();
 		return compacted.startsWith(country.name()) ?
 				compacted.substring(country.name().length()) : compacted;
 	}
@@ -82,19 +82,24 @@ public class VatNumber {
 	}
 
 	public CheckVatResult query() throws Exception {
-		return country==null ? new CheckVatResult() : country.queryVatNumber(number);
+		return country==null || number.isEmpty() ? new CheckVatResult() : country.queryVatNumber(number);
+	}
+
+
+	public static void main(VatNumber number) throws Exception {
+
+		System.out.println(number.query());
+		System.out.println("VALID: " + number.isValid());
+
 	}
 
 
 	public static void main(String[] args) throws Exception {
 
-		VatNumber number=new VatNumber(COUNTRIES.PT, "PT 501591109");
-		System.out.println("VALID: " + number.isValid());
-		System.out.println(number.query());
-
-		number=new VatNumber(COUNTRIES.PT, "509922716");
-		System.out.println("VALID: " + number.isValid());
-		System.out.println(number.query());
+		main(new VatNumber(COUNTRIES.PT, null));
+		main(new VatNumber(COUNTRIES.PT, ""));
+		main(new VatNumber(COUNTRIES.PT, "PT 501591109"));
+		main(new VatNumber(COUNTRIES.PT, "509922716"));
 
 	}
 
