@@ -126,22 +126,15 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		try{
-			StockMovement request=build(new RandomValue().nextInt(DocumentNumberMax)+1,
-					new SeriesServiceTest().registar(new RegistarSeriesType(
-							new RandomValue().numbers(SeriesServiceTest.SerieMaxLength),
-							TipoSerieType.N, TipoDocType.GT, 1, TimeDateUtils.getCurrentDate(),
-							SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)));
+		StockMovementServiceTest service=new StockMovementServiceTest();
 
-			StockMovementServiceTest service=new StockMovementServiceTest();
-
-			print(service.register(request));
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		print(service.register(build(new RandomValue().nextInt(DocumentNumberMax)+1,
+				new SeriesServiceTest().registar(new RegistarSeriesType(
+						new RandomValue().numbers(SeriesServiceTest.SerieMaxLength),
+						TipoSerieType.N, TipoDocType.GT, 1, TimeDateUtils.getCurrentDate(),
+						SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)))));
 
 	}
 

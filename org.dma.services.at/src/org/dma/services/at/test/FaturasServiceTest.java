@@ -99,18 +99,11 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		try{
-			RegisterInvoiceType request=build(new RandomValue().nextInt(999999));
+		FaturasServiceTest service=new FaturasServiceTest();
 
-			FaturasServiceTest service=new FaturasServiceTest();
-
-			print(service.register(request));
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		print(service.register(build(new RandomValue().nextInt(999999))));
 
 	}
 

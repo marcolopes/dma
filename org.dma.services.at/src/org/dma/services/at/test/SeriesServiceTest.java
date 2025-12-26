@@ -370,7 +370,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 	}
 
 
-	public static void run() {
+	public static void main() {
 
 		SeriesServiceTest service=new SeriesServiceTest();
 

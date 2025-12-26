@@ -141,7 +141,8 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 						SSLContext.getInstance("TLSv1.2", PROVIDERS.JSSE.provider) :
 						SSLContext.getInstance("TLS");
 
-				if (Debug.STATUS) System.setProperty("javax.net.debug", "ssl:handshake");
+				//System.setProperty("javax.net.debug", "ssl:handshake");
+
 				// Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
 				KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 				kmf.init(cert.sw.getKeyStore(), cert.sw.password.toCharArray());
@@ -259,11 +260,11 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 		byte[] createdBytes = timestamp.getBytes("UTF8");
 		byte[] passwordBytes = password.getBytes("UTF8");
-		byte[] message = new byte[simetricKey.length + createdBytes.length + passwordBytes.length];
-		System.arraycopy(simetricKey, 0, message, 0, simetricKey.length);
-		System.arraycopy(createdBytes, 0, message, simetricKey.length, createdBytes.length);
-		System.arraycopy(passwordBytes, 0, message, simetricKey.length + createdBytes.length, passwordBytes.length);
-		return new MessageDigest(ALGORITHMS.SHA1).digest(message);
+		byte[] messageBytes = new byte[simetricKey.length + createdBytes.length + passwordBytes.length];
+		System.arraycopy(simetricKey, 0, messageBytes, 0, simetricKey.length);
+		System.arraycopy(createdBytes, 0, messageBytes, simetricKey.length, createdBytes.length);
+		System.arraycopy(passwordBytes, 0, messageBytes, simetricKey.length + createdBytes.length, passwordBytes.length);
+		return new MessageDigest(ALGORITHMS.SHA1).digest(messageBytes);
 
 	}
 

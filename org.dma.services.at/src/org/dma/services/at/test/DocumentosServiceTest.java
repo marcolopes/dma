@@ -143,24 +143,19 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		try{
-			RegisterInvoiceRequest request=build(new RandomValue().nextInt(DocumentNumberMax)+1,
-					new SeriesServiceTest().registar(new RegistarSeriesType(
-							new RandomValue().numbers(SeriesServiceTest.SerieMaxLength),
-							TipoSerieType.N, TipoDocType.FT, 1, TimeDateUtils.getCurrentDate(),
-							SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)));
+		DocumentosServiceTest service=new DocumentosServiceTest();
 
-			DocumentosServiceTest service=new DocumentosServiceTest();
+		RegisterInvoiceRequest request=build(new RandomValue().nextInt(DocumentNumberMax)+1,
+				new SeriesServiceTest().registar(new RegistarSeriesType(
+						new RandomValue().numbers(SeriesServiceTest.SerieMaxLength),
+						TipoSerieType.N, TipoDocType.FT, 1, TimeDateUtils.getCurrentDate(),
+						SeriesServiceTest.NumCertSWFatur, MeioProcessamentoType.PI)));
 
-			print(service.registerInvoice(request));
-			print(service.changeInvoiceStatus(request, InvoiceStatusType.A));
-			print(service.deleteInvoice(request, DeleteReasonType.ER));
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		print(service.registerInvoice(request));
+		print(service.changeInvoiceStatus(request, InvoiceStatusType.A));
+		print(service.deleteInvoice(request, DeleteReasonType.ER));
 
 	}
 

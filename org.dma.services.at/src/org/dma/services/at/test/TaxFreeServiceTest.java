@@ -159,24 +159,19 @@ public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		try{
-			TaxFreeServiceTest service=new TaxFreeServiceTest();
+		TaxFreeServiceTest service=new TaxFreeServiceTest();
 
-			TaxFreeSubmissionResponseType response=service.register(build());
+		TaxFreeSubmissionResponseType response=service.register(build());
 
-			System.out.println(response.getReturnInfo().getReturnCode());
-			System.out.println(response.getReturnInfo().getReturnMessage());
+		System.out.println(response.getReturnInfo().getReturnCode());
+		System.out.println(response.getReturnInfo().getReturnMessage());
 
-			if (response.getTaxFreeCommRegistration()!=null){
-				System.out.println(response.getTaxFreeCommRegistration().getTaxFreeCommCode());
-				System.out.println(response.getTaxFreeCommRegistration().getQRCodeContent());
-				System.out.println(response.getTaxFreeCommRegistration().getRegistrationDateTime());
-			}
-
-		}catch(Exception e){
-			e.printStackTrace();
+		if (response.getTaxFreeCommRegistration()!=null){
+			System.out.println(response.getTaxFreeCommRegistration().getTaxFreeCommCode());
+			System.out.println(response.getTaxFreeCommRegistration().getQRCodeContent());
+			System.out.println(response.getTaxFreeCommRegistration().getRegistrationDateTime());
 		}
 
 	}
