@@ -59,8 +59,7 @@ public class CustomDecimalText extends CustomText {
 					new BigDecimal(newText.toString());
 				}catch(NumberFormatException e){
 					event.doit=false;
-				}
-				value=event.doit ? newText.toString() : value;
+				}value=event.doit ? newText.toString() : value;
 			}
 		});
 

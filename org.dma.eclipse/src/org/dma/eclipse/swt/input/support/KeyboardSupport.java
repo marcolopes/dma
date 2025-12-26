@@ -113,6 +113,12 @@ public class KeyboardSupport implements KeyListener {
 		return selection.getFirstElement();
 	}
 
+	public boolean editSelectedElement(int column) {
+		Object element=getSelectedElement();
+		if (element!=null) viewer.editElement(getSelectedElement(), column);
+		return viewer.isCellEditorActive();
+	}
+
 	public void selectControlText(int column) {
 		if (SystemUtils.IS_OS_MAC){
 			Object element=getSelectedElement();
@@ -129,10 +135,8 @@ public class KeyboardSupport implements KeyListener {
 
 		int currentColumn=column;
 
-		do try{
-			viewer.editElement(getSelectedElement(), currentColumn);
-			//is editor active?
-			if (viewer.isCellEditorActive()) column=currentColumn;
+		do try{//is editor active?
+			if (editSelectedElement(currentColumn)) column=currentColumn;
 			else currentColumn=getNextColumn(currentColumn);
 
 		}catch(Exception e){
@@ -148,10 +152,8 @@ public class KeyboardSupport implements KeyListener {
 
 		int currentColumn=column;
 
-		do try{
-			viewer.editElement(getSelectedElement(), currentColumn);
-			//is editor active?
-			if (viewer.isCellEditorActive()) column=currentColumn;
+		do try{//is editor active?
+			if (editSelectedElement(currentColumn)) column=currentColumn;
 			else currentColumn=getPreviousColumn(currentColumn);
 
 		}catch(Exception e){
