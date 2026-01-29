@@ -38,7 +38,7 @@ import eu.europa.ec.taxud.vies.services.checkvat.CheckVatService;
  */
 public class CheckVatHandler {
 
-	/**
+	/*
 	 * http://ec.europa.eu/taxation_customs/vies/faq.html<br>
 	 * http://i18napis.appspot.com/address/data/PT (replace PT for other country codes)<br>
 	 * http://stackoverflow.com/questions/578406/what-is-the-ultimate-postal-code-and-zip-regex<br>
