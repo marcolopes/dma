@@ -24,11 +24,9 @@ import java.io.IOException;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.RandomAccessFileOrArray;
 
-/**
+/*
  * https://stackoverflow.com/questions/1260895/merging-1000-pdf-thru-itext-throws-java-lang-outofmemoryerror-java-heap-space
- * <br>
  * https://stackoverflow.com/questions/30449348/signing-pdf-memory-consumption
- * <br>
  * https://stackoverflow.com/questions/62164906/use-of-randomaccessfileorarray
  */
 public class HugePdfFile extends AbstractPdfFile {

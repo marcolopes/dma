@@ -22,7 +22,7 @@ import org.apache.commons.codec.binary.Base64;
 
 public class MessageDigest {
 
-	/**
+	/*
 	 * https://docs.oracle.com/javase/7/docs/api/java/security/MessageDigest.html
 	 */
 	public enum ALGORITHMS {

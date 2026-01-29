@@ -41,7 +41,9 @@ import org.dma.java.util.TimeDateUtils;
 
 public class JKSCertificate {
 
-	//https://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#KeyStore
+	/*
+	 * https://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#KeyStore
+	 */
 	public enum KEYSTORE_TYPE {
 		/** The proprietary keystore implementation provided by the SUN provider */
 		JKS,

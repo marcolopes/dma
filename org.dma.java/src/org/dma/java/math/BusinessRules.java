@@ -202,7 +202,7 @@ public class BusinessRules {
 	 * Rounds the number to the nearest<br>
 	 * Numbers can be with or without decimals<br>
 	 * Example: 5, 10 = 10
-	 *<p>
+	 * <p>
 	 * HALF_UP<br>
 	 * Rounding mode to round towards "nearest neighbor" unless
 	 * both neighbors are equidistant, in which case round up.
@@ -221,7 +221,7 @@ public class BusinessRules {
 	 * Rounds the number to the nearest<br>
 	 * Numbers can be with or without decimals<br>
 	 * Example: 5, 10 = 0
-	 *<p>
+	 * <p>
 	 * HALF_DOWN<br>
 	 * Rounding mode to round towards "nearest neighbor" unless
 	 * both neighbors are equidistant, in which case round down.

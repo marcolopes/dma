@@ -31,7 +31,7 @@ import org.dma.java.util.RandomValue;
 
 public class CryptoCipher {
 
-	/**
+	/*
 	 * https://docs.oracle.com/javase/7/docs/api/javax/crypto/Cipher.html
 	 */
 	public enum CIPHERS {

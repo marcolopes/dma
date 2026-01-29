@@ -20,7 +20,7 @@ package org.dma.java.cipher;
 
 import org.dma.java.util.RandomValue;
 
-/**
+/*
  * https://www.schneier.com/academic/blowfish/
  */
 public class BlowfishCipher extends CryptoCipher {

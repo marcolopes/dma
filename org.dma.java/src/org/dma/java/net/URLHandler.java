@@ -33,7 +33,7 @@ import org.dma.java.io.CustomFile;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.StringUtils;
 
-/**
+/*
  * https://docs.oracle.com/javase/tutorial/networking/urls/urlInfo.html
  */
 public class URLHandler {

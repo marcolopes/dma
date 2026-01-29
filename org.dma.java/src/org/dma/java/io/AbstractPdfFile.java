@@ -30,11 +30,9 @@ import com.lowagie.text.pdf.PdfStamper;
 
 import org.dma.java.security.PdfSignature;
 
-/**
+/*
  * https://kb.itextpdf.com/home/it5kb/faq/can-itext-2-1-7-itextsharp-4-1-6-or-earlier-be-used-commercially
- * <br>
  * https://itextpdf.com/en/blog/itext-news-technical-notes/announcing-deprecation-support-java-7
- * <br>
  * https://stackoverflow.com/questions/12596643/itext-multiple-signatures
  */
 public abstract class AbstractPdfFile extends ByteFile {
