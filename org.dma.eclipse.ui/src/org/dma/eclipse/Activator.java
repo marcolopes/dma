@@ -39,7 +39,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class Activator implements BundleActivator {
 
-	public static final int PLUGIN_REVISION = 1;
+	public static final int PLUGIN_REVISION = 2;
 
 	public static final Bundle PLUGIN_BUNDLE = FrameworkUtil.getBundle(Activator.class);
 
