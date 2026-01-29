@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2017 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ package org.dma.eclipse.core.bindings.converters;
 
 import java.math.BigDecimal;
 
-public class StringToBigDecimal extends CustomConverter {
+import org.eclipse.core.databinding.conversion.Converter;
+
+public class StringToBigDecimal extends Converter {
 
 	public StringToBigDecimal() {
 		super(String.class, BigDecimal.class);

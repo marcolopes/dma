@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ public class CustomTrayItem extends TrayItem {
 	public CustomTrayItem(Display display, String name, Image image, boolean visible) {
 		super(display.getSystemTray(), SWT.NONE);
 		//there could be no active shell!
-		shell=getDisplay().getShells()[0];
+		shell=display.getActiveShell()==null ? display.getShells()[0] : display.getActiveShell();
 		setToolTipText(name);
 		setImage(image);
 		addListener(SWT.Selection, maximizeListener);
