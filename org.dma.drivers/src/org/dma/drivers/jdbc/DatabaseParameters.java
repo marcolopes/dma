@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -129,7 +129,7 @@ public class DatabaseParameters extends EnumMap<POOLMANAGERS, IDatabaseManager> 
 		getManager().compact(host, database, folder, username, password);
 	}
 
-	public File backup() throws Exception {
+	public File executeBackup() throws Exception {
 		return getManager().executeBackup(host, database, folder, username, password, backup);
 	}
 
