@@ -25,19 +25,19 @@ import org.dma.java.util.StringUtils;
 
 /**
  * GENERICO (SIBS)
- *<p>
+ * <p>
  * A REFERENCIA MULTIBANCO e composta sempre por 9 digitos, e por norma
  * deve ser separada em grupos de 3 digitos para facilitar a visualizacao.
  * (ex: 123 456 789)
- *<p>
+ * <p>
  * O formato da REFERENCIA MULTIBANCO no nosso sistema e' o seguinte:
  * DDDDDDDCC
- *<p>
+ * <p>
  * DDDDDDD: ID de PAGAMENTO - 7 digitos que identificam o nº do documento
  * a pagar ou o nº do v/cliente (conforme prefiram associar o pagamento a
  * um documento ou a um cliente). Caso o ID tenha mais que 7 digitos irao
  * ser utilizados apenas os 7 mais a direita.
- *<p>
+ * <p>
  * CC: CHECKDIGITS - 2 digitos de controlo que servem para o terminal
  * validar se a informacao esta' correta.
  */

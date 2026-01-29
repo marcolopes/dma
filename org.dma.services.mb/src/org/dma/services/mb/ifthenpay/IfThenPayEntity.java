@@ -25,25 +25,27 @@ import org.dma.services.mb.MultibancoRef;
 
 /**
  * IF THEN PAY
- *<p>
+ * <p>
  * A REFERENCIA MULTIBANCO e composta sempre por 9 digitos, e por norma
  * deve ser separada em grupos de 3 digitos para facilitar a visualizacao.
  * (ex: 123 456 789)
- *<p>
+ * <p>
  * O formato da REFERENCIA MULTIBANCO no nosso sistema e' o seguinte:
  * SSSDDDDCC
- *<p>
+ * <p>
  * SSS: SUB-ENTIDADE - 3 digitos que identificam a sub-entidade (o vendedor).
  * Este codigo e' atribuido pela IFTHEN e ira' ocupar os PRIMEIROS DIGITOS
  * da ID de PAGAMENTO, que de outra forma teria o tamanho de 7 digitos.
- *<p>
+ * <p>
  * DDDD: ID de PAGAMENTO - 4 digitos que identificam o nº do documento
  * a pagar ou o nº do v/cliente (conforme prefiram associar o pagamento
  * a um documento ou a um cliente). Caso o ID tenha mais que 4 digitos
  * irao ser utilizados apenas os 4 mais a direita.
- *<p>
+ * <p>
  * CC: CHECKDIGITS - 2 digitos de controlo que servem para o terminal
  * validar se a informacao esta' correta.
+ * <p>
+ * https://www.ifthenpay.com/docs/en/guides/multibanco
  */
 public class IfThenPayEntity extends MultibancoEntity {
 

@@ -28,7 +28,7 @@ import java.util.Collection;
 import org.dma.java.time.DatePeriod;
 
 /*
- * https://www.ifthensoftware.com/IfmbWS/IfmbWS.asmx?op=getPayments
+ * https://ifthenpay.com/ifmbws/ifmbws.asmx
  *
  * Os parametros a passar na chamada do metodo sao:
  *
