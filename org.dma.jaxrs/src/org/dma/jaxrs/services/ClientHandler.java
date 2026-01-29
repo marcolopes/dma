@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,12 @@
 package org.dma.jaxrs.services;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status.Family;
 
 import org.dma.java.gson.GsonConverter;
 
-/**
+/*
  * https://restfulapi.net/http-methods
  * https://eclipse-ee4j.github.io/jersey/download.html
  * https://repo1.maven.org/maven2/org/glassfish/jersey/bundles/jaxrs-ri/
@@ -45,8 +47,10 @@ public class ClientHandler extends GsonConverter {
 	}
 
 	/** @see Client#close() */
-	public void close() {
-		client.close();
+	public void close() {client.close();}
+
+	public boolean isSuccessful(Response response) {
+		return response.getStatusInfo().getFamily()==Family.SUCCESSFUL;
 	}
 
 
