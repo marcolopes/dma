@@ -64,9 +64,6 @@ import org.dma.java.security.MessageDigest.ALGORITHMS;
 import org.dma.java.util.Debug;
 import org.dma.java.util.SystemUtils;
 
-/**
- * SOAP Message Handler
- */
 public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 	private enum DIRECTION {
