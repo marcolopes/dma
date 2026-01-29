@@ -33,7 +33,7 @@ import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle.Listener;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
-/**
+/*
  * https://jetty.org/download.html
  */
 public class JettyServer implements Runnable {
