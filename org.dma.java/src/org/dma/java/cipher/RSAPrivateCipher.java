@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 package org.dma.java.cipher;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.Signature;
@@ -104,7 +105,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 			byte[] signatureBytes=signWithSHA1(messageBytes);
 			byte[] base64Bytes=new Base64().encode(signatureBytes);
 
-			return new String(base64Bytes, "UTF8");
+			return new String(base64Bytes, StandardCharsets.UTF_8);
 
 		}catch(Exception e){
 			throw new SignatureException(e);
@@ -125,7 +126,7 @@ public class RSAPrivateCipher extends CryptoCipher {
 	public String BASE64signWithSHA1(String message) throws SignatureException {
 
 		if (message!=null) try{
-			byte[] messageBytes=message.getBytes("UTF8");
+			byte[] messageBytes=message.getBytes(StandardCharsets.UTF_8);
 
 			return BASE64signWithSHA1(messageBytes);
 

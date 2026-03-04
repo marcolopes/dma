@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,12 +49,11 @@ public class NTPServerHandler {
 		}
 
 		public String toText() {
-			return new MessageList(
-					getServerDate()+" (Server Date)",
-					new Date()+" (System Date)",
-					"Offset needed to adjust local clock: "+getOffset(),
-					"Round-trip network delay: "+getDelay(),
-					"Comments: "+getComments()).toString();
+			return new MessageList("Server Date: "+getServerDate()).
+					append("System Date: "+new Date()).
+					append("Offset needed to adjust local clock: "+getOffset()).
+					append("Round-trip network delay: "+getDelay()).
+					append("Comments: "+getComments()).toString();
 		}
 
 	}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,10 @@ public class EmailRecipients extends ArrayList<EmailAddress> {
 
 	public EmailRecipients(EmailAddress to) {
 		addTo(to);
+	}
+
+	public EmailRecipients(EmailRecipients recipients) {
+		addAll(recipients);
 	}
 
 	@Override
@@ -89,6 +93,19 @@ public class EmailRecipients extends ArrayList<EmailAddress> {
 	public EmailRecipients addBcc(Collection<EmailAddress> address) {
 		bcc.addAll(address);
 		return this;
+	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object
+	 */
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() +
+				" [to=" + super.toString() +
+				", cc=" + cc +
+				", bcc=" + bcc + "]";
 	}
 
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 package org.dma.java.email;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 import javax.mail.PasswordAuthentication;
 
@@ -41,14 +40,6 @@ public class EmailParameters extends EmailRecipients {
 
 	public ServerParameters getServer() {return server;}
 	public EmailAddress getFrom() {return from;}
-
-	public EmailParameters(ServerParameters server, EmailAddress from, EmailAddress...to) {
-		this(server, from, Arrays.asList(to));
-	}
-
-	public EmailParameters(ServerParameters server, EmailAddress from, Collection<EmailAddress> to) {
-		this(server, from, new EmailRecipients());
-	}
 
 	public EmailParameters(ServerParameters server, EmailAddress from, EmailRecipients recipients) {
 		this.server=server;
@@ -100,28 +91,28 @@ public class EmailParameters extends EmailRecipients {
 		return getClass().getSimpleName() +
 				" [server=" + server +
 				", from=" + from +
-				", to=" + super.toString() + "]";
+				", recipients=" + super.toString() + "]";
 	}
 
 
 	public static void main(String arg[]) {
 
-		ServerParameters server=new ServerParameters("mail.xxxxxx.com", 25,
-				SECURITY.NONE, new PasswordAuthentication("marcolopes@xxxxxx.com", "***"));
-		EmailAddress from=new EmailAddress("suporte@xxxxxx.com", "FROM: xxxxxx");
-		EmailRecipients recipients=new EmailRecipients(new EmailAddress("marcolopes@xxxxxx.com", "TO: Marco Lopes"));
-
 		//attachment file
 		UTF8TextFile file=new UTF8TextFile(new FileParameters("attachment", "txt").createTempFile());
 		file.write("The quick brown fox jumps over the lazy dog");
 
-		for(EmailMessage message: Arrays.asList(
-				new EmailMessage("SUBJECT: Simple Mail Test", "BODY: http://marcolopes.eu"),
-				new HtmlEmailMessage("SUBJECT: HTML Mail Test", "BODY: <a href=\"http://marcolopes.eu\">HTML Link</a>"))) try{
+		ServerParameters server=new ServerParameters("mail.xxxxxx.com", 25,
+				SECURITY.NONE, new PasswordAuthentication("mail@xxxxxx.com", "***"));
+		EmailAddress from=new EmailAddress("from@xxxxxx.com", "From Name");
+		EmailAddress to=new EmailAddress("to@xxxxxx.com", "To Name");
 
-			EmailParameters email=new EmailParameters(server, from, recipients.
-					addBcc(new EmailAddress("bcc1@xxxxxx.com", "TO: First Last"),
-							new EmailAddress("bcc2@xxxxxx.com", "TO: First Last")));
+		for(EmailMessage message: Arrays.asList(
+				new EmailMessage("Simple Mail Test", "http://marcolopes.pages.dev"),
+				new HtmlEmailMessage("HTML Mail Test", "<a href=\"http://marcolopes.pages.dev\">HTML Link</a>"))) try{
+
+			EmailParameters email=new EmailParameters(server, from, new EmailRecipients(to).
+					addBcc(new EmailAddress("bcc1@xxxxxx.com", "Bcc One"),
+							new EmailAddress("bcc2@xxxxxx.com", "Bcc Two")));
 
 			email.send(message, new EmailAttachment(file, "Attachment Description"));
 

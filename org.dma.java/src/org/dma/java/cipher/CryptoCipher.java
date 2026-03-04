@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.dma.java.cipher;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 import javax.crypto.Cipher;
@@ -185,7 +186,7 @@ public class CryptoCipher {
 			// Encode Bytes to BASE64
 			byte[] base64Bytes=new Base64(lineLength).encode(encrypted);
 			// Convert Bytes to String
-			return base64Bytes==null ? null : new String(base64Bytes, "UTF8");
+			return base64Bytes==null ? null : new String(base64Bytes, StandardCharsets.UTF_8);
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -209,7 +210,7 @@ public class CryptoCipher {
 
 		if (message!=null) try{
 			// Convert String to Bytes
-			byte[] messageBytes=message.getBytes("UTF8");
+			byte[] messageBytes=message.getBytes(StandardCharsets.UTF_8);
 			// Encrypt Bytes
 			return BASE64encrypt(messageBytes, lineLength);
 
@@ -251,7 +252,7 @@ public class CryptoCipher {
 			// Decrypt Bytes
 			byte[] decrypted=decrypt(base64Bytes);
 			// Convert Bytes to String
-			return decrypted==null ? null : new String(decrypted, "UTF8");
+			return decrypted==null ? null : new String(decrypted, StandardCharsets.UTF_8);
 
 		}catch(Exception e){
 			System.err.println(e);
@@ -274,7 +275,7 @@ public class CryptoCipher {
 
 		if (message!=null) try{
 			// Convert String to Bytes
-			byte[] messageBytes=message.getBytes("UTF8");
+			byte[] messageBytes=message.getBytes(StandardCharsets.UTF_8);
 			// Decrypt Bytes
 			return BASE64decrypt(messageBytes);
 

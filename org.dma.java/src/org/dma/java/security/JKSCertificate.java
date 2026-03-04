@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -180,19 +180,18 @@ public class JKSCertificate {
 	 */
 	@Override
 	public String toString() {
-		return isValid() ? new MessageList(
-				"-----BEGIN X509 CERTIFICATE-----",
-				"ALIAS: " + alias,
-				"USAGE: " + getKeyUsage(),
-				"SERIAL: " + X509Cert.getSerialNumber(),
-				"ISSUER: " + X509Cert.getIssuerX500Principal(),
-				"SUBJECT: " + X509Cert.getSubjectX500Principal(),
-				"ISSUED: " + X509Cert.getNotBefore(),
-				"EXPIRES: " + X509Cert.getNotAfter(),
-				"DAYS LEFT: " + daysToExpire(),
-				"HASH CODE: " + hashCode(),
-				"-----END X509 CERTIFICATE-----").toString() :
-				"INVALID X509 CERTIFICATE";
+		MessageList list=new MessageList("-----BEGIN X509 CERTIFICATE-----");
+		return isValid() ? list.
+				append("ALIAS: " + alias).
+				append("USAGE: " + getKeyUsage()).
+				append("SERIAL: " + X509Cert.getSerialNumber()).
+				append("ISSUER: " + X509Cert.getIssuerX500Principal()).
+				append("SUBJECT: " + X509Cert.getSubjectX500Principal()).
+				append("ISSUED: " + X509Cert.getNotBefore()).
+				append("EXPIRES: " + X509Cert.getNotAfter()).
+				append("DAYS LEFT: " + daysToExpire()).
+				append("HASH CODE: " + hashCode()).toString() :
+					list.append("INVALID X509 CERTIFICATE").toString();
 	}
 
 	@Override

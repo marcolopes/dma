@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 package org.dma.java.cipher;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.Signature;
@@ -96,9 +96,9 @@ public class RSAPublicCipher extends CryptoCipher {
 		if (base64signature!=null && message!=null) try{
 			byte[] base64Bytes=new Base64().decode(base64signature);
 
-			return verifySHA1Signature(base64Bytes, message.getBytes("UTF8"));
+			return verifySHA1Signature(base64Bytes, message.getBytes(StandardCharsets.UTF_8));
 
-		}catch(UnsupportedEncodingException e){
+		}catch(Exception e){
 			System.err.println(e);
 		}return false;
 

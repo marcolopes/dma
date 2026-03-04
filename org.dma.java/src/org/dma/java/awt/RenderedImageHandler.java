@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
+
+import org.apache.commons.codec.binary.Base64;
 
 public class RenderedImageHandler {
 
@@ -75,5 +77,10 @@ public class RenderedImageHandler {
 		}return false;
 	}
 
+
+	/** @see RenderedImageHandler#getBytes(String) */
+	public String toBase64String(String formatName) {
+		return new String(Base64.encodeBase64(getBytes(formatName)));
+	}
 
 }

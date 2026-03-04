@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,10 +48,13 @@ public class FileParameters {
 	}
 
 
-	/** @see File#createTempFile(String, String, File) */
-	public File createTempFile() {
+	/**
+	 * @see File#createTempFile(String, String, File)
+	 * @see File#deleteOnExit()
+	 */
+	public File createTempFile(boolean deleteOnExit) {
 		try{File file=File.createTempFile(prefix+"-", suffix, folder);
-			file.deleteOnExit();
+			if (deleteOnExit) file.deleteOnExit();
 			return file;
 		}catch(Exception e){
 			System.err.println(e);
@@ -59,11 +62,24 @@ public class FileParameters {
 	}
 
 
+	/**
+	 * Creates a new File (deleted on exit)
+	 *
+	 * @see FileParameters#createTempFile(boolean)
+	 */
+	public File createTempFile() {
+		return createTempFile(true);
+	}
+
+
 	/** @see FileParameters#createTempFile() */
 	public ByteFile createTempFile(byte[] bytes) {
-		ByteFile file=new ByteFile(createTempFile());
-		file.write(bytes);
-		return file;
+		File file=createTempFile();
+		if (file!=null){
+			ByteFile wrapper=new ByteFile(file);
+			wrapper.write(bytes);
+			return wrapper;
+		}return null;
 	}
 
 

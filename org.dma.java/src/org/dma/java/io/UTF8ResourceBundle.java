@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@
  *******************************************************************************/
 package org.dma.java.io;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -55,7 +56,7 @@ public class UTF8ResourceBundle extends ResourceBundle {
 	@Override
 	protected Object handleGetObject(String key) {
 		final String value=bundle.getString(key);
-		return value==null ? null : new String(value.getBytes(CustomFile.ISO_CHARSET), CustomFile.UTF8_CHARSET);
+		return value==null ? null : new String(value.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 	}
 
 	@Override

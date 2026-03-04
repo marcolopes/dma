@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,21 +41,23 @@ public class MessageList extends ArrayList<MessageLine> {
 
 	public MessageList() {}
 	public MessageList(Throwable e) {add(e);}
-	public MessageList(String...array) {this(new StringList(array));}
+	public MessageList(String string) {add(string);}
 	public MessageList(StringList list) {for(String string: list) add(string);}
 
 	public boolean add(Throwable e) {return e==null ? false : add(new MessageLine(e));}
 	public boolean add(String string) {return string==null ? false : add(new MessageLine(string));}
 	public boolean add(MessageList list) {return addAll(list);}
 
+	public MessageList append(Throwable e) {add(e); return this;}
+	public MessageList append(String string) {add(string); return this;}
+	public MessageList append(MessageList list) {add(list); return this;}
 	public MessageList append(MessageLine line) {add(line); return this;}
-	public MessageList append(Object obj) {return obj==null ? this : append(new MessageLine(obj));}
 
 	/** Returns a new list */
 	public MessageList prefix(String prefix) {
 		MessageList list=new MessageList();
 		for(MessageLine line: this){
-			list.append(new MessageLine(line).addPrefix(": ").addPrefix(prefix));
+			list.append(new MessageLine(line).addPrefix(": ").addPrefix(prefix).toString());
 		}return list;
 	}
 
@@ -80,7 +82,7 @@ public class MessageList extends ArrayList<MessageLine> {
 
 	public static void main(String[] args) {
 
-		MessageList list=new MessageList("dummy one", "dummy two");
+		MessageList list=new MessageList("dummy one").append("dummy two");
 		list.prefix("prefix").print();
 		list.print();
 

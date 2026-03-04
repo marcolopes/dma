@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
@@ -109,8 +111,8 @@ public class CustomFile extends File {
 	 */
 	public boolean copyTo(File dst, CopyOption...options) {
 		if (exists()) try{//destination can be a directory!
-			File target=dst.isDirectory() ? Paths.get(dst.getPath(), getName()).toFile() : dst;
-			Files.copy(toPath(), target.toPath(), options.length==0 ? COPY_OPTIONS : options);
+			Path target=dst.isDirectory() ? Paths.get(dst.getPath(), getName()) : dst.toPath();
+			Files.copy(toPath(), target, options.length==0 ? COPY_OPTIONS : options);
 			return true;
 		}catch(Exception e){
 			System.err.println(e);
@@ -124,8 +126,8 @@ public class CustomFile extends File {
 	 */
 	public boolean moveTo(File dst, CopyOption...options) {
 		if (exists()) try{//destination can be a directory!
-			File target=dst.isDirectory() ? Paths.get(dst.getPath(), getName()).toFile() : dst;
-			Files.move(toPath(), target.toPath(), options.length==0 ? MOVE_OPTIONS : options);
+			Path target=dst.isDirectory() ? Paths.get(dst.getPath(), getName()) : dst.toPath();
+			Files.move(toPath(), target, options.length==0 ? MOVE_OPTIONS : options);
 			return true;
 		}catch(Exception e){
 			System.err.println(e);
@@ -133,6 +135,7 @@ public class CustomFile extends File {
 	}
 
 
+	/** @see File#renameTo(File) */
 	public boolean renameTo(String pathname) {
 		try{return renameTo(new File(pathname));
 		}catch(Exception e){
@@ -141,6 +144,7 @@ public class CustomFile extends File {
 	}
 
 
+	/** @see File#createNewFile() */
 	public boolean create() {
 		try{return super.createNewFile();
 		}catch(Exception e){
@@ -214,6 +218,7 @@ public class CustomFile extends File {
 	}
 
 
+	/** @see URI#toURL() */
 	public URL toURL() {
 		try{return toURI().toURL();
 		}catch(Exception e){

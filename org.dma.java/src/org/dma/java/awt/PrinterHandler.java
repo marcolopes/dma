@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ public class PrinterHandler {
 
 	public static PrintService lookupPrintService(String printerName) {
 		for(PrintService ps: PrinterJob.lookupPrintServices()) {
-			if (ps.getName().indexOf(printerName)>=0) return ps;
+			if (printerName!=null && ps.getName().indexOf(printerName)>=0) return ps;
 		}return null;
 	}
 
@@ -139,12 +139,12 @@ public class PrinterHandler {
 
 		if (file!=null) try{
 
-			PDDocument doc=PDDocument.load(file);
+			PDDocument document=PDDocument.load(file);
 
 			try{PrinterJob job=PrinterJob.getPrinterJob();
 				job.setPrintService(service);
 				job.setJobName(file.getName());
-				job.setPageable(new PDFPageable(doc));
+				job.setPageable(new PDFPageable(document));
 				job.print();
 
 			}catch(PrinterAbortException e){
@@ -153,7 +153,7 @@ public class PrinterHandler {
 				e.printStackTrace();
 				throw new PrintException("Error while printing", e);
 			}finally{
-				doc.close();
+				document.close();
 			}
 
 		}catch(IOException e){

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,8 +60,8 @@ public class Folder extends CustomFile {
 	/*
 	 * Folders
 	 */
+	/** @see Folder#listFiles(FileFilter) */
 	public File[] listDirectories(final String wildcards) {
-
 		FileFilter filter=new FileFilter() {
 			//convert to regex
 			String regex=wildcards.replace("*", ".*").replace("?", ".");
@@ -71,28 +71,25 @@ public class Folder extends CustomFile {
 				return file.isDirectory() && pattern.matcher(file.getName()).find();
 			}
 		};
-
 		try{return listFiles(filter);
 		}catch(Exception e){
 			System.err.println(e);
 		}return new File[0];
-
 	}
 
+	/** @see Folder#listDirectories(String) */
 	public File[] listDirectories() {
-
 		return listDirectories("*.*");
-
 	}
 
 
+	/** @see File#mkdir() */
+	@Override
 	public boolean create() {
-
 		try{return exists() ? true : mkdir();
 		}catch(Exception e){
 			System.err.println(e);
 		}return false;
-
 	}
 
 
@@ -100,8 +97,8 @@ public class Folder extends CustomFile {
 	/*
 	 * Files
 	 */
+	/** @see File#listFiles(FileFilter) */
 	public File[] listFiles(final String wildcards) {
-
 		FileFilter filter=new FileFilter() {
 			//convert to regex
 			String regex=wildcards.replace("*", ".*").replace("?", ".");
@@ -111,62 +108,49 @@ public class Folder extends CustomFile {
 				return file.isFile() &&	pattern.matcher(file.getName()).find();
 			}
 		};
-
 		try{return listFiles(filter);
 		}catch(Exception e){
 			System.err.println(e);
 		}return new File[0];
-
 	}
 
+	/** @see Folder#listFiles(String) */
 	@Override
 	public File[] listFiles() {
-
 		return listFiles("*.*");
-
 	}
 
 
 	@Deprecated
 	String[] getFileNames(String wildcards) {
-
 		int index=0;
 		File[] files=listFiles(wildcards);
 		String[] names=new String[files.length];
 		for(File file: files) names[index++]=file.getName();
 		return names;
-
 	}
 
 	@Deprecated
 	String[] getFileNames() {
-
 		return getFileNames("*.*");
-
 	}
 
 
+	/** @see Folder#listFiles(String) */
 	public int deleteFiles(String wildcards) {
-
 		int count=0;
-
 		File[] files=listFiles(wildcards);
 		for(File file: files) try{
 			if (file.delete()) count++;
-
 		}catch(Exception e){
 			System.err.println(e);
 		}System.out.println(count+"/"+files.length+" files deleted in "+toString());
-
 		return count;
-
 	}
 
 
 	public int deleteAllFiles() {
-
 		return deleteFiles("*.*");
-
 	}
 
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.java.security;
+
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -84,7 +86,7 @@ public class MessageDigest {
 
 		if (message!=null) try{
 			// Convert String to Bytes
-			byte[] messageBytes=message.getBytes("UTF8");
+			byte[] messageBytes=message.getBytes(StandardCharsets.UTF_8);
 			// Digest Bytes
 			return digest(messageBytes);
 
@@ -111,7 +113,7 @@ public class MessageDigest {
 			// Encode Bytes to BASE64
 			byte[] base64Bytes=new Base64().encode(digest(message));
 			// Convert Bytes to String
-			return new String(base64Bytes, "UTF8");
+			return new String(base64Bytes, StandardCharsets.UTF_8);
 
 		}catch(Exception e){
 			System.err.println(e);

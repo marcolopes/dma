@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ public final class VersionNumber {
 		int i=0;
 		int[] array={0,0,0,0};
 		for(String element: StringUtils.split(version, ".")){
-			array[i++]=StringUtils.val(StringUtils.numbers(element));
+			if (i<array.length) array[i++]=StringUtils.val(StringUtils.numbers(element));
 		}return new VersionNumber(array[0], array[1], array[2], array[3]);
 	}
 
