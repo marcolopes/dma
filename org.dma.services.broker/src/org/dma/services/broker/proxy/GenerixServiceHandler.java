@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,15 +25,12 @@ import com.generixgroup.pt.messaging.webservice.GetDocResponse;
 import com.generixgroup.pt.messaging.webservice.ListDocResponse;
 import com.generixgroup.pt.messaging.webservice.RoutingInfo;
 import com.generixgroup.pt.messaging.webservice.UploadDocResponse;
-import com.generixgroup.pt.messaging.webservice.Webservice;
 import com.generixgroup.pt.messaging.webservice.WebserviceService;
-
-import org.dma.services.broker.SOAPMessageHandler;
 
 /**
  * PROXY para ligacao ao endpoint do webservice
  */
-public class GenerixServiceHandler extends SOAPMessageHandler<Webservice> {
+public class GenerixServiceHandler {
 
 	/** Invoice Manager */
 	public enum ENDPOINTS {
@@ -44,20 +41,19 @@ public class GenerixServiceHandler extends SOAPMessageHandler<Webservice> {
 		public final String name;
 
 		private ENDPOINTS(String name) {
-			this.name = name;
+			this.name=name;
 		}
 
 	}
 
-	private final ENDPOINTS endpoint;
-
-	public Webservice getService() throws WebServiceException {
-		return getService(endpoint.name);
-	}
+	public final ENDPOINTS endpoint;
+	public final String username;
+	public final String password;
 
 	public GenerixServiceHandler(ENDPOINTS endpoint, String username, String password) {
-		super(new WebserviceService().getWebservicePort(), null, username, password);
-		this.endpoint = endpoint;
+		this.endpoint=endpoint;
+		this.username=username;
+		this.password=password;
 	}
 
 
@@ -70,7 +66,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler<Webservice> {
 	 */
 	public UploadDocResponse uploadDocument(String transactionID, Credentials credentials,
 			RoutingInfo info, String document) throws WebServiceException {
-		return getService().uploadDocument(transactionID, credentials, info, document);
+		return new WebserviceService().getWebservicePort().uploadDocument(transactionID, credentials, info, document);
 	}
 
 	/**
@@ -79,7 +75,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler<Webservice> {
 	 * @param credentials Autenticação
 	 */
 	public ListDocResponse listDocuments(Credentials credentials) throws WebServiceException {
-		return getService().listDocuments(credentials, "*");
+		return new WebserviceService().getWebservicePort().listDocuments(credentials, "*");
 	}
 
 	/**
@@ -89,7 +85,7 @@ public class GenerixServiceHandler extends SOAPMessageHandler<Webservice> {
 	 * @param messageID Nome do ficheiro
 	 */
 	public GetDocResponse getDocument(Credentials credentials, String messageID) throws WebServiceException {
-		return getService().getDocument(credentials, messageID, true);
+		return new WebserviceService().getWebservicePort().getDocument(credentials, messageID, true);
 	}
 
 

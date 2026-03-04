@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,28 @@
  *******************************************************************************/
 package org.dma.services.broker.proxy;
 
+import java.security.SecureRandom;
+
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 
 import com.softlimits.clarinet.ArrayOfMessageOutputData;
 import com.softlimits.clarinet.IMessageService;
 import com.softlimits.clarinet.MessageService;
+import com.sun.xml.ws.developer.JAXWSProperties;
 
+import org.dma.java.net.PermissiveTrustStore;
 import org.dma.java.security.JKSCertificate;
-import org.dma.services.broker.SOAPMessageHandler;
 
 /*
  * PROXY para ligacao ao endpoint do webservice
  *
  * https://www.espap.gov.pt/spfin/Paginas/spfin.aspx#maintab5
  */
-public class EspapServiceHandler extends SOAPMessageHandler<IMessageService> {
+public class EspapServiceHandler {
 
 	public enum ENDPOINTS {
 
@@ -42,25 +49,40 @@ public class EspapServiceHandler extends SOAPMessageHandler<IMessageService> {
 		public final String name;
 
 		private ENDPOINTS(String name) {
-			this.name = name;
+			this.name=name;
 		}
 
 	}
 
-	private final ENDPOINTS endpoint;
-
-	public IMessageService getService() throws WebServiceException {
-		return getService(endpoint.name);
+	public static IMessageService getService(JKSCertificate cert) throws WebServiceException {
+		System.setProperty("javax.net.debug", "all");
+		IMessageService service=new MessageService().getCustomBindingIMessageService();
+		try{SSLContext sslContext=SSLContext.getInstance("TLSv1.2");
+			KeyManagerFactory kmf=KeyManagerFactory.getInstance("SunX509");
+			kmf.init(cert.getKeyStore(), cert.password.toCharArray());
+			sslContext.init(kmf.getKeyManagers(), new TrustManager[]{new PermissiveTrustStore()}, new SecureRandom());
+			BindingProvider provider=(BindingProvider)service;
+			provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
+		}catch(Exception e){
+			throw new WebServiceException(e);
+		}return service;
 	}
 
-	public EspapServiceHandler(ENDPOINTS endpoint, JKSCertificate cert, String username, String password) {
-		super(new MessageService().getCustomBindingIMessageService(), cert, username, password);
-		this.endpoint = endpoint;
+	public final ENDPOINTS endpoint;
+	public final String username;
+	public final String password;
+	public final JKSCertificate cert;
+
+	public EspapServiceHandler(ENDPOINTS endpoint, String username, String password, JKSCertificate cert) {
+		this.endpoint=endpoint;
+		this.username=username;
+		this.password=password;
+		this.cert=cert;
 	}
 
 
 	public ArrayOfMessageOutputData processMessage(byte[] message) throws WebServiceException {
-		return getService().processMessage(message);
+		return getService(cert).processMessage(message);
 	}
 
 
