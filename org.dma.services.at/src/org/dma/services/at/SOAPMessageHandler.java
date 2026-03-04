@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package org.dma.services.at;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,8 +29,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPElement;
@@ -156,7 +159,13 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 				// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
 				provider.getRequestContext().put(JAXWSProperties.SSL_SOCKET_FACTORY, sslContext.getSocketFactory());
-
+				// FIX Java 7: Contorna NullPointerException no JAX-WS nativo (IPAddressUtil)
+				if (SystemUtils.IS_JAVA_1_7) provider.getRequestContext().put(JAXWSProperties.HOSTNAME_VERIFIER, new HostnameVerifier() {
+					@Override
+				    public boolean verify(String hostname, SSLSession session) {
+				        return true;
+				    }
+				});
 			}
 
 		}catch(Exception e){
@@ -255,8 +264,8 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 	@Deprecated
 	private byte[] createPasswordDigest(byte[] simetricKey, String timestamp, String password) throws UnsupportedEncodingException {
 
-		byte[] createdBytes = timestamp.getBytes("UTF8");
-		byte[] passwordBytes = password.getBytes("UTF8");
+		byte[] createdBytes = timestamp.getBytes(StandardCharsets.UTF_8);
+		byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
 		byte[] messageBytes = new byte[simetricKey.length + createdBytes.length + passwordBytes.length];
 		System.arraycopy(simetricKey, 0, messageBytes, 0, simetricKey.length);
 		System.arraycopy(createdBytes, 0, messageBytes, simetricKey.length, createdBytes.length);
@@ -286,7 +295,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		toXML(source, new StreamResult(out));
-		return out.toString("UTF-8");
+		return out.toString(StandardCharsets.UTF_8.name());
 
 	}
 
