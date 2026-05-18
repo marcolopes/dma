@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,13 +61,12 @@ public class MultibancoRef {
 	}
 
 	public String toText() {
-		return new MessageList(
-				"PAGAMENTO MULTIBANCO",
-				StringUtils.replicas("─", 10+13),
-				StringUtils.padRight("ENTIDADE",10,' ') + StringUtils.padLeft(getEntityToText(),13,' '),
-				StringUtils.padRight("REFERENCIA",10,' ') + StringUtils.padLeft(getRef9ToText(),13,' '),
-				StringUtils.padRight("MONTANTE",10,' ') + StringUtils.padLeft(getValueToText(),13,' '),
-				StringUtils.replicas("─", 10+13)).toString();
+		return new MessageList("PAGAMENTO MULTIBANCO").
+				append(StringUtils.replicas("─", 10+13)).
+				append(StringUtils.padRight("ENTIDADE",10,' ') + StringUtils.padLeft(getEntityToText(),13,' ')).
+				append(StringUtils.padRight("REFERENCIA",10,' ') + StringUtils.padLeft(getRef9ToText(),13,' ')).
+				append(StringUtils.padRight("MONTANTE",10,' ') + StringUtils.padLeft(getValueToText(),13,' ')).
+				append(StringUtils.replicas("─", 10+13)).toString();
 	}
 
 	@Override
