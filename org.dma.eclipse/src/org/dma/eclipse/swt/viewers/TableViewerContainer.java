@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import org.dma.eclipse.swt.graphics.FontManager;
 import org.dma.eclipse.swt.widgets.CustomTable.SORT_DIRECTION;
 import org.dma.java.util.ArrayUtils;
 import org.dma.java.util.ClipboardManager;
-import org.dma.java.util.Debug;
 import org.dma.java.util.MessageList;
 import org.dma.java.util.MovableList;
 import org.dma.java.util.SystemUtils;
@@ -189,14 +188,10 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 		return objectCollection.size()!=size;
 	}
 
-	public MessageList updateTable(boolean update) {
-		if (update) updateTable();
-		return new MessageList();
-	}
-
-	public MessageList updateTable(MessageList error) {
-		updateTable(error.isEmpty());
-		return error;
+	public void updateTable(Collection<T> col) {
+		objectCollection.clear();
+		addElements(col);
+		refreshTable();
 	}
 
 	/* Used for dynamic load */
@@ -231,9 +226,7 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 	}
 
 	public void copySelectionToClipboard() {
-		Collection<T> selection=getSelectionList();
-		Debug.out("Selection", selection);
-		ClipboardManager.copyToClipboard(selection);
+		ClipboardManager.copyToClipboard(getSelectionList());
 	}
 
 
@@ -286,11 +279,6 @@ public abstract class TableViewerContainer<T> extends TableContainer {
 
 	public int addNewElement() {
 		return addElements(Arrays.asList(getNewObject()));
-	}
-
-	public int setElements(Collection<T> col) {
-		objectCollection.clear();
-		return addElements(col);
 	}
 
 	public int replaceElement(T element, int index) {

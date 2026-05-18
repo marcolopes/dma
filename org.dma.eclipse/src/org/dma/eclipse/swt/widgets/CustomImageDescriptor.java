@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,13 +73,16 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	}
 
 	public static ImageData createImageData(BufferedImage image) {
-		if(image.getType()!=BufferedImage.TYPE_3BYTE_BGR) return createImageData(image, image.getTransparency()!=Transparency.OPAQUE);
-		int width=image.getWidth();
-		int height=image.getHeight();
-		int bands=image.getColorModel().getColorSpace().getNumComponents();
-		int depth=24;
-		byte[] pixels=((DataBufferByte)image.getRaster().getDataBuffer()).getData();
-		return new ImageData(width, height, depth, new PaletteData(0x0000ff, 0x00ff00, 0xff0000), width * bands, pixels);
+		if (image!=null){
+			if (image.getType()==BufferedImage.TYPE_3BYTE_BGR){
+				int width=image.getWidth();
+				int height=image.getHeight();
+				int bands=image.getColorModel().getColorSpace().getNumComponents();
+				int depth=24;
+				byte[] pixels=((DataBufferByte)image.getRaster().getDataBuffer()).getData();
+				return new ImageData(width, height, depth, new PaletteData(0x0000ff, 0x00ff00, 0xff0000), width * bands, pixels);
+			}return createImageData(image, image.getTransparency()!=Transparency.OPAQUE);
+		}return null;
 	}
 
 	private static void close(InputStream stream) {

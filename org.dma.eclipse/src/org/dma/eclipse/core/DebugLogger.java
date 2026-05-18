@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,18 @@
  *******************************************************************************/
 package org.dma.eclipse.core;
 
-import java.util.LinkedHashMap;
+import java.util.EnumMap;
 
 import org.dma.eclipse.core.DebugLogger.SEVERITY;
+import org.dma.java.util.MessageLine;
+import org.dma.java.util.MessageList;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 
-public class DebugLogger extends LinkedHashMap<SEVERITY, Integer> {
+public class DebugLogger extends EnumMap<SEVERITY, Integer> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,56 +49,48 @@ public class DebugLogger extends LinkedHashMap<SEVERITY, Integer> {
 
 	}
 
+	public void report() {
+		MessageList list=new MessageList();
+		for(SEVERITY key: keySet()) list.add(new MessageLine("Type").append(key).equal(get(key)));
+		if (!list.isEmpty()){
+			list.add(0, new MessageLine(size()).append("Exception(s) BY SEVERITY"));
+			System.out.println(list.toString());
+		}
+	}
+
 	private final Plugin plugin;
 
 	public DebugLogger(Plugin plugin) {
+		super(SEVERITY.class);
 		this.plugin=plugin;
 	}
 
 
-	public void log(String message) {
-		log(SEVERITY.INFO, message, null);
+	@Deprecated
+	private Status log(String message) {
+		return log(SEVERITY.INFO, message, null);
 	}
 
-	public void log(SEVERITY severity, String message) {
-		log(severity, message, null);
+	/** @see DebugLogger#log(SEVERITY, String, Throwable) */
+	public Status log(SEVERITY severity, String message) {
+		return log(severity, message, null);
 	}
 
-	public void log(SEVERITY severity, Throwable exception) {
-		log(severity, "", exception);
+	/** @see DebugLogger#log(SEVERITY, String, Throwable) */
+	public Status log(SEVERITY severity, Throwable exception) {
+		return log(severity, "", exception);
 	}
 
-	public void log(SEVERITY severity, String message, Throwable exception) {
-		//log entry
+	/** @see ILog#log(IStatus status) */
+	public Status log(SEVERITY severity, String message, Throwable exception) {
 		Status status=new Status(severity.type, plugin.getBundle().getSymbolicName(), message, exception);
+		//log the status
 		plugin.getLog().log(status);
 		//add to exceptions
 		if (exception!=null && severity!=SEVERITY.OK){
-			Integer n=get(severity);
-			put(severity, n==null ? 1 : n+1);
-		}
-	}
-
-
-	public void report() {
-
-		if (!isEmpty()){
-
-			System.out.println(size()+" Exception(s) BY SEVERITY");
-
-			for(SEVERITY key: keySet()){
-				System.out.print("Type "+key+" (");
-				switch(key){
-				case OK: System.out.print("OK"); break;
-				case INFO: System.out.print("INFO"); break;
-				case WARNING: System.out.print("WARNING"); break;
-				case ERROR: System.out.print("ERROR"); break;
-				case CANCEL: System.out.print("CANCEL"); break;
-				}System.out.println(") = "+get(key));
-			}
-
-		}
-
+			Integer value=get(severity);
+			put(severity, value==null ? 1 : value+1);
+		}return status;
 	}
 
 

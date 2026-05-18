@@ -50,14 +50,15 @@ public abstract class ExclusiveJobList extends ArrayList<CustomJob> {
 
 	/** Schedules all jobs */
 	public synchronized void schedule() {
-		if (isEmpty()) return;
-		for (CustomJob job: this) job.schedule(jobRule);
-		doneJob.schedule(jobRule);
+		if (!isEmpty()){
+			for(CustomJob job: this) job.schedule(jobRule);
+			doneJob.schedule(jobRule);
+		}
 	}
 
 	/** Cancels all jobs */
 	public synchronized void cancel() {
-		for (CustomJob job: this) job.cancel();
+		for(CustomJob job: this) job.cancel();
 	}
 
 }

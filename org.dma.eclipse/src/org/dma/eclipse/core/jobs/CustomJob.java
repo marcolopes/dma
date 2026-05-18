@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -157,7 +157,6 @@ public class CustomJob extends Job {
 
 	/** Execute jobs with rule (null=immediately) */
 	public void schedule(ISchedulingRule rule) {
-		Debug.err("SCHEDULING JOB", this);
 		setRule(rule);
 		schedule();
 	}
@@ -170,20 +169,20 @@ public class CustomJob extends Job {
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 
-		Chronograph time = new Chronograph().start();
+		Chronograph time=new Chronograph().start();
 
-		ILock lock = getJobManager().newLock();
+		ILock lock=getJobManager().newLock();
 
 		try{lock.acquire();
 			monitor.beginTask("", IProgressMonitor.UNKNOWN);
-			Debug.out("STARTED JOB", this);
+			Debug.err("STARTED JOB", this);
 
 			canceled=false;
 			for(int i=0; i<tasks.size() && !canceled; i++){
 
 				final IAction action=tasks.get(i);
-				Debug.out("RUNNING TASK", action);
 				monitor.subTask(action.getText());
+				Debug.out("RUNNING TASK", action);
 
 				if(action instanceof UIAction){//UI task
 					syncExec(new Runnable() {
@@ -204,7 +203,7 @@ public class CustomJob extends Job {
 			finishing();
 			lock.release();
 			monitor.done();
-			Debug.out("FINISHED JOB ("+time.stop()+")", this);
+			Debug.err("FINISHED JOB ("+time.stop()+")", this);
 
 		}return Status.CANCEL_STATUS;
 

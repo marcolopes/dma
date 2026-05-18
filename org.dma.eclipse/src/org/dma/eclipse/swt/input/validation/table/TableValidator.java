@@ -43,7 +43,7 @@ public abstract class TableValidator<T> implements IValidator {
 	private final SelectionListener selectionListener=new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			Debug.err("TABLE");
+			Debug.out("TABLE");
 			if (!viewer.isCellEditorActive()) validateTable();
 		}
 	};
@@ -110,7 +110,7 @@ public abstract class TableValidator<T> implements IValidator {
 	 */
 	public boolean validateTable() {
 
-		Debug.err("VALIDATING", validatorMap.keySet());
+		Debug.out("VALIDATING", validatorMap.keySet());
 
 		return manager.validateAll();
 

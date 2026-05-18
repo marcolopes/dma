@@ -22,7 +22,6 @@ import java.awt.image.BufferedImage;
 
 import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
 import org.dma.java.awt.ImageHandler;
-import org.dma.java.util.Debug;
 
 import org.eclipse.jface.action.Action;
 
@@ -37,7 +36,6 @@ public abstract class CustomAction extends Action {
 
 	/** @see Action */
 	public CustomAction(String text) {
-		Debug.out("ID", ID);
 		setText(text);
 		setId(ID);
 	}
