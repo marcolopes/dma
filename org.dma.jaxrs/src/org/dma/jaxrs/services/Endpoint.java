@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
@@ -37,29 +38,27 @@ import org.dma.jaxrs.responses.IResponse;
 public class Endpoint extends org.dma.jaxrs.responses.Response {
 
 	@Context private UriInfo info;
-
 	public UriInfo getInfo() {return info;}
 
 	@Context private HttpServletRequest request;
+	public HttpServletRequest getRequest() {return request;}
 
 	@Override
 	public String toString() {
-		//2025-04-04;23:59:99:999(Endpoint)[127.0.0.1]->[127.0.0.1]/url
-		return new MessageLine(TimeDateUtils.getDateFormatted(new Date(request.getSession().getLastAccessedTime()), TimeDateUtils.DEFAULT_TIMESTAMP_PATTERN)).
-				parentheses(getClass().getSimpleName()).
-				brackets(request.getRemoteAddr()).
-				forward().
-				brackets(request.getLocalAddr()).
-				append(request.getPathInfo()).toString("");
+		//2025-04-04 23:59:99:999 [127.0.0.1 -> 127.0.0.1] http://url?parameters
+		return new MessageLine(TimeDateUtils.getDateFormatted(
+				new Date(request.getSession().getLastAccessedTime()), "yyyy-MM-dd HH:mm:ss:SSS")).
+				//parentheses(getClass().getSimpleName()).
+				brackets(new MessageLine(request.getRemoteAddr()).forward().append(request.getLocalAddr())).
+				append(info.getRequestUri()).toString();
 	}
 
-	public HttpServletRequest getRequest() {return request;}
+	/*
+	 * Runnable
+	 */
+	private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
-	public static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
-
-	public static void run(EndpointRunnable runnable) {
-		EXECUTOR.execute(runnable);
-	}
+	public static void run(EndpointRunnable runnable) {EXECUTOR.execute(runnable);}
 
 	public abstract class EndpointRunnable implements Runnable {
 
@@ -71,15 +70,23 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 			this.ar=ar;
 		}
 
+		public boolean resume(Response response) {
+			System.out.println(Endpoint.this.toString());
+			System.out.println(response);
+			return ar.resume(response);
+		}
+
+		/** Override to handle exception cause */
+		public WebApplicationException handle(Throwable cause) {
+			cause.printStackTrace();
+			return new WebApplicationException(cause);
+		}
+
 		@Override
 		public void run() {
-			try{Response response=process().build();
-				System.out.println(Endpoint.this.toString());
-				System.out.println(response);
-				ar.resume(response);
+			try{resume(process().build());
 			}catch(Exception e){
-				e.printStackTrace();
-				ar.resume(internalServerError().build());
+				resume(handle(e).getResponse());
 			}
 		}
 
