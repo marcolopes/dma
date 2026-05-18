@@ -46,8 +46,8 @@ public class ServiceHandler<T> extends SOAPMessageHandler<T> {
 	/** @see SOAPMessageHandler#SOAPMessageHandler(Object, String, String, ServiceCertificates) */
 	public ServiceHandler(T service, String endpoint, String username, String password, ServiceCertificates cert, File output) {
 		super(service, username, password, cert);
-		this.endpoint = endpoint;
-		this.output = output;
+		this.endpoint=endpoint;
+		this.output=output;
 	}
 
 

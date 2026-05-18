@@ -42,7 +42,9 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.Binding;
 import javax.xml.ws.BindingProvider;
@@ -99,10 +101,10 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 	 * @param cert Service certificates
 	 */
 	public SOAPMessageHandler(T service, String username, String password, ServiceCertificates cert) {
-		this.service = service;
-		this.username = username;
-		this.password = password;
-		this.cert = cert;
+		this.service=service;
+		this.username=username;
+		this.password=password;
+		this.cert=cert;
 	}
 
 
@@ -111,17 +113,17 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 	 */
 	public T getService(String endpoint) throws WebServiceException {
 
-		BindingProvider provider = (BindingProvider)service;
+		BindingProvider provider=(BindingProvider)service;
 
-		Binding binding = provider.getBinding();
-		List<Handler> chain = binding.getHandlerChain();
+		Binding binding=provider.getBinding();
+		List<Handler> chain=binding.getHandlerChain();
 		if (!chain.contains(this)) try{
 
 			if (cert==null) throw new WebServiceException("No certificates found!");
 			if (Debug.STATUS) System.out.println(cert);
 			cert.validate();
 
-			HttpURLHandler url = new HttpURLHandler(endpoint);
+			HttpURLHandler url=new HttpURLHandler(endpoint);
 			if (!url.isValid()) throw new Exception("Invalid URL: "+endpoint);
 
 			// add handler
@@ -137,24 +139,24 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 			if (url.isSecure()){
 
-				SSLContext sslContext = SystemUtils.IS_JAVA_1_7 ?
+				SSLContext sslContext=SystemUtils.IS_JAVA_1_7 ?
 						SSLContext.getInstance("TLSv1.2", PROVIDERS.JSSE.provider) :
 						SSLContext.getInstance("TLS");
 
 				//System.setProperty("javax.net.debug", "ssl:handshake");
 
 				// Indica um conjunto de certificados confiaveis para estabelecer a ligacao SSL
-				KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+				KeyManagerFactory kmf=KeyManagerFactory.getInstance("SunX509");
 				kmf.init(cert.sw.getKeyStore(), cert.sw.password.toCharArray());
 				sslContext.init(kmf.getKeyManagers(), cert.ts==null ?
 						// Trust Store que aceita ligacao SSL sem validar o certificado
 						new TrustManager[]{new PermissiveTrustStore()} : cert.ts.getTrustManagers(), new SecureRandom());
 
-				/*KeyStore ks = KeyStore.getInstance("JKS");
+				/*KeyStore ks=KeyStore.getInstance("JKS");
 				ks.load(this.getClass().getClassLoader().getResourceAsStream("trustStore"), "cliente".toCharArray());
-				TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+				TrustManagerFactory tmf=TrustManagerFactory.getInstance("SunX509");
 				tmf.init(ks);
-				SSLContext sslContext = SSLContext.getInstance("TLS");
+				SSLContext sslContext=SSLContext.getInstance("TLS");
 				sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);*/
 
 				// Coloca o SSL socket factory no request context da ligacao a efetuar ao webservice
@@ -193,14 +195,14 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 		if (DIRECTION.get(smc)==DIRECTION.OUTBOUND) try{
 
 			// Generate simetric key used for this request!
-			CryptoCipher simetricKeyCipher = new CryptoCipher(CIPHERS.AES_ECB_PKCS5);
-			byte[] simetricKey = simetricKeyCipher.getKey().getEncoded();
+			CryptoCipher simetricKeyCipher=new CryptoCipher(CIPHERS.AES_ECB_PKCS5);
+			byte[] simetricKey=simetricKeyCipher.getKey().getEncoded();
 
 			// Create SOAP Factory
-			SOAPFactory factory = SOAPFactory.newInstance();
+			SOAPFactory factory=SOAPFactory.newInstance();
 
 			// Username Token
-			SOAPElement usernameToken = factory.createElement("UsernameToken", AUTH_PREFIX, AUTH_NAMESPACE);
+			SOAPElement usernameToken=factory.createElement("UsernameToken", AUTH_PREFIX, AUTH_NAMESPACE);
 
 			// Username
 			usernameToken.addChildElement(factory.createElement("Username", AUTH_PREFIX, AUTH_NAMESPACE).addTextNode(username));
@@ -215,7 +217,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 					// Encrypt with the simetric key and B64 encode the password
 					simetricKeyCipher.BASE64encrypt(password, 0)));
 
-			/*SOAPElement passwordElement = factory.createElement("Password", AUTH_PREFIX, AUTH_NAMESPACE).addTextNode(
+			/*SOAPElement passwordElement=factory.createElement("Password", AUTH_PREFIX, AUTH_NAMESPACE).addTextNode(
 					// Encrypt with the simetric key and B64 encode the password
 					simetricKeyCipher.BASE64encrypt(password, 0));
 			// Encrypt with the simetric key and B64 encode the digest
@@ -228,11 +230,11 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 					simetricKeyCipher.BASE64encrypt(createTimestamp(), 0)));
 
 			// Security
-			SOAPElement securityHeader = factory.createElement("Security", AUTH_PREFIX, AUTH_NAMESPACE);
+			SOAPElement securityHeader=factory.createElement("Security", AUTH_PREFIX, AUTH_NAMESPACE);
 			securityHeader.addChildElement(usernameToken);
 
 			// Create SOAP Header for SOAP envelope
-			SOAPEnvelope envelope = smc.getMessage().getSOAPPart().getEnvelope();
+			SOAPEnvelope envelope=smc.getMessage().getSOAPPart().getEnvelope();
 			if (envelope.getHeader()==null) envelope.addHeader(); // JAVA 8
 			envelope.getHeader().addChildElement(securityHeader);
 
@@ -253,7 +255,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 	private String createTimestamp() {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 		Long offset=TIME_INFO==null || TIME_INFO.getOffset()==null ? 0 : TIME_INFO.getOffset();
 		return sdf.format(new Date(System.currentTimeMillis()+offset));
@@ -264,9 +266,9 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 	@Deprecated
 	private byte[] createPasswordDigest(byte[] simetricKey, String timestamp, String password) throws UnsupportedEncodingException {
 
-		byte[] createdBytes = timestamp.getBytes(StandardCharsets.UTF_8);
-		byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
-		byte[] messageBytes = new byte[simetricKey.length + createdBytes.length + passwordBytes.length];
+		byte[] createdBytes=timestamp.getBytes(StandardCharsets.UTF_8);
+		byte[] passwordBytes=password.getBytes(StandardCharsets.UTF_8);
+		byte[] messageBytes=new byte[simetricKey.length + createdBytes.length + passwordBytes.length];
 		System.arraycopy(simetricKey, 0, messageBytes, 0, simetricKey.length);
 		System.arraycopy(createdBytes, 0, messageBytes, simetricKey.length, createdBytes.length);
 		System.arraycopy(passwordBytes, 0, messageBytes, simetricKey.length + createdBytes.length, passwordBytes.length);
@@ -279,7 +281,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 		if (!smc.isEmpty()) try{
 
-			Source source = smc.getMessage().getSOAPPart().getContent();
+			Source source=smc.getMessage().getSOAPPart().getContent();
 			switch(DIRECTION.get(smc)){
 			case OUTBOUND: System.err.println("<!---SENT--->\n" + log(source)); break;
 			case INBOUND: System.err.println("<!---RECEIVED--->\n" + log(source)); break;
@@ -293,7 +295,7 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 	protected String log(Source source) throws Exception {
 
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ByteArrayOutputStream out=new ByteArrayOutputStream();
 		toXML(source, new StreamResult(out));
 		return out.toString(StandardCharsets.UTF_8.name());
 
@@ -301,11 +303,23 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 
 	protected void toXML(Source source, Result outputTarget) throws Exception {
 
-		Transformer transformer = TransformerFactory.newInstance().newTransformer();
-		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.transform(source, outputTarget);
+		if (source!=null) try{
+			Transformer transformer=TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+			transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.transform(source, outputTarget);
+
+		}catch(TransformerFactoryConfigurationError e){
+			// Occurs when the XML Transformer implementation is missing or misconfigured in the environment
+			throw new Exception("Critical error: XML Transformer Factory implementation not found or misconfigured", e);
+		}catch(IllegalArgumentException e){
+			// Occurs if the OutputKeys (method, encoding, indent) are not supported by the transformer
+			throw new Exception("Invalid transformation properties: Check encoding or output method settings", e);
+		}catch(TransformerException e){
+			// This is where "mismatched tag" errors from HTML/Firewall responses are caught
+			throw new Exception("XML Transformation failed: The source content is not a valid XML document (likely an HTML error page from a firewall or proxy)", e);
+		}
 
 	}
 

@@ -43,7 +43,7 @@ public class FaturasServiceHandler extends ServiceHandler<Faturas> {
 		public final String name;
 
 		private ENDPOINTS(String name) {
-			this.name = name;
+			this.name=name;
 		}
 
 	}

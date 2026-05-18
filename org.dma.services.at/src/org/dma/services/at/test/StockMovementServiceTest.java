@@ -61,14 +61,14 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 	public static StockMovement build(int numero, SeriesInfo info) throws Exception {
 
-		Line line = new Line();
+		Line line=new Line();
 		line.setProductDescription("Artigo");
 		line.setQuantity(new BigDecimal(10));
 		line.setUnitOfMeasure("UN");
 		line.setUnitPrice(new BigDecimal(100));
 
 		//--- REQUEST ---
-		StockMovement request = new StockMovement();
+		StockMovement request=new StockMovement();
 
 		request.setTaxRegistrationNumber(RequesterTaxID);
 		request.setCompanyName("Empresa");
@@ -94,7 +94,7 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 
 	private static AddressStructurePT createAdressStructure(String addressdetail, String city, String postalCode, String country) throws Exception {
 
-		AddressStructurePT addressStructure = new AddressStructurePT();
+		AddressStructurePT addressStructure=new AddressStructurePT();
 		//incluir o nome da rua, numero de policia e andar, se aplicavel.
 		if (addressdetail!=null) addressStructure.setAddressdetail(addressdetail);
 		if (city!=null) addressStructure.setCity(city);

@@ -46,7 +46,7 @@ public class SeriesServiceHandler extends ServiceHandler<SeriesWS> {
 		public final String name;
 
 		private ENDPOINTS(String name) {
-			this.name = name;
+			this.name=name;
 		}
 
 	}

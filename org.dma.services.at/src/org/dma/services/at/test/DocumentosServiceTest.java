@@ -73,11 +73,11 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 
 	public static RegisterInvoiceRequest build(int numero, SeriesInfo info) throws Exception {
 
-		InvoiceStatus status = new InvoiceStatus();
+		InvoiceStatus status=new InvoiceStatus();
 		status.setInvoiceStatus(InvoiceStatusType.N.value());
 		status.setInvoiceStatusDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceStatusDate));
 
-		InvoiceDataType invoice = new InvoiceDataType();
+		InvoiceDataType invoice=new InvoiceDataType();
 		invoice.setInvoiceNo(info.getTipoDoc()+" "+info.getSerie()+"/"+numero);
 		invoice.setATCUD(info.getCodValidacaoSerie()+"-"+numero);
 		invoice.setInvoiceDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
@@ -91,27 +91,27 @@ public class DocumentosServiceTest extends DocumentosServiceHandler {
 		invoice.setPaperLessIndicator(0);
 		invoice.setSystemEntryDate(TimeDateUtils.getXMLGregorianCalendar(SystemEntryDate));
 
-		Tax tax = new Tax();
+		Tax tax=new Tax();
 		tax.setTaxType(TaxType.IVA);
 		tax.setTaxCountryRegion("PT");
 		tax.setTaxCode("NOR");
 		tax.setTaxPercentage(new BigDecimal(23));
 
-		LineSummary line = new LineSummary();
+		LineSummary line=new LineSummary();
 		line.setTaxPointDate(TimeDateUtils.getXMLGregorianCalendar(InvoiceDate));
 		line.setDebitCreditIndicator(DebitCreditIndicator.D);
 		line.setAmount(new BigDecimal(100));
 		line.setTax(tax);
 		invoice.getLineSummary().add(line);
 
-		DocumentTotals documentTotals = new DocumentTotals();
+		DocumentTotals documentTotals=new DocumentTotals();
 		documentTotals.setTaxPayable(new BigDecimal(23));
 		documentTotals.setNetTotal(new BigDecimal(100));
 		documentTotals.setGrossTotal(new BigDecimal(123));
 		invoice.setDocumentTotals(documentTotals);
 
 		//--- REQUEST ---
-		RegisterInvoiceRequest request = new RegisterInvoiceRequest();
+		RegisterInvoiceRequest request=new RegisterInvoiceRequest();
 
 		request.setEFaturaMDVersion(EFaturaMDVersion);
 		request.setAuditFileVersion("1.04_01");

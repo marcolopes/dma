@@ -56,7 +56,7 @@ public class DocumentosServiceHandler extends ServiceHandler<FatcorewsPort> {
 		public final String name;
 
 		private ENDPOINTS(String name) {
-			this.name = name;
+			this.name=name;
 		}
 
 	}
@@ -87,12 +87,12 @@ public class DocumentosServiceHandler extends ServiceHandler<FatcorewsPort> {
 	}
 
 	public ResponseType changeInvoiceStatus(RegisterInvoiceRequest request, InvoiceStatusType status) throws WebServiceException {
-		ChangeInvoiceStatusRequest newRequest = new ChangeInvoiceStatusRequest();
+		ChangeInvoiceStatusRequest newRequest=new ChangeInvoiceStatusRequest();
 
 		newRequest.setEFaturaMDVersion(request.getEFaturaMDVersion());
 		newRequest.setTaxRegistrationNumber(request.getTaxRegistrationNumber());
 
-		InvoiceHeaderType header = new InvoiceHeaderType();
+		InvoiceHeaderType header=new InvoiceHeaderType();
 		header.setInvoiceNo(request.getInvoiceData().getInvoiceNo());
 		header.setATCUD(request.getInvoiceData().getATCUD());
 		header.setInvoiceDate(request.getInvoiceData().getInvoiceDate());
@@ -102,7 +102,7 @@ public class DocumentosServiceHandler extends ServiceHandler<FatcorewsPort> {
 		header.setCustomerTaxIDCountry(request.getInvoiceData().getCustomerTaxIDCountry());
 		newRequest.setInvoiceHeader(header);
 
-		NewInvoiceStatusType newStatus = new NewInvoiceStatusType();
+		NewInvoiceStatusType newStatus=new NewInvoiceStatusType();
 		newStatus.setInvoiceStatus(status.value());
 		newStatus.setInvoiceStatusDate(TimeDateUtils.getXMLGregorianCalendar());
 		newRequest.setInvoiceStatus(newStatus);
@@ -115,12 +115,12 @@ public class DocumentosServiceHandler extends ServiceHandler<FatcorewsPort> {
 	}
 
 	public ResponseType deleteInvoice(RegisterInvoiceRequest request, DeleteReasonType reason) throws WebServiceException {
-		DeleteInvoiceRequest newRequest = new DeleteInvoiceRequest();
+		DeleteInvoiceRequest newRequest=new DeleteInvoiceRequest();
 
 		newRequest.setEFaturaMDVersion(request.getEFaturaMDVersion());
 		newRequest.setTaxRegistrationNumber(request.getTaxRegistrationNumber());
 
-		InvoiceHeaderType header = new InvoiceHeaderType();
+		InvoiceHeaderType header=new InvoiceHeaderType();
 		header.setInvoiceNo(request.getInvoiceData().getInvoiceNo());
 		header.setATCUD(request.getInvoiceData().getATCUD());
 		header.setInvoiceDate(request.getInvoiceData().getInvoiceDate());
@@ -129,7 +129,7 @@ public class DocumentosServiceHandler extends ServiceHandler<FatcorewsPort> {
 		header.setCustomerTaxID(request.getInvoiceData().getCustomerTaxID());
 		header.setCustomerTaxIDCountry(request.getInvoiceData().getCustomerTaxIDCountry());
 
-		ListInvoiceDocumentsType list = new ListInvoiceDocumentsType();
+		ListInvoiceDocumentsType list=new ListInvoiceDocumentsType();
 		list.getInvoice().add(header);
 		newRequest.setDocumentsList(list);
 

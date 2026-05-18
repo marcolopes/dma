@@ -42,7 +42,7 @@ public class TaxFreeServiceHandler extends ServiceHandler<TaxFreeService> {
 		public final String name;
 
 		private ENDPOINTS(String name) {
-			this.name = name;
+			this.name=name;
 		}
 
 	}

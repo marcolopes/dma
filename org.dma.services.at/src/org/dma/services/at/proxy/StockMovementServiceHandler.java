@@ -43,7 +43,7 @@ public class StockMovementServiceHandler extends ServiceHandler<DocumentosTransp
 		public final String name;
 
 		private ENDPOINTS(String name) {
-			this.name = name;
+			this.name=name;
 		}
 
 	}

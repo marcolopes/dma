@@ -62,59 +62,59 @@ public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 	public static TaxFreeSubmissionRequestType build() throws Exception {
 
 		//--- HEADER ---
-		RequestHeaderType header = new RequestHeaderType();
+		RequestHeaderType header=new RequestHeaderType();
 		header.setRequesterTaxID(RequesterTaxID);
 
 		//--- COMPANY ---
-		CompanyType company = new CompanyType();
+		CompanyType company=new CompanyType();
 		company.setTaxRegistrationNumber(RequesterTaxID);
 		company.setBusinessName("Empresa");
 		company.setEmail("tax@empresa.com");
 
 		//--- BUYER ---
-		BuyerType buyer = new BuyerType();
+		BuyerType buyer=new BuyerType();
 		buyer.setName("Turista nao europeu");
 		buyer.setResidenceCountryCode("BR");
 		buyer.setTaxRegistrationNumber(123456789);
 		buyer.setBirthDate(TimeDateUtils.getXMLGregorianCalendar("2001-09-11"));
 
-		IdentityDocType identity = new IdentityDocType();
+		IdentityDocType identity=new IdentityDocType();
 		identity.setType("PASSAPORTE");
 		identity.setNumber(new RandomValue().integer(9));
 		identity.setCountryCode("BR");
 		buyer.setIdentityDoc(identity);
 
 		//--- REFUND ---
-		RefundType refund = new RefundType();
+		RefundType refund=new RefundType();
 		refund.setGuaranteeTotal(new BigDecimal("0.00"));
 		refund.setCalculatedTaxTotal(new BigDecimal("46.00"));
 
 		//--- INVOICES ---
-		InvoicesType invoices = new InvoicesType();
+		InvoicesType invoices=new InvoicesType();
 		invoices.setNumberOfEntries(1);
 		//invoices.setInvoicesGrossTotal(new BigDecimal("200.00"));
 		//invoices.setCalculatedTaxes(taxes);
 
-		InvoiceIdentifiersType invoiceIdentifiers = new InvoiceIdentifiersType();
+		InvoiceIdentifiersType invoiceIdentifiers=new InvoiceIdentifiersType();
 		invoiceIdentifiers.setInvoiceNo("CFA 2018/"+new RandomValue().integer(6));
 		invoiceIdentifiers.setHashTermination(new RandomValue().letters(4));
 
 		/*
-		SimpleBuyerType simpleBuyer = new SimpleBuyerType();
+		SimpleBuyerType simpleBuyer=new SimpleBuyerType();
 		simpleBuyer.setCompanyName("Turista nao europeu");
-		VatNumberInfoType vatNumberInfo = new VatNumberInfoType();
+		VatNumberInfoType vatNumberInfo=new VatNumberInfoType();
 		vatNumberInfo.setCustomerTaxID("123456789");
 		vatNumberInfo.setCountryCode("BR");
 		simpleBuyer.setVatNumberInfo(vatNumberInfo);
 		*/
 
-		CalculatedTaxesType taxes = new CalculatedTaxesType();
-		CalculatedTaxType tax = new CalculatedTaxType();
+		CalculatedTaxesType taxes=new CalculatedTaxesType();
+		CalculatedTaxType tax=new CalculatedTaxType();
 		tax.setTaxPercentage(new BigDecimal("23.00"));
 		tax.setTaxAmount(new BigDecimal("46.00"));
 		taxes.getCalculatedTax().add(tax);
 
-		InvoiceType invoice = new InvoiceType();
+		InvoiceType invoice=new InvoiceType();
 		//invoice.setATCUD(StringUtils.numbers(100));
 		invoice.setInvoiceIdentifiers(invoiceIdentifiers);
 		invoice.setInvoiceType("FT");
@@ -125,23 +125,23 @@ public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 		invoice.setCalculatedTaxes(taxes);
 
 		//--- INVOICE LINES ---
-		InvoiceLineType invoiceLine = new InvoiceLineType();
+		InvoiceLineType invoiceLine=new InvoiceLineType();
 		invoiceLine.setProductClass("ALI");
 		invoiceLine.setProductDescription("Vinho do Porto");
 		invoiceLine.setQuantity(new BigDecimal("1.00"));
 		invoiceLine.setTaxBaseTotal(new BigDecimal("200.00"));
 
-		InvoiceLinesListType invoiceLinesList = new InvoiceLinesListType();
+		InvoiceLinesListType invoiceLinesList=new InvoiceLinesListType();
 		invoiceLinesList.getInvoiceLine().add(invoiceLine);
 		invoice.setInvoiceLinesList(invoiceLinesList);
 
 		//--- INVOICES LIST ---
-		InvoicesListType invoicesList = new InvoicesListType();
+		InvoicesListType invoicesList=new InvoicesListType();
 		invoicesList.getInvoice().add(invoice);
 		invoices.setInvoicesList(invoicesList);
 
 		//--- TAX FREE ---
-		TaxFreeCommType taxFree = new TaxFreeCommType();
+		TaxFreeCommType taxFree=new TaxFreeCommType();
 		taxFree.setIdentifier(new RandomValue().integer(9));
 		taxFree.setSeller(company);
 		taxFree.setBuyer(buyer);
@@ -149,7 +149,7 @@ public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 		taxFree.setInvoices(invoices);
 
 		//--- REQUEST ---
-		TaxFreeSubmissionRequestType request = new TaxFreeSubmissionRequestType();
+		TaxFreeSubmissionRequestType request=new TaxFreeSubmissionRequestType();
 
 		request.setRequestHeader(header);
 		request.setTaxFreeComm(taxFree);

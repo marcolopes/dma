@@ -50,22 +50,22 @@ public class FaturasServiceTest extends FaturasServiceHandler {
 
 	public static RegisterInvoiceType build(int numero) throws Exception {
 
-		Tax tax = new Tax();
+		Tax tax=new Tax();
 		tax.setTaxType("IVA");
 		tax.setTaxCountryRegion("PT");
 		tax.setTaxPercentage(new BigDecimal(23));
 
-		Line line = new Line();
+		Line line=new Line();
 		line.setDebitAmount(new BigDecimal(100));
 		line.setTax(tax);
 
-		DocumentTotals documentTotals = new DocumentTotals();
+		DocumentTotals documentTotals=new DocumentTotals();
 		documentTotals.setTaxPayable(new BigDecimal(23));
 		documentTotals.setNetTotal(new BigDecimal(100));
 		documentTotals.setGrossTotal(new BigDecimal(123));
 
 		//--- REQUEST ---
-		RegisterInvoiceType request = new RegisterInvoiceType();
+		RegisterInvoiceType request=new RegisterInvoiceType();
 
 		request.setTaxRegistrationNumber(RequesterTaxID);
 		request.setInvoiceNo("CFA 2012/"+numero);
