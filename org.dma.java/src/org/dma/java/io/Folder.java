@@ -140,12 +140,13 @@ public class Folder extends CustomFile {
 	public int deleteFiles(String wildcards) {
 		int count=0;
 		File[] files=listFiles(wildcards);
-		for(File file: files) try{
-			if (file.delete()) count++;
-		}catch(Exception e){
-			System.err.println(e);
-		}System.out.println(count+"/"+files.length+" files deleted in "+toString());
-		return count;
+		if (files!=null){
+			for(File file: files) try{
+				if (file.delete()) count++;
+			}catch(Exception e){
+				System.err.println(e);
+			}System.out.println(count+"/"+files.length+" files deleted in "+toString());
+		}return count;
 	}
 
 

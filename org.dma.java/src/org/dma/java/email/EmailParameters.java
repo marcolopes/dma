@@ -28,12 +28,14 @@ import org.apache.commons.mail.EmailException;
 import org.dma.java.email.ServerParameters.SECURITY;
 import org.dma.java.io.FileParameters;
 import org.dma.java.io.UTF8TextFile;
-import org.dma.java.util.Debug;
 import org.dma.java.util.ErrorList;
 
 public class EmailParameters extends EmailRecipients {
 
 	private static final long serialVersionUID = 1L;
+
+	private boolean debug;
+	public void setDebug(boolean debug) {this.debug=debug;}
 
 	private final ServerParameters server;
 	private final EmailAddress from;
@@ -51,7 +53,8 @@ public class EmailParameters extends EmailRecipients {
 	/** @see Email#send() */
 	public String send(EmailMessage message, EmailAttachment...attachment) throws EmailException {
 
-		CustomHtmlEmail email=new CustomHtmlEmail(server, Debug.STATUS);
+		CustomHtmlEmail email=new CustomHtmlEmail(server);
+		email.setDebug(debug);
 
 		email.setSubject(message.getSubject());
 		if (message.isHtml()) email.setHtmlMsg(message.getBody());

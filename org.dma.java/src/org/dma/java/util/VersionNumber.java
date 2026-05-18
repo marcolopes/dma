@@ -66,7 +66,6 @@ public final class VersionNumber {
 	 * false if the current version is EQUAL of GREATER
 	 */
 	public boolean smallerThan(VersionNumber version) {
-		Debug.out(version);
 		int[] THIS=toArray();
 		int[] OTHER=version.toArray();
 		//major to minor

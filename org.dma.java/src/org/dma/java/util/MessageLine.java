@@ -29,8 +29,8 @@ public class MessageLine extends StringList {
 		if (obj instanceof Date) return TimeDateUtils.getDateFormatted((Date)obj);
 		if (obj instanceof Time) return TimeDateUtils.getTimeFormatted((Time)obj);
 		if (obj instanceof Throwable){
-			Throwable e=(Throwable)obj;
-			return e.getMessage()==null ? e.toString() : e.getMessage();
+			Throwable exception=(Throwable)obj;
+			return exception.getMessage()==null ? exception.toString() : exception.getMessage();
 		}return obj.toString();
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,8 +75,28 @@ public class Command {
 	}
 
 
+	/** @see ProcessBuilder#start() */
 	public Process start() throws IOException {
-		Process process=builder.start();
+		return builder.start();
+	}
+
+
+	/**
+	 * @see Command#start()
+	 * @see Process#waitFor()
+	 */
+	public int startAndWait() throws IOException, InterruptedException {
+		return start().waitFor();
+	}
+
+
+	/**
+	 * @see Command#start()
+	 * @see Process#getInputStream()
+	 * @see Process#waitFor()
+	 */
+	public int startReadAndWait() throws IOException, InterruptedException {
+		Process process=start();
 		BufferedReader in=new BufferedReader(new InputStreamReader(process.getInputStream()));
 		try{String line;
 			while((line=in.readLine())!=null){
@@ -84,13 +104,7 @@ public class Command {
 			}
 		}finally{
 			in.close();
-		}return process;
-	}
-
-
-	/** @see Process#waitFor() */
-	public int startAndWait() throws IOException, InterruptedException {
-		return start().waitFor();
+		}return process.waitFor();
 	}
 
 
@@ -108,10 +122,13 @@ public class Command {
 		//create empty image
 		new ByteFile(parameters.toFile()).write(new byte[0]);
 
+		//execute command
 		Command cmd=new Command(parameters.folder, "mspaint", parameters.filename);
 		cmd.setVariable("VAR", "value");
-		//execute command
-		if (cmd.startAndWait()!=0) throw new Exception(cmd.toString());
+
+		System.out.println(cmd.startReadAndWait());
+		System.out.println(cmd.startAndWait());
+		cmd.start();
 
 	}
 

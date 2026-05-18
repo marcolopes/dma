@@ -40,15 +40,15 @@ public class MessageList extends ArrayList<MessageLine> {
 	}
 
 	public MessageList() {}
-	public MessageList(Throwable e) {add(e);}
+	public MessageList(Throwable throwable) {add(throwable);}
 	public MessageList(String string) {add(string);}
 	public MessageList(StringList list) {for(String string: list) add(string);}
 
-	public boolean add(Throwable e) {return e==null ? false : add(new MessageLine(e));}
+	public boolean add(Throwable throwable) {return throwable==null ? false : add(new MessageLine(throwable));}
 	public boolean add(String string) {return string==null ? false : add(new MessageLine(string));}
 	public boolean add(MessageList list) {return addAll(list);}
 
-	public MessageList append(Throwable e) {add(e); return this;}
+	public MessageList append(Throwable throwable) {add(throwable); return this;}
 	public MessageList append(String string) {add(string); return this;}
 	public MessageList append(MessageList list) {add(list); return this;}
 	public MessageList append(MessageLine line) {add(line); return this;}

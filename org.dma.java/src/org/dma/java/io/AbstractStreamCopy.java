@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ public abstract class AbstractStreamCopy {
 	/** Streams must be closed by caller */
 	public void copy(BufferedInputStream in, BufferedOutputStream out) throws IOException, InterruptedException {
 
-		byte[] buffer=new byte[1024];
+		byte[] buffer=new byte[1024*8];
 
 		int len;
 		// Transfer bytes from input to output

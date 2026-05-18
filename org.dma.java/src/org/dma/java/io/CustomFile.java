@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -38,6 +37,7 @@ import java.util.List;
 
 import org.dma.java.util.StringList;
 import org.dma.java.util.StringUtils;
+import org.dma.java.util.SystemUtils;
 
 public class CustomFile extends File {
 
@@ -163,7 +163,7 @@ public class CustomFile extends File {
 
 
 	/** @see Desktop#open(File) */
-	public boolean open() throws IOException {
+	public boolean open() throws Exception {
 		if (Desktop.isDesktopSupported()){
 			Desktop.getDesktop().open(this);
 			return true;
@@ -172,34 +172,27 @@ public class CustomFile extends File {
 
 
 	/**
-	 * In Windows, use {@link CustomFile#executeWithCmd(String...)}
+	 * In windows we use {@link WindowsCommand#WindowsCommand(File, String)}
 	 * to avoid CreateProcess error=740
 	 * (The requested operation requires elevation)
-	 *
-	 * @see Command#Command(File, String, List)
-	 * @see Process#exitValue()
-	 */
-	public int execute(String...args) throws IOException {
-		return new Command(getParentFile(), toString(), args).start().exitValue();
-	}
-
-
-	/**
 	 * https://ss64.com/nt/start.html
 	 *
-	 * @see WindowsCommand#WindowsCommand(File, String)
-	 * @see Process#exitValue()
+	 * @see Command#Command(File, String, List)
 	 */
-	public int executeWithCmd(String...args) throws IOException {
-		//START "title" [/D path] [options] "command" [parameters]
-		StringList list=new StringList("START", StringUtils.quote(getName()),
-				/*path defined by Command WORKING directory parameter
-				"/D "+StringUtils.quote(getParent())),*/
-				StringUtils.quote(getName()));
-		list.addAll(Arrays.asList(args));
-		//START "title" "program" parameters
-		String command=list.concat(" ");
-		return new WindowsCommand(getParentFile(), command).start().exitValue();
+	public Command command(String...args) {
+		if (SystemUtils.IS_OS_WINDOWS){
+			/*
+			 * START "title" [/D path] [options] "command" [parameters]
+			 * [/D path] is redundant (defined by WORKING directory parameter)
+			 * START "title" "program" parameters
+			 */
+			StringList list=new StringList("START",
+					StringUtils.quote(getName()),
+					//"/D "+StringUtils.quote(getParent())),
+					StringUtils.quote(getName()));
+			list.addAll(Arrays.asList(args));
+			return new WindowsCommand(getParentFile(), list.concat(" "));
+		}return new Command(getParentFile(), toString(), args);
 	}
 
 
@@ -242,19 +235,22 @@ public class CustomFile extends File {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		System.out.println(Folder.current().toString());
+		System.out.println(Folder.current());
 		System.out.println(new CustomFile(""));
-		System.out.println();
+		System.out.println(new CustomFile("\\Users\\marcolopes\\Temp"));
+		System.out.println(new CustomFile("\\Users\\marcolopes", "Temp"));
+		System.out.println(new CustomFile("\\Users", "marcolopes", "Temp"));
 		System.out.println(new CustomFile("C:\\Users\\marcolopes\\Temp"));
 		System.out.println(new CustomFile("C:\\Users\\marcolopes", "Temp"));
 		System.out.println(new CustomFile("C:\\Users", "marcolopes", "Temp"));
 		System.out.println(new CustomFile("C:", "Users", "marcolopes", "Temp"));
-		System.out.println();
-		System.out.println(new CustomFile("\\Users\\marcolopes\\Temp"));
-		System.out.println(new CustomFile("\\Users\\marcolopes", "Temp"));
-		System.out.println(new CustomFile("\\Users", "marcolopes", "Temp"));
+
+		CustomFile file=new CustomFile(Folder.temporary(), "mspaint");
+		System.out.println(file.command().startReadAndWait());
+		System.out.println(file.command().startAndWait());
+		file.command().start();
 
 	}
 

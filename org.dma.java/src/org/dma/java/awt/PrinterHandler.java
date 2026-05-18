@@ -34,6 +34,7 @@ import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
 
@@ -75,7 +76,7 @@ public class PrinterHandler {
 
 
 	public void checkPrinter() throws PrinterException {
-		Debug.err("service", service);
+		Debug.out("service", service);
 		if (service==null) throw new PrinterException("Invalid printer "+printerName);
 	}
 
@@ -133,18 +134,21 @@ public class PrinterHandler {
 
 
 	/** Prints a PDF using apache pdfbox */
-	public void printPdf(File file) throws PrinterException, PrintException, IOException {
+	public void printPdf(File file, boolean pageable) throws PrinterException, PrintException, IOException {
 
 		checkPrinter();
 
 		if (file!=null) try{
 
-			PDDocument document=PDDocument.load(file);
+			final PDDocument document=PDDocument.load(file);
 
 			try{PrinterJob job=PrinterJob.getPrinterJob();
 				job.setPrintService(service);
 				job.setJobName(file.getName());
-				job.setPageable(new PDFPageable(document));
+
+				if (pageable) job.setPageable(new PDFPageable(document));
+				else throw new NotImplementedException("Printable NOT implemented yet");
+
 				job.print();
 
 			}catch(PrinterAbortException e){

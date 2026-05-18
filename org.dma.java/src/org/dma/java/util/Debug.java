@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2019 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ public class Debug {
 		StringBuilder sb=new StringBuilder();
 
 		try{sb.insert(0, obj==null ? NULL : obj.equals(NULL) ? "" : obj.toString()).
-			insert(0, message==null || message.isEmpty() ? "" : sb.length()==0 ? message : message+": ").
+			insert(0, StringUtils.isEmpty(message) ? "" : sb.length()==0 ? message : message+": ").
 			insert(0, caller.toString());
 
 		}catch(Exception e){

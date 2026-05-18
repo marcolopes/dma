@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,8 +32,7 @@ import org.dma.java.email.ServerParameters.SECURITY;
 public class CustomHtmlEmail extends HtmlEmail {
 
 	/** Charset UTF-8 */
-	public CustomHtmlEmail(ServerParameters server, boolean debug) {
-		setDebug(debug);
+	public CustomHtmlEmail(ServerParameters server) {
 		setCharset(EmailConstants.UTF_8);
 
 		setHostName(server.getHostName());
