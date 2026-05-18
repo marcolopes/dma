@@ -3,7 +3,7 @@ Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Java Drivers
 Bundle-SymbolicName: org.dma.drivers;singleton:=true
-Bundle-Version: 1.5.2.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Vendor: marcolopespt@gmail.com
 Bundle-Activator: org.dma.drivers.Activator
 Bundle-ActivationPolicy: lazy

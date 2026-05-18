@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ public abstract class AbstractManager implements IDatabaseManager {
 
 	public void executeBackup(Command cmd, String password) throws Exception {
 		Debug.out("BACKUP COMMAND: "+cmd);
-		if (cmd.startAndWait()!=0) throw new Exception(cmd.toString());
+		if (cmd.startReadAndWait()!=0) throw new Exception(cmd.toString());
 	}
 
 	/** Release the connection from the pool */
