@@ -4,7 +4,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Jetty Server
 Bundle-SymbolicName: org.dma.jetty;singleton:=true
 Bundle-Version: 9.2.29.qualifier
-Bundle-Vendor: marcolopespt@gmail.com
+Bundle-Vendor: https://jetty.org
 Bundle-Activator: org.dma.jetty.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
