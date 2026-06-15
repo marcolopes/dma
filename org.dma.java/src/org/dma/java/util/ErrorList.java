@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,38 +20,38 @@ package org.dma.java.util;
 
 public class ErrorList {
 
-	private final MessageList errors=new MessageList();
 	private final MessageList warnings=new MessageList();
+	private final MessageList errors=new MessageList();
 
-	public MessageList errors() {return errors;}
 	public MessageList warnings() {return warnings;}
+	public MessageList errors() {return errors;}
 
 	public ErrorList() {}
 
 	/** Clears ERRORS and WARNINGS */
 	public void clear() {
-		errors.clear();
 		warnings.clear();
+		errors.clear();
 	}
 
 	/** Prints ERRORS and WARNINGS */
 	public ErrorList print() {
-		errors.print();
 		warnings.print();
+		errors.print(System.err);
 		return this;
 	}
 
 	/** Adds ERRORS and WARNINGS */
 	public ErrorList add(ErrorList list) {
-		errors.addAll(list.errors);
 		warnings.addAll(list.warnings);
+		errors.addAll(list.errors);
 		return this;
 	}
 
 	public ErrorList prefix(String prefix) {
 		ErrorList list=new ErrorList();
-		list.errors.addAll(errors.prefix(prefix));
 		list.warnings.addAll(warnings.prefix(prefix));
+		list.errors.addAll(errors.prefix(prefix));
 		return list;
 	}
 

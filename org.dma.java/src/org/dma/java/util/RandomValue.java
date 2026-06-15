@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 package org.dma.java.util;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class RandomValue extends RandomString {
@@ -100,17 +101,20 @@ public class RandomValue extends RandomString {
 	 */
 	public <T> T from(Collection<T> col) {
 
-		int index=nextInt(col.size());
+		if (!col.isEmpty()){
 
-		for(T element: col){
-			if (--index<0) return element;
+			int index=nextInt(col.size());
+
+			for(T element: col){
+				if (--index<0) return element;
+			}
 		}return null;
 
 	}
 
 	public <T> T from(T[] array) {
 
-		return array.length==0 ? null : array[nextInt(array.length)];
+		return from(Arrays.asList(array));
 
 	}
 

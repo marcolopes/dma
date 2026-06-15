@@ -18,6 +18,13 @@
  *******************************************************************************/
 package org.dma.java.awt;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
 import java.awt.print.PrinterAbortException;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -34,10 +41,13 @@ import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
 
+import org.dma.java.io.FileParameters;
+import org.dma.java.io.Folder;
 import org.dma.java.util.Debug;
 
 public class PrinterHandler {
@@ -68,9 +78,15 @@ public class PrinterHandler {
 	private final PrintService service;
 
 	private final String printerName;
+	private final boolean debug;
 
 	public PrinterHandler(String printerName) {
+		this(printerName, false);
+	}
+
+	public PrinterHandler(String printerName, boolean debug) {
 		this.printerName=printerName;
+		this.debug=debug;
 		this.service=lookupPrintService(printerName);
 	}
 
@@ -133,8 +149,19 @@ public class PrinterHandler {
 	}
 
 
+	private void save(BufferedImage image, int pageIndex, File pdfFile) {
+		RenderedImageHandler handler=new RenderedImageHandler(image);
+		File file=new FileParameters(pdfFile.getName().
+				concat(pageIndex<0 ? "" : ".page"+pageIndex),
+				RenderedImageHandler.IMAGE_PNG, Folder.temporary()).toFile();
+		file.deleteOnExit();
+		handler.save(file, RenderedImageHandler.IMAGE_PNG);
+		System.out.println(file);
+	}
+
+
 	/** Prints a PDF using apache pdfbox */
-	public void printPdf(File file, boolean pageable) throws PrinterException, PrintException, IOException {
+	public void printPdf(final File file, boolean pageable) throws PrinterException, PrintException, IOException {
 
 		checkPrinter();
 
@@ -147,7 +174,60 @@ public class PrinterHandler {
 				job.setJobName(file.getName());
 
 				if (pageable) job.setPageable(new PDFPageable(document));
-				else throw new NotImplementedException("Printable NOT implemented yet");
+				else{
+					// 1. Get the default PageFormat from the OS (usually A4 or Letter)
+					PageFormat pf=job.defaultPage();
+
+					// 2. Define the full printable area (zero margins for maximum precision in calculations)
+					// This ensures we use every pixel the driver allows
+					Paper paper=pf.getPaper();
+					paper.setImageableArea(0, 0, paper.getWidth(), paper.getHeight());
+					pf.setPaper(paper);
+
+					// 3. Render the PDF page once as a high quality image
+					// 203 DPI matches most thermal printer native resolutions and avoids scaling artifacts
+					final BufferedImage image=new PDFRenderer(document).renderImageWithDPI(0, 203*3, ImageType.BINARY);
+					if (debug) save(image, -1, file);
+
+					job.setPrintable(new Printable() {
+						@Override
+						public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) {
+							Debug.err("pageIndex", pageIndex);
+
+							// 4. Scale the rendered PDF image to the maximum printable width
+							// This prevents left/right clipping issues on thermal printer drivers
+							double printableWidth=pageFormat.getImageableWidth();
+							double scale=printableWidth / image.getWidth();
+
+							// 5. Determine how many source image pixels fit on one physical printed page
+							int sourceSliceHeight=(int)(pageFormat.getImageableHeight() / scale);
+							int yOffset=pageIndex * sourceSliceHeight;
+
+							if (yOffset<image.getHeight()){// more content to print?
+								// 6. Extract only the visible vertical slice for the current printed page
+								// This replaces the PDF coordinate translation logic with image slicing
+								int imageSliceHeight=Math.min(sourceSliceHeight, image.getHeight()-yOffset);
+								BufferedImage slice=image.getSubimage(0, yOffset, image.getWidth(), imageSliceHeight);
+								if (debug) save(slice, pageIndex, file);
+
+								// 7. Draw the image slice scaled to the printable page area
+								// The printer driver receives a simple bitmap instead of PDF vector graphics
+								int x=(int)pageFormat.getImageableX();
+								int y=(int)pageFormat.getImageableY();
+								int height=(int)(imageSliceHeight * scale);
+								Graphics2D g2d=(Graphics2D)graphics;
+								g2d.drawImage(slice, x, y, (int)printableWidth, height, null);
+
+								// 8. Insert a control pixel on all pages (except the last)
+								// This prevents the printer from auto-trimming trailing blank lines
+								if (yOffset + sourceSliceHeight<image.getHeight()){
+									g2d.setColor(Color.BLACK);
+									g2d.fillRect(x, y+height-1, 1, 1);
+								}return PAGE_EXISTS;
+							}return NO_SUCH_PAGE;
+						}
+					}, pf);
+				}
 
 				job.print();
 

@@ -41,47 +41,18 @@ public class MessageLine extends StringList {
 		return this;
 	}
 
-	public MessageLine parentheses(Object obj) {
-		return append("("+parse(obj)+")");
-	}
-
-	public MessageLine brackets(Object obj) {
-		return append("["+parse(obj)+"]");
-	}
-
-	public MessageLine equal(Object obj) {
-		return append("=").append(parse(obj));
-	}
-
-	public MessageLine notEqual(Object obj) {
-		return append("<>").append(parse(obj));
-	}
-
-	public MessageLine biggerThan(Object obj) {
-		return append(">").append(parse(obj));
-	}
-
-	public MessageLine smallerThan(Object obj) {
-		return append("<").append(parse(obj));
-	}
-
-	public MessageLine forward() {
-		return append("->");
-	}
-
-	public MessageLine back() {
-		return append("<-");
-	}
-
+	public MessageLine parentheses(Object obj) {return append("("+parse(obj)+")");}
+	public MessageLine brackets(Object obj) {return append("["+parse(obj)+"]");}
+	public MessageLine equal(Object obj) {return append("=").append(parse(obj));}
+	public MessageLine notEqual(Object obj) {return append("<>").append(parse(obj));}
+	public MessageLine biggerThan(Object obj) {return append(">").append(parse(obj));}
+	public MessageLine smallerThan(Object obj) {return append("<").append(parse(obj));}
+	public MessageLine forward() {return append("->");}
+	public MessageLine back() {return append("<-");}
 	@Deprecated
-	public MessageLine colon() {
-		return append(":");
-	}
-
+	public MessageLine colon() {return append(":");}
 	@Deprecated
-	public MessageLine dash() {
-		return append("-");
-	}
+	public MessageLine dash() {return append("-");}
 
 	public String toString(String separator) {
 		return concat(separator);

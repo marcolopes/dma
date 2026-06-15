@@ -20,14 +20,19 @@ package org.dma.java.util;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 import org.dma.java.input.FieldFormat.SEPARATOR;
 
 public class MessageList extends ArrayList<MessageLine> {
 
 	private static final long serialVersionUID = 1L;
+
+	/** Throws exception if NOT empty */
+	public void throwException() throws Exception {
+		if (!isEmpty()) throw new Exception(toString());
+	}
 
 	public void print() {print(System.out);}
 
@@ -61,14 +66,8 @@ public class MessageList extends ArrayList<MessageLine> {
 		}return list;
 	}
 
-
-	/** Throws exception if NOT empty */
-	public void throwException() throws Exception {
-		if (!isEmpty()) throw new Exception(toString());
-	}
-
 	public String toString(String separator) {
-		Set<String> col=new LinkedHashSet(size());
+		Collection<String> col=new LinkedHashSet(size());
 		for(MessageLine line: this){
 			col.add(line.toString());
 		}return new StringList(col).concat(separator);

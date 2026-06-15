@@ -44,11 +44,10 @@ public class RenderedImageHandler {
 
 	/** @see Raster#getPixels(int, int, int, int, int[])*/
 	public int[] getPixels() {
-		return image==null ? new int[0] :
-			image.getData().getPixels(0, 0, image.getWidth(), image.getHeight(), (int[])null);
+		return image==null ? new int[0] : image.getData().getPixels(0, 0, image.getWidth(), image.getHeight(), (int[])null);
 	}
 
-	/** @see ImageIO#write(RenderedImage, String, File) */
+	/** @see ImageIO#write(RenderedImage, String, ImageOutputStream) */
 	public byte[] getBytes(String formatName) {
 		if (image!=null) try{
 			ByteArrayOutputStream baos=new ByteArrayOutputStream();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,9 +61,9 @@ public class StringList extends ArrayList<String> {
 
 	@Override
 	public StringList subList(int fromIndex, int toIndex) {
-		return fromIndex<0 || fromIndex>toIndex ?
-				new StringList(0) : new StringList(super.subList(
-						fromIndex, toIndex>size() ? size() : toIndex));
+		return fromIndex>toIndex ? new StringList(0) :
+			new StringList(super.subList(fromIndex<0 ? 0 :
+				fromIndex, toIndex>size() ? size() : toIndex));
 	}
 
 
@@ -281,13 +281,9 @@ public class StringList extends ArrayList<String> {
 	}
 
 
-	public String toString(String separator) {
-		return concat(separator);
-	}
-
 	@Override
 	public String toString() {
-		return toString(SEPARATOR.LINE.value);
+		return concat(SEPARATOR.LINE.value);
 	}
 
 
@@ -296,7 +292,7 @@ public class StringList extends ArrayList<String> {
 		StringList list=new StringList(StringUtils.words("The quick brown fox jumps over the lazy dog")){
 			@Override
 			public String toString() {
-				return "["+toString("|")+"]";
+				return "["+concat("|")+"]";
 			}
 		};
 

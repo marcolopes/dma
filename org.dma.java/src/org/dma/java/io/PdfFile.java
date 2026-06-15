@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfCopy;
 import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfSmartCopy;
 
 import org.dma.java.time.Chronograph;
 
@@ -64,7 +65,7 @@ public class PdfFile extends AbstractPdfFile {
 
 		FileOutputStream out=asOutputStream();
 		try{Document document=new Document();
-			PdfCopy copy=new PdfCopy(document, out);
+			PdfCopy copy=new PdfSmartCopy(document, out);
 			document.open();
 			for(File file: files){
 				PdfReader reader=new PdfReader(file.getAbsolutePath());
