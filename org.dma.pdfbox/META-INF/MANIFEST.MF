@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
-Bundle-Name: Apache PDF Box
+Bundle-Name: Apache PDFBox
 Bundle-SymbolicName: org.dma.pdfbox;singleton:=true
 Bundle-Version: 2.0.33.qualifier
 Bundle-Vendor: https://pdfbox.apache.org
