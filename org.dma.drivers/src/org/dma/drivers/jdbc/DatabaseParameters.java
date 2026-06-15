@@ -21,6 +21,8 @@ package org.dma.drivers.jdbc;
 import java.io.File;
 import java.sql.Connection;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.dma.drivers.jdbc.managers.H2Manager;
 import org.dma.drivers.jdbc.managers.IDatabaseManager;
@@ -34,6 +36,40 @@ import org.dma.java.net.URLHandler.LOCALHOST;
 public class DatabaseParameters extends EnumMap<POOLMANAGERS, IDatabaseManager> {
 
 	private static final long serialVersionUID = 1L;
+
+	public static class Counters {
+
+		/** Successful backups */
+		public AtomicInteger backup=new AtomicInteger();
+
+		/** Successful connections */
+		public AtomicInteger connection=new AtomicInteger();
+
+	}
+
+	private static class CountersMap extends HashMap<String, Counters> {
+
+		private static final long serialVersionUID = 1L;
+
+		private static CountersMap instance;
+
+		public static synchronized CountersMap getInstance() {
+			if (instance==null) instance=new CountersMap();
+			return instance;
+		}
+
+		public synchronized Counters getCounters(String key) {
+			Counters counters=get(key);
+			if (counters==null) put(key, counters=new Counters());
+			return counters;
+		}
+
+	}
+
+	/** Per connection URL */
+	public Counters getCounters() {
+		return CountersMap.getInstance().getCounters(connectionUrl);
+	}
 
 	private IDatabaseManager get(POOLMANAGERS pool) {
 		IDatabaseManager manager=super.get(pool);
@@ -130,11 +166,15 @@ public class DatabaseParameters extends EnumMap<POOLMANAGERS, IDatabaseManager> 
 	}
 
 	public File backup() throws Exception {
-		return getManager().executeBackup(host, database, folder, username, password, backup);
+		File file=getManager().executeBackup(host, database, folder, username, password, backup);
+		getCounters().backup.incrementAndGet();
+		return file;
 	}
 
 	public Connection getConnection() throws Exception {
-		return getManager().getConnection(connectionUrl, username, password);
+		Connection connection=getManager().getConnection(connectionUrl, username, password);
+		getCounters().connection.incrementAndGet();
+		return connection;
 	}
 
 	public void checkConnection() throws Exception {

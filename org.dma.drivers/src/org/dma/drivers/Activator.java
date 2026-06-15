@@ -31,7 +31,7 @@ import org.dma.drivers.jdbc.POOLMANAGERS;
  */
 public class Activator implements BundleActivator {
 
-	public static final int PLUGIN_REVISION = 29;
+	public static final int PLUGIN_REVISION = 30;
 
 	public static final Bundle PLUGIN_BUNDLE = FrameworkUtil.getBundle(Activator.class);
 
