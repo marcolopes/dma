@@ -54,7 +54,7 @@ public abstract class AbstractViewAction extends CustomAction {
 		UIHelper.showBusyWhile(new Runnable() {
 			@Override
 			public void run() {
-				Debug.err(viewId, secondaryId);
+				Debug.out(viewId, secondaryId);
 				try{initialize(view=UIHelper.openView(viewId, secondaryId));
 					if (detach) UIHelper2.detachView(view);
 					else UIHelper.showView(view);

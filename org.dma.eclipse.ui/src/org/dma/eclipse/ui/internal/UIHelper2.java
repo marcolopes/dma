@@ -53,7 +53,7 @@ public class UIHelper2 extends UIHelper {
 		ToolBar toolBar=getPerspectiveToolBar();
 		if (toolBar!=null) for (Listener listener: toolBar.getListeners(SWT.MenuDetect)){
 			toolBar.removeListener(SWT.MenuDetect, listener);
-			Debug.out("REMOVED", listener.toString());
+			Debug.out("REMOVED", listener);
 		}
 	}
 
