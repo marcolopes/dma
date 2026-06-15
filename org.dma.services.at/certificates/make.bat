@@ -1,10 +1,10 @@
 @echo off
-echo *******************************************************************************
+echo *****************************************************************************
 echo * Marco Lopes (marcolopespt@gmail.com)
 echo * Importacao da chave publica para KEY STORE
 echo * Conversao do certificado de TESTES (compatibilidade)
 echo * https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Faturacao/Paginas/default.aspx
-echo *******************************************************************************
+echo *****************************************************************************
 setlocal
 
 set OPENSSL_CONF=
