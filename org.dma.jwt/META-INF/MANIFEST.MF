@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
-Bundle-Name: iText PDF
+Bundle-Name: JSON Web Token
 Bundle-SymbolicName: org.dma.jwt;singleton:=true
 Bundle-Version: 3.10.3.qualifier
 Bundle-Vendor: https://github.com/auth0/java-jwt
