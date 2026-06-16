@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libraries/lib/commons-codec-1.10.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/lib/commons-collections4-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/lib/commons-logging-1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/lib/junit-4.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/lib/log4j-1.2.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/ooxml-lib/curvesapi-1.04.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/ooxml-lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/poi-3.17.jar" sourcepath="libraries/poi-3.17-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/poi-examples-3.17.jar" sourcepath="libraries/poi-3.17-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/poi-excelant-3.17.jar" sourcepath="libraries/poi-3.17-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/poi-ooxml-3.17.jar" sourcepath="libraries/poi-3.17-sources.zip"/>
+	<classpathentry exported="true" kind="lib" path="libraries/poi-ooxml-schemas-3.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/poi-scratchpad-3.17.jar" sourcepath="libraries/poi-3.17-sources.zip"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
