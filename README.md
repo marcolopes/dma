@@ -1,2 +1,2 @@
 # dma
-Eclipse Java Plugin Projects
+Eclipse Java 7 Plugin Projects
