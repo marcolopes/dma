@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,21 @@ import java.util.LinkedHashMap;
 import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.model.ResourceMethod;
 
+import com.google.gson.JsonObject;
+
 public class ResourceInfoMap extends LinkedHashMap<String, Collection<ResourceInfo>> {
 
 	private static final long serialVersionUID = 1L;
+
+	public void print() {print("");}
+	public void print(String basePath) {
+		if (resource!=null) System.out.println("[" + basePath + resource.getPath() + "]"+resource.getName());
+		for(String key: keySet()){
+			for(ResourceInfo info: get(key)){
+				System.out.println(info);
+			}
+		}
+	}
 
 	private final Resource resource;
 
@@ -55,17 +67,13 @@ public class ResourceInfoMap extends LinkedHashMap<String, Collection<ResourceIn
 		}
 	}
 
-	public void print(String basePath) {
-		if (resource!=null) System.out.println("[" + basePath + resource.getPath() + "]"+resource.getName());
+	public JsonObject toJsonObject() {
+		JsonObject jsonObject=new JsonObject();
 		for(String key: keySet()){
 			for(ResourceInfo info: get(key)){
-				System.out.println(info);
+				jsonObject.addProperty(key, info.toString());
 			}
-		}
-	}
-
-	public void print() {
-		print("");
+		}return jsonObject;
 	}
 
 }
