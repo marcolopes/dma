@@ -28,8 +28,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.dma.java.input.FieldFormat.SEPARATOR;
-
 public class StringList extends ArrayList<String> {
 
 	private static final long serialVersionUID = 1L;
@@ -283,7 +281,7 @@ public class StringList extends ArrayList<String> {
 
 	@Override
 	public String toString() {
-		return concat(SEPARATOR.LINE.value);
+		return concat("\n");
 	}
 
 

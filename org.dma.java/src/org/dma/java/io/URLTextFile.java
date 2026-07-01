@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.Charset;
-
-import org.dma.java.input.FieldFormat.SEPARATOR;
 
 public class URLTextFile extends URLFile {
 
@@ -72,7 +70,7 @@ public class URLTextFile extends URLFile {
 
 			try{String line;
 				while((line=in.readLine()) != null){
-					buffer.append(buffer.length()==0 ? line : SEPARATOR.LINE.value+line);
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 			}finally{
 				in.close();

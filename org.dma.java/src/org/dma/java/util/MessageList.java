@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import org.dma.java.input.FieldFormat.SEPARATOR;
-
 public class MessageList extends ArrayList<MessageLine> {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +36,7 @@ public class MessageList extends ArrayList<MessageLine> {
 
 	public void print(OutputStream out) {
 		if (!isEmpty()) try{
-			out.write(toString().concat(SEPARATOR.LINE.value).getBytes());
+			out.write(toString().concat("\n").getBytes());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -75,7 +73,7 @@ public class MessageList extends ArrayList<MessageLine> {
 
 	@Override
 	public String toString() {
-		return toString(SEPARATOR.LINE.value);
+		return toString("\n");
 	}
 
 

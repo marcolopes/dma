@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,8 +43,6 @@ public class FieldFormat extends FieldRegex {
 	public enum SEPARATOR {
 
 		/** JAVA line separator */
-		@Deprecated
-		LINE ("\n"),
 		COMMA (","),
 		HYPHEN ("-"),
 		SEMICOLON (";");

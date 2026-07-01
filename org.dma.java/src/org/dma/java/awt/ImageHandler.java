@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,8 @@ public class ImageHandler extends RenderedImageHandler {
 	 * will not show when converted to SWT Image
 	 */
 	public static BufferedImage drawImage(BufferedImage image) {
-		try{//Setup the rendering resources to match the source image's
+		if (image!=null) try{
+			//Setup the rendering resources to match the source image's
 			BufferedImage result=new BufferedImage(image.getWidth(), image.getHeight(),
 					image.getTransparency()==Transparency.OPAQUE ?
 					BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB);
@@ -49,7 +50,6 @@ public class ImageHandler extends RenderedImageHandler {
 			Graphics2D g2d=result.createGraphics();
 			g2d.drawImage(image, 0, 0, null);
 			g2d.dispose();
-			//Return the scaled image to the caller
 			return result;
 
 		}catch(Exception e){
@@ -94,7 +94,7 @@ public class ImageHandler extends RenderedImageHandler {
 		}return null;
 	}
 
-	private final BufferedImage image;
+	protected final BufferedImage image;
 
 	/** @see ImageHandler#createImage(byte[]) */
 	public ImageHandler(byte[] bytes) {
@@ -142,6 +142,22 @@ public class ImageHandler extends RenderedImageHandler {
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
+	}
+
+	/** Returns the active printable height, skipping trailing blank rows */
+	public int getPrintableHeight() {
+		if (image!=null){
+			int width=image.getWidth();
+			int height=image.getHeight();
+			if (width>0 && height>0){
+				int RGB=image.getRGB(0, 0);
+				for(int y=height-1; y>=0; y--){
+					for(int x=0; x<width; x++){
+						if (image.getRGB(x, y)!=RGB) return y+1;
+					}
+				}
+			}
+		}return 0;
 	}
 
 }

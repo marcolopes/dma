@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.Collection;
-
-import org.dma.java.input.FieldFormat.SEPARATOR;
 
 public class TextFile extends CustomFile {
 
@@ -91,7 +89,7 @@ public class TextFile extends CustomFile {
 
 			try{String line;
 				while((line=in.readLine())!=null){
-					buffer.append(buffer.length()==0 ? line : SEPARATOR.LINE.value+line);
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 			}finally{
 				in.close();
@@ -114,7 +112,7 @@ public class TextFile extends CustomFile {
 
 			try{String line;
 				while((line=in.readLine())!=null && lines--!=0){
-					buffer.append(buffer.length()==0 ? line : SEPARATOR.LINE.value+line);
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 			}finally{
 				in.close();
@@ -194,7 +192,7 @@ public class TextFile extends CustomFile {
 
 			try{String line;
 				while((line=in.readLine())!=null && lines--!=0){
-					buffer.append(buffer.length()==0 ? line : SEPARATOR.LINE.value+line);
+					buffer.append(buffer.length()==0 ? line : "\n"+line);
 				}
 			}finally{
 				in.close();

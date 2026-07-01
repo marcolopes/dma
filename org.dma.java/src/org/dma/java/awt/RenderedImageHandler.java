@@ -31,28 +31,41 @@ import org.apache.commons.codec.binary.Base64;
 
 public class RenderedImageHandler {
 
-	public static final String IMAGE_BMP = "bmp";
-	public static final String IMAGE_GIF = "gif";
-	public static final String IMAGE_JPEG = "jpg";
-	public static final String IMAGE_PNG = "png";
+	public enum IMAGE_FORMATS {
 
-	private final RenderedImage image;
+		/** Uncompressed 1-bit friendly format; always preserves exact raster data */ BMP ("bmp"),
+		/** Lossless compressed format; supports indexed 1-bit when palette is preserved */ PNG ("png"),
+		/** Indexed color format; can store 1-bit if palette matches, but encoder is limited */ GIF ("gif"),
+		/** Lossy 24-bit format; never preserves 1-bit or grayscale fidelity */ JPEG ("jpg");
+
+		public final String name;
+
+		private IMAGE_FORMATS() {this(null);}
+		private IMAGE_FORMATS(String name) {
+			this.name=name;
+		}
+
+	}
+
+	protected final RenderedImage image;
 
 	public RenderedImageHandler(RenderedImage image) {
 		this.image=image;
 	}
 
+
 	/** @see Raster#getPixels(int, int, int, int, int[])*/
+	@Deprecated
 	public int[] getPixels() {
 		return image==null ? new int[0] : image.getData().getPixels(0, 0, image.getWidth(), image.getHeight(), (int[])null);
 	}
 
 	/** @see ImageIO#write(RenderedImage, String, ImageOutputStream) */
-	public byte[] getBytes(String formatName) {
+	public byte[] getBytes(IMAGE_FORMATS format) {
 		if (image!=null) try{
 			ByteArrayOutputStream baos=new ByteArrayOutputStream();
 			try{ImageOutputStream ios=ImageIO.createImageOutputStream(baos);
-				try{ImageIO.write(image, formatName, ios);
+				try{ImageIO.write(image, format.name, ios);
 				}finally{
 					ios.flush();
 					ios.close();
@@ -66,20 +79,18 @@ public class RenderedImageHandler {
 		}return null;
 	}
 
-
 	/** @see ImageIO#write(RenderedImage, String, File) */
-	public boolean save(File file, String formatName) {
+	public boolean save(IMAGE_FORMATS format, File file) {
 		if (image!=null) try{
-			return ImageIO.write(image, formatName, file);
+			return ImageIO.write(image, format.name, file);
 		}catch(IOException e){
 			System.err.println(e);
 		}return false;
 	}
 
-
-	/** @see RenderedImageHandler#getBytes(String) */
-	public String toBase64String(String formatName) {
-		return new String(Base64.encodeBase64(getBytes(formatName)));
+	/** @see RenderedImageHandler#getBytes(IMAGE_FORMATS) */
+	public String toBase64String(IMAGE_FORMATS format) {
+		return new String(Base64.encodeBase64(getBytes(format)));
 	}
 
 }

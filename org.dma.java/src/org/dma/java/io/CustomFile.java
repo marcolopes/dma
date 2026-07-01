@@ -201,13 +201,13 @@ public class CustomFile extends File {
 	}
 
 
-	public FileOutputStream asOutputStream(boolean append) throws FileNotFoundException {
-		return new FileOutputStream(this, append);
+	public FileOutputStream asOutputStream() throws FileNotFoundException {
+		return asOutputStream(false);
 	}
 
 
-	public FileOutputStream asOutputStream() throws FileNotFoundException {
-		return asOutputStream(false);
+	public FileOutputStream asOutputStream(boolean append) throws FileNotFoundException {
+		return new FileOutputStream(this, append);
 	}
 
 

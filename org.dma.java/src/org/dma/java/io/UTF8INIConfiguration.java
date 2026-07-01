@@ -35,4 +35,5 @@ public class UTF8INIConfiguration extends HierarchicalINIConfiguration {
 		return CustomFile.UTF8_CHARSET;
 	}
 
+
 }
