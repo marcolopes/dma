@@ -43,7 +43,7 @@ public class CustomTable extends Table {
 
 	private volatile boolean busy=false;
 
-	private synchronized void setBusy(boolean busy) {
+	private void setBusy(boolean busy) {
 		this.busy=busy;
 		setRedraw(!busy);
 	}
