@@ -42,7 +42,7 @@ public class VatNumber {
 			if (number.matches("[0-9]+") && !number.startsWith("0") && number.length()==max){
 				int checkSum=0;
 				//calculate checkSum
-				for (int i=0; i<max-1; i++) checkSum+=(number.charAt(i)-'0')*(max-i);
+				for(int i=0; i<max-1; i++) checkSum+=(number.charAt(i)-'0')*(max-i);
 				//calculate checkDigit
 				int checkDigit=11-(checkSum % 11);
 				//if checkDigit is higher than 9 set it to zero

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 import javax.xml.datatype.DatatypeFactory;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
+import javax.xml.ws.WebServiceException;
+
+import com.sun.xml.ws.developer.JAXWSProperties;
 
 import eu.europa.ec.taxud.vies.services.checkvat.CheckVatPortType;
 import eu.europa.ec.taxud.vies.services.checkvat.CheckVatService;
@@ -37,6 +43,19 @@ import eu.europa.ec.taxud.vies.services.checkvat.CheckVatService;
  * http://ec.europa.eu/taxation_customs/vies
  */
 public class CheckVatHandler {
+
+	public static CheckVatPortType getService() throws WebServiceException {
+		CheckVatPortType service=new CheckVatService().getCheckVatPort();
+		if (SystemUtils.IS_JAVA_1_7) try{
+			BindingProvider provider=(BindingProvider)service;
+			provider.getRequestContext().put(JAXWSProperties.HOSTNAME_VERIFIER, new HostnameVerifier() {
+				@Override
+				public boolean verify(String hostname, SSLSession session) {return true;}
+			});
+		}catch(Exception e){
+			throw new WebServiceException(e);
+		}return service;
+	}
 
 	/*
 	 * http://ec.europa.eu/taxation_customs/vies/faq.html<br>
@@ -104,12 +123,8 @@ public class CheckVatHandler {
 		/** Queries VIES service */
 		public CheckVatResult queryVatNumber(String vatNumber) throws Exception {
 
-			if (SystemUtils.IS_JAVA_1_7) System.setProperty("https.protocols", "TLSv1.2");
+			CheckVatPortType service=getService();
 
-			CheckVatService service=new CheckVatService();
-
-			System.out.print("Please read disclaimer from service provider at: ");
-			System.out.println(service.getWSDLDocumentLocation());
 			System.out.print("Querying VAT Information Exchange System: ");
 			System.out.println(vatNumber);
 
@@ -117,8 +132,7 @@ public class CheckVatHandler {
 			Holder<String> name=new Holder(new String());
 			Holder<String> address=new Holder(new String());
 
-			CheckVatPortType servicePort=service.getCheckVatPort();
-			servicePort.checkVat(
+			service.checkVat(
 					new Holder(name()),
 					new Holder(vatNumber),
 					new Holder(DatatypeFactory.newInstance().newXMLGregorianCalendar()),
