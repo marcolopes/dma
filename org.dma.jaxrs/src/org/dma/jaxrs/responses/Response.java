@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,13 @@ import javax.ws.rs.core.Response.Status;
 import org.dma.java.gson.GsonConverter;
 
 public class Response extends GsonConverter {
+
+	/**
+	 * A common, de-facto standard header for authenticating API requests.
+	 * While widely used, it is not formally recognized by W3C or IETF.
+	 * API providers define its specific usage for transmitting an API key.
+	 */
+	public static final String X_API_KEY = "x-api-key";
 
 	/*
 	 * Builders

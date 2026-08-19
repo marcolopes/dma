@@ -20,10 +20,12 @@
 package org.dma.jaxrs.services;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status.Family;
 
 import org.dma.java.gson.GsonConverter;
+import org.dma.java.net.URLHandler;
 
 /*
  * https://restfulapi.net/http-methods
@@ -32,18 +34,23 @@ import org.dma.java.gson.GsonConverter;
  */
 public class ClientHandler extends GsonConverter {
 
-	public final Client client;
+	private final Client client;
+	private final URLHandler url;
 
-	public ClientHandler() {
-		this(new ClientBuilder().builder);
+	public Client getClient() {return client;}
+	public URLHandler getUrl() {return url;}
+
+	public ClientHandler(URLHandler url) {
+		this(url, new ClientBuilder().builder);
 	}
 
-	public ClientHandler(javax.ws.rs.client.ClientBuilder builder) {
-		this(builder.build());
+	public ClientHandler(URLHandler url, javax.ws.rs.client.ClientBuilder builder) {
+		this(url, builder.build());
 	}
 
-	public ClientHandler(Client client) {
+	public ClientHandler(URLHandler url, Client client) {
 		this.client=client;
+		this.url=url;
 	}
 
 	/** @see Client#close() */
@@ -51,6 +58,10 @@ public class ClientHandler extends GsonConverter {
 
 	public boolean isSuccessful(Response response) {
 		return response.getStatusInfo().getFamily()==Family.SUCCESSFUL;
+	}
+
+	public WebTarget target(String...more) {
+		return client.target(url.path(more));
 	}
 
 
