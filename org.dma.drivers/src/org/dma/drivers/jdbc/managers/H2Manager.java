@@ -36,7 +36,6 @@ import org.dma.drivers.jdbc.BackupParameters;
 import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.CustomFile;
 import org.dma.java.io.Folder;
-import org.dma.java.io.UTF8ZipFile;
 import org.dma.java.io.ZipFile;
 import org.dma.java.net.HttpServerHandler;
 
@@ -64,10 +63,8 @@ public class H2Manager extends AbstractManager {
 		File file=new CustomFile(folder.getPath(), database+Constants.SUFFIX_LOCK_FILE);
 		System.out.println("DATABASE LOCK: "+file);
 		FileLock lock=new FileLock(new TraceSystem(null), file.getPath(), 0);
-		try{lock.lock(FileLock.LOCK_FILE);
-		}finally{
-			lock.unlock();
-		}
+		lock.lock(FileLock.LOCK_FILE);
+		lock.unlock();
 	}
 
 	public H2Manager(POOLMANAGERS pool) {
@@ -98,7 +95,7 @@ public class H2Manager extends AbstractManager {
 	public File executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception {
 		String prefix=getUniqueId(database);
 		//[folder]/[prefix].zip
-		ZipFile zip=new UTF8ZipFile(backup.folder, prefix+".zip");
+		ZipFile zip=new ZipFile(backup.folder, prefix+".zip");
 		System.out.println("BACKUP ZIP: "+zip);
 		if (isEmbedded(host)){
 			/*
@@ -110,18 +107,15 @@ public class H2Manager extends AbstractManager {
 			 */
 			File file=new CustomFile(folder.getPath(), database+Constants.SUFFIX_PAGE_FILE);
 			System.out.println("DATABASE FILE: "+file);
-			checkLock(folder, database); //LOCKED?
-			if (file.length()>0 && !zip.deflate(file)) throw new Exception("Could not deflate ZIP file: "+zip);
+			checkLock(folder, database); //locked?
+			if (file.length()>0) new ZipFile(zip).deflate(file); //ZIP file
 		}else{
 			File dump=new CustomFile(backup.folder, prefix+".sql");
 			System.out.println("BACKUP DUMP: "+dump);
 			executeBackup(backup.buildCommand(getConnectionUrl(host, database, folder), username, password, dump), password);
 			//ZIP & delete dump
-			if (dump.length()>0) try{
-				if (!zip.deflate(dump)) throw new Exception("Could not deflate ZIP file: "+zip);
-			}finally{
-				dump.delete();
-			}
+			zip.deflate(dump);
+			dump.delete();
 		}return zip;
 	}
 

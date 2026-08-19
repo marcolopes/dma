@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,9 +48,10 @@ public class JettyParameters extends HttpServerHandler {
 		return error;
 	}
 
-	public void configure(ServerConnector connector) {
+	public ServerConnector configure(ServerConnector connector) {
 		connector.setHost(host);
 		connector.setPort(port);
+		return connector;
 	}
 
 	@Override

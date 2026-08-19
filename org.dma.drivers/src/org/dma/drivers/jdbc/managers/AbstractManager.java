@@ -28,7 +28,6 @@ import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.Command;
 import org.dma.java.io.CustomFile;
 import org.dma.java.io.Folder;
-import org.dma.java.io.UTF8ZipFile;
 import org.dma.java.io.ZipFile;
 import org.dma.java.util.TimeDateUtils;
 
@@ -53,9 +52,9 @@ public abstract class AbstractManager implements IDatabaseManager {
 		System.out.println("BACKUP DUMP: "+dump);
 		executeBackup(backup.buildCommand(database, username, password, dump), password);
 		//ZIP & delete dump
-		ZipFile zip=new UTF8ZipFile(backup.folder, prefix+".zip");
+		ZipFile zip=new ZipFile(backup.folder, prefix+".zip");
 		System.out.println("BACKUP ZIP: "+zip);
-		if (!zip.deflate(dump)) throw new Exception("Could not deflate ZIP file: "+zip);
+		zip.deflate(dump);
 		dump.delete();
 		return zip;
 	}
