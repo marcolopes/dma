@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@
 package org.dma.eclipse.core.jobs;
 
 import java.util.ArrayList;
-
-import org.dma.java.util.Debug;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
@@ -42,7 +40,6 @@ public abstract class ExclusiveJobList extends ArrayList<CustomJob> {
 	}.addTask(new UIAction() {
 		@Override
 		public void run() {
-			Debug.out("DONE");
 			clear();
 			done();
 		}

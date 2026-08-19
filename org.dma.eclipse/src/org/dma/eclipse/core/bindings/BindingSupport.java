@@ -20,8 +20,6 @@ package org.dma.eclipse.core.bindings;
 
 import java.util.LinkedHashMap;
 
-import org.dma.java.util.Debug;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.Realm;
@@ -79,8 +77,6 @@ public class BindingSupport extends LinkedHashMap<String, Binding> {
 
 
 	public void unregisterAll() {
-
-		Debug.out(keySet());
 
 		while(!isEmpty()){
 			String property=keySet().iterator().next();

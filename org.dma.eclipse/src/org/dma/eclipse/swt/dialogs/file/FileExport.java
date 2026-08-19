@@ -25,7 +25,6 @@ import java.util.Arrays;
 import org.dma.java.io.Folder;
 import org.dma.java.io.TextFile;
 import org.dma.java.io.XMLFile;
-import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -43,7 +42,7 @@ public class FileExport extends FileDialog {
 	/** @see FileDialog#setFilterExtensions(String[]) */
 	public FileExport(Shell parent, String...extensions) {
 		super(parent==null ? new Shell() : parent, SWT.SAVE);
-		Debug.out("extensions", Arrays.asList(extensions));
+		System.out.println("EXTENSIONS :"+Arrays.asList(extensions));
 		setFilterExtensions(extensions);
 	}
 

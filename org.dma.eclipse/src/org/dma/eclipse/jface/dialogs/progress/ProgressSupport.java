@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ package org.dma.eclipse.jface.dialogs.progress;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
-
-import org.dma.java.util.Debug;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -90,7 +88,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			for(IProgressAction action: keySet()){
 				//task name
 				String taskName=get(action);
-				Debug.out("TASK", taskName);
+				System.out.println("TASK: "+taskName);
 				action.run(null);
 			}
 
@@ -104,7 +102,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 					for(IProgressAction action: keySet()) try{
 						//task name
 						String taskName=get(action);
-						Debug.out("TASK", taskName);
+						System.out.println("TASK: "+taskName);
 						monitor.subTask(taskName);
 						action.run(monitor);
 						monitor.worked(TOTAL_WORK/size());
@@ -122,10 +120,10 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 			System.err.println(e);
 			return run(true);
 		}catch(InvocationTargetException e){
-			Debug.err("InvocationTargetException");
+			System.err.println("InvocationTargetException");
 			throw new Exception(e.getCause()==null ? e.getMessage() : e.getCause().getMessage());
 		}catch(InterruptedException e){
-			Debug.err("InterruptedException");
+			System.err.println("InterruptedException");
 			return false;
 		}return true;
 

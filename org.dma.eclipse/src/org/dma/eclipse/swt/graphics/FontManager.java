@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@
  * Object Refinery Limited and Contributors.
  *******************************************************************************/
 package org.dma.eclipse.swt.graphics;
-
-import org.dma.java.util.Debug;
 
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.JFaceResources;
@@ -45,7 +43,7 @@ public class FontManager {
 	}
 
 	private static class HeadlessFontRegistry implements IFontRegistry {
-		static{Debug.out();}
+		static{System.err.println(HeadlessFontRegistry.class.getSimpleName());}
 		@Override
 		public Font get(String symbolicName) {return null;}
 		@Override
@@ -55,7 +53,7 @@ public class FontManager {
 	}
 
 	public static class CustomFontRegistry extends FontRegistry implements IFontRegistry {
-		static{Debug.out();}
+		static{System.err.println(CustomFontRegistry.class.getSimpleName());}
 	}
 
 	public static final IFontRegistry REGISTRY = Display.getCurrent()==null ? new HeadlessFontRegistry() : new CustomFontRegistry();

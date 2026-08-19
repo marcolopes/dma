@@ -148,13 +148,14 @@ public class CustomImageDescriptor extends ImageDescriptor {
 	 * For a list of all SWT example snippets see
 	 * http://www.eclipse.org/swt/snippets/
 	 */
+	@Deprecated
 	public BufferedImage convertToAWT() {
 		PaletteData palette=data.palette;
 		if (palette.isDirect){
 			ColorModel colorModel=new DirectColorModel(data.depth, palette.redMask, palette.greenMask, palette.blueMask);
 			BufferedImage image=new BufferedImage(colorModel, colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
-			for (int y=0; y < data.height; y++){
-				for (int x=0; x < data.width; x++){
+			for(int y=0; y < data.height; y++){
+				for(int x=0; x < data.width; x++){
 					int pixel=data.getPixel(x, y);
 					RGB rgb=palette.getRGB(pixel);
 					image.setRGB(x, y,  rgb.red << 16 | rgb.green << 8 | rgb.blue);
@@ -165,7 +166,7 @@ public class CustomImageDescriptor extends ImageDescriptor {
 		byte[] red=new byte[rgbs.length];
 		byte[] green=new byte[rgbs.length];
 		byte[] blue=new byte[rgbs.length];
-		for (int i=0; i < rgbs.length; i++) {
+		for(int i=0; i < rgbs.length; i++) {
 			RGB rgb=rgbs[i];
 			red[i]=(byte)rgb.red;
 			green[i]=(byte)rgb.green;
@@ -177,8 +178,8 @@ public class CustomImageDescriptor extends ImageDescriptor {
 		BufferedImage image=new BufferedImage(colorModel, colorModel.createCompatibleWritableRaster(data.width, data.height), false, null);
 		WritableRaster raster=image.getRaster();
 		int[] pixelArray=new int[1];
-		for (int y=0; y < data.height; y++){
-			for (int x=0; x < data.width; x++){
+		for(int y=0; y < data.height; y++){
+			for(int x=0; x < data.width; x++){
 				int pixel=data.getPixel(x, y);
 				pixelArray[0]=pixel;
 				raster.setPixel(x, y, pixelArray);

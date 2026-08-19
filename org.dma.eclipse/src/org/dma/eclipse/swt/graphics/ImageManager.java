@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import java.util.Arrays;
 
 import org.dma.eclipse.swt.widgets.CustomImageDescriptor;
 import org.dma.java.awt.RenderedImageHandler;
-import org.dma.java.util.Debug;
 
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
@@ -72,7 +71,7 @@ public class ImageManager {
 	}
 
 	private static class HeadlessImageRegistry implements IImageRegistry {
-		static{Debug.out();}
+		static{System.err.println(HeadlessImageRegistry.class.getSimpleName());}
 		@Override
 		public Image get(String key) {return null;}
 		@Override
@@ -90,7 +89,7 @@ public class ImageManager {
 	}
 
 	public static class CustomImageRegistry extends ImageRegistry implements IImageRegistry {
-		static{Debug.out();}
+		static{System.err.println(CustomImageRegistry.class.getSimpleName());}
 		@Override
 		public Image getImage(Integer size) {
 			String key=getKey(size);

@@ -26,7 +26,6 @@ import org.dma.java.io.ByteFile;
 import org.dma.java.io.Folder;
 import org.dma.java.io.TextFile;
 import org.dma.java.io.XMLFile;
-import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -44,7 +43,7 @@ public class FileImport extends FileDialog {
 	/** @see FileDialog#setFilterExtensions(String[]) */
 	public FileImport(Shell parent, String...extensions) {
 		super(parent==null ? new Shell() : parent, SWT.OPEN | SWT.MULTI);
-		Debug.out("extensions", Arrays.asList(extensions));
+		System.out.println("EXTENSIONS :"+Arrays.asList(extensions));
 		setFilterExtensions(extensions);
 	}
 

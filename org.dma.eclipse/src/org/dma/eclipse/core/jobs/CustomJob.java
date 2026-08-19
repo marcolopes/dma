@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dma.java.time.Chronograph;
-import org.dma.java.util.Debug;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -133,7 +132,7 @@ public class CustomJob extends Job {
 
 	@Override
 	public void canceling() {
-		Debug.err("CANCELING JOB", this);
+		System.err.println("CANCELING JOB "+this);
 		canceled=true;
 	}
 
@@ -147,7 +146,7 @@ public class CustomJob extends Job {
 	}
 
 	public boolean isBusy() {
-		Debug.err("JOB "+this+" STATE is "+getStateName());
+		System.err.println("JOB "+this+" STATE is "+getStateName());
 		int state=getState();
 		return state==Job.RUNNING || state==Job.WAITING || state==Job.SLEEPING;
 	}
@@ -175,14 +174,13 @@ public class CustomJob extends Job {
 
 		try{lock.acquire();
 			monitor.beginTask("", IProgressMonitor.UNKNOWN);
-			Debug.err("STARTED JOB", this);
+			System.err.println("STARTED JOB "+this);
 
 			canceled=false;
 			for(int i=0; i<tasks.size() && !canceled; i++){
 
 				final IAction action=tasks.get(i);
 				monitor.subTask(action.getText());
-				Debug.out("RUNNING TASK", action);
 
 				if(action instanceof UIAction){//UI task
 					syncExec(new Runnable() {
@@ -203,7 +201,7 @@ public class CustomJob extends Job {
 			finishing();
 			lock.release();
 			monitor.done();
-			Debug.err("FINISHED JOB ("+time.stop()+")", this);
+			System.err.println("FINISHED JOB "+this+" in "+time.stop());
 
 		}return Status.CANCEL_STATUS;
 

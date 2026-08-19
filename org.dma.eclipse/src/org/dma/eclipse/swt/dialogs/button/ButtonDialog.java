@@ -20,7 +20,6 @@ package org.dma.eclipse.swt.dialogs.button;
 
 import org.dma.eclipse.swt.widgets.CustomButton;
 import org.dma.eclipse.swt.widgets.CustomShell;
-import org.dma.java.util.Debug;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
@@ -119,9 +118,7 @@ public abstract class ButtonDialog extends CustomShell {
 
 		new ButtonDialog() {
 			@Override
-			public void ok() {
-				Debug.out(OK);
-			}
+			public void ok() {}
 		}.openAndSleep();
 
 	}

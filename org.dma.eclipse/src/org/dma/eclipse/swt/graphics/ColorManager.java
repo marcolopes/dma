@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2023 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
 package org.dma.eclipse.swt.graphics;
-
-import org.dma.java.util.Debug;
 
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
@@ -48,7 +46,7 @@ public class ColorManager {
 	}
 
 	private static class HeadlessColorRegistry implements IColorRegistry {
-		static{Debug.out();}
+		static{System.err.println(HeadlessColorRegistry.class.getSimpleName());}
 		@Override
 		public Color get(String symbolicName) {return null;}
 		@Override
@@ -62,7 +60,7 @@ public class ColorManager {
 	}
 
 	public static class CustomColorRegistry extends ColorRegistry implements IColorRegistry {
-		static{Debug.out();}
+		static{System.err.println(CustomColorRegistry.class.getSimpleName());}
 		@Override
 		public Color getColor(int systemColorID) {
 			return Display.getCurrent().getSystemColor(systemColorID);

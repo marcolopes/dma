@@ -105,7 +105,7 @@ public class CustomSWTList extends org.eclipse.swt.widgets.List {
 	public void fill(int size) {
 		String line=StringUtils.replicas("-", 20);
 		add(line+" DUMMY ITEMS "+line);
-		for (int i=getItemCount(); i<=size; i++){
+		for(int i=getItemCount(); i<=size; i++){
 			add(new RandomValue().letters(50));
 		}
 	}

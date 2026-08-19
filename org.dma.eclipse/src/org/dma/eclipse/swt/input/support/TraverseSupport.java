@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dma.java.math.NumericUtils;
-import org.dma.java.util.Debug;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.TraverseEvent;
@@ -49,7 +48,6 @@ public class TraverseSupport implements TraverseListener {
 			if (control instanceof Text){
 				Text text=(Text)control;
 				if (NumericUtils.bit(text.getStyle(), SWT.MULTI)){
-					Debug.out("SWT.MULTI");
 					//TAB key pressed?
 					if (event.keyCode==SWT.TAB) event.doit=true; // traverse
 					//control KEYPAD return?
