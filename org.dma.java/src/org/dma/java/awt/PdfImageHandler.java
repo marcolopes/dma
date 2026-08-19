@@ -37,7 +37,7 @@ public class PdfImageHandler extends ImageHandler {
 		if (!file.exists()){
 			file.deleteOnExit();
 			save(IMAGE_FORMATS.PNG, file);
-			System.out.println(file);
+			System.out.println(size()+": "+file);
 		}
 	}
 

@@ -64,7 +64,7 @@ public class CustomHtmlEmail extends HtmlEmail {
 
 	/** see {@link Email#addTo} */
 	public Email addTo(Collection<EmailAddress> address) throws EmailException {
-		for (EmailAddress element: address){
+		for(EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (to): "+address);
 			addTo(element.getEmail(), element.getName());
 		}return this;
@@ -78,7 +78,7 @@ public class CustomHtmlEmail extends HtmlEmail {
 
 	/** see {@link Email#addCc} */
 	public Email addCc(Collection<EmailAddress> address) throws EmailException {
-		for (EmailAddress element: address){
+		for(EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (cc): "+address);
 			addCc(element.getEmail(), element.getName());
 		}return this;
@@ -92,7 +92,7 @@ public class CustomHtmlEmail extends HtmlEmail {
 
 	/** see {@link Email#addBcc} */
 	public Email addBcc(Collection<EmailAddress> address) throws EmailException {
-		for (EmailAddress element: address){
+		for(EmailAddress element: address){
 			if (!element.isValid()) throw new EmailException("Invalid email address (bcc): "+address);
 			addBcc(element.getEmail(), element.getName());
 		}return this;
@@ -106,7 +106,7 @@ public class CustomHtmlEmail extends HtmlEmail {
 
 	/** see {@link MultiPartEmail#attach} */
 	public void attach(Collection<EmailAttachment> attachment) throws EmailException {
-		for (EmailAttachment element: attachment){
+		for(EmailAttachment element: attachment){
 			super.attach(element);
 		}setBoolHasAttachments(true);
 	}

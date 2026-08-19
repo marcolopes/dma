@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,17 @@ package org.dma.java.net;
 import java.awt.Desktop;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
 
 import org.apache.commons.codec.binary.Base64;
+
+import org.dma.java.util.SystemUtils;
 
 public class HttpURLHandler extends URLHandler {
 
@@ -40,15 +45,38 @@ public class HttpURLHandler extends URLHandler {
 
 
 	public boolean isSecure() {
-		return url.getProtocol().equals("https");
+		return url!=null && url.getProtocol().equals("https");
+	}
+
+
+	private HttpURLConnection openSecureConnection() throws Exception {
+
+		HttpURLConnection connection=(HttpURLConnection)openConnection();
+		if (connection!=null) {
+			connection.setRequestProperty("User-Agent", "Mozilla");
+			if (connection instanceof HttpsURLConnection){
+				HttpsURLConnection httpsConnection=(HttpsURLConnection)connection;
+				if (SystemUtils.IS_JAVA_1_7){
+					SSLContext sslContext=SSLContext.getInstance("TLSv1.2");
+					sslContext.init(null, new TrustManager[]{new PermissiveTrustStore()}, new SecureRandom());
+					httpsConnection.setSSLSocketFactory(sslContext.getSocketFactory());
+				}else{
+					httpsConnection.setSSLSocketFactory(PermissiveTrustStore.createSSLContext().getSocketFactory());
+				}httpsConnection.setHostnameVerifier(new HostnameVerifier(){
+					@Override
+					public boolean verify(String hostname, SSLSession session) {return true;}
+				});
+			}
+		}return connection;
+
 	}
 
 
 	public boolean ping(int timeout) {
 
-		try{HttpURLConnection connection=(HttpURLConnection)openConnection();
+		try{HttpURLConnection connection=openSecureConnection();
 			if (connection!=null) try{
-				connection.setRequestMethod("HEAD");
+				connection.setRequestMethod("GET");
 				connection.setConnectTimeout(timeout);
 				return connection.getResponseCode()!=HttpURLConnection.HTTP_NOT_FOUND;
 			}catch(Exception e){
@@ -66,19 +94,11 @@ public class HttpURLHandler extends URLHandler {
 	/** @see HttpURLConnection */
 	public boolean check(int status) {
 
-		try{HttpURLConnection connection=(HttpURLConnection)openConnection();
+		try{HttpURLConnection connection=openSecureConnection();
 			if (connection!=null) try{
-				connection.setRequestMethod("HEAD");
+				connection.setRequestMethod("GET");
 				connection.setInstanceFollowRedirects(false);
-				if (connection instanceof HttpsURLConnection){
-					HttpsURLConnection httpsConnection=(HttpsURLConnection)connection;
-					httpsConnection.setSSLSocketFactory(PermissiveTrustStore.createSSLContext()	.getSocketFactory());
-					httpsConnection.setHostnameVerifier(new HostnameVerifier(){
-						public boolean verify(String hostname, SSLSession session) {
-							return true;
-						}
-					});
-				}return connection.getResponseCode()==status;
+				return connection.getResponseCode()==status;
 			}catch(Exception e){
 				System.err.println(e);
 			}finally{
@@ -93,7 +113,8 @@ public class HttpURLHandler extends URLHandler {
 
 	public HttpURLConnection getConnection(String key) {
 
-		try{HttpURLConnection connection=(HttpURLConnection)openConnection();
+		if (url!=null) try{
+			HttpURLConnection connection=openSecureConnection();
 			if (connection!=null) try{
 				connection.setRequestProperty("Authorization",
 						"Basic "+new String(new Base64().encode(key.getBytes())));
@@ -165,15 +186,23 @@ public class HttpURLHandler extends URLHandler {
 
 	public static void main(String[] args) {
 
-		System.setProperty("https.protocols", "TLSv1.2");
+		for(String url: new String[]{
+			"http://neverssl.com",
+			"http://httpforever.com",
+			"https://web.projectocolibri.com"
+			}) try{
 
-		HttpURLHandler handler=new HttpURLHandler("https://web.projectocolibri.com");
+			HttpURLHandler handler=new HttpURLHandler(url);
 
-		System.err.println(handler.path());
-		System.err.println("Valid? " + handler.isValid());
-		System.err.println("HTTP? " + handler.check(HttpURLConnection.HTTP_OK));
-		System.err.println("Ping? " + handler.ping(3*1000));
-		System.err.println("Auth? " + handler.isAuthValid("***"));
+			System.err.println(handler.path());
+			System.out.println("Valid? " + handler.isValid());
+			System.out.println("HTTP? " + handler.check(HttpURLConnection.HTTP_OK));
+			System.out.println("Ping? " + handler.ping(3*1000));
+			System.out.println("Auth? " + handler.isAuthValid("***"));
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 

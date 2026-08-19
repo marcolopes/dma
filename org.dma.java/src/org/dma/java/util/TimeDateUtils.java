@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,6 +95,8 @@ public class TimeDateUtils {
 	public static final char DEFAULT_TIME_SEPARATOR = ':';
 	/** HH:mm */
 	public static final String DEFAULT_TIME_PATTERN = TIME_HOUR_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MINUTE_PATTERN;
+	/** HH:mm:ss */
+	public static final String DEFAULT_TIME_PATTERN_WITH_SECONDS = DEFAULT_TIME_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_SECOND_PATTERN;
 	/** yyyy-MM-dd;HH:mm:ss:SSS */
 	public static final String DEFAULT_TIMESTAMP_PATTERN = DATE_YEAR_PATTERN + DEFAULT_DATE_SEPARATOR + DATE_MONTH_PATTERN + DEFAULT_DATE_SEPARATOR + DATE_DAY_PATTERN+";"+
 			TIME_HOUR_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MINUTE_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_SECOND_PATTERN + DEFAULT_TIME_SEPARATOR + TIME_MILISECOND_PATTERN;
@@ -540,9 +542,11 @@ public class TimeDateUtils {
 	}
 
 	public static String getDateFormatted(Date date, String pattern) {
-		try{return getSimpleDateFormat(pattern).format(date);
-		}catch(Exception e){}
-		return null;
+		SimpleDateFormat sdf=getSimpleDateFormat(pattern);
+		synchronized(sdf){
+			try{return sdf.format(date);
+			}catch(Exception e){}
+		}return null;
 	}
 
 	/** Date formatted with {@link #DEFAULT_DATE_PATTERN} */
@@ -551,8 +555,10 @@ public class TimeDateUtils {
 	}
 
 	public static Date getDate(String date, String pattern) {
-		try{return getSimpleDateFormat(pattern).parse(date);
-		}catch(Exception e){
+		SimpleDateFormat sdf=getSimpleDateFormat(pattern);
+		synchronized(sdf){
+			try{return sdf.parse(date);
+			}catch(Exception e){}
 		}return null;
 	}
 
@@ -758,9 +764,11 @@ public class TimeDateUtils {
 	}
 
 	public static String getTimeFormatted(Time time, String pattern) {
-		try{return getSimpleDateFormat(pattern).format(time);
-		}catch(Exception e){}
-		return null;
+		SimpleDateFormat sdf=getSimpleDateFormat(pattern);
+		synchronized(sdf){
+			try{return sdf.format(time);
+			}catch(Exception e){}
+		}return null;
 	}
 
 	/** Time formatted with {@link #DEFAULT_TIME_PATTERN} */
@@ -854,9 +862,11 @@ public class TimeDateUtils {
 	}
 
 	public static String getTimestampFormatted(Timestamp timestamp, String pattern) {
-		try{return getSimpleDateFormat(pattern).format(timestamp);
-		}catch(Exception e){}
-		return null;
+		SimpleDateFormat sdf=getSimpleDateFormat(pattern);
+		synchronized(sdf){
+			try{return sdf.format(timestamp);
+			}catch(Exception e){}
+		}return null;
 	}
 
 	/** Timestamp formatted with {@link #DEFAULT_TIMESTAMP_PATTERN} */

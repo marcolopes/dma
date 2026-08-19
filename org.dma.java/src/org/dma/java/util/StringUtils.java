@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,7 +98,7 @@ public class StringUtils {
 	}
 
 
-	/** Is a 0 or a 1 */
+	/** Is ZERO (0) or ONE (1) */
 	public static boolean isLogical(String string) {
 
 		return string.equals("0") || string.equals("1");
@@ -360,20 +360,6 @@ public class StringUtils {
 		if(quote.length==0) return unquote(string, '"');
 
 		return !isQuoted(string, quote) ? string : string.substring(1, string.length()-1);
-
-	}
-
-
-	@Deprecated
-	public static String indent(String text) {
-
-		StringBuilder result=new StringBuilder();
-		int count=0;
-		for(String line: text.split("\n")) {
-			if(line.contains("}")) count--;
-			result.append(replicas("\t", count) + line + "\n");
-			if(line.contains("{")) count++;
-		}return result.toString();
 
 	}
 

@@ -74,6 +74,12 @@ public class CustomFile extends File {
 		return StringUtils.removeAll(plain, '<','>',':','?','*','\"','\n','\r','\t','\f','\0');
 	}
 
+	private static File getFile(String pathname, String...more) {
+		try{return Paths.get(pathname, more).toFile();
+		}catch(Exception e){}
+		return null;
+	}
+
 	/** Ensures absolute path */
 	public CustomFile(File file, String...more) {
 		this(file.getPath(), more);
@@ -81,7 +87,7 @@ public class CustomFile extends File {
 
 	/** Ensures absolute path */
 	public CustomFile(String pathname, String...more) {
-		this(Paths.get(pathname, more).toFile());
+		this(getFile(pathname, more));
 	}
 
 	/** Ensures absolute path */

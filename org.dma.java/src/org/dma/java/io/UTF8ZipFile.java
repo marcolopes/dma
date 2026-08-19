@@ -18,27 +18,20 @@
  *******************************************************************************/
 package org.dma.java.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.File;
 
-public abstract class AbstractStreamCopy {
+public class UTF8ZipFile extends ZipFile {
 
-	public abstract boolean cancel();
+	public UTF8ZipFile(File file, String...more) {
+		super(UTF8_CHARSET, file, more);
+	}
 
-	/** Streams must be closed by caller */
-	public void copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
+	public UTF8ZipFile(String pathname, String...more) {
+		super(UTF8_CHARSET, pathname, more);
+	}
 
-		byte[] buffer=new byte[1024*8];
-
-		int len;
-		// Transfer bytes from input to output
-		while(!cancel() && (len=in.read(buffer)) > 0){
-			out.write(buffer, 0, len);
-		}
-
-		if (cancel()) throw new InterruptedException();
-
+	public UTF8ZipFile(File file) {
+		super(UTF8_CHARSET, file);
 	}
 
 

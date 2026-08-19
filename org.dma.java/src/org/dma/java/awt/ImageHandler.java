@@ -22,6 +22,7 @@ import java.awt.Graphics2D;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
+import java.awt.image.DataBuffer;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
@@ -94,6 +95,8 @@ public class ImageHandler extends RenderedImageHandler {
 		}return null;
 	}
 
+	private Integer hashCode;
+
 	protected final BufferedImage image;
 
 	/** @see ImageHandler#createImage(byte[]) */
@@ -159,5 +162,38 @@ public class ImageHandler extends RenderedImageHandler {
 			}
 		}return 0;
 	}
+
+	/** Returns the size in bytes */
+	public long size() {
+		if (image!=null) try{
+			DataBuffer dataBuffer=image.getRaster().getDataBuffer();
+			long totalSize=(long)dataBuffer.getSize()*dataBuffer.getNumBanks();
+			switch(dataBuffer.getDataType()){
+				case DataBuffer.TYPE_BYTE: return totalSize;
+				case DataBuffer.TYPE_USHORT:
+				case DataBuffer.TYPE_SHORT: return totalSize*2;
+				case DataBuffer.TYPE_INT:
+				case DataBuffer.TYPE_FLOAT: return totalSize*4;
+				case DataBuffer.TYPE_DOUBLE:  return totalSize*8;
+			}
+		}catch(Exception e){
+			System.err.println(e);
+		}return 0;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode==null){
+			hashCode=0;
+			if (image!=null){
+				int h=1;
+				h=31*h+ImageDataBufferType.hashCode(image.getRaster().getDataBuffer());
+				h=31*h+image.getWidth();
+				h=31*h+image.getHeight();
+				return hashCode=31*h+image.getType();
+			}
+		}return hashCode;
+	}
+
 
 }

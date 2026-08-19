@@ -89,19 +89,21 @@ public class FieldFormat extends FieldRegex {
 
 	public enum TYPES {
 
-		TIME (java.sql.Time.class),
-		DATE (java.util.Date.class),
-		LONG (java.lang.Long.class),
-		DOUBLE (java.lang.Double.class),
-		DECIMAL (java.math.BigDecimal.class),
-		INTEGER (java.lang.Integer.class),
-		BOOLEAN (java.lang.Boolean.class),
-		STRING (java.lang.String.class);
+		TIME (Time.class, new Time(0)),
+		DATE (Date.class, new Date(0)),
+		LONG (Long.class, new Long(0)),
+		DOUBLE (Double.class, new Double(0)),
+		DECIMAL (BigDecimal.class, BigDecimal.ZERO),
+		INTEGER (Integer.class, new Integer(0)),
+		BOOLEAN (Boolean.class, new Boolean(false)),
+		STRING (String.class, new String());
 
 		public final Class klass;
+		public final Object defaultValue;
 
-		TYPES(Class klass) {
+		TYPES(Class klass, Object defaultValue) {
 			this.klass=klass;
+			this.defaultValue=defaultValue;
 		}
 
 		/*
@@ -111,6 +113,7 @@ public class FieldFormat extends FieldRegex {
 		 * SIZE 4,3: #,##0.000
 		 */
 		public String buildPattern(FieldSize size) {
+			StringBuilder sb=new StringBuilder();
 			switch(this){
 			case TIME: return TimeDateUtils.DEFAULT_TIME_PATTERN;
 			case DATE: return TimeDateUtils.DEFAULT_DATE_PATTERN;
@@ -118,25 +121,21 @@ public class FieldFormat extends FieldRegex {
 			case DOUBLE:
 			case DECIMAL:
 			case INTEGER:
-				StringBuilder pattern=new StringBuilder();
 				//#,###,##
 				for(int i=size.size; i>1; i--){
-					pattern.append("#");
-					if (i%3==1) pattern.append(",");
+					sb.append("#");
+					if (i%3==1) sb.append(",");
 				}//#,###,##0
-				pattern.append("0");
+				sb.append("0");
 				//#,###,##0.000
-				if (size.scale>0) pattern.append("."+StringUtils.replicas("0", size.scale));
-				return pattern.toString();
-
+				if (size.scale>0) sb.append("."+StringUtils.replicas("0", size.scale));
+				break;
 			case BOOLEAN:
-			case STRING: break;
-			}return null;
+			case STRING: return null;
+			}return sb.toString();
 		}
 
 	}
-
-	private final String pattern;
 
 	public FieldFormat(TYPES type, String pattern, char...exclude) {
 		this(type, pattern, NONE, exclude);
@@ -159,8 +158,7 @@ public class FieldFormat extends FieldRegex {
 	}
 
 	public FieldFormat(TYPES type, FieldSize size, String pattern, int properties, char...exclude) {
-		super(type, size, properties, exclude);
-		this.pattern=pattern==null ? type.buildPattern(size) : pattern;
+		super(type, size, pattern==null ? type.buildPattern(size) : pattern, properties, exclude);
 	}
 
 
@@ -172,7 +170,7 @@ public class FieldFormat extends FieldRegex {
 	}
 
 	public String getEditPattern() {
-		switch(getType()){
+		switch(type){
 		case TIME:
 		case DATE: break;
 		case LONG:
@@ -185,7 +183,7 @@ public class FieldFormat extends FieldRegex {
 	}
 
 	public String format(Object value, DecimalFormatSymbols symbols) {
-		switch(getType()){
+		switch(type){
 		case TIME: return TimeDateUtils.getTimeFormatted((Time)value, pattern);
 		case DATE: return TimeDateUtils.getDateFormatted((Date)value, pattern);
 		case LONG:
@@ -198,7 +196,7 @@ public class FieldFormat extends FieldRegex {
 	}
 
 	public Object parse(String text) {
-		try{switch(getType()){
+		try{switch(type){
 			case TIME: return TimeDateUtils.getTime(text, pattern);
 			case DATE: return TimeDateUtils.getDate(text, pattern);
 			case LONG: return new Long(text);

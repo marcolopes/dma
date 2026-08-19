@@ -38,7 +38,7 @@ public class ClipboardManager {
 
 	public static void copyToClipboard(Collection<?> col) {
 
-		if (col!=null && !col.isEmpty()) {
+		if (col!=null && !col.isEmpty()){
 
 			clear();
 

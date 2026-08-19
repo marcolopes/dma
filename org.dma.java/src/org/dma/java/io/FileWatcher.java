@@ -18,27 +18,25 @@
  *******************************************************************************/
 package org.dma.java.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.File;
 
-public abstract class AbstractStreamCopy {
+public abstract class FileWatcher extends FolderWatcher {
 
-	public abstract boolean cancel();
+	/** Returns false if interrupted */
+	public abstract boolean onChange(File file);
 
-	/** Streams must be closed by caller */
-	public void copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
+	private final File file;
 
-		byte[] buffer=new byte[1024*8];
+	public FileWatcher(File file) {
+		super(new Folder(file.getParent()));
+		this.file=file;
+	}
 
-		int len;
-		// Transfer bytes from input to output
-		while(!cancel() && (len=in.read(buffer)) > 0){
-			out.write(buffer, 0, len);
-		}
-
-		if (cancel()) throw new InterruptedException();
-
+	@Override
+	public boolean onChange(File[] files) {
+		for(File file: files){
+			if (file.equals(this.file)) return onChange(file);
+		}return true;
 	}
 
 

@@ -155,14 +155,14 @@ public class NumericUtils {
 
 		System.out.println("double");
 		double d=0d;
-		for (int i=1; i<=100; i++) {
+		for(int i=1; i<=100; i++){
 			d+=0.01;
 			System.out.println(d);
 		}
 
 		System.out.println("float");
 		float f=0f;
-		for (int i=1; i<=100; i++) {
+		for(int i=1; i<=100; i++){
 			f+=0.01;
 			System.out.println(f);
 		}

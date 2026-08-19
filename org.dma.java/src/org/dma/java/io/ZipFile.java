@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,77 +18,83 @@
  *******************************************************************************/
 package org.dma.java.io;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipOutputStream;
 
 public class ZipFile extends CustomFile {
 
-	/** @see CustomFile#CustomFile(File, String...) */
+	public final Charset charset;
+
+	/** Uses JAVA DEFAULT charset */
 	public ZipFile(File file, String...more) {
+		this(Charset.defaultCharset(), file, more);
+	}
+
+	/** @see CustomFile#CustomFile(File, String...) */
+	public ZipFile(Charset charset, File file, String...more) {
 		super(file, more);
+		this.charset=charset;
+	}
+
+	/** Uses JAVA DEFAULT charset */
+	public ZipFile(String pathname, String...more) {
+		this(Charset.defaultCharset(), pathname, more);
 	}
 
 	/** @see CustomFile#CustomFile(String, String...) */
-	public ZipFile(String pathname, String...more) {
+	public ZipFile(Charset charset, String pathname, String...more) {
 		super(pathname, more);
+		this.charset=charset;
+	}
+
+	/** Uses JAVA DEFAULT charset */
+	public ZipFile(File file) {
+		this(Charset.defaultCharset(), file);
 	}
 
 	/** @see CustomFile#CustomFile(File) */
-	public ZipFile(File file) {
+	public ZipFile(Charset charset, File file) {
 		super(file);
+		this.charset=charset;
 	}
 
+	public boolean store(File filesToAdd) {
+		return store(Arrays.asList(filesToAdd));
+	}
 
-	/** @see ZipEntry#setMethod(int) */
-	public void append(Collection<File> files, int method) throws ZipException, IOException {
+	public boolean store(Collection<File> files) {
+		return append(files, ZipEntry.STORED);
+	}
 
-		byte[] buffer=new byte[1024];
+	public boolean deflate(File files) {
+		return deflate(Arrays.asList(files));
+	}
 
-		ZipOutputStream out=new ZipOutputStream(
-				new BufferedOutputStream(asOutputStream(true)));
+	public boolean deflate(Collection<File> files) {
+		return append(files, ZipEntry.DEFLATED);
+	}
 
-		for(File file: files){
+	public boolean append(Collection<File> files, int method) {
 
-			ZipEntry entry=new ZipEntry(file.getName());
-			entry.setMethod(method);
-			out.putNextEntry(entry);
-
-			BufferedInputStream in=new BufferedInputStream(new FileInputStream(file));
-			try{int len;
-				while((len=in.read(buffer))>0){
-					out.write(buffer, 0, len);
-				}
-			}finally{
-				in.close();
-			}out.closeEntry();
-
-		}out.close();
+		return new AbstractZipAppend(this, charset) {
+			public boolean cancel() {
+				return false;
+			}
+		}.from(files, method);
 
 	}
 
+	public boolean extract(Folder folder, Collection<File> files) {
 
-	public void store(Collection<File> files) throws ZipException, IOException {
-		append(files, ZipEntry.STORED);
-	}
+		return new AbstractZipExtract(this, charset) {
+			public boolean cancel() {
+				return false;
+			}
+		}.to(folder, files);
 
-	public void store(File filesToAdd) throws ZipException, IOException {
-		store(Arrays.asList(filesToAdd));
-	}
-
-	public void deflate(Collection<File> files) throws ZipException, IOException {
-		append(files, ZipEntry.DEFLATED);
-	}
-
-	public void deflate(File files) throws ZipException, IOException {
-		deflate(Arrays.asList(files));
 	}
 
 

@@ -44,7 +44,6 @@ public class HttpServerHandler extends HttpURLHandler {
 
 	public HttpServerHandler(boolean secure, String host, int port) {
 		super(getUrl(secure, host, port));
-
 		this.host=host;
 		this.port=port;
 	}

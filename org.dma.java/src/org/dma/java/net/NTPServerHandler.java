@@ -168,8 +168,7 @@ public class NTPServerHandler {
 
 	public static void main(String[] args) {
 
-		query(NTP_SERVERS.OAL);
-		query(NTP_SERVERS.OAL);
+		query(NTP_SERVERS.NTP_POOL);
 
 	}
 

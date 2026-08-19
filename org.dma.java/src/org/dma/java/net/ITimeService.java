@@ -16,30 +16,15 @@
  * Contributors
  * Marco Lopes (marcolopespt@gmail.com)
  *******************************************************************************/
-package org.dma.java.io;
+package org.dma.java.net;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import org.apache.commons.net.ntp.TimeInfo;
 
-public abstract class AbstractStreamCopy {
+public interface ITimeService {
 
-	public abstract boolean cancel();
+	/** @see TimeInfo#getOffset() */
+	public long getOffset();
 
-	/** Streams must be closed by caller */
-	public void copy(InputStream in, OutputStream out) throws IOException, InterruptedException {
-
-		byte[] buffer=new byte[1024*8];
-
-		int len;
-		// Transfer bytes from input to output
-		while(!cancel() && (len=in.read(buffer)) > 0){
-			out.write(buffer, 0, len);
-		}
-
-		if (cancel()) throw new InterruptedException();
-
-	}
-
+	public ITimeService shutdown();
 
 }

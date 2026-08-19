@@ -36,7 +36,7 @@ import javax.print.SimpleDoc;
 public class PrinterHandler {
 
 	public static PrintService lookupPrintService(String printerName) {
-		for(PrintService ps: PrinterJob.lookupPrintServices()) {
+		for(PrintService ps: PrinterJob.lookupPrintServices()){
 			if (printerName!=null && ps.getName().indexOf(printerName)>=0) return ps;
 		}return null;
 	}

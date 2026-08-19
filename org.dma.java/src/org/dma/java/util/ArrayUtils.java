@@ -48,6 +48,7 @@ public class ArrayUtils {
 	}
 
 
+	@Deprecated
 	static String[] toStringArray(char[] array) {
 
 		String[] result=new String[array.length];
