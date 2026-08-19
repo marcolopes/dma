@@ -36,12 +36,13 @@ import pt.gov.portaldasfinancas.servicos.faturas.Tax;
  */
 public class FaturasServiceTest extends FaturasServiceHandler {
 
+	@Deprecated
 	public static final Integer RequesterTaxID = 599999993;
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
 	public FaturasServiceTest() {
-		this(RequesterTaxID+"/0037", "testes1234");
+		this(RequesterTaxID+"/0001", "testes1234");
 	}
 
 	public FaturasServiceTest(String username, String password) {

@@ -47,12 +47,13 @@ import pt.gov.portaldasfinancas.servicos.taxfree.TaxFreeSubmissionResponseType;
  */
 public class TaxFreeServiceTest extends TaxFreeServiceHandler {
 
+	@Deprecated
 	public static final Integer RequesterTaxID = 599999993;
 
 	public static final String InvoiceDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd");
 
 	public TaxFreeServiceTest() {
-		this(RequesterTaxID+"/0037", "testes1234");
+		this(RequesterTaxID+"/0001", "testes1234");
 	}
 
 	public TaxFreeServiceTest(String username, String password) {

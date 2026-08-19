@@ -46,6 +46,7 @@ import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesTyp
  */
 public class SeriesServiceTest extends SeriesServiceHandler {
 
+	@Deprecated
 	public static final Integer RequesterTaxID = 599999993;
 
 	public static final int SerieMaxLength = 35;
@@ -63,7 +64,7 @@ public class SeriesServiceTest extends SeriesServiceHandler {
 	private enum PRINT {NONE, INFO, ID}
 
 	public SeriesServiceTest() {
-		this(RequesterTaxID+"/0037", "testes1234");
+		this(RequesterTaxID+"/0001", "testes1234");
 	}
 
 	public SeriesServiceTest(String username, String password) {

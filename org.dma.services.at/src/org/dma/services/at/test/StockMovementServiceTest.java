@@ -43,6 +43,7 @@ import pt.gov.portaldasfinancas.servicos.series.types.requests.RegistarSeriesTyp
  */
 public class StockMovementServiceTest extends StockMovementServiceHandler {
 
+	@Deprecated
 	public static final Integer RequesterTaxID = 599999993;
 
 	public static final int DocumentNumberMax = 999999;
@@ -52,7 +53,7 @@ public class StockMovementServiceTest extends StockMovementServiceHandler {
 	public static final String SystemEntryDate = TimeDateUtils.getDateFormatted("yyyy-MM-dd'T'HH:mm:ss");
 
 	public StockMovementServiceTest() {
-		this(RequesterTaxID+"/0037", "testes1234");
+		this(RequesterTaxID+"/0001", "testes1234");
 	}
 
 	public StockMovementServiceTest(String username, String password) {

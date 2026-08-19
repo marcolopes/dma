@@ -66,7 +66,6 @@ import org.dma.java.net.NTPServerHandler.NTP_SERVERS;
 import org.dma.java.net.PermissiveTrustStore;
 import org.dma.java.security.MessageDigest;
 import org.dma.java.security.MessageDigest.ALGORITHMS;
-import org.dma.java.util.Debug;
 import org.dma.java.util.SystemUtils;
 
 public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
@@ -120,7 +119,6 @@ public class SOAPMessageHandler<T> implements SOAPHandler<SOAPMessageContext> {
 		if (!chain.contains(this)) try{
 
 			if (cert==null) throw new WebServiceException("No certificates found!");
-			if (Debug.STATUS) System.out.println(cert);
 			cert.validate();
 
 			HttpURLHandler url=new HttpURLHandler(endpoint);
