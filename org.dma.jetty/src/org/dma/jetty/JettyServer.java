@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ package org.dma.jetty;
 import java.util.Collection;
 
 import org.eclipse.jetty.io.EndPoint;
+import org.eclipse.jetty.server.ConnectionFactory;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -30,7 +31,7 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.HandlerWrapper;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle.Listener;
-import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 /*
  * https://jetty.org/download.html
@@ -41,22 +42,12 @@ public class JettyServer implements Runnable {
 	public static final IllegalArgumentException PARAMETERS_NOT_DEFINED_EXCEPTION = new IllegalArgumentException("parameters is not defined");
 	public static final IllegalArgumentException HANDLER_NOT_DEFINED_EXCEPTION = new IllegalArgumentException("handler is not defined");
 
-	/** @see ServerConnector */
-	public interface JettyConnectorFactory {
-		Connector[] create(Server server);
-	}
+	private final Server server=new Server();
 
-	private volatile boolean busy=false;
-
-	private final QueuedThreadPool pool=new QueuedThreadPool();
-	public QueuedThreadPool getPool() {return pool;}
-
-	private final Server server=new Server(pool);
 	private final JettyParameters parameters;
 	private final Handler handler;
 
-	public JettyParameters getParameters() {return parameters;}
-	public Handler getHandler() {return handler;}
+	private volatile boolean busy=false;
 
 	public JettyServer() {
 		this(new HandlerWrapper());
@@ -78,14 +69,8 @@ public class JettyServer implements Runnable {
 		configure();
 	}
 
-	public JettyServer setConnectors(JettyConnectorFactory factory) {
-		server.setConnectors(factory.create(server));
-		return this;
-	}
-
-	@SuppressWarnings("resource")
 	private void configure() {
-		server.setConnectors(new Connector[]{parameters.configure(new ServerConnector(server))});
+		configure(new ConnectionFactory[]{});
 		server.setHandler(handler);
 		server.setStopAtShutdown(true);
 		server.addLifeCycleListener(new Listener() {
@@ -100,6 +85,20 @@ public class JettyServer implements Runnable {
 			@Override
 			public void lifeCycleStopped(LifeCycle event) {busy=false;}
 		});
+	}
+
+	public void configure(ConnectionFactory...factories) {
+		configure(null, factories);
+	}
+
+	//https://dzone.com/articles/adding-ssl-support-embedded
+	public void configure(SslContextFactory sslContextFactory, ConnectionFactory...factories) {
+		ServerConnector connector=sslContextFactory==null ?
+				factories.length==0 ? new ServerConnector(server) : new ServerConnector(server, factories) :
+				factories.length==0 ? new ServerConnector(server, sslContextFactory) : new ServerConnector(server, sslContextFactory, factories);
+		parameters.configure(connector);
+		connector.close();
+		server.setConnectors(new Connector[]{connector});
 	}
 
 	@Override
@@ -143,6 +142,10 @@ public class JettyServer implements Runnable {
 		return server.isStopped();
 	}
 
+	public Server getServer() {
+		return server;
+	}
+
 	public Collection<EndPoint> getConnectedEndPoints() {
 		for(Connector connector: server.getConnectors()){
 			System.out.println(connector);
@@ -150,6 +153,14 @@ public class JettyServer implements Runnable {
 				System.out.println(endpoint);
 			}
 		}return server.getConnectors()[0].getConnectedEndPoints();
+	}
+
+	public JettyParameters getParameters() {
+		return parameters;
+	}
+
+	public Handler getHandler() {
+		return handler;
 	}
 
 	@Override
