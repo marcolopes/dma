@@ -43,66 +43,10 @@ public class StringList extends ArrayList<String> {
 		}return list;
 	}
 
-	public static StringList valueOf(boolean[] array) {
-		StringList list=new StringList(array.length);
-		for(boolean element: array){
-			list.add(String.valueOf(element));
-		}return list;
-	}
-
-	public static StringList valueOf(byte[] array) {
-		StringList list=new StringList(array.length);
-		for(byte element: array){
-			list.add(String.valueOf(element));
-		}return list;
-	}
-
-	public static StringList valueOf(char[] array) {
-		StringList list=new StringList(array.length);
-		for(char element: array){
-			list.add(String.valueOf(element));
-		}return list;
-	}
-
-	public static StringList valueOf(short[] array) {
-		StringList list=new StringList(array.length);
-		for(short element: array){
-			list.add(String.valueOf(element));
-		}return list;
-	}
-
-	public static StringList valueOf(int[] array) {
-		StringList list=new StringList(array.length);
-		for(int element: array){
-			list.add(String.valueOf(element));
-		}return list;
-	}
-
-	public static StringList valueOf(long[] array) {
-		StringList list=new StringList(array.length);
-		for(long element: array){
-			list.add(String.valueOf(element));
-		}return list;
-	}
-
-	public static StringList valueOf(float[] array) {
-		StringList list=new StringList(array.length);
-		for(float element: array){
-			list.add(String.valueOf(element));
-		}return list;
-	}
-
-	public static StringList valueOf(double[] array) {
-		StringList list=new StringList(array.length);
-		for(double element: array){
-			list.add(String.valueOf(element));
-		}return list;
-	}
-
 	public StringList() {super();}
 	public StringList(Collection<String> col) {super(col);}
 	public StringList(int initialCapacity) {super(initialCapacity);}
-	public StringList(String...array) {super(Arrays.asList(array));}
+	public StringList(String...array) {this(Arrays.asList(array));}
 
 	/*
 	 * Conversion

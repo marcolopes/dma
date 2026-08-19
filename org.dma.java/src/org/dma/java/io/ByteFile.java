@@ -156,16 +156,15 @@ public class ByteFile extends CustomFile {
 	}
 
 
-	public int append(File file) {
-		return append(new ByteFile(file).readFully());
+	public void append(File file) {
+		append(new ByteFile(file).readFully());
 	}
 
 
-	public long append(Collection<File> files) {
-		long length=0;
+	public void append(Collection<File> files) {
 		for(File file: files) {
-			length+=append(file);
-		}return length;
+			append(file);
+		}
 	}
 
 

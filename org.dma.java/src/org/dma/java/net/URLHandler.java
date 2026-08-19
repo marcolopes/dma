@@ -213,7 +213,7 @@ public class URLHandler {
 
 	public String path(String...more) {
 		String spec=url==null ? "" : url.toString();
-		return more.length==0 ? spec : getURL(spec, more).toString();
+		return more.length==0 ? spec : spec+"/"+ArrayUtils.concat(more, "/");
 	}
 
 	@Override

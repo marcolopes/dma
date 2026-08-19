@@ -25,7 +25,7 @@ public final class VersionNumber {
 	public static VersionNumber valueOf(String version) {
 		int i=0;
 		int[] array={0,0,0,0};
-		for(String element: StringUtils.split(version, ".")){
+		if (version!=null) for(String element: StringUtils.split(version, ".")){
 			if (i<array.length) array[i++]=StringUtils.val(StringUtils.numbers(element));
 		}return new VersionNumber(array[0], array[1], array[2], array[3]);
 	}
@@ -112,7 +112,7 @@ public final class VersionNumber {
 	}
 
 	public boolean equals(String version) {
-		return equals(VersionNumber.valueOf(version));
+		return equals(valueOf(version));
 	}
 
 	public boolean equals(VersionNumber version) {
