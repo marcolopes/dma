@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package org.dma.drivers.jdbc;
 
 import org.h2.engine.Constants;
 
-import org.dma.drivers.Activator;
 import org.dma.java.util.SystemUtils.SystemProperty;
 import org.dma.java.util.VersionNumber;
 
@@ -37,15 +36,21 @@ public enum DRIVERS {
 	PostgreSQL ("org.postgresql.Driver"),
 	SQLServer ("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-	public static final VersionNumber H2_VERSION = new VersionNumber(
-			Constants.VERSION_MAJOR, Constants.VERSION_MINOR, Constants.BUILD_ID);
+	public static Class classForName(String className) {
+		try{return Class.forName(className);
+		}catch(ClassNotFoundException e){
+			System.err.println(e);
+		}return null;
+	}
+
+	public static final VersionNumber H2_VERSION = new VersionNumber(Constants.VERSION_MAJOR, Constants.VERSION_MINOR, Constants.BUILD_ID);
 
 	public final String name;
 	public final Class klass;
 
 	DRIVERS(String name, SystemProperty...prop) {
 		this.name=name;
-		this.klass=Activator.classForName(name);
+		this.klass=classForName(name);
 	}
 
 }

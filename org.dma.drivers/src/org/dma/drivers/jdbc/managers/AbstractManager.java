@@ -28,8 +28,8 @@ import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.Command;
 import org.dma.java.io.CustomFile;
 import org.dma.java.io.Folder;
+import org.dma.java.io.UTF8ZipFile;
 import org.dma.java.io.ZipFile;
-import org.dma.java.util.Debug;
 import org.dma.java.util.TimeDateUtils;
 
 public abstract class AbstractManager implements IDatabaseManager {
@@ -50,18 +50,18 @@ public abstract class AbstractManager implements IDatabaseManager {
 	public File executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception {
 		String prefix=getUniqueId(database);
 		CustomFile dump=new CustomFile(backup.folder, prefix+".sql");
-		Debug.out("BACKUP DUMP: "+dump);
+		System.out.println("BACKUP DUMP: "+dump);
 		executeBackup(backup.buildCommand(database, username, password, dump), password);
 		//ZIP & delete dump
-		ZipFile zip=new ZipFile(backup.folder, prefix+".zip");
-		Debug.out("BACKUP ZIP: "+zip);
-		zip.deflate(dump);
+		ZipFile zip=new UTF8ZipFile(backup.folder, prefix+".zip");
+		System.out.println("BACKUP ZIP: "+zip);
+		if (!zip.deflate(dump)) throw new Exception("Could not deflate ZIP file: "+zip);
 		dump.delete();
 		return zip;
 	}
 
 	public void executeBackup(Command cmd, String password) throws Exception {
-		Debug.out("BACKUP COMMAND: "+cmd);
+		System.out.println("BACKUP COMMAND: "+cmd);
 		if (cmd.startReadAndWait()!=0) throw new Exception(cmd.toString());
 	}
 
@@ -74,9 +74,7 @@ public abstract class AbstractManager implements IDatabaseManager {
 
 	@Override
 	public Connection getConnection(String url, String username, String password) throws SQLException {
-		Connection connection=pool.getConnection(url, username, password);
-		Debug.out(pool.name(), getConnectionId(connection));
-		return connection;
+		return pool.getConnection(url, username, password);
 	}
 
 	@Override
@@ -94,14 +92,14 @@ public abstract class AbstractManager implements IDatabaseManager {
 	 */
 	@Override
 	public void executeAlterDataType(Connection connection, String tableName, String columnName, String dataType) throws SQLException {
-		Debug.out("ALTERING DATA TYPE <"+tableName+":"+columnName+">");
+		System.out.println("ALTERING DATA TYPE <"+tableName+":"+columnName+">");
 		executeSQLUpdate(connection, alterDataTypeSQL(tableName, columnName, dataType));
 	}
 
 	@Override
 	public void executeDropForeignKeys(Connection connection, String tableName, String columnName) throws SQLException {
 		for(String foreignKeyName: getForeignKeyNames(connection, tableName, columnName)){
-			Debug.out("DROPPING FOREIGN KEY <"+tableName+":"+foreignKeyName+">");
+			System.out.println("DROPPING FOREIGN KEY <"+tableName+":"+foreignKeyName+">");
 			executeSQLUpdate(connection, dropForeignKeySQL(tableName, foreignKeyName));
 		}
 	}
@@ -109,7 +107,7 @@ public abstract class AbstractManager implements IDatabaseManager {
 	@Override
 	public void executeDropIndices(Connection connection, String tableName, String columnName) throws SQLException {
 		for(String indexKeyName: getIndexKeyNames(connection, tableName, columnName)){
-			Debug.out("DROPPING INDEX <"+tableName+":"+indexKeyName+">");
+			System.out.println("DROPPING INDEX <"+tableName+":"+indexKeyName+">");
 			executeSQLUpdate(connection, dropIndexKeySQL(tableName, indexKeyName));
 		}
 	}
@@ -118,13 +116,13 @@ public abstract class AbstractManager implements IDatabaseManager {
 	public void executeDropColumn(Connection connection, String tableName, String columnName) throws SQLException {
 		executeDropForeignKeys(connection, tableName, columnName);
 		executeDropIndices(connection, tableName, columnName);
-		Debug.out("DROPPING <"+tableName+":"+columnName+">");
+		System.out.println("DROPPING <"+tableName+":"+columnName+">");
 		executeSQLUpdate(connection, dropColumnSQL(tableName, columnName));
 	}
 
 	@Override
 	public void executeDropTable(Connection connection, String tableName) throws SQLException {
-		Debug.out("DROPPING <"+tableName+">");
+		System.out.println("DROPPING <"+tableName+">");
 		executeSQLUpdate(connection, dropTableSQL(tableName));
 	}
 

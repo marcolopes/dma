@@ -22,6 +22,8 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.dma.drivers.jdbc.managers.H2Manager;
@@ -206,6 +208,47 @@ public class DatabaseParameters extends EnumMap<POOLMANAGERS, IDatabaseManager> 
 	@Override
 	public boolean equals(Object obj) {
 		return hashCode()==obj.hashCode();
+	}
+
+	public static void main(String[] args) {
+
+		final int MAX=100;
+
+		POOLMANAGERS.print();
+
+		Map<POOLMANAGERS, Integer> count=new LinkedHashMap();
+
+		for(POOLMANAGERS pool: POOLMANAGERS.values()){
+			count.put(pool, 0);
+			DatabaseParameters parameters=new DatabaseParameters(pool.name(), Folder.temporary(), "sa", "", pool);
+			System.out.println(parameters);
+
+			try{parameters.checkConnection();
+			}catch(Exception e){
+				System.err.println(e);
+			}
+
+			for(int i=1; i<=MAX; i++) try{
+				//parameters.getConnection().close();
+				parameters.getConnection();
+				count.put(pool, i);
+			}catch(Exception e){
+				System.err.println(e);
+				break;
+			}
+
+			try{parameters.shutdown();
+			}catch(Exception e){
+				System.err.println(e);
+			}
+
+		}POOLMANAGERS.print();
+
+		System.out.println("---MAX CONNECTIONS---");
+		for(Entry<POOLMANAGERS, Integer> entry: count.entrySet()){
+			System.out.println(entry);
+		}
+
 	}
 
 }

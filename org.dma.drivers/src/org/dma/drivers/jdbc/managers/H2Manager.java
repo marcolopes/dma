@@ -36,9 +36,9 @@ import org.dma.drivers.jdbc.BackupParameters;
 import org.dma.drivers.jdbc.POOLMANAGERS;
 import org.dma.java.io.CustomFile;
 import org.dma.java.io.Folder;
+import org.dma.java.io.UTF8ZipFile;
 import org.dma.java.io.ZipFile;
 import org.dma.java.net.HttpServerHandler;
-import org.dma.java.util.Debug;
 
 public class H2Manager extends AbstractManager {
 
@@ -62,10 +62,12 @@ public class H2Manager extends AbstractManager {
 
 	public static void checkLock(Folder folder, String database) throws Exception {
 		File file=new CustomFile(folder.getPath(), database+Constants.SUFFIX_LOCK_FILE);
-		Debug.out("DATABASE LOCK: "+file);
+		System.out.println("DATABASE LOCK: "+file);
 		FileLock lock=new FileLock(new TraceSystem(null), file.getPath(), 0);
-		lock.lock(FileLock.LOCK_FILE);
-		lock.unlock();
+		try{lock.lock(FileLock.LOCK_FILE);
+		}finally{
+			lock.unlock();
+		}
 	}
 
 	public H2Manager(POOLMANAGERS pool) {
@@ -96,8 +98,8 @@ public class H2Manager extends AbstractManager {
 	public File executeBackup(String host, String database, Folder folder, String username, String password, BackupParameters backup) throws Exception {
 		String prefix=getUniqueId(database);
 		//[folder]/[prefix].zip
-		ZipFile zip=new ZipFile(backup.folder, prefix+".zip");
-		Debug.out("BACKUP ZIP: "+zip);
+		ZipFile zip=new UTF8ZipFile(backup.folder, prefix+".zip");
+		System.out.println("BACKUP ZIP: "+zip);
 		if (isEmbedded(host)){
 			/*
 			 * H2 Driver v1.3.169
@@ -107,16 +109,19 @@ public class H2Manager extends AbstractManager {
 			 * Backup.execute(dump.toString(), db.getParent(), db.getName(), false);
 			 */
 			File file=new CustomFile(folder.getPath(), database+Constants.SUFFIX_PAGE_FILE);
-			Debug.out("DATABASE FILE: "+file);
-			checkLock(folder, database); //locked?
-			if (file.length()>0) new ZipFile(zip).deflate(file); //ZIP file
+			System.out.println("DATABASE FILE: "+file);
+			checkLock(folder, database); //LOCKED?
+			if (file.length()>0 && !zip.deflate(file)) throw new Exception("Could not deflate ZIP file: "+zip);
 		}else{
 			File dump=new CustomFile(backup.folder, prefix+".sql");
-			Debug.out("BACKUP DUMP: "+dump);
+			System.out.println("BACKUP DUMP: "+dump);
 			executeBackup(backup.buildCommand(getConnectionUrl(host, database, folder), username, password, dump), password);
 			//ZIP & delete dump
-			zip.deflate(dump);
-			dump.delete();
+			if (dump.length()>0) try{
+				if (!zip.deflate(dump)) throw new Exception("Could not deflate ZIP file: "+zip);
+			}finally{
+				dump.delete();
+			}
 		}return zip;
 	}
 
