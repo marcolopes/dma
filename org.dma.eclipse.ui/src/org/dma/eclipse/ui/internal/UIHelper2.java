@@ -51,7 +51,7 @@ public class UIHelper2 extends UIHelper {
 
 	public static void disablePerspectiveToolBarMenu() {
 		ToolBar toolBar=getPerspectiveToolBar();
-		if (toolBar!=null) for (Listener listener: toolBar.getListeners(SWT.MenuDetect)){
+		if (toolBar!=null) for(Listener listener: toolBar.getListeners(SWT.MenuDetect)){
 			toolBar.removeListener(SWT.MenuDetect, listener);
 			Debug.out("REMOVED", listener);
 		}

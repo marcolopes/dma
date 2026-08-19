@@ -153,7 +153,7 @@ public class UIHelper {
 	}
 
 	public static boolean isPerspectiveOpen(String perspectiveId) {
-		for (IPerspectiveDescriptor perspective: getOpenPerspectives()) {
+		for(IPerspectiveDescriptor perspective: getOpenPerspectives()){
 			if (perspective.getId().equals(perspectiveId)) return true;
 		}return false;
 	}
