@@ -61,7 +61,7 @@ public class ProgressSupport extends LinkedHashMap<IProgressAction, String> {
 		return put(action, null);
 	}
 
-	public void put(Class klass) {
+	public void put(Class<?> klass) {
 		if (IProgressAction.class.isAssignableFrom(klass)) try{
 			IProgressAction action=(IProgressAction)klass.newInstance();
 			put(action, action.getClass().getName());

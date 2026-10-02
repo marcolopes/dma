@@ -65,7 +65,7 @@ public class CustomMessageDialog extends MessageDialog {
 	@SuppressWarnings("hiding")
 	public enum DIALOG_TYPES {
 
-		ERROR (null, DIALOG_BUTTONS.OK),
+		ERROR ("Error", DIALOG_BUTTONS.OK),
 		INFORMATION ("Information", DIALOG_BUTTONS.OK),
 		WARNING ("Warning", DIALOG_BUTTONS.OK),
 		QUESTION ("Attention", DIALOG_BUTTONS.YES, DIALOG_BUTTONS.NO),

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2022 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ public class BundleUtils {
 
 
 	/** @see BundleUtils#pathResolver(Bundle, String) */
-	public static String pathResolver(Class klass, String relativePath) {
+	public static String pathResolver(Class<?> klass, String relativePath) {
 
 		return pathResolver(FrameworkUtil.getBundle(klass), relativePath);
 
