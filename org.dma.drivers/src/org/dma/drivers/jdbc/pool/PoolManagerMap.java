@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.dma.drivers.jdbc.pool.PoolManagerMap.UserMap;
-
-public class PoolManagerMap extends ConcurrentHashMap<String, UserMap> {
+public class PoolManagerMap extends ConcurrentHashMap<String, PoolManagerMap.UserMap> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -77,7 +75,7 @@ public class PoolManagerMap extends ConcurrentHashMap<String, UserMap> {
 	}
 
 	public IPoolManager put(String url, String username, String password, IPoolManager manager) {
-		if (!containsKey(url)) put(url, new UserMap());
+		putIfAbsent(url, new UserMap());
 		return get(url).put(username, password, manager);
 	}
 

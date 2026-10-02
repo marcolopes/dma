@@ -36,8 +36,8 @@ public enum DRIVERS {
 	PostgreSQL ("org.postgresql.Driver"),
 	SQLServer ("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-	public static Class classForName(String className) {
-		try{return Class.forName(className);
+	public static <T> Class<T> classForName(String className) {
+		try{return (Class<T>)Class.forName(className);
 		}catch(ClassNotFoundException e){
 			System.err.println(e);
 		}return null;
@@ -46,7 +46,7 @@ public enum DRIVERS {
 	public static final VersionNumber H2_VERSION = new VersionNumber(Constants.VERSION_MAJOR, Constants.VERSION_MINOR, Constants.BUILD_ID);
 
 	public final String name;
-	public final Class klass;
+	public final Class<?> klass;
 
 	DRIVERS(String name, SystemProperty...prop) {
 		this.name=name;
