@@ -44,8 +44,15 @@ public class JettyServer implements Runnable {
 
 	private final Server server=new Server();
 
+	public Server getServer() {return server;}
+	public boolean isRunning() {return server.isRunning();}
+	public boolean isStopped() {return server.isStopped();}
+
 	private final JettyParameters parameters;
 	private final Handler handler;
+
+	public JettyParameters getParameters() {return parameters;}
+	public Handler getHandler() {return handler;}
 
 	private volatile boolean busy=false;
 
@@ -111,39 +118,22 @@ public class JettyServer implements Runnable {
 		}
 	}
 
-	public JettyServer start() {
+	public JettyServer start() throws InterruptedException {
 		busy=true;
 		new Thread(this).start();
-		while(busy)try{
+		while(busy){
 			Thread.sleep(50);
-		}catch(Exception e){
-			e.printStackTrace();
 		}return this;
 	}
 
-	public JettyServer stop() {
-		try{server.stop();
-		}catch(Exception e){
-			e.printStackTrace();
-		}return this;
+	public JettyServer stop() throws Exception {
+		server.stop();
+		return this;
 	}
 
-	public boolean startStop() {
-		if (isRunning()) stop();
-		else start();
+	public boolean startStop() throws Exception {
+		if (isRunning()) stop(); else start();
 		return isRunning();
-	}
-
-	public boolean isRunning() {
-		return server.isRunning();
-	}
-
-	public boolean isStopped() {
-		return server.isStopped();
-	}
-
-	public Server getServer() {
-		return server;
 	}
 
 	public Collection<EndPoint> getConnectedEndPoints() {
@@ -153,14 +143,6 @@ public class JettyServer implements Runnable {
 				System.out.println(endpoint);
 			}
 		}return server.getConnectors()[0].getConnectedEndPoints();
-	}
-
-	public JettyParameters getParameters() {
-		return parameters;
-	}
-
-	public Handler getHandler() {
-		return handler;
 	}
 
 	@Override

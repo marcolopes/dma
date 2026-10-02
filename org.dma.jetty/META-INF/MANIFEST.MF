@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Eclipse-BundleShape: dir
+Eclipse-BundleShape: jar
 Bundle-ManifestVersion: 2
 Bundle-Name: Jetty Server
 Bundle-SymbolicName: org.dma.jetty;singleton:=true
@@ -45,13 +45,12 @@ Bundle-ClassPath: .,
  libraries/jetty-9.2.29/jsp/jetty-jsp-9.2.29.v20191105.jar,
  libraries/jetty-9.2.29/jsp/jetty-jsp-jdt-2.3.3.jar,
  libraries/jetty-9.2.29/jsp/org.eclipse.jetty.orbit.javax.servlet.jsp.jstl-1.2.0.v201105211821.jar
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
+Require-Bundle: org.eclipse.osgi;bundle-version="3.8.2",
  org.eclipse.jdt.core;bundle-version="3.8.3",
- org.eclipse.jface;bundle-version="3.8.0",
- org.dma.eclipse;bundle-version="7.11.0",
  org.dma.java;bundle-version="7.11.0",
  org.dma.jaxrs;bundle-version="2.25.1"
 Export-Package: org.dma.jetty,
+ org.eclipse.jetty.io,
  org.eclipse.jetty.server,
  org.eclipse.jetty.server.handler,
  org.eclipse.jetty.servlet,

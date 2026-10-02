@@ -34,7 +34,7 @@ public class JettyParameters extends HttpServerHandler {
 	public static final IllegalArgumentException INVALID_PORT_EXCEPTION = new IllegalArgumentException(FIELDS.PORT + " is invalid");
 
 	public JettyParameters() {
-		this("127.0.0.1", 8087);
+		this("127.0.0.1", 8090);
 	}
 
 	public JettyParameters(String host, int port) {

@@ -18,25 +18,18 @@
  *******************************************************************************/
 package org.dma.jetty;
 
-import java.awt.image.BufferedImage;
-
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
 
-import org.dma.eclipse.swt.graphics.ImageManager;
-import org.dma.java.awt.ImageHandler;
-
-import org.eclipse.core.runtime.Plugin;
-import org.eclipse.swt.graphics.Image;
-
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends Plugin {
+public class Activator implements BundleActivator {
 
-	public static final int PLUGIN_REVISION = 4;
+	public static final int PLUGIN_REVISION = 6;
 
 	public static final Bundle PLUGIN_BUNDLE = FrameworkUtil.getBundle(Activator.class);
 
@@ -49,14 +42,6 @@ public class Activator extends Plugin {
 			String.valueOf(PLUGIN_REVISION));
 
 	public static final String PLUGIN_NAME = PLUGIN_ID+" "+PLUGIN_VERSION;
-
-	public static BufferedImage getBufferedImage(String resource) {
-		return ImageHandler.createImage(Activator.class, resource);
-	}
-
-	public static Image getImage(String resource) {
-		return ImageManager.getImage(getBufferedImage(resource));
-	}
 
 	public Activator() {
 		System.err.println(PLUGIN_NAME+" "+getClass().getSimpleName());

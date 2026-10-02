@@ -32,7 +32,7 @@ public class JettyWebServer extends JettyServer {
 	}
 
 	@Override
-	public JettyServer start() {
+	public JettyServer start() throws InterruptedException {
 		deleteTempLocation();
 		return super.start();
 	}
