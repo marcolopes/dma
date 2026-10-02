@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.dma.java.util.StringList;
-import org.dma.jaxrs.services.QueryParameters.QueryParameterValue;
 
-public class QueryParameters extends ArrayList<QueryParameterValue> {
+public class QueryParameters extends ArrayList<QueryParameters.QueryParameterValue> {
 
 	private static final long serialVersionUID = 0L;
 

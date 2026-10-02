@@ -76,17 +76,11 @@ public class Endpoint extends org.dma.jaxrs.responses.Response {
 			return ar.resume(response);
 		}
 
-		/** Override to handle exception cause */
-		public WebApplicationException handle(Throwable cause) {
-			cause.printStackTrace();
-			return new WebApplicationException(cause);
-		}
-
 		@Override
 		public void run() {
 			try{resume(process().build());
 			}catch(Exception e){
-				resume(handle(e).getResponse());
+				resume(new WebApplicationException(e).getResponse());
 			}
 		}
 

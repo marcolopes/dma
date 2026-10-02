@@ -20,6 +20,7 @@
 package org.dma.jaxrs.responses;
 
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.Status.Family;
 
 import org.dma.java.gson.GsonConverter;
 
@@ -31,6 +32,10 @@ public class Response extends GsonConverter {
 	 * API providers define its specific usage for transmitting an API key.
 	 */
 	public static final String X_API_KEY = "x-api-key";
+
+	public static boolean isSuccessful(javax.ws.rs.core.Response response) {
+		return response!=null && response.getStatusInfo().getFamily()==Family.SUCCESSFUL;
+	}
 
 	/*
 	 * Builders

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2025 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,37 +18,33 @@
  *******************************************************************************/
 package org.dma.jaxrs.resources;
 
-import java.util.ArrayList;
-
-import javax.ws.rs.QueryParam;
-
-import org.glassfish.jersey.server.model.Parameter;
+import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.model.ResourceMethod;
 
-public class ResourceInfo extends ArrayList<Parameter> {
+public class ResourceInfo extends QueryParamList {
 
-	public final ResourceMethod method;
-	public final String path;
+	private static final long serialVersionUID = 1L;
 
-	public ResourceInfo(ResourceMethod method, String path) {
-		this.method=method;
-		this.path=path;
-		for(Parameter parameter: method.getInvocable().getParameters()){
-			if (parameter.getSourceAnnotation()!=null &&
-				parameter.getSourceAnnotation().annotationType()==QueryParam.class) add(parameter);
-		}
+	public String getQueryParams() {return super.toString();}
+
+	public final String resourcePath;
+	public final String httpMethod;
+
+	public ResourceInfo(String resourcePath, ResourceMethod method) {
+		super(method);
+		this.resourcePath=resourcePath;
+		this.httpMethod=method.getHttpMethod();
+	}
+
+	public ResourceInfo(Resource resource) {
+		super(resource);
+		this.resourcePath=resource.getPath();
+		this.httpMethod="";
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb=new StringBuilder();
-		sb.append(path);
-		for(Parameter parameter: this){
-			sb.append("&");
-			sb.append(parameter.getSourceName());
-			sb.append("=");
-			sb.append(parameter.getRawType().getSimpleName());
-		}return String.format("%-8s %s", method.getHttpMethod(), sb.toString());
+		return String.format("%-8s %s", httpMethod, isEmpty() ? resourcePath : resourcePath+"?"+getQueryParams());
 	}
 
 }

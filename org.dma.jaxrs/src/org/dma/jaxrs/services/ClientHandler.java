@@ -19,20 +19,20 @@
  *******************************************************************************/
 package org.dma.jaxrs.services;
 
+import java.util.concurrent.Future;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status.Family;
 
-import org.dma.java.gson.GsonConverter;
 import org.dma.java.net.URLHandler;
+import org.dma.java.util.MessageList;
 
 /*
  * https://restfulapi.net/http-methods
  * https://eclipse-ee4j.github.io/jersey/download.html
  * https://repo1.maven.org/maven2/org/glassfish/jersey/bundles/jaxrs-ri/
  */
-public class ClientHandler extends GsonConverter {
+public class ClientHandler extends org.dma.jaxrs.responses.Response {
 
 	private final Client client;
 	private final URLHandler url;
@@ -53,15 +53,23 @@ public class ClientHandler extends GsonConverter {
 		this.url=url;
 	}
 
+	public WebTarget target(String...more) {
+		return client.target(url.path(more));
+	}
+
 	/** @see Client#close() */
 	public void close() {client.close();}
 
-	public boolean isSuccessful(Response response) {
-		return response.getStatusInfo().getFamily()==Family.SUCCESSFUL;
-	}
-
-	public WebTarget target(String...more) {
-		return client.target(url.path(more));
+	public <T> T get(Future<T> future) {
+		try{return future.get();
+		}catch(Exception e){
+			MessageList error=new MessageList(getUrl().toString()).append(e);
+			Throwable cause=e.getCause();
+			while(cause!=null){
+				error.add(cause);
+				cause=cause.getCause();
+			}error.print(System.err);
+		}return null;
 	}
 
 
