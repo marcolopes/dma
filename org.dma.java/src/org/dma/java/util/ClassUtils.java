@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,21 +24,21 @@ import java.util.Objects;
 public final class ClassUtils extends org.apache.commons.lang.ClassUtils {
 
 	/** JAR is exported! */
-	public static boolean isExported(Class klass) {
+	public static boolean isExported(Class<?> klass) {
 		String protocol=klass.getResource(klass.getSimpleName()+".class").getProtocol();
 		return !Objects.equals(protocol, "file");
 	}
 
 
-	public static Class classForName(String className) {
-		try{return Class.forName(className);
+	public static <T> Class<T> classForName(String className) {
+		try{return (Class<T>)Class.forName(className);
 		}catch(ClassNotFoundException e){
 			System.err.println(e);
 		}return null;
 	}
 
 
-	public static Object getField(Class klass, String field) {
+	public static Object getField(Class<?> klass, String field) {
 		try{return klass.getField(field).get(klass);
 		}catch(NoClassDefFoundError e){
 			System.err.print("CLASS NOT FOUND "+klass.getCanonicalName()+"."+field);
@@ -55,15 +55,14 @@ public final class ClassUtils extends org.apache.commons.lang.ClassUtils {
 	/** Create a new instance of the given class */
 	public static <T> T newInstance(Class<? extends T> klass, Class<? extends T> subclass) {
 		if (klass!=null) try{
-			Class<? extends T> targetClass=klass.asSubclass(subclass);
-			return targetClass.newInstance();
+			return klass.asSubclass(subclass).newInstance();
 		}catch(Exception e){
 			System.err.println(e);
 		}return null;
 	}
 
 	/** Create a new instance of the given class */
-	public static <T> T newInstance(Class<? extends T> klass) {
+	public static <T> T newInstance(Class<T> klass) {
 		return newInstance(klass, klass);
 	}
 
@@ -75,7 +74,7 @@ public final class ClassUtils extends org.apache.commons.lang.ClassUtils {
 
 
 	public static Object invoke(String className, String methodName, Class[] parameterTypes, Object...args) throws Exception {
-		Class klass=classForName(className);
+		Class<?> klass=classForName(className);
 		Method method=klass.getDeclaredMethod(methodName, parameterTypes);
 		return method.invoke(klass, args);
 	}
@@ -91,7 +90,7 @@ public final class ClassUtils extends org.apache.commons.lang.ClassUtils {
 
 	public static void main(String[] args) throws Exception {
 
-		System.out.println(newInstance(ErrorList.class));
+		newInstance(MessageList.class).append("OK").print();
 		System.out.println(invoke("java.lang.Integer", "valueOf", "10"));
 
 	}

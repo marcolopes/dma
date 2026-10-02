@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2021 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public class CollectionUtils {
 
 	/** Returns a new array even if collection is empty */
 	@Deprecated
-	static <T> T[] toArray(Collection<T> col, Class klass) {
+	static <T> T[] toArray(Collection<T> col, Class<?> klass) {
 		return toArray(col, (T[])Array.newInstance(klass, col.size()));
 	}
 

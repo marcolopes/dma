@@ -245,12 +245,14 @@ public class CustomFile extends File {
 
 		System.out.println(Folder.current());
 		System.out.println(new CustomFile(""));
-		System.out.println(new CustomFile("\\Users\\marcolopes\\Temp"));
-		System.out.println(new CustomFile("\\Users\\marcolopes", "Temp"));
-		System.out.println(new CustomFile("\\Users", "marcolopes", "Temp"));
-		System.out.println(new CustomFile("C:\\Users\\marcolopes\\Temp"));
-		System.out.println(new CustomFile("C:\\Users\\marcolopes", "Temp"));
-		System.out.println(new CustomFile("C:\\Users", "marcolopes", "Temp"));
+		System.out.println(new CustomFile("/"));
+		System.out.println(new CustomFile("/Users/marcolopes/Temp"));
+		System.out.println(new CustomFile("/Users/marcolopes", "Temp"));
+		System.out.println(new CustomFile("/Users", "marcolopes", "Temp"));
+		System.out.println(new CustomFile("/", "Users", "marcolopes", "Temp"));
+		System.out.println(new CustomFile("C:/Users/marcolopes/Temp"));
+		System.out.println(new CustomFile("C:/Users/marcolopes", "Temp"));
+		System.out.println(new CustomFile("C:/Users", "marcolopes", "Temp"));
 		System.out.println(new CustomFile("C:", "Users", "marcolopes", "Temp"));
 
 		CustomFile file=new CustomFile(Folder.temporary(), "mspaint");

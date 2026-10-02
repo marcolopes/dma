@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2008-2024 Marco Lopes (marcolopespt@gmail.com)
+ * Copyright 2008-2026 Marco Lopes (marcolopespt@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class ByteFile extends CustomFile {
 			long length=length();
 
 			// File is too large
-			if (length > Integer.MAX_VALUE) throw new IOException("File is too large: "+getName());
+			if (length>Integer.MAX_VALUE) throw new IOException("File is too large: "+getName());
 
 			byte[] buffer=new byte[(int)length];
 
@@ -73,10 +73,10 @@ public class ByteFile extends CustomFile {
 			try{int offset=0;
 				int numRead=0;
 				// Read in the bytes
-				while(offset < length && (numRead=in.read(buffer, offset, buffer.length-offset)) > 0){
+				while(offset<length && (numRead=in.read(buffer, offset, buffer.length-offset))>0){
 					offset+=numRead;
 				}// Ensure all the bytes have been read in
-				if (offset < buffer.length) throw new IOException("Could not completely read file: "+getName());
+				if (offset<buffer.length) throw new IOException("Could not completely read file: "+getName());
 
 			}finally{
 				in.close();
@@ -110,12 +110,12 @@ public class ByteFile extends CustomFile {
 
 	}
 
-	public byte[] encodeBase64() {
+	public byte[] readBase64() {
 		return Base64.encodeBase64(readFully());
 	}
 
 	/** @see Charsets#US_ASCII */
-	public String encodeBase64String() {
+	public String readBase64String() {
 		return Base64.encodeBase64String(readFully());
 	}
 
@@ -128,7 +128,6 @@ public class ByteFile extends CustomFile {
 	 * By setting up such an output stream, an application can write bytes
 	 * to the underlying output stream without necessarily causing a call to
 	 * the underlying system for each byte written.
-	 *
 	 */
 	public int write(byte[] bytes, boolean append) {
 

@@ -89,19 +89,21 @@ public class FieldFormat extends FieldRegex {
 
 	public enum TYPES {
 
-		TIME (java.sql.Time.class),
-		DATE (java.util.Date.class),
-		LONG (java.lang.Long.class),
-		DOUBLE (java.lang.Double.class),
-		DECIMAL (java.math.BigDecimal.class),
-		INTEGER (java.lang.Integer.class),
-		BOOLEAN (java.lang.Boolean.class),
-		STRING (java.lang.String.class);
+		TIME (Time.class, new Time(0)),
+		DATE (Date.class, new Date(0)),
+		LONG (Long.class, new Long(0)),
+		DOUBLE (Double.class, new Double(0)),
+		DECIMAL (BigDecimal.class, BigDecimal.ZERO),
+		INTEGER (Integer.class, new Integer(0)),
+		BOOLEAN (Boolean.class, new Boolean(false)),
+		STRING (String.class, new String());
 
-		public final Class klass;
+		public final Class<?> klass;
+		public final Object defaultValue;
 
-		TYPES(Class klass) {
+		TYPES(Class<?> klass, Object defaultValue) {
 			this.klass=klass;
+			this.defaultValue=defaultValue;
 		}
 
 		/*

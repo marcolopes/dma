@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.dma.java.util;
 
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.Date;
 
@@ -26,8 +27,10 @@ public class MessageLine extends StringList {
 	private static final long serialVersionUID = 1L;
 
 	private static String parse(Object obj) {
+		if (obj==null) return "<NULL>";
 		if (obj instanceof Date) return TimeDateUtils.getDateFormatted((Date)obj);
 		if (obj instanceof Time) return TimeDateUtils.getTimeFormatted((Time)obj);
+		if (obj instanceof BigDecimal) return ((BigDecimal)obj).toPlainString();
 		if (obj instanceof Throwable){
 			Throwable exception=(Throwable)obj;
 			return exception.getMessage()==null ? exception.toString() : exception.getMessage();
